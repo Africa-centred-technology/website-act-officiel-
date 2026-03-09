@@ -1,4 +1,4 @@
-import ServicesShellClient from "@/components/services/ServicesShellClient";
+import ServicesGrid from "@/components/services/ServicesGrid";
 
 export const metadata = {
   title: "Nos Services — Africa Centred Technology",
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function ServicesPage() {
-  return <ServicesShellClient />;
+  return <ServicesGrid />;
 }
