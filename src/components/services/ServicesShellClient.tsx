@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 
-const ServicesShell = dynamic(() => import("./ServicesShell"), { ssr: false });
+const ServiceRoomShell = dynamic(() => import("./ServiceRoomShell"), { ssr: false });
 
 export default function ServicesShellClient() {
-  return <ServicesShell />;
+  return <ServiceRoomShell />;
 }
