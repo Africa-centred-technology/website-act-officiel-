@@ -22,6 +22,10 @@ export interface Service {
   benefits: string[];
   deliverables: string[];
   video: string;
+  /** Image principale (hero / intro section) */
+  heroImage: string;
+  /** Images des sous-services (une par sub, peut en avoir moins) */
+  subImages: string[];
 }
 
 const ORANGE = "#D35400";
@@ -49,6 +53,11 @@ export const SERVICES: Service[] = [
     benefits: ["Efficacité opérationnelle", "Adoption rapide", "ROI mesurable", "Plateformes évolutives"],
     deliverables: ["Application livrée & documentée", "Formation des équipes techniques", "Maintenance & support 12 mois", "Tableau de bord de performance"],
     video: "https://cdn.pixabay.com/video/2019/05/06/23355-334950213_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "automatisation-ia",
@@ -75,6 +84,12 @@ export const SERVICES: Service[] = [
     benefits: ["Processus accéléré ×5", "Erreurs humaines réduites", "Décisions renforcées", "Coordination fluide"],
     deliverables: ["Cartographie des processus automatisables", "Agents déployés & testés", "Tableau de bord de monitoring", "Guide de gouvernance IA"],
     video: "https://cdn.pixabay.com/video/2023/07/24/173103-848555583_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "architecture-infrastructure",
@@ -101,6 +116,12 @@ export const SERVICES: Service[] = [
     benefits: ["Investissement protégé", "Scalabilité native", "Conformité assurée", "Coûts maîtrisés"],
     deliverables: ["Schéma d'architecture validé", "Plan de migration détaillé", "Rapport TCO 5 ans", "Documentation technique complète"],
     video: "https://cdn.pixabay.com/video/2024/11/05/240062_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1647166545674-ce28ce93bdca?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "data-intelligence-artificielle",
@@ -127,6 +148,12 @@ export const SERVICES: Service[] = [
     benefits: ["Décisions data-driven", "Modèles contextualisés", "Gouvernance intégrée", "Big Data opérable"],
     deliverables: ["Modèles IA déployés & validés", "Pipelines de données automatisés", "Dashboard analytics temps réel", "Charte IA & gouvernance"],
     video: "https://cdn.pixabay.com/video/2020/01/30/31772-388253161_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1527474305487-b87b222841cc?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "geomatique-sig",
@@ -149,6 +176,11 @@ export const SERVICES: Service[] = [
     benefits: ["Décisions d'aménagement éclairées", "Autonomie géomatique", "Données actualisées", "Appui aux politiques"],
     deliverables: ["Cartographie numérique haute résolution", "Plateforme SIG opérationnelle", "Formation équipes SIG", "Protocole de mise à jour"],
     video: "https://cdn.pixabay.com/video/2017/07/23/10854-226632941_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "conseil-strategique",
@@ -175,6 +207,12 @@ export const SERVICES: Service[] = [
     benefits: ["Stratégie claire", "Transformation réussie", "Investissements rentabilisés", "Territoires efficaces"],
     deliverables: ["Rapport d'audit de maturité digitale", "Feuille de route stratégique 3 ans", "Plan de conduite du changement", "Tableau de bord KPIs"],
     video: "https://cdn.pixabay.com/video/2022/10/31/137265-766326232_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "conseil-operationnel",
@@ -197,6 +235,11 @@ export const SERVICES: Service[] = [
     benefits: ["Processus optimisés", "Besoins réels identifiés", "ROI concret", "Adoption facilitée"],
     deliverables: ["Cartographie BPMN des processus", "Cahier des charges fonctionnel", "Plan d'optimisation priorisé", "Rapport ROI 6 mois"],
     video: "https://cdn.pixabay.com/video/2024/03/01/202560-918431383_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1664575602554-2087b04935a5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   {
     slug: "formation-competences",
@@ -223,6 +266,12 @@ export const SERVICES: Service[] = [
     benefits: ["Équipes autonomes", "Savoir-faire ancré", "Souveraineté progressive", "Écosystème renforcé"],
     deliverables: ["Parcours de formation personnalisé", "Supports pédagogiques complets", "Évaluations & certifications", "Communauté apprenante activée"],
     video: "https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4",
+    heroImage: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85",
+    subImages: [
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
 ];
 
