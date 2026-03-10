@@ -93,14 +93,14 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
   const next = PROJECTS[idx + 1] ?? null;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070e1c", color: "#fff", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "#070e1c", color: "#fff", overflowX: "hidden", paddingTop: "5rem" }}>
       <Grain />
 
       {/* ── BACK LINK ────────────────────────────────── */}
       <div
         style={{
           position: "fixed",
-          top: "clamp(5rem, 8vh, 7rem)",
+          top: "clamp(8rem, 12vh, 10rem)", /* Ensure it clears the navbar links */
           left: "clamp(1.5rem, 5vw, 4rem)",
           zIndex: 200,
         }}
@@ -143,7 +143,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         ref={heroRef}
         style={{
           position: "relative",
-          height: "100vh",
+          height: "calc(100vh - 5rem)",
           minHeight: 600,
           overflow: "hidden",
           display: "flex",
@@ -155,7 +155,10 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         <motion.div
           style={{
             position: "absolute",
-            inset: "-10%",
+            top: 0,
+            bottom: "-20%",
+            left: "-5%",
+            right: "-5%",
             y: imgY,
             opacity: imgOpacity,
           }}

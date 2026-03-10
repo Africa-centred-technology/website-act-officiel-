@@ -39,8 +39,8 @@ const SOCIALS = [
 
 /* ── Orbiting dot helper ────────────────────────────────── */
 function OrbitDot({
-  duration, radius, color, delay = 0,
-}: { duration: number; radius: number; color: string; delay?: number }) {
+  duration, radius, color, delay = 0, size = 7,
+}: { duration: number; radius: number; color: string; delay?: number; size?: number }) {
   return (
     <motion.div
       style={{ position: "absolute", top: "50%", left: "50%", width: 0, height: 0 }}
@@ -49,11 +49,11 @@ function OrbitDot({
     >
       <div style={{
         position: "absolute",
-        width: 5, height: 5,
+        width: size, height: size,
         borderRadius: "50%",
         background: color,
-        boxShadow: `0 0 10px 2px ${color}88`,
-        top: -radius, left: -2.5,
+        boxShadow: `0 0 14px 4px ${color}cc, 0 0 28px 8px ${color}44`,
+        top: -radius, left: -(size / 2),
       }} />
     </motion.div>
   );
@@ -134,23 +134,50 @@ function VisualPanel() {
 
       {/* Orbital rings */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {[130, 200, 270].map((r, i) => (
+        {[120, 195, 268].map((r, i) => (
           <motion.div key={i}
             style={{
               position: "absolute",
               width: r * 2, height: r * 2,
               borderRadius: "50%",
-              border: `1px solid rgba(211,84,0,${0.12 - i * 0.03})`,
+              border: `1px solid rgba(211,84,0,${[0.45, 0.28, 0.18][i]})`,
+              boxShadow: `0 0 ${[18, 10, 6][i]}px rgba(211,84,0,${[0.18, 0.10, 0.06][i]})`,
             }}
             animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
             transition={{ duration: 28 + i * 12, ease: "linear", repeat: Infinity }}
           />
         ))}
 
+        {/* Tick marks on inner ring */}
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+          <motion.div key={deg}
+            style={{
+              position: "absolute", top: "50%", left: "50%", width: 0, height: 0,
+              rotate: deg,
+            }}
+          >
+            <div style={{
+              position: "absolute",
+              width: 1, height: 7,
+              background: `rgba(211,84,0,0.55)`,
+              top: -120, left: -0.5,
+            }} />
+          </motion.div>
+        ))}
+
         {/* Orbiting dots */}
-        <OrbitDot duration={9}  radius={130} color={ORANGE} />
-        <OrbitDot duration={15} radius={200} color={GOLD}   delay={1.5} />
-        <OrbitDot duration={22} radius={270} color={ORANGE} delay={3} />
+        <OrbitDot duration={9}  radius={120} color={ORANGE} size={8} />
+        <OrbitDot duration={15} radius={195} color={GOLD}   delay={1.5} size={7} />
+        <OrbitDot duration={22} radius={268} color={ORANGE} delay={3}   size={6} />
+
+        {/* Center glow disc */}
+        <div style={{
+          position: "absolute",
+          width: 160, height: 160,
+          borderRadius: "50%",
+          background: "radial-gradient(ellipse, rgba(211,84,0,0.18) 0%, rgba(211,84,0,0.06) 40%, transparent 70%)",
+          filter: "blur(8px)",
+        }} />
 
         {/* Center logo */}
         <motion.div
@@ -158,10 +185,18 @@ function VisualPanel() {
           transition={{ delay: 0.35, duration: 0.8, ease: [...BURST] }}
           style={{ position: "relative", zIndex: 2 }}
         >
+          {/* Subtle halo ring */}
+          <div style={{
+            position: "absolute",
+            inset: "-28px",
+            borderRadius: "50%",
+            border: "1px solid rgba(211,84,0,0.35)",
+            boxShadow: "0 0 20px rgba(211,84,0,0.15)",
+          }} />
           <Image
             src="/logo/logo.png" alt="ACT"
-            width={100} height={40}
-            style={{ objectFit: "contain", opacity: 0.35, filter: "grayscale(0.3)" }}
+            width={130} height={52}
+            style={{ objectFit: "contain", opacity: 0.95, filter: "brightness(1.15) drop-shadow(0 0 12px rgba(211,84,0,0.5))" }}
           />
         </motion.div>
       </div>

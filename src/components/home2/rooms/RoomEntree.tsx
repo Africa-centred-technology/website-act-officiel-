@@ -282,13 +282,6 @@ export default function RoomEntree() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.60, delay: 0.04 }}
         >
-          <span className="diamond diamond--sm" />
-          <span
-            className="text-white/40 uppercase tracking-[0.32em]"
-            style={{ fontSize: "1.05rem" }}
-          >
-            Vue Satellite — Afrique
-          </span>
         </motion.div>
 
         {/* ── Split gauche/droite : 01 ← | → AFRICA / CENTRED / TECHNOLOGY ── */}

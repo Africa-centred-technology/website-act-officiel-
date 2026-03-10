@@ -4,7 +4,34 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 
 const MANIFESTO =
-  "Nous ne nous contentons pas d'implémenter des technologies. Nous créons les moteurs de croissance de demain en intégrant l'IA générative, l'analyse prédictive et l'automatisation intelligente au cœur de votre métier africain. L'Afrique ne suit pas la révolution technologique — elle la dirige.";
+  "La technologie n'a de valeur que lorsqu'elle crée un impact réel. Nous ne nous contentons pas d'implémenter des technologies. Nous concevons des solutions qui créent de la valeur durable pour les organisations. En combinant intelligence artificielle, analyse de données et automatisation, nous aidons les entreprises à transformer leurs défis en opportunités et à construire les systèmes qui soutiendront leur croissance de demain.";
+
+/* ── Curseur clignotant ─────────────────────────────────────────── */
+function BlinkCursor() {
+  return (
+    <motion.span
+      aria-hidden
+      style={{
+        display:       "inline-block",
+        width:         "4px",
+        height:        "0.82em",
+        background:    "#D35400",
+        marginLeft:    "0.15em",
+        verticalAlign: "middle",
+        borderRadius:  1,
+      }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: [0, 0, 1, 1, 0, 0] }}
+      viewport={{ once: false, amount: 0.5 }}
+      transition={{
+        duration: 1.05,
+        repeat:   Infinity,
+        ease:     "linear",
+        times:    [0, 0.04, 0.06, 0.5, 0.52, 1],
+      }}
+    />
+  );
+}
 
 /* Each word is its own component to keep hooks at the top level */
 function Word({
@@ -66,8 +93,8 @@ export default function AxManifesto() {
       {/* Revealed text block */}
       <div style={{ maxWidth: "88rem" }}>
         <p
-          className="font-black uppercase leading-tight"
-          style={{ fontSize: "clamp(2.8rem, 4.5vw, 5.5rem)", lineHeight: 1.18 }}
+          className="font-black uppercase"
+          style={{ fontSize: "clamp(2.0rem, 3.2vw, 4.2rem)", lineHeight: 1.48 }}
         >
           {words.map((word, i) => (
             <Word
@@ -79,6 +106,7 @@ export default function AxManifesto() {
               {word}
             </Word>
           ))}
+          <BlinkCursor />
         </p>
       </div>
 

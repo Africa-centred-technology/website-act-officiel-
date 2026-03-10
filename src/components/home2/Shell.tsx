@@ -25,7 +25,7 @@ export interface Room {
 }
 
 export const ROOMS: Room[] = [
-  { id: "continent", label: "LE CONTINENT", subtitle: "Vue Satellite — Afrique", number: "01", Component: RoomEntree },
+  { id: "continent", label: "LE CONTINENT", subtitle: "Afrique", number: "01", Component: RoomEntree },
   { id: "cite", label: "LA CITÉ", subtitle: "Casablanca · Lagos · Nairobi", number: "02", Component: RoomAtelier },
   { id: "marche", label: "LE MARCHÉ", subtitle: "Bazar · Souk · Grand Marché", number: "03", Component: RoomGalerie },
   { id: "maison", label: "LA MAISON", subtitle: "Architecture & Patrimoine Africain", number: "04", Component: RoomManifeste },

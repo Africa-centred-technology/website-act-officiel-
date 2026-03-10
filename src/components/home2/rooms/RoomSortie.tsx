@@ -13,6 +13,107 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
 import RoomBackground from "@/components/home2/RoomBackground";
+import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+
+const NAV_LINKS = [
+  { href: "/about",    label: "À Propos"    },
+  { href: "/services", label: "Services"    },
+  { href: "/projects", label: "Réalisations"},
+  { href: "/blog",     label: "Blog"        },
+  { href: "/contact",  label: "Contact"     },
+];
+
+const SOCIALS = [
+  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
+  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
+];
+
+function FooterStrip() {
+  return (
+    <motion.div
+      aria-label="Footer"
+      className="absolute left-0 right-0 pointer-events-auto"
+      style={{ bottom: "5rem", zIndex: 10, padding: "0 clamp(2rem, 5vw, 6rem)" }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1.1, duration: 0.7 }}
+    >
+      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
+
+        {/* Col 1 — Contact */}
+        <div>
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+            <a href="mailto:contact@act.africa"
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Mail size={18} strokeWidth={1.6} />contact@act.africa
+            </a>
+            <a href="tel:+212694528498"
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Phone size={18} strokeWidth={1.6} />+212 694-528498
+            </a>
+            <span className="flex items-center gap-3 text-white/40" style={{ fontSize: "1.15rem" }}>
+              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
+            </span>
+          </div>
+        </div>
+
+        {/* Col 2 — Réseaux Sociaux */}
+        <div>
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+            {SOCIALS.map(({ Icon, href, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
+                style={{ fontSize: "1.15rem" }}>
+                <Icon size={20} strokeWidth={1.5} />{label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Col 3 — Carrières + CTA */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
+          <div>
+            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
+            <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
+              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
+            </p>
+            <Link href="/careers"
+              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
+              style={{ fontSize: "1.05rem", letterSpacing: "0.1em" }}>
+              Postuler maintenant →
+            </Link>
+          </div>
+          <CTAButton href="/contact">Un projet en tête ?</CTAButton>
+        </div>
+
+      </div>
+
+      <div style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
+          © 2026 Africa Centred Technology. Tous droits réservés
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
+          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+            Politique de Confidentialité
+          </Link>
+          <span className="text-white/25">/</span>
+          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+            CGU
+          </Link>
+        </div>
+      </div>
+
+    </motion.div>
+  );
+}
 
 /** Button drifts toward cursor, snaps back on leave */
 function Magnetic({ children }: { children: React.ReactNode }) {
@@ -248,8 +349,7 @@ export default function RoomSortie() {
           transition={{ delay: 0.35, duration: 0.7 }}
         >
           Prêt à transformer vos défis en opportunités technologiques ?
-          ACT est votre partenaire stratégique pour l&apos;ère de
-          l&apos;Intelligence Artificielle africaine.
+          ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.
         </motion.p>
 
         {/* CTAs — foreground, last to appear */}
@@ -273,6 +373,9 @@ export default function RoomSortie() {
           </Link>
         </motion.div>
       </motion.div>
+
+      {/* ── Footer strip — navigation, contact, socials ── */}
+      <FooterStrip />
     </div>
   );
 }

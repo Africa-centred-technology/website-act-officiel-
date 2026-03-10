@@ -9,6 +9,7 @@ import {
   motion, AnimatePresence,
   useMotionValue, useSpring, useInView,
 } from "framer-motion";
+import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import RoomBackground from "@/components/home2/RoomBackground";
 import LogoPhase from "@/components/services/LogoPhase";
 
@@ -26,7 +27,7 @@ const STATS = [
 ];
 
 const MANIFESTO =
-  "Nous ne nous contentons pas d'implémenter des technologies. Nous créons les moteurs de croissance de demain en intégrant l'IA générative, l'analyse prédictive et l'automatisation intelligente au cœur de votre métier africain. L'Afrique ne suit pas la révolution technologique — elle la dirige.";
+  "La technologie n'a de valeur que lorsqu'elle crée un impact réel. Nous ne nous contentons pas d'implémenter des technologies. Nous concevons des solutions qui créent de la valeur durable pour les organisations. En combinant intelligence artificielle, analyse de données et automatisation, nous aidons les entreprises à transformer leurs défis en opportunités et à construire les systèmes qui soutiendront leur croissance de demain.";
 
 const VALUES = [
   { n: "01", title: "Innovation",    color: "#D35400",
@@ -430,13 +431,39 @@ function SectionStats() {
 function ManifestoWord({ word, index, total, inView }: { word: string; index: number; total: number; inView: boolean }) {
   const delay = 0.28 + index * (1.55 / total);
   return (
-    <motion.span className="inline-block mr-[0.28em] mb-[0.16em]"
-      style={{ transformOrigin: "50% 100%" }}
+    <motion.span
+      style={{ display: "inline-block", marginRight: "0.28em", marginBottom: "0.16em", transformOrigin: "50% 100%" }}
       initial={{ opacity: 0.05, color: "#D35400bb", scale: 0.86, rotateX: 12, y: 8 }}
       animate={inView ? { opacity: 1, color: "#ffffff", scale: 1, rotateX: 0, y: 0 } : {}}
       transition={{ delay, duration: 0.62, ease: "easeOut" }}>
       {word}
     </motion.span>
+  );
+}
+
+function BlinkCursor({ delay }: { delay: number }) {
+  return (
+    <motion.span
+      aria-hidden
+      style={{
+        display:       "inline-block",
+        width:         "3px",
+        height:        "0.82em",
+        background:    "#D35400",
+        marginLeft:    "0.15em",
+        verticalAlign: "middle",
+        borderRadius:  1,
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
+      transition={{
+        delay,
+        duration: 1.05,
+        repeat:   Infinity,
+        ease:     "linear",
+        times:    [0, 0.04, 0.06, 0.5, 0.52, 1],
+      }}
+    />
   );
 }
 
@@ -459,8 +486,9 @@ function SectionADN() {
       {/* Word-by-word manifesto */}
       <div ref={ref}>
         <motion.div style={{ maxWidth: "90rem", x: midX, perspective: "1100px" }}>
-          <p className="font-black uppercase leading-tight" style={{ fontSize: "clamp(1.8rem, 3.4vw, 4.6rem)", lineHeight: 1.22 }}>
+          <p className="font-black uppercase" style={{ fontSize: "clamp(1.25rem, 2.0vw, 2.8rem)", lineHeight: 1.55, letterSpacing: "0.01em" }}>
             {words.map((w, i) => <ManifestoWord key={i} word={w} index={i} total={words.length} inView={inView} />)}
+            <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
           </p>
         </motion.div>
       </div>
@@ -468,7 +496,7 @@ function SectionADN() {
       {/* Attribution */}
       <motion.div className="flex items-center gap-4 mt-14"
         initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-        transition={{ delay: 2.0, duration: 0.7 }} style={{ x: fgX }}>
+        transition={{ delay: 0.28 + (words.length - 1) * (1.55 / words.length) + 1.1, duration: 0.7 }} style={{ x: fgX }}>
         <div style={{ width: 36, height: 1, background: "#D35400" }} />
         <span className="text-white/55 uppercase" style={{ fontSize: "1.15rem", letterSpacing: "0.2em" }}>
           SOHAIB BAROUD — Fondateur &amp; CEO, ACT
@@ -763,6 +791,112 @@ function MashrabiyaCanvas() {
   return <canvas ref={canvasRef} aria-hidden className="absolute inset-0" style={{ width: "100%", height: "100%", zIndex: 1 }} />;
 }
 
+/* ── Footer strip partagé avec RoomSortie ───────────────────────── */
+const ABOUT_NAV_LINKS = [
+  { href: "/",         label: "Accueil"     },
+  { href: "/services", label: "Services"    },
+  { href: "/projects", label: "Réalisations"},
+  { href: "/blog",     label: "Blog"        },
+  { href: "/contact",  label: "Contact"     },
+];
+
+const ABOUT_SOCIALS = [
+  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
+  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
+];
+
+function FooterStrip() {
+  return (
+    <motion.div
+      aria-label="Footer"
+      className="absolute left-0 right-0 pointer-events-auto"
+      style={{ bottom: "5rem", zIndex: 10, padding: "0 clamp(2rem, 5vw, 6rem)" }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 1.0, duration: 0.7 }}
+    >
+      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
+
+        {/* Col 1 — Contact */}
+        <div>
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            <a href="mailto:contact@act.africa"
+              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Mail size={18} strokeWidth={1.6} />contact@act.africa
+            </a>
+            <a href="tel:+212694528498"
+              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Phone size={18} strokeWidth={1.6} />+212 694-528498
+            </a>
+            <span className="flex items-center gap-3 text-white/35" style={{ fontSize: "1.15rem" }}>
+              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
+            </span>
+          </div>
+        </div>
+
+        {/* Col 2 — Réseaux Sociaux */}
+        <div>
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            {ABOUT_SOCIALS.map(({ Icon, href, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/60 hover:text-[#D35400] transition-colors"
+                style={{ fontSize: "1.15rem" }}>
+                <Icon size={20} strokeWidth={1.5} />{label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Col 3 — Carrières + CTA */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
+          <div>
+            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
+            <p className="text-white/45" style={{ fontSize: "1.1rem", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "240px" }}>
+              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
+            </p>
+            <Link href="/careers"
+              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase"
+              style={{ fontSize: "1rem", letterSpacing: "0.08em" }}>
+              Postuler maintenant →
+            </Link>
+          </div>
+          <Link href="/contact" className="cta-btn" style={{ marginTop: "0.4rem" }}>
+            <div className="cta-btn__border" /><div className="cta-btn__blur" />
+            <div className="cta-btn__background" />
+            <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">Un projet en tête ?</span></div>
+          </Link>
+        </div>
+
+      </div>
+
+      <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: "1.2rem" }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.8rem" }}>
+        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
+          © 2026 Africa Centred Technology. Tous droits réservés
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+            Politique de Confidentialité
+          </Link>
+          <span className="text-white/25">/</span>
+          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+            CGU
+          </Link>
+        </div>
+      </div>
+
+    </motion.div>
+  );
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    SECTION 07 — L'HORIZON  (RoomSortie CTA pattern)
    ══════════════════════════════════════════════════════════════════════ */
@@ -831,8 +965,7 @@ function SectionCTA() {
           initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           transition={{ delay: 0.35, duration: 0.7 }}>
           Prêt à transformer vos défis en opportunités technologiques ?
-          ACT est votre partenaire stratégique pour l&apos;ère de
-          l&apos;Intelligence Artificielle africaine.
+          ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.
         </motion.p>
 
         <motion.div className="flex flex-wrap items-center justify-center gap-8"
@@ -851,95 +984,170 @@ function SectionCTA() {
           </Link>
         </motion.div>
       </motion.div>
+
+      {/* ── Footer strip ── */}
+      <FooterStrip />
     </section>
   );
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   SIDE NAVIGATION — mini SpatialNav fixe pour la page About
+   ROOMS — liste des sections About (même pattern que Shell.tsx home)
    ══════════════════════════════════════════════════════════════════════ */
-const SECTIONS_NAV = [
-  { id: "s01", label: "HISTOIRE" },
-  { id: "s02", label: "CHIFFRES" },
-  { id: "s03", label: "ADN" },
-  { id: "s04", label: "VALEURS" },
-  { id: "s05", label: "PARCOURS" },
-  { id: "s06", label: "ÉQUIPE" },
-  { id: "s07", label: "HORIZON" },
+const ABOUT_ROOMS = [
+  { id: "histoire", label: "NOTRE HISTOIRE", number: "01", Component: SectionHero     },
+  { id: "chiffres", label: "NOS CHIFFRES",   number: "02", Component: SectionStats    },
+  { id: "adn",      label: "NOTRE ADN",       number: "03", Component: SectionADN     },
+  { id: "valeurs",  label: "NOS VALEURS",     number: "04", Component: SectionValues  },
+  { id: "parcours", label: "LE PARCOURS",     number: "05", Component: SectionTimeline},
+  { id: "equipe",   label: "L'ÉQUIPE",        number: "06", Component: SectionTeam    },
+  { id: "horizon",  label: "L'HORIZON",       number: "07", Component: SectionCTA     },
 ];
 
-function SideNav({ current }: { current: number }) {
+const THROTTLE_MS = 1300;
+
+/* ── Navigation basse (calquée sur SpatialNav) ──────────────────── */
+function AboutNav({
+  rooms, current, onGoTo,
+}: { rooms: typeof ABOUT_ROOMS; current: number; onGoTo: (i: number) => void }) {
+  const total = rooms.length;
   return (
-    <motion.div className="fixed right-6 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-3"
-      style={{ zIndex: 200 }}
-      initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 3, duration: 0.6 }}>
-      {SECTIONS_NAV.map((s, i) => (
-        <a key={s.id} href={`#${s.id}`} title={s.label}>
-          <motion.div animate={{ width: i === current ? 28 : 5, background: i === current ? "#D35400" : "rgba(255,255,255,0.15)" }}
-            transition={{ type: "spring", stiffness: 320, damping: 28 }}
-            style={{ height: 4, borderRadius: 99 }} />
-        </a>
-      ))}
-    </motion.div>
+    <div className="fixed bottom-0 left-0 w-full" style={{ zIndex: 50, pointerEvents: "none" }}>
+      {/* Barre de progression */}
+      <div style={{ height: 1, background: "rgba(255,255,255,0.05)", marginBottom: "2rem", position: "relative" }}>
+        <motion.div
+          style={{ position: "absolute", left: 0, top: 0, height: "100%", background: "#D35400", originX: 0 }}
+          animate={{ width: `${((current + 1) / total) * 100}%` }}
+          transition={{ type: "spring", stiffness: 140, damping: 24 }}
+        />
+      </div>
+      {/* Rangée : spacer | points | flèches */}
+      <div className="flex items-end justify-between"
+        style={{ padding: "0 clamp(1.5rem, 4vw, 5rem) 2.5rem" }}>
+        <div style={{ minWidth: "clamp(8rem, 25vw, 14rem)" }} />
+
+        {/* Points centrés */}
+        <div className="flex items-center gap-2"
+          style={{ position: "absolute", left: "50%", bottom: "3.2rem", transform: "translateX(-50%)", pointerEvents: "auto" }}>
+          {rooms.map((r, i) => (
+            <button key={r.id} onClick={() => onGoTo(i)} aria-label={r.label}
+              style={{ padding: "10px 6px", background: "none", border: "none" }}>
+              <motion.div
+                animate={{ width: i === current ? 28 : 5, background: i === current ? "#D35400" : "rgba(255,255,255,0.15)" }}
+                transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                style={{ height: 4, borderRadius: 99 }}
+              />
+            </button>
+          ))}
+        </div>
+
+        {/* Flèches */}
+        <div className="flex items-center gap-1" style={{ pointerEvents: "auto" }}>
+          <button onClick={() => onGoTo(current - 1)} disabled={current === 0}
+            style={{ background: "none", border: "none", padding: "12px 16px", fontSize: "1.5rem",
+              fontWeight: 900, lineHeight: 1, transition: "color 0.2s",
+              color: current === 0 ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.4)" }}>←</button>
+          <button onClick={() => onGoTo(current + 1)} disabled={current === total - 1}
+            style={{ background: "none", border: "none", padding: "12px 16px", fontSize: "1.5rem",
+              fontWeight: 900, lineHeight: 1, transition: "color 0.2s",
+              color: current === total - 1 ? "rgba(255,255,255,0.1)" : "#D35400" }}>→</button>
+        </div>
+      </div>
+    </div>
   );
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   MAIN SHELL
+   MAIN SHELL — rooms fullscreen avec navigation roue / clavier / touch
    ══════════════════════════════════════════════════════════════════════ */
 export default function AboutShell() {
+  const [current, setCurrent]     = useState(0);
   const [portalDone, setPortalDone] = useState(false);
-  const [currentSection, setCurrentSection] = useState(0);
+  const throttleRef  = useRef(false);
+  const currentRef   = useRef(0);
+  const touchStartY  = useRef(0);
+  const total        = ABOUT_ROOMS.length;
 
-  /* Track current section for side nav */
+  const goTo = useCallback((i: number) => {
+    if (throttleRef.current) return;
+    const clamped = Math.max(0, Math.min(total - 1, i));
+    if (clamped === currentRef.current) return;
+    throttleRef.current = true;
+    currentRef.current  = clamped;
+    setCurrent(clamped);
+    setTimeout(() => { throttleRef.current = false; }, THROTTLE_MS);
+  }, [total]);
+
+  /* Roue souris */
   useEffect(() => {
     if (!portalDone) return;
-    const sectionEls = document.querySelectorAll("[data-section]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            const idx = parseInt((e.target as HTMLElement).dataset.section ?? "0");
-            setCurrentSection(idx);
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-    sectionEls.forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, [portalDone]);
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      goTo(currentRef.current + (e.deltaY > 0 ? 1 : -1));
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    return () => window.removeEventListener("wheel", onWheel);
+  }, [portalDone, goTo]);
+
+  /* Clavier */
+  useEffect(() => {
+    if (!portalDone) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown" || e.key === "PageDown") goTo(currentRef.current + 1);
+      if (e.key === "ArrowUp"   || e.key === "PageUp")   goTo(currentRef.current - 1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [portalDone, goTo]);
+
+  /* Touch swipe */
+  useEffect(() => {
+    if (!portalDone) return;
+    const onStart = (e: TouchEvent) => { touchStartY.current = e.touches[0].clientY; };
+    const onEnd   = (e: TouchEvent) => {
+      const diff = touchStartY.current - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) goTo(currentRef.current + (diff > 0 ? 1 : -1));
+    };
+    window.addEventListener("touchstart", onStart, { passive: true });
+    window.addEventListener("touchend",   onEnd,   { passive: true });
+    return () => { window.removeEventListener("touchstart", onStart); window.removeEventListener("touchend", onEnd); };
+  }, [portalDone, goTo]);
 
   return (
     <>
+      {/* Intro LogoPhase */}
       <AnimatePresence>
         {!portalDone && (
-          <motion.div
-            key="logo-intro"
+          <motion.div key="logo-intro"
             style={{ position: "fixed", inset: 0, background: "#070E1C", zIndex: 9998 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.4 }}
-          >
+            exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.4 }}>
             <LogoPhase onDone={() => setPortalDone(true)} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {portalDone && <SideNav current={currentSection} />}
+      {portalDone && (
+        <>
+          {/* Conteneur rooms fullscreen */}
+          <div style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#070E1C" }}>
+            <AnimatePresence mode="wait">
+              {ABOUT_ROOMS.map((room, i) => i === current && (
+                <motion.div key={room.id}
+                  style={{ position: "absolute", inset: 0 }}
+                  initial={{ opacity: 0, scale: 1.04, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, scale: 1,    filter: "blur(0px)" }}
+                  exit={{    opacity: 0, scale: 0.97,  filter: "blur(5px)" }}
+                  transition={{ duration: 0.62, ease: [0.6, 0.08, 0.02, 0.99] }}>
+                  <room.Component />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
 
-      <motion.div
-        initial={{ opacity: 0 }} animate={portalDone ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{ background: "#070E1C", minHeight: "100vh", paddingTop: "5rem", overflowX: "hidden" }}>
-
-        <div id="s01" data-section="0"><SectionHero /></div>
-        <div id="s02" data-section="1"><SectionStats /></div>
-        <div id="s03" data-section="2"><SectionADN /></div>
-        <div id="s04" data-section="3"><SectionValues /></div>
-        <div id="s05" data-section="4"><SectionTimeline /></div>
-        <div id="s06" data-section="5"><SectionTeam /></div>
-        <div id="s07" data-section="6"><SectionCTA /></div>
-      </motion.div>
+          {/* Navigation basse */}
+          <AboutNav rooms={ABOUT_ROOMS} current={current} onGoTo={goTo} />
+        </>
+      )}
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Room } from "@/components/home2/Shell";
 
 interface Props {
@@ -10,11 +10,7 @@ interface Props {
   onGoTo:  (i: number) => void;
 }
 
-/* Compass bearings — each room feels like a direction of travel */
-const BEARINGS = ["N 32° — Vue Satellite", "NE 124° — Zone Urbaine", "E 88° — Le Marché", "SE 215° — Quartier Résidentiel", "S 270° — Salle d'Exposition", "NW 340° — Horizon"];
-
 export default function SpatialNav({ rooms, current, onGoTo }: Props) {
-  const room  = rooms[current];
   const total = rooms.length;
 
   return (
@@ -48,37 +44,8 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
       {/* Row: label | dots | arrows */}
       <div className="flex items-end justify-between">
 
-        {/* Left — animated room name + subtitle */}
-        <div style={{ pointerEvents: "auto", minWidth: "clamp(10rem, 35vw, 18rem)" }}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={room.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.32 }}
-            >
-              <span
-                className="block text-white/18 uppercase spatial-nav-eyebrow"
-                style={{ fontSize: "0.78rem", letterSpacing: "0.38em", marginBottom: "0.28rem" }}
-              >
-                {BEARINGS[current] ?? ""}
-              </span>
-              <span
-                className="block font-black text-white uppercase spatial-nav-label-main"
-                style={{ fontSize: "1.32rem", letterSpacing: "0.14em", lineHeight: 1 }}
-              >
-                {room.label}
-              </span>
-              <span
-                className="block text-white/28 uppercase spatial-nav-label-sub"
-                style={{ fontSize: "0.75rem", letterSpacing: "0.28em", marginTop: "0.3rem" }}
-              >
-                {room.subtitle}
-              </span>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        {/* Left — spacer */}
+        <div style={{ minWidth: "clamp(10rem, 35vw, 18rem)" }} />
 
         {/* Centre — progress dots */}
         <div

@@ -5,6 +5,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Facebook, Youtube, Instagram, ArrowUp } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
+import { usePathname } from "next/navigation";
+
+/* Pages en rooms fullscreen — le footer global y est masqué */
+const ROOMS_PAGES = ["/", "/about", "/services", "/projects", "/contact"];
 
 const navLinks = [
   { label: "Accueil",      href: "/" },
@@ -31,6 +35,9 @@ const marqueeItems = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (ROOMS_PAGES.includes(pathname)) return null;
+
   return (
     <footer
       className="relative overflow-hidden"
