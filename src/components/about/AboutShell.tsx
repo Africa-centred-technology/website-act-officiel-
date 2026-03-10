@@ -10,6 +10,7 @@ import {
   useMotionValue, useSpring, useInView,
 } from "framer-motion";
 import RoomBackground from "@/components/home2/RoomBackground";
+import LogoPhase from "@/components/services/LogoPhase";
 
 /* ══════════════════════════════════════════════════════════════════════
    CONSTANTS & DATA
@@ -74,105 +75,6 @@ const STAT_DEPTH = [
   { rotateX: 5,  scale: 0.93, blur: 3,  delay: 0.34 },
 ];
 
-/* ══════════════════════════════════════════════════════════════════════
-   PORTAL OVERLAY
-   ══════════════════════════════════════════════════════════════════════ */
-type PortalPhase = "ring" | "zoom" | "flash" | "done";
-
-function PortalOverlay({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<PortalPhase>("ring");
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase("zoom"),  900);
-    const t2 = setTimeout(() => setPhase("flash"), 1750);
-    const t3 = setTimeout(() => { setPhase("done"); onDone(); }, 2450);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [onDone]);
-
-  const particles = useMemo(() =>
-    Array.from({ length: 28 }, (_, i) => ({
-      id: i, angle: (i / 28) * 360,
-      dist: 42 + (i % 5) * 10, size: 1.2 + (i % 3) * 0.7, delay: (i % 6) * 0.04,
-    }))
-  , []);
-
-  if (phase === "done") return null;
-
-  return (
-    <motion.div
-      className="fixed inset-0 flex items-center justify-center"
-      style={{ zIndex: 9998, background: "#070E1C" }}
-      animate={phase === "flash" ? { opacity: [1, 1, 0] } : { opacity: 1 }}
-      transition={phase === "flash" ? { duration: 0.7, times: [0, 0.4, 1] } : {}}
-    >
-      {/* Radial glow */}
-      <motion.div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(211,84,0,0.18) 0%, transparent 72%)" }}
-        animate={phase === "zoom" ? { scale: [1, 7], opacity: [0.8, 0] } : { scale: [1, 1.08, 1], opacity: 1 }}
-        transition={phase === "zoom" ? { duration: 0.9, ease: [0.4, 0, 1, 1] } : { duration: 3, repeat: Infinity }}
-      />
-
-      {/* Portal ring */}
-      <motion.div className="relative"
-        initial={{ scale: 0.1, opacity: 0 }}
-        animate={phase === "ring" ? { scale: 1, opacity: 1 } : phase === "zoom" ? { scale: 30, opacity: 0 } : {}}
-        transition={phase === "ring" ? { duration: 0.7, ease: [...BURST] } : phase === "zoom" ? { duration: 0.85, ease: [0.6, 0, 1, 0.42] } : {}}
-      >
-        <div style={{ width: "22rem", height: "22rem", borderRadius: "50%",
-          border: "2px solid rgba(211,84,0,0.6)",
-          boxShadow: "0 0 60px 8px rgba(211,84,0,0.35), inset 0 0 40px rgba(211,84,0,0.10)",
-          position: "relative" }} />
-        <motion.div className="absolute inset-4" style={{ borderRadius: "50%", border: "1px solid rgba(243,156,18,0.3)" }}
-          animate={{ rotate: 360 }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }} />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5, ease: [...BURST] }} className="flex flex-col items-center gap-3">
-            <motion.span className="diamond" style={{ width: "2.4rem", height: "2.4rem", background: "#D35400" }}
-              animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} />
-            <p className="text-white font-black uppercase" style={{ fontSize: "1.1rem", letterSpacing: "0.5em" }}>ACT</p>
-            <p className="text-white/40 uppercase" style={{ fontSize: "0.75rem", letterSpacing: "0.4em" }}>Notre Histoire</p>
-          </motion.div>
-        </div>
-        <div className="absolute inset-0 pointer-events-none">
-          {particles.map(p => {
-            const rad = (p.angle * Math.PI) / 180;
-            return (
-              <motion.div key={p.id} className="absolute rounded-full"
-                style={{ left: `${50 + Math.cos(rad) * p.dist}%`, top: `${50 + Math.sin(rad) * p.dist}%`,
-                  width: p.size, height: p.size, background: p.id % 3 === 0 ? "#F39C12" : "#D35400",
-                  boxShadow: `0 0 ${p.size * 5}px rgba(211,84,0,0.7)` }}
-                animate={phase === "zoom"
-                  ? { x: `${Math.cos(rad) * 300}%`, y: `${Math.sin(rad) * 300}%`, opacity: 0, scale: 3 }
-                  : { opacity: [0, 0.9, 0] }}
-                transition={phase === "zoom"
-                  ? { duration: 0.8, delay: p.delay, ease: [0.6, 0, 1, 0.42] }
-                  : { duration: 2.5 + p.delay, repeat: Infinity }} />
-            );
-          })}
-        </div>
-      </motion.div>
-
-      {phase === "flash" && (
-        <motion.div className="absolute inset-0 pointer-events-none"
-          initial={{ opacity: 0.9 }} animate={{ opacity: 0 }} transition={{ duration: 0.7 }}
-          style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(243,156,18,0.8) 0%, rgba(211,84,0,0.4) 40%, transparent 70%)" }} />
-      )}
-      {phase === "zoom" && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {Array.from({ length: 16 }, (_, i) => (
-            <motion.div key={i} className="absolute"
-              style={{ left: "50%", top: "50%", width: "2px", height: "50vw",
-                background: "linear-gradient(to top, transparent, rgba(211,84,0,0.5))",
-                transformOrigin: "top center", transform: `rotate(${(i / 16) * 360}deg) translateX(-50%)` }}
-              initial={{ scaleY: 0, opacity: 0 }}
-              animate={{ scaleY: 1, opacity: [0, 0.6, 0] }}
-              transition={{ duration: 0.7, ease: [0.6, 0, 1, 0.42] }} />
-          ))}
-        </div>
-      )}
-    </motion.div>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════════
    SHARED PRIMITIVES
@@ -231,9 +133,8 @@ function AmbiantLines({ positions = ["14%", "84%"] }: { positions?: string[] }) 
  * [GHOST_NUM] | [EYEBROW / TITLE chars animated]
  */
 function SectionHeader({
-  num, eyebrow, title, titleColor = "#ffffff", midX, midY,
+  eyebrow, title, titleColor = "#ffffff", midX, midY,
 }: {
-  num:        string;
   eyebrow:    string;
   title:      string;
   titleColor?: string;
@@ -242,7 +143,7 @@ function SectionHeader({
 }) {
   return (
     <motion.div className="flex items-center gap-6" style={{ x: midX, y: midY, marginBottom: "3.5rem", position: "relative", zIndex: 3 }}>
-      {/* Left: eyebrow + ghost number */}
+      {/* Left: eyebrow */}
       <div style={{ flexShrink: 0 }}>
         <motion.div className="flex items-center gap-3 mb-3"
           initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
@@ -252,19 +153,7 @@ function SectionHeader({
             {eyebrow}
           </span>
         </motion.div>
-        <motion.span aria-hidden className="font-black select-none block"
-          style={{ fontSize: "clamp(5rem, 11vw, 15rem)", color: "rgba(211,84,0,0.20)", letterSpacing: "-0.04em", lineHeight: 1 }}
-          initial={{ x: -50, opacity: 0, filter: "blur(18px)" }}
-          whileInView={{ x: 0, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-          transition={{ duration: 1.0, ease: [...EASE3D] }}>
-          {num}
-        </motion.span>
       </div>
-
-      {/* Separator */}
-      <motion.div style={{ width: 1, alignSelf: "stretch", background: "rgba(211,84,0,0.3)", flexShrink: 0, originY: 0.5 }}
-        initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.18 }} />
 
       {/* Right: title chars */}
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", alignItems: "flex-end", flex: 1, gap: "0 0" }}>
@@ -353,22 +242,12 @@ function SectionHero() {
   const { bgX, bgY, midX, midY, fgX, fgY, onMouseMove } = useParallax();
 
   return (
-    <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col justify-center"
-      style={{ minHeight: "100vh", padding: "4rem 5.5rem 10rem" }}>
+    <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col justify-center about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       <RoomBackground variant="about-histoire" />
       <ScanLine />
       <ParticleField />
       <AmbiantLines positions={["14%", "84%"]} />
-
-      {/* Ghost "01" deep bg */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black"
-        style={{ right: "-1%", top: "2%", fontSize: "clamp(12rem, 22vw, 28rem)", lineHeight: 1,
-          color: "rgba(211,84,0,0.05)", letterSpacing: "-0.04em", x: bgX, y: bgY, zIndex: 0 }}
-        initial={{ scale: 1.22, opacity: 0, filter: "blur(22px)" }}
-        animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 2.0, ease: [...EASE3D] }}>
-        01
-      </motion.div>
 
       {/* Sun pulse */}
       <motion.div aria-hidden className="absolute pointer-events-none"
@@ -398,26 +277,10 @@ function SectionHero() {
           <span className="text-white/40 uppercase" style={{ fontSize: "1.05rem", letterSpacing: "0.32em" }}>
             Africa Centred Technology · Fondée en 2023
           </span>
-          <span className="hidden md:block text-white/10 font-black uppercase ml-auto" style={{ fontSize: "1.05rem", letterSpacing: "0.2em" }}>
-            01 / NOTRE HISTOIRE
-          </span>
         </motion.div>
 
-        {/* Split: ghost "01" | NOTRE / HISTOIRE */}
+        {/* Title */}
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
-          <motion.div style={{ flexShrink: 0 }}
-            initial={{ x: -60, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, delay: 0.04, ease: [...BURST] }}>
-            <span aria-hidden className="font-black select-none"
-              style={{ fontSize: "clamp(7rem, 16vw, 22rem)", color: "rgba(211,84,0,0.22)", letterSpacing: "-0.04em", lineHeight: 1, display: "block" }}>
-              01
-            </span>
-          </motion.div>
-
-          <motion.div style={{ width: 1, alignSelf: "stretch", background: "rgba(211,84,0,0.35)", flexShrink: 0, originY: 0.5 }}
-            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 0.8, delay: 0.22 }} />
-
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
             {[
               { word: "NOTRE",   color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
@@ -520,10 +383,6 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
             transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: index * 0.7 }} />
 
           <div className="relative flex flex-col" style={{ zIndex: 3, flex: 1 }}>
-            <span aria-hidden className="font-black block select-none"
-              style={{ fontSize: "clamp(3rem, 5vw, 7rem)", lineHeight: 1, marginBottom: "2rem", color: "rgba(255,255,255,0.04)" }}>
-              {stat.n}
-            </span>
             <div className="flex items-center gap-2 mb-4">
               <span className="diamond diamond--sm" />
               <span className="text-[#D35400] uppercase" style={{ fontSize: "1rem", letterSpacing: "0.2em" }}>Indicateur</span>
@@ -550,25 +409,15 @@ function SectionStats() {
   const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
 
   return (
-    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden"
-      style={{ minHeight: "100vh", padding: "4.5rem 5rem 10rem" }}>
+    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       <RoomBackground variant="about-chiffres" />
       <ScanLine />
 
-      {/* Ghost 02 */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black"
-        style={{ right: "2%", top: "6%", fontSize: "clamp(12rem, 20vw, 26rem)", lineHeight: 1,
-          color: "rgba(211,84,0,0.055)", letterSpacing: "-0.04em", x: bgX, y: bgY }}
-        initial={{ scale: 1.18, opacity: 0, filter: "blur(20px)" }}
-        whileInView={{ scale: 1, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-        transition={{ duration: 1.9, ease: [...EASE3D] }}>
-        02
-      </motion.div>
-
-      <SectionHeader num="02" eyebrow="Les chiffres qui parlent" title="NOS CHIFFRES" midX={midX} midY={midY} />
+      <SectionHeader eyebrow="Les chiffres qui parlent" title="NOS CHIFFRES" midX={midX} midY={midY} />
       <OrangeRule />
 
-      <div className="grid gap-4 flex-1" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+      <div className="room-grid-3 gap-4">
         {STATS.map((s, i) => <StatCard key={s.n} stat={s} index={i} />)}
       </div>
     </section>
@@ -598,23 +447,13 @@ function SectionADN() {
   const words  = useMemo(() => MANIFESTO.split(/\s+/).filter(Boolean), []);
 
   return (
-    <section onMouseMove={onMouseMove} className="relative flex flex-col justify-center overflow-hidden"
-      style={{ minHeight: "100vh", padding: "5rem 6rem 12rem" }}>
+    <section onMouseMove={onMouseMove} className="relative flex flex-col justify-center overflow-hidden about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       <RoomBackground variant="about-adn" />
       <ScanLine />
       <AmbiantLines positions={["12%", "88%"]} />
 
-      {/* Ghost 03 */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black"
-        style={{ right: "0%", top: "4%", fontSize: "clamp(12rem, 22vw, 28rem)", lineHeight: 1,
-          color: "rgba(211,84,0,0.04)", letterSpacing: "-0.04em", x: bgX, y: bgY }}
-        initial={{ scale: 1.22, opacity: 0, filter: "blur(22px)" }}
-        whileInView={{ scale: 1, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-        transition={{ duration: 2.0, ease: [...EASE3D] }}>
-        03
-      </motion.div>
-
-      <SectionHeader num="03" eyebrow="Notre ADN · Notre Mission" title="NOTRE ADN" midX={midX} midY={midY} />
+      <SectionHeader eyebrow="Notre ADN · Notre Mission" title="NOTRE ADN" midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* Word-by-word manifesto */}
@@ -654,26 +493,16 @@ function SectionValues() {
   ];
 
   return (
-    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden"
-      style={{ minHeight: "100vh", padding: "4.5rem 5rem 10rem" }}>
+    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       <RoomBackground variant="about-valeurs" />
       <ScanLine />
 
-      {/* Ghost 04 */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black"
-        style={{ right: "2%", top: "4%", fontSize: "clamp(12rem, 20vw, 26rem)", lineHeight: 1,
-          color: "rgba(211,84,0,0.05)", letterSpacing: "-0.04em", x: bgX, y: bgY }}
-        initial={{ scale: 1.18, opacity: 0, filter: "blur(20px)" }}
-        whileInView={{ scale: 1, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-        transition={{ duration: 1.9, ease: [...EASE3D] }}>
-        04
-      </motion.div>
-
-      <SectionHeader num="04" eyebrow="Ce qui nous anime" title="NOS VALEURS" midX={midX} midY={midY} />
+      <SectionHeader eyebrow="Ce qui nous anime" title="NOS VALEURS" midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* 2×2 grid — each card from its own corner like RoomGalerie */}
-      <div className="grid flex-1" style={{ gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "0.6rem", minHeight: 0 }}>
+      <div className="about-2col-grid flex-1" style={{ minHeight: 0 }}>
         {VALUES.map((v, i) => {
           const entry = ENTRY[i];
           return (
@@ -690,9 +519,6 @@ function SectionValues() {
 
               {/* Default info */}
               <div className="absolute inset-0 flex flex-col justify-end" style={{ padding: "2.5rem" }}>
-                <span aria-hidden className="font-black text-white/04 select-none block" style={{ fontSize: "clamp(4rem, 8vw, 12rem)", lineHeight: 1, color: "rgba(255,255,255,0.03)" }}>
-                  {v.n}
-                </span>
                 <div className="flex items-center gap-2 mb-3">
                   <span className="diamond diamond--sm" style={{ background: v.color }} />
                   <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
@@ -715,7 +541,7 @@ function SectionValues() {
                     <div className="flex items-center gap-2 mb-3">
                       <span className="diamond diamond--sm" style={{ background: v.color }} />
                       <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                        {v.n} — Valeur ACT
+                        Valeur ACT
                       </span>
                     </div>
                     <h3 className="font-black uppercase text-white mb-4" style={{ fontSize: "clamp(2rem, 3.2vw, 4rem)", lineHeight: 1.05 }}>
@@ -744,23 +570,13 @@ function SectionTimeline() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <section id="parcours" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden"
-      style={{ minHeight: "100vh", padding: "4.5rem 5rem 10rem" }}>
+    <section id="parcours" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       <RoomBackground variant="about-parcours" />
       <ScanLine />
       <AmbiantLines positions={["10%", "90%"]} />
 
-      {/* Ghost 05 */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black"
-        style={{ right: "2%", top: "4%", fontSize: "clamp(12rem, 20vw, 26rem)", lineHeight: 1,
-          color: "rgba(211,84,0,0.04)", letterSpacing: "-0.04em", x: bgX, y: bgY }}
-        initial={{ scale: 1.18, opacity: 0, filter: "blur(20px)" }}
-        whileInView={{ scale: 1, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-        transition={{ duration: 1.9, ease: [...EASE3D] }}>
-        05
-      </motion.div>
-
-      <SectionHeader num="05" eyebrow="Notre parcours · 2023–2026" title="LE PARCOURS" midX={midX} midY={midY} />
+      <SectionHeader eyebrow="Notre parcours · 2023–2026" title="LE PARCOURS" midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* Timeline — accordion accordion style (expand on hover/click) */}
@@ -830,8 +646,8 @@ function SectionTeam() {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section id="equipe" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden"
-      style={{ minHeight: "100vh", padding: "4.5rem 5rem 10rem" }}>
+    <section id="equipe" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       {/* Dark textured bg (no photo bg — team photos would clash) */}
       <div className="absolute inset-0" style={{ background: "#070E1C", zIndex: 0 }} />
       <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 1,
@@ -842,23 +658,13 @@ function SectionTeam() {
       <ParticleField count={14} />
       <AmbiantLines positions={["8%", "92%"]} />
 
-      {/* Ghost 06 */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black"
-        style={{ right: "2%", top: "2%", fontSize: "clamp(12rem, 20vw, 26rem)", lineHeight: 1,
-          color: "rgba(211,84,0,0.04)", letterSpacing: "-0.04em", x: bgX, y: bgY, zIndex: 1 }}
-        initial={{ scale: 1.18, opacity: 0, filter: "blur(20px)" }}
-        whileInView={{ scale: 1, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-        transition={{ duration: 1.9, ease: [...EASE3D] }}>
-        06
-      </motion.div>
-
       <div className="relative" style={{ zIndex: 2 }}>
-        <SectionHeader num="06" eyebrow="Les fondateurs ACT" title="L'ÉQUIPE" midX={midX} midY={midY} />
+        <SectionHeader eyebrow="Les fondateurs ACT" title="L'ÉQUIPE" midX={midX} midY={midY} />
         <OrangeRule />
       </div>
 
       {/* 2×2 photo grid — each from its corner like RoomGalerie */}
-      <div className="grid flex-1 relative" style={{ gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "0.6rem", minHeight: "60vh", zIndex: 2 }}>
+      <div className="about-2col-grid flex-1 relative" style={{ minHeight: "60vh", zIndex: 2 }}>
         {TEAM.map((member, i) => {
           const entry = PHOTO_ENTRY[i];
           return (
@@ -879,7 +685,7 @@ function SectionTeam() {
                 <div className="flex items-end justify-between">
                   <div>
                     <span className="block text-white/28 uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.22em", marginBottom: "0.3rem" }}>
-                      0{i + 1} — {member.role}
+                      {member.role}
                     </span>
                     <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.1rem, 1.7vw, 1.9rem)", lineHeight: 1.1 }}>
                       {member.name}
@@ -964,21 +770,12 @@ function SectionCTA() {
   const { bgX, bgY, midX, midY, fgX, fgY, onMouseMove } = useParallax();
 
   return (
-    <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col items-center justify-center text-center"
-      style={{ minHeight: "100vh", padding: "4rem 6rem 10rem" }}>
+    <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col items-center justify-center text-center about-sec-pad"
+      style={{ minHeight: "100vh" }}>
       <RoomBackground variant="about-cta" />
       <PortalRings />
       <ParticleField count={22} />
       <AmbiantLines positions={["18%", "82%"]} />
-
-      {/* Ghost 07 */}
-      <motion.span aria-hidden className="block text-white/10 font-black uppercase absolute"
-        style={{ fontSize: "1.1rem", letterSpacing: "0.2em", top: "6%", x: bgX, y: bgY }}
-        initial={{ scale: 1.14, opacity: 0, filter: "blur(14px)" }}
-        whileInView={{ scale: 1, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-        transition={{ duration: 1.9, ease: [...EASE3D] }}>
-        07 / L&apos;HORIZON
-      </motion.span>
 
       {/* Ambient glow */}
       <motion.div aria-hidden className="absolute pointer-events-none"
@@ -1000,22 +797,8 @@ function SectionCTA() {
           <span className="diamond diamond--sm" />
         </motion.div>
 
-        {/* Split: 07 | REJOIGNEZ / LA RÉVOLUTION / TECH */}
+        {/* Title */}
         <div style={{ display: "flex", alignItems: "center", gap: "3rem", marginBottom: "3rem" }}>
-          <motion.div style={{ flexShrink: 0 }}
-            initial={{ x: -60, opacity: 0, filter: "blur(18px)" }}
-            whileInView={{ x: 0, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-            transition={{ duration: 1.1, delay: 0.04, ease: [0.04, 0.72, 0.08, 1.0] }}>
-            <span aria-hidden className="font-black select-none"
-              style={{ fontSize: "clamp(6rem, 14vw, 19rem)", color: "rgba(211,84,0,0.20)", letterSpacing: "-0.04em", lineHeight: 1, display: "block" }}>
-              07
-            </span>
-          </motion.div>
-
-          <motion.div style={{ width: 1, alignSelf: "stretch", background: "rgba(211,84,0,0.35)", flexShrink: 0, originY: 0.5 }}
-            initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.22 }} />
-
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
             <motion.p className="font-black uppercase leading-none"
               style={{ fontSize: "clamp(1.2rem, 2.5vw, 3.5rem)", letterSpacing: "0.18em", color: "rgba(255,255,255,0.45)" }}
@@ -1076,13 +859,13 @@ function SectionCTA() {
    SIDE NAVIGATION — mini SpatialNav fixe pour la page About
    ══════════════════════════════════════════════════════════════════════ */
 const SECTIONS_NAV = [
-  { id: "s01", label: "01 — HISTOIRE" },
-  { id: "s02", label: "02 — CHIFFRES" },
-  { id: "s03", label: "03 — ADN" },
-  { id: "s04", label: "04 — VALEURS" },
-  { id: "s05", label: "05 — PARCOURS" },
-  { id: "s06", label: "06 — ÉQUIPE" },
-  { id: "s07", label: "07 — HORIZON" },
+  { id: "s01", label: "HISTOIRE" },
+  { id: "s02", label: "CHIFFRES" },
+  { id: "s03", label: "ADN" },
+  { id: "s04", label: "VALEURS" },
+  { id: "s05", label: "PARCOURS" },
+  { id: "s06", label: "ÉQUIPE" },
+  { id: "s07", label: "HORIZON" },
 ];
 
 function SideNav({ current }: { current: number }) {
@@ -1130,7 +913,16 @@ export default function AboutShell() {
   return (
     <>
       <AnimatePresence>
-        {!portalDone && <PortalOverlay key="portal" onDone={() => setPortalDone(true)} />}
+        {!portalDone && (
+          <motion.div
+            key="logo-intro"
+            style={{ position: "fixed", inset: 0, background: "#070E1C", zIndex: 9998 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.4 }}
+          >
+            <LogoPhase onDone={() => setPortalDone(true)} />
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {portalDone && <SideNav current={currentSection} />}

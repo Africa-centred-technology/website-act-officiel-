@@ -16,8 +16,8 @@ export default function ServicesSpatialNav({ services, current, onGoTo }: Props)
 
   return (
     <div
-      className="fixed bottom-0 left-0 w-full"
-      style={{ zIndex: 50, padding: "0 4rem 3.2rem", pointerEvents: "none" }}
+      className="fixed bottom-0 left-0 w-full spatial-nav-wrap"
+      style={{ zIndex: 50, pointerEvents: "none" }}
     >
       {/* Progress bar */}
       <div style={{ height: 1, background: "rgba(255,255,255,0.05)", marginBottom: "2rem", position: "relative" }}>
@@ -35,7 +35,7 @@ export default function ServicesSpatialNav({ services, current, onGoTo }: Props)
       <div className="flex items-end justify-between">
 
         {/* Left — service courant */}
-        <div style={{ pointerEvents: "auto", minWidth: "20rem" }}>
+        <div style={{ pointerEvents: "auto", minWidth: "clamp(8rem, 30vw, 20rem)" }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={svc.slug}
@@ -44,19 +44,18 @@ export default function ServicesSpatialNav({ services, current, onGoTo }: Props)
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.32 }}
             >
-              <span className="block uppercase" style={{
+              <span className="block uppercase spatial-nav-eyebrow" style={{
                 fontSize: "0.76rem", letterSpacing: "0.38em",
                 color: "rgba(255,255,255,0.18)", marginBottom: "0.28rem",
               }}>
-                {svc.n}&nbsp;/&nbsp;{String(total).padStart(2, "0")}
-                &nbsp;&nbsp;·&nbsp;&nbsp;Pôle {svc.poleN}
+                Pôle {svc.poleN}
               </span>
-              <span className="block font-black text-white uppercase" style={{
+              <span className="block font-black text-white uppercase spatial-nav-label-main" style={{
                 fontSize: "1.28rem", letterSpacing: "0.14em", lineHeight: 1,
               }}>
                 {svc.title.replace(/\n/g, " ")}
               </span>
-              <span className="block uppercase" style={{
+              <span className="block uppercase spatial-nav-label-sub" style={{
                 fontSize: "0.74rem", letterSpacing: "0.26em",
                 color: `${svc.accent}90`, marginTop: "0.3rem",
               }}>
@@ -78,7 +77,7 @@ export default function ServicesSpatialNav({ services, current, onGoTo }: Props)
             {services.slice(0, 5).map((s, i) => (
               <button key={s.slug} onClick={() => onGoTo(i)}
                 aria-label={s.title.replace(/\n/g, " ")}
-                style={{ cursor: "none", padding: "7px 3px", background: "none", border: "none" }}>
+                style={{ padding: "10px 6px", background: "none", border: "none" }}>
                 <motion.div
                   animate={{
                     width:      i === current ? 24 : 5,
@@ -99,7 +98,7 @@ export default function ServicesSpatialNav({ services, current, onGoTo }: Props)
               return (
                 <button key={s.slug} onClick={() => onGoTo(idx)}
                   aria-label={s.title.replace(/\n/g, " ")}
-                  style={{ cursor: "none", padding: "7px 3px", background: "none", border: "none" }}>
+                  style={{ padding: "10px 6px", background: "none", border: "none" }}>
                   <motion.div
                     animate={{
                       width:      idx === current ? 24 : 5,
@@ -118,14 +117,14 @@ export default function ServicesSpatialNav({ services, current, onGoTo }: Props)
         <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", pointerEvents: "auto" }}>
           <button onClick={() => onGoTo(current - 1)} disabled={current === 0}
             style={{
-              cursor: "none", background: "none", border: "none", padding: "8px 14px",
+              background: "none", border: "none", padding: "12px 16px",
               fontSize: "1.5rem", fontWeight: 900, lineHeight: 1,
               color: current === 0 ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.40)",
               transition: "color 0.2s",
             }}>←</button>
           <button onClick={() => onGoTo(current + 1)} disabled={current === total - 1}
             style={{
-              cursor: "none", background: "none", border: "none", padding: "8px 14px",
+              background: "none", border: "none", padding: "12px 16px",
               fontSize: "1.5rem", fontWeight: 900, lineHeight: 1,
               color: current === total - 1 ? "rgba(255,255,255,0.10)" : svc.accent,
               transition: "color 0.2s",

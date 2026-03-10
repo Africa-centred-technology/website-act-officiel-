@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Linkedin, Facebook, Youtube, Instagram, ArrowUp } from "lucide-react";
+import { Facebook, Youtube, Instagram, ArrowUp } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
 
 const navLinks = [
@@ -16,10 +16,9 @@ const navLinks = [
 ];
 
 const socials = [
-  { icon: Linkedin,  href: "#", label: "LinkedIn" },
-  { icon: Facebook,  href: "#", label: "Facebook" },
-  { icon: Youtube,   href: "#", label: "YouTube" },
-  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
+  { icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
 ];
 
 const marqueeItems = [
@@ -130,6 +129,8 @@ export default function Footer() {
                 key={label}
                 href={href}
                 aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-3 text-white/40 hover:text-white transition-colors"
                 whileHover={{ x: 5 }}
               >
@@ -201,7 +202,7 @@ export default function Footer() {
       {/* Back to top */}
       <motion.button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-8 right-8 z-50 flex flex-col items-center gap-2 text-white/40 hover:text-white transition-colors group"
+        className="fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-50 flex flex-col items-center gap-2 text-white/40 hover:text-white transition-colors group"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Retour en haut"

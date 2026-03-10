@@ -37,9 +37,9 @@ interface BgCfg {
 }
 
 const CFG: Record<Variant, BgCfg> = {
-  /* ── Room 01 — LE CONTINENT — savanna at dawn ── */
+  /* ── Room 01 — LE CONTINENT — African futuristic city at sunset ── */
   continent: {
-    src:    "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=2400&q=80",
+    src:    "/logo/sectionherohome.jpeg",
     kbFrom: { scale: 1.0,  x: "0%",   y: "0%"   },
     kbTo:   { scale: 1.10, x: "-3%",  y: "-2%"  },
     kbDur:  26,

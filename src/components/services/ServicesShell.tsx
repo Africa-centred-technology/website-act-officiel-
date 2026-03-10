@@ -477,20 +477,6 @@ function ServicePanel({ svc }: { svc: Svc }) {
       {/* ── Scanline ── */}
       <ScanLine color={svc.accent} />
 
-      {/* ── Ghost number ── */}
-      <motion.div aria-hidden style={{
-        position: "absolute", right: "-2rem", top: "-4rem",
-        fontSize: "clamp(14rem, 26vw, 34rem)", lineHeight: 1,
-        fontWeight: 900, letterSpacing: "-0.05em",
-        color: `${svc.accent}08`, userSelect: "none", pointerEvents: "none",
-        x: bgX, y: bgY, zIndex: 0,
-      }}
-        initial={{ scale: 1.3, opacity: 0, filter: "blur(30px)" }}
-        animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 2.0, ease: [...EASE] }}
-      >
-        {svc.n}
-      </motion.div>
 
       {/* ── Horizontal ambient lines ── */}
       {(["18%", "82%"] as const).map(pos => (
@@ -773,7 +759,7 @@ function ServiceNav({ current, services, onGoTo }: {
           fontSize: "var(--font-18)", fontWeight: 900,
           color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.04em"
         }}>
-          {svc.n} — {svc.title.split("\n")[0]}
+          {svc.title.split("\n")[0]}
         </span>
       </motion.div>
 
@@ -798,17 +784,6 @@ function ServiceNav({ current, services, onGoTo }: {
         ))}
       </div>
 
-      {/* Right — counter */}
-      <div style={{ textAlign: "right", pointerEvents: "none" }}>
-        <span className="font-black" style={{
-          fontSize: "var(--font-25)", color: `${svc.accent}33`, letterSpacing: "-0.02em",
-        }}>
-          {svc.n}
-          <span style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.15)", marginLeft: "0.3rem" }}>
-            / {String(services.length).padStart(2, "0")}
-          </span>
-        </span>
-      </div>
     </div>
   );
 }
@@ -820,7 +795,7 @@ function HeroSection() {
   return (
     <section style={{
       height: "100vh", display: "flex", flexDirection: "column",
-      justifyContent: "flex-end", padding: "0 5.5rem 8rem",
+      justifyContent: "flex-end", padding: "0 clamp(1.5rem, 4.5vw, 5.5rem) clamp(4rem, 7vw, 8rem)",
       position: "relative", overflow: "hidden",
       background: "linear-gradient(180deg, #050C18 0%, #030810 100%)",
     }}>
@@ -918,7 +893,7 @@ function CTASection() {
   return (
     <section style={{
       minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-      background: "#030810", position: "relative", overflow: "hidden", padding: "8rem 5.5rem",
+      background: "#030810", position: "relative", overflow: "hidden", padding: "clamp(4rem, 7vw, 8rem) clamp(1.5rem, 4.5vw, 5.5rem)",
     }}>
       <div aria-hidden style={{
         position: "absolute", inset: 0, zIndex: 0,

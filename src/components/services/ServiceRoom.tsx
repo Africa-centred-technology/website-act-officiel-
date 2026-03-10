@@ -27,8 +27,8 @@ import Link from "next/link";
 import type { Service, ServiceSub } from "@/lib/data/services";
 
 /* ── Constants ──────────────────────────────────────── */
-const BURST  = [0.04, 0.72, 0.08, 1.0] as const;
-const EASE3D = [0.6,  0.08, 0.02, 0.99] as const;
+const BURST = [0.04, 0.72, 0.08, 1.0] as const;
+const EASE3D = [0.6, 0.08, 0.02, 0.99] as const;
 
 type CharFx = "rollIn" | "burstOut" | "riseUp";
 const FX_CYCLE: CharFx[] = ["rollIn", "burstOut", "riseUp"];
@@ -87,23 +87,23 @@ function WordChars({
   fx: CharFx; stagger?: number; size?: string;
 }) {
   const chars = text.split("");
-  const mid   = Math.floor(chars.length / 2);
+  const mid = Math.floor(chars.length / 2);
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start", flexWrap: "nowrap" }}>
       {chars.map((ch, i) => {
-        const ord       = fx === "burstOut" ? Math.abs(i - mid) : i;
+        const ord = fx === "burstOut" ? Math.abs(i - mid) : i;
         const charDelay = delay + ord * stagger;
 
         const initial =
-          fx === "rollIn"   ? { y: "-108%", opacity: 0, filter: "blur(4px)" }
-          : fx === "burstOut" ? { scale: 0.04, opacity: 0, filter: "blur(22px) brightness(3.2)" }
-          :                     { y: "108%",  opacity: 0 };
+          fx === "rollIn" ? { y: "-108%", opacity: 0, filter: "blur(4px)" }
+            : fx === "burstOut" ? { scale: 0.04, opacity: 0, filter: "blur(22px) brightness(3.2)" }
+              : { y: "108%", opacity: 0 };
 
         const target =
-          fx === "rollIn"   ? { y: "0%",  opacity: 1, filter: "blur(0px)" }
-          : fx === "burstOut" ? { scale: 1, opacity: 1, filter: "blur(0px) brightness(1.0)" }
-          :                     { y: "0%", opacity: 1 };
+          fx === "rollIn" ? { y: "0%", opacity: 1, filter: "blur(0px)" }
+            : fx === "burstOut" ? { scale: 1, opacity: 1, filter: "blur(0px) brightness(1.0)" }
+              : { y: "0%", opacity: 1 };
 
         const inner = (
           <motion.span className="font-black uppercase" style={{
@@ -128,8 +128,8 @@ function WordChars({
    ═══════════════════════════════════════════════════════ */
 const CARD_DEPTH = [
   { rotateX: 14, scale: 0.76, blur: 12, delay: 0.08 },
-  { rotateX: 8,  scale: 0.86, blur: 7,  delay: 0.20 },
-  { rotateX: 4,  scale: 0.94, blur: 3,  delay: 0.32 },
+  { rotateX: 8, scale: 0.86, blur: 7, delay: 0.20 },
+  { rotateX: 4, scale: 0.94, blur: 3, delay: 0.32 },
 ];
 
 function SubCard({ sub, index, accent }: { sub: ServiceSub; index: number; accent: string }) {
@@ -139,9 +139,9 @@ function SubCard({ sub, index, accent }: { sub: ServiceSub; index: number; accen
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    const r  = cardRef.current.getBoundingClientRect();
+    const r = cardRef.current.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top)  / r.height;
+    const py = (e.clientY - r.top) / r.height;
     setTilt({ rx: (py - 0.5) * 18, ry: (px - 0.5) * -18, gx: px * 100, gy: py * 100, on: true });
   };
   const onLeave = () => setTilt({ rx: 0, ry: 0, gx: 50, gy: 50, on: false });
@@ -151,7 +151,7 @@ function SubCard({ sub, index, accent }: { sub: ServiceSub; index: number; accen
       initial={{ opacity: 0, y: 52, scale: depth.scale, rotateX: depth.rotateX, filter: `blur(${depth.blur}px)` }}
       animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" }}
       transition={{ duration: 0.92, delay: depth.delay, ease: [0.6, 0.08, 0.02, 0.99] }}
-      style={{ perspective: "1200px", cursor: "none" }}
+      style={{ perspective: "1200px" }}
     >
       <motion.div
         ref={cardRef}
@@ -227,37 +227,37 @@ function SubCard({ sub, index, accent }: { sub: ServiceSub; index: number; accen
    ═══════════════════════════════════════════════════════ */
 export default function ServiceRoom({ svc, index }: { svc: Service; index: number }) {
   /* 3-layer parallax */
-  const mx  = useMotionValue(0);
-  const my  = useMotionValue(0);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
   const bgX = useSpring(mx, { stiffness: 22, damping: 18 });
   const bgY = useSpring(my, { stiffness: 22, damping: 18 });
   const midX = useSpring(mx, { stiffness: 55, damping: 22 });
   const midY = useSpring(my, { stiffness: 55, damping: 22 });
-  const fgX  = useSpring(mx, { stiffness: 105, damping: 24 });
-  const fgY  = useSpring(my, { stiffness: 105, damping: 24 });
+  const fgX = useSpring(mx, { stiffness: 105, damping: 24 });
+  const fgY = useSpring(my, { stiffness: 105, damping: 24 });
 
   const onMouseMove = (e: React.MouseEvent) => {
-    mx.set((e.clientX / window.innerWidth  - 0.5) * 2);
+    mx.set((e.clientX / window.innerWidth - 0.5) * 2);
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
 
   /* Particules déterministes par service */
   const particles = useMemo(() =>
     Array.from({ length: 22 }, (_, i) => ({
-      id:    i,
-      x:     ((i * 53 + index * 7  + 11) % 100),
-      y:     ((i * 71 + index * 13 + 23) % 100),
-      size:  1.0 + (i % 3) * 0.7,
-      dur:   4.5 + (i % 5) * 1.3,
+      id: i,
+      x: ((i * 53 + index * 7 + 11) % 100),
+      y: ((i * 71 + index * 13 + 23) % 100),
+      size: 1.0 + (i % 3) * 0.7,
+      dur: 4.5 + (i % 5) * 1.3,
       delay: (i % 7) * 0.6,
     })), [index]);
 
   /* Char-fx cyclé par index */
   const titleLines = svc.title.split("\n");
-  const baseFx     = FX_CYCLE[index % 3];
-  const altFx      = FX_CYCLE[(index + 1) % 3];
-  const alt2Fx     = FX_CYCLE[(index + 2) % 3];
-  const fxList     = [baseFx, altFx, alt2Fx];
+  const baseFx = FX_CYCLE[index % 3];
+  const altFx = FX_CYCLE[(index + 1) % 3];
+  const alt2Fx = FX_CYCLE[(index + 2) % 3];
+  const fxList = [baseFx, altFx, alt2Fx];
 
   /* Couleurs de titre : alternance blanc / accent / blanc */
   const titleColors = ["#ffffff", svc.accent, "#ffffff"];
@@ -269,7 +269,7 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
         position: "relative", width: "100%", height: "100%",
         overflow: "hidden",
         display: "flex", flexDirection: "column",
-        padding: "0 5.5rem 11rem 5.5rem",
+        padding: "clamp(3rem, 4vw, 4rem) clamp(1.5rem, 4vw, 5.5rem) clamp(5rem, 8vw, 9rem)",
         justifyContent: "center",
       }}
     >
@@ -291,7 +291,7 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
       }} />
 
       {/* ── Orbit arc ── */}
-      <OrbitArc label={`${svc.n} · ${svc.tagline.toUpperCase()}`} accent={svc.accent} />
+      <OrbitArc label={svc.tagline.toUpperCase()} accent={svc.accent} />
 
       {/* ── Scan-line ── */}
       <ScanLine accent={svc.accent} />
@@ -358,6 +358,7 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
         display: "flex", alignItems: "center",
         gap: "3rem",
         width: "100%",
+        marginTop: "3rem", /* Push content entirely below the 12% ambient line */
       }}>
 
         {/* ── COLONNE GAUCHE — titre + info ── */}
@@ -371,35 +372,10 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
             <span style={{ color: "rgba(255,255,255,0.32)", fontSize: "1rem", letterSpacing: "0.28em", textTransform: "uppercase" }}>
               Pôle {svc.poleN} · {svc.pole}
             </span>
-            <span style={{ color: "rgba(255,255,255,0.08)", fontWeight: 900, fontSize: "1rem", letterSpacing: "0.2em", marginLeft: "auto" }}>
-              {svc.n} / 08
-            </span>
           </motion.div>
 
           {/* Split : numéro ghost | titre chars */}
           <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-            {/* Numéro en avant-plan */}
-            <motion.div style={{ flexShrink: 0 }}
-              initial={{ x: -50, opacity: 0, filter: "blur(16px)" }}
-              animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-              transition={{ duration: 1.0, ease: [...BURST] }}>
-              <span aria-hidden className="font-black select-none" style={{
-                fontSize: "clamp(5rem, 10vw, 14rem)",
-                color: `${svc.accent}25`,
-                letterSpacing: "-0.04em", lineHeight: 1, display: "block",
-              }}>
-                {svc.n}
-              </span>
-            </motion.div>
-
-            {/* Séparateur vertical */}
-            <motion.div style={{
-              width: 1, alignSelf: "stretch",
-              background: `${svc.accent}55`, flexShrink: 0, originY: 0.5,
-            }}
-              initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            />
 
             {/* Lignes du titre */}
             <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", gap: "0.1em" }}>

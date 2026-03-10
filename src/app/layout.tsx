@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body suppressHydrationWarning className="antialiased flex flex-col min-h-screen bg-[#0A1410] text-white overflow-x-hidden">
         <Header />
         <main className="flex-grow">{children}</main>

@@ -19,8 +19,8 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
 
   return (
     <div
-      className="fixed bottom-0 left-0 w-full"
-      style={{ zIndex: 50, padding: "0 4rem 3.2rem", pointerEvents: "none" }}
+      className="fixed bottom-0 left-0 w-full spatial-nav-wrap"
+      style={{ zIndex: 50, pointerEvents: "none" }}
     >
       {/* Progress bar */}
       <div
@@ -49,7 +49,7 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
       <div className="flex items-end justify-between">
 
         {/* Left — animated room name + subtitle */}
-        <div style={{ pointerEvents: "auto", minWidth: "18rem" }}>
+        <div style={{ pointerEvents: "auto", minWidth: "clamp(10rem, 35vw, 18rem)" }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={room.id}
@@ -59,21 +59,19 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
               transition={{ duration: 0.32 }}
             >
               <span
-                className="block text-white/18 uppercase"
+                className="block text-white/18 uppercase spatial-nav-eyebrow"
                 style={{ fontSize: "0.78rem", letterSpacing: "0.38em", marginBottom: "0.28rem" }}
               >
-                {room.number}&nbsp;/&nbsp;{String(total).padStart(2, "0")}
-                &nbsp;&nbsp;·&nbsp;&nbsp;
                 {BEARINGS[current] ?? ""}
               </span>
               <span
-                className="block font-black text-white uppercase"
+                className="block font-black text-white uppercase spatial-nav-label-main"
                 style={{ fontSize: "1.32rem", letterSpacing: "0.14em", lineHeight: 1 }}
               >
                 {room.label}
               </span>
               <span
-                className="block text-white/28 uppercase"
+                className="block text-white/28 uppercase spatial-nav-label-sub"
                 style={{ fontSize: "0.75rem", letterSpacing: "0.28em", marginTop: "0.3rem" }}
               >
                 {room.subtitle}
@@ -98,7 +96,7 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
               key={r.id}
               onClick={() => onGoTo(i)}
               aria-label={r.label}
-              style={{ cursor: "none", padding: "7px 4px", background: "none", border: "none" }}
+              style={{ padding: "10px 6px", background: "none", border: "none" }}
             >
               <motion.div
                 animate={{
@@ -121,10 +119,9 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
             onClick={() => onGoTo(current - 1)}
             disabled={current === 0}
             style={{
-              cursor:     "none",
               background: "none",
               border:     "none",
-              padding:    "8px 14px",
+              padding:    "12px 16px",
               fontSize:   "1.5rem",
               fontWeight: 900,
               lineHeight: 1,
@@ -138,10 +135,9 @@ export default function SpatialNav({ rooms, current, onGoTo }: Props) {
             onClick={() => onGoTo(current + 1)}
             disabled={current === total - 1}
             style={{
-              cursor:     "none",
               background: "none",
               border:     "none",
-              padding:    "8px 14px",
+              padding:    "12px 16px",
               fontSize:   "1.5rem",
               fontWeight: 900,
               lineHeight: 1,

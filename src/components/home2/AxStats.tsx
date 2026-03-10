@@ -34,7 +34,7 @@ export default function AxStats() {
       {/* Section label */}
       <div
         className="flex items-center gap-4"
-        style={{ padding: "3rem 6rem 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+        style={{ padding: "3rem clamp(1.5rem, 5vw, 6rem) 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}
       >
         <span className="diamond diamond--sm" />
         <span className="text-white/25 uppercase tracking-[0.3em]" style={{ fontSize: "1.1rem" }}>
@@ -47,16 +47,13 @@ export default function AxStats() {
       </div>
 
       {/* Grid */}
-      <div
-        className="grid"
-        style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
-      >
+      <div className="ax-stats-grid">
         {stats.map((s, i) => (
           <motion.div
             key={s.label}
-            className="relative flex flex-col"
+            className="relative flex flex-col ax-stats-cell"
             style={{
-              padding: "5rem 4.5rem",
+              padding: "clamp(2.5rem, 4vw, 5rem) clamp(1.5rem, 3.5vw, 4.5rem)",
               borderRight: i < 3 ? "1px solid rgba(255,255,255,0.04)" : undefined,
             }}
             initial={{ opacity: 0, y: 28 }}
