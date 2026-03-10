@@ -222,27 +222,13 @@ body[data-scrolling-direction="up"] .navbar {
   padding: 1.4rem 2.8rem;
 }
 
-/* ── Desktop: 3-col grid — nav | logo | nav+burger ── */
-.navbar-logo {
-  justify-self: center;
-  display: flex;
-  align-items: center;
-}
-
-/* Mobile: simple flex — logo left, burger right */
+/* Mobile: simple flex — burger right */
 @media (max-width: 1023px) {
   .navbar-flex {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 0.85rem 1.4rem;
-  }
-  .navbar-logo {
-    justify-self: unset;
-  }
-  .navbar-logo img {
-    width: 130px !important;
-    max-width: 38vw;
   }
 }
 

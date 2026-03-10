@@ -87,14 +87,14 @@ const CFG: Record<Variant, BgCfg> = {
     warm:   "radial-gradient(ellipse 56% 46% at 62% 48%, rgba(211,84,0,0.13) 0%, transparent 100%)",
   },
 
-  /* ── Room 06 — L'HORIZON — African sunset, the CTA portal ── */
+  /* ── Room 06 — L'HORIZON — Modern African tech city at night ── */
   horizon: {
-    src:    "https://images.unsplash.com/photo-1504197832061-98356e3dcdcf?auto=format&fit=crop&w=2400&q=80",
+    src:    "https://images.unsplash.com/photo-1573164574511-73c773193279?auto=format&fit=crop&w=2400&q=80",
     kbFrom: { scale: 1.0,  x: "0%",   y: "-5%"  },
     kbTo:   { scale: 1.14, x: "0%",   y: "3%"   },
     kbDur:  30,
     dark:   "linear-gradient(to bottom, rgba(3,6,10,0.90) 0%, rgba(3,6,10,0.14) 46%, rgba(3,6,10,0.90) 100%)",
-    warm:   "radial-gradient(ellipse 72% 50% at 50% 62%, rgba(211,84,0,0.36) 0%, rgba(180,50,0,0.16) 52%, transparent 100%)",
+    warm:   "transparent",
   },
 
   /* ═══════════════════════════════════════════════════════════

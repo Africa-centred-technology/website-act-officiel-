@@ -291,54 +291,6 @@ export default function RoomSortie() {
           <span className="diamond diamond--sm" />
         </motion.div>
 
-        {/* ── Split gauche/droite : 06 ← | → RÉVOLUTION TECH ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: "3rem", marginBottom: "3rem" }}>
-
-
-          {/* Right: titre empilé, aligné droite */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-            {/* "REJOIGNEZ LA" */}
-            <motion.p
-              className="font-black uppercase leading-none"
-              style={{ fontSize: "clamp(1.2rem, 2.5vw, 3.5rem)", letterSpacing: "0.18em", color: "rgba(255,255,255,0.45)" }}
-              initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0,  filter: "blur(0px)" }}
-              transition={{ duration: 0.75, delay: 0.15, ease: [0.6, 0.08, 0.02, 0.99] }}
-            >
-              REJOIGNEZ LA
-            </motion.p>
-
-            {/* "RÉVOLUTION" — scale depuis l'infini */}
-            <div style={{ perspective: "1400px" }}>
-              <motion.h2
-                className="font-black uppercase leading-none"
-                style={{
-                  fontSize:        "clamp(3.5rem, 10vw, 14rem)",
-                  letterSpacing:   "-0.04em",
-                  color:           "#D35400",
-                  transformOrigin: "100% 80%",
-                  lineHeight:      0.9,
-                }}
-                initial={{ scale: 0.04, opacity: 0, rotateX: 30, filter: "blur(44px) brightness(0.08)" }}
-                animate={{ scale: 1,    opacity: 1, rotateX: 0,  filter: "blur(0px)  brightness(1.0)"  }}
-                transition={{ duration: 1.22, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.12 }}
-              >
-                RÉVOLUTION
-              </motion.h2>
-            </div>
-
-            {/* "TECH" */}
-            <motion.p
-              className="font-black uppercase leading-none"
-              style={{ fontSize: "clamp(1.5rem, 3.5vw, 5rem)", letterSpacing: "0.12em", color: "rgba(255,255,255,0.85)" }}
-              initial={{ opacity: 0, scale: 0.08, rotateX: -22, filter: "blur(28px)" }}
-              animate={{ opacity: 1, scale: 1,    rotateX: 0,   filter: "blur(0px)"  }}
-              transition={{ duration: 0.95, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.38 }}
-            >
-              TECH
-            </motion.p>
-          </div>
-        </div>
 
         {/* Subtext */}
         <motion.p

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import BlogArticlesShell from "../../../components/blog/BlogArticlesShell";
 
 export const metadata = {
@@ -7,5 +8,9 @@ export const metadata = {
 };
 
 export default function BlogArticlesPage() {
-  return <BlogArticlesShell />;
+  return (
+    <Suspense>
+      <BlogArticlesShell />
+    </Suspense>
+  );
 }

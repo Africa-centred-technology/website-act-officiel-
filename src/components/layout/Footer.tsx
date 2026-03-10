@@ -8,7 +8,7 @@ import CTAButton from "@/components/ui/CTAButton";
 import { usePathname } from "next/navigation";
 
 /* Pages en rooms fullscreen — le footer global y est masqué */
-const ROOMS_PAGES = ["/", "/about", "/services", "/projects", "/contact", "/blog", "/blog/articles"];
+const ROOMS_PAGES = ["/", "/about", "/services", "/projects", "/contact", "/blog", "/blog/articles", "/secteurs"];
 
 const navLinks = [
   { label: "Accueil",      href: "/" },

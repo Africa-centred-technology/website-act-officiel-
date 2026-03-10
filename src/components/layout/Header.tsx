@@ -17,10 +17,11 @@ const GOLD   = "#F39C12";
 const LEFT_NAV = [
   { href: "/about",    label: "À Propos",    key: "about"    },
   { href: "/services", label: "Services",    key: "services" },
-  { href: "/projects", label: "Réalisations", key: "projects" },
+  { href: "/secteurs", label: "Secteurs",    key: "secteurs" },
 ];
 
 const RIGHT_NAV = [
+  { href: "/projects", label: "Réalisations", key: "projects" },
   { href: "/blog",    label: "Blog",    key: "blog"    },
   { href: "/contact", label: "Contact", key: "contact" },
 ];
@@ -29,9 +30,10 @@ const MENU_LINKS = [
   { href: "/",         label: "Accueil",      n: "01", key: "index"    },
   { href: "/about",    label: "À Propos",     n: "02", key: "about"    },
   { href: "/services", label: "Services",     n: "03", key: "services" },
-  { href: "/projects", label: "Réalisations", n: "04", key: "projects" },
-  { href: "/blog",     label: "Blog",         n: "05", key: "blog"     },
-  { href: "/contact",  label: "Contact",      n: "06", key: "contact"  },
+  { href: "/secteurs", label: "Secteurs",     n: "04", key: "secteurs" },
+  { href: "/projects", label: "Réalisations", n: "05", key: "projects" },
+  { href: "/blog",     label: "Blog",         n: "06", key: "blog"     },
+  { href: "/contact",  label: "Contact",      n: "07", key: "contact"  },
 ];
 
 const SOCIALS = [
@@ -363,17 +365,23 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* CENTER: Logo */}
-          <Link href="/" className="navbar-logo" style={{ position: "relative", zIndex: 201 }}
-            onClick={open ? close : undefined} aria-label="Accueil ACT">
-            <motion.div whileHover={{ scale: 1.04 }} transition={{ duration: 0.2 }}>
-              <Image
-                src="/logo/logo.png" alt="Africa Centred Technology"
-                width={180} height={72}
-                style={{ objectFit: "contain", height: "auto" }}
-                priority
+          {/* CENTER — Accueil */}
+          <Link
+            href="/"
+            className={`navbar-navigation__link${isActive("index") ? " --is-active" : ""}`}
+            style={{ justifySelf: "center", position: "relative", fontFamily: "Futura, sans-serif", fontWeight: 500, fontSize: "clamp(1.05rem, 1.1vw, 1.25rem)", textTransform: "uppercase", letterSpacing: "0.1em" }}
+          >
+            Accueil
+            {isActive("index") && (
+              <motion.span layoutId="nav-dot"
+                style={{
+                  position: "absolute", bottom: "-5px", left: "50%",
+                  translateX: "-50%",
+                  width: 3, height: 3, borderRadius: "50%", background: ORANGE,
+                  display: "block",
+                }}
               />
-            </motion.div>
+            )}
           </Link>
 
           {/* RIGHT — secondary links + hamburger */}
