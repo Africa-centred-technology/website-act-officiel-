@@ -27,7 +27,7 @@
 
 [1\.	Ingénierie Logicielle & Développement de Solutions Métiers & Mobiles	7](#ingénierie-logicielle-&-développement-de-solutions-métiers-&-mobiles)
 
-[2\.	Automatisation Intelligente (IA Agentique)	8](#automatisation-intelligente-\(ia-agentique\)-\(transformé-ça-en-problématique-et-montrer-comment-est-ce-que-ce-que-l’on-ressout-ses-problèmes-avec-les-services-proposées\))
+[2\.	Automatisation Intelligente (IA Agentique)	8](#automatisation-intelligente-\(ia-agentique\))
 
 [3\.	Architecture & Infrastructure	9](#architecture-&-infrastructure-\(transformé-ça-en-produit\))
 
@@ -57,7 +57,7 @@
 
 **Africa Centred Technology (ACT)** est une entreprise créée en **2026**, née de la vision de son fondateur **Sohaib Baroud**, avec l’ambition de développer des solutions technologiques adaptées aux réalités africaines et de contribuer activement à la transformation digitale du continent.  
 L’origine du projet remonte à **2025**, lorsque les premiers projets technologiques ont été réalisés **en freelance**. Ces premières réalisations ont été menées en collaboration avec les mêmes partenaires qui constituent aujourd’hui l’équipe d’ACT. Ensemble, ils ont pu mettre en pratique Nos compétences pour  répondre à des besoins concrets et poser les bases d’une initiative technologique structurée.  
-Ces expériences ont permis non seulement de démontrer leur savoir-faire, mais aussi de confirmer la pertinence de leur vision commune : concevoir des solutions numériques innovantes, accessibles et adaptées aux réalités africaines. Forts de cette première collaboration réussie, les membres de l’équipe ont décidé de structurer leur initiative et de créer officiellement **Africa Centred Technology** en 2026  
+Ces expériences ont permis non seulement de démontrer leur savoir-faire, mais aussi de confirmer la pertinence de leur vision commune : concevoir des solutions numériques innovantes, accessibles et adaptées aux réalités africaines. Forts de cette première collaboration réussie, les membres de l’équipe ont décidé de structurer leur initiative et de créer officiellement **Africa Centred Technology** en 2026 (à reformuler)   
 . Ainsi, l’équipe est ainsi composée de :
 
 * Sohaib Baroud **\-Fondateur**  
@@ -71,7 +71,7 @@ Ensemble, pour œuvrer au développement de solutions technologiques innovantes,
 
 * ### Vision {#vision}
 
-La vision d’**Africa Centred Technology (ACT)** est de contribuer activement à l’émergence d’un **écosystème technologique africain fort, innovant et autonome**. À travers nos initiatives et nos projets, nous ambitionnons de participer à la construction d’une **souveraineté technologique africaine**, en développant des solutions numériques conçues pour répondre aux réalités, aux besoins et aux défis spécifiques du continent.
+La vision d’**Africa Centred Technology (ACT)** est de contribuer activement à l’émergence d’un **écosystème technologique  fort, innovant et autonome**. À travers nos initiatives et nos projets, nous ambitionnons de participer à la construction d’une **souveraineté technologique**, en développant des solutions numériques conçues pour répondre aux réalités, aux besoins et aux défis spécifiques du continent.
 
 * ### Ambition  {#ambition}
 
@@ -80,8 +80,7 @@ Dans cette perspective, Nous aspirons à :
 
 * **Contribuer au positionnement de l’Afrique comme productrice de technologies**, et non uniquement comme consommatrice, en valorisant la création locale de solutions numériques et l’innovation issue du continent  
 * **Encourager et valoriser les talents technologiques africains**, en participant au développement d’un écosystème d’innovation fondé sur les compétences locales, la collaboration et le partage de connaissances.  
-* **Accompagner la transformation digitale des entreprises, organisations et institutions**, en proposant des solutions technologiques qui améliorent l’efficacité, l’accessibilité et la modernisation des services  
-* Participer au développement d’une intelligence artificielle responsable et contextualisée, pensée pour répondre aux réalités sociales, économiques et culturelles africaines. 
+* **Accompagner la transformation digitale des entreprises, organisations et institutions**, en proposant des solutions technologiques qui améliorent l’efficacité, l’accessibilité et la modernisation des services
 
 À travers cette vision, Africa Centred Technology souhaite contribuer, à son échelle, à **l’essor d’un numérique africain plus inclusif, innovant et durable**.
 
@@ -89,18 +88,16 @@ Dans cette perspective, Nous aspirons à :
 
 * ### Notre engagement  {#notre-engagement }
 
-Chez **Africa Centred Technology (ACT)**, notre engagement repose sur une conviction forte : la technologie peut être un **levier essentiel de développement, d’innovation et d’autonomie pour l’Afrique.**   
-Notre mission est d’accompagner la transformation digitale du continent en **concevant, développant et diffusant des solutions technologiques innovantes**, adaptées aux réalités locales. À travers nos actions, nous cherchons à renforcer la performance des organisations, soutenir l’innovation locale et contribuer à l’émergence d’une **souveraineté numérique africaine**.  
+Chez **Africa Centred Technology (ACT)**, notre engagement repose sur une conviction forte : la technologie peut être un **levier essentiel de développement, d’innovation et d’autonomie.**   
+Notre mission est d’accompagner la transformation digitale du continent en **concevant, développant et diffusant des solutions technologiques innovantes**, adaptées aux réalités. À travers nos actions, nous cherchons à renforcer la performance des organisations, soutenir l’innovation et contribuer à l’émergence d’une **souveraineté numérique**.  
 Nous nous engageons à mettre la technologie au service des entreprises, des institutions et des territoires, en proposant des solutions pratiques, durables et adaptées aux contextes africains.  
 Cette mission se décline à travers plusieurs axes d’action : 
 
 * **Conseiller et accompagner les organisations publiques et privées** dans leurs projets de transformation stratégique et digitale, en les aidant à intégrer efficacement les technologies numériques dans leurs activités.  
 * **Concevoir et déployer des solutions technologiques robustes,** notamment dans les domaines du développement logiciel, de l’intelligence artificielle, de la gestion des données et des infrastructures cloud.  
-* **Contribuer à la modernisation des territoires et des infrastructures**, en explorant l’utilisation de technologies intelligentes capables d’améliorer la gestion, l’efficacité et l’accessibilité des services.  
-* **Développer les compétences locales,** en favorisant la formation, le partage de connaissances et le transfert de savoir-faire afin de renforcer les capacités technologiques des talents africains.  
-* **Promouvoir une intelligence artificielle éthique, responsable et contextualisée,** pensée pour répondre aux enjeux économiques, sociaux et culturels propres au continent africain.
+* **Développer les compétences locales,** en favorisant la formation, le partage de connaissances et le transfert de savoir-faire afin de renforcer les capacités technologiques des talents africains.
 
-À travers cet engagement, Africa Centred Technology souhaite contribuer à la construction d’un **écosystème technologique africain innovant, responsable et durable**, où la technologie devient un moteur de progrès et d’opportunités.
+À travers cet engagement, Africa Centred Technology souhaite contribuer à la construction d’un **écosystème technologique  innovant, responsable et durable**, où la technologie devient un moteur de progrès et d’opportunités.
 
 * ### Nos valeurs  {#nos-valeurs}
 
@@ -173,19 +170,7 @@ Cette approche favorise une adoption rapide des outils, une utilisation quotidie
 
 En développant des solutions logicielles adaptées aux réalités africaines et aux exigences des organisations modernes, ACT contribue à construire des écosystèmes numériques capables d’accompagner durablement la transformation digitale des entreprises et des institutions du continent.
 
-## Ancien version
-
-* **Applications Web & Mobiles "African-Ready" :**
-
-ACT conçoit des applications web et mobiles modernes qui allient performance, fiabilité et excellence en expérience utilisateur. Chaque solution est pensée pour offrir une navigation fluide, rapide et intuitive, avec des interfaces ergonomiques qui facilitent l’utilisation et valorisent l’identité visuelle des marques et organisations. L’accent est mis sur la qualité du design, l’optimisation des performances et la robustesse technique afin de garantir des plateformes digitales efficaces, évolutives et agréables à utiliser.
-
-Dans une logique mobile-first, ACT développe des applications mobiles natives (Android et iOS) ainsi que des solutions hybrides en s’appuyant sur les technologies les plus adaptées à chaque projet. Les équipes portent une attention particulière à la qualité du développement, à la stabilité des applications et à l’optimisation de l’expérience utilisateur. Grâce à une ingénierie logicielle rigoureuse et à des standards élevés de conception, ACT livre des applications fiables, performantes et évolutives, capables d’accompagner durablement la croissance et la transformation digitale des organisations
-
-* **Logiciels Métiers Spécifiques** 
-
-ACT développe également des logiciels métiers destinés aux entreprises et aux institutions africaines afin de soutenir leurs activités opérationnelles et leur gestion interne. Ces solutions incluent notamment des systèmes de gestion des ressources humaines, des logiciels de comptabilité conformes aux normes OHADA, des plateformes de gestion de la relation client, des outils de suivi de projets ou encore des systèmes de gestion des stocks. L’approche d’ACT consiste à analyser les processus réels de chaque organisation afin de concevoir un logiciel parfaitement adapté à ses pratiques et à son environnement. Contrairement aux solutions génériques souvent imposées aux organisations, qui obligent les utilisateurs à modifier leurs méthodes de travail, les logiciels développés par ACT s’adaptent aux besoins spécifiques de l’entreprise. Cette approche favorise une adoption rapide des outils, une utilisation quotidienne efficace et un retour sur investissement mesurable**.**
-
-2. ### Automatisation Intelligente (IA Agentique) (Transformé ça en problématique et montrer comment est ce que ce que l’on ressout ses problèmes avec les services proposées) {#automatisation-intelligente-(ia-agentique)-(transformé-ça-en-problématique-et-montrer-comment-est-ce-que-ce-que-l’on-ressout-ses-problèmes-avec-les-services-proposées)}
+2. ### Automatisation Intelligente (IA Agentique) {#automatisation-intelligente-(ia-agentique)}
 
 1 \- Problème global  
 Les organisations gèrent aujourd’hui des processus métiers de plus en plus complexes impliquant de multiples sources d’information, des interactions entre différents services et une combinaison de systèmes numériques et de documents physiques. Dans de nombreux cas, ces processus reposent encore sur des tâches manuelles, des échanges d’informations fragmentés et des outils qui ne communiquent pas efficacement entre eux.  
@@ -259,23 +244,6 @@ En combinant intelligence artificielle, automatisation des processus et collabor
 
 L’automatisation intelligente devient ainsi un levier stratégique pour transformer les processus métiers et accompagner durablement la transformation digitale des entreprises et des institutions.
 
-## Ancien Version
-
-* **Architectures Multi-Agents** : 
-
-Les **architectures multi-agents** reposent sur l’utilisation de plusieurs agents d’intelligence artificielle spécialisés qui collaborent pour exécuter un processus métier complet. Plutôt que d’avoir un seul système centralisé, chaque agent est conçu pour accomplir une tâche précise : collecte de données, analyse d’informations, coordination entre services, génération de rapports ou déclenchement d’actions automatisées. Ces agents communiquent entre eux et partagent les informations nécessaires pour assurer la continuité du processus.  
-Cette approche permet de gérer des processus complexes impliquant plusieurs étapes et plusieurs sources d’information. Par exemple, un agent peut récupérer des données depuis un formulaire ou un document, un second agent peut analyser ces données et identifier les éléments importants, tandis qu’un troisième agent peut générer un rapport ou transmettre une demande de validation à un responsable. L’architecture multi-agents rend les systèmes d’automatisation plus **flexibles, évolutifs et capables de s’adapter à des workflows métiers variés**.
-
-* **Traitement Hybride Digital/Papier** :
-
-Dans de nombreuses organisations, les processus métiers combinent encore **documents numériques et documents papier**. Le traitement hybride digital/papier consiste à automatiser ces flux mixtes en intégrant des technologies capables de transformer les documents physiques en données exploitables. Cela inclut notamment la **numérisation de documents, la reconnaissance de texte (OCR), l’extraction automatique d’informations et leur intégration dans des systèmes d’information**.  
-Grâce à cette approche, les documents papier tels que formulaires, factures, contrats ou dossiers administratifs peuvent être analysés automatiquement et intégrés dans des workflows numériques. Les données extraites peuvent ensuite être utilisées pour déclencher des actions automatiques : mise à jour de bases de données, génération de rapports, validation de dossiers ou transmission à un service spécifique. Cela permet de **réduire les erreurs de saisie, accélérer le traitement des dossiers et améliorer la traçabilité des informations**.
-
-* **IA de Soutien (Augmentation Humaine)** :
-
- L’**IA de soutien**, également appelée augmentation humaine, repose sur l’idée que l’intelligence artificielle ne doit pas remplacer les professionnels, mais **renforcer leurs capacités de travail et de prise de décision**. L’IA intervient pour analyser de grandes quantités de données, identifier des tendances, générer des recommandations ou préparer des synthèses, permettant aux équipes de se concentrer sur les décisions stratégiques et les tâches à forte valeur ajoutée.  
-Dans cette approche, l’humain reste au centre du processus : il valide les décisions importantes, supervise les actions automatisées et peut corriger ou ajuster les recommandations produites par les agents IA. L’objectif est de créer une **collaboration efficace entre l’humain et la machine**, où l’intelligence artificielle agit comme un assistant avancé qui améliore la rapidité, la précision et la qualité des décisions au sein de l’organisation.
-
 3. ### Architecture & Infrastructure (Transformé ça en produit) {#architecture-&-infrastructure-(transformé-ça-en-produit)}
 
 **Concevoir aujourd’hui les systèmes capables de soutenir la croissance de demain**
@@ -346,116 +314,175 @@ ACT aide les organisations à :
 
 En combinant expertise technique, connaissance du contexte africain et vision stratégique, ACT transforme l’architecture technologique en **levier de croissance et d’innovation**.
 
-Ancien Version 
-
-**Services proposés :**
-
-* Architecture logicielle 
-
-L'architecture logicielle définit la structure interne d'une application : comment le code est organisé en couches (présentation, logique métier, accès aux données), comment les différents modules communiquent entre eux, quelles interfaces sont exposées pour permettre des intégrations futures. ACT adopte des patterns d'architecture modernes architecture micro services, architecture événementielle, API-first qui garantissent une grande flexibilité et une capacité d'évolution sans rupture.
-
-Concrètement, cela signifie qu'une application développée par ACT aujourd'hui pour une petite administration communale peut, sans être reconstruite de zéro, être étendue demain pour couvrir l'ensemble d'une région, puis intégrée dans un système national. Cette pensée scalable concevoir pour aujourd'hui tout en préparant demain est une signature de l'approche architecturale d'ACT, et un gage de protection de l'investissement initial des clients
-
-* Solution Cloud
-
-Le cloud computing représente une opportunité considérable pour les organisations africaines : il permet d'accéder à des infrastructures informatiques puissantes et sécurisées sans les coûts prohibitifs d'un datacenter local, de disposer d'une flexibilité en termes de capacité (on peut augmenter ou réduire les ressources en quelques minutes selon les besoins), et de bénéficier de services managés bases de données, moteurs de recherche, outils d'IA qui seraient impossibles à construire et maintenir seul.
-
-Cependant, le cloud en Afrique pose des questions spécifiques qu'ACT maîtrise parfaitement. La localisation des données est un enjeu souverain : de nombreux pays africains ont adopté des lois exigeant que certaines données (données de santé, données fiscales, données bancaires) soient hébergées sur le territoire national ou continental. ACT accompagne ses clients dans le choix des fournisseurs cloud les plus adaptés incluant des acteurs ayant des datacenters sur le continent africain comme AWS Afrique du Sud, Azure Nigeria, ou des opérateurs locaux et dans la conception d'architectures hybrides combinant cloud public et hébergement local selon la sensibilité des données.
-
-ACT accompagne également ses clients dans la migration vers le cloud de systèmes existants (cloud migration), une opération délicate qui nécessite une planification rigoureuse pour éviter toute interruption de service et garantir la préservation de l'intégrité des données. Cette migration est traitée non pas comme un simple déplacement technique, mais comme une opportunité de moderniser les architectures, d'optimiser les coûts et de renforcer la sécurité.
-
-* IT Consulting & Solution Design
-
-Au-delà de la réalisation technique, ACT propose un service de conseil en systèmes d'information qui aide les décideurs africains DSI, directeurs généraux, ministres, élus à faire les bons choix technologiques. Acheter ou développer sur mesure ? Opter pour un ERP généraliste ou un outil spécialisé ? Migrer vers le cloud maintenant ou attendre ? Quel niveau de sécurité est nécessaire pour ce type de données ? Quel est le coût total de possession d'une solution sur cinq ans ?
-
-Ces questions sont stratégiques, et les réponses dépendent étroitement du contexte de chaque organisation. ACT apporte une expertise indépendante non liée à un éditeur de logiciels particulier pour aider ses clients à prendre ces décisions en connaissance de cause. Les consultants ACT produisent des analyses comparatives rigoureuses, des études de faisabilité technique et financière, et des recommandations argumentées qui permettent aux décideurs de choisir en toute confiance.
-
 4. ### Data Intelligence Artificielle & Big Data {#data-intelligence-artificielle-&-big-data}
 
-L'Afrique génère chaque jour des volumes considérables de données : transactions mobiles, données de santé, données agricoles, données de mobilité, données climatiques, données d'éducation, données commerciales. Pourtant, une infime partie de ces données est collectée, structurée, analysée et utilisée pour prendre de meilleures décisions. La plupart s'évaporent, non exploitées, dans des systèmes cloisonnés ou des formats non interopérables. C'est un gâchis colossal  et une opportunité immense pour les organisations qui sauront s'en saisir.
+1 — Problème global
 
-ACT s'est positionnée comme un acteur de référence dans la valorisation des données africaines. Son équipe Data & Intelligence Artificielle accompagne les organisations dans toutes les étapes du cycle de vie de la donnée : collecte, stockage, traitement, analyse, visualisation et décision. Cette approche holistique garantit que les investissements dans la data produisent des résultats concrets et mesurables, et non de simples tableaux de bord que personne ne consulte.
+L’Afrique génère chaque jour des volumes considérables de données : transactions mobiles, données agricoles, informations de santé, données climatiques, flux logistiques, activités commerciales ou données issues des services publics.  
+Pourtant, une grande partie de ces données reste inexploitable. Elles sont souvent dispersées dans des systèmes cloisonnés, stockées dans des formats incompatibles ou simplement non collectées. Cette fragmentation empêche les organisations de transformer leurs données en information utile pour orienter leurs décisions stratégiques et opérationnelles.  
+Cette situation représente à la fois un défi majeur pour les organisations africaines et une opportunité considérable pour celles capables de structurer et valoriser leurs données.
 
-**Services proposés :**
+2 — Pression stratégique
 
-* Data Science / Machine Learning
+Dans un environnement économique de plus en plus piloté par les données, les organisations doivent être capables de collecter, structurer et analyser l’information afin d’améliorer leurs décisions, anticiper les évolutions du marché et optimiser leurs opérations.  
+Cependant, de nombreuses institutions et entreprises ne disposent pas encore des infrastructures nécessaires pour gérer leurs données à grande échelle. Les données sont parfois dispersées entre différents systèmes, de qualité inégale ou difficilement exploitables pour des analyses avancées ou des applications d’intelligence artificielle.  
+Sans une architecture data solide et des capacités analytiques adaptées, les organisations risquent de rester à l’écart de l’économie numérique et de perdre un avantage compétitif face aux acteurs capables de transformer leurs données en levier stratégique.
 
-Une fois les données structurées et disponibles, ACT déploie ses capacités en Data Science pour en extraire de la valeur. Cela prend des formes très concrètes selon le secteur et les besoins : prévisions de la demande pour les distributeurs et les chaînes logistiques, modèles de détection de fraude pour les institutions financières, analyse des déterminants de l'absentéisme scolaire pour les ministères de l'éducation, prédiction des pannes d'équipements industriels, segmentation des populations rurales pour les programmes de développement.
+3 — Méthode ACT
 
-Un point de différenciation important d'ACT est son approche des données d'entraînement pour les modèles de Machine Learning. Les modèles d'IA développés dans les pays du Nord sont entraînés sur des données qui ne reflètent pas les réalités africaines : des données de visages qui surreprésentent les populations blanches, des modèles de crédit calibrés sur des historiques bancaires formels inexistants en Afrique, des algorithmes de reconnaissance vocale incapables de traiter les accents et les langues africaines. ACT développe des modèles entraînés sur des données africaines, par des équipes africaines, produisant des résultats pertinents et justes pour les utilisateurs africains.
+ACT accompagne les organisations africaines dans la mise en place d’écosystèmes data complets permettant de collecter, structurer, analyser et valoriser leurs données.  
+Notre approche couvre l’ensemble du cycle de vie de la donnée :  
+• collecte et intégration des données  
+ • structuration et stockage  
+ • traitement et analyse  
+ • visualisation et aide à la décision  
+ • déploiement de modèles d’intelligence artificielle  
+Cette approche holistique garantit que les investissements dans la data produisent des résultats concrets et mesurables, en transformant les données brutes en informations exploitables pour les décideurs.
 
-* Data Engineering Services
+4 — Actions proposées
 
-Avant de pouvoir analyser des données et en tirer des insights, il faut s'assurer que ces données existent, qu'elles sont collectées de manière fiable, stockées dans des formats accessibles et de qualité suffisante. C'est le rôle du Data Engineering — une discipline souvent méconnue mais absolument fondamentale, qui constitue la plomberie invisible du monde de la data.
+ACT propose un ensemble de services permettant aux organisations de construire et exploiter leurs capacités data et IA.
 
-ACT construit pour ses clients des architectures de données modernes : pipelines de collecte automatisés qui agrègent les données depuis diverses sources (systèmes opérationnels, capteurs, formulaires, APIs tierces), data warehouses et data lakes dimensionnés pour les volumes africains et optimisés pour des coûts de stockage maîtrisés, systèmes de qualité des données qui détectent et corrigent automatiquement les anomalies, les doublons et les incohérences. Cette infrastructure data solide est le prérequis indispensable à toute démarche analytique ou IA — sans elle, les modèles les plus sophistiqués ne produiront que des résultats erronés.
+**Data Science & Machine Learning**
 
-* Big Data
+ACT développe des modèles analytiques et prédictifs permettant d’extraire de la valeur à partir des données.  
+Ces applications incluent notamment :  
+• prévisions de la demande pour les distributeurs et chaînes logistiques  
+ • détection de fraude pour les institutions financières  
+ • analyse de l’absentéisme scolaire pour les systèmes éducatifs  
+ • prédiction des pannes d’équipements industriels  
+ • segmentation des populations pour les programmes de développement  
+ACT se distingue par le développement de modèles entraînés sur **des données africaines**, conçus par des équipes africaines, afin de garantir des résultats pertinents et adaptés aux réalités locales.
 
-Certains contextes africains génèrent des volumes de données si importants qu'ils dépassent les capacités des outils analytiques classiques. Un opérateur télécom avec 30 millions d'abonnés actifs génère des milliards d'événements réseau chaque jour. Une agence nationale de statistiques collecte des données de recensement pour des dizaines de millions de ménages. Un système de surveillance épidémiologique national agrège des données de santé depuis des milliers de points de collecte. Ces volumes nécessitent des architectures Big Data spécifiques.
+**Data Engineering**
 
-ACT déploie des architectures Big Data basées sur des technologies open-source éprouvées (Hadoop, Spark, Kafka, Elasticsearch) adaptées aux contraintes africaines en termes de coût, de compétences disponibles et de maintenance. L'objectif n'est pas de déployer la technologie la plus sophistiquée, mais la plus appropriée — celle qui permettra à l'organisation d'exploiter ses volumes de données de manière durable, sans dépendre d'une expertise externe permanente.
+ACT met en place les infrastructures techniques nécessaires à la collecte et à l’exploitation des données.  
+Ces architectures incluent notamment :  
+• pipelines automatisés de collecte de données  
+ • data warehouses et data lakes  
+ • systèmes de contrôle de la qualité des données  
+ • intégration de données provenant de multiples sources (systèmes métiers, capteurs, formulaires, APIs)  
+Cette infrastructure constitue la base indispensable à toute stratégie data ou IA.
 
-* Intelligence Artificielle
+**Big Data**
 
-L'intelligence artificielle est souvent présentée comme la prochaine révolution industrielle. Pour l'Afrique, elle représente à la fois une opportunité extraordinaire et un risque réel. L'opportunité est évidente : l'IA peut compenser des déficits en ressources humaines qualifiées dans des secteurs critiques comme la santé (aide au diagnostic médical dans les zones sans médecin), l'agriculture (conseils agronomiques personnalisés pour les petits exploitants), l'éducation (tutorat adaptatif pour les zones sans enseignants qualifiés), ou la justice (analyse de jurisprudence pour les avocats et juges qui manquent de documentation).
+Certaines organisations doivent gérer des volumes de données très importants nécessitant des architectures spécifiques.  
+ACT conçoit et déploie des plateformes Big Data basées sur des technologies open source telles que :  
+• Hadoop  
+ • Spark  
+ • Kafka  
+ • Elasticsearch  
+Ces architectures permettent de traiter et analyser de grands volumes de données tout en optimisant les coûts d’infrastructure et de maintenance.
 
-Mais le risque est tout aussi réel : une IA développée sans prise en compte des contextes africains peut reproduire et amplifier des biais existants, prendre des décisions injustes pour des populations déjà vulnérables, ou renforcer des inégalités structurelles. ACT s'est donné une ligne directrice claire en matière d'IA : chaque solution d'intelligence artificielle développée doit être explicable (on doit pouvoir expliquer pourquoi l'algorithme a pris telle décision), équitable (les résultats ne doivent pas discriminer les populations sur la base de critères protégés), et contrôlable (un humain doit toujours être en mesure de comprendre, superviser et corriger les décisions de l'IA).
+**Intelligence Artificielle**
 
-* AI Governance
+ACT développe des solutions d’intelligence artificielle capables d’analyser les données, générer des recommandations et soutenir les processus de décision.  
+Ces solutions peuvent être appliquées à de nombreux domaines :  
+• santé (aide au diagnostic et analyse de données médicales)  
+ • agriculture (recommandations agronomiques et prévisions de rendement)  
+ • éducation (analyse des performances et soutien pédagogique)  
+ • finance (analyse de risque et détection de fraude)  
+Chaque solution est conçue selon des principes d’IA responsable garantissant transparence, équité et supervision humaine.
 
-L'adoption de l'IA par les organisations africaines soulève des questions de gouvernance qui vont bien au-delà des aspects purement techniques. Qui est responsable lorsqu'un algorithme de décision prend une mauvaise décision ? Comment s'assurer que les données utilisées pour entraîner un modèle respectent la vie privée des individus ? Comment expliquer à un comité de direction non technique pourquoi investir dans l'IA, quels bénéfices attendre et dans quel délai ? Comment intégrer l'IA dans les processus existants sans désorganiser les équipes ?
+**Gouvernance de l’IA**
 
-ACT a développé une offre de conseil en gouvernance de l'IA qui répond précisément à ces questions. Elle aide les organisations à définir leur politique d'IA — quelles décisions peuvent être déléguées à des algorithmes, quelles décisions doivent rester humaines, comment documenter et auditer les systèmes d'IA en production — à mettre en place des comités d'éthique de l'IA, et à former les dirigeants et les équipes à une culture de l'IA responsable. Cette approche place l'Afrique en avance sur de nombreux pays qui ont adopté l'IA sans réfléchir à ces questions fondamentales.
+ACT accompagne également les organisations dans la mise en place de cadres de gouvernance pour l’utilisation responsable de l’intelligence artificielle.  
+Cela inclut notamment :  
+• définition des politiques d’usage de l’IA  
+ • mise en place de comités d’éthique  
+ • audit et documentation des systèmes d’IA  
+ • formation des dirigeants et des équipes à la culture data et IA
 
-**Domaine de compétence :**
+5 — Bénéfices business
 
-* Conception de solutions IA adaptées aux enjeux africains
+Les solutions data et intelligence artificielle développées par ACT permettent aux organisations de :  
+• transformer leurs données en levier stratégique  
+ • améliorer la qualité et la rapidité de la prise de décision  
+ • optimiser leurs opérations et anticiper les évolutions du marché  
+ • réduire les inefficacités liées aux systèmes d’information fragmentés  
+ • développer des services innovants basés sur la donnée  
+Ces capacités permettent aux organisations de passer d’une gestion intuitive à une **gestion pilotée par les données**.
 
-* Exploitation et valorisation des données
+6 — Vision future
 
-* Mise en place d’architectures data
-
-* Gouvernance et éthique de l’IA
-
-* Développement de modèles prédictifs et analytiques
+En développant des infrastructures data modernes et des solutions d’intelligence artificielle adaptées aux réalités africaines, ACT contribue à faire émerger un écosystème numérique dans lequel les données deviennent un moteur de croissance, d’innovation et de développement pour les entreprises, les institutions publiques et les organisations du continent.  
+L’exploitation responsable et stratégique des données permettra aux organisations africaines de mieux comprendre leur environnement, d’améliorer leurs services et de construire les fondations d’une économie numérique durable.
 
 5. ### Géomatique & Systèmes d’Information Géographique {#géomatique-&-systèmes-d’information-géographique}
 
- **Services proposés :**
+1 — Problème global
 
-* Cartographie
+Les territoires africains évoluent rapidement sous l’effet de la croissance démographique, de l’urbanisation accélérée, des transformations agricoles et des enjeux environnementaux. Pourtant, dans de nombreuses institutions publiques et organisations, les décisions liées à l’aménagement du territoire, à la gestion des ressources naturelles ou à la planification des infrastructures sont encore prises avec des informations géographiques incomplètes, obsolètes ou difficilement accessibles.  
+L’absence de données géospatiales fiables et de systèmes d’analyse territoriale limite la capacité des organisations à comprendre les dynamiques de leurs territoires et à orienter efficacement leurs politiques publiques ou leurs investissements.
 
-La production cartographique d'ACT s'appuie sur les technologies les plus modernes de la géomatique : imagerie satellitaire haute résolution, données LiDAR (relevés 3D par laser aéroporté), relevés terrain par GPS et drones, et exploitation des données géospatiales ouvertes (OpenStreetMap, données Copernicus de l'ESA). ACT produit des cartes numériques à différentes échelles du plan de quartier au découpage national en formats standard compatibles avec les principaux outils SIG (GeoJSON, Shapefile, GeoTIFF).
+2 — Pression stratégique
 
-Au-delà de la production cartographique initiale, ACT met en place des processus de mise à jour continue des données géographiques, essentiels dans des contextes africains où les territoires évoluent rapidement : expansion urbaine, ouverture de nouvelles routes, création de nouveaux quartiers, déforestation, délimitation de nouvelles unités administratives. Une carte qui n'est pas maintenue à jour devient rapidement inexacte et donc dangereuse pour la prise de décision.
+Face à ces enjeux, les institutions et les organisations doivent aujourd’hui disposer d’outils capables de collecter, structurer et analyser les données géographiques afin d’orienter leurs décisions.  
+L’expansion urbaine rapide, l’ouverture de nouvelles infrastructures, les risques climatiques ou encore les besoins croissants en services publics exigent une meilleure compréhension des territoires. Sans systèmes d’information géographique performants et sans données cartographiques à jour, les décideurs risquent de baser leurs choix sur des informations partielles ou dépassées.  
+La maîtrise de la donnée géospatiale devient ainsi un levier stratégique pour la planification territoriale, la gestion des ressources et l’élaboration de politiques publiques efficaces.
 
-* Système d’Information Géographique (SIG)
+3 — Méthode ACT
 
-Les SIG développés par ACT ne sont pas de simples outils de visualisation. Ce sont de véritables plateformes de décision qui permettent aux institutions de croiser des données territoriales avec des données socio-économiques, démographiques ou environnementales pour répondre à des questions concrètes. Où construire la prochaine école pour maximiser l'accès à l'éducation ? Quels quartiers sont les plus exposés au risque d'inondation et doivent être prioritairement dotés d'infrastructures de drainage ? Quelles zones agricoles ont le meilleur potentiel de rendement pour orienter les investissements en intrants ?
+ACT accompagne les institutions, les entreprises et les organisations dans la mise en place de solutions géomatiques permettant de collecter, analyser et exploiter les données territoriales.  
+Notre approche combine technologies modernes de cartographie, systèmes d’information géographique et analyse spatiale afin de transformer les données géographiques en outils d’aide à la décision.  
+En intégrant différentes sources de données — imagerie satellitaire, relevés terrain, drones et bases de données géospatiales — ACT permet aux organisations de disposer d’une vision précise, actualisée et exploitable de leurs territoires.
 
-ACT accompagne ses clients dans la prise en main de ces outils : de la formation technique des agents SIG à l'accompagnement des décideurs dans l'interprétation des analyses spatiales. L'objectif est de créer une véritable culture de la décision basée sur les données spatiales au sein des institutions africaines  en transformant le SIG d'un outil réservé à quelques techniciens en un outil de management utilisé à tous les niveaux de l'organisation.
+4 — Actions proposées
 
-**Domaine de compétence :**
+ACT propose un ensemble de services géomatiques permettant de structurer et exploiter l’information géographique.
 
-* Gestion territoriale
+**Cartographie**
 
-* Analyse spatiale
+ACT produit des cartes numériques à différentes échelles, du plan de quartier jusqu’au niveau national.  
+La production cartographique s’appuie sur plusieurs sources de données :  
+• imagerie satellitaire haute résolution  
+ • données LiDAR pour la modélisation 3D des territoires  
+ • relevés terrain par GPS et drones  
+ • exploitation de données géospatiales ouvertes (OpenStreetMap, données Copernicus)  
+Les cartes produites sont livrées dans des formats standards compatibles avec les principaux outils SIG :  
+• GeoJSON  
+ • Shapefile  
+ • GeoTIFF  
+ACT met également en place des processus de **mise à jour continue des données géographiques**, indispensables dans des contextes où les territoires évoluent rapidement.
 
-* Planification urbaine
+**Systèmes d’Information Géographique (SIG)**
 
-* Appui aux politiques publiques
+ACT développe des systèmes d’information géographique permettant de centraliser, visualiser et analyser les données territoriales.  
+Ces plateformes permettent de croiser des données géographiques avec des données :  
+• socio-économiques  
+ • démographiques  
+ • environnementales  
+ • infrastructurelles  
+Les organisations peuvent ainsi répondre à des questions stratégiques telles que :  
+• où construire de nouvelles infrastructures publiques  
+ • quelles zones sont exposées aux risques environnementaux  
+ • quelles régions présentent le meilleur potentiel de développement économique ou agricole  
+ACT accompagne ses clients dans l’adoption de ces outils, en formant les équipes techniques et en aidant les décideurs à interpréter les analyses spatiales.
+
+5 — Bénéfices business
+
+Les solutions géomatiques et SIG développées par ACT permettent aux organisations de :  
+• améliorer la planification territoriale  
+ • mieux comprendre les dynamiques spatiales de leurs territoires  
+ • optimiser les investissements en infrastructures  
+ • anticiper les risques environnementaux et climatiques  
+ • renforcer la qualité des décisions publiques et stratégiques  
+En transformant les données géographiques en informations exploitables, les institutions peuvent orienter leurs actions de manière plus précise et plus efficace.  
+6 — Vision future
+
+En développant des infrastructures géospatiales modernes et des systèmes d’analyse territoriale adaptés aux réalités africaines, ACT contribue à renforcer la capacité des institutions et des organisations à comprendre et gérer leurs territoires.  
+La valorisation des données géographiques devient ainsi un levier essentiel pour soutenir la planification urbaine, la gestion durable des ressources et la mise en œuvre de politiques publiques fondées sur des données fiables et actualisées.
 
 ## II. OFFRE DE SERVICES CONSEIL & FORMATION {#ii.-offre-de-services-conseil-&-formation}
 
-Si la technologie constitue le moteur de la transformation digitale, le conseil et la formation en sont le carburant. Aucun système d'information performant ne peut produire ses effets dans une organisation qui n'a pas clarifié sa stratégie, aligné ses processus et développé les compétences de ses équipes. C'est ce constat — profondément ancré dans les réalités africaines — qui a conduit ACT à structurer un pôle Conseil & Formation à part entière, complémentaire mais autonome par rapport au pôle Ingénierie.  
+Si la technologie constitue le moteur de la transformation digitale, le conseil et la formation en sont le carburant. Aucun système d'information performant ne peut produire ses effets dans une organisation qui n'a pas clarifié sa stratégie, aligné ses processus et développé les compétences de ses équipes. C'est ce constat profondément ancré dans les réalités africaines qui a conduit ACT à structurer un pôle Conseil & Formation à part entière, complémentaire mais autonome par rapport au pôle Ingénierie.  
 En Afrique, les projets de transformation digitale échouent rarement à cause d'un déficit technologique. Ils échouent parce que les organisations ne sont pas prêtes à changer, parce que les équipes n'ont pas été formées, parce que la stratégie n'a pas été pensée avant l'outil. ACT intervient précisément à ces points de rupture, pour s'assurer que chaque investissement technologique repose sur des bases solides et produit un impact durable.
 
 1. ### Conseil Stratégique & Transformation {#conseil-stratégique-&-transformation}
 
 La transformation digitale est souvent mal comprise. Beaucoup d'organisations africaines  entreprises comme institutions publiques  abordent le sujet par le biais des outils : elles cherchent d'abord un logiciel, une application, une infrastructure cloud, sans avoir défini au préalable pourquoi elles en ont besoin, ce qu'elles souhaitent changer dans leur fonctionnement, et quel modèle elles veulent atteindre. Cette approche conduit à des investissements coûteux, mal adoptés et rapidement abandonnés.
 
-ACT inverse cette logique. Avant de concevoir ou de déployer la moindre solution technique, ACT engage ses clients dans un travail de fond sur leur vision stratégique, leur modèle d'organisation, leurs processus clés et leurs ambitions de croissance. Ce n'est qu'à l'issue de ce diagnostic que les orientations technologiques sont définies — non l'inverse.
+ACT inverse cette logique. Avant de concevoir ou de déployer la moindre solution technique, ACT engage ses clients dans un travail de fond sur leur vision stratégique, leur modèle d'organisation, leurs processus clés et leurs ambitions de croissance. Ce n'est qu'à l'issue de ce diagnostic que les orientations technologiques sont définies  non l'inverse.
 
 **Services proposés :**
 
@@ -470,24 +497,6 @@ Sur la base de ce diagnostic, ACT co-construit avec ses clients une feuille de r
 La transformation digitale est avant tout une transformation humaine et organisationnelle. Introduire de nouveaux outils sans accompagner les équipes dans le changement génère résistances, contournements et retours en arrière. ACT prend en charge cette dimension critique en proposant un accompagnement complet à la conduite du changement : communication interne, formation des managers, animation de groupes pilotes, gestion des résistances et suivi de l'adoption.
 
 ACT assure également le pilotage de projets de transformation de bout en bout, dès la phase de cadrage. Cela inclut la mise en place d'instances de gouvernance du projet (comités de pilotage, revues d'avancement), la gestion des risques et des interdépendances, ainsi que la mesure régulière des impacts à travers des tableaux de bord de suivi partagés avec les équipes dirigeantes.
-
-* Conseil en Développement Territorial, Gestion Urbaine & Ville Intelligente
-
-L'Afrique est le continent qui urbanise le plus vite au monde. D'ici 2050, plus de 1,3 milliard d'Africains vivront dans des villes — dont beaucoup sont aujourd'hui des villes moyennes sans ressources suffisantes pour gérer cette croissance. ACT a fait du développement territorial une spécialisation stratégique, en proposant aux collectivités locales, aux agences de développement et aux gouvernements un conseil adapté aux réalités et aux contraintes du terrain africain.
-
-Le conseil en développement territorial d'ACT va bien au-delà des approches Smart City venues d'Europe ou d'Asie. Il s'agit de construire des territoires intelligents africains, c'est-à-dire des villes et des communes qui utilisent la technologie pour améliorer concrètement le quotidien de leurs habitants : améliorer l'accès aux services publics, réduire les délais administratifs, optimiser la gestion des déchets et de l'eau, sécuriser l'espace public, faciliter la mobilité. Mais tout cela en tenant compte des réalités locales : niveaux d'alphabétisation numérique, disponibilité de l'énergie électrique, contraintes budgétaires, structures de gouvernance et pratiques culturelles.
-
-**Domaine de compétence :**
-
-* Définition de stratégies digitales
-
-* Pilotage de la transformation organisationnelle
-
-* Développement territorial intelligent
-
-* Modernisation des administrations et entreprises
-
-* Structuration de la croissance numérique
 
 2. ### Conseil Opérationnel & Métier {#conseil-opérationnel-&-métier}
 
@@ -575,7 +584,7 @@ ACT déploie des solutions IoT (Internet des Objets) pour la maintenance prédic
 
 ACT accompagne également les entreprises industrielles dans la digitalisation de leur chaîne logistique — un enjeu crucial en Afrique où les infrastructures de transport sont parfois défaillantes et où la traçabilité des produits est un enjeu de compétitivité pour accéder aux marchés d'exportation. Des systèmes de suivi en temps réel, des plateformes de gestion des stocks et des outils d'optimisation des flux permettent à ces entreprises de gagner en fiabilité et en visibilité.
 
-* **Télécommunications & Médias – L’épine dorsale du digital africain**
+* **Télécommunications & Médias – L’épine dorsale du digital africain (Séparer telecommunication & Media )** 
 
 Les télécommunications ont été le premier grand succès de la transformation digitale africaine. Le mobile a permis à des centaines de millions d'Africains d'accéder à des services auparavant réservés aux populations urbaines aisées : paiements, informations, communications, services de santé. Avec des taux de pénétration mobile parmi les plus dynamiques du monde, l'Afrique subsaharienne est devenue un laboratoire mondial de l'innovation télécoms.
 
@@ -585,7 +594,7 @@ ACT aide précisément ces opérateurs à monétiser intelligemment leurs donné
 
 Pour les médias africains, ACT accompagne la transition numérique : développement de plateformes de contenus en ligne, mise en place de modèles économiques adaptés (abonnement, publicité programmatique, micropaiement), formation des équipes éditoriales aux outils de production numérique. Les médias africains ont un rôle fondamental à jouer dans la souveraineté de l'information sur le continent ACT s'engage à les aider à remplir ce rôle dans un environnement numérique de plus en plus concurrentiel.
 
-* **Géomatique – Connaître son territoire pour mieux le développer** 
+* **Agriculture  – Connaître son territoire pour mieux le développer (à developper)** 
 
 On ne peut pas développer ce qu'on ne connaît pas. Cette maxime simple résume l'enjeu fondamental de la géomatique pour le continent africain. De nombreux États africains ne disposent pas encore de cartographies précises et actualisées de leur territoire : les données foncières sont incomplètes ou contestées, les limites administratives sont floues, les ressources naturelles sont mal inventoriées, les zones à risque (inondations, glissements de terrain, sécheresse) ne sont pas systématiquement identifiées. Cette absence de connaissance territoriale fine se paie cher : en mauvaises décisions d'aménagement, en conflits fonciers, en catastrophes naturelles mal anticipées, en investissements publics mal orientés.
 
@@ -595,6 +604,9 @@ En matière de planification urbaine, les SIG développés par ACT permettent au
 
 ACT forme également les agents publics et les techniciens des collectivités à l'utilisation des SIG : collecte de données de terrain avec des tablettes et des GPS, mise à jour des bases de données géographiques, production de cartes thématiques pour la prise de décision. L'objectif est que chaque ministère de l'aménagement, chaque agence de développement territorial, chaque mairie de ville moyenne dispose en interne d'une capacité géomatique autonome.
 
+* Finance   
+* E-commerce   
+* Gestion urbaine   
 * **Secteur public- construire l’état africain du XXIe siècl**e 
 
 La transformation digitale des États africains n'est pas seulement un enjeu d'efficacité administrative. C'est un enjeu de légitimité, de gouvernance et de développement économique. Un État qui délivre rapidement et de manière transparente ses services actes d'état civil, permis de construire, agréments commerciaux, déclarations fiscales crée les conditions d'un environnement favorable aux investissements et à l'entrepreneuriat. Un État qui collecte et analyse ses propres données peut prendre des décisions de politique publique éclairées, allouer ses ressources limitées de manière optimale et évaluer l'impact de ses programmes.

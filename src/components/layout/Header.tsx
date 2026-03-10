@@ -18,17 +18,20 @@ const LEFT_NAV = [
   { href: "/about",    label: "À Propos",    key: "about"    },
   { href: "/services", label: "Services",    key: "services" },
   { href: "/projects", label: "Réalisations", key: "projects" },
-  { href: "/blog",     label: "Blog",         key: "blog" },
 ];
 
-const menuLinks = [
-  { href: "/",         label: "Accueil",      key: "index" },
-  { href: "/services", label: "Services",     key: "services" },
-  { href: "/projects", label: "Réalisations", key: "projects" },
-  { href: "/", label: "Secteurs d'activités", key: "secteurs" },
-  { href: "/blog",     label: "Blog",         key: "blog" },
-  { href: "/contact",  label: "Carrière",      key: "contact" },
-  { href: "/notre-groupe",  label: "Notre Groupe",      key: "notre-groupe" },
+const RIGHT_NAV = [
+  { href: "/blog",    label: "Blog",    key: "blog"    },
+  { href: "/contact", label: "Contact", key: "contact" },
+];
+
+const MENU_LINKS = [
+  { href: "/",         label: "Accueil",      n: "01", key: "index"    },
+  { href: "/about",    label: "À Propos",     n: "02", key: "about"    },
+  { href: "/services", label: "Services",     n: "03", key: "services" },
+  { href: "/projects", label: "Réalisations", n: "04", key: "projects" },
+  { href: "/blog",     label: "Blog",         n: "05", key: "blog"     },
+  { href: "/contact",  label: "Contact",      n: "06", key: "contact"  },
 ];
 
 const SOCIALS = [

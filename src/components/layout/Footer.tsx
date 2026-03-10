@@ -8,7 +8,7 @@ import CTAButton from "@/components/ui/CTAButton";
 import { usePathname } from "next/navigation";
 
 /* Pages en rooms fullscreen — le footer global y est masqué */
-const ROOMS_PAGES = ["/", "/about", "/services", "/projects", "/contact"];
+const ROOMS_PAGES = ["/", "/about", "/services", "/projects", "/contact", "/blog", "/blog/articles"];
 
 const navLinks = [
   { label: "Accueil",      href: "/" },
@@ -36,7 +36,7 @@ const marqueeItems = [
 
 export default function Footer() {
   const pathname = usePathname();
-  if (ROOMS_PAGES.includes(pathname)) return null;
+  if (ROOMS_PAGES.some(p => pathname === p || pathname.startsWith(p + "/"))) return null;
 
   return (
     <footer

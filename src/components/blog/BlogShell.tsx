@@ -4,8 +4,112 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { blogPosts, categories } from "@/lib/blog-data";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
+
+/* ── Footer strip ────────────────────────────────────── */
+const FOOTER_SOCIALS = [
+  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
+  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
+];
+
+function FooterStrip() {
+  return (
+    <motion.div
+      aria-label="Footer"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7 }}
+      style={{ background: "#070e1c", padding: "clamp(3rem,5vw,5rem) clamp(1.5rem, 6vw, 8rem) clamp(4rem, 7vw, 6rem)" }}
+    >
+      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
+
+        {/* Col 1 — Contact */}
+        <div>
+          <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900, fontSize: "1rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "1.6rem" }}>Contact</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            <a href="mailto:contact@act.africa" style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "rgba(255,255,255,0.6)", fontSize: "1.15rem", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#fff"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"}>
+              <Mail size={18} strokeWidth={1.6} />contact@act.africa
+            </a>
+            <a href="tel:+212694528498" style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "rgba(255,255,255,0.6)", fontSize: "1.15rem", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#fff"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"}>
+              <Phone size={18} strokeWidth={1.6} />+212 694-528498
+            </a>
+            <span style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "rgba(255,255,255,0.35)", fontSize: "1.15rem" }}>
+              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
+            </span>
+          </div>
+        </div>
+
+        {/* Col 2 — Réseaux Sociaux */}
+        <div>
+          <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900, fontSize: "1rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            {FOOTER_SOCIALS.map(({ Icon, href, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "rgba(255,255,255,0.6)", fontSize: "1.15rem", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#D35400"}
+                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"}>
+                <Icon size={20} strokeWidth={1.5} />{label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Col 3 — Carrières + CTA */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
+          <div>
+            <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900, fontSize: "1rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "1.2rem" }}>Carrières</p>
+            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "1.1rem", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "240px" }}>
+              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
+            </p>
+            <Link href="/careers"
+              style={{ color: "#D35400", fontSize: "1rem", letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#F39C12"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "#D35400"}>
+              Postuler maintenant →
+            </Link>
+          </div>
+          <Link href="/contact"
+            style={{ display: "inline-flex", alignItems: "center", gap: "0.9rem", background: "#D35400", color: "#fff", fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700, fontSize: "0.85rem", letterSpacing: "0.22em", textTransform: "uppercase", padding: "1.1rem 2.5rem", borderRadius: "0.5rem", textDecoration: "none", transition: "background 0.25s, transform 0.25s", alignSelf: "flex-start" }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#b84a00"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#D35400"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+            Un projet en tête ? →
+          </Link>
+        </div>
+
+      </div>
+
+      <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: "1.2rem" }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.8rem" }}>
+        <span style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.92rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          © 2026 Africa Centred Technology. Tous droits réservés
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Link href="/privacy" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.92rem", textTransform: "uppercase", textDecoration: "none", transition: "color 0.2s" }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.7)"}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"}>
+            Politique de Confidentialité
+          </Link>
+          <span style={{ color: "rgba(255,255,255,0.25)" }}>/</span>
+          <Link href="/terms" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.92rem", textTransform: "uppercase", textDecoration: "none", transition: "color 0.2s" }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.7)"}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"}>
+            CGU
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function BlogShell() {
   const containerRef = useRef(null);
@@ -122,7 +226,7 @@ export default function BlogShell() {
           position: "relative",
           overflow: "hidden",
           zIndex: 10,
-          boxShadow: "0 -50px 100px rgba(0,0,0,0.8)" // Creates depth shadow on top
+          boxShadow: "0 -30px 60px rgba(0,0,0,0.04)"
         }}
       >
         {/* Subtle gradient background */}
@@ -275,12 +379,11 @@ export default function BlogShell() {
                     </div>
 
                     {/* Gradient Overlay */}
-                    <div style={{ 
-                      position: "absolute", 
-                      inset: 0, 
-                      background: "linear-gradient(to top, #080c08 0%, rgba(8,12,8,0.85) 40%, rgba(8,12,8,0.2) 100%)", 
+                    <div style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(to top, rgba(12,8,4,0.92) 0%, rgba(12,8,4,0.72) 40%, rgba(12,8,4,0.15) 100%)",
                       zIndex: 2,
-                      opacity: 0.7
                     }} />
                     
                     {/* Content */}
@@ -300,8 +403,8 @@ export default function BlogShell() {
                         alignItems: "center",
                         gap: "0.8rem",
                         padding: "0.6rem 1.4rem",
-                        background: "rgba(255,255,255,0.03)",
-                        border: "1px solid rgba(255,255,255,0.08)",
+                        background: "rgba(0,0,0,0.25)",
+                        border: "1px solid rgba(255,255,255,0.12)",
                         borderRadius: "100px",
                         backdropFilter: "blur(12px)",
                         width: "fit-content"
@@ -482,6 +585,8 @@ export default function BlogShell() {
           </Link>
         </div>
       </section>
+
+      <FooterStrip />
     </div>
   );
 }
