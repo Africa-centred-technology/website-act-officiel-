@@ -780,8 +780,16 @@ body[data-scrolling-direction="up"] .navbar {
   align-items: flex-end;
   gap: 4rem;
 }
-@media (max-width: 768px) {
-  .contact-hero-bottom { grid-template-columns: 1fr; gap: 2rem; }
+@media (max-width: 860px) {
+  .contact-hero-bottom {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Hero : réduit sur mobile paysage */
+@media (max-height: 520px) and (orientation: landscape) {
+  .contact-hero { min-height: 100% !important; padding-top: 6rem !important; }
 }
 
 /* Cards: 4 colonnes → 2 → 1 */
@@ -797,15 +805,28 @@ body[data-scrolling-direction="up"] .navbar {
   .contact-cards-grid { grid-template-columns: 1fr; }
 }
 
+/* Désactive transform hover sur touch */
+@media (hover: none) and (pointer: coarse) {
+  .contact-cards-grid a { transform: none !important; }
+}
+
 /* Form layout: formulaire + sidebar → 1 col mobile */
 .contact-form-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr clamp(280px, 30vw, 380px);
   gap: clamp(2rem, 4vw, 4rem);
   align-items: start;
 }
 @media (max-width: 1024px) {
   .contact-form-layout { grid-template-columns: 1fr; }
+}
+
+/* Sidebar remonte au-dessus du form sur mobile */
+.contact-sidebar {
+  order: 0;
+}
+@media (max-width: 1024px) {
+  .contact-sidebar { order: -1; }
 }
 
 /* Form row: 2 cols → 1 col */
@@ -816,6 +837,15 @@ body[data-scrolling-direction="up"] .navbar {
 }
 @media (max-width: 600px) {
   .form-row { grid-template-columns: 1fr; }
+}
+
+/* Touch targets minimum 44px */
+@media (hover: none) and (pointer: coarse) {
+  .contact-cards-grid a,
+  .contact-form-layout button,
+  .contact-form-layout a {
+    min-height: 44px;
+  }
 }
 
 /* ── Project detail page ─────────────────────────────── */

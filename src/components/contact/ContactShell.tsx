@@ -156,6 +156,7 @@ export default function ContactShell() {
       {/* ── HERO ───────────────────────────────────────── */}
       <section
         ref={heroRef}
+        className="contact-hero"
         style={{
           position: "relative",
           minHeight: "80vh",
@@ -507,6 +508,7 @@ export default function ContactShell() {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "0.8rem",
+                    minHeight: 48,
                   }}
                   onMouseEnter={(e) => { if (!sending) (e.currentTarget as HTMLElement).style.background = "#b84a00"; }}
                   onMouseLeave={(e) => { if (!sending) (e.currentTarget as HTMLElement).style.background = "#D35400"; }}
@@ -533,7 +535,8 @@ export default function ContactShell() {
             initial={{ opacity: 0, y: 30 }}
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.25 }}
-            style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+            className="contact-sidebar"
+          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
           >
             {/* Engagements */}
             <div
