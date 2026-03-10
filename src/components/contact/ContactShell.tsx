@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 /* ── Data ──────────────────────────────────────────────── */
 const CONTACT_INFO = [
@@ -11,28 +12,28 @@ const CONTACT_INFO = [
     lines: ["+212 694-528498", "+212 662-777507", "+212 779-635687"],
     href: "tel:+212694528498",
     cta: "Appeler →",
-    icon: "📞",
+    Icon: Phone,
   },
   {
     label: "Email",
     lines: ["contact@act.africa", "support@act.africa"],
     href: "mailto:contact@act.africa",
     cta: "Écrire →",
-    icon: "✉",
+    Icon: Mail,
   },
   {
     label: "Adresse",
     lines: ["Mer Sultan, 6e Rue château", "Casablanca, Maroc 🇲🇦"],
     href: "#",
     cta: "Voir →",
-    icon: "📍",
+    Icon: MapPin,
   },
   {
     label: "Horaires",
     lines: ["Lun – Ven : 8h – 18h", "Sam : 9h – 13h"],
     href: "#form",
     cta: "Planifier →",
-    icon: "🕐",
+    Icon: Clock,
   },
 ];
 
@@ -276,7 +277,22 @@ export default function ContactShell() {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
               }}
             >
-              <span style={{ display: "block", fontSize: "1.6rem", marginBottom: "1rem" }}>{c.icon}</span>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 44,
+                  height: 44,
+                  background: "rgba(211,84,0,0.1)",
+                  border: "1px solid rgba(211,84,0,0.2)",
+                  borderRadius: "0.6rem",
+                  marginBottom: "1.2rem",
+                  color: "#D35400",
+                }}
+              >
+                <c.Icon size={20} strokeWidth={1.8} />
+              </div>
               <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#D35400", marginBottom: "0.8rem" }}>
                 {c.label}
               </p>
@@ -643,9 +659,12 @@ export default function ContactShell() {
         style={{
           padding: "clamp(5rem,9vw,9rem) clamp(1.5rem,6vw,8rem)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
+          textAlign: "center",
         }}
       >
-        <SLabel>FAQ</SLabel>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <SLabel>FAQ</SLabel>
+        </div>
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -656,7 +675,7 @@ export default function ContactShell() {
           Questions <span style={{ color: "#D35400" }}>Fréquentes</span>
         </motion.h2>
 
-        <div style={{ maxWidth: 860, display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto", display: "flex", flexDirection: "column", gap: "0.8rem", textAlign: "left" }}>
           {FAQS.map((faq, i) => {
             const isOpen = openFaq === i;
             return (
