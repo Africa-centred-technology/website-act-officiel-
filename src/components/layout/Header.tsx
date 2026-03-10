@@ -12,15 +12,17 @@ const navLeft = [
   { href: "/about",    label: "À Propos",    key: "about" },
   { href: "/services", label: "Services",    key: "services" },
   { href: "/projects", label: "Réalisations", key: "projects" },
+  { href: "/blog",     label: "Blog",         key: "blog" },
 ];
 
 const menuLinks = [
   { href: "/",         label: "Accueil",      key: "index" },
-  { href: "/about",    label: "À Propos",     key: "about" },
   { href: "/services", label: "Services",     key: "services" },
   { href: "/projects", label: "Réalisations", key: "projects" },
+  { href: "/", label: "Secteurs d'activités", key: "secteurs" },
   { href: "/blog",     label: "Blog",         key: "blog" },
-  { href: "/contact",  label: "Contact",      key: "contact" },
+  { href: "/contact",  label: "Carrière",      key: "contact" },
+  { href: "/notre-groupe",  label: "Notre Groupe",      key: "notre-groupe" },
 ];
 
 const socials = [
