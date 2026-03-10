@@ -9,10 +9,10 @@ const ease = [0.6, 0.08, 0.02, 0.99] as const;
 
 /* ─── Design tokens ─── */
 export const V = {
-  bg:        "#080c08",
-  surface:   "#111611",
-  surface2:  "#171d17",
-  border:    "rgba(255,255,255,0.07)",
+  bg:        "#06120e",
+  surface:   "#0a1d17",
+  surface2:  "#0f261f",
+  border:    "rgba(82,201,122,0.08)",
   orange:    "#e85c1a",
   orangeLt:  "rgba(232,92,26,0.15)",
   orangeGlow:"rgba(232,92,26,0.35)",

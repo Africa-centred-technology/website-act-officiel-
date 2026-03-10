@@ -17,54 +17,64 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
     .filter((p) => p.slug !== post.slug)
     .slice(0, 3);
 
+  const relatedPosts = blogPosts
+    .filter((p) => p.slug !== post.slug)
+    .map((p) => {
+      let score = 0;
+      if (p.category === post.category) score += 2;
+      const commonKeywords = p.keywords.filter(kw => post.keywords.includes(kw));
+      score += commonKeywords.length;
+      return { post: p, score };
+    })
+    .filter((p) => p.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((p) => p.post)
+    .slice(0, 3);
+
   return (
-    <div style={{ background: "#0A1410", minHeight: "100vh" }}>
+    <div style={{ background: "#06120e", minHeight: "100vh" }}>
       {/* ── HERO ── */}
       <section
         ref={heroRef}
         style={{
           paddingTop: "14rem",
-          paddingBottom: "6rem",
+          paddingBottom: "8rem",
           position: "relative",
           overflow: "hidden",
+          minHeight: "75vh",
+          display: "flex",
+          alignItems: "flex-end",
         }}
       >
-        {/* Post Image Hero Background */}
+        {/* Full Image Background */}
         <div
           style={{
             position: "absolute",
-            top: 0,
-            right: 0,
-            width: "45%",
-            height: "100%",
+            inset: 0,
             zIndex: 0,
-            opacity: 0.25,
-            pointerEvents: "none",
-            maskImage: "linear-gradient(to right, transparent, black 40%)",
-            WebkitMaskImage: "linear-gradient(to right, transparent, black 40%)",
           }}
         >
           <Image
             src={post.image}
             alt={post.title}
             fill
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", opacity: 0.75 }}
             priority
           />
         </div>
 
-        {/* Background glow */}
+        {/* Dark Gradient Overlay for Readability */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: `radial-gradient(ellipse at 60% 0%, ${post.categoryColor}12 0%, transparent 60%)`,
-            pointerEvents: "none",
+            background: "linear-gradient(to bottom, transparent 0%, transparent 30%, rgba(6,18,14,0.9) 85%, #06120e 100%)",
             zIndex: 1,
+            pointerEvents: "none",
           }}
         />
 
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -426,6 +436,38 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           </aside>
         </div>
       </section>
+
+      {/* ── RELATED POSTS ── */}
+      {relatedPosts.length > 0 && (
+        <section style={{ paddingBottom: "10rem" }}>
+          <div className="container">
+            <h2
+              style={{
+                fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
+                fontFamily: "Futura, sans-serif",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                color: "#fff",
+                marginBottom: "4rem",
+                textAlign: "center",
+              }}
+            >
+              Articles <span style={{ color: post.categoryColor }}>Connexes</span>
+            </h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 34rem), 1fr))",
+                gap: "3rem",
+              }}
+            >
+              {relatedPosts.map((rp, i) => (
+                <RelatedArticleCard key={rp.slug} relatedPost={rp} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
@@ -644,6 +686,195 @@ function ContentSection({
           </pre>
         </div>
       )}
+    </motion.div>
+  );
+}
+
+/* ─── Related Article Card ─── */
+function RelatedArticleCard({
+  relatedPost: post,
+  index,
+}: {
+  relatedPost: BlogPost;
+  index: number;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{
+        duration: 0.6,
+        delay: (index % 3) * 0.08,
+        ease: [0.6, 0.08, 0.02, 0.99],
+      }}
+    >
+      <Link
+        href={`/blog/${post.slug}`}
+        style={{ display: "block", textDecoration: "none", height: "100%" }}
+      >
+        <div
+          style={{
+            background: "rgba(255,255,255,0.025)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            borderRadius: "1.2rem",
+            transition:
+              "border-color 0.3s ease, background 0.3s ease, transform 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLDivElement;
+            el.style.borderColor = `${post.categoryColor}66`;
+            el.style.background = "rgba(255,255,255,0.04)";
+            el.style.transform = "translateY(-4px)";
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLDivElement;
+            el.style.borderColor = "rgba(255,255,255,0.07)";
+            el.style.background = "rgba(255,255,255,0.025)";
+            el.style.transform = "translateY(0)";
+          }}
+        >
+          {/* Image */}
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "22rem",
+              flexShrink: 0,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              style={{ objectFit: "cover", opacity: 0.7 }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(to bottom, transparent 40%, rgba(10,20,16,0.9))",
+              }}
+            />
+          </div>
+
+          {/* Content */}
+          <div
+            style={{
+              padding: "2.5rem 3rem 3rem",
+              display: "flex",
+              flexDirection: "column",
+              flex: 1,
+            }}
+          >
+            <div>
+              {/* Category */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <span
+                  style={{
+                    padding: "0.4rem 1rem",
+                    background: `${post.categoryColor}18`,
+                    border: `1px solid ${post.categoryColor}44`,
+                    borderRadius: "2rem",
+                    color: post.categoryColor,
+                    fontFamily: "Futura, sans-serif",
+                    fontSize: "1rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  {post.category}
+                </span>
+              </div>
+
+              <h3
+                style={{
+                  fontSize: "1.8rem",
+                  fontFamily: "Futura, sans-serif",
+                  fontWeight: 800,
+                  color: "#fff",
+                  lineHeight: 1.2,
+                  marginBottom: "1.2rem",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {post.title}
+              </h3>
+
+              <p
+                style={{
+                  color: "rgba(255,255,255,0.4)",
+                  fontSize: "1.3rem",
+                  lineHeight: 1.6,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {post.excerpt}
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: "auto",
+                paddingTop: "2rem",
+                borderTop: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <div style={{ display: "flex", gap: "1.5rem" }}>
+                <span
+                  style={{
+                    color: "rgba(255,255,255,0.3)",
+                    fontSize: "1.1rem",
+                    fontFamily: "Futura, sans-serif",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {post.date}
+                </span>
+                <span
+                  style={{
+                    color: "rgba(255,255,255,0.3)",
+                    fontSize: "1.1rem",
+                    fontFamily: "Futura, sans-serif",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {post.readTime}
+                </span>
+              </div>
+              <span
+                style={{
+                  color: "#D35400",
+                  fontFamily: "Futura, sans-serif",
+                  fontSize: "1.1rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                Lire →
+              </span>
+            </div>
+          </div>
+        </div>
+      </Link>
     </motion.div>
   );
 }

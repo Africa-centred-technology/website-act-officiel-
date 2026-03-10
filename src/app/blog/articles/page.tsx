@@ -1,4 +1,4 @@
-import BlogArticlesShell from "@/components/blog/BlogArticlesShell";
+import BlogArticlesShell from "../../../components/blog/BlogArticlesShell";
 
 export const metadata = {
   title: "Articles — Africa Centred Technology",

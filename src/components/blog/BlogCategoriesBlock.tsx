@@ -6,7 +6,7 @@ import { categories } from "@/lib/blog-data";
 
 /* ─── Design tokens (consistent with BlogHero) ─── */
 const V = {
-  bg:        "#080c08",
+  bg:        "#06120e",
   orange:    "#e85c1a",
   orangeLt:  "rgba(232,92,26,0.15)",
   orangeGlow:"rgba(232,92,26,0.35)",
@@ -159,59 +159,82 @@ export default function BlogCategoriesBlock({
         Toutes les rubriques
       </h3>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+      <div style={{ 
+        display: "grid", 
+        gridTemplateColumns: "repeat(3, 1fr)", 
+        gap: "1.5rem" 
+      }}>
         {rubriques.map((cat, i) => {
           const isActive = activeCategory === cat.value;
           return (
             <motion.button
               key={cat.value}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.05 }}
               onClick={() => onCategoryChange && onCategoryChange(cat.value)}
               style={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "1.2rem 1.5rem",
-                background: isActive ? "rgba(211,84,0,0.12)" : "transparent",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "1.2rem",
+                padding: "2rem",
+                background: isActive ? "rgba(211,84,0,0.1)" : "rgba(255,255,255,0.02)",
                 border: `1px solid ${
-                  isActive ? "rgba(211,84,0,0.3)" : "rgba(255,255,255,0.04)"
+                  isActive ? "rgba(211,84,0,0.4)" : "rgba(255,255,255,0.06)"
                 }`,
-                borderRadius: "0.8rem",
+                borderRadius: "1.2rem",
                 color: isActive ? "#fff" : "rgba(255,255,255,0.55)",
                 fontFamily: "Futura, sans-serif",
-                fontSize: "1.3rem",
+                fontSize: "1.4rem",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
                 textAlign: "left",
+                position: "relative",
+                overflow: "hidden"
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.04)";
                   e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
                   e.currentTarget.style.color = "rgba(255,255,255,0.55)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
                 }
               }}
             >
-              <span style={{ fontWeight: isActive ? 600 : 400 }}>{cat.label}</span>
-              <span
-                style={{
-                  fontSize: "1.2rem",
-                  color: isActive ? "#D35400" : "rgba(255,255,255,0.2)",
-                  transform: isActive ? "translateX(0)" : "translateX(-4px)",
-                  transition: "all 0.3s ease",
-                }}
-              >
-                →
-              </span>
+              <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontWeight: isActive ? 700 : 500, textTransform: "uppercase", letterSpacing: "0.05em" }}>{cat.label}</span>
+                <span
+                  style={{
+                    fontSize: "1.4rem",
+                    color: isActive ? "#D35400" : "rgba(255,255,255,0.2)",
+                    transform: isActive ? "translateX(0)" : "translateX(-4px)",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  →
+                </span>
+              </div>
+              
+              {isActive && (
+                <motion.div 
+                  layoutId="active-line"
+                  style={{ 
+                    position: "absolute", 
+                    bottom: 0, 
+                    left: 0, 
+                    height: "3px", 
+                    width: "100%", 
+                    background: "#D35400" 
+                  }} 
+                />
+              )}
             </motion.button>
           );
         })}

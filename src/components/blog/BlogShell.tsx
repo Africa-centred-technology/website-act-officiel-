@@ -189,7 +189,7 @@ export default function BlogShell() {
           {/* 3-column grid with enhanced staggered reveal */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(32rem, 1fr))",
+            gridTemplateColumns: "repeat(3, 1fr)",
             gap: "3.2rem",
           }}>
             {categories.filter(c => c.value !== "all").map((cat, i) => {
