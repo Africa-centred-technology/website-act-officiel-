@@ -215,14 +215,14 @@ export default function ContactShell() {
             style={{ display: "flex", flexDirection: "column", gap: "0.6rem", flexShrink: 0 }}
           >
             {[
-              { icon: "📞", val: "+212 694-528498", href: "tel:+212694528498" },
-              { icon: "✉", val: "contact@act.africa", href: "mailto:contact@act.africa" },
+              { Icon: Phone, val: "+212 694-528498", href: "tel:+212694528498" },
+              { Icon: Mail,  val: "contact@act.africa", href: "mailto:contact@act.africa" },
             ].map((c) => (
               <a
                 key={c.val}
                 href={c.href}
                 style={{
-                  display: "flex", alignItems: "center", gap: "0.8rem",
+                  display: "flex", alignItems: "center", gap: "0.85rem",
                   color: "rgba(255,255,255,0.55)",
                   fontFamily: "Futura, system-ui, sans-serif",
                   fontSize: "var(--font-20)",
@@ -232,7 +232,7 @@ export default function ContactShell() {
                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#D35400")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.55)")}
               >
-                <span>{c.icon}</span>
+                <c.Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
                 {c.val}
               </a>
             ))}
@@ -590,7 +590,7 @@ export default function ContactShell() {
                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#b84a00")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#D35400")}
               >
-                📞 +212 694-528498
+                <Phone size={16} strokeWidth={1.8} /> +212 694-528498
               </a>
             </div>
 
@@ -785,7 +785,7 @@ export default function ContactShell() {
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#b84a00")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#D35400")}
             >
-              📞 +212 694-528498
+              <Phone size={17} strokeWidth={1.8} /> +212 694-528498
             </a>
             <a
               href="mailto:contact@act.africa"
@@ -807,7 +807,7 @@ export default function ContactShell() {
                 (e.currentTarget as HTMLElement).style.color = "#fff";
               }}
             >
-              ✉ contact@act.africa
+              <Mail size={17} strokeWidth={1.8} /> contact@act.africa
             </a>
           </div>
         </motion.div>
