@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Linkedin, Facebook, Youtube } from "lucide-react";
 
 /* ── Data ──────────────────────────────────────────────── */
 const CONTACT_INFO = [
@@ -609,9 +609,9 @@ export default function ContactShell() {
               <SLabel>Suivez-nous</SLabel>
               <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap" }}>
                 {[
-                  { label: "LinkedIn", href: "https://linkedin.com/company/africa-centred-technology", abbr: "in" },
-                  { label: "Facebook", href: "https://facebook.com/actafrica", abbr: "fb" },
-                  { label: "YouTube", href: "https://youtube.com/@actafrica", abbr: "yt" },
+                  { label: "LinkedIn", href: "https://linkedin.com/company/africa-centred-technology", Icon: Linkedin },
+                  { label: "Facebook", href: "https://facebook.com/actafrica", Icon: Facebook },
+                  { label: "YouTube",  href: "https://youtube.com/@actafrica",  Icon: Youtube },
                 ].map((s) => (
                   <a
                     key={s.label}
@@ -628,13 +628,8 @@ export default function ContactShell() {
                       background: "rgba(255,255,255,0.05)",
                       border: "1px solid rgba(255,255,255,0.1)",
                       borderRadius: "0.5rem",
-                      color: "rgba(255,255,255,0.5)",
-                      fontFamily: "Futura, system-ui, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.68rem",
-                      letterSpacing: "0.05em",
+                      color: "rgba(255,255,255,0.45)",
                       textDecoration: "none",
-                      textTransform: "uppercase",
                       transition: "background 0.25s, color 0.25s, border-color 0.25s",
                     }}
                     onMouseEnter={(e) => {
@@ -644,11 +639,11 @@ export default function ContactShell() {
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
-                      (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)";
+                      (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)";
                       (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)";
                     }}
                   >
-                    {s.abbr}
+                    <s.Icon size={19} strokeWidth={1.8} />
                   </a>
                 ))}
               </div>
