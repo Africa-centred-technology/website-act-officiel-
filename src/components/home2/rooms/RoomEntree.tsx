@@ -194,8 +194,8 @@ export default function RoomEntree() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative overflow-hidden flex flex-col justify-center"
-      style={{ width: "100%", height: "100%", padding: "4rem 5.5rem 10rem" }}
+      className="relative overflow-hidden flex flex-col justify-center room-pad"
+      style={{ width: "100%", height: "100%" }}
     >
       {/* ── Photo savane + Ken Burns ── */}
       <RoomBackground variant="continent" />
@@ -206,27 +206,6 @@ export default function RoomEntree() {
       {/* ── Scan-line horizontale ── */}
       <ScanLine />
 
-      {/* ── Grand "01" en arrière-plan profond ── */}
-      <motion.div
-        aria-hidden
-        className="absolute select-none pointer-events-none font-black"
-        style={{
-          right:         "-1%",
-          top:           "2%",
-          fontSize:      "clamp(12rem, 22vw, 28rem)",
-          lineHeight:    1,
-          color:         "rgba(211,84,0,0.05)",
-          letterSpacing: "-0.04em",
-          x:             bgX,
-          y:             bgY,
-          zIndex:        0,
-        }}
-        initial={{ scale: 1.22, opacity: 0, filter: "blur(22px)" }}
-        animate={{ scale: 1,    opacity: 1, filter: "blur(0px)"  }}
-        transition={{ duration: 2.0, ease: [...EASE3D] }}
-      >
-        01
-      </motion.div>
 
       {/* ── Sun pulse radial orange ── */}
       <motion.div
@@ -310,45 +289,11 @@ export default function RoomEntree() {
           >
             Vue Satellite — Afrique
           </span>
-          <span
-            className="hidden md:block text-white/10 font-black uppercase ml-auto"
-            style={{ fontSize: "1.05rem", letterSpacing: "0.2em" }}
-          >
-            01 / LE CONTINENT
-          </span>
         </motion.div>
 
         {/* ── Split gauche/droite : 01 ← | → AFRICA / CENTRED / TECHNOLOGY ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
 
-          {/* Left — "01" : ancre orange ghost, entre de gauche */}
-          <motion.div
-            style={{ flexShrink: 0 }}
-            initial={{ x: -60, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1.1, delay: 0.04, ease: [...BURST] }}
-          >
-            <span
-              aria-hidden
-              className="font-black select-none"
-              style={{
-                fontSize:      "clamp(7rem, 16vw, 22rem)",
-                color:         "rgba(211,84,0,0.22)",
-                letterSpacing: "-0.04em",
-                lineHeight:    1,
-                display:       "block",
-              }}
-            >
-              01
-            </span>
-          </motion.div>
-
-          {/* Séparateur vertical — grandit depuis le centre */}
-          <motion.div
-            style={{ width: 1, alignSelf: "stretch", background: "rgba(211,84,0,0.35)", flexShrink: 0, originY: 0.5 }}
-            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-            transition={{ duration: 0.8, delay: 0.22 }}
-          />
 
           {/* Right — mots empilés, alignés à droite, perspective 3D */}
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>

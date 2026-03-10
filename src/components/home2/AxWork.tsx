@@ -12,16 +12,16 @@ const projects = [
     category: "Intelligence Artificielle",
     year: "2024–25",
     desc: "Système de récupération augmentée multimodal intégrant documents, images, audio et vidéo pour opérer en environnement à faible connectivité.",
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    image: "/realisationprojet/2025/systeme-rag-multi-sources.png",
   },
   {
     id: "cod",
     index: "02",
     title: "CODRescue Platform",
     category: "E-commerce & Logistique",
-    year: "2024",
+    year: "2025",
     desc: "Plateforme complète de gestion e-commerce avec dashboards en temps réel, intégrations multi-transporteurs et optimisation des coûts.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    image: "/realisationprojet/2025/CODRescue-v2.png",
   },
   {
     id: "sig",
@@ -30,7 +30,7 @@ const projects = [
     category: "Systèmes d'Information Géographique",
     year: "2026",
     desc: "Application de gestion des espaces verts avec cartographie interactive, suivi temps réel des interventions et capteurs IoT terrain.",
-    image: "https://images.unsplash.com/photo-1542601906897-a1cf845e6ed6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    image: "/realisationprojet/2026/GreenSIGapp.png",
   },
   {
     id: "gam",
@@ -39,7 +39,7 @@ const projects = [
     category: "Média & Éditorial",
     year: "2026",
     desc: "Web TV panafricaine avec architecture headless, gestion éditoriale avancée et diffusion multi-canal pour 15 pays africains.",
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    image: "/realisationprojet/2026/GAM-Genies-Afrique-Medias.png",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function AxWork() {
       style={{ background: "rgba(3,6,10,0.88)", zIndex: 2, borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
       {/* Header */}
-      <div style={{ padding: "8rem 6rem 4rem" }}>
+      <div style={{ padding: "clamp(4rem, 7vw, 8rem) clamp(1.5rem, 5vw, 6rem) clamp(2rem, 3vw, 4rem)" }}>
         <motion.div
           className="flex items-end justify-between"
           initial={{ opacity: 0, y: 22 }}
@@ -78,7 +78,7 @@ export default function AxWork() {
       </div>
 
       {/* Accordion list */}
-      <div style={{ padding: "0 6rem 8rem" }}>
+      <div style={{ padding: "0 clamp(1.5rem, 5vw, 6rem) clamp(4rem, 7vw, 8rem)" }}>
         {projects.map((p, i) => {
           const isOpen = open === p.id;
           return (
@@ -91,11 +91,10 @@ export default function AxWork() {
             >
               {/* Row header — clickable */}
               <button
-                className="w-full text-left"
+                className="w-full text-left ax-work-btn"
                 style={{
                   borderTop: "1px solid rgba(255,255,255,0.06)",
-                  padding: "2.4rem 0",
-                  cursor: "none",
+                  padding: "clamp(1.4rem, 2.5vw, 2.4rem) 0",
                 }}
                 onClick={() => setOpen(isOpen ? null : p.id)}
               >
@@ -143,14 +142,11 @@ export default function AxWork() {
                     transition={{ duration: 0.55, ease: [0.6, 0.08, 0.02, 0.99] }}
                     style={{ overflow: "hidden" }}
                   >
-                    <div
-                      className="grid"
-                      style={{ gridTemplateColumns: "1fr 1.6fr", gap: "4rem", paddingBottom: "4rem" }}
-                    >
+                    <div className="ax-work-panel" style={{ paddingBottom: "clamp(2rem, 4vw, 4rem)" }}>
                       {/* Image with clip-path reveal */}
                       <motion.div
-                        className="relative overflow-hidden"
-                        style={{ height: "32rem" }}
+                        className="relative overflow-hidden ax-work-img"
+                        style={{ height: "clamp(18rem, 28vw, 32rem)" }}
                         initial={{ clipPath: "inset(0 100% 0 0)" }}
                         animate={{ clipPath: "inset(0 0% 0 0)" }}
                         transition={{ duration: 0.7, delay: 0.1, ease: [0.6, 0.08, 0.02, 0.99] }}

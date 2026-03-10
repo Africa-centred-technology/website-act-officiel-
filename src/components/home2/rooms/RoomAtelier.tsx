@@ -79,7 +79,7 @@ function ServiceCard({ svc, index }: { svc: (typeof services)[0]; index: number 
         delay:    depth.delay,
         ease:     [0.6, 0.08, 0.02, 0.99],
       }}
-      style={{ perspective: "1200px", cursor: "none", height: "100%" }}
+      style={{ perspective: "1200px", height: "100%" }}
     >
       <motion.div
         ref={cardRef}
@@ -191,31 +191,11 @@ export default function RoomAtelier() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative flex flex-col overflow-hidden"
-      style={{ width: "100%", height: "100%", padding: "4.5rem 5rem 10rem" }}
+      className="relative flex flex-col overflow-hidden room-pad"
+      style={{ width: "100%", height: "100%" }}
     >
       <RoomBackground variant="cite" />
 
-      {/* ── Deep BG: room number — blur-focus entry from distance ── */}
-      <motion.div
-        aria-hidden
-        className="absolute select-none pointer-events-none font-black"
-        style={{
-          right:         "2%",
-          top:           "6%",
-          fontSize:      "clamp(12rem, 20vw, 26rem)",
-          lineHeight:    1,
-          color:         "rgba(211,84,0,0.055)",
-          letterSpacing: "-0.04em",
-          x: bgX,
-          y: bgY,
-        }}
-        initial={{ scale: 1.18, opacity: 0, filter: "blur(20px)" }}
-        animate={{ scale: 1,    opacity: 1, filter: "blur(0px)"  }}
-        transition={{ duration: 1.9, ease: [0.6, 0.08, 0.02, 0.99] }}
-      >
-        02
-      </motion.div>
 
       {/* ── Section header — split gauche/droite ── */}
       <motion.div
@@ -235,16 +215,6 @@ export default function RoomAtelier() {
               Ce que nous fabriquons
             </span>
           </motion.div>
-          <motion.span
-            aria-hidden
-            className="font-black select-none block"
-            style={{ fontSize: "clamp(5rem, 11vw, 15rem)", color: "rgba(211,84,0,0.20)", letterSpacing: "-0.04em", lineHeight: 1 }}
-            initial={{ x: -50, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1.0, ease: [0.6, 0.08, 0.02, 0.99] }}
-          >
-            02
-          </motion.span>
         </div>
 
         {/* Séparateur vertical */}
@@ -285,10 +255,7 @@ export default function RoomAtelier() {
       />
 
       {/* ── 3-column cards from depth ── */}
-      <div
-        className="grid gap-4"
-        style={{ gridTemplateColumns: "repeat(3, 1fr)", flex: 1, minHeight: 0 }}
-      >
+      <div className="room-grid-3 gap-4">
         {services.map((svc, i) => (
           <ServiceCard key={svc.n} svc={svc} index={i} />
         ))}

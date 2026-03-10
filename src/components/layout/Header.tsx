@@ -1,15 +1,21 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import CTAButton from "@/components/ui/CTAButton";
-import { Linkedin, Facebook, Youtube, Instagram } from "lucide-react";
+import { Facebook, Youtube, Instagram } from "lucide-react";
 
-const navLeft = [
-  { href: "/about",    label: "À Propos",    key: "about" },
+/* ── Tokens ─────────────────────────────────────────────── */
+const EASE   = [0.6, 0.08, 0.02, 0.99] as const;
+const BURST  = [0.04, 0.72, 0.08, 1.0]  as const;
+const ORANGE = "#D35400";
+const GOLD   = "#F39C12";
+
+/* ── Data ───────────────────────────────────────────────── */
+const LEFT_NAV = [
+  { href: "/about",    label: "À Propos",    key: "about"    },
   { href: "/services", label: "Services",    key: "services" },
   { href: "/projects", label: "Réalisations", key: "projects" },
   { href: "/blog",     label: "Blog",         key: "blog" },
@@ -25,294 +31,515 @@ const menuLinks = [
   { href: "/notre-groupe",  label: "Notre Groupe",      key: "notre-groupe" },
 ];
 
-const socials = [
-  { icon: Linkedin,  href: "#", label: "LinkedIn" },
-  { icon: Facebook,  href: "#", label: "Facebook" },
-  { icon: Youtube,   href: "#", label: "YouTube" },
-  { icon: Instagram, href: "#", label: "Instagram" },
+const SOCIALS = [
+  { icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
+  { icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
 ];
 
-export default function Header() {
-  const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
+/* ── Orbiting dot helper ────────────────────────────────── */
+function OrbitDot({
+  duration, radius, color, delay = 0,
+}: { duration: number; radius: number; color: string; delay?: number }) {
+  return (
+    <motion.div
+      style={{ position: "absolute", top: "50%", left: "50%", width: 0, height: 0 }}
+      animate={{ rotate: 360 }}
+      transition={{ duration, ease: "linear", repeat: Infinity, delay }}
+    >
+      <div style={{
+        position: "absolute",
+        width: 5, height: 5,
+        borderRadius: "50%",
+        background: color,
+        boxShadow: `0 0 10px 2px ${color}88`,
+        top: -radius, left: -2.5,
+      }} />
+    </motion.div>
+  );
+}
 
-  /* Scroll direction tracking → show/hide navbar (clone pattern) */
+/* ── Right-panel visual ─────────────────────────────────── */
+function VisualPanel() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
   useEffect(() => {
-    let lastY = 0;
-    const threshold = 60;
-    const handler = () => {
-      const y = window.scrollY;
-      const direction = y > lastY ? "down" : "up";
-      const started = y > threshold;
-      document.body.setAttribute("data-scrolling-direction", direction);
-      document.body.setAttribute("data-scrolling-started", started ? "true" : "false");
-      lastY = y;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
+    let raf = 0;
+    let t = 0;
+
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
     };
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    resize();
+    window.addEventListener("resize", resize, { passive: true });
+
+    const draw = () => {
+      const W = canvas.width, H = canvas.height;
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2;
+
+      /* Subtle grid */
+      ctx.strokeStyle = "rgba(211,84,0,0.04)";
+      ctx.lineWidth = 0.5;
+      const cell = 38;
+      for (let y = 0; y < H + cell; y += cell) {
+        for (let x = 0; x < W + cell; x += cell) {
+          const d = cell * 0.3;
+          ctx.beginPath();
+          ctx.moveTo(x, y - d); ctx.lineTo(x + d, y);
+          ctx.lineTo(x, y + d); ctx.lineTo(x - d, y);
+          ctx.closePath(); ctx.stroke();
+        }
+      }
+
+      /* Pulsing radial glow */
+      const a = 0.06 + Math.sin(t * 0.8) * 0.03;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.45);
+      g.addColorStop(0, `rgba(211,84,0,${a})`);
+      g.addColorStop(1, "transparent");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      /* Slow rotating lines from center */
+      for (let i = 0; i < 6; i++) {
+        const angle = t * 0.15 + (i / 6) * Math.PI * 2;
+        const len = Math.min(W, H) * 0.38;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(angle) * len, cy + Math.sin(angle) * len);
+        ctx.strokeStyle = `rgba(211,84,0,${0.05 + (i % 2) * 0.02})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+
+      t += 0.016;
+      raf = requestAnimationFrame(draw);
+    };
+
+    raf = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
-  /* Lock body scroll when menu open */
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  return (
+    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
+      <canvas ref={canvasRef} aria-hidden
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
 
-  /* Close on Escape */
+      {/* Orbital rings */}
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {[130, 200, 270].map((r, i) => (
+          <motion.div key={i}
+            style={{
+              position: "absolute",
+              width: r * 2, height: r * 2,
+              borderRadius: "50%",
+              border: `1px solid rgba(211,84,0,${0.12 - i * 0.03})`,
+            }}
+            animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
+            transition={{ duration: 28 + i * 12, ease: "linear", repeat: Infinity }}
+          />
+        ))}
+
+        {/* Orbiting dots */}
+        <OrbitDot duration={9}  radius={130} color={ORANGE} />
+        <OrbitDot duration={15} radius={200} color={GOLD}   delay={1.5} />
+        <OrbitDot duration={22} radius={270} color={ORANGE} delay={3} />
+
+        {/* Center logo */}
+        <motion.div
+          initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.35, duration: 0.8, ease: [...BURST] }}
+          style={{ position: "relative", zIndex: 2 }}
+        >
+          <Image
+            src="/logo/logo.png" alt="ACT"
+            width={100} height={40}
+            style={{ objectFit: "contain", opacity: 0.35, filter: "grayscale(0.3)" }}
+          />
+        </motion.div>
+      </div>
+
+      {/* Bottom CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.55, duration: 0.6 }}
+        style={{ position: "absolute", bottom: "3.5rem", left: "2rem", right: "2rem" }}
+      >
+        <Link href="/contact"
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: "0.65rem",
+            padding: "0.9rem 1.5rem",
+            background: ORANGE,
+            color: "#fff",
+            borderRadius: "0.5rem",
+            fontFamily: "Futura, system-ui, sans-serif",
+            fontSize: "0.75rem",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            fontWeight: 500,
+          }}
+        >
+          Démarrer un projet
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </Link>
+      </motion.div>
+
+      {/* Left accent border */}
+      <motion.div
+        style={{
+          position: "absolute", left: 0, top: "15%", bottom: "15%", width: "1px",
+          background: `linear-gradient(to bottom, transparent, ${ORANGE}55, transparent)`,
+        }}
+        initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+        transition={{ delay: 0.3, duration: 0.9, ease: [...EASE] }}
+      />
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
+   MAIN HEADER
+   ══════════════════════════════════════════════════════════ */
+export default function Header() {
+  const pathname = usePathname();
+  const [open, setOpen]     = useState(false);
+  const [scrolled, setScrolled]       = useState(false);
+  const [progress, setProgress]       = useState(0);
+  const [hovered, setHovered]         = useState<string | null>(null);
+
+  /* Scroll tracking */
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && menuOpen) setMenuOpen(false);
+    let lastY = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrolled(y > 40);
+      setProgress(max > 0 ? y / max : 0);
+      document.body.setAttribute("data-scrolling-direction", y > lastY ? "down" : "up");
+      document.body.setAttribute("data-scrolling-started", y > 80 ? "true" : "false");
+      lastY = y;
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [menuOpen]);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* Body scroll lock */
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  /* Escape to close */
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", fn);
+    return () => window.removeEventListener("keydown", fn);
+  }, []);
+
+  const close = useCallback(() => setOpen(false), []);
 
   function isActive(key: string) {
     const p = pathname ?? "/";
     if (key === "index") return p === "/" || p === "";
-    return p.includes(`/${key}`);
+    return p.startsWith(`/${key}`);
   }
 
-  const menuVariants = {
-    hidden: { opacity: 0, visibility: "hidden" as const },
-    visible: {
-      opacity: 1,
-      visibility: "visible" as const,
-      transition: { duration: 0.5, ease: [0.6, 0.08, 0.02, 0.99] as [number,number,number,number] },
-    },
-    exit: {
-      opacity: 0,
-      visibility: "hidden" as const,
-      transition: { duration: 0.35 },
-    },
-  };
-
-  const linkVariants = {
-    hidden:  { opacity: 0, y: 20, filter: "blur(8px)" },
-    visible: (i: number) => ({
-      opacity: 1, y: 0, filter: "blur(0px)",
-      transition: { delay: i * 0.07 + 0.2, duration: 0.6, ease: [0.6, 0.08, 0.02, 0.99] as [number,number,number,number] },
-    }),
-  };
+  /* ── Hamburger button (shared JSX) ── */
+  const HamburgerBtn = ({ className = "" }: { className?: string }) => (
+    <button
+      className={`navbar-hamburger${open ? " navbar-hamburger--open" : ""} ${className}`}
+      onClick={() => setOpen(v => !v)}
+      aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+      aria-expanded={open}
+    >
+      <span className="navbar-hamburger__lines" aria-hidden>
+        <motion.span className="navbar-hamburger__line navbar-hamburger__line-top"
+          animate={open ? { y: 5, rotate: 45 } : { y: 0, rotate: 0 }}
+          transition={{ duration: 0.35, ease: [...EASE] }}
+        />
+        <motion.span className="navbar-hamburger__line navbar-hamburger__line-bottom"
+          animate={open ? { y: -4, rotate: -45, width: "2.4rem" } : { y: 0, rotate: 0 }}
+          transition={{ duration: 0.35, ease: [...EASE] }}
+        />
+      </span>
+      <motion.span
+        className="navbar-hamburger__label"
+        key={open ? "close" : "menu"}
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -4 }}
+        transition={{ duration: 0.22 }}
+      >
+        {open ? "CLOSE" : "MENU"}
+      </motion.span>
+    </button>
+  );
 
   return (
     <>
-      {/* ══ NAVBAR ══ */}
-      <nav className="navbar">
+      {/* ── Scroll progress bar ── */}
+      <div aria-hidden style={{
+        position: "fixed", top: 0, left: 0, right: 0, height: "1.5px", zIndex: 202,
+        background: "rgba(255,255,255,0.04)",
+      }}>
+        <motion.div
+          style={{ height: "100%", background: ORANGE, originX: 0 }}
+          animate={{ scaleX: progress }}
+          transition={{ type: "spring", stiffness: 280, damping: 38 }}
+        />
+      </div>
+
+      {/* ── Navbar — desktop only (hidden on mobile via CSS) ── */}
+      <nav className={`navbar${scrolled ? " navbar--scrolled" : ""}`}>
         <div className="navbar-flex">
 
-          {/* LEFT: nav links (desktop) */}
-          <ul className="navbar-navigation hidden md:flex">
-            {navLeft.map((link) => (
-              <li key={link.key}>
-                <Link
-                  href={link.href}
-                  className={`navbar-navigation__link ${isActive(link.key) ? "--is-active" : ""}`}
-                >
+          {/* LEFT — nav links */}
+          <ul className="navbar-navigation" style={{ display: "flex" }}>
+            {LEFT_NAV.map((link) => (
+              <li key={link.key} style={{ position: "relative" }}>
+                <Link href={link.href}
+                  className={`navbar-navigation__link${isActive(link.key) ? " --is-active" : ""}`}>
                   {link.label}
+                  {isActive(link.key) && (
+                    <motion.span layoutId="nav-dot"
+                      style={{
+                        position: "absolute", bottom: "-5px", left: "50%",
+                        translateX: "-50%",
+                        width: 3, height: 3, borderRadius: "50%", background: ORANGE,
+                        display: "block",
+                      }}
+                    />
+                  )}
                 </Link>
               </li>
             ))}
           </ul>
 
           {/* CENTER: Logo */}
-          <Link href="/" className="justify-self-center flex flex-col items-center">
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              className="flex flex-col items-center gap-0"
-            >
-              <span
-                className="font-black uppercase leading-none text-white"
-                style={{ fontSize: "1.6rem", letterSpacing: "0.25em" }}
-              >
-                ACT
-              </span>
-              <span
-                className="text-[#D35400] uppercase leading-none"
-                style={{ fontSize: "0.85rem", letterSpacing: "0.3em" }}
-              >
-                Africa Centred Technology
-              </span>
+          <Link href="/" className="navbar-logo" style={{ position: "relative", zIndex: 201 }}
+            onClick={open ? close : undefined} aria-label="Accueil ACT">
+            <motion.div whileHover={{ scale: 1.04 }} transition={{ duration: 0.2 }}>
+              <Image
+                src="/logo/logo.png" alt="Africa Centred Technology"
+                width={180} height={72}
+                style={{ objectFit: "contain", height: "auto" }}
+                priority
+              />
             </motion.div>
           </Link>
 
-          {/* RIGHT: Hamburger */}
-          <button
-            className="navbar-hamburger justify-self-end"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            <motion.span
-              className="navbar-hamburger__line navbar-hamburger__line-top"
-              animate={menuOpen ? { y: 6, rotate: 45 } : { y: 0, rotate: 0 }}
-              transition={{ duration: 0.35, ease: [0.6, 0.08, 0.02, 0.99] }}
-            />
-            <motion.span
-              className="navbar-hamburger__line navbar-hamburger__line-bottom"
-              animate={menuOpen ? { y: -4, rotate: -45 } : { y: 0, rotate: 0 }}
-              transition={{ duration: 0.35, ease: [0.6, 0.08, 0.02, 0.99] }}
-            />
-          </button>
+          {/* RIGHT — secondary links + hamburger */}
+          <div style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: "2rem" }}>
+            <ul className="navbar-navigation hidden xl:flex" style={{ gap: "2.5rem" }}>
+              {RIGHT_NAV.map((link) => (
+                <li key={link.key} style={{ position: "relative" }}>
+                  <Link href={link.href}
+                    className={`navbar-navigation__link${isActive(link.key) ? " --is-active" : ""}`}>
+                    {link.label}
+                    {isActive(link.key) && (
+                      <motion.span layoutId="nav-dot"
+                        style={{
+                          position: "absolute", bottom: "-5px", left: "50%",
+                          translateX: "-50%",
+                          width: 3, height: 3, borderRadius: "50%", background: ORANGE,
+                          display: "block",
+                        }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <HamburgerBtn />
+          </div>
         </div>
       </nav>
 
-      {/* ══ FULLSCREEN MENU OVERLAY ══ */}
+      {/* ── Mobile floating menu button — only visible below 1024px ── */}
+      <div className="mobile-menu-btn">
+        <HamburgerBtn />
+      </div>
+
+      {/* ── Fullscreen menu overlay ── */}
       <AnimatePresence>
-        {menuOpen && (
+        {open && (
           <motion.div
             key="menu-overlay"
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed inset-0 z-[150]"
+            style={{ position: "fixed", inset: 0, zIndex: 150, display: "flex" }}
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.7, ease: [...EASE] }}
           >
-            <div className="menu-inner h-full">
-              {/* Left: image */}
-              <div className="menu-image hidden md:block">
-                <motion.div
-                  className="w-full h-full relative"
-                  initial={{ scale: 1.06 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 1.2, ease: [0.6, 0.08, 0.02, 0.99] }}
-                >
-                  {/* Gradient overlay on image */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: "linear-gradient(to right, transparent, rgba(10,20,16,0.3))",
-                      zIndex: 1,
-                    }}
-                  />
-                  {/* Menu background image */}
-                  <Image
-                    src="https://media.licdn.com/dms/image/v2/C4D1BAQEm9aYTIqZhMg/company-background_10000/company-background_10000/0/1634310266750/technopark_maroc_cover?e=2147483647&v=beta&t=7gJ75iWSzYjgG-EDcHkkj7zg0XwRleXjG4qbBe7Tjxs"
-                    alt=""
-                    fill
-                    unoptimized
-                    style={{ objectFit: "cover", objectPosition: "center" }}
-                  />
-                  {/* Diamond decorative */}
-                  <div className="absolute inset-0 flex items-center justify-center z-10">
-                    <motion.div
-                      initial={{ scale: 0, rotate: -20 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ delay: 0.4, duration: 0.8, ease: [0.6, 0.08, 0.02, 0.99] }}
-                      className="flex flex-col items-center gap-6 text-white/20 text-center"
-                    >
-                      <span className="diamond" style={{ width: "4rem", height: "4rem" }} />
-                      <p
-                        className="font-black uppercase tracking-widest"
-                        style={{ fontSize: "var(--font-20)", letterSpacing: "0.4em" }}
-                      >
-                        Africa Centred<br />Technology
-                      </p>
-                      <span className="diamond diamond--gold" style={{ width: "2rem", height: "2rem" }} />
-                    </motion.div>
-                  </div>
-                </motion.div>
-              </div>
+            {/* ── LEFT: navigation ── */}
+            <div style={{
+              flex: "1 1 0",
+              background: "#06090F",
+              display: "flex",
+              flexDirection: "column",
+              padding: "clamp(4.5rem, 8vw, 7rem) clamp(1.8rem, 5vw, 5rem) clamp(2rem, 4vw, 3rem)",
+              overflow: "hidden",
+              position: "relative",
+            }}>
+              {/* Grain */}
+              <div className="grain-overlay" aria-hidden />
 
-              {/* Right: navigation */}
-              <div
-                className="flex flex-col justify-between overflow-y-auto"
+              {/* Eyebrow */}
+              <motion.div
+                style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "clamp(1.5rem, 3vh, 3rem)" }}
+                initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25, duration: 0.5 }}
+              >
+                <span className="diamond diamond--sm" />
+                <span style={{
+                  fontFamily: "Futura, system-ui",
+                  fontSize: "0.72rem", letterSpacing: "0.38em",
+                  textTransform: "uppercase", color: "rgba(255,255,255,0.22)",
+                }}>Navigation</span>
+                <span style={{
+                  marginLeft: "auto",
+                  fontFamily: "Futura, system-ui",
+                  fontSize: "0.72rem", letterSpacing: "0.12em",
+                  textTransform: "uppercase", color: "rgba(255,255,255,0.12)",
+                }}>
+                  ACT · {new Date().getFullYear()}
+                </span>
+              </motion.div>
+
+              {/* Links */}
+              <nav style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "0" }}>
+                {MENU_LINKS.map((link, i) => {
+                  const active = isActive(link.key);
+                  const dimmed = hovered !== null && hovered !== link.key;
+                  return (
+                    <div
+                      key={link.key}
+                      className="nav-link-row"
+                      style={{ position: "relative" }}
+                      onMouseEnter={() => setHovered(link.key)}
+                      onMouseLeave={() => setHovered(null)}
+                    >
+                      <motion.div
+                        initial={{ x: -70, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.08 + i * 0.055, duration: 0.65, ease: [...EASE] }}
+                      >
+                        <Link href={link.href} onClick={close} style={{ display: "block", textDecoration: "none" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", padding: "0.15rem 0", position: "relative" }}>
+
+                            {/* Accent bar */}
+                            <div style={{
+                              position: "absolute", left: 0, top: "12%", bottom: "12%",
+                              width: "2px", background: ORANGE,
+                              transform: "scaleY(0)", transformOrigin: "top",
+                              opacity: 0,
+                              transition: "transform 0.28s cubic-bezier(0.6,0.08,0.02,0.99), opacity 0.2s",
+                            }} className="nav-accent-bar" />
+
+                            {/* Number */}
+                            <span className="nav-link-num" style={{
+                              fontFamily: "Futura, system-ui, sans-serif",
+                              fontSize: "clamp(0.6rem, 0.8vw, 0.85rem)",
+                              letterSpacing: "0.25em",
+                              color: active ? GOLD : ORANGE,
+                              minWidth: "2.2rem",
+                              paddingLeft: "0.85rem",
+                              opacity: 0,
+                              transition: "opacity 0.2s ease",
+                              userSelect: "none",
+                              flexShrink: 0,
+                            }}>
+                              {link.n}
+                            </span>
+
+                            {/* Label */}
+                            <span style={{
+                              fontFamily: "Futura, system-ui, sans-serif",
+                              fontWeight: 900,
+                              fontSize: "clamp(2.2rem, 5vw, 7rem)",
+                              lineHeight: 0.92,
+                              letterSpacing: "-0.025em",
+                              textTransform: "uppercase",
+                              color: dimmed
+                                ? "rgba(255,255,255,0.04)"
+                                : active ? ORANGE : "rgba(255,255,255,0.82)",
+                              transition: "color 0.3s ease",
+                              userSelect: "none",
+                            }}>
+                              {link.label}
+                            </span>
+                          </div>
+                          {/* Thin separator */}
+                          <div style={{ height: "1px", background: "rgba(255,255,255,0.04)", marginLeft: "0.85rem" }} />
+                        </Link>
+                      </motion.div>
+                    </div>
+                  );
+                })}
+              </nav>
+
+              {/* Bottom bar */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
                 style={{
-                  background: "#0A1410",
-                  padding: "7rem 5rem 4rem",
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                  paddingTop: "1.5rem",
+                  display: "flex", flexDirection: "column", gap: "0.85rem",
                 }}
               >
-                {/* Tag */}
-                <motion.div
-                  className="flex items-center gap-3 mb-8"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.15 }}
-                >
-                  <span className="diamond diamond--sm" />
-                  <span
-                    className="text-white/40 uppercase tracking-[0.3em]"
-                    style={{ fontSize: "1.1rem" }}
-                  >
-                    Menu
-                  </span>
-                </motion.div>
+                {/* Socials */}
+                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+                  {SOCIALS.map(({ icon: Icon, href, label }) => (
+                    <motion.a key={label} href={href} aria-label={label}
+                      target="_blank" rel="noopener noreferrer"
+                      whileHover={{ y: -2, color: ORANGE }}
+                      style={{ color: "rgba(255,255,255,0.22)", transition: "color 0.2s" }}>
+                      <Icon size={15} />
+                    </motion.a>
+                  ))}
+                </div>
+                {/* Contacts */}
+                <div style={{ display: "flex", gap: "2.5rem", flexWrap: "wrap" }}>
+                  {[
+                    { label: "contact@act.africa", href: "mailto:contact@act.africa" },
+                    { label: "+212 694-528498",    href: "tel:+212694528498"         },
+                  ].map(({ label, href }) => (
+                    <a key={href} href={href} style={{
+                      fontFamily: "Futura, system-ui, sans-serif",
+                      fontSize: "clamp(0.68rem, 0.85vw, 0.9rem)",
+                      letterSpacing: "0.05em",
+                      color: "rgba(255,255,255,0.25)",
+                      textDecoration: "none",
+                      transition: "color 0.2s",
+                    }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.65)")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.25)")}
+                    >{label}</a>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
 
-                {/* Nav links */}
-                <nav className="flex-1">
-                  <ul className="space-y-1">
-                    {menuLinks.map((link, i) => (
-                      <motion.li
-                        key={link.key}
-                        custom={i}
-                        variants={linkVariants}
-                        initial="hidden"
-                        animate="visible"
-                      >
-                        <Link
-                          href={link.href}
-                          onClick={() => setMenuOpen(false)}
-                          className={`block font-black uppercase leading-tight transition-colors hover:text-white ${
-                            isActive(link.key) ? "text-white" : "text-white/25"
-                          }`}
-                          style={{ fontSize: "var(--font-40)" }}
-                        >
-                          {link.label}
-                        </Link>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </nav>
-
-                {/* Bottom: socials + CTA */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="mt-8 space-y-6"
-                >
-                  <div>
-                    <p
-                      className="text-white/40 uppercase tracking-[0.2em] mb-3"
-                      style={{ fontSize: "1.1rem" }}
-                    >
-                      Réseaux Sociaux
-                    </p>
-                    <div className="flex items-center gap-4">
-                      {socials.map(({ icon: Icon, href, label }) => (
-                        <motion.a
-                          key={label}
-                          href={href}
-                          aria-label={label}
-                          whileHover={{ scale: 1.15, color: "#D35400" }}
-                          className="text-white/40 hover:text-white transition-colors"
-                        >
-                          <Icon size={18} />
-                        </motion.a>
-                      ))}
-                    </div>
-                  </div>
-
-                  <CTAButton href="/contact" onClick={() => setMenuOpen(false)}>
-                    Un projet en tête ?
-                  </CTAButton>
-
-                  <div className="flex flex-col gap-1" style={{ fontSize: "1.1rem" }}>
-                    <a
-                      href="mailto:contact@act.africa"
-                      className="text-white/40 hover:text-white/70 transition-colors"
-                    >
-                      contact@act.africa
-                    </a>
-                    <a
-                      href="tel:+212694528498"
-                      className="text-white/40 hover:text-white/70 transition-colors"
-                    >
-                      +212 694-528498
-                    </a>
-                  </div>
-                </motion.div>
-              </div>
+            {/* ── RIGHT: visual panel (hidden on mobile) ── */}
+            <div className="hidden md:block" style={{
+              width: "clamp(280px, 30vw, 440px)",
+              flexShrink: 0,
+              background: "#050810",
+              position: "relative",
+              overflow: "hidden",
+            }}>
+              <VisualPanel />
             </div>
           </motion.div>
         )}

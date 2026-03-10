@@ -192,22 +192,11 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
       }} />
 
       {/* Orbit arc */}
-      <OrbitArc label={`${svc.n} · ${svc.tagline}`} accent={svc.accent} />
+      <OrbitArc label={svc.tagline} accent={svc.accent} />
 
       {/* Scan-line */}
       <ScanLine accent={svc.accent} />
 
-      {/* Ghost number */}
-      <motion.div aria-hidden className="absolute select-none pointer-events-none font-black" style={{
-        right: "-2rem", top: "50%", translateY: "-50%",
-        fontSize: "clamp(130px, 24vw, 320px)",
-        color: `${svc.accent}09`, letterSpacing: "-0.04em", lineHeight: 1,
-        x: bgX, y: bgY, zIndex: 3,
-      }}
-        initial={{ scale: 1.2, opacity: 0, filter: "blur(24px)" }}
-        animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 2.0, ease: [...EASE] }}
-      >{svc.n}</motion.div>
 
       {/* Sun pulse */}
       <motion.div aria-hidden style={{
@@ -265,7 +254,6 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           <span style={{ color: "rgba(255,255,255,0.15)" }}>›</span>
           <Link href="/services" style={{ color: "rgba(255,255,255,0.35)", textDecoration: "none" }}>Services</Link>
           <span style={{ color: "rgba(255,255,255,0.15)" }}>›</span>
-          <span style={{ color: svc.accent }}>{svc.n}</span>
           <span style={{
             marginLeft: "auto",
             background: `${svc.accent}16`, border: `1px solid ${svc.accent}40`,
@@ -279,21 +267,6 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
 
         {/* Titre */}
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", marginBottom: "2rem" }}>
-          <motion.div style={{ flexShrink: 0 }}
-            initial={{ x: -50, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.0, ease: [...BURST] }}>
-            <span aria-hidden className="font-black select-none" style={{
-              fontSize: "clamp(5rem, 10vw, 15rem)", color: `${svc.accent}22`,
-              letterSpacing: "-0.04em", lineHeight: 1, display: "block",
-            }}>{svc.n}</span>
-          </motion.div>
-          <motion.div style={{
-            width: 1, alignSelf: "stretch", background: `${svc.accent}55`, flexShrink: 0,
-          }}
-            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-            transition={{ duration: 0.8, delay: 0.22 }}
-          />
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", gap: "0.05em" }}>
             {titleLines.map((line, li) => (
               <WordChars key={li} text={line}
@@ -548,7 +521,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
               letterSpacing: "-0.04em", lineHeight: 1,
               userSelect: "none",
             }} aria-hidden>
-              {svcN}.{String(index + 1).padStart(2, "0")}
             </div>
           </>
         ) : (
@@ -562,14 +534,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
               position: "absolute", inset: 0,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <span style={{
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(50px, 9vw, 120px)",
-                fontWeight: 700, color: `${accent}28`,
-                letterSpacing: "-0.04em", lineHeight: 1,
-              }} aria-hidden>
-                {svcN}.{String(index + 1).padStart(2, "0")}
-              </span>
             </div>
           </>
         )}
@@ -598,16 +562,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
         <motion.div variants={fadeUp} style={{
           display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.5rem",
         }}>
-          <span style={{
-            width: 32, height: 32, borderRadius: "50%",
-            background: `${accent}18`, border: `1px solid ${accent}40`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: "clamp(10px, 0.65rem, 0.7rem)",
-            fontFamily: "Futura, system-ui, sans-serif",
-            color: accent, flexShrink: 0,
-          }}>
-            {String(index + 1).padStart(2, "0")}
-          </span>
           <motion.div style={{ flex: 1, height: 1, background: accent, originX: 0 }}
             initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}

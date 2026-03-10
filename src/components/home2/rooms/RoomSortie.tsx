@@ -101,8 +101,8 @@ export default function RoomSortie() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative overflow-hidden flex flex-col items-center justify-center text-center"
-      style={{ width: "100%", height: "100%", padding: "4rem 6rem 10rem" }}
+      className="relative overflow-hidden flex flex-col items-center justify-center text-center room-pad"
+      style={{ width: "100%", height: "100%" }}
     >
       <RoomBackground variant="horizon" />
 
@@ -117,7 +117,7 @@ export default function RoomSortie() {
         animate={{ scale: 1,    opacity: 1, filter: "blur(0px)"  }}
         transition={{ duration: 1.9, ease: [0.6, 0.08, 0.02, 0.99] }}
       >
-        06 / LA SORTIE
+        LA SORTIE
       </motion.span>
 
       {/* ── Breathing ambient glow — bg layer ── */}
@@ -193,34 +193,6 @@ export default function RoomSortie() {
         {/* ── Split gauche/droite : 06 ← | → RÉVOLUTION TECH ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "3rem", marginBottom: "3rem" }}>
 
-          {/* Left: "06" */}
-          <motion.div
-            style={{ flexShrink: 0 }}
-            initial={{ x: -60, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1.1, delay: 0.04, ease: [0.04, 0.72, 0.08, 1.0] }}
-          >
-            <span
-              aria-hidden
-              className="font-black select-none"
-              style={{
-                fontSize:      "clamp(6rem, 14vw, 19rem)",
-                color:         "rgba(211,84,0,0.20)",
-                letterSpacing: "-0.04em",
-                lineHeight:    1,
-                display:       "block",
-              }}
-            >
-              06
-            </span>
-          </motion.div>
-
-          {/* Séparateur vertical */}
-          <motion.div
-            style={{ width: 1, alignSelf: "stretch", background: "rgba(211,84,0,0.35)", flexShrink: 0, originY: 0.5 }}
-            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-            transition={{ duration: 0.8, delay: 0.22 }}
-          />
 
           {/* Right: titre empilé, aligné droite */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>

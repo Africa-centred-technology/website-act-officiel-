@@ -70,15 +70,6 @@ function ServiceCard({ svc, index }: { svc: Service; index: number }) {
 
           {/* Header : numéro + icône */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span style={{
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(11px, 0.9rem, 1rem)",
-              letterSpacing: "0.2em",
-              color: `${svc.accent}CC`,
-              fontWeight: 500,
-            }}>
-              {svc.n}
-            </span>
             <div style={{
               width: 40, height: 40, borderRadius: "0.6rem",
               background: `${svc.accent}12`,

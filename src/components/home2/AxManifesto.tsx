@@ -44,7 +44,7 @@ export default function AxManifesto() {
     <section
       ref={ref}
       className="relative"
-      style={{ background: "#040A06", minHeight: "160vh", padding: "12rem 6rem 10rem" }}
+      style={{ background: "#040A06", minHeight: "160vh", padding: "clamp(5rem, 10vw, 12rem) clamp(1.5rem, 5vw, 6rem) clamp(4rem, 8vw, 10rem)" }}
     >
       {/* Eyebrow */}
       <motion.div

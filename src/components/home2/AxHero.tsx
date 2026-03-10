@@ -86,7 +86,7 @@ export default function AxHero() {
         }}
       />
 
-      <div className="relative" style={{ padding: "0 6rem", zIndex: 4 }}>
+      <div className="relative" style={{ padding: "0 clamp(1.5rem, 5vw, 6rem)", zIndex: 4 }}>
 
         {/* Eyebrow */}
         <motion.div
@@ -160,7 +160,7 @@ export default function AxHero() {
             ACT fusionne l&apos;intelligence artificielle et l&apos;ingénierie de pointe
             pour propulser les entreprises africaines au sommet de l&apos;innovation mondiale.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-6">
             <CTAButton href="/contact">Démarrer votre transformation</CTAButton>
             <div className="flex items-center gap-2 text-white/25 uppercase" style={{ fontSize: "1.1rem", letterSpacing: "0.2em" }}>
               <span className="diamond diamond--sm" />
@@ -173,7 +173,7 @@ export default function AxHero() {
       {/* Animated scroll pulse */}
       <motion.div
         className="absolute"
-        style={{ bottom: "3.5rem", right: "5rem", zIndex: 4 }}
+        style={{ bottom: "3.5rem", right: "clamp(1.5rem, 4vw, 5rem)", zIndex: 4 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.7 }}

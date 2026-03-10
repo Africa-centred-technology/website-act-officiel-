@@ -58,31 +58,11 @@ export default function RoomAxiomes() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative flex flex-col justify-center overflow-hidden"
-      style={{ width: "100%", height: "100%", padding: "5rem 5rem 12rem" }}
+      className="relative flex flex-col justify-center overflow-hidden room-pad"
+      style={{ width: "100%", height: "100%" }}
     >
       <RoomBackground variant="musee" />
 
-      {/* ── Deep BG: room number — blur-focus entry ── */}
-      <motion.div
-        aria-hidden
-        className="absolute select-none pointer-events-none font-black"
-        style={{
-          left:          "2%",
-          bottom:        "6%",
-          fontSize:      "clamp(12rem, 20vw, 26rem)",
-          lineHeight:    1,
-          color:         "rgba(211,84,0,0.055)",
-          letterSpacing: "-0.04em",
-          x:             bgX,
-          y:             bgY,
-        }}
-        initial={{ scale: 1.18, opacity: 0, filter: "blur(20px)" }}
-        animate={{ scale: 1,    opacity: 1, filter: "blur(0px)"  }}
-        transition={{ duration: 1.9, ease: [0.6, 0.08, 0.02, 0.99] }}
-      >
-        05
-      </motion.div>
 
       {/* ── Header split gauche/droite : 05 ← | → LES AXIOMES ── */}
       <motion.div
@@ -102,16 +82,6 @@ export default function RoomAxiomes() {
               Chiffres Clés · Nos Axiomes
             </span>
           </motion.div>
-          <motion.span
-            aria-hidden
-            className="font-black select-none block"
-            style={{ fontSize: "clamp(5rem, 11vw, 15rem)", color: "rgba(211,84,0,0.20)", letterSpacing: "-0.04em", lineHeight: 1 }}
-            initial={{ x: -50, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1.0, ease: [0.6, 0.08, 0.02, 0.99] }}
-          >
-            05
-          </motion.span>
         </div>
 
         {/* Séparateur vertical */}
@@ -146,7 +116,7 @@ export default function RoomAxiomes() {
 
       {/* ── Stats 4-column grid — "AXIOMES" fragmenté comme tâches de peinture ── */}
       {/* AX · IO · ME · S — un fragment par colonne, ghost en arrière-plan */}
-      <div className="grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+      <div className="room-grid-4">
         {stats.map((s, i) => {
           const depthScale  = 0.72 + i * 0.07;
           const depthBlur   = 12  - i * 3;

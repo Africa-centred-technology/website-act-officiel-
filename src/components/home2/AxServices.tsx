@@ -48,7 +48,8 @@ function HoloCard({ svc, index }: { svc: (typeof services)[0]; index: number }) 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.7, delay: index * 0.15 }}
-      style={{ perspective: "1100px", cursor: "none" }}
+      style={{ perspective: "1100px" }}
+      className="holo-card-wrap"
     >
       <motion.div
         ref={ref}
@@ -59,8 +60,8 @@ function HoloCard({ svc, index }: { svc: (typeof services)[0]; index: number }) 
         style={{
           transformStyle: "preserve-3d",
           position: "relative",
-          padding: "4.5rem 3.5rem",
-          minHeight: "44rem",
+          padding: "clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 3vw, 3.5rem)",
+          minHeight: "clamp(32rem, 38vw, 44rem)",
           display: "flex",
           flexDirection: "column",
           background: "rgba(3,6,10,0.82)",
@@ -157,7 +158,7 @@ export default function AxServices() {
       className="relative"
       style={{ background: "rgba(3,6,10,0.90)", zIndex: 2, borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div style={{ padding: "8rem 6rem" }}>
+      <div style={{ padding: "clamp(4rem, 7vw, 8rem) clamp(1.5rem, 5vw, 6rem)" }}>
         {/* Header */}
         <motion.div
           className="flex items-end justify-between mb-16"
@@ -183,7 +184,7 @@ export default function AxServices() {
         </motion.div>
 
         {/* Holographic 3-col grid */}
-        <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+        <div className="ax-services-grid">
           {services.map((svc, i) => (
             <HoloCard key={svc.n} svc={svc} index={i} />
           ))}

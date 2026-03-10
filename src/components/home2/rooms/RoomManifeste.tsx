@@ -55,8 +55,8 @@ export default function RoomManifeste() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative flex flex-col justify-center overflow-hidden"
-      style={{ width: "100%", height: "100%", padding: "5rem 6rem 12rem" }}
+      className="relative flex flex-col justify-center overflow-hidden room-pad"
+      style={{ width: "100%", height: "100%" }}
     >
       <RoomBackground variant="maison" />
 
@@ -78,16 +78,6 @@ export default function RoomManifeste() {
               Notre Manifeste
             </span>
           </motion.div>
-          <motion.span
-            aria-hidden
-            className="font-black select-none block"
-            style={{ fontSize: "clamp(5rem, 11vw, 15rem)", color: "rgba(211,84,0,0.20)", letterSpacing: "-0.04em", lineHeight: 1 }}
-            initial={{ x: -50, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1.0, ease: ease3D }}
-          >
-            04
-          </motion.span>
         </div>
 
         {/* Séparateur vertical */}

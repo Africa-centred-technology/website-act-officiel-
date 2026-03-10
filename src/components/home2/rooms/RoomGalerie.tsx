@@ -84,8 +84,8 @@ export default function RoomGalerie() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative flex flex-col overflow-hidden"
-      style={{ width: "100%", height: "100%", padding: "4.5rem 5rem 10rem" }}
+      className="relative flex flex-col overflow-hidden room-pad"
+      style={{ width: "100%", height: "100%" }}
     >
       <RoomBackground variant="marche" />
 
@@ -107,16 +107,6 @@ export default function RoomGalerie() {
               Portfolio · Nos Réalisations
             </span>
           </motion.div>
-          <motion.span
-            aria-hidden
-            className="font-black select-none block"
-            style={{ fontSize: "clamp(5rem, 11vw, 15rem)", color: "rgba(211,84,0,0.20)", letterSpacing: "-0.04em", lineHeight: 1 }}
-            initial={{ x: -50, opacity: 0, filter: "blur(18px)" }}
-            animate={{ x: 0,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1.0, ease: [0.6, 0.08, 0.02, 0.99] }}
-          >
-            03
-          </motion.span>
         </div>
 
         {/* Séparateur vertical */}
@@ -179,7 +169,7 @@ export default function RoomGalerie() {
                 ease:     [0.6, 0.08, 0.02, 0.99],
               }}
               className="relative overflow-hidden"
-              style={{ cursor: "none" }}
+              style={{  }}
               onMouseEnter={() => setHovered(p.id)}
               onMouseLeave={() => setHovered(null)}
             >
