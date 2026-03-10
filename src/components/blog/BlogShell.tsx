@@ -152,16 +152,16 @@ export default function BlogShell() {
       {/* ── IMMERSIVE SPACER ── 
           Acts as the bridge between Vision and Content
       */}
-      <section 
-        style={{ 
-          height: "60vh", 
-          display: "flex", 
-          flexDirection: "column", 
-          alignItems: "center", 
+      <section
+        style={{
+          height: "60vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
           position: "relative",
           zIndex: 2,
-          marginTop: "-10vh" // Slight overlap
+          marginTop: "-10vh",
         }}
       >
         {/* The growing vertical line */}
@@ -184,11 +184,11 @@ export default function BlogShell() {
             textAlign: "center"
           }}
         >
-          <span style={{ 
-            color: V.dim, 
-            fontSize: "11px", 
-            fontFamily: FONT_BODY, 
-            textTransform: "uppercase", 
+          <span style={{
+            color: V.dim,
+            fontSize: "11px",
+            fontFamily: FONT_BODY,
+            textTransform: "uppercase",
             letterSpacing: "0.3em",
             fontWeight: 600
           }}>
@@ -265,18 +265,19 @@ export default function BlogShell() {
               <span style={{ width: "32px", height: "1px", background: V.orange, opacity: 0.6 }} />
             </div>
 
-            <h2 
+            <h2
               className="section-header-title"
               style={{
-              fontSize: "clamp(3.5rem, 5vw, 5.5rem)",
-              fontFamily: "'Bebas Neue', Futura, sans-serif",
-              fontWeight: 400,
-              color: V.cream,
-              textTransform: "uppercase" as const,
-              letterSpacing: "0.05em",
-              margin: 0,
-              lineHeight: 1,
-            }}>
+                fontSize: "clamp(3.5rem, 5vw, 5.5rem)",
+                fontFamily: "'Bebas Neue', Futura, sans-serif",
+                fontWeight: 400,
+                color: V.cream,
+                textTransform: "uppercase" as const,
+                letterSpacing: "0.05em",
+                margin: 0,
+                lineHeight: 1,
+              }}
+            >
               L'écosystème <span style={{ color: V.orange }}>par Rubriques</span>
             </h2>
 

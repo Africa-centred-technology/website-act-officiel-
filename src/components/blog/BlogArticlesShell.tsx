@@ -156,7 +156,7 @@ export default function BlogArticlesShell() {
   };
 
   return (
-    <div style={{ background: "#06120e", minHeight: "100vh" }}>
+    <div style={{ background: "#070E1C", minHeight: "100vh" }}>
       {/* ── HEADER ── */}
       <section
         ref={headerRef}
@@ -668,7 +668,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
       >
         <div
           style={{
-            background: "#080c08",
+            background: "#0d1b2e",
             border: "1px solid rgba(255,255,255,0.05)",
             borderRadius: "1.2rem",
             overflow: "hidden",
@@ -701,7 +701,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
               style={{
                 position: "absolute",
                 inset: 0,
-                background: `linear-gradient(to right, transparent 30%, #080c08)`,
+                background: `linear-gradient(to right, transparent 30%, #0d1b2e)`,
               }}
             />
             {/* Top Left Badge */}

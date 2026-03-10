@@ -125,7 +125,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
     .slice(0, 3);
 
   return (
-    <div style={{ background: "#06120e", minHeight: "100vh" }}>
+    <div style={{ background: "#070E1C", minHeight: "100vh" }}>
       {/* ── HERO ── */}
       <section
         ref={heroRef}
@@ -161,7 +161,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to bottom, transparent 0%, transparent 30%, rgba(6,18,14,0.9) 85%, #06120e 100%)",
+            background: "linear-gradient(to bottom, transparent 0%, transparent 30%, rgba(7,14,28,0.9) 85%, #070E1C 100%)",
             zIndex: 1,
             pointerEvents: "none",
           }}
