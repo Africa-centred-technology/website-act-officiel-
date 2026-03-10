@@ -161,7 +161,9 @@ export default function BlogShell() {
               <span style={{ width: "32px", height: "1px", background: V.orange, opacity: 0.6 }} />
             </div>
 
-            <h2 style={{
+            <h2 
+              className="section-header-title"
+              style={{
               fontSize: "clamp(3.5rem, 5vw, 5.5rem)",
               fontFamily: "'Bebas Neue', Futura, sans-serif",
               fontWeight: 400,
@@ -186,12 +188,23 @@ export default function BlogShell() {
             </p>
           </motion.div>
 
-          {/* 3-column grid with enhanced staggered reveal */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "3.2rem",
-          }}>
+          <style>{`
+            .categories-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 3.2rem;
+            }
+            @media (max-width: 992px) {
+              .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            @media (max-width: 768px) {
+              .categories-grid { grid-template-columns: 1fr; gap: 2rem; }
+              .section-header-title { font-size: clamp(3rem, 8vw, 4rem) !important; }
+            }
+          `}</style>
+
+          {/* Responsive grid with enhanced staggered reveal */}
+          <div className="categories-grid">
             {categories.filter(c => c.value !== "all").map((cat, i) => {
               const articleCount = blogPosts.filter(p => p.category === cat.label).length;
 

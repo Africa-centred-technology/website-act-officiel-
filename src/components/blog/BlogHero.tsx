@@ -145,11 +145,29 @@ export default function BlogHero() {
 
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @media (max-width: 992px) {
+          .hero-grid { 
+            grid-template-columns: 1fr !important; 
+            min-height: auto !important; 
+          }
+          .hero-left { 
+            border-right: none !important; 
+            border-bottom: 1px solid ${V.border}; 
+            padding: 6rem 2rem 4rem 2rem !important; 
+          }
+          .hero-right { 
+            padding: 4rem 2rem !important; 
+          }
+          .title-display { 
+            font-size: clamp(70px, 18vw, 120px) !important; 
+          }
+        }
       `}</style>
 
       {/* ── HERO SECTION ── */}
       <section
         ref={heroRef}
+        className="hero-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
@@ -158,6 +176,7 @@ export default function BlogHero() {
       >
         {/* ═══ LEFT: Giant title + stats ═══ */}
         <div
+          className="hero-left"
           style={{
             position: "relative",
             borderRight: `1px solid ${V.border}`,
@@ -190,6 +209,7 @@ export default function BlogHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.05, ease }}
+            className="title-display"
             style={{
               fontFamily: FONT_DISPLAY,
               fontSize: "clamp(100px, 16vw, 200px)",
@@ -334,6 +354,7 @@ export default function BlogHero() {
 
         {/* ═══ RIGHT: Content + actions ═══ */}
         <div
+          className="hero-right"
           style={{
             display: "flex",
             flexDirection: "column",
