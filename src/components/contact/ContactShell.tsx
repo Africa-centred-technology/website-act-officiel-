@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Linkedin, Facebook, Youtube } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube } from "lucide-react";
 
 /* ── Data ──────────────────────────────────────────────── */
 const CONTACT_INFO = [
@@ -609,9 +609,9 @@ export default function ContactShell() {
               <SLabel>Suivez-nous</SLabel>
               <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap" }}>
                 {[
-                  { label: "LinkedIn", href: "https://linkedin.com/company/africa-centred-technology", Icon: Linkedin },
-                  { label: "Facebook", href: "https://facebook.com/actafrica", Icon: Facebook },
-                  { label: "YouTube",  href: "https://youtube.com/@actafrica",  Icon: Youtube },
+                  { label: "Instagram", href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", Icon: Instagram },
+                  { label: "YouTube",   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           Icon: Youtube   },
+                  { label: "Facebook",  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    Icon: Facebook  },
                 ].map((s) => (
                   <a
                     key={s.label}
