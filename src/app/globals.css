@@ -771,6 +771,53 @@ body[data-scrolling-direction="up"] .navbar {
   }
 }
 
+/* ── Contact page ────────────────────────────────────── */
+
+/* Hero bottom: description + liens → stack mobile */
+.contact-hero-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 4rem;
+}
+@media (max-width: 768px) {
+  .contact-hero-bottom { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Cards: 4 colonnes → 2 → 1 */
+.contact-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.5rem);
+}
+@media (max-width: 900px) {
+  .contact-cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .contact-cards-grid { grid-template-columns: 1fr; }
+}
+
+/* Form layout: formulaire + sidebar → 1 col mobile */
+.contact-form-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+@media (max-width: 1024px) {
+  .contact-form-layout { grid-template-columns: 1fr; }
+}
+
+/* Form row: 2 cols → 1 col */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
 /* ── Project detail page ─────────────────────────────── */
 
 /* Meta bar: 4 items en ligne → 2×2 → empilé */
