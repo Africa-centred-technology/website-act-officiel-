@@ -12,44 +12,43 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
-import RoomBackground from "@/components/home2/RoomBackground";
 
 const projects = [
   {
-    id:       "rag",
-    index:    "01",
-    title:    "Système RAG Multi-sources",
+    id: "rag",
+    index: "01",
+    title: "Système RAG Multi-sources",
     category: "Intelligence Artificielle",
-    year:     "2024–25",
-    desc:     "Système de récupération augmentée multimodal intégrant documents, images, audio et vidéo pour opérer en environnement à faible connectivité.",
-    image:    "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    year: "2024–25",
+    desc: "Système de récupération augmentée multimodal intégrant documents, images, audio et vidéo pour opérer en environnement à faible connectivité.",
+    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
   },
   {
-    id:       "cod",
-    index:    "02",
-    title:    "CODRescue Platform",
+    id: "cod",
+    index: "02",
+    title: "CODRescue Platform",
     category: "E-commerce & Logistique",
-    year:     "2024",
-    desc:     "Plateforme complète de gestion e-commerce avec dashboards en temps réel, intégrations multi-transporteurs et optimisation des coûts.",
-    image:    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    year: "2024",
+    desc: "Plateforme complète de gestion e-commerce avec dashboards en temps réel, intégrations multi-transporteurs et optimisation des coûts.",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
   },
   {
-    id:       "sig",
-    index:    "03",
-    title:    "GreenSIG V1",
+    id: "sig",
+    index: "03",
+    title: "GreenSIG V1",
     category: "SIG & IoT",
-    year:     "2026",
-    desc:     "Application de gestion des espaces verts avec cartographie interactive, suivi temps réel des interventions et capteurs IoT terrain.",
-    image:    "https://images.unsplash.com/photo-1542601906897-a1cf845e6ed6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    year: "2026",
+    desc: "Application de gestion des espaces verts avec cartographie interactive, suivi temps réel des interventions et capteurs IoT terrain.",
+    image: "https://images.unsplash.com/photo-1542601906897-a1cf845e6ed6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
   },
   {
-    id:       "gam",
-    index:    "04",
-    title:    "GAM — Génies Afrique Médias",
+    id: "gam",
+    index: "04",
+    title: "GAM — Génies Afrique Médias",
     category: "Média & Éditorial",
-    year:     "2026",
-    desc:     "Web TV panafricaine avec architecture headless, gestion éditoriale avancée et diffusion multi-canal pour 15 pays africains.",
-    image:    "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
+    year: "2026",
+    desc: "Web TV panafricaine avec architecture headless, gestion éditoriale avancée et diffusion multi-canal pour 15 pays africains.",
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80",
   },
 ];
 
@@ -58,26 +57,26 @@ const projects = [
  * with a distinct depth (scale) to suggest stacking from 3D space.
  */
 const PHOTO_ENTRY = [
-  { x: "-18%", y: "8%",   scale: 0.80, blur: 10, delay: 0.05 }, // TL — from left, deepest
-  { x:  "18%", y: "8%",   scale: 0.82, blur: 8,  delay: 0.18 }, // TR — from right
-  { x: "-10%", y: "14%",  scale: 0.87, blur: 5,  delay: 0.30 }, // BL — from below-left
-  { x:  "10%", y: "14%",  scale: 0.92, blur: 3,  delay: 0.42 }, // BR — shallowest, last
+  { x: "-18%", y: "8%", scale: 0.80, blur: 10, delay: 0.05 }, // TL — from left, deepest
+  { x: "18%", y: "8%", scale: 0.82, blur: 8, delay: 0.18 }, // TR — from right
+  { x: "-10%", y: "14%", scale: 0.87, blur: 5, delay: 0.30 }, // BL — from below-left
+  { x: "10%", y: "14%", scale: 0.92, blur: 3, delay: 0.42 }, // BR — shallowest, last
 ];
 
 export default function RoomGalerie() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   /* ── 3-layer parallax ── */
-  const mx  = useMotionValue(0);
-  const my  = useMotionValue(0);
-  const bgX  = useSpring(mx, { stiffness: 28, damping: 18 });
-  const bgY  = useSpring(my, { stiffness: 28, damping: 18 });
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const bgX = useSpring(mx, { stiffness: 28, damping: 18 });
+  const bgY = useSpring(my, { stiffness: 28, damping: 18 });
   const midX = useSpring(mx, { stiffness: 62, damping: 22 });
   const midY = useSpring(my, { stiffness: 62, damping: 22 });
-  const fgX  = useSpring(mx, { stiffness: 110, damping: 24 });
+  const fgX = useSpring(mx, { stiffness: 110, damping: 24 });
 
   const onMouseMove = (e: React.MouseEvent) => {
-    mx.set((e.clientX / window.innerWidth  - 0.5) * 2);
+    mx.set((e.clientX / window.innerWidth - 0.5) * 2);
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
 
@@ -87,7 +86,7 @@ export default function RoomGalerie() {
       className="relative flex flex-col overflow-hidden room-pad"
       style={{ width: "100%", height: "100%" }}
     >
-      <RoomBackground variant="marche" />
+
 
       {/* ── Header split gauche/droite : 03 ← | → LA GALERIE ── */}
       <motion.div
@@ -123,13 +122,13 @@ export default function RoomGalerie() {
               <motion.span
                 className="font-black uppercase inline-block"
                 style={{
-                  fontSize:      "clamp(2.8rem, 6.5vw, 9.5rem)",
-                  lineHeight:    1,
+                  fontSize: "clamp(2.8rem, 6.5vw, 9.5rem)",
+                  lineHeight: 1,
                   letterSpacing: "-0.03em",
-                  color:         "#ffffff",
+                  color: "#ffffff",
                 }}
                 initial={{ y: "110%", skewX: 10 }}
-                animate={{ y: "0%",   skewX: 0  }}
+                animate={{ y: "0%", skewX: 0 }}
                 transition={{ duration: 0.7, delay: 0.15 + ci * 0.040, ease: [0.6, 0.08, 0.02, 0.99] }}
               >
                 {ch === " " ? "\u00A0" : ch}
@@ -151,25 +150,25 @@ export default function RoomGalerie() {
               key={p.id}
               initial={{
                 opacity: 0,
-                x:       entry.x,
-                y:       entry.y,
-                scale:   entry.scale,
-                filter:  `blur(${entry.blur}px)`,
+                x: entry.x,
+                y: entry.y,
+                scale: entry.scale,
+                filter: `blur(${entry.blur}px)`,
               }}
               animate={{
                 opacity: 1,
-                x:       "0%",
-                y:       "0%",
-                scale:   1,
-                filter:  "blur(0px)",
+                x: "0%",
+                y: "0%",
+                scale: 1,
+                filter: "blur(0px)",
               }}
               transition={{
                 duration: 0.85,
-                delay:    entry.delay,
-                ease:     [0.6, 0.08, 0.02, 0.99],
+                delay: entry.delay,
+                ease: [0.6, 0.08, 0.02, 0.99],
               }}
               className="relative overflow-hidden"
-              style={{  }}
+              style={{}}
               onMouseEnter={() => setHovered(p.id)}
               onMouseLeave={() => setHovered(null)}
             >
@@ -182,7 +181,7 @@ export default function RoomGalerie() {
                 className="object-cover"
                 style={{
                   transition: "transform 0.75s ease",
-                  transform:  hovered === p.id ? "scale(1.07)" : "scale(1.0)",
+                  transform: hovered === p.id ? "scale(1.07)" : "scale(1.0)",
                 }}
               />
 

@@ -10,7 +10,6 @@ import React from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const ease3D = [0.6, 0.08, 0.02, 0.99] as const;
-import RoomBackground from "@/components/home2/RoomBackground";
 
 const MANIFESTO =
   "La technologie n'a de valeur que lorsqu'elle crée un impact réel. Nous ne nous contentons pas d'implémenter des technologies. Nous concevons des solutions qui créent de la valeur durable pour les organisations. En combinant intelligence artificielle, analyse de données et automatisation, nous aidons les entreprises à transformer leurs défis en opportunités et à construire les systèmes qui soutiendront leur croissance de demain.";
@@ -23,23 +22,23 @@ function BlinkCursor({ delay }: { delay: number }) {
     <motion.span
       aria-hidden
       style={{
-        display:       "inline-block",
-        width:         "3px",
-        height:        "0.82em",
-        background:    "#D35400",
-        marginLeft:    "0.15em",
+        display: "inline-block",
+        width: "3px",
+        height: "0.82em",
+        background: "#D35400",
+        marginLeft: "0.15em",
         verticalAlign: "middle",
-        borderRadius:  1,
-        flexShrink:    0,
+        borderRadius: 1,
+        flexShrink: 0,
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
       transition={{
         delay,
         duration: 1.05,
-        repeat:   Infinity,
-        ease:     "linear",
-        times:    [0, 0.04, 0.06, 0.5, 0.52, 1],
+        repeat: Infinity,
+        ease: "linear",
+        times: [0, 0.04, 0.06, 0.5, 0.52, 1],
       }}
     />
   );
@@ -86,11 +85,18 @@ export default function RoomManifeste() {
       className="relative flex flex-col justify-center overflow-hidden room-pad"
       style={{ width: "100%", height: "100%", paddingBottom: "4rem", paddingTop: "4rem" }}
     >
-      <RoomBackground variant="maison" />
+
+
+      {/* ── Section Decoration (Background) ── */}
+      <motion.div
+        aria-hidden
+        className="absolute top-1/4 -right-20 w-96 h-96 bg-[#D35400]/5 blur-[120px] rounded-full"
+        style={{ x: bgX, y: bgY }}
+      />
 
       {/* ── Header split gauche/droite : 04 ← | → LE MANIFESTE ── */}
       <motion.div
-        className="flex items-center gap-6 mb-8"
+        className="flex items-center gap-6 mb-12"
         style={{ x: midX, y: midY }}
       >
         {/* Left: eyebrow + "04" */}
@@ -122,9 +128,9 @@ export default function RoomManifeste() {
               key={wi}
               className="font-black uppercase block"
               style={{
-                fontSize: wi === 0 ? "clamp(1.2rem, 2.5vw, 3rem)" : "clamp(2.2rem, 5vw, 6.5rem)",
-                lineHeight: 1,
-                letterSpacing: "-0.03em",
+                fontSize: wi === 0 ? "clamp(1.5rem, 3vw, 4rem)" : "clamp(3rem, 7vw, 9rem)",
+                lineHeight: 0.85,
+                letterSpacing: "-0.04em",
                 color: wi === 0 ? "rgba(255,255,255,0.4)" : "#ffffff",
                 transformOrigin: "50% 100%",
               }}
@@ -138,32 +144,61 @@ export default function RoomManifeste() {
         </div>
       </motion.div>
 
-      {/* Word-by-word reveal — mid layer — perspective donne le plan incliné */}
-      <motion.div style={{ maxWidth: "90rem", x: midX, perspective: "1100px" }}>
-        <p
-          className="font-bold uppercase"
-          style={{ fontSize: "clamp(1.0rem, 1.55vw, 2.1rem)", lineHeight: 1.58, letterSpacing: "0.02em" }}
-        >
-          {words.map((w, i) => (
-            <Word key={i} word={w} index={i} total={words.length} />
-          ))}
-          <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
-        </p>
-      </motion.div>
+      {/* ── Main Content : Text (Left) + Image (Right) ── */}
+      <div className="flex flex-col lg:flex-row items-center lg:items-center gap-16 lg:gap-24">
 
-      {/* Attribution — foreground accent */}
-      <motion.div
-        className="flex items-center gap-4 mt-8"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
-        style={{ x: fgX }}
-      >
-        <div style={{ width: 36, height: 1, background: "#D35400" }} />
-        <span className="text-white/55 uppercase" style={{ fontSize: "1.15rem", letterSpacing: "0.2em" }}>
-          SOHIAB BAROUD — Fondateur &amp; CEO, ACT
-        </span>
-      </motion.div>
+        {/* Left Side: Text Reveal & Attribution */}
+        <div className="flex-1">
+          {/* Word-by-word reveal — mid layer */}
+          <motion.div style={{ maxWidth: "65rem", x: midX, perspective: "1100px" }}>
+            <p
+              className="font-bold uppercase"
+              style={{ fontSize: "clamp(1.2rem, 2vw, 2.4rem)", lineHeight: 1.45, letterSpacing: "0.01em" }}
+            >
+              {words.map((w, i) => (
+                <Word key={i} word={w} index={i} total={words.length} />
+              ))}
+              <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
+            </p>
+          </motion.div>
+
+          {/* Attribution — foreground accent */}
+          <motion.div
+            className="flex items-center gap-5 mt-12"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
+            style={{ x: fgX }}
+          >
+            <div style={{ width: 48, height: 2, background: "#D35400" }} />
+            <span className="text-white/70 uppercase font-medium" style={{ fontSize: "1.25rem", letterSpacing: "0.25em" }}>
+              SOHIAB BAROUD — Fondateur &amp; CEO, ACT
+            </span>
+          </motion.div>
+        </div>
+
+        {/* Right Side: Manifeste Image */}
+        <motion.div
+          className="w-full lg:w-[45%] flex-shrink-0"
+          style={{ x: fgX, y: midY }}
+          initial={{ opacity: 0, scale: 0.9, x: 40 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: ease3D }}
+        >
+          <div className="relative group">
+            {/* Soft Glow */}
+            <div className="absolute -inset-10 bg-[#D35400]/10 blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
+
+            <img
+              src="/Manifeste.png"
+              alt="Notre Manifeste"
+              className="relative w-full h-auto rounded-3xl grayscale-[15%] hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-[1.02]"
+              style={{ boxShadow: "0 40px 100px -20px rgba(0,0,0,0.8)" }}
+            />
+          </div>
+        </motion.div>
+
+      </div>
     </div>
   );
 }

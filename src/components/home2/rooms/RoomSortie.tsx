@@ -12,21 +12,20 @@ import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
-import RoomBackground from "@/components/home2/RoomBackground";
 import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/about",    label: "À Propos"    },
-  { href: "/services", label: "Services"    },
-  { href: "/projects", label: "Réalisations"},
-  { href: "/blog",     label: "Blog"        },
-  { href: "/contact",  label: "Contact"     },
+  { href: "/about", label: "À Propos" },
+  { href: "/services", label: "Services" },
+  { href: "/projects", label: "Réalisations" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const SOCIALS = [
   { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
-  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
+  { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
+  { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
 ];
 
 function FooterStrip() {
@@ -118,16 +117,16 @@ function FooterStrip() {
 /** Button drifts toward cursor, snaps back on leave */
 function Magnetic({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-  const x   = useMotionValue(0);
-  const y   = useMotionValue(0);
-  const sx  = useSpring(x, { stiffness: 220, damping: 20 });
-  const sy  = useSpring(y, { stiffness: 220, damping: 20 });
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 220, damping: 20 });
+  const sy = useSpring(y, { stiffness: 220, damping: 20 });
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const r = ref.current.getBoundingClientRect();
-    x.set((e.clientX - r.left - r.width  / 2) * 0.32);
-    y.set((e.clientY - r.top  - r.height / 2) * 0.32);
+    x.set((e.clientX - r.left - r.width / 2) * 0.32);
+    y.set((e.clientY - r.top - r.height / 2) * 0.32);
   };
   const onLeave = () => { x.set(0); y.set(0); };
 
@@ -159,9 +158,9 @@ function PortalRing() {
           animate={{ width: "80vmin", height: "80vmin", opacity: 0 }}
           transition={{
             duration: 2.8,
-            delay:    i * 0.55,
-            repeat:   Infinity,
-            ease:     "easeOut",
+            delay: i * 0.55,
+            repeat: Infinity,
+            ease: "easeOut",
           }}
         />
       ))}
@@ -171,17 +170,17 @@ function PortalRing() {
 
 export default function RoomSortie() {
   /* ── 3-layer parallax ── */
-  const mx  = useMotionValue(0);
-  const my  = useMotionValue(0);
-  const bgX  = useSpring(mx, { stiffness: 28, damping: 18 });
-  const bgY  = useSpring(my, { stiffness: 28, damping: 18 });
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const bgX = useSpring(mx, { stiffness: 28, damping: 18 });
+  const bgY = useSpring(my, { stiffness: 28, damping: 18 });
   const midX = useSpring(mx, { stiffness: 62, damping: 22 });
   const midY = useSpring(my, { stiffness: 62, damping: 22 });
-  const fgX  = useSpring(mx, { stiffness: 110, damping: 24 });
-  const fgY  = useSpring(my, { stiffness: 110, damping: 24 });
+  const fgX = useSpring(mx, { stiffness: 110, damping: 24 });
+  const fgY = useSpring(my, { stiffness: 110, damping: 24 });
 
   const onMouseMove = (e: React.MouseEvent) => {
-    mx.set((e.clientX / window.innerWidth  - 0.5) * 2);
+    mx.set((e.clientX / window.innerWidth - 0.5) * 2);
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
 
@@ -189,11 +188,11 @@ export default function RoomSortie() {
   const particles = useMemo(
     () =>
       Array.from({ length: 22 }, (_, i) => ({
-        id:    i,
-        x:     (i * 47 + 11) % 100,
-        y:     (i * 67 + 23) % 100,
-        size:  1.5 + (i % 2),
-        dur:   4.5 + (i % 5) * 1.2,
+        id: i,
+        x: (i * 47 + 11) % 100,
+        y: (i * 67 + 23) % 100,
+        size: 1.5 + (i % 2),
+        dur: 4.5 + (i % 5) * 1.2,
         delay: (i % 6) * 0.8,
       })),
     []
@@ -205,7 +204,7 @@ export default function RoomSortie() {
       className="relative overflow-hidden flex flex-col items-center justify-center text-center room-pad"
       style={{ width: "100%", height: "100%" }}
     >
-      <RoomBackground variant="horizon" />
+
 
       {/* ── Portal rings — expanding from centre on arrival ── */}
       <PortalRing />
@@ -215,7 +214,7 @@ export default function RoomSortie() {
         className="block text-white/10 font-black uppercase absolute"
         style={{ fontSize: "1.1rem", letterSpacing: "0.2em", top: "6%", x: bgX, y: bgY }}
         initial={{ scale: 1.14, opacity: 0, filter: "blur(14px)" }}
-        animate={{ scale: 1,    opacity: 1, filter: "blur(0px)"  }}
+        animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.9, ease: [0.6, 0.08, 0.02, 0.99] }}
       >
         LA SORTIE
@@ -226,14 +225,14 @@ export default function RoomSortie() {
         aria-hidden
         className="absolute pointer-events-none"
         style={{
-          width:        "70vw",
-          height:       "40vw",
-          background:   "radial-gradient(ellipse, rgba(211,84,0,0.09) 0%, transparent 70%)",
+          width: "70vw",
+          height: "40vw",
+          background: "radial-gradient(ellipse, rgba(211,84,0,0.09) 0%, transparent 70%)",
           borderRadius: "50%",
-          top:          "50%",
-          left:         "50%",
-          translateX:   "-50%",
-          translateY:   "-50%",
+          top: "50%",
+          left: "50%",
+          translateX: "-50%",
+          translateY: "-50%",
           x: bgX,
           y: bgY,
         }}
@@ -248,12 +247,12 @@ export default function RoomSortie() {
             key={p.id}
             className="absolute rounded-full"
             style={{
-              left:       `${p.x}%`,
-              top:        `${p.y}%`,
-              width:      p.size,
-              height:     p.size,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: p.size,
+              height: p.size,
               background: "#D35400",
-              boxShadow:  `0 0 ${p.size * 5}px rgba(211,84,0,0.6)`,
+              boxShadow: `0 0 ${p.size * 5}px rgba(211,84,0,0.6)`,
             }}
             animate={{ y: [0, -30, 0], opacity: [0, 0.65, 0] }}
             transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
@@ -308,7 +307,7 @@ export default function RoomSortie() {
         <motion.div
           className="flex flex-wrap items-center justify-center gap-8"
           initial={{ opacity: 0, y: 18, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0,  scale: 1    }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
           style={{ x: fgX, y: fgY }}
         >

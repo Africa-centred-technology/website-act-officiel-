@@ -8,38 +8,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Facebook, Youtube, Instagram } from "lucide-react";
 
 /* ── Tokens ─────────────────────────────────────────────── */
-const EASE   = [0.6, 0.08, 0.02, 0.99] as const;
-const BURST  = [0.04, 0.72, 0.08, 1.0]  as const;
+const EASE = [0.6, 0.08, 0.02, 0.99] as const;
+const BURST = [0.04, 0.72, 0.08, 1.0] as const;
 const ORANGE = "#D35400";
-const GOLD   = "#F39C12";
+const GOLD = "#F39C12";
 
 /* ── Data ───────────────────────────────────────────────── */
 const LEFT_NAV = [
-  { href: "/about",    label: "À Propos",    key: "about"    },
-  { href: "/services", label: "Services",    key: "services" },
-  { href: "/secteurs", label: "Secteurs",    key: "secteurs" },
+  { href: "/about", label: "À Propos", key: "about" },
+  { href: "/services", label: "Services", key: "services" },
+  { href: "/secteurs", label: "Secteurs", key: "secteurs" },
 ];
 
 const RIGHT_NAV = [
   { href: "/projects", label: "Réalisations", key: "projects" },
-  { href: "/blog",    label: "Blog",    key: "blog"    },
+  { href: "/blog", label: "Blog", key: "blog" },
   { href: "/contact", label: "Contact", key: "contact" },
 ];
 
 const MENU_LINKS = [
-  { href: "/",         label: "Accueil",      n: "01", key: "index"    },
-  { href: "/about",    label: "À Propos",     n: "02", key: "about"    },
-  { href: "/services", label: "Services",     n: "03", key: "services" },
-  { href: "/secteurs", label: "Secteurs",     n: "04", key: "secteurs" },
+  { href: "/", label: "Accueil", n: "01", key: "index" },
+  { href: "/about", label: "À Propos", n: "02", key: "about" },
+  { href: "/services", label: "Services", n: "03", key: "services" },
+  { href: "/secteurs", label: "Secteurs", n: "04", key: "secteurs" },
   { href: "/projects", label: "Réalisations", n: "05", key: "projects" },
-  { href: "/blog",     label: "Blog",         n: "06", key: "blog"     },
-  { href: "/contact",  label: "Contact",      n: "07", key: "contact"  },
+  { href: "/blog", label: "Blog", n: "06", key: "blog" },
+  { href: "/contact", label: "Contact", n: "07", key: "contact" },
 ];
 
 const SOCIALS = [
   { icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
-  { icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
+  { icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
+  { icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
 ];
 
 /* ── Orbiting dot helper ────────────────────────────────── */
@@ -76,7 +76,7 @@ function VisualPanel() {
     let t = 0;
 
     const resize = () => {
-      canvas.width  = canvas.offsetWidth;
+      canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
     };
     resize();
@@ -171,9 +171,9 @@ function VisualPanel() {
         ))}
 
         {/* Orbiting dots */}
-        <OrbitDot duration={9}  radius={120} color={ORANGE} size={8} />
-        <OrbitDot duration={15} radius={195} color={GOLD}   delay={1.5} size={7} />
-        <OrbitDot duration={22} radius={268} color={ORANGE} delay={3}   size={6} />
+        <OrbitDot duration={9} radius={120} color={ORANGE} size={8} />
+        <OrbitDot duration={15} radius={195} color={GOLD} delay={1.5} size={7} />
+        <OrbitDot duration={22} radius={268} color={ORANGE} delay={3} size={6} />
 
         {/* Center glow disc */}
         <div style={{
@@ -252,10 +252,10 @@ function VisualPanel() {
    ══════════════════════════════════════════════════════════ */
 export default function Header() {
   const pathname = usePathname();
-  const [open, setOpen]     = useState(false);
-  const [scrolled, setScrolled]       = useState(false);
-  const [progress, setProgress]       = useState(0);
-  const [hovered, setHovered]         = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   /* Scroll tracking */
   useEffect(() => {
@@ -369,7 +369,7 @@ export default function Header() {
           <Link
             href="/"
             className={`navbar-navigation__link${isActive("index") ? " --is-active" : ""}`}
-            style={{ justifySelf: "center", position: "relative", fontFamily: "Futura, sans-serif", fontWeight: 500, fontSize: "clamp(1.05rem, 1.1vw, 1.25rem)", textTransform: "uppercase", letterSpacing: "0.1em" }}
+            style={{ justifySelf: "center", position: "relative", fontFamily: "Futura, sans-serif", fontWeight: 500, fontSize: "clamp(1.2rem, 1.4vw, 1.55rem)", textTransform: "uppercase", letterSpacing: "0.1em" }}
           >
             Accueil
             {isActive("index") && (
@@ -559,7 +559,7 @@ export default function Header() {
                 <div style={{ display: "flex", gap: "2.5rem", flexWrap: "wrap" }}>
                   {[
                     { label: "contact@act.africa", href: "mailto:contact@act.africa" },
-                    { label: "+212 694-528498",    href: "tel:+212694528498"         },
+                    { label: "+212 694-528498", href: "tel:+212694528498" },
                   ].map(({ label, href }) => (
                     <a key={href} href={href} style={{
                       fontFamily: "Futura, system-ui, sans-serif",

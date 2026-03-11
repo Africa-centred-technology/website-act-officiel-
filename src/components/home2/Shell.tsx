@@ -3,13 +3,14 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "framer-motion";
+
 import SpatialNav from "@/components/home2/SpatialNav";
 import RoomEntree from "@/components/home2/rooms/RoomEntree";
 import RoomAtelier from "@/components/home2/rooms/RoomAtelier";
-import RoomGalerie from "@/components/home2/rooms/RoomGalerie";
 import RoomManifeste from "@/components/home2/rooms/RoomManifeste";
-import RoomAxiomes from "@/components/home2/rooms/RoomAxiomes";
 import RoomSortie from "@/components/home2/rooms/RoomSortie";
+import RoomQuiSommesNous from "@/components/home2/rooms/RoomQuiSommesNous";
+import RoomPortail from "@/components/home2/rooms/RoomPortail";
 
 /* Canvas / window-dependent — client only */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -26,10 +27,10 @@ export interface Room {
 
 export const ROOMS: Room[] = [
   { id: "continent", label: "LE CONTINENT", subtitle: "Afrique", number: "01", Component: RoomEntree },
-  { id: "cite", label: "LA CITÉ", subtitle: "Casablanca · Lagos · Nairobi", number: "02", Component: RoomAtelier },
-  { id: "marche", label: "LE MARCHÉ", subtitle: "Bazar · Souk · Grand Marché", number: "03", Component: RoomGalerie },
+  { id: "qui-sommes-nous", label: "QUI SOMMES-NOUS", subtitle: "L'Identité ACT", number: "02", Component: RoomQuiSommesNous },
+  { id: "cite", label: "LA CITÉ", subtitle: "Casablanca · Lagos · Nairobi", number: "03", Component: RoomAtelier },
   { id: "maison", label: "LA MAISON", subtitle: "Architecture & Patrimoine Africain", number: "04", Component: RoomManifeste },
-  { id: "musee", label: "LE MUSÉE", subtitle: "Art Moderne & Innovation", number: "05", Component: RoomAxiomes },
+  { id: "portail", label: "LE PORTAIL", subtitle: "Espace Client Sécurisé", number: "05", Component: RoomPortail },
   { id: "horizon", label: "L'HORIZON", subtitle: "L'Afrique de Demain", number: "06", Component: RoomSortie },
 ];
 
@@ -58,36 +59,24 @@ const THROTTLE = 1300;
  */
 const variants = {
   enter: (dir: number) => ({
-    x: `${dir > 0 ? 5 : -5}%`,
-    y: "3%",
-    scale: 0.13,
-    rotateY: dir > 0 ? 10 : -10,
-    rotateX: 5,
+    y: `${dir > 0 ? 100 : -100}%`,
     opacity: 0,
-    filter: "blur(42px) brightness(0.07) saturate(0.14)",
+    filter: "blur(6px) brightness(0.7)",
     zIndex: 2,
   }),
   center: {
-    x: "0%",
     y: "0%",
-    scale: 1,
-    rotateY: 0,
-    rotateX: 0,
     opacity: 1,
-    filter: "blur(0px) brightness(1.0) saturate(1.0)",
+    filter: "blur(0px) brightness(1.0)",
     zIndex: 2,
-    transition: { duration: 1.38, ease: [0.04, 0.72, 0.08, 1.0] },
+    transition: { duration: 0.85, ease: [0.04, 0.72, 0.08, 1.0] },
   },
   exit: (dir: number) => ({
-    x: `${dir > 0 ? -4 : 4}%`,
-    y: "-2%",
-    scale: 0.08,
-    rotateY: dir > 0 ? -10 : 10,
-    rotateX: -4,
+    y: `${dir > 0 ? -100 : 100}%`,
     opacity: 0,
-    filter: "blur(36px) brightness(0.05) saturate(0.12)",
+    filter: "blur(6px) brightness(0.7)",
     zIndex: 1,
-    transition: { duration: 0.65, ease: [0.60, 0.0, 1.0, 0.42] },
+    transition: { duration: 0.60, ease: [0.60, 0.0, 1.0, 0.42] },
   }),
 };
 
@@ -223,6 +212,9 @@ export default function Home2Shell() {
       <TransitionFlash key={`flash-${current}`} />
       <VignettePulse key={`vgnt-${current}`} />
 
+      {/* Spatial navigation — fixed bottom */}
+      <SpatialNav rooms={ROOMS} current={current} onGoTo={goTo} />
+
       {/* Perspective container — 950px FOV for strong depth-of-field journey */}
       <div
         style={{
@@ -231,8 +223,7 @@ export default function Home2Shell() {
           left: 0,
           right: 0,
           bottom: 0,
-          perspective: "950px",
-          perspectiveOrigin: "50% 46%",
+          overflow: "hidden",
         }}
       >
         <AnimatePresence mode="sync" custom={dir}>
@@ -252,10 +243,26 @@ export default function Home2Shell() {
             <Component />
           </motion.div>
         </AnimatePresence>
+
+        {/* Global Persistent Logo (starting from index 1) */}
+        {current !== 0 && (
+          <motion.div
+            layoutId="logo-continent"
+            className="fixed bottom-3 right-3 z-[100] pointer-events-none"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 0.80, scale: 0.8 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 1.2, ease: [0.04, 0.72, 0.08, 1.0] }}
+          >
+            <img
+              src="/logo/logo_continent.png"
+              alt=""
+              className="w-[clamp(6rem,15vw,20rem)] h-auto filter brightness-90 contrast-110"
+            />
+          </motion.div>
+        )}
       </div>
 
-      {/* Spatial navigation — fixed bottom */}
-      <SpatialNav rooms={ROOMS} current={current} onGoTo={goTo} />
     </div>
   );
 }

@@ -17,12 +17,8 @@
 
 import React, { useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import Link from "next/link";
-import CTAButton from "@/components/ui/CTAButton";
-import RoomBackground from "@/components/home2/RoomBackground";
 
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
-const EASE3D = [0.6, 0.08, 0.02, 0.99] as const;
 
 /* ── Arc de texte en orbite (SVG textPath) ──────────────────────────── */
 function OrbitArc() {
@@ -49,12 +45,12 @@ function OrbitArc() {
         </defs>
         <text
           style={{
-            fontSize:      "3.0",
-            fill:          "rgba(255,255,255,0.07)",
-            fontWeight:    900,
+            fontSize: "3.0",
+            fill: "rgba(255,255,255,0.07)",
+            fontWeight: 900,
             letterSpacing: "1.2",
             textTransform: "uppercase",
-            fontFamily:    "inherit",
+            fontFamily: "inherit",
           }}
         >
           <textPath href="#orbitPath01">
@@ -74,20 +70,20 @@ function ScanLine() {
       aria-hidden
       className="absolute left-0 w-full pointer-events-none"
       style={{
-        height:     "2px",
+        height: "2px",
         background:
           "linear-gradient(to right, transparent 0%, rgba(211,84,0,0.50) 25%, rgba(255,130,30,0.90) 50%, rgba(211,84,0,0.50) 75%, transparent 100%)",
-        boxShadow:  "0 0 28px 5px rgba(211,84,0,0.28)",
-        zIndex:     4,
+        boxShadow: "0 0 28px 5px rgba(211,84,0,0.28)",
+        zIndex: 4,
       }}
       initial={{ top: "-4px", opacity: 0 }}
       animate={{ top: ["−4px", "102%"], opacity: [0, 1, 1, 0] }}
       transition={{
-        duration:    2.6,
-        ease:        "easeInOut",
-        repeat:      Infinity,
+        duration: 2.6,
+        ease: "easeInOut",
+        repeat: Infinity,
         repeatDelay: 8.5,
-        times:       [0, 0.06, 0.92, 1],
+        times: [0, 0.06, 0.92, 1],
       }}
     />
   );
@@ -106,44 +102,46 @@ function WordChars({
   size?: string;
 }) {
   const chars = text.split("");
-  const mid   = Math.floor(chars.length / 2);
+  const mid = Math.floor(chars.length / 2);
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start", marginLeft: indent, marginTop: mt }}>
       {chars.map((ch, i) => {
-        const ord       = fx === "burstOut" ? Math.abs(i - mid) : i;
+        const ord = fx === "burstOut" ? Math.abs(i - mid) : i;
         const charDelay = delay + ord * stagger;
 
         const initial =
           fx === "rollIn"
             ? { y: "-108%", opacity: 0, filter: "blur(4px)" }
             : fx === "burstOut"
-            ? { scale: 0.04, opacity: 0, filter: "blur(22px) brightness(3.2)" }
-            : { y: "108%",  opacity: 0 };
+              ? { scale: 0.04, opacity: 0, filter: "blur(22px) brightness(3.2)" }
+              : { y: "108%", opacity: 0 };
 
         const target =
           fx === "rollIn"
-            ? { y: "0%",  opacity: 1, filter: "blur(0px)" }
+            ? { y: "0%", opacity: 1, filter: "blur(0px)" }
             : fx === "burstOut"
-            ? { scale: 1, opacity: 1, filter: "blur(0px) brightness(1.0)" }
-            : { y: "0%", opacity: 1 };
+              ? { scale: 1, opacity: 1, filter: "blur(0px) brightness(1.0)" }
+              : { y: "0%", opacity: 1 };
 
         const inner = (
           <motion.span
             className="font-black uppercase"
             style={{
-              display:       "inline-block",
+              display: "inline-block",
               color,
-              fontSize:      size,
-              lineHeight:    1,
+              fontSize: size,
+              lineHeight: 1,
               letterSpacing: "-0.03em",
+              textShadow: "0px 12px 40px rgba(0,0,0,0.6)",
+              fontFamily: "'Geist', sans-serif",
             }}
             initial={initial}
             animate={target}
             transition={{
               duration: fx === "burstOut" ? 1.1 : 0.74,
-              delay:    charDelay,
-              ease:     [...BURST],
+              delay: charDelay,
+              ease: [...BURST],
             }}
           >
             {ch}
@@ -163,17 +161,15 @@ function WordChars({
 /* ── Room ────────────────────────────────────────────────────────────── */
 export default function RoomEntree() {
   /* 3-layer parallax */
-  const mx   = useMotionValue(0);
-  const my   = useMotionValue(0);
-  const bgX  = useSpring(mx, { stiffness: 22, damping: 18 });
-  const bgY  = useSpring(my, { stiffness: 22, damping: 18 });
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const bgX = useSpring(mx, { stiffness: 22, damping: 18 });
+  const bgY = useSpring(my, { stiffness: 22, damping: 18 });
   const midX = useSpring(mx, { stiffness: 55, damping: 22 });
   const midY = useSpring(my, { stiffness: 55, damping: 22 });
-  const fgX  = useSpring(mx, { stiffness: 105, damping: 24 });
-  const fgY  = useSpring(my, { stiffness: 105, damping: 24 });
 
   const onMouseMove = (e: React.MouseEvent) => {
-    mx.set((e.clientX / window.innerWidth  - 0.5) * 2);
+    mx.set((e.clientX / window.innerWidth - 0.5) * 2);
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
 
@@ -181,11 +177,11 @@ export default function RoomEntree() {
   const particles = useMemo(
     () =>
       Array.from({ length: 20 }, (_, i) => ({
-        id:    i,
-        x:     (i * 53 + 7)  % 100,
-        y:     (i * 71 + 19) % 100,
-        size:  1.1 + (i % 3) * 0.65,
-        dur:   4.8 + (i % 5) * 1.2,
+        id: i,
+        x: (i * 53 + 7) % 100,
+        y: (i * 71 + 19) % 100,
+        size: 1.1 + (i % 3) * 0.65,
+        dur: 4.8 + (i % 5) * 1.2,
         delay: (i % 7) * 0.55,
       })),
     []
@@ -197,8 +193,6 @@ export default function RoomEntree() {
       className="relative overflow-hidden flex flex-col justify-center room-pad"
       style={{ width: "100%", height: "100%" }}
     >
-      {/* ── Photo savane + Ken Burns ── */}
-      <RoomBackground variant="continent" />
 
       {/* ── Arc de texte en orbite ── */}
       <OrbitArc />
@@ -212,17 +206,17 @@ export default function RoomEntree() {
         aria-hidden
         className="absolute pointer-events-none"
         style={{
-          width:        "85vw",
-          height:       "52vw",
-          background:   "radial-gradient(ellipse, rgba(211,84,0,0.14) 0%, rgba(211,84,0,0.05) 45%, transparent 72%)",
+          width: "85vw",
+          height: "52vw",
+          background: "radial-gradient(ellipse, rgba(211,84,0,0.14) 0%, rgba(211,84,0,0.05) 45%, transparent 72%)",
           borderRadius: "50%",
-          top:          "50%",
-          left:         "48%",
-          translateX:   "-50%",
-          translateY:   "-50%",
-          x:            bgX,
-          y:            bgY,
-          zIndex:       0,
+          top: "50%",
+          left: "48%",
+          translateX: "-50%",
+          translateY: "-50%",
+          x: bgX,
+          y: bgY,
+          zIndex: 0,
         }}
         animate={{ scale: [1, 1.40, 1], opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
@@ -235,19 +229,19 @@ export default function RoomEntree() {
             key={p.id}
             className="absolute rounded-full"
             style={{
-              left:       `${p.x}%`,
-              top:        `${p.y}%`,
-              width:      p.size,
-              height:     p.size,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: p.size,
+              height: p.size,
               background: "#D35400",
-              boxShadow:  `0 0 ${p.size * 6}px rgba(211,84,0,0.55)`,
+              boxShadow: `0 0 ${p.size * 6}px rgba(211,84,0,0.55)`,
             }}
             animate={{ y: [0, -42, 0], opacity: [0, 0.58, 0] }}
             transition={{
               duration: p.dur,
-              repeat:   Infinity,
-              delay:    p.delay,
-              ease:     "easeInOut",
+              repeat: Infinity,
+              delay: p.delay,
+              ease: "easeInOut",
             }}
           />
         ))}
@@ -260,11 +254,11 @@ export default function RoomEntree() {
           aria-hidden
           className="absolute left-0 w-full pointer-events-none"
           style={{
-            height:     1,
+            height: 1,
             background: "rgba(255,255,255,0.05)",
-            top:        pos,
-            originX:    0.5,
-            zIndex:     1,
+            top: pos,
+            originX: 0.5,
+            zIndex: 1,
           }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
@@ -284,57 +278,60 @@ export default function RoomEntree() {
         >
         </motion.div>
 
-        {/* ── Split gauche/droite : 01 ← | → AFRICA / CENTRED / TECHNOLOGY ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+        {/* ── Split gauche/droite : Logo ← | → AFRICA / CENTRED / TECHNOLOGY ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "4rem", justifyContent: "space-between", width: "100%" }}>
+
+          {/* Left — Logo Continent */}
+          <motion.div
+            layoutId="logo-continent"
+            style={{ x: bgX, y: bgY, flexShrink: 0, zIndex: 10 }}
+            initial={{ opacity: 0, scale: 0.7, x: -80, rotate: -3 }}
+            animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
+            exit={{ scale: 0.2, x: 400, y: 400, opacity: 0, rotate: 10 }}
+            transition={{ duration: 1.8, delay: 0.1, ease: BURST }}
+          >
+            <img
+              src="/logo/logo_continent.png"
+              alt="Africa Continent Logo"
+              style={{
+                width: "clamp(30rem, 65vw, 75rem)",
+                height: "auto",
+                filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
+                opacity: 0.99,
+                pointerEvents: "none",
+                userSelect: "none",
+              }}
+            />
+          </motion.div>
 
 
           {/* Right — mots empilés, alignés à droite, perspective 3D */}
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
-            <WordChars text="AFRICA"     delay={0.10} fx="rollIn"   stagger={0.040} size="clamp(3rem, 7.5vw, 10.5rem)" />
-            <WordChars text="CENTRED"    delay={0.30} fx="burstOut" color="#D35400" stagger={0.044} mt="0.15em" size="clamp(1.8rem, 3.5vw, 5rem)" />
-            <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp"   stagger={0.020} mt="0.10em"    size="clamp(2.8rem, 7vw, 9.5rem)" />
+            <WordChars text="AFRICA" delay={0.10} fx="rollIn" stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
+            <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.5rem, 5vw, 7rem)" />
+            <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 1.2, ease: "easeOut" }}
+              style={{
+                marginTop: "2.5rem",
+                color: "rgba(255,255,255,0.85)",
+                letterSpacing: "0.45em",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                fontSize: "clamp(0.9rem, 1.8vw, 1.4rem)",
+                textShadow: "0px 4px 15px rgba(0,0,0,0.5)",
+                fontFamily: "'Geist', sans-serif",
+              }}
+            >
+              Let's spark the change
+            </motion.p>
           </div>
 
         </div>
 
-        {/* Règle orange */}
-        <motion.div
-          style={{ height: 1, background: "rgba(211,84,0,0.55)", originX: 0, marginTop: "2.8rem", marginBottom: "2rem" }}
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }}
-        />
-
-        {/* Sous-titre */}
-        <motion.p
-          className="text-white/60"
-          style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "44rem" }}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.95, duration: 0.65 }}
-        >
-          Votre partenaire stratégique pour l&apos;ère de l&apos;Intelligence Artificielle
-          africaine — où la technologie rencontre le continent.
-        </motion.p>
-
-        {/* CTAs — foreground layer */}
-        <motion.div
-          className="flex flex-wrap items-center gap-8 mt-10"
-          style={{ x: fgX, y: fgY }}
-          initial={{ opacity: 0, y: 18, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0,  scale: 1    }}
-          transition={{ delay: 1.15, duration: 0.60 }}
-        >
-          <CTAButton href="/contact">Démarrer un projet</CTAButton>
-          <Link
-            href="/services"
-            className="flex items-center gap-3 text-white/50 hover:text-white transition-colors uppercase"
-            style={{ fontSize: "1.15rem", letterSpacing: "0.12em" }}
-          >
-            <span className="diamond diamond--sm" />
-            Nos expertises
-          </Link>
-        </motion.div>
       </motion.div>
     </div>
   );
