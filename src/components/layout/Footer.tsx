@@ -11,31 +11,66 @@ import { usePathname } from "next/navigation";
 const ROOMS_PAGES = ["/", "/about", "/services", "/projects", "/contact", "/blog", "/blog/articles", "/secteurs"];
 
 const navLinks = [
-  { label: "Accueil",      href: "/" },
-  { label: "À Propos",     href: "/about" },
-  { label: "Services",     href: "/services" },
+  { label: "Accueil", href: "/" },
+  { label: "À Propos", href: "/about" },
+  { label: "Services", href: "/services" },
   { label: "Réalisations", href: "/projects" },
-  { label: "Blog",         href: "/blog" },
-  { label: "Contact",      href: "/contact" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const socials = [
-  { icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
-  { icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==",
+    label: "Instagram",
+  },
+  {
+    icon: Youtube,
+    href: "https://www.youtube.com/@AfricaCentredTechnology",
+    label: "YouTube",
+  },
+  {
+    icon: Facebook,
+    href: "https://web.facebook.com/profile.php?id=61585541019830",
+    label: "Facebook",
+  },
 ];
 
 const marqueeItems = [
-  "ACT", "×", "AFRIQUE", "×", "TECHNOLOGIE", "×",
-  "INTELLIGENCE ARTIFICIELLE", "×", "INNOVATION", "×",
-  "TRANSFORMATION DIGITALE", "×", "INGÉNIERIE", "×",
-  "ACT", "×", "AFRIQUE", "×", "TECHNOLOGIE", "×",
-  "INTELLIGENCE ARTIFICIELLE", "×", "INNOVATION", "×",
-  "TRANSFORMATION DIGITALE", "×", "INGÉNIERIE", "×",
+  "ACT",
+  "×",
+  "AFRIQUE",
+  "×",
+  "TECHNOLOGIE",
+  "×",
+  "INTELLIGENCE ARTIFICIELLE",
+  "×",
+  "INNOVATION",
+  "×",
+  "TRANSFORMATION DIGITALE",
+  "×",
+  "INGÉNIERIE",
+  "×",
+  "ACT",
+  "×",
+  "AFRIQUE",
+  "×",
+  "TECHNOLOGIE",
+  "×",
+  "INTELLIGENCE ARTIFICIELLE",
+  "×",
+  "INNOVATION",
+  "×",
+  "TRANSFORMATION DIGITALE",
+  "×",
+  "INGÉNIERIE",
+  "×",
 ];
 
 export default function Footer() {
   const pathname = usePathname();
+
   if (ROOMS_PAGES.some(p => pathname === p || pathname.startsWith(p + "/"))) return null;
 
   return (
@@ -54,11 +89,11 @@ export default function Footer() {
               key={i}
               className={`whitespace-nowrap px-5 ${
                 item === "×"
-                  ? "text-[#D35400] text-[1.4rem]"
+                  ? "text-[#D35400] text-[1.8rem]"
                   : "text-white/25 font-black uppercase"
               }`}
               style={{
-                fontSize: item === "×" ? "1.4rem" : "1.3rem",
+                fontSize: item === "×" ? "1.8rem" : "1.7rem",
                 letterSpacing: "0.15em",
               }}
             >
@@ -70,7 +105,6 @@ export default function Footer() {
 
       {/* ── Footer grid (clone named areas) ── */}
       <div className="footer-grid">
-
         {/* Navigation */}
         <div style={{ gridArea: "nav" }}>
           <nav className="flex flex-col gap-3">
@@ -79,11 +113,9 @@ export default function Footer() {
                 <Link
                   href={link.href}
                   className="flex items-center gap-3 group"
-                  style={{ fontSize: "1.4rem" }}
+                  style={{ fontSize: "1.9rem" }}
                 >
-                  <span
-                    className="diamond diamond--sm opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
+                  <span className="diamond diamond--sm opacity-0 group-hover:opacity-100 transition-opacity" />
                   <span className="text-white/40 hover:text-white transition-colors uppercase tracking-wide font-black">
                     {link.label}
                   </span>
@@ -97,7 +129,7 @@ export default function Footer() {
         <div style={{ gridArea: "contact" }}>
           <p
             className="text-white/30 uppercase tracking-[0.2em] mb-4"
-            style={{ fontSize: "1.1rem" }}
+            style={{ fontSize: "1.5rem" }}
           >
             Contact
           </p>
@@ -105,18 +137,18 @@ export default function Footer() {
             <a
               href="mailto:contact@act.africa"
               className="text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.4rem" }}
+              style={{ fontSize: "1.9rem" }}
             >
               contact@act.africa
             </a>
             <a
               href="tel:+212694528498"
               className="text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.4rem" }}
+              style={{ fontSize: "1.9rem" }}
             >
               +212 694-528498
             </a>
-            <p className="text-white/40 mt-2" style={{ fontSize: "1.3rem" }}>
+            <p className="text-white/40 mt-2" style={{ fontSize: "1.7rem" }}>
               Casablanca, Maroc
             </p>
           </div>
@@ -126,7 +158,7 @@ export default function Footer() {
         <div style={{ gridArea: "socials" }}>
           <p
             className="text-white/30 uppercase tracking-[0.2em] mb-4"
-            style={{ fontSize: "1.1rem" }}
+            style={{ fontSize: "1.5rem" }}
           >
             Réseaux Sociaux
           </p>
@@ -141,8 +173,8 @@ export default function Footer() {
                 className="flex items-center gap-3 text-white/40 hover:text-white transition-colors"
                 whileHover={{ x: 5 }}
               >
-                <Icon size={16} />
-                <span style={{ fontSize: "1.3rem" }}>{label}</span>
+                <Icon size={22} />
+                <span style={{ fontSize: "1.7rem" }}>{label}</span>
               </motion.a>
             ))}
           </div>
@@ -152,17 +184,20 @@ export default function Footer() {
         <div style={{ gridArea: "careers" }}>
           <p
             className="text-white/30 uppercase tracking-[0.2em] mb-4"
-            style={{ fontSize: "1.1rem" }}
+            style={{ fontSize: "1.5rem" }}
           >
             Carrières
           </p>
-          <p className="text-white/50 mb-4 max-w-[240px]" style={{ fontSize: "1.3rem", lineHeight: 1.6 }}>
+          <p
+            className="text-white/50 mb-4 max-w-[320px]"
+            style={{ fontSize: "1.7rem", lineHeight: 1.6 }}
+          >
             Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
           </p>
           <Link
             href="/careers"
             className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase tracking-wide"
-            style={{ fontSize: "1.2rem" }}
+            style={{ fontSize: "1.5rem" }}
           >
             Postuler maintenant →
           </Link>
@@ -181,7 +216,10 @@ export default function Footer() {
             paddingTop: "2rem",
           }}
         >
-          <p className="text-white/25 uppercase" style={{ fontSize: "1.1rem", letterSpacing: "0.08em" }}>
+          <p
+            className="text-white/25 uppercase"
+            style={{ fontSize: "1.4rem", letterSpacing: "0.08em" }}
+          >
             © 2026 Africa Centred Technology.{" "}
             <span>Tous droits réservés</span>
           </p>
@@ -196,11 +234,19 @@ export default function Footer() {
           }}
           className="flex items-center gap-4"
         >
-          <Link href="/privacy" className="text-white/25 hover:text-white/60 transition-colors uppercase" style={{ fontSize: "1.1rem" }}>
+          <Link
+            href="/privacy"
+            className="text-white/25 hover:text-white/60 transition-colors uppercase"
+            style={{ fontSize: "1.4rem" }}
+          >
             Politique de Confidentialité
           </Link>
           <span className="text-white/20">/</span>
-          <Link href="/terms" className="text-white/25 hover:text-white/60 transition-colors uppercase" style={{ fontSize: "1.1rem" }}>
+          <Link
+            href="/terms"
+            className="text-white/25 hover:text-white/60 transition-colors uppercase"
+            style={{ fontSize: "1.4rem" }}
+          >
             CGU
           </Link>
         </div>
@@ -218,11 +264,15 @@ export default function Footer() {
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          <ArrowUp size={16} />
+          <ArrowUp size={20} />
         </motion.div>
         <span
           className="uppercase tracking-widest"
-          style={{ fontSize: "0.9rem", writingMode: "vertical-rl", textOrientation: "mixed" }}
+          style={{
+            fontSize: "1.2rem",
+            writingMode: "vertical-rl",
+            textOrientation: "mixed",
+          }}
         >
           Top
         </span>
