@@ -11,6 +11,7 @@ import RoomManifeste from "@/components/home2/rooms/RoomManifeste";
 import RoomSortie from "@/components/home2/rooms/RoomSortie";
 import RoomQuiSommesNous from "@/components/home2/rooms/RoomQuiSommesNous";
 import RoomPortail from "@/components/home2/rooms/RoomPortail";
+import RoomBlog from "@/components/home2/rooms/RoomBlog";
 
 /* Canvas / window-dependent — client only */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -31,7 +32,8 @@ export const ROOMS: Room[] = [
   { id: "cite", label: "LA CITÉ", subtitle: "Casablanca · Lagos · Nairobi", number: "03", Component: RoomAtelier },
   { id: "maison", label: "LA MAISON", subtitle: "Architecture & Patrimoine Africain", number: "04", Component: RoomManifeste },
   { id: "portail", label: "LE PORTAIL", subtitle: "Espace Client Sécurisé", number: "05", Component: RoomPortail },
-  { id: "horizon", label: "L'HORIZON", subtitle: "L'Afrique de Demain", number: "06", Component: RoomSortie },
+  { id: "blog", label: "LE BLOG", subtitle: "Actualités & Insights Tech", number: "06", Component: RoomBlog },
+  { id: "horizon", label: "L'HORIZON", subtitle: "L'Afrique de Demain", number: "07", Component: RoomSortie },
 ];
 
 const THROTTLE = 1300;
