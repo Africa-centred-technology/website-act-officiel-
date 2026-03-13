@@ -32,7 +32,7 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
   useEffect(() => { if (inView) mv.set(to); }, [inView, to, mv]);
 
   return (
-    <span ref={ref} className="font-black text-white leading-none">
+    <span ref={ref} className="font-black text-white leading-none" style={{ fontFamily: "var(--font-display)" }}>
       <motion.span>{display}</motion.span>
       <span className="text-[#D35400]">{suffix}</span>
     </span>
@@ -77,7 +77,7 @@ export default function RoomAxiomes() {
             transition={{ duration: 0.55, delay: 0.04 }}
           >
             <span className="diamond diamond--sm" />
-            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.95rem", letterSpacing: "0.3em", textTransform: "uppercase" }}>
+            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.95rem", letterSpacing: "0.3em", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
               Chiffres Clés · Nos Axiomes
             </span>
           </motion.div>
@@ -101,6 +101,7 @@ export default function RoomAxiomes() {
                   lineHeight: 1,
                   letterSpacing: "-0.03em",
                   color: ch === " " ? "transparent" : (ci >= 4 ? "#D35400" : "#ffffff"),
+                  fontFamily: "var(--font-display)",
                 }}
                 initial={{ y: "108%", opacity: 0 }}
                 animate={{ y: "0%", opacity: 1 }}
@@ -149,11 +150,11 @@ export default function RoomAxiomes() {
 
               <p
                 className="font-black uppercase text-white mt-5"
-                style={{ fontSize: "clamp(1.15rem, 1.5vw, 1.7rem)", letterSpacing: "0.05em", lineHeight: 1.2 }}
+                style={{ fontSize: "clamp(1.15rem, 1.5vw, 1.7rem)", letterSpacing: "0.05em", lineHeight: 1.2, fontFamily: "var(--font-display)" }}
               >
                 {s.label}
               </p>
-              <p className="text-white/55 mt-2" style={{ fontSize: "1.1rem" }}>
+              <p className="text-white/55 mt-2" style={{ fontSize: "1.1rem", fontFamily: "var(--font-body)" }}>
                 {s.desc}
               </p>
             </motion.div>

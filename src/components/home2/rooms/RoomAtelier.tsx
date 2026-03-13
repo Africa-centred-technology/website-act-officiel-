@@ -104,11 +104,11 @@ function TitleBlock({ svc, width }: { svc: (typeof services)[0]; width: string }
     <div style={{ width, flexShrink: 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
         <span className="diamond diamond--sm" />
-        <span style={{ color: "#D35400", fontSize: "0.95rem", letterSpacing: "0.20em", textTransform: "uppercase", fontWeight: 700 }}>
+        <span style={{ color: "#D35400", fontSize: "0.95rem", letterSpacing: "0.20em", textTransform: "uppercase", fontWeight: 700, fontFamily: "var(--font-display)" }}>
           {svc.tag}
         </span>
       </div>
-      <h3 style={{ fontWeight: 900, textTransform: "uppercase", color: "#fff", lineHeight: 1.05, whiteSpace: "pre-line", fontSize: "clamp(1.5rem, 2.5vw, 3rem)" }}>
+      <h3 style={{ fontWeight: 900, textTransform: "uppercase", color: "#fff", lineHeight: 1.05, whiteSpace: "pre-line", fontSize: "clamp(1.5rem, 2.5vw, 3rem)", fontFamily: "var(--font-display)" }}>
         {svc.title}
       </h3>
     </div>
@@ -118,7 +118,14 @@ function TitleBlock({ svc, width }: { svc: (typeof services)[0]; width: string }
 function DescBlock({ svc, hovered, width }: { svc: (typeof services)[0]; hovered: boolean; width: string }) {
   return (
     <div style={{ width, flexShrink: 0 }}>
-      <p style={{ fontSize: "clamp(1rem, 1.2vw, 1.3rem)", lineHeight: 1.65, color: "rgba(255,255,255,0.42)", marginBottom: "0.7rem" }}>
+      <p style={{ 
+        fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)", 
+        lineHeight: 1.65, 
+        color: hovered ? "#ffffff" : "rgba(255,255,255,0.45)", 
+        marginBottom: "0.7rem",
+        fontFamily: "var(--font-body)",
+        transition: "color 0.4s ease, font-size 0.4s ease"
+      }}>
         {svc.desc}
       </p>
       <Link href={svc.href} style={{
@@ -207,13 +214,12 @@ function ServiceCard({ svc, index }: { svc: (typeof services)[0]; index: number 
           <DescBlock svc={svc} hovered={hovered} width={layout.descW} />
         )}
 
-        {/* flip: image d'abord, titre immédiatement à sa droite */}
+        {/* flip: image d'abord, titre immédiatement à sa droite (Excentré vers la droite) */}
         {layout.flip && (
-          <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} />
-        )}
-
-        {layout.flip && (
-          <TitleBlock svc={svc} width={layout.titleW} />
+          <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginLeft: "clamp(2rem, 10vw, 15rem)" }}>
+            <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} />
+            <TitleBlock svc={svc} width={layout.titleW} />
+          </div>
         )}
 
       </div>
@@ -244,7 +250,7 @@ export default function RoomAtelier() {
       {/* ── Section header — split gauche/droite ── */}
       <motion.div
         className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4"
-        style={{ x: midX, y: midY, fontFamily: "'Geist', sans-serif" }}
+        style={{ x: midX, y: midY, fontFamily: "var(--font-display)" }}
       >
         {/* Left: eyebrow + label */}
         <div style={{ flexShrink: 0, paddingBottom: "1rem" }}>

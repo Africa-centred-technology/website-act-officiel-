@@ -17,10 +17,10 @@ export default function RoomBlog() {
                         transition={{ duration: 0.8 }}
                         className="text-center"
                     >
-                        <h1 className="text-white text-6xl md:text-7xl font-black uppercase mb-3">
+                        <h1 className="text-white text-6xl md:text-7xl font-black uppercase mb-3" style={{ fontFamily: "var(--font-display)" }}>
                              <span className="text-[#D35400]">BLOG</span>
                         </h1>
-                        <p className="text-white/60 text-lg md:text-xl">
+                        <p className="text-white/60 text-lg md:text-xl" style={{ fontFamily: "var(--font-body)" }}>
                             Actualités, Insights & Tendances Tech
                         </p>
                     </motion.div>
@@ -61,11 +61,11 @@ export default function RoomBlog() {
                                         </span>
                                     </div>
                                     {/* Titre */}
-                                    <h3 className="text-white text-2xl md:text-3xl font-bold leading-tight mb-3 group-hover:text-[#D35400] transition-colors line-clamp-2">
+                                    <h3 className="text-white text-2xl md:text-3xl font-bold leading-tight mb-3 group-hover:text-[#D35400] transition-colors line-clamp-2" style={{ fontFamily: "var(--font-display)" }}>
                                         {blogPosts[0].title}
                                     </h3>
                                     {/* Excerpt */}
-                                    <p className="text-white text-2xl leading-relaxed line-clamp-2">
+                                    <p className="text-white text-2xl leading-relaxed line-clamp-2" style={{ fontFamily: "var(--font-body)" }}>
                                         {blogPosts[0].excerpt}
                                     </p>
                                 </Link>
@@ -100,7 +100,7 @@ export default function RoomBlog() {
                                             </span>
                                         </div>
                                         {/* Titre */}
-                                        <h3 className="text-white text-xl md:text-2xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2">
+                                        <h3 className="text-white text-xl md:text-2xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2" style={{ fontFamily: "var(--font-display)" }}>
                                             {post.title}
                                         </h3>
                                     </Link>

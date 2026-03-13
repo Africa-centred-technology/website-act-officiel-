@@ -64,7 +64,7 @@ function FooterStrip() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.6 }}
         >
-          <p className="uppercase font-black text-white/55 mb-5" style={{ fontSize: "0.95rem", letterSpacing: "0.3em" }}>Contact</p>
+          <p className="uppercase font-black text-white/55 mb-5" style={{ fontSize: "0.95rem", letterSpacing: "0.3em", fontFamily: "var(--font-display)" }}>Contact</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <a href="mailto:contact@act.africa"
               className="group flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-all duration-300"
@@ -91,7 +91,7 @@ function FooterStrip() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6 }}
         >
-          <p className="uppercase font-black text-white/55 mb-5" style={{ fontSize: "0.95rem", letterSpacing: "0.3em" }}>Réseaux Sociaux</p>
+          <p className="uppercase font-black text-white/55 mb-5" style={{ fontSize: "0.95rem", letterSpacing: "0.3em", fontFamily: "var(--font-display)" }}>Réseaux Sociaux</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {SOCIALS.map(({ Icon, href, label }, idx) => (
               <motion.a
@@ -121,7 +121,7 @@ function FooterStrip() {
           transition={{ delay: 1.6, duration: 0.6 }}
         >
           <div>
-            <p className="uppercase font-black text-white/55 mb-4" style={{ fontSize: "0.95rem", letterSpacing: "0.3em" }}>Carrières</p>
+            <p className="uppercase font-black text-white/55 mb-4" style={{ fontSize: "0.95rem", letterSpacing: "0.3em", fontFamily: "var(--font-display)" }}>Carrières</p>
             <p className="text-white/60 mb-4" style={{ fontSize: "1.05rem", lineHeight: 1.65, maxWidth: "240px" }}>
               Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
             </p>
@@ -424,7 +424,7 @@ export default function RoomSortie() {
             {/* Subtext */}
             <motion.p
               className="text-white/65 mb-12"
-              style={{ fontSize: "clamp(1.1rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem" }}
+              style={{ fontSize: "clamp(1.1rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem", fontFamily: "var(--font-body)" }}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35, duration: 0.7 }}
