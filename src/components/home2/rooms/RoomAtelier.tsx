@@ -259,12 +259,6 @@ export default function RoomAtelier() {
               Audit & Ingénierie
             </span>
           </motion.div>
-          <motion.h2
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            style={{ color: "#fff", fontSize: "1.1rem", fontWeight: 300, letterSpacing: "0.05em", opacity: 0.8 }}
-          >
-            Nos expertises sectorielles
-          </motion.h2>
         </div>
 
         {/* Right: "Ce que nous proposons" chars */}

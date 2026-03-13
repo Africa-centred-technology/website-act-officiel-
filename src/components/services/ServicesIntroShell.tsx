@@ -31,6 +31,9 @@ const FOOTER_SOCIALS = [
   { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
 ];
 
+const ORANGE = "#D35400";
+const GOLD = "#F39C12";
+
 function FooterStrip() {
   return (
     <motion.div
@@ -50,19 +53,17 @@ function FooterStrip() {
 
         {/* Col 1 — Contact */}
         <div>
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
+          <p style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.3em", marginBottom: "1.6rem", color: ORANGE, fontWeight: 900, textTransform: "uppercase" }}>Contact</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             <a href="mailto:contact@act.africa"
-              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
+              style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", color: "#ffffff", display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
               <Mail size={18} strokeWidth={1.6} />contact@act.africa
             </a>
             <a href="tel:+212694528498"
-              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
+              style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", color: "#ffffff", display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
               <Phone size={18} strokeWidth={1.6} />+212 694-528498
             </a>
-            <span className="flex items-center gap-3 text-white/35" style={{ fontSize: "1.15rem" }}>
+            <span style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", color: "#ffffff", display: "flex", alignItems: "center", gap: "0.75rem" }}>
               <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
             </span>
           </div>
@@ -70,12 +71,11 @@ function FooterStrip() {
 
         {/* Col 2 — Réseaux Sociaux */}
         <div>
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+          <p style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.3em", marginBottom: "1.6rem", color: ORANGE, fontWeight: 900, textTransform: "uppercase" }}>Réseaux Sociaux</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             {FOOTER_SOCIALS.map(({ Icon, href, label }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/60 hover:text-[#D35400] transition-colors"
-                style={{ fontSize: "1.15rem" }}>
+                style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", color: "#ffffff", display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
                 <Icon size={20} strokeWidth={1.5} />{label}
               </a>
             ))}
@@ -85,18 +85,16 @@ function FooterStrip() {
         {/* Col 3 — Carrières + CTA */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
           <div>
-            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
-            <p className="text-white/45" style={{ fontSize: "1.1rem", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "240px" }}>
+            <p style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.3em", marginBottom: "1.2rem", color: ORANGE, fontWeight: 900, textTransform: "uppercase" }}>Carrières</p>
+            <p style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", color: "#ffffff", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "280px" }}>
               Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
             </p>
             <Link href="/careers"
-              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase"
-              style={{ fontSize: "1rem", letterSpacing: "0.08em" }}>
+              style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)", color: ORANGE, textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.08em" }}>
               Postuler maintenant →
             </Link>
           </div>
-          <Link href="/contact" className="text-white/60 hover:text-white transition-colors uppercase"
-            style={{ fontSize: "1rem", letterSpacing: "0.08em" }}>
+          <Link href="/contact" style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)", color: "#ffffff", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.08em" }}>
             Un projet en tête ? →
           </Link>
         </div>
@@ -105,15 +103,15 @@ function FooterStrip() {
 
       <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: "1.2rem" }} />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.8rem" }}>
-        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
+        <span style={{ fontSize: "clamp(0.85rem, 1.1vw, 1rem)", color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.08em" }}>
           © 2026 Africa Centred Technology. Tous droits réservés
         </span>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
             Politique de Confidentialité
           </Link>
-          <span className="text-white/25">/</span>
-          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>/</span>
+          <Link href="/terms" style={{ fontSize: "clamp(0.85rem, 1.1vw, 1rem)", color: "#ffffff", textDecoration: "none", textTransform: "uppercase" }}>
             CGU
           </Link>
         </div>
@@ -127,8 +125,6 @@ const ServiceRoomShell = dynamic(() => import("./ServiceRoomShell"), { ssr: fals
 /* ── Tokens ───────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
-const ORANGE = "#D35400";
-const GOLD = "#F39C12";
 
 type Phase = "logo" | "services" | "entering" | "room";
 
@@ -202,22 +198,22 @@ function ServiceCard({
             background: svc.accent, flexShrink: 0, display: "inline-block",
           }} />
           <span style={{
-            fontSize: "clamp(9px, 0.6rem, 0.64rem)", letterSpacing: "0.18em",
-            color: "rgba(255,255,255,0.28)", textTransform: "uppercase",
+            fontSize: "clamp(0.8rem, 1vw, 1rem)", letterSpacing: "0.18em",
+            color: "#ffffff", textTransform: "uppercase", fontWeight: 700,
           }}>Pôle {svc.poleN} · {svc.pole}</span>
         </div>
 
         <h3 style={{
           fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "clamp(13px, 0.98rem, 1.08rem)",
+          fontSize: "clamp(1rem, 1.3vw, 1.4rem)",
           fontWeight: 500, color: "#fff",
           lineHeight: 1.22, whiteSpace: "pre-line", flex: 1,
         }}>{svc.title}</h3>
 
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
           <p className="svc-card__tagline" style={{
-            fontSize: "clamp(10px, 0.68rem, 0.74rem)",
-            color: "rgba(255,255,255,0.30)",
+            fontSize: "clamp(0.85rem, 1.1vw, 1.15rem)",
+            color: "#ffffff",
             fontStyle: "italic", lineHeight: 1.35, maxWidth: "82%",
           }}>{svc.tagline}</p>
           <svg className="svc-card__arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
@@ -258,9 +254,9 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
         <div>
           <p style={{
             fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(10px, 0.70rem, 0.76rem)",
+            fontSize: "clamp(10px, 0.8rem, 0.9rem)",
             letterSpacing: "0.3em", textTransform: "uppercase",
-            color: "rgba(255,255,255,0.22)", marginBottom: "0.4rem",
+            color: "#ffffff", marginBottom: "0.4rem",
           }}>Africa Centred Technology</p>
           <h1 style={{
             fontFamily: "Futura, system-ui, sans-serif",
@@ -279,8 +275,8 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
                 boxShadow: `0 0 5px ${p.color}`,
               }} />
               <span style={{
-                fontSize: "clamp(10px, 0.66rem, 0.70rem)",
-                color: "rgba(255,255,255,0.32)", letterSpacing: "0.1em",
+                fontSize: "clamp(10px, 0.75rem, 0.85rem)",
+                color: "#ffffff", letterSpacing: "0.1em",
               }}>{p.label}</span>
             </div>
           ))}

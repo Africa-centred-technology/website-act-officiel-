@@ -493,17 +493,17 @@ function ServicePanel({ svc }: { svc: Svc }) {
         display: "flex",
         flexDirection: "row",
         padding: "clamp(2rem, 5vw, 5rem) clamp(2rem, 5.5vw, 5.5rem) clamp(3rem, 6vw, 6rem)",
-        gap: "clamp(2rem, 4vw, 5rem)",
         overflow: "hidden",
       }}>
 
-        {/* ══ COLONNE GAUCHE ══ */}
+        {/* ══ CONTENU ══ */}
         <div style={{
-          flex: "0 0 45%",
+          flex: 1,
           display: "flex",
           flexDirection: "column",
           minWidth: 0,
           overflow: "hidden",
+          maxWidth: "680px",
         }}>
           {/* Eyebrow */}
           <motion.div
@@ -514,8 +514,8 @@ function ServicePanel({ svc }: { svc: Svc }) {
             <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem" }}>
               <Diamond size="0.45rem" color={svc.accent} />
               <span style={{
-                fontSize: "1.05rem", color: "rgba(255,255,255,0.30)",
-                letterSpacing: "0.28em", textTransform: "uppercase"
+                fontSize: "clamp(1rem, 1.3vw, 1.25rem)", color: "#ffffff",
+                letterSpacing: "0.28em", textTransform: "uppercase", fontWeight: 700
               }}>
                 Pôle {svc.poleN} · {svc.pole}
               </span>
@@ -544,21 +544,13 @@ function ServicePanel({ svc }: { svc: Svc }) {
               ))}
             </div>
 
-            {/* ── Tagline + rule ── */}
+            {/* ── Rule ── */}
             <motion.div
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: 1, scaleX: 1 }}
               transition={{ delay: 0.7, duration: 0.8, ease: [...EASE] }}
-              style={{ height: 1, background: `${svc.accent}88`, originX: 0, margin: "1.5rem 0 1rem" }}
+              style={{ height: 1, background: `${svc.accent}88`, originX: 0, margin: "1.5rem 0" }}
             />
-            <motion.p
-              style={{ fontSize: "var(--font-20)", color: `${svc.accent}bb`, letterSpacing: "0.06em", textTransform: "uppercase" }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.85, duration: 0.55 }}
-            >
-              {svc.tagline}
-            </motion.p>
 
             {/* ── Video (takes all remaining space) ── */}
             <motion.div
@@ -611,7 +603,7 @@ function ServicePanel({ svc }: { svc: Svc }) {
             transition={{ delay: 1.0, duration: 0.6 }}
           >
             <p style={{
-              fontSize: "1.0rem", color: "rgba(255,255,255,0.22)",
+              fontSize: "clamp(1rem, 1.3vw, 1.25rem)", color: "#ffffff",
               letterSpacing: "0.28em", textTransform: "uppercase", marginBottom: "0.8rem"
             }}>
               Bénéfices
@@ -624,7 +616,7 @@ function ServicePanel({ svc }: { svc: Svc }) {
                   transition={{ delay: 1.1 + i * 0.07, duration: 0.4 }}
                   style={{
                     padding: "0.4rem 0.9rem", border: `1px solid ${svc.accent}44`,
-                    color: `${svc.accent}cc`, fontSize: "0.95rem", letterSpacing: "0.06em", textTransform: "uppercase"
+                    color: svc.accent, fontSize: "clamp(0.95rem, 1.2vw, 1.15rem)", letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 700
                   }}
                 >{b}</motion.span>
               ))}
@@ -640,7 +632,7 @@ function ServicePanel({ svc }: { svc: Svc }) {
           >
             <Link href="/contact" style={{
               display: "inline-flex", alignItems: "center", gap: "0.8rem",
-              color: "rgba(255,255,255,0.35)", fontSize: "1.05rem",
+              color: "#ffffff", fontSize: "clamp(1.05rem, 1.3vw, 1.25rem)",
               letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
             }}>
               <Diamond size="0.42rem" color={svc.accent} />
@@ -649,62 +641,6 @@ function ServicePanel({ svc }: { svc: Svc }) {
           </motion.div>
         </div>
 
-        {/* ══ COLONNE DROITE ══ */}
-        <div style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          minWidth: 0,
-          overflow: "hidden",
-        }}>
-          {/* ── Intro text ── */}
-          <motion.p
-            style={{
-              fontSize: "var(--font-20)", color: "rgba(255,255,255,0.45)",
-              lineHeight: 1.7, marginBottom: "1.5rem"
-            }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.7 }}
-          >
-            {svc.intro}
-          </motion.p>
-
-          {/* ── Sub-services ── */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", flex: 1, justifyContent: "center" }}>
-            {svc.subs.map((sub, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: 28, filter: "blur(8px)" }}
-                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                transition={{ delay: 0.6 + i * 0.14, duration: 0.7, ease: [...EASE] }}
-                style={{
-                  background: `rgba(255,255,255,0.025)`,
-                  border: `1px solid ${i === 0 ? `${svc.accent}44` : "rgba(255,255,255,0.06)"}`,
-                  padding: "1.4rem 1.6rem",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                <div style={{
-                  position: "absolute", left: 0, top: 0, bottom: 0, width: 2,
-                  background: i === 0 ? svc.accent : "rgba(255,255,255,0.12)"
-                }} />
-                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.5rem" }}>
-                  <span style={{ fontSize: "0.9rem", color: `${svc.accent}66`, letterSpacing: "0.15em" }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-black uppercase"
-                    style={{ fontSize: "var(--font-18)", letterSpacing: "0.04em", color: "rgba(255,255,255,0.85)" }}>
-                    {sub.title}
-                  </span>
-                </div>
-                <p style={{ fontSize: "var(--font-18)", color: "rgba(255,255,255,0.40)", lineHeight: 1.6, paddingLeft: "2rem" }}>
-                  {sub.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -750,14 +686,14 @@ function ServiceNav({ current, services, onGoTo }: {
         transition={{ duration: 0.4 }}
       >
         <span style={{
-          fontSize: "1.0rem", color: "rgba(255,255,255,0.22)",
-          letterSpacing: "0.28em", textTransform: "uppercase", display: "block", marginBottom: "0.3rem"
+          fontSize: "clamp(1rem, 1.3vw, 1.25rem)", color: "#ffffff",
+          letterSpacing: "0.28em", textTransform: "uppercase", display: "block", marginBottom: "0.3rem", fontWeight: 700
         }}>
           {svc.pole}
         </span>
         <span style={{
-          fontSize: "var(--font-18)", fontWeight: 900,
-          color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.04em"
+          fontSize: "clamp(1rem, 1.3vw, 1.35rem)", fontWeight: 900,
+          color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.04em"
         }}>
           {svc.title.split("\n")[0]}
         </span>
@@ -828,7 +764,7 @@ function HeroSection() {
           initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}>
           <Diamond size="0.5rem" />
-          <span style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.30)", letterSpacing: "0.3em", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "clamp(1.05rem, 1.4vw, 1.35rem)", color: "#ffffff", letterSpacing: "0.3em", textTransform: "uppercase" }}>
             L'Arborescence ACT
           </span>
         </motion.div>
@@ -847,7 +783,7 @@ function HeroSection() {
           transition={{ delay: 0.75, duration: 0.9, ease: [...EASE] }} />
 
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}>
-          <motion.p style={{ fontSize: "var(--font-20)", color: "rgba(255,255,255,0.42)", lineHeight: 1.7, maxWidth: "36rem" }}
+          <motion.p style={{ fontSize: "var(--font-20)", color: "#ffffff", lineHeight: 1.7, maxWidth: "36rem" }}
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 0.65 }}>
             Deux pôles complémentaires — Ingénierie et Conseil — couvrant l&apos;intégralité de la chaîne de valeur de la transformation digitale africaine.
@@ -877,7 +813,7 @@ function HeroSection() {
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
           <span style={{
-            fontSize: "1.0rem", color: "rgba(255,255,255,0.20)",
+            fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", color: "#ffffff",
             letterSpacing: "0.35em", textTransform: "uppercase"
           }}>Scroll pour explorer</span>
         </motion.div>
@@ -911,7 +847,7 @@ function CTASection() {
           viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}>
           Construisons l&apos;avenir<br /><span style={{ color: ORANGE }}>ensemble</span>
         </motion.h2>
-        <motion.p style={{ fontSize: "var(--font-20)", color: "rgba(255,255,255,0.42)", lineHeight: 1.7, marginBottom: "4rem" }}
+        <motion.p style={{ fontSize: "var(--font-20)", color: "#ffffff", lineHeight: 1.7, marginBottom: "4rem" }}
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
           Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h.
@@ -922,7 +858,7 @@ function CTASection() {
           <CTAButton href="/contact">Démarrer votre projet</CTAButton>
           <Link href="/about" style={{
             display: "inline-flex", alignItems: "center", gap: "0.7rem",
-            color: "rgba(255,255,255,0.35)", fontSize: "1.1rem",
+            color: "#ffffff", fontSize: "clamp(1.05rem, 1.3vw, 1.2rem)",
             letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
           }}>
             <Diamond size="0.42rem" />
