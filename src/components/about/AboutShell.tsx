@@ -9,8 +9,8 @@ import {
   motion, AnimatePresence,
   useMotionValue, useSpring, useInView,
 } from "framer-motion";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import RoomBackground from "@/components/home2/RoomBackground";
+import FooterStrip from "@/components/layout/FooterStrip";
 import LogoPhase from "@/components/services/LogoPhase";
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -799,103 +799,6 @@ const ABOUT_NAV_LINKS = [
   { href: "/blog",     label: "Blog"        },
   { href: "/contact",  label: "Contact"     },
 ];
-
-const ABOUT_SOCIALS = [
-  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
-  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
-];
-
-function FooterStrip() {
-  return (
-    <motion.div
-      aria-label="Footer"
-      className="absolute left-0 right-0 pointer-events-auto"
-      style={{ bottom: "5rem", zIndex: 10, padding: "0 clamp(2rem, 5vw, 6rem)" }}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 1.0, duration: 0.7 }}
-    >
-      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
-
-        {/* Col 1 — Contact */}
-        <div>
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            <a href="mailto:contact@act.africa"
-              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
-              <Mail size={18} strokeWidth={1.6} />contact@act.africa
-            </a>
-            <a href="tel:+212694528498"
-              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
-              <Phone size={18} strokeWidth={1.6} />+212 694-528498
-            </a>
-            <span className="flex items-center gap-3 text-white/35" style={{ fontSize: "1.15rem" }}>
-              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
-            </span>
-          </div>
-        </div>
-
-        {/* Col 2 — Réseaux Sociaux */}
-        <div>
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            {ABOUT_SOCIALS.map(({ Icon, href, label }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/60 hover:text-[#D35400] transition-colors"
-                style={{ fontSize: "1.15rem" }}>
-                <Icon size={20} strokeWidth={1.5} />{label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Col 3 — Carrières + CTA */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
-          <div>
-            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
-            <p className="text-white/45" style={{ fontSize: "1.1rem", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "240px" }}>
-              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-            </p>
-            <Link href="/careers"
-              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase"
-              style={{ fontSize: "1rem", letterSpacing: "0.08em" }}>
-              Postuler maintenant →
-            </Link>
-          </div>
-          <Link href="/contact" className="cta-btn" style={{ marginTop: "0.4rem" }}>
-            <div className="cta-btn__border" /><div className="cta-btn__blur" />
-            <div className="cta-btn__background" />
-            <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">Un projet en tête ?</span></div>
-          </Link>
-        </div>
-
-      </div>
-
-      <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: "1.2rem" }} />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.8rem" }}>
-        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
-          © 2026 Africa Centred Technology. Tous droits réservés
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
-            Politique de Confidentialité
-          </Link>
-          <span className="text-white/25">/</span>
-          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
-            CGU
-          </Link>
-        </div>
-      </div>
-
-    </motion.div>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════════
    SECTION 07 — L'HORIZON  (RoomSortie CTA pattern)

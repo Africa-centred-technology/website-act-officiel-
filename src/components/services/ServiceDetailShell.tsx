@@ -13,12 +13,19 @@
 
 import React, { useRef, useMemo } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   motion,
   useScroll, useTransform,
   useMotionValue, useSpring,
 } from "framer-motion";
+
+/* Background layers */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 import { SERVICES, type Service } from "@/lib/data/services";
+import FooterStrip from "@/components/layout/FooterStrip";
 
 const EASE  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -1086,23 +1093,32 @@ export default function ServiceDetailShell({ svc }: { svc: Service }) {
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070E1C", color: "#fff" }}>
-      <StickyHeader svc={svc} />
-      <HeroSection svc={svc} index={index} />
-      <IntroSection svc={svc} />
-      <div>
-        {svc.subs.map((sub, i) => (
-          <SubServicePanel
-            key={i} sub={sub} index={i}
-            accent={svc.accent} svcN={svc.n}
-            img={svc.subImages[i]}
-          />
-        ))}
+    <div style={{ minHeight: "100vh", background: "#070E1C", color: "#fff", position: "relative" }}>
+      {/* Background layers */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#070E1C" }}>
+        <WaveTerrain />
+        <Grain />
+        <Cursor />
       </div>
-      <BenefitsSection svc={svc} />
-      <DeliverablesSection svc={svc} />
-      <RelatedServices svc={svc} />
-      <CtaSection svc={svc} />
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <StickyHeader svc={svc} />
+        <HeroSection svc={svc} index={index} />
+        <IntroSection svc={svc} />
+        <div>
+          {svc.subs.map((sub, i) => (
+            <SubServicePanel
+              key={i} sub={sub} index={i}
+              accent={svc.accent} svcN={svc.n}
+              img={svc.subImages[i]}
+            />
+          ))}
+        </div>
+        <BenefitsSection svc={svc} />
+        <DeliverablesSection svc={svc} />
+        <RelatedServices svc={svc} />
+        <CtaSection svc={svc} />
+        <FooterStrip />
+      </div>
     </div>
   );
 }

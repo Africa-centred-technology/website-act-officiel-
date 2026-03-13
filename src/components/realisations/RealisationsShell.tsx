@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { PROJECTS, CATEGORIES } from "@/lib/data/projects";
+import FooterStrip from "@/components/layout/FooterStrip";
 
 /* ── Shared home2 background layers (same as Shell.tsx) ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -85,128 +85,6 @@ function WordChars({
         );
       })}
     </div>
-  );
-}
-
-/* ── Footer socials ─────────────────────────────────────── */
-const FOOTER_SOCIALS = [
-  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
-  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
-];
-
-function FooterStrip() {
-  return (
-    <motion.div
-      aria-label="Footer"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7 }}
-      style={{
-        position: "relative",
-        zIndex: 2,
-        background: "rgba(7,14,28,0.97)",
-        padding: "clamp(3rem,5vw,5rem) clamp(1.5rem,6vw,8rem) clamp(4rem,7vw,6rem)",
-        borderTop: "1px solid rgba(211,84,0,0.18)",
-      }}
-    >
-      <div style={{ height: 1, background: "rgba(211,84,0,0.32)", marginBottom: "3rem" }} />
-
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-        gap: "3rem",
-        marginBottom: "2.8rem",
-      }}>
-        {/* Col 1 — Contact */}
-        <div>
-          <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 900, color: ORANGE, marginBottom: "1.6rem" }}>
-            Contact
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            {[
-              { href: "mailto:contact@act.africa", Icon: Mail,  label: "contact@act.africa" },
-              { href: "tel:+212694528498",         Icon: Phone, label: "+212 694-528498"    },
-            ].map(({ href, Icon, label }) => (
-              <a key={href} href={href}
-                style={{ display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = ORANGE)}
-                onMouseLeave={e => (e.currentTarget.style.color = "#ffffff")}
-              >
-                <Icon size={17} strokeWidth={1.5} /> {label}
-              </a>
-            ))}
-            <span style={{ display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)" }}>
-              <MapPin size={17} strokeWidth={1.5} /> Casablanca, Maroc
-            </span>
-          </div>
-        </div>
-
-        {/* Col 2 — Réseaux */}
-        <div>
-          <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 900, color: ORANGE, marginBottom: "1.6rem" }}>
-            Réseaux Sociaux
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            {FOOTER_SOCIALS.map(({ Icon, href, label }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", transition: "color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = ORANGE)}
-                onMouseLeave={e => (e.currentTarget.style.color = "#ffffff")}
-              >
-                <Icon size={17} strokeWidth={1.5} /> {label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Col 3 — Carrières + CTA */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
-          <div>
-            <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 900, color: ORANGE, marginBottom: "1.2rem" }}>
-              Carrières
-            </p>
-            <p style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "280px" }}>
-              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-            </p>
-            <Link href="/careers"
-              style={{ color: ORANGE, textDecoration: "none", fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)", letterSpacing: "0.1em", textTransform: "uppercase", transition: "color 0.2s" }}
-              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = GOLD)}
-              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = ORANGE)}
-            >
-              Postuler maintenant →
-            </Link>
-          </div>
-          <Link href="/contact" className="cta-btn" style={{ marginTop: "0.4rem" }}>
-            <div className="cta-btn__border" />
-            <div className="cta-btn__blur" />
-            <div className="cta-btn__background" />
-            <div className="cta-btn__inner">
-              <span className="cta-btn__icon" />
-              <span className="cta-btn__text">Un projet en tête ?</span>
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      <div style={{ height: 1, background: "rgba(255,255,255,0.05)", marginBottom: "1.2rem" }} />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.8rem" }}>
-        <span style={{ color: "#ffffff", textTransform: "uppercase", fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", letterSpacing: "0.08em" }}>
-          © 2026 Africa Centred Technology. Tous droits réservés
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          {[{ href: "/privacy", label: "Politique de Confidentialité" }, { href: "/terms", label: "CGU" }].map(({ href, label }, i, arr) => (
-            <React.Fragment key={href}>
-              <Link href={href} style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", textTransform: "uppercase", transition: "color 0.2s" }}>
-                {label}
-              </Link>
-              {i < arr.length - 1 && <span style={{ color: "rgba(255,255,255,0.5)" }}>/</span>}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-    </motion.div>
   );
 }
 

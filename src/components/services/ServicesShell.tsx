@@ -2,11 +2,19 @@
 
 import React, { useState, useRef, useEffect, useMemo, useCallback, memo } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   motion, AnimatePresence,
   useScroll, useMotionValue, useSpring, useTransform,
 } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
+
+/* ══════════════════════════════════════════════════════
+   Background layers
+   ══════════════════════════════════════════════════════ */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
 /* ══════════════════════════════════════════════════════
    TOKENS
@@ -733,7 +741,6 @@ function HeroSection() {
       height: "100vh", display: "flex", flexDirection: "column",
       justifyContent: "flex-end", padding: "0 clamp(1.5rem, 4.5vw, 5.5rem) clamp(4rem, 7vw, 8rem)",
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(180deg, #050C18 0%, #030810 100%)",
     }}>
       {/* Giant ghost */}
       <motion.div aria-hidden className="font-black uppercase select-none pointer-events-none"
@@ -956,10 +963,18 @@ function ServicesJourney() {
    ══════════════════════════════════════════════════════ */
 export default function ServicesShell() {
   return (
-    <div style={{ background: "#050C18" }}>
-      <HeroSection />
-      <ServicesJourney />
-      <CTASection />
+    <div style={{ background: "#070E1C", minHeight: "100vh", position: "relative" }}>
+      {/* Background layers */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#070E1C" }}>
+        <WaveTerrain />
+        <Grain />
+        <Cursor />
+      </div>
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <HeroSection />
+        <ServicesJourney />
+        <CTASection />
+      </div>
     </div>
   );
 }
