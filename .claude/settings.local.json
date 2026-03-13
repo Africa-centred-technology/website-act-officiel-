@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | tail -30)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error|warning|✓|Compiled\\)\" | head -20)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|Error|✓ Compiled|✓ Generating\\)\" | head -20)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|Type error|Error:|✓ Compiled|✓ Generating|Failed to compile\\)\" | head -30)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|Type error|Error:|✓ Compiled|Failed\\)\" | head -20)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|✓ Compiled|Failed\\)\" | head -5)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|✓ Compiled|Failed to compile\\)\" | head -5)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|Type error|✓ Compiled|Failed to compile\\)\" | head -10)",
+      "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|✓ Compiled|Failed|Error\\)\")"
+    ]
+  }
+}

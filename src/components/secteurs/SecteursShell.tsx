@@ -1,446 +1,393 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+import dynamic from "next/dynamic";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { secteurs } from "@/lib/secteurs-data";
+import FooterStrip from "@/components/layout/FooterStrip";
+
+/* ── Background layers ─────────────────────────────────────── */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
 /* ── Tokens ─────────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 const ORANGE = "#D35400";
 const BG = "#070E1C";
 
-/* ── Footer socials ─────────────────────────────────────── */
-const FOOTER_SOCIALS = [
-  {
-    Icon: Instagram,
-    href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==",
-    label: "Instagram",
-  },
-  {
-    Icon: Youtube,
-    href: "https://www.youtube.com/@AfricaCentredTechnology",
-    label: "YouTube",
-  },
-  {
-    Icon: Facebook,
-    href: "https://web.facebook.com/profile.php?id=61585541019830",
-    label: "Facebook",
-  },
-];
+/* ── Directions ─────────────────────────────────────────── */
+type Dir = 1 | -1;
 
-/* ── FooterStrip ─────────────────────────────────────────── */
-function FooterStrip() {
+/* ══════════════════════════════════════════════════════════
+   ALBUM SECTION — fixed height, arrow + drag navigation
+   ══════════════════════════════════════════════════════════ */
+function AlbumSection() {
+  const total = secteurs.length;
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState<Dir>(1);
+  const [isDragging, setIsDragging] = useState(false);
+
+  // Drag state
+  const dragStartX = useRef(0);
+  const dragStartY = useRef(0);
+  const hasDragged = useRef(false);
+
+  const go = useCallback(
+    (d: Dir) => {
+      setDir(d);
+      setActive((prev) => (prev + d + total) % total);
+    },
+    [total]
+  );
+
+  const goTo = useCallback(
+    (i: number) => {
+      setDir(i > active ? 1 : -1);
+      setActive(i);
+    },
+    [active]
+  );
+
+  /* Keyboard navigation */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") go(-1);
+      if (e.key === "ArrowRight") go(1);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [go]);
+
+  /* Mouse drag handlers */
+  const onMouseDown = (e: React.MouseEvent) => {
+    dragStartX.current = e.clientX;
+    dragStartY.current = e.clientY;
+    hasDragged.current = false;
+    setIsDragging(true);
+  };
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const dx = Math.abs(e.clientX - dragStartX.current);
+    if (dx > 8) hasDragged.current = true;
+  };
+  const onMouseUp = (e: React.MouseEvent) => {
+    setIsDragging(false);
+    if (!hasDragged.current) return;
+    const dx = e.clientX - dragStartX.current;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+  };
+  const onMouseLeave = (e: React.MouseEvent) => {
+    if (isDragging) {
+      setIsDragging(false);
+      const dx = e.clientX - dragStartX.current;
+      if (hasDragged.current && Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+    }
+  };
+
+  /* Touch handlers */
+  const onTouchStart = (e: React.TouchEvent) => {
+    dragStartX.current = e.touches[0].clientX;
+    hasDragged.current = false;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - dragStartX.current;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+  };
+
+  const s = secteurs[active];
+  const num = String(active + 1).padStart(2, "0");
+  const tot = String(total).padStart(2, "0");
+
+  /* Slide variants */
+  const variants = {
+    enter: (d: Dir) => ({ x: d * 60, opacity: 0, scale: 0.97 }),
+    center: { x: 0, opacity: 1, scale: 1 },
+    exit: (d: Dir) => ({ x: d * -60, opacity: 0, scale: 0.97 }),
+  };
+
   return (
-    <motion.div
-      aria-label="Footer"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7 }}
+    <section
       style={{
-        background: BG,
-        padding:
-          "clamp(3rem,5vw,5rem) clamp(1.5rem, 6vw, 8rem) clamp(4rem, 7vw, 6rem)",
+        height: "100vh",
+        display: "flex",
+        alignItems: "stretch",
+        overflow: "hidden",
+        position: "relative",
+        paddingLeft: "clamp(1.5rem, 6vw, 8rem)",
+        paddingRight: "clamp(1.5rem, 3vw, 3rem)",
       }}
     >
-      <div
-        style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }}
-      />
-
+      {/* ── LEFT: Text Content ──────────────────────────── */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "4rem",
-          marginBottom: "2.8rem",
+          flex: "0 0 52%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          paddingRight: "3rem",
+          position: "relative",
+          zIndex: 2,
         }}
       >
-        {/* Col 1 — Contact */}
-        <div>
-          <p
-            style={{
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "1rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              fontWeight: 900,
-              color: "rgba(255,255,255,0.55)",
-              marginBottom: "1.6rem",
-            }}
+        <AnimatePresence mode="wait" custom={dir}>
+          <motion.div
+            key={active}
+            custom={dir}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
           >
-            Contact
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            <a
-              href="mailto:contact@act.africa"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                color: "rgba(255,255,255,0.60)",
-                textDecoration: "none",
-                fontSize: "1.1rem",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "rgba(255,255,255,0.60)")
-              }
-            >
-              <Mail size={16} strokeWidth={1.6} />
-              contact@act.africa
-            </a>
-            <a
-              href="tel:+212694528498"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                color: "rgba(255,255,255,0.60)",
-                textDecoration: "none",
-                fontSize: "1.1rem",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "rgba(255,255,255,0.60)")
-              }
-            >
-              <Phone size={16} strokeWidth={1.6} />
-              +212 694-528498
-            </a>
-            <span
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                color: "rgba(255,255,255,0.35)",
-                fontSize: "1.1rem",
-              }}
-            >
-              <MapPin size={16} strokeWidth={1.6} />
-              Casablanca, Maroc
-            </span>
-          </div>
-        </div>
+            {/* Counter */}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.5rem" }}>
+              <span style={{ width: "4rem", height: "3px", background: s.color, display: "inline-block" }} />
+              <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", letterSpacing: "0.2em", color: "#ffffff", textTransform: "uppercase", opacity: 0.8 }}>
+                {num} / {tot}
+              </span>
+            </div>
 
-        {/* Col 2 — Réseaux Sociaux */}
-        <div>
-          <p
-            style={{
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "1rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              fontWeight: 900,
-              color: "rgba(255,255,255,0.55)",
-              marginBottom: "1.6rem",
-            }}
-          >
-            Réseaux Sociaux
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            {FOOTER_SOCIALS.map(({ Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                  color: "rgba(255,255,255,0.60)",
-                  textDecoration: "none",
-                  fontSize: "1.1rem",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "rgba(255,255,255,0.60)")
-                }
-              >
-                <Icon size={18} strokeWidth={1.5} />
-                {label}
-              </a>
-            ))}
-          </div>
-        </div>
+            {/* Label - Sector Name First - ORANGE */}
+            <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", fontWeight: 900, textTransform: "uppercase", color: ORANGE, marginBottom: "0.6rem", letterSpacing: "0.04em" }}>
+              {s.label}
+            </p>
 
-        {/* Col 3 — Carrières + CTA */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
-          <div>
+            {/* Tagline - Second */}
             <p
               style={{
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "1rem",
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                fontWeight: 900,
-                color: "rgba(255,255,255,0.55)",
-                marginBottom: "1.2rem",
+                fontWeight: 700,
+                fontSize: "clamp(2rem, 3.5vw, 4rem)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.02em",
+                color: "#ffffff",
+                margin: "0 0 2rem",
               }}
             >
-              Carrières
+              {s.tagline}
             </p>
-            <p
-              style={{
-                color: "rgba(255,255,255,0.45)",
-                fontSize: "1.1rem",
-                lineHeight: 1.55,
-                marginBottom: "0.9rem",
-                maxWidth: "240px",
-              }}
-            >
-              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de
-              demain.
+
+            {/* Description - BIGGER */}
+            <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)", lineHeight: 1.75, maxWidth: "650px", marginBottom: "2.5rem", textAlign: "justify" }}>
+              {s.description.length > 350 ? s.description.slice(0, 350) + "…" : s.description}
             </p>
-            <Link
-              href="/careers"
-              style={{
-                color: ORANGE,
-                textDecoration: "none",
-                fontSize: "1rem",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.color = "#F39C12")
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.color = ORANGE)
-              }
-            >
-              Postuler maintenant →
-            </Link>
-          </div>
-          <Link href="/contact" className="cta-btn" style={{ marginTop: "0.4rem" }}>
-            <div className="cta-btn__border" />
-            <div className="cta-btn__blur" />
-            <div className="cta-btn__background" />
-            <div className="cta-btn__inner">
-              <span className="cta-btn__icon" />
-              <span className="cta-btn__text">Un projet en tête ?</span>
+
+            {/* Services - BIGGER */}
+            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2.5rem", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+              {s.services.slice(0, 3).map((svc) => (
+                <li key={svc} style={{ display: "flex", alignItems: "flex-start", gap: "0.85rem", color: "#ffffff", fontSize: "clamp(1.1rem, 1.35vw, 1.35rem)", lineHeight: 1.5 }}>
+                  <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: s.color, flexShrink: 0, marginTop: "0.55rem" }} />
+                  {svc}
+                </li>
+              ))}
+            </ul>
+
+            {/* Key figure - BIGGER */}
+            {s.chiffre && (
+              <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${s.color}44`, borderLeft: `5px solid ${s.color}`, borderRadius: "0.8rem", padding: "1.4rem 2rem", marginBottom: "2.5rem", display: "inline-block" }}>
+                <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(2rem, 3vw, 3rem)", fontWeight: 900, color: ORANGE, margin: "0 0 0.35rem", lineHeight: 1 }}>
+                  {s.chiffre.value}
+                </p>
+                <p style={{ color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", margin: 0, lineHeight: 1.4, opacity: 0.85 }}>
+                  {s.chiffre.label}
+                </p>
+              </div>
+            )}
+
+            {/* CTA - BIGGER */}
+            <div>
+              <Link
+                href={`/secteurs/${s.slug}`}
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", letterSpacing: "0.12em", textTransform: "uppercase", color: "#ffffff", textDecoration: "none", borderBottom: "3px solid rgba(255,255,255,0.4)", paddingBottom: "0.5rem", transition: "color 0.25s, border-color 0.25s" }}
+                onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = ORANGE; el.style.borderBottomColor = ORANGE; }}
+                onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = "#ffffff"; el.style.borderBottomColor = "rgba(255,255,255,0.4)"; }}
+              >
+                Explorer le secteur →
+              </Link>
             </div>
-          </Link>
-        </div>
+          </motion.div>
+        </AnimatePresence>
+
+
       </div>
 
-      <div
-        style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: "1.2rem" }}
-      />
+      {/* ── RIGHT: Photo Cards Stack ("hand of cards") ──── */}
       <div
         style={{
+          flex: "0 0 48%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "0.8rem",
+          justifyContent: "center",
+          paddingTop: "5vh",
+          paddingBottom: "5vh",
+          paddingRight: "2rem",
+          position: "relative",
+          overflow: "visible",
         }}
       >
-        <span
+        {/* Wrapper for all stacked cards */}
+        <div
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
           style={{
-            color: "rgba(255,255,255,0.40)",
-            textTransform: "uppercase",
-            fontSize: "0.92rem",
-            letterSpacing: "0.08em",
+            width: "100%",
+            maxWidth: "420px",
+            height: "min(72vh, 580px)",
+            position: "relative",
+            cursor: isDragging ? "grabbing" : "grab",
+            userSelect: "none",
           }}
         >
-          © 2026 Africa Centred Technology. Tous droits réservés
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <Link
-            href="/privacy"
-            style={{
-              color: "rgba(255,255,255,0.40)",
-              textDecoration: "none",
-              fontSize: "0.92rem",
-              textTransform: "uppercase",
-              transition: "color 0.2s",
-            }}
-          >
-            Politique de Confidentialité
-          </Link>
-          <span style={{ color: "rgba(255,255,255,0.25)" }}>/</span>
-          <Link
-            href="/terms"
-            style={{
-              color: "rgba(255,255,255,0.40)",
-              textDecoration: "none",
-              fontSize: "0.92rem",
-              textTransform: "uppercase",
-              transition: "color 0.2s",
-            }}
-          >
-            CGU
-          </Link>
+          {/* Render ALL cards — background cards fanned out, active on top */}
+          {secteurs.map((cardSecteur, i) => {
+            const isActive = i === active;
+            // Calculate relative position from active (circular)
+            let relPos = i - active;
+            if (relPos > Math.floor(total / 2)) relPos -= total;
+            if (relPos < -Math.floor(total / 2)) relPos += total;
+            const absPos = Math.abs(relPos);
+
+            // Only render cards within ±3 of active
+            if (absPos > 3) return null;
+
+            // Fan-out config: rotation, translate, scale, opacity per distance from active
+            const rotationMap: Record<number, number> = { 0: 0, 1: 6, 2: -4.5, 3: 9 };
+            const translateXMap: Record<number, number> = { 0: 0, 1: 25, 2: -18, 3: 40 };
+            const translateYMap: Record<number, number> = { 0: 0, 1: 8, 2: 14, 3: 20 };
+            const scaleMap: Record<number, number> = { 0: 1, 1: 0.95, 2: 0.90, 3: 0.85 };
+            const opacityMap: Record<number, number> = { 0: 1, 1: 0.85, 2: 0.65, 3: 0.45 };
+
+            const rot = (rotationMap[absPos] || 0) * (relPos < 0 ? -1 : 1);
+            const tx = (translateXMap[absPos] || 0) * (relPos < 0 ? -1 : 1);
+            const ty = translateYMap[absPos] || 0;
+            const sc = scaleMap[absPos] || 0.85;
+            const op = opacityMap[absPos] || 0.45;
+            const zIdx = 10 - absPos;
+
+            const cardNum = String(i + 1).padStart(2, "0");
+
+            return (
+              <div
+                key={cardSecteur.slug}
+                style={{
+                  position: isActive ? "relative" : "absolute",
+                  inset: isActive ? undefined : 0,
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "1.25rem",
+                  overflow: "hidden",
+                  transform: `rotate(${rot}deg) translate(${tx}px, ${ty}px) scale(${sc})`,
+                  transformOrigin: "center 85%",
+                  zIndex: zIdx,
+                  opacity: op,
+                  boxShadow: isActive
+                    ? "0 32px 80px rgba(0,0,0,0.55), 0 8px 24px rgba(0,0,0,0.35)"
+                    : "0 16px 50px rgba(0,0,0,0.40)",
+                  pointerEvents: isActive ? "auto" : "none",
+                  transition: "transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, box-shadow 0.5s ease",
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "#0d1525",
+                }}
+              >
+                {/* Number top-right */}
+                <div style={{ position: "absolute", top: "1.25rem", right: "1.5rem", zIndex: 10, fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.85rem", letterSpacing: "0.2em", color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>
+                  {cardNum}
+                </div>
+
+                {/* Image area */}
+                <div style={{ position: "relative", flex: 1, minHeight: 0, overflow: "hidden" }}>
+                  <Image
+                    src={cardSecteur.image}
+                    alt={cardSecteur.label}
+                    fill
+                    style={{ objectFit: "cover", pointerEvents: "none" }}
+                    sizes="45vw"
+                    priority={isActive}
+                    draggable={false}
+                  />
+                  {/* Gradient overlay */}
+                  <div style={{ position: "absolute", inset: 0, background: isActive ? "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 100%)" : "linear-gradient(to bottom, rgba(7,14,28,0.25) 0%, rgba(7,14,28,0.65) 100%)", pointerEvents: "none" }} />
+
+                  {isActive && (
+                    <>
+                      {/* Icon badge */}
+                      <div style={{ position: "absolute", bottom: "1.1rem", left: "1.25rem", background: "rgba(0,0,0,0.50)", backdropFilter: "blur(8px)", borderRadius: "0.45rem", padding: "0.3rem 0.65rem", display: "flex", alignItems: "center", gap: "0.35rem", pointerEvents: "none" }}>
+                        <span style={{ fontSize: "0.95rem" }}>{cardSecteur.icon}</span>
+                      </div>
+
+                      {/* Left arrow */}
+                      <button
+                        onClick={(e) => { e.stopPropagation(); go(-1); }}
+                        aria-label="Secteur précédent"
+                        style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
+                        onMouseEnter={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.70)"; b.style.borderColor = "rgba(255,255,255,0.55)"; b.style.transform = "translateY(-50%) scale(1.08)"; }}
+                        onMouseLeave={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.40)"; b.style.borderColor = "rgba(255,255,255,0.25)"; b.style.transform = "translateY(-50%) scale(1)"; }}
+                      >
+                        <ChevronLeft size={16} strokeWidth={2.5} />
+                      </button>
+
+                      {/* Right arrow */}
+                      <button
+                        onClick={(e) => { e.stopPropagation(); go(1); }}
+                        aria-label="Secteur suivant"
+                        style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
+                        onMouseEnter={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.70)"; b.style.borderColor = "rgba(255,255,255,0.55)"; b.style.transform = "translateY(-50%) scale(1.08)"; }}
+                        onMouseLeave={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.40)"; b.style.borderColor = "rgba(255,255,255,0.25)"; b.style.transform = "translateY(-50%) scale(1)"; }}
+                      >
+                        <ChevronRight size={16} strokeWidth={2.5} />
+                      </button>
+
+                      {/* Progress dots */}
+                      <div style={{ position: "absolute", bottom: "1rem", right: "1.25rem", zIndex: 20, display: "flex", alignItems: "center", gap: "0.35rem", pointerEvents: "auto" }}>
+                        {secteurs.map((_, di) => (
+                          <button
+                            key={di}
+                            onClick={(e) => { e.stopPropagation(); goTo(di); }}
+                            aria-label={`Secteur ${di + 1}`}
+                            style={{ width: di === active ? "1.2rem" : "0.35rem", height: "0.35rem", borderRadius: "4px", background: di === active ? "#fff" : "rgba(255,255,255,0.35)", border: "none", padding: 0, cursor: "pointer", transition: "width 0.35s ease, background 0.35s ease" }}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Legend strip */}
+                <div style={{ background: "#f5f0e8", padding: "0.85rem 1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", flexShrink: 0 }}>
+                  <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#1B3022", fontWeight: 700, margin: 0, display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <span style={{ color: "rgba(27,48,34,0.45)", fontSize: "0.58rem" }}>({cardNum})</span>
+                    {cardSecteur.label.toUpperCase()}
+                  </p>
+                  {isActive && (
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <button title="Secteur précédent" onClick={(e) => { e.stopPropagation(); go(-1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
+                        <ChevronLeft size={14} strokeWidth={2.5} />
+                      </button>
+                      <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.58rem", letterSpacing: "0.14em", color: "rgba(27,48,34,0.45)", flexShrink: 0 }}>{num} / {tot}</span>
+                      <button title="Secteur suivant" onClick={(e) => { e.stopPropagation(); go(1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
+                        <ChevronRight size={14} strokeWidth={2.5} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </motion.div>
-  );
-}
 
-/* ── Secteur Card ────────────────────────────────────────── */
-function SecteurCard({
-  secteur,
-  index,
-}: {
-  secteur: (typeof secteurs)[number];
-  index: number;
-}) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.65, delay: (index % 3) * 0.08, ease: [...EASE] }}
-      style={{ position: "relative" }}
-    >
-      <Link
-        href={`/secteurs/${secteur.slug}`}
-        style={{ textDecoration: "none", display: "block" }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <div
-          style={{
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: "0.75rem",
-            border: `1px solid ${hovered ? secteur.color + "55" : "rgba(255,255,255,0.07)"}`,
-            transition: "border-color 0.35s ease, transform 0.35s ease",
-            transform: hovered ? "translateY(-4px)" : "translateY(0)",
-          }}
-        >
-          {/* Image */}
-          <div style={{ position: "relative", height: "240px", overflow: "hidden" }}>
-            <Image
-              src={secteur.image}
-              alt={secteur.label}
-              fill
-              style={{
-                objectFit: "cover",
-                transition: "transform 0.6s ease",
-                transform: hovered ? "scale(1.06)" : "scale(1)",
-              }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            {/* Dark overlay */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: `linear-gradient(to bottom, rgba(7,14,28,0.35) 0%, rgba(7,14,28,0.82) 100%)`,
-                transition: "background 0.35s ease",
-              }}
-            />
-            {/* Accent overlay on hover */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: `${secteur.color}15`,
-                opacity: hovered ? 1 : 0,
-                transition: "opacity 0.35s ease",
-              }}
-            />
-            {/* Icon */}
-            <div
-              style={{
-                position: "absolute",
-                top: "1.25rem",
-                left: "1.25rem",
-                fontSize: "2rem",
-                filter: "drop-shadow(0 0 8px rgba(0,0,0,0.5))",
-              }}
-            >
-              {secteur.icon}
-            </div>
-          </div>
-
-          {/* Content */}
-          <div
-            style={{
-              background: "rgba(7,14,28,0.95)",
-              padding: "1.5rem",
-              borderTop: `1px solid ${secteur.color}22`,
-            }}
-          >
-            {/* Label */}
-            <p
-              style={{
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.75rem",
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                color: secteur.color,
-                marginBottom: "0.6rem",
-                fontWeight: 500,
-              }}
-            >
-              {secteur.label}
-            </p>
-            {/* Tagline */}
-            <h3
-              style={{
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
-                fontWeight: 900,
-                color: "#fff",
-                lineHeight: 1.2,
-                marginBottom: "0.85rem",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              {secteur.tagline}
-            </h3>
-            {/* Description short */}
-            <p
-              style={{
-                color: "rgba(255,255,255,0.50)",
-                fontSize: "0.95rem",
-                lineHeight: 1.6,
-                marginBottom: "1.25rem",
-                display: "-webkit-box",
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
-                overflow: "hidden",
-              }}
-            >
-              {secteur.description}
-            </p>
-            {/* CTA */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                color: hovered ? secteur.color : "rgba(255,255,255,0.45)",
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.8rem",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                transition: "color 0.25s ease",
-              }}
-            >
-              Explorer
-              <motion.span
-                animate={{ x: hovered ? 4 : 0 }}
-                transition={{ duration: 0.25 }}
-              >
-                →
-              </motion.span>
-            </div>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
+      {/* Vertical divider */}
+      <div style={{ position: "absolute", left: "52%", top: "15%", bottom: "15%", width: "1px", background: "rgba(255,255,255,0.05)", pointerEvents: "none" }} />
+    </section>
   );
 }
 
@@ -457,77 +404,62 @@ export default function SecteursShell() {
         color: "#fff",
       }}
     >
+      {/* ── Background layers ── */}
+      <WaveTerrain />
+      <Cursor />
+      <Grain />
+
       {/* ── Hero ── */}
       <section
         style={{
           position: "relative",
+          zIndex: 1,
           overflow: "hidden",
-          paddingTop: "clamp(8rem, 12vw, 12rem)",
+          paddingTop: "clamp(7rem, 11vw, 12rem)",
           paddingBottom: "clamp(4rem, 6vw, 7rem)",
           paddingLeft: "clamp(1.5rem, 6vw, 8rem)",
           paddingRight: "clamp(1.5rem, 6vw, 8rem)",
         }}
       >
-        {/* Background glow */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(211,84,0,0.12) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
+        {/* Radial glow orange */}
+        <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 72% 56% at 50% -8%, rgba(211,84,0,0.13) 0%, transparent 68%)" }} />
 
-        {/* Horizontal rule */}
+        {/* Orange rule reveal */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 1.2, ease: [...EASE] }}
-          style={{
-            height: 1,
-            background: "rgba(211,84,0,0.35)",
-            marginBottom: "2.5rem",
-            originX: 0,
-          }}
+          transition={{ duration: 1.1, ease: [...EASE] }}
+          style={{ height: 1, background: "rgba(211,84,0,0.38)", marginBottom: "2.5rem", originX: 0 }}
         />
 
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.2rem" }}
         >
-          <span className="diamond diamond--sm" />
-          <span
-            style={{
-              color: "rgba(255,255,255,0.35)",
-              fontSize: "0.85rem",
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-            }}
-          >
-            Secteurs d&apos;activité
+          <motion.div
+            style={{ width: 28, height: 1, background: ORANGE, originX: 0 }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.5, duration: 0.45 }}
+          />
+          <span style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", letterSpacing: "0.35em", textTransform: "uppercase" }}>
+            Africa Centred Technology
+          </span>
+          <span style={{ color: ORANGE, fontWeight: 900, fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase" }}>
+            — Secteurs
           </span>
         </motion.div>
 
         {/* Title */}
-        <div style={{ overflow: "hidden", marginBottom: "1.5rem" }}>
+        <div style={{ overflow: "hidden", marginBottom: "1.25rem" }}>
           <motion.h1
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{ duration: 0.85, delay: 0.18, ease: [...EASE] }}
-            style={{
-              fontWeight: 900,
-              fontSize: "clamp(3rem, 8vw, 11rem)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-              textTransform: "uppercase",
-              color: "#fff",
-              margin: 0,
-            }}
+            style={{ fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
           >
             NOS DOMAINES
             <br />
@@ -535,116 +467,29 @@ export default function SecteursShell() {
           </motion.h1>
         </div>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
+        {/* Subtitle + Stats row */}
+        <motion.div 
+          initial={{ opacity: 0, y: 16 }} 
+          animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.65, delay: 0.42 }}
-          style={{
-            color: "rgba(255,255,255,0.55)",
-            fontSize: "clamp(1rem, 1.5vw, 1.3rem)",
-            lineHeight: 1.65,
-            maxWidth: "640px",
-          }}
+          style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "3rem" }}
         >
-          ACT intervient dans les secteurs stratégiques de l&apos;économie africaine,
-          apportant expertise technologique et vision locale pour transformer les
-          défis du continent en opportunités concrètes.
-        </motion.p>
-
-        {/* Stats bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          style={{
-            display: "flex",
-            gap: "3rem",
-            marginTop: "3rem",
-            flexWrap: "wrap",
-          }}
-        >
-          {[
-            { value: "7", label: "Secteurs couverts" },
-            { value: "15+", label: "Projets déployés" },
-            { value: "100%", label: "Impact africain" },
-          ].map(({ value, label }) => (
-            <div key={label}>
-              <p
-                style={{
-                  fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
-                  fontWeight: 900,
-                  color: ORANGE,
-                  margin: 0,
-                  lineHeight: 1,
-                }}
-              >
-                {value}
-              </p>
-              <p
-                style={{
-                  color: "rgba(255,255,255,0.35)",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  marginTop: "0.4rem",
-                }}
-              >
-                {label}
-              </p>
-            </div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* ── Grid ── */}
-      <section
-        style={{
-          padding:
-            "clamp(3rem,5vw,5rem) clamp(1.5rem, 6vw, 8rem) clamp(4rem, 7vw, 6rem)",
-        }}
-      >
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          style={{ marginBottom: "3rem" }}
-        >
-          <p
-            style={{
-              color: "rgba(255,255,255,0.30)",
-              fontSize: "0.8rem",
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              marginBottom: "0.6rem",
-            }}
-          >
-            — Nos domaines d&apos;intervention
+          <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "700px", margin: 0, textAlign: "justify", flex: 1 }}>
+            ACT intervient dans les secteurs stratégiques de l&apos;économie africaine, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.
           </p>
-          <div
-            style={{
-              height: 1,
-              background: "rgba(255,255,255,0.06)",
-              marginTop: "1.5rem",
-            }}
-          />
+          <div style={{ display: "flex", gap: "3.5rem", flexWrap: "wrap" }}>
+            {[{ value: "7", label: "Secteurs" }, { value: "15+", label: "Projets" }, { value: "100%", label: "Impact africain" }].map(({ value, label }) => (
+              <div key={label}>
+                <p style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 900, color: ORANGE, margin: 0, lineHeight: 1 }}>{value}</p>
+                <p style={{ color: "#ffffff", fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "0.4rem", opacity: 0.8 }}>{label}</p>
+              </div>
+            ))}
+          </div>
         </motion.div>
-
-        {/* Cards grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
-            gap: "1.75rem",
-          }}
-        >
-          {secteurs.map((secteur, i) => (
-            <SecteurCard key={secteur.slug} secteur={secteur} index={i} />
-          ))}
-        </div>
       </section>
+
+      {/* ── Album Section (100vh, fixed, arrows + drag) ── */}
+      <AlbumSection />
 
       {/* ── CTA band ── */}
       <motion.section
@@ -653,85 +498,21 @@ export default function SecteursShell() {
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
         style={{
-          padding: "clamp(4rem, 7vw, 7rem) clamp(1.5rem, 6vw, 8rem)",
+          padding: "clamp(5rem, 9vw, 10rem) clamp(2rem, 8vw, 10rem)",
           background: "rgba(211,84,0,0.06)",
           borderTop: "1px solid rgba(211,84,0,0.18)",
           borderBottom: "1px solid rgba(211,84,0,0.18)",
           textAlign: "center",
         }}
       >
-        <p
-          style={{
-            color: "rgba(255,255,255,0.35)",
-            fontSize: "0.8rem",
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            marginBottom: "1.25rem",
-          }}
-        >
-          Votre secteur, notre expertise
+        <p style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: "1.75rem", opacity: 0.85 }}>Votre secteur, notre expertise</p>
+        <h2 style={{ fontWeight: 900, fontSize: "clamp(2.5rem, 6vw, 6rem)", textTransform: "uppercase", lineHeight: 1, letterSpacing: "-0.02em", color: "#fff", marginBottom: "2rem" }}>Parlons de votre projet</h2>
+        <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.6, maxWidth: "800px", margin: "0 auto 3.5rem", opacity: 0.85, textAlign: "justify" }}>
+          Quelle que soit votre industrie, ACT dispose de l&apos;expertise technologique pour vous accompagner dans votre transformation digitale.
         </p>
-        <h2
-          style={{
-            fontWeight: 900,
-            fontSize: "clamp(2rem, 5vw, 5rem)",
-            textTransform: "uppercase",
-            lineHeight: 1,
-            letterSpacing: "-0.02em",
-            color: "#fff",
-            marginBottom: "1.5rem",
-          }}
-        >
-          Parlons de votre projet
-        </h2>
-        <p
-          style={{
-            color: "rgba(255,255,255,0.50)",
-            fontSize: "clamp(0.95rem, 1.3vw, 1.15rem)",
-            lineHeight: 1.6,
-            maxWidth: "560px",
-            margin: "0 auto 2.5rem",
-          }}
-        >
-          Quelle que soit votre industrie, ACT dispose de l&apos;expertise
-          technologique pour vous accompagner dans votre transformation digitale.
-        </p>
-        <Link
-          href="/contact"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.65rem",
-            padding: "1rem 2.25rem",
-            background: ORANGE,
-            color: "#fff",
-            borderRadius: "0.5rem",
-            textDecoration: "none",
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "0.8rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            fontWeight: 500,
-            transition: "background 0.2s ease",
-          }}
-          onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.background = "#b84700")
-          }
-          onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.background = ORANGE)
-          }
-        >
+        <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.85rem", padding: "1.4rem 3rem", background: ORANGE, color: "#fff", borderRadius: "0.6rem", textDecoration: "none", fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, transition: "background 0.2s ease" }} onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#b84700")} onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = ORANGE)}>
           Démarrer un projet
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
         </Link>
       </motion.section>
 

@@ -65,7 +65,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       <span
         style={{
           fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "0.7rem",
+          fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
           fontWeight: 700,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
@@ -118,7 +118,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             padding: "0.55rem 1.2rem",
             color: "rgba(255,255,255,0.5)",
             fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "0.68rem",
+            fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
             fontWeight: 700,
             letterSpacing: "0.2em",
             textTransform: "uppercase",
@@ -219,7 +219,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#fff",
                 fontFamily: "Futura, system-ui, sans-serif",
                 fontWeight: 700,
-                fontSize: "0.68rem",
+                fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
                 letterSpacing: "0.25em",
                 textTransform: "uppercase",
                 padding: "0.35rem 1rem",
@@ -230,9 +230,9 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             </span>
             <span
               style={{
-                color: "rgba(255,255,255,0.3)",
+                color: "#ffffff",
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.75rem",
+                fontSize: "clamp(0.8rem, 1vw, 1rem)",
                 letterSpacing: "0.18em",
               }}
             >
@@ -312,7 +312,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 <p
                   style={{
                     fontFamily: "Futura, system-ui, sans-serif",
-                    fontSize: "0.65rem",
+                    fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
                     fontWeight: 700,
                     letterSpacing: "0.3em",
                     textTransform: "uppercase",
@@ -340,7 +340,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
               <p
                 style={{
                   fontFamily: "Futura, system-ui, sans-serif",
-                  fontSize: "0.65rem",
+                  fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
                   fontWeight: 700,
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
@@ -361,10 +361,10 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                       padding: "0.4rem 1rem",
                       fontFamily: "Futura, system-ui, sans-serif",
                       fontWeight: 700,
-                      fontSize: "0.72rem",
+                      fontSize: "clamp(0.75rem, 0.95vw, 0.95rem)",
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.65)",
+                      color: "#ffffff",
                     }}
                   >
                     {tag}
@@ -495,10 +495,10 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                     style={{
                       fontFamily: "Futura, system-ui, sans-serif",
                       fontWeight: 700,
-                      fontSize: "0.78rem",
+                      fontSize: "clamp(0.8rem, 1vw, 1rem)",
                       letterSpacing: "0.12em",
                       textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.5)",
+                      color: "#ffffff",
                     }}
                   >
                     {r.label}
@@ -539,7 +539,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                       flexShrink: 0,
                       fontFamily: "Futura, system-ui, sans-serif",
                       fontWeight: 900,
-                      fontSize: "0.72rem",
+                      fontSize: "clamp(0.75rem, 0.95vw, 0.95rem)",
                       color: "#D35400",
                       letterSpacing: "0.1em",
                       paddingTop: "0.2rem",
@@ -656,7 +656,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#fff",
                 fontFamily: "Futura, system-ui, sans-serif",
                 fontWeight: 700,
-                fontSize: "0.82rem",
+                fontSize: "clamp(0.85rem, 1.1vw, 1.05rem)",
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
                 padding: "1.2rem 2.8rem",
@@ -703,16 +703,16 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
               ((e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)")
             }
             onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLElement).style.background = "transparent")
+            ((e.currentTarget as HTMLElement).style.background = "transparent")
             }
           >
             <span
               style={{
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "clamp(0.7rem, 0.9vw, 0.9rem)",
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.25)",
+                color: "#ffffff",
               }}
             >
               ← Projet précédent
@@ -731,7 +731,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             <span
               style={{
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.7rem",
+                fontSize: "clamp(0.75rem, 0.95vw, 0.95rem)",
                 letterSpacing: "0.15em",
                 color: "#D35400",
               }}
@@ -762,10 +762,10 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             <span
               style={{
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "clamp(0.7rem, 0.9vw, 0.9rem)",
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.25)",
+                color: "#ffffff",
               }}
             >
               Projet suivant →
@@ -785,7 +785,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             <span
               style={{
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.7rem",
+                fontSize: "clamp(0.75rem, 0.95vw, 0.95rem)",
                 letterSpacing: "0.15em",
                 color: "#D35400",
               }}

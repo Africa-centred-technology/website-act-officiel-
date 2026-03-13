@@ -13,12 +13,19 @@
 
 import React, { useRef, useMemo } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   motion,
   useScroll, useTransform,
   useMotionValue, useSpring,
 } from "framer-motion";
+
+/* Background layers */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 import { SERVICES, type Service } from "@/lib/data/services";
+import FooterStrip from "@/components/layout/FooterStrip";
 
 const EASE  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -250,15 +257,15 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
         }}
           initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.04 }}>
-          <Link href="/" style={{ color: "rgba(255,255,255,0.25)", textDecoration: "none" }}>Accueil</Link>
-          <span style={{ color: "rgba(255,255,255,0.15)" }}>›</span>
-          <Link href="/services" style={{ color: "rgba(255,255,255,0.35)", textDecoration: "none" }}>Services</Link>
-          <span style={{ color: "rgba(255,255,255,0.15)" }}>›</span>
+          <Link href="/" style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)" }}>Accueil</Link>
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>›</span>
+          <Link href="/services" style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)" }}>Services</Link>
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>›</span>
           <span style={{
             marginLeft: "auto",
             background: `${svc.accent}16`, border: `1px solid ${svc.accent}40`,
             borderRadius: "2rem", padding: "0.28rem 0.9rem",
-            fontSize: "clamp(10px, 0.7rem, 0.74rem)", letterSpacing: "0.18em",
+            fontSize: "clamp(0.85rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em",
             textTransform: "uppercase", color: svc.accent,
           }}>
             Pôle {svc.poleN} · {svc.pole}
@@ -337,14 +344,14 @@ function IntroSection({ svc }: { svc: Service }) {
           variants={stagger(0)}>
           <motion.p variants={fadeUp} style={{
             fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(10px, 0.72rem, 0.78rem)",
+            fontSize: "clamp(0.85rem, 1vw, 1rem)",
             letterSpacing: "0.28em", textTransform: "uppercase",
-            color: `${svc.accent}99`, marginBottom: "1.8rem",
+            color: "#ffffff", marginBottom: "1.8rem", fontWeight: 700,
           }}>Notre approche</motion.p>
 
           <motion.p variants={fadeUp} style={{
-            fontSize: "clamp(1.15rem, 1.5vw, 1.7rem)",
-            lineHeight: 1.8, color: "rgba(255,255,255,0.7)",
+            fontSize: "clamp(1.2rem, 1.6vw, 1.8rem)",
+            lineHeight: 1.8, color: "#ffffff",
             fontStyle: "italic", marginBottom: "2.5rem",
           }}>
             "{svc.intro}"
@@ -369,11 +376,11 @@ function IntroSection({ svc }: { svc: Service }) {
             </div>
             <div>
               <p style={{ fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(13px, 0.88rem, 0.95rem)", color: "#fff", marginBottom: "0.2rem" }}>
+                fontSize: "clamp(14px, 1.1vw, 1.2rem)", color: "#fff", marginBottom: "0.2rem" }}>
                 {svc.subs.length} sous-services · {svc.benefits.length} avantages · {svc.deliverables.length} livrables
               </p>
-              <p style={{ fontSize: "clamp(11px, 0.72rem, 0.76rem)",
-                color: `${svc.accent}88`, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+              <p style={{ fontSize: "clamp(12px, 0.95vw, 1.05rem)",
+                color: svc.accent, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
                 Pôle {svc.poleN} — {svc.pole}
               </p>
             </div>
@@ -575,8 +582,8 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
         }}>{sub.title}</motion.h3>
 
         <motion.p variants={fadeUp} style={{
-          fontSize: "clamp(13px, 0.95rem, 1.05rem)",
-          lineHeight: 1.82, color: "rgba(255,255,255,0.52)",
+          fontSize: "clamp(14px, 1.1vw, 1.2rem)",
+          lineHeight: 1.82, color: "#ffffff",
         }}>{sub.desc}</motion.p>
       </motion.div>
 
@@ -634,8 +641,8 @@ function BenefitsSection({ svc }: { svc: Service }) {
               <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, transparent, ${svc.accent}60)` }} />
               <span style={{
                 fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(10px, 0.72rem, 0.78rem)",
-                letterSpacing: "0.28em", textTransform: "uppercase", color: `${svc.accent}AA`,
+                fontSize: "clamp(0.85rem, 1vw, 1rem)",
+                letterSpacing: "0.28em", textTransform: "uppercase", color: svc.accent, fontWeight: 700,
               }}>Ce que vous gagnez</span>
               <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${svc.accent}60, transparent)` }} />
             </motion.div>
@@ -713,9 +720,9 @@ function DeliverablesSection({ svc }: { svc: Service }) {
           variants={stagger(0)}>
           <motion.p variants={fadeUp} style={{
             fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(10px, 0.72rem, 0.78rem)",
+            fontSize: "clamp(0.85rem, 1vw, 1rem)",
             letterSpacing: "0.28em", textTransform: "uppercase",
-            color: "rgba(255,255,255,0.3)", marginBottom: "3rem",
+            color: "#ffffff", marginBottom: "3rem", fontWeight: 700,
           }}>Ce que vous recevez</motion.p>
 
           <div style={{ position: "relative", display: "flex", flexDirection: "column" }}>
@@ -751,8 +758,8 @@ function DeliverablesSection({ svc }: { svc: Service }) {
                   }}>{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <div style={{ paddingTop: "0.7rem" }}>
-                  <p style={{ fontSize: "clamp(14px, 1rem, 1.05rem)",
-                    color: "rgba(255,255,255,0.72)", lineHeight: 1.55 }}>{d}</p>
+                  <p style={{ fontSize: "clamp(15px, 1.2vw, 1.3rem)",
+                    color: "#ffffff", lineHeight: 1.55 }}>{d}</p>
                 </div>
               </motion.div>
             ))}
@@ -796,8 +803,8 @@ function DeliverablesSection({ svc }: { svc: Service }) {
             {svc.deliverables.length} livrables<br />
             <span style={{ color: svc.accent }}>concrets</span>
           </p>
-          <p style={{ fontSize: "clamp(12px, 0.82rem, 0.88rem)",
-            color: "rgba(255,255,255,0.35)", letterSpacing: "0.06em" }}>
+          <p style={{ fontSize: "clamp(13px, 1vw, 1.15rem)",
+            color: "#ffffff", letterSpacing: "0.06em" }}>
             Documentation · Formation · Support
           </p>
         </motion.div>
@@ -830,8 +837,8 @@ function RelatedServices({ svc }: { svc: Service }) {
           }}>
             <p style={{
               fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(10px, 0.72rem, 0.78rem)",
-              letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)",
+              fontSize: "clamp(0.85rem, 1vw, 1rem)",
+              letterSpacing: "0.28em", textTransform: "uppercase", color: "#ffffff", fontWeight: 700,
             }}>Services du Pôle {svc.poleN}</p>
             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.06)" }} />
           </motion.div>
@@ -864,8 +871,8 @@ function RelatedServices({ svc }: { svc: Service }) {
                     <div style={{ position: "relative", zIndex: 1 }}>
                       <span style={{
                         fontFamily: "Futura, system-ui, sans-serif",
-                        fontSize: "clamp(10px, 0.7rem, 0.74rem)",
-                        letterSpacing: "0.2em", color: `${r.accent}AA`, display: "block", marginBottom: "0.7rem",
+                        fontSize: "clamp(0.8rem, 1vw, 1rem)",
+                        letterSpacing: "0.2em", color: r.accent, display: "block", marginBottom: "0.7rem", fontWeight: 700,
                       }}>{r.n}</span>
                       <p style={{
                         fontFamily: "Futura, system-ui, sans-serif",
@@ -935,9 +942,9 @@ function CtaSection({ svc }: { svc: Service }) {
 
           <motion.p variants={fadeUp} style={{
             fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(10px, 0.72rem, 0.78rem)",
+            fontSize: "clamp(0.85rem, 1vw, 1rem)",
             letterSpacing: "0.28em", textTransform: "uppercase",
-            color: `${svc.accent}99`, marginBottom: "1.2rem",
+            color: svc.accent, marginBottom: "1.2rem", fontWeight: 700,
           }}>Travaillons ensemble</motion.p>
 
           <motion.h2 variants={fadeUp} style={{
@@ -947,8 +954,8 @@ function CtaSection({ svc }: { svc: Service }) {
           }}>Intéressé par ce service ?</motion.h2>
 
           <motion.p variants={fadeUp} style={{
-            fontSize: "clamp(14px, 1rem, 1.1rem)",
-            color: "rgba(255,255,255,0.45)", maxWidth: "520px",
+            fontSize: "clamp(15px, 1.2vw, 1.35rem)",
+            color: "#ffffff", maxWidth: "520px",
             margin: "0 auto 3rem",
           }}>Parlons de votre projet en 30 minutes — sans engagement.</motion.p>
 
@@ -961,7 +968,7 @@ function CtaSection({ svc }: { svc: Service }) {
               padding: "1rem 2.5rem",
               background: svc.accent, color: "#fff", borderRadius: "0.5rem",
               fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(12px, 0.82rem, 0.88rem)",
+              fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)",
               letterSpacing: "0.14em", textTransform: "uppercase",
               textDecoration: "none", fontWeight: 500,
             }}>
@@ -974,10 +981,10 @@ function CtaSection({ svc }: { svc: Service }) {
             <Link href="/services" style={{
               display: "inline-flex", alignItems: "center", gap: "0.6rem",
               padding: "1rem 2rem",
-              background: "transparent", color: "rgba(255,255,255,0.45)",
-              border: "1px solid rgba(255,255,255,0.12)", borderRadius: "0.5rem",
+              background: "transparent", color: "#ffffff",
+              border: "1px solid rgba(255,255,255,0.4)", borderRadius: "0.5rem",
               fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(12px, 0.82rem, 0.88rem)",
+              fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)",
               letterSpacing: "0.14em", textTransform: "uppercase", textDecoration: "none",
             }}>← Tous les services</Link>
           </motion.div>
@@ -1086,23 +1093,32 @@ export default function ServiceDetailShell({ svc }: { svc: Service }) {
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070E1C", color: "#fff" }}>
-      <StickyHeader svc={svc} />
-      <HeroSection svc={svc} index={index} />
-      <IntroSection svc={svc} />
-      <div>
-        {svc.subs.map((sub, i) => (
-          <SubServicePanel
-            key={i} sub={sub} index={i}
-            accent={svc.accent} svcN={svc.n}
-            img={svc.subImages[i]}
-          />
-        ))}
+    <div style={{ minHeight: "100vh", background: "#070E1C", color: "#fff", position: "relative" }}>
+      {/* Background layers */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#070E1C" }}>
+        <WaveTerrain />
+        <Grain />
+        <Cursor />
       </div>
-      <BenefitsSection svc={svc} />
-      <DeliverablesSection svc={svc} />
-      <RelatedServices svc={svc} />
-      <CtaSection svc={svc} />
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <StickyHeader svc={svc} />
+        <HeroSection svc={svc} index={index} />
+        <IntroSection svc={svc} />
+        <div>
+          {svc.subs.map((sub, i) => (
+            <SubServicePanel
+              key={i} sub={sub} index={i}
+              accent={svc.accent} svcN={svc.n}
+              img={svc.subImages[i]}
+            />
+          ))}
+        </div>
+        <BenefitsSection svc={svc} />
+        <DeliverablesSection svc={svc} />
+        <RelatedServices svc={svc} />
+        <CtaSection svc={svc} />
+        <FooterStrip />
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+import FooterStrip from "@/components/layout/FooterStrip";
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
@@ -33,147 +33,82 @@ function FooterStrip() {
     <motion.div
       aria-label="Footer"
       className="absolute left-0 right-0 pointer-events-auto"
-      style={{ bottom: "3rem", zIndex: 10, padding: "0 clamp(2rem, 5vw, 6rem)" }}
+      style={{ bottom: "5rem", zIndex: 10, padding: "0 clamp(2rem, 5vw, 6rem)" }}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1, duration: 0.7 }}
     >
-      {/* Séparateur supérieur avec glow */}
-      <motion.div
-        style={{
-          height: 2,
-          background: "linear-gradient(90deg, transparent 0%, rgba(211,84,0,0.6) 50%, transparent 100%)",
-          marginBottom: "2.5rem",
-          filter: "blur(0.5px)"
-        }}
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 1.3, duration: 1.2 }}
-      />
+      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-        gap: "3rem",
-        marginBottom: "2.5rem"
-      }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
 
         {/* Col 1 — Contact */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
-        >
-          <p className="uppercase font-black text-white/55 mb-5" style={{ fontSize: "0.95rem", letterSpacing: "0.3em", fontFamily: "var(--font-display)" }}>Contact</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div>
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
             <a href="mailto:contact@act.africa"
-              className="group flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-all duration-300"
-              style={{ fontSize: "1.05rem" }}>
-              <Mail size={18} strokeWidth={1.6} className="group-hover:scale-110 transition-transform" />
-              contact@act.africa
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Mail size={18} strokeWidth={1.6} />contact@act.africa
             </a>
             <a href="tel:+212694528498"
-              className="group flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-all duration-300"
-              style={{ fontSize: "1.05rem" }}>
-              <Phone size={18} strokeWidth={1.6} className="group-hover:scale-110 transition-transform" />
-              +212 694-528498
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Phone size={18} strokeWidth={1.6} />+212 694-528498
             </a>
-            <span className="flex items-center gap-3 text-white/40" style={{ fontSize: "1.05rem" }}>
-              <MapPin size={18} strokeWidth={1.6} />
-              Casablanca, Maroc
+            <span className="flex items-center gap-3 text-white/40" style={{ fontSize: "1.15rem" }}>
+              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Col 2 — Réseaux Sociaux */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
-        >
-          <p className="uppercase font-black text-white/55 mb-5" style={{ fontSize: "0.95rem", letterSpacing: "0.3em", fontFamily: "var(--font-display)" }}>Réseaux Sociaux</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {SOCIALS.map(({ Icon, href, label }, idx) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-all duration-300"
-                style={{ fontSize: "1.05rem" }}
-                whileHover={{ x: 5 }}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.5 + idx * 0.1, duration: 0.4 }}
-              >
-                <Icon size={20} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-                {label}
-              </motion.a>
+        <div>
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+            {SOCIALS.map(({ Icon, href, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
+                style={{ fontSize: "1.15rem" }}>
+                <Icon size={20} strokeWidth={1.5} />{label}
+              </a>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Col 3 — Carrières + CTA */}
-        <motion.div
-          style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.6 }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
           <div>
-            <p className="uppercase font-black text-white/55 mb-4" style={{ fontSize: "0.95rem", letterSpacing: "0.3em", fontFamily: "var(--font-display)" }}>Carrières</p>
-            <p className="text-white/60 mb-4" style={{ fontSize: "1.05rem", lineHeight: 1.65, maxWidth: "240px" }}>
+            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
+            <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
               Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
             </p>
-            <motion.div whileHover={{ x: 5 }}>
-              <Link href="/careers"
-                className="group inline-flex items-center gap-2 text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
-                style={{ fontSize: "1rem", letterSpacing: "0.1em" }}>
-                Postuler maintenant
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  →
-                </motion.span>
-              </Link>
-            </motion.div>
+            <Link href="/careers"
+              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
+              style={{ fontSize: "1.05rem", letterSpacing: "0.1em" }}>
+              Postuler maintenant →
+            </Link>
           </div>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <CTAButton href="/contact">Un projet en tête ?</CTAButton>
-          </motion.div>
-        </motion.div>
+          <CTAButton href="/contact">Un projet en tête ?</CTAButton>
+        </div>
 
       </div>
 
-      <motion.div
-        style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }}
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 1.7, duration: 0.8 }}
-      />
-      <motion.div
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
-      >
-        <span className="text-white/40 uppercase" style={{ fontSize: "0.88rem", letterSpacing: "0.08em" }}>
+      <div style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
           © 2026 Africa Centred Technology. Tous droits réservés
         </span>
         <div style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
-          <Link href="/privacy" className="text-white/40 hover:text-[#D35400] transition-colors uppercase" style={{ fontSize: "0.88rem" }}>
+          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
             Politique de Confidentialité
           </Link>
           <span className="text-white/25">/</span>
-          <Link href="/terms" className="text-white/40 hover:text-[#D35400] transition-colors uppercase" style={{ fontSize: "0.88rem" }}>
+          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
             CGU
           </Link>
         </div>
-      </motion.div>
+      </div>
 
     </motion.div>
   );

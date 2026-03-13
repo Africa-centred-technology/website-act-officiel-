@@ -12,8 +12,8 @@
  *   5. Particules flottantes (accent)
  *   6. Lignes ambiantes horizontales
  *   7. Contenu — 3 couches parallax (bg / mid / fg)
- *      · Gauche  : header, titre char-split, tagline, benefits, CTA
- *      · Droite  : sous-services (cards 3D tilt, depth-entry)
+ *      · Gauche  : Image Hero (4/3, cadre accent)
+ *      · Droite  : header, titre char-split, tagline, benefits, CTA
  *
  * Chaque service a :
  *  - Son propre gradient (service.bg)
@@ -21,10 +21,11 @@
  *  - Char-fx alternés selon l'index
  */
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
-import type { Service, ServiceSub } from "@/lib/data/services";
+import Image from "next/image";
+import type { Service } from "@/lib/data/services";
 
 /* ── Constants ──────────────────────────────────────── */
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -120,105 +121,6 @@ function WordChars({
           : <div key={i}>{inner}</div>;
       })}
     </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════
-   SUB-SERVICE CARD (tilt 3D + depth-entry)
-   ═══════════════════════════════════════════════════════ */
-const CARD_DEPTH = [
-  { rotateX: 14, scale: 0.76, blur: 12, delay: 0.08 },
-  { rotateX: 8, scale: 0.86, blur: 7, delay: 0.20 },
-  { rotateX: 4, scale: 0.94, blur: 3, delay: 0.32 },
-];
-
-function SubCard({ sub, index, accent }: { sub: ServiceSub; index: number; accent: string }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, on: false });
-  const depth = CARD_DEPTH[Math.min(index, 2)];
-
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const r = cardRef.current.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top) / r.height;
-    setTilt({ rx: (py - 0.5) * 18, ry: (px - 0.5) * -18, gx: px * 100, gy: py * 100, on: true });
-  };
-  const onLeave = () => setTilt({ rx: 0, ry: 0, gx: 50, gy: 50, on: false });
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 52, scale: depth.scale, rotateX: depth.rotateX, filter: `blur(${depth.blur}px)` }}
-      animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" }}
-      transition={{ duration: 0.92, delay: depth.delay, ease: [0.6, 0.08, 0.02, 0.99] }}
-      style={{ perspective: "1200px" }}
-    >
-      <motion.div
-        ref={cardRef}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
-        animate={{ rotateX: tilt.rx, rotateY: tilt.ry }}
-        transition={{ type: "spring", stiffness: 240, damping: 22 }}
-        style={{
-          transformStyle: "preserve-3d",
-          position: "relative",
-          padding: "1.8rem 2rem",
-          background: "rgba(8,18,32,0.72)",
-          border: `1px solid ${tilt.on ? accent + "66" : "rgba(255,255,255,0.08)"}`,
-          overflow: "hidden",
-          transition: "border-color 0.28s",
-        }}
-      >
-        {/* Scanlines CSS */}
-        <div aria-hidden style={{
-          position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1,
-          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px)",
-        }} />
-        {/* Glow cursor */}
-        <div aria-hidden style={{
-          position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2,
-          background: tilt.on
-            ? `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, ${accent}18 0%, transparent 65%)`
-            : "none",
-          transition: "background 0.22s",
-        }} />
-        {/* Accent bar top */}
-        <motion.div aria-hidden style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 2,
-          background: accent, originX: 0,
-        }}
-          animate={{ scaleX: tilt.on ? 1 : 0 }}
-          transition={{ type: "spring", stiffness: 280, damping: 24 }}
-        />
-
-        <div style={{ position: "relative", zIndex: 3 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
-            <span style={{ fontSize: "0.7rem", letterSpacing: "0.18em", color: `${accent}88` }}>
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <motion.div style={{
-              flex: 1, height: 1, background: accent, originX: 0,
-            }}
-              animate={{ scaleX: tilt.on ? 1 : 0.15 }}
-              transition={{ type: "spring", stiffness: 280, damping: 24 }}
-            />
-          </div>
-          <h4 style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(13px, 1rem, 1.08rem)",
-            fontWeight: 500, color: "#fff", marginBottom: "0.6rem", lineHeight: 1.2,
-          }}>
-            {sub.title}
-          </h4>
-          <p style={{
-            fontSize: "clamp(11px, 0.82rem, 0.88rem)",
-            lineHeight: 1.65, color: "rgba(255,255,255,0.45)",
-          }}>
-            {sub.desc}
-          </p>
-        </div>
-      </motion.div>
-    </motion.div>
   );
 }
 
@@ -356,41 +258,110 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
       <div style={{
         position: "relative", zIndex: 2,
         display: "flex", alignItems: "center",
-        gap: "3rem",
+        gap: "4rem",
         width: "100%",
-        marginTop: "3rem", /* Push content entirely below the 12% ambient line */
+        marginTop: "3rem",
       }}>
 
-        {/* ── COLONNE GAUCHE — titre + info ── */}
-        <motion.div style={{ flex: "0 0 55%", x: midX, y: midY }}>
+        {/* ── COLONNE GAUCHE — Hero Image ── */}
+        <motion.div
+          style={{ flex: "1", position: "relative", x: bgX, y: bgY }}
+          initial={{ opacity: 0, x: -60, scale: 0.95 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 1.0, delay: 0.35, ease: [...EASE3D] }}
+        >
+          {/* Cadre accent coin haut-gauche */}
+          <motion.div aria-hidden style={{
+            position: "absolute", top: -10, left: -10, zIndex: 3,
+            width: 48, height: 48,
+            borderTop: `2px solid ${svc.accent}`,
+            borderLeft: `2px solid ${svc.accent}`,
+          }}
+            initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+          />
+          {/* Cadre accent coin bas-droite */}
+          <motion.div aria-hidden style={{
+            position: "absolute", bottom: -10, right: -10, zIndex: 3,
+            width: 48, height: 48,
+            borderBottom: `2px solid ${svc.accent}`,
+            borderRight: `2px solid ${svc.accent}`,
+          }}
+            initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.9, duration: 0.5 }}
+          />
+
+          {/* Conteneur image avec ratio 4/3 */}
+          <div style={{
+            position: "relative",
+            width: "100%",
+            aspectRatio: "4 / 3",
+            overflow: "hidden",
+            border: `1px solid ${svc.accent}22`,
+          }}>
+            <Image
+              src={svc.heroImage}
+              alt={svc.title.replace(/\n/g, " ")}
+              fill
+              style={{ objectFit: "cover", objectPosition: "center" }}
+              sizes="(max-width: 1200px) 45vw, 38vw"
+              priority
+            />
+            {/* Overlay gradient sombre sur les bords */}
+            <div aria-hidden style={{
+              position: "absolute", inset: 0,
+              background: `linear-gradient(225deg, rgba(3,5,8,0.55) 0%, transparent 45%, rgba(3,5,8,0.70) 100%)`,
+            }} />
+            {/* Overlay couleur accent subtil */}
+            <div aria-hidden style={{
+              position: "absolute", inset: 0,
+              background: `linear-gradient(to top, ${svc.accent}22 0%, transparent 50%)`,
+            }} />
+            {/* Numéro du service en surimpression */}
+            <div aria-hidden style={{
+              position: "absolute", bottom: "1.2rem", right: "1.4rem",
+              fontSize: "clamp(0.75rem, 1vw, 0.9rem)",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: svc.accent,
+              fontWeight: 700,
+              display: "flex", alignItems: "center", gap: "0.5rem",
+            }}>
+              {svc.n} — {svc.tagline}
+              <span style={{ display: "inline-block", width: 24, height: 1, background: svc.accent }} />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── COLONNE DROITE — titre + info ── */}
+        <motion.div style={{ flex: "0 0 52%", x: midX, y: midY }}
+          initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.0, delay: 0.35, ease: [...EASE3D] }}
+        >
 
           {/* Eyebrow */}
           <motion.div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.8rem" }}
-            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, delay: 0.04 }}>
             <span className="diamond diamond--sm" style={{ background: svc.accent }} />
-            <span style={{ color: "rgba(255,255,255,0.32)", fontSize: "1rem", letterSpacing: "0.28em", textTransform: "uppercase" }}>
+            <span style={{ color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.25rem)", letterSpacing: "0.28em", textTransform: "uppercase", fontWeight: 700 }}>
               Pôle {svc.poleN} · {svc.pole}
             </span>
           </motion.div>
 
-          {/* Split : numéro ghost | titre chars */}
-          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-
-            {/* Lignes du titre */}
-            <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", gap: "0.1em" }}>
-              {titleLines.map((line, li) => (
-                <WordChars
-                  key={li}
-                  text={line}
-                  delay={0.10 + li * 0.22}
-                  color={titleColors[li % 3]}
-                  fx={fxList[li % 3]}
-                  stagger={0.034}
-                  size="clamp(2.2rem, 4.2vw, 5.5rem)"
-                />
-              ))}
-            </div>
+          {/* Titre chars */}
+          <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", gap: "0.1em" }}>
+            {titleLines.map((line, li) => (
+              <WordChars
+                key={li}
+                text={line}
+                delay={0.10 + li * 0.22}
+                color={titleColors[li % 3]}
+                fx={fxList[li % 3]}
+                stagger={0.034}
+                size="clamp(2.2rem, 4.2vw, 5.5rem)"
+              />
+            ))}
           </div>
 
           {/* Règle accent */}
@@ -404,9 +375,9 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
 
           {/* Intro */}
           <motion.p style={{
-            fontSize: "clamp(1.1rem, 1.4vw, 1.55rem)",
-            lineHeight: 1.72, color: "rgba(255,255,255,0.56)",
-            maxWidth: "36rem",
+            fontSize: "clamp(1.05rem, 1.4vw, 1.45rem)",
+            lineHeight: 1.72, color: "#ffffffCC",
+            maxWidth: "34rem",
           }}
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.62 }}>
@@ -419,13 +390,14 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
             transition={{ delay: 1.12, duration: 0.55 }}>
             {svc.benefits.map(b => (
               <span key={b} style={{
-                fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
+                fontSize: "clamp(0.85rem, 1vw, 1rem)",
                 letterSpacing: "0.08em",
-                color: `${svc.accent}CC`,
+                color: svc.accent,
                 background: `${svc.accent}12`,
                 border: `1px solid ${svc.accent}30`,
                 borderRadius: "2rem",
                 padding: "0.3rem 0.85rem",
+                fontWeight: 700,
               }}>
                 {b}
               </span>
@@ -433,7 +405,7 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
           </motion.div>
 
           {/* CTAs */}
-          <motion.div style={{ display: "flex", alignItems: "center", gap: "2rem", marginTop: "2rem", x: fgX, y: fgY }}
+          <motion.div style={{ display: "flex", alignItems: "center", gap: "2rem", marginTop: "2rem" }}
             initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 1.22, duration: 0.58 }}>
@@ -444,7 +416,7 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
               color: "#fff",
               borderRadius: "0.4rem",
               fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(0.78rem, 0.9vw, 0.95rem)",
+              fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)",
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               textDecoration: "none",
@@ -458,9 +430,9 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
             </Link>
             <Link href="/contact" style={{
               display: "flex", alignItems: "center", gap: "0.6rem",
-              color: "rgba(255,255,255,0.45)",
+              color: "#ffffff",
               textDecoration: "none",
-              fontSize: "clamp(0.78rem, 0.9vw, 0.92rem)",
+              fontSize: "clamp(0.9rem, 1.1vw, 1.15rem)",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               transition: "color 0.2s",
@@ -470,52 +442,6 @@ export default function ServiceRoom({ svc, index }: { svc: Service; index: numbe
             </Link>
           </motion.div>
         </motion.div>
-
-        {/* ── COLONNE DROITE — sous-services cards ── */}
-        <div style={{
-          flex: "0 0 42%",
-          display: "flex", flexDirection: "column",
-          gap: "0.85rem",
-          maxHeight: "68vh",
-          overflowY: "auto",
-          scrollbarWidth: "none",
-        }}>
-          {svc.subs.map((sub, i) => (
-            <SubCard key={i} sub={sub} index={i} accent={svc.accent} />
-          ))}
-          {/* Livrable hint */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            style={{
-              padding: "1.2rem 1.6rem",
-              background: `${svc.accent}0A`,
-              border: `1px dashed ${svc.accent}30`,
-              borderRadius: "0.4rem",
-            }}
-          >
-            <p style={{
-              fontSize: "clamp(10px, 0.72rem, 0.78rem)",
-              letterSpacing: "0.18em", textTransform: "uppercase",
-              color: `${svc.accent}AA`, marginBottom: "0.6rem",
-            }}>
-              Livrables inclus
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-              {svc.deliverables.map((d, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
-                    stroke={svc.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                  <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.45)" }}>
-                    {d}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
       </div>
     </div>
   );

@@ -20,115 +20,23 @@ import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { SERVICES, type Service } from "@/lib/data/services";
 import LogoPhase from "./LogoPhase";
+import FooterStrip from "@/components/layout/FooterStrip";
 
-/* ── Footer strip (même contenu que RoomSortie) ─────────────────── */
-const FOOTER_SOCIALS = [
-  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { Icon: Youtube,   href: "https://www.youtube.com/@AfricaCentredTechnology",                                           label: "YouTube"   },
-  { Icon: Facebook,  href: "https://web.facebook.com/profile.php?id=61585541019830",                                    label: "Facebook"  },
-];
+const ORANGE = "#D35400";
+const GOLD = "#F39C12";
 
-function FooterStrip() {
-  return (
-    <motion.div
-      aria-label="Footer"
-      style={{
-        position: "absolute", bottom: 0, left: 0, right: 0,
-        zIndex: 20, padding: "0 clamp(2rem, 5vw, 6rem) 1.8rem",
-        pointerEvents: "auto",
-      }}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.8, duration: 0.7 }}
-    >
-      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
-
-        {/* Col 1 — Contact */}
-        <div>
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            <a href="mailto:contact@act.africa"
-              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
-              <Mail size={18} strokeWidth={1.6} />contact@act.africa
-            </a>
-            <a href="tel:+212694528498"
-              className="flex items-center gap-3 text-white/60 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
-              <Phone size={18} strokeWidth={1.6} />+212 694-528498
-            </a>
-            <span className="flex items-center gap-3 text-white/35" style={{ fontSize: "1.15rem" }}>
-              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
-            </span>
-          </div>
-        </div>
-
-        {/* Col 2 — Réseaux Sociaux */}
-        <div>
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-            {FOOTER_SOCIALS.map(({ Icon, href, label }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/60 hover:text-[#D35400] transition-colors"
-                style={{ fontSize: "1.15rem" }}>
-                <Icon size={20} strokeWidth={1.5} />{label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Col 3 — Carrières + CTA */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
-          <div>
-            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
-            <p className="text-white/45" style={{ fontSize: "1.1rem", lineHeight: 1.55, marginBottom: "0.9rem", maxWidth: "240px" }}>
-              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-            </p>
-            <Link href="/careers"
-              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase"
-              style={{ fontSize: "1rem", letterSpacing: "0.08em" }}>
-              Postuler maintenant →
-            </Link>
-          </div>
-          <Link href="/contact" className="text-white/60 hover:text-white transition-colors uppercase"
-            style={{ fontSize: "1rem", letterSpacing: "0.08em" }}>
-            Un projet en tête ? →
-          </Link>
-        </div>
-
-      </div>
-
-      <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: "1.2rem" }} />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.8rem" }}>
-        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
-          © 2026 Africa Centred Technology. Tous droits réservés
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
-            Politique de Confidentialité
-          </Link>
-          <span className="text-white/25">/</span>
-          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
-            CGU
-          </Link>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+/* ── Background layers (same as SecteursShell for uniformity) ── */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
 const ServiceRoomShell = dynamic(() => import("./ServiceRoomShell"), { ssr: false });
 
 /* ── Tokens ───────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
-const ORANGE = "#D35400";
-const GOLD = "#F39C12";
 
 type Phase = "logo" | "services" | "entering" | "room";
 
@@ -196,28 +104,17 @@ function ServiceCard({
         padding: "1.4rem 1.5rem 1.2rem",
         display: "flex", flexDirection: "column", flex: 1, gap: "0.65rem",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span className="svc-card__dot" style={{
-            width: 5, height: 5, borderRadius: "50%",
-            background: svc.accent, flexShrink: 0, display: "inline-block",
-          }} />
-          <span style={{
-            fontSize: "clamp(9px, 0.6rem, 0.64rem)", letterSpacing: "0.18em",
-            color: "rgba(255,255,255,0.28)", textTransform: "uppercase",
-          }}>Pôle {svc.poleN} · {svc.pole}</span>
-        </div>
-
         <h3 style={{
           fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "clamp(13px, 0.98rem, 1.08rem)",
+          fontSize: "clamp(1rem, 1.3vw, 1.4rem)",
           fontWeight: 500, color: "#fff",
           lineHeight: 1.22, whiteSpace: "pre-line", flex: 1,
         }}>{svc.title}</h3>
 
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
           <p className="svc-card__tagline" style={{
-            fontSize: "clamp(10px, 0.68rem, 0.74rem)",
-            color: "rgba(255,255,255,0.30)",
+            fontSize: "clamp(0.85rem, 1.1vw, 1.15rem)",
+            color: "#ffffff",
             fontStyle: "italic", lineHeight: 1.35, maxWidth: "82%",
           }}>{svc.tagline}</p>
           <svg className="svc-card__arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
@@ -241,70 +138,136 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
       style={{
         position: "absolute", inset: 0, zIndex: 8,
         display: "flex", flexDirection: "column",
-        padding: "clamp(5.5rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem) clamp(22rem, 28vw, 26rem)",
-        overflow: "hidden",
+        overflowY: "auto", overflowX: "hidden",
       }}
     >
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -18 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, ease: [...EASE] }}
-        style={{
-          marginBottom: "1.5rem",
-          display: "flex", alignItems: "flex-end", justifyContent: "space-between",
-          flexWrap: "wrap", gap: "0.8rem",
-        }}
-      >
-        <div>
-          <p style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(10px, 0.70rem, 0.76rem)",
-            letterSpacing: "0.3em", textTransform: "uppercase",
-            color: "rgba(255,255,255,0.22)", marginBottom: "0.4rem",
-          }}>Africa Centred Technology</p>
-          <h1 style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(22px, 3.2vw, 3.8rem)",
-            fontWeight: 500, color: "#fff", lineHeight: 1,
-          }}>Nos Services</h1>
+      {/* ── Hero Header (identique Secteurs) ── */}
+      <div style={{
+        position: "relative",
+        zIndex: 1,
+        paddingTop: "clamp(7rem, 11vw, 10rem)",
+        paddingBottom: "clamp(3rem, 4vw, 4.5rem)",
+        paddingLeft: "clamp(1.5rem, 6vw, 8rem)",
+        paddingRight: "clamp(1.5rem, 6vw, 8rem)",
+        flexShrink: 0,
+      }}>
+        {/* Radial glow orange */}
+        <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 72% 56% at 50% -8%, rgba(211,84,0,0.13) 0%, transparent 68%)" }} />
+
+        {/* Orange rule */}
+        <motion.div
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+          transition={{ duration: 1.1, ease: [...EASE] }}
+          style={{ height: 1, background: "rgba(211,84,0,0.38)", marginBottom: "2.5rem", originX: 0 }}
+        />
+
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.2rem" }}
+        >
+          <motion.div
+            style={{ width: 28, height: 1, background: ORANGE, originX: 0 }}
+            initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+            transition={{ delay: 0.5, duration: 0.45 }}
+          />
+          <span style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", letterSpacing: "0.35em", textTransform: "uppercase" }}>
+            Africa Centred Technology
+          </span>
+          <span style={{ color: ORANGE, fontWeight: 900, fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase" }}>
+            — Services
+          </span>
+        </motion.div>
+
+        {/* Grand titre */}
+        <div style={{ overflow: "hidden", marginBottom: "1.25rem" }}>
+          <motion.h1
+            initial={{ y: "100%", opacity: 0 }} animate={{ y: "0%", opacity: 1 }}
+            transition={{ duration: 0.85, delay: 0.18, ease: [...EASE] }}
+            style={{ fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
+          >
+            NOS PÔLES
+            <br />
+            <span style={{ color: ORANGE }}>D&apos;EXPERTISE</span>
+          </motion.h1>
         </div>
 
-        {/* Légende pôles */}
-        <div style={{ display: "flex", gap: "1.5rem" }}>
-          {[{ label: "Pôle I · Ingénierie", color: ORANGE }, { label: "Pôle II · Conseil", color: GOLD }].map(p => (
-            <div key={p.label} style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-              <span style={{
-                width: 6, height: 6, borderRadius: "50%",
-                background: p.color, flexShrink: 0,
-                boxShadow: `0 0 5px ${p.color}`,
-              }} />
-              <span style={{
-                fontSize: "clamp(10px, 0.66rem, 0.70rem)",
-                color: "rgba(255,255,255,0.32)", letterSpacing: "0.1em",
-              }}>{p.label}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Grid 4 colonnes */}
-      <div className="room-grid-4 svc-overview-grid" style={{ gap: "0.8rem", flex: 1 }}>
-        {SERVICES.map((svc, i) => (
-          <ServiceCard key={svc.slug} svc={svc} index={i} onEnter={onEnter} />
-        ))}
+        {/* Sous-titre + légende pôles */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.42 }}
+          style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}
+        >
+          <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "680px", margin: 0, textAlign: "justify", flex: 1 }}>
+            ACT déploie deux pôles complémentaires — Ingénierie Technologique &amp; Conseil — pour couvrir l&apos;intégralité des besoins de transformation digitale des entreprises africaines.
+          </p>
+          <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
+            {[{ label: "Pôle I · Ingénierie", color: ORANGE }, { label: "Pôle II · Conseil", color: GOLD }].map(p => (
+              <div key={p.label} style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: p.color, flexShrink: 0, boxShadow: `0 0 7px ${p.color}` }} />
+                <span style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)", color: "#ffffff", letterSpacing: "0.12em", textTransform: "uppercase" }}>{p.label}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
+      {/* ── Grille ── */}
+      <div style={{
+        padding: "0 clamp(1.5rem, 6vw, 8rem) 4rem",
+        display: "flex", flexDirection: "column", gap: "2.5rem",
+        flexShrink: 0,
+      }}>
+
+        {/* ── Pôle I ── */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: ORANGE, flexShrink: 0, boxShadow: `0 0 6px ${ORANGE}` }} />
+            <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${ORANGE}CC`, whiteSpace: "nowrap" }}>
+              Pôle I — Ingénierie Technologique
+            </span>
+            <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${ORANGE}50, transparent)` }} />
+          </div>
+          <div className="svc-overview-grid" style={{ gap: "1.2rem" }}>
+            {SERVICES.filter(s => s.poleN === "I").map(svc => (
+              <ServiceCard key={svc.slug} svc={svc} index={SERVICES.indexOf(svc)} onEnter={onEnter} />
+            ))}
+          </div>
+        </div>
+
+        {/* ── Pôle II ── */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: GOLD, flexShrink: 0, boxShadow: `0 0 6px ${GOLD}` }} />
+            <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${GOLD}CC`, whiteSpace: "nowrap" }}>
+              Pôle II — Conseil &amp; Formation
+            </span>
+            <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${GOLD}50, transparent)` }} />
+          </div>
+          <div className="svc-overview-grid" style={{ gap: "1.2rem" }}>
+            {SERVICES.filter(s => s.poleN === "II").map(svc => (
+              <ServiceCard key={svc.slug} svc={svc} index={SERVICES.indexOf(svc)} onEnter={onEnter} />
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      {/* Footer dans le flux scrollable — identique à SecteursShell */}
       <FooterStrip />
 
       <style>{`
         /* ── Grid responsive ── */
-        @media (max-width: 1024px) { .svc-overview-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 540px)  { .svc-overview-grid { grid-template-columns: 1fr !important; } }
+        .svc-overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 1100px) { .svc-overview-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 640px)  { .svc-overview-grid { grid-template-columns: 1fr !important; } }
 
         /* ── Card base ── */
         .svc-card {
           border: 1px solid rgba(255,255,255,0.08);
           transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+          min-height: clamp(200px, 26vh, 300px) !important;
         }
         .svc-card__img {
           opacity: 0.62;
@@ -461,19 +424,10 @@ export default function ServicesIntroShell() {
       position: "relative", background: "#070E1C",
       paddingTop: "5rem",   /* clear the fixed navbar */
     }}>
-      {/* Fond ambiant */}
-      {(phase === "logo" || phase === "services") && (
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(ellipse 80% 60% at 50% 80%, #0D1F0A 0%, #050C18 60%, #030810 100%)",
-            opacity: 0.4,
-          }} />
-        </div>
-      )}
-
-      {/* Grain */}
-      <div className="grain-overlay" aria-hidden />
+      {/* ── Background layers (même fond que Secteurs) ── */}
+      <WaveTerrain />
+      <Cursor />
+      <Grain />
 
       {/* Phases */}
       <AnimatePresence mode="wait">
