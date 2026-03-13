@@ -12,7 +12,7 @@ import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
-import FooterStrip from "@/components/layout/FooterStrip";
+import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
