@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { PROJECTS } from "@/lib/data/projects";
 
 export default function RoomPortail() {
@@ -13,56 +14,67 @@ export default function RoomPortail() {
     ];
 
     return (
-        <div className="h-full w-full overflow-hidden relative flex flex-col">
+        <div className="h-full w-full overflow-hidden relative">
             {/* Content Section */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col py-8 custom-scrollbar">
-                <div className="w-full pt-20">
-                    
-                    <div className="mb-20 px-12">
-                        {/* Eyebrow */}
-                        <motion.div
-                            className="flex items-center gap-3 mb-5"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.55, delay: 0.05 }}
-                        >
-                            <span className="diamond diamond--sm" />
-                            <span style={{
-                                fontFamily: "var(--font-display)",
-                                fontSize: "1.1rem",
-                                letterSpacing: "0.32em",
-                                textTransform: "uppercase",
-                                color: "rgba(255,255,255,0.28)",
-                            }}>
-                                Nos Réalisations
-                            </span>
-                        </motion.div>
+            <div className=" overflow-y-auto overflow-x-hidden py-8 custom-scrollbar">
+                {/* Spacer léger entre navbar et contenu */}
+                <div className="h-12" />
 
-                        {/* Titre Principal */}
-                        <motion.h2
-                            initial={{ opacity: 0, y: 28 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.75, delay: 0.15 }}
-                            style={{
-                                fontFamily: "var(--font-display)",
-                                fontWeight: 900,
-                                fontSize: "clamp(1rem, 2.2vw, 3rem)",
-                                lineHeight: 1.0,
-                                letterSpacing: "-0.02em",
-                                textTransform: "uppercase",
-                                color: "#fff",
-                            }}
-                        >
-                            NOS PROJETS &
-                            <span style={{ color: "#D35400" }}>DÉFIS RELEVÉS</span>
-                        </motion.h2>
+                <div className="w-full pt-32 md:pt-40 lg:pt-48">
+
+                    {/* Conteneur des titres avec des padding importants pour éviter les extrêmes */}
+                    <div className="w-full px-8 md:px-12 lg:px-16 xl:px-20">
+                        {/* En-tête avec flex-row, aligné en bas et bordure en dessous pour correspondre à l'image */}
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-16">
+                            {/* Eyebrow - aligné à gauche et plus bas visuellement */}
+                            <motion.div
+                                className="flex items-center gap-3 mb-6 md:mb-2"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.55, delay: 0.05 }}
+                            >
+                                <span className="diamond diamond--sm" />
+                                <span style={{
+                                    fontFamily: "var(--font-display)",
+                                    fontSize: "0.75rem",
+                                    letterSpacing: "0.32em",
+                                    textTransform: "uppercase",
+                                    color: "rgba(255,255,255,0.4)",
+                                }}>
+                                    NOS RÉALISATIONS
+                                </span>
+                            </motion.div>
+
+                            {/* Titre Principal - aligné à droite */}
+                            <motion.h2
+                                initial={{ opacity: 0, y: 28 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.75, delay: 0.15 }}
+                                className="text-right"
+                                style={{
+                                    fontFamily: "var(--font-display)",
+                                    fontWeight: 900,
+                                    fontSize: "clamp(1.5rem, 3vw, 3.5rem)",
+                                    lineHeight: 0.9,
+                                    letterSpacing: "-0.02em",
+                                    textTransform: "uppercase",
+                                    color: "#fff",
+                                }}
+                            >
+                                NOS PROJETS &
+                                  <span style={{ color: "#D35400" }}> DÉFIS RELEVÉS</span>
+                            </motion.h2>
+                        </div>
                     </div>
+
+                    {/* Spacer pour créer un espacement visible */}
+                    <div className="h-20" />
 
                     {/* Affichage horizontal des projets statiques */}
                     <div className="w-full px-12 mb-24">
-                        <div className="flex gap-8 overflow-x-hidden flex-wrap md:flex-nowrap">
+                        <div className="flex gap-8 overflow-x-hidden flex-wrap md:flex-nowrap justify-center">
                             {PROJECTS.slice(0, 4).map((project, idx) => (
                                 <motion.div
                                     key={project.id}
@@ -72,7 +84,7 @@ export default function RoomPortail() {
                                     transition={{ duration: 0.6, delay: idx * 0.1 }}
                                     className="group flex-shrink-0 w-[300px]"
                                 >
-                                    <div className="flex flex-col bg-white/5 rounded-xl overflow-hidden shadow-2xl h-[450px] border border-white/10 group-hover:border-[#D35400]/50 transition-colors duration-300">
+                                    <div className="flex flex-col bg-white/5 rounded-xl overflow-hidden shadow-2xl h-[350px] border border-white/10 group-hover:border-[#D35400]/50 transition-colors duration-300">
                                         {/* Partie 1 : Image (moitié supérieure) */}
                                         <div className="relative w-full h-[180px] flex-shrink-0 overflow-hidden">
                                             <img
@@ -89,7 +101,7 @@ export default function RoomPortail() {
                                         {/* Partie 2 : Contenu (moitié inférieure) */}
                                         <div className="p-6 flex flex-col flex-1">
                                             {/* Meta */}
-                                            <div className="flex items-center gap-2 mb-3">
+                                            <div className="flex items-center gap-2 mb-3 mt-8">
                                                 <span className="w-6 h-px bg-[#D35400]" />
                                                 <span className="text-[#D35400] text-xs font-bold uppercase tracking-widest">
                                                     {project.category}
@@ -97,12 +109,12 @@ export default function RoomPortail() {
                                             </div>
 
                                             {/* Titre */}
-                                            <h3 className="text-white text-lg font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+                                            <h2 className="text-white text-xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2 mb-8" style={{ fontFamily: "var(--font-display)" }}>
                                                 {project.title}
-                                            </h3>
+                                            </h2>
 
                                             {/* Description avec flex-1 pour pousser vers le bas si besoin, mais ici on limite les lignes */}
-                                            <p className="text-white/70 text-sm line-clamp-3 leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)" }}>
+                                            <p className="text-white/50 text-xl line-clamp-3 leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)" }}>
                                                 {project.description}
                                             </p>
                                         </div>
@@ -112,8 +124,27 @@ export default function RoomPortail() {
                         </div>
                     </div>
 
+                    {/* Spacer entre cards et bouton */}
+                    <div className="h-16" />
+
+                    {/* Bouton CTA centré */}
+                    <div className="flex justify-center">
+                        <Link href="/projets" className="cta-btn" style={{ textDecoration: "none" }}>
+                            <span className="cta-btn__border" aria-hidden />
+                            <span className="cta-btn__blur" aria-hidden />
+                            <span className="cta-btn__background" aria-hidden />
+                            <span className="cta-btn__inner">
+                                <span className="cta-btn__icon" aria-hidden />
+                                <span className="cta-btn__text">Voir tous les projets</span>
+                            </span>
+                        </Link>
+                    </div>
+
+                    {/* Spacer entre projets et section clients */}
+                    <div className="h-20" />
+
                     {/* Section: Ils nous font confiance - Défilement infini */}
-                    <div className="w-full pt-12 pb-6 border-t border-white/10 mt-auto">
+                    <div className="w-full pt-12 pb-6 border-t border-white/10">
                         <h3 className="text-white/60 text-center text-sm uppercase tracking-widest mb-10 px-12" style={{ fontFamily: "var(--font-display)" }}>
                             Ils nous font confiance
                         </h3>

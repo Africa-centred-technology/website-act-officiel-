@@ -125,8 +125,8 @@ export default function RoomQuiSommesNous() {
                             Chez ACT, nous sommes animés par une <strong style={{ color: "#fff" }}>raison d'être commune</strong> : libérer l'énergie humaine et technologique.
                             Née en <strong style={{ color: "#fff" }}>2026</strong> de la vision de{" "}
                             <strong style={{ color: "#fff" }}>Sohaib Baroud</strong>, nous allions une approche profondément humaine à la puissance de l'Intelligence Artificielle.
-                            Notre objectif : créer un <strong style={{ color: "#fff" }}>impact concret et durable</strong> pour transformer nos sociétés — et bâtir ensemble une{" "}
-                            <strong style={{ color: "#D35400" }}>souveraineté technologique</strong>.
+                            Notre objectif : créer un <strong style={{ color: "#fff" }}>impact concret et durable</strong> pour transformer nos sociétés — et bâtir ensemble un{" "}
+                            <strong style={{ color: "#D35400" }}>écosystème numérique</strong>.
                         </motion.p>
 
                         {/* Stats bar */}

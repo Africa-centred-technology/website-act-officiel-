@@ -17,7 +17,7 @@ const services = [
     n: "01",
     title: "Pôle\nDéveloppement\nTechnologique",
     tag: "Ingénierie",
-    desc: "Solutions sur mesure, plateformes robustes et développement logiciel adapté aux enjeux du continent africain.",
+    desc: "Solutions sur mesure, plateformes robustes et développement logiciel adapté aux enjeux de chaque client.",
     href: "/services#dev",
     img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80",
   },

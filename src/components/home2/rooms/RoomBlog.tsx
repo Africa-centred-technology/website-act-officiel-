@@ -8,8 +8,11 @@ import { blogPosts } from "@/lib/blog-data";
 export default function RoomBlog() {
     return (
         <div className="h-full w-full overflow-hidden relative flex flex-col">
+            {/* Spacer léger entre navbar et contenu */}
+            <div className="h-12" />
+
             {/* Hero Section */}
-            <div className="w-full py-8 px-12 border-b border-white/10">
+            <div className="w-full py-8 px-8 md:px-12 border-b border-white/10">
                 <div className="max-w-6xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
@@ -29,12 +32,12 @@ export default function RoomBlog() {
 
             {/* Content Section */}
             <div className="flex-1 overflow-hidden flex items-center justify-center">
-                <section className="px-12 py-6">
+                <section className="px-8 md:px-12 py-6">
                     <div className="w-full max-w-6xl mx-auto">
                         
 
                     {/* Grid: 1 grand article à gauche + 2 petits articles à droite */}
-                    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 mb-12 items-start">
+                    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 mb-8 items-start">
                         {/* Grand article (gauche) */}
                         {blogPosts[0] && (
                             <motion.div
@@ -46,7 +49,7 @@ export default function RoomBlog() {
                             >
                                 <Link href={`/blog/${blogPosts[0].slug}`} className="block w-full">
                                     {/* Image */}
-                                    <div className="relative w-full h-[300px] overflow-hidden mb-4 rounded-lg bg-white/5 mx-4">
+                                    <div className="relative w-full h-[300px] overflow-hidden mb-4 rounded-lg bg-white/5">
                                         <img
                                             src={blogPosts[0].image}
                                             alt={blogPosts[0].title}
@@ -85,7 +88,7 @@ export default function RoomBlog() {
                                 >
                                     <Link href={`/blog/${post.slug}`} className="flex flex-col gap-2">
                                         {/* Image */}
-                                        <div className="w-full h-[110px] overflow-hidden rounded-lg mx-4">
+                                        <div className="w-full h-[110px] overflow-hidden rounded-lg">
                                             <img
                                                 src={post.image}
                                                 alt={post.title}
@@ -108,6 +111,9 @@ export default function RoomBlog() {
                             ))}
                         </div>
                     </div>
+
+                        {/* Spacer entre articles et bouton */}
+                        <div className="h-12" />
 
                         {/* Bouton CTA centré */}
                         <div className="flex justify-center">

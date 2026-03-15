@@ -14,6 +14,7 @@ import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
 import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
+
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
   { href: "/services", label: "Services" },
@@ -28,24 +29,24 @@ const SOCIALS = [
   { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
 ];
 
-function FooterStrip() {
+function Footer() {
   return (
     <motion.div
       aria-label="Footer"
       className="absolute left-0 right-0 pointer-events-auto"
-      style={{ bottom: "5rem", zIndex: 10, padding: "0 clamp(2rem, 5vw, 6rem)" }}
+      style={{ bottom: "3rem", zIndex: 10, padding: "0 clamp(2.5rem, 6vw, 8rem)" }}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1, duration: 0.7 }}
     >
       <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
+      <div className="text-left" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
 
         {/* Col 1 — Contact */}
-        <div>
+        <div className="flex flex-col items-start">
           <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
             <a href="mailto:contact@act.africa"
               className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
               style={{ fontSize: "1.15rem" }}>
@@ -63,9 +64,9 @@ function FooterStrip() {
         </div>
 
         {/* Col 2 — Réseaux Sociaux */}
-        <div>
+        <div className="flex flex-col items-start">
           <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
             {SOCIALS.map(({ Icon, href, label }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
@@ -77,8 +78,8 @@ function FooterStrip() {
         </div>
 
         {/* Col 3 — Carrières + CTA */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
-          <div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.6rem" }}>
+          <div className="flex flex-col items-start text-left">
             <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
             <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
               Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
@@ -340,6 +341,7 @@ export default function RoomSortie() {
             <motion.h1
               className="text-white font-black uppercase mb-8"
               style={{
+                fontFamily: "var(--font-display)",
                 fontSize: "clamp(3rem, 8vw, 6.5rem)",
                 lineHeight: 1.1,
                 letterSpacing: "-0.02em",
@@ -359,7 +361,7 @@ export default function RoomSortie() {
             {/* Subtext */}
             <motion.p
               className="text-white/65 mb-12"
-              style={{ fontSize: "clamp(1.1rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem", fontFamily: "var(--font-body)" }}
+              style={{ fontSize: "clamp(1.5rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem", fontFamily: "var(--font-body)" }}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35, duration: 0.7 }}
@@ -372,42 +374,9 @@ export default function RoomSortie() {
         </div>
       </motion.div>
 
-      {/* CTAs — foreground, last to appear (POSITION ABSOLUE pour ne plus être poussés vers le bas) */}
-      <motion.div
-        className="absolute left-1/2 -translate-x-1/2 bottom-[26vh] z-50 flex flex-wrap items-center justify-center gap-8 w-max"
-        initial={{ opacity: 0, y: 18, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.7 }}
-        style={{ x: fgX, y: fgY }}
-      >
-        <Magnetic>
-          <CTAButton href="/contact">Démarrer un projet</CTAButton>
-        </Magnetic>
-        <Magnetic>
-          <Link
-            href="/services"
-            className="group flex items-center gap-3 text-white/65 hover:text-white transition-all duration-300 uppercase px-6 py-3 rounded-full border border-white/10 hover:border-[#D35400]/50 hover:bg-white/5 shadow-2xl bg-black/20 backdrop-blur-sm"
-            style={{ fontSize: "1.1rem", letterSpacing: "0.12em" }}
-          >
-            <motion.span
-              className="diamond diamond--sm"
-              animate={{ rotate: [0, 180, 360] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            />
-            Nos expertises
-            <motion.span
-              className="text-[#D35400]"
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              →
-            </motion.span>
-          </Link>
-        </Magnetic>
-      </motion.div>
 
       {/* ── Footer strip — navigation, contact, socials ── */}
-      <FooterStrip />
+      <Footer />
     </div>
   );
 }
