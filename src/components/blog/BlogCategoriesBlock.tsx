@@ -137,7 +137,7 @@ export default function BlogCategoriesBlock({
       <h3
         style={{
           fontSize: "1.6rem",
-          fontFamily: "Futura, sans-serif",
+          fontFamily: "var(--font-display)",
           fontWeight: 800,
           color: "#fff",
           marginBottom: "2rem",
@@ -185,7 +185,7 @@ export default function BlogCategoriesBlock({
                 }`,
                 borderRadius: "1.2rem",
                 color: isActive ? "#fff" : "rgba(255,255,255,0.55)",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "1.4rem",
                 cursor: "pointer",
                 transition: "all 0.3s ease",

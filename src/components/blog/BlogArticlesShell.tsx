@@ -101,8 +101,8 @@ export default function BlogArticlesShell() {
                 alignItems: "center",
                 gap: "0.6rem",
                 color: "#e85c1a",
-                fontFamily: "Futura, sans-serif",
-                fontSize: "1.2rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "1.8rem",
                 textDecoration: "none",
                 marginBottom: "2rem",
                 transition: "opacity 0.3s",
@@ -113,8 +113,8 @@ export default function BlogArticlesShell() {
 
             <h1
               style={{
-                fontSize: "clamp(4rem, 8vw, 7rem)",
-                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: "clamp(5rem, 10vw, 9rem)",
+                fontFamily: "var(--font-display)",
                 lineHeight: 0.9,
                 color: "#fff",
                 marginBottom: "1.5rem",
@@ -134,7 +134,7 @@ export default function BlogArticlesShell() {
 
             <p
               style={{
-                fontSize: "1.3rem",
+                fontSize: "2rem",
                 color: "rgba(255,255,255,0.45)",
                 lineHeight: 1.6,
                 maxWidth: "50rem",
@@ -189,8 +189,8 @@ export default function BlogArticlesShell() {
                   border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: "0.6rem",
                   color: "#fff",
-                  fontFamily: "Futura, sans-serif",
-                  fontSize: "1.1rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "1.7rem",
                   outline: "none",
                   transition: "border-color 0.3s ease, background 0.3s ease",
                 }}
@@ -268,8 +268,8 @@ export default function BlogArticlesShell() {
                       background: "none",
                       border: "none",
                       color: isActive ? "#e85c1a" : "rgba(255,255,255,0.45)",
-                      fontFamily: "Futura, sans-serif",
-                      fontSize: "1.35rem",
+                      fontFamily: "var(--font-body)",
+                      fontSize: "2rem",
                       fontWeight: isActive ? 600 : 400,
                       cursor: "pointer",
                       transition: "all 0.3s ease",
@@ -289,7 +289,7 @@ export default function BlogArticlesShell() {
                         background: isActive ? "rgba(232,92,26,0.15)" : "rgba(255,255,255,0.05)",
                         color: isActive ? "#e85c1a" : "rgba(255,255,255,0.3)",
                         borderRadius: "1.5rem",
-                        fontSize: "1.05rem",
+                        fontSize: "1.6rem",
                         fontWeight: 600,
                       }}
                     >
@@ -319,11 +319,11 @@ export default function BlogArticlesShell() {
                 paddingTop: "0",
                 paddingBottom: "1rem",
                 color: "rgba(255,255,255,0.35)",
-                fontFamily: "Futura, sans-serif",
-                fontSize: "1.1rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "1.7rem",
               }}
             >
-              <span style={{ color: "#fff", fontWeight: 700, fontSize: "1.2rem" }}>{filtered.length}</span> articles trouvés
+              <span style={{ color: "#fff", fontWeight: 700, fontSize: "1.9rem" }}>{filtered.length}</span> articles trouvés
             </div>
 
             {/* Small divider line under found articles count */}
@@ -372,8 +372,8 @@ export default function BlogArticlesShell() {
                   border: "1px solid #e85c1a",
                   borderRadius: "3rem",
                   color: "#e85c1a",
-                  fontFamily: "Futura, sans-serif",
-                  fontSize: "1.2rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "1.8rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                   cursor: "pointer",
@@ -399,7 +399,7 @@ export default function BlogArticlesShell() {
                 padding: "8rem 0",
                 color: "rgba(255,255,255,0.3)",
                 fontSize: "var(--font-18)",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
                 textTransform: "uppercase",
               }}
             >
@@ -492,15 +492,15 @@ function ArticleCard({
                 padding: "0.4rem 0.8rem",
                 borderRadius: "0.4rem",
                 color: "rgba(255,255,255,0.7)",
-                fontSize: "1rem",
+                fontSize: "1.5rem",
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
                 border: "1px solid rgba(255,255,255,0.1)",
               }}
             >
-              <Clock size={14} /> {post.readTime}
+              <Clock size={18} /> {post.readTime}
             </div>
           </div>
 
@@ -522,8 +522,8 @@ function ArticleCard({
                     border: `1px solid ${post.categoryColor}55`,
                     borderRadius: "0.4rem",
                     color: post.categoryColor,
-                    fontFamily: "Futura, sans-serif",
-                    fontSize: "0.95rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "1.4rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
                     fontWeight: 600,
@@ -535,8 +535,8 @@ function ArticleCard({
 
               <h3
                 style={{
-                  fontSize: "1.8rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontSize: "2.2rem",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 800,
                   color: "#fff",
                   lineHeight: 1.2,
@@ -622,18 +622,18 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
                 color: "#fff",
                 padding: "0.6rem 1.4rem",
                 borderRadius: "0.4rem",
-                fontSize: "1rem",
+                fontSize: "1.3rem",
                 fontWeight: 700,
                 display: "flex",
                 alignItems: "center",
                 gap: "0.6rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
                 boxShadow: "0 4px 12px rgba(232,92,26,0.3)",
               }}
             >
-              <Star size={14} fill="#fff" /> À LA UNE
+              <Star size={16} fill="#fff" /> À LA UNE
             </div>
           </div>
 
@@ -655,8 +655,8 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
                   border: `1px solid ${post.categoryColor}55`,
                   borderRadius: "0.4rem",
                   color: post.categoryColor,
-                  fontFamily: "Futura, sans-serif",
-                  fontSize: "0.95rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "1.5rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                   fontWeight: 600,
@@ -668,8 +668,8 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
 
             <h2
               style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: "clamp(2.8rem, 4vw, 4rem)",
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(3.2rem, 5vw, 5rem)",
                 color: "#fff",
                 lineHeight: 1.1,
                 marginBottom: "2rem",
@@ -681,14 +681,14 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
             <p
               style={{
                 color: "rgba(255,255,255,0.45)",
-                fontSize: "1.2rem",
+                fontSize: "1.8rem",
                 lineHeight: 1.6,
                 marginBottom: "4rem",
                 display: "-webkit-box",
                 WebkitLineClamp: 4,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
               }}
             >
               {post.excerpt}
@@ -712,8 +712,8 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
                   alignItems: "center",
                   gap: "0.8rem",
                   color: "rgba(255,255,255,0.35)",
-                  fontSize: "1.05rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontSize: "1.6rem",
+                  fontFamily: "var(--font-body)",
                 }}
               >
                 <span>{post.date}</span>
@@ -723,8 +723,8 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
               <span
                 style={{
                   color: "#e85c1a",
-                  fontFamily: "Futura, sans-serif",
-                  fontSize: "1.1rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "1.7rem",
                   fontWeight: 600,
                 }}
               >

@@ -22,9 +22,9 @@ export const V = {
   green:     "#52c97a",
 };
 
-export const FONT_DISPLAY = "'Bebas Neue', 'Futura', sans-serif";
-export const FONT_SERIF   = "'Instrument Serif', Georgia, serif";
-export const FONT_BODY    = "'Outfit', 'Futura', sans-serif";
+export const FONT_DISPLAY = "var(--font-display)";
+export const FONT_SERIF   = "var(--font-display)";
+export const FONT_BODY    = "var(--font-body)";
 
 const AFRICA_PATH = "M50 5C35 5 22 12 18 22c-4 10-2 20-6 28-4 8-7 14-4 24 3 10 12 16 18 26 6 10 10 18 18 23 8 5 16 2 22-5 6-7 8-16 14-24 6-8 12-14 12-24 0-10-6-18-8-26-2-8 0-18-6-26C72 10 62 5 50 5Z";
 
@@ -83,37 +83,7 @@ function CustomCursor() {
   );
 }
 
-/* ═══════════════════════════════════════════════ */
-/* ═══ Scroll Progress Bar ═══ */
-/* ═══════════════════════════════════════════════ */
-function ProgressBar() {
-  const [width, setWidth] = useState(0);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      setWidth(pct);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        height: "2px",
-        background: V.orange,
-        boxShadow: `0 0 12px ${V.orangeGlow}`,
-        zIndex: 999,
-        width: `${width}%`,
-        transition: "width 0.1s linear",
-      }}
-    />
-  );
-}
 
 /* ═══════════════════════════════════════════════ */
 /* ═══ BlogHero ═══ */
@@ -122,6 +92,7 @@ export default function BlogHero() {
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
   const [activeTopic, setActiveTopic] = useState(0);
+  const [hasUserSelected, setHasUserSelected] = useState(false);
   const [topCategories, setTopCategories] = useState<{label: string; value: string; count: number}[]>([]);
 
   useEffect(() => {
@@ -139,9 +110,7 @@ export default function BlogHero() {
 
   return (
     <>
-
     <CustomCursor />
-    <ProgressBar />
 
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
@@ -158,8 +127,8 @@ export default function BlogHero() {
           .hero-right { 
             padding: 4rem 2rem !important; 
           }
-          .title-display { 
-            font-size: clamp(70px, 18vw, 120px) !important; 
+          .title-display {
+            font-size: clamp(50px, 12vw, 90px) !important;
           }
         }
       `}</style>
@@ -212,78 +181,83 @@ export default function BlogHero() {
             className="title-display"
             style={{
               fontFamily: FONT_DISPLAY,
-              fontSize: "clamp(100px, 16vw, 200px)",
+              fontSize: "clamp(70px, 11vw, 140px)",
               lineHeight: 0.9,
               letterSpacing: "-0.01em",
               color: V.cream,
               position: "relative",
               zIndex: 1,
               WebkitTextStroke: "1px rgba(240,234,216,0.1)",
+              display: "flex",
+              flexWrap: "wrap",
+              columnGap: "0.25em"
             }}
           >
-            BL
-            {/* O with Africa SVG inside */}
-            <span style={{ display: "inline-block", position: "relative" }}>
-              O
-              <div
+            <span style={{ whiteSpace: "nowrap", display: "inline-flex" }}>
+              BL
+              {/* O with Africa SVG inside */}
+              <span style={{ display: "inline-block", position: "relative" }}>
+                O
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -52%)",
+                    width: "55%",
+                    height: "62%",
+                    background: "linear-gradient(135deg, #1e2d1e, #2d1e10)",
+                    border: "1px solid rgba(232,92,26,0.4)",
+                    borderRadius: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 0 20px rgba(232,92,26,0.15)",
+                  }}
+                >
+                  <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style={{ width: "45%", fill: V.orange }}>
+                    <path d={AFRICA_PATH} />
+                  </svg>
+                </div>
+              </span>
+              <span
                 style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -52%)",
-                  width: "55%",
-                  height: "62%",
-                  background: "linear-gradient(135deg, #1e2d1e, #2d1e10)",
-                  border: "1px solid rgba(232,92,26,0.4)",
-                  borderRadius: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 0 20px rgba(232,92,26,0.15)",
+                  color: "transparent",
+                  WebkitTextStroke: `2px ${V.orange}`,
+                  filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
                 }}
               >
-                <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style={{ width: "45%", fill: V.orange }}>
-                  <path d={AFRICA_PATH} />
-                </svg>
-              </div>
+                G
+              </span>
             </span>
-            <span
-              style={{
-                color: "transparent",
-                WebkitTextStroke: `2px ${V.orange}`,
-                filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
-              }}
-            >
-              G
-            </span>
-             <span
-              style={{
-                marginLeft: "0.15em",
-                color: "transparent",
-                WebkitTextStroke: `2px ${V.orange}`,
-                filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
-              }}
-            >
-              A
-            </span>
-                    <span
-              style={{
-                
-                color: "transparent",
-                WebkitTextStroke: `2px ${V.orange}`,
-                filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
-              }}
-            >
-              C
-            </span>
-                    <span
-              style={{
-                color: "transparent",
-                WebkitTextStroke: `2px ${V.orange}`,
-                filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
-              }}
-            >
-              T
+            <span style={{ whiteSpace: "nowrap", display: "inline-flex" }}>
+              <span
+                style={{
+                  color: "transparent",
+                  WebkitTextStroke: `2px ${V.orange}`,
+                  filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
+                }}
+              >
+                A
+              </span>
+              <span
+                style={{
+                  color: "transparent",
+                  WebkitTextStroke: `2px ${V.orange}`,
+                  filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
+                }}
+              >
+                C
+              </span>
+              <span
+                style={{
+                  color: "transparent",
+                  WebkitTextStroke: `2px ${V.orange}`,
+                  filter: `drop-shadow(0 0 30px ${V.orangeGlow})`,
+                }}
+              >
+                T
+              </span>
             </span>
           </motion.div>
 
@@ -337,7 +311,7 @@ export default function BlogHero() {
                 </span>
                 <span
                   style={{
-                    fontSize: "11px",
+                    fontSize: "15px",
                     fontWeight: 500,
                     letterSpacing: "0.12em",
                     textTransform: "uppercase" as const,
@@ -372,7 +346,7 @@ export default function BlogHero() {
               display: "flex",
               alignItems: "center",
               gap: 0,
-              fontSize: "11px",
+              fontSize: "13px",
               color: V.dim,
               letterSpacing: "0.08em",
               fontFamily: FONT_BODY,
@@ -382,48 +356,12 @@ export default function BlogHero() {
             <span style={{ color: V.dim }}> › </span>
             <span style={{ padding: "0 6px" }}>Blog</span>
             <span style={{ color: V.dim }}> › </span>
-            <span style={{ padding: "0 6px" }}>Toutes les rubriques</span>
+            <span style={{ padding: "0 6px", color: hasUserSelected && topCategories[activeTopic]?.label ? V.orange : V.dim }}>
+              {hasUserSelected && topCategories[activeTopic]?.label ? topCategories[activeTopic].label : "Toutes les rubriques"}
+            </span>
           </motion.nav>
 
-          {/* Live badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15, ease }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "rgba(82,201,122,0.1)",
-              border: "1px solid rgba(82,201,122,0.25)",
-              borderRadius: "100px",
-              padding: "6px 14px",
-              width: "fit-content",
-            }}
-          >
-            <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: V.green,
-                boxShadow: `0 0 8px ${V.green}`,
-                animation: "blink 1.8s ease-in-out infinite",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "11px",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase" as const,
-                color: V.green,
-                fontFamily: FONT_BODY,
-              }}
-            >
-              Dernier article · il y a 2h
-            </span>
-          </motion.div>
+        
 
           {/* Headline */}
           <motion.h1
@@ -451,7 +389,7 @@ export default function BlogHero() {
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.35, ease }}
             style={{
-              fontSize: "15px",
+              fontSize: "16px",
               lineHeight: 1.75,
               color: V.muted,
               maxWidth: "500px",
@@ -475,7 +413,7 @@ export default function BlogHero() {
           >
             <div
               style={{
-                fontSize: "11px",
+                fontSize: "15px",
                 fontWeight: 600,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase" as const,
@@ -490,7 +428,10 @@ export default function BlogHero() {
               {topCategories.map((cat, i) => (
                 <button
                   key={cat.value}
-                  onClick={() => setActiveTopic(i)}
+                  onClick={() => {
+                    setActiveTopic(i);
+                    setHasUserSelected(true);
+                  }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -499,7 +440,7 @@ export default function BlogHero() {
                     borderRadius: "8px",
                     border: activeTopic === i ? `1px solid ${V.orange}` : `1px solid ${V.border}`,
                     background: activeTopic === i ? V.orangeLt : V.surface,
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: 500,
                     color: activeTopic === i ? V.cream : V.muted,
                     cursor: "none",
@@ -522,7 +463,7 @@ export default function BlogHero() {
                   {cat.label}
                   <span
                     style={{
-                      fontSize: "10px",
+                      fontSize: "12px",
                       fontWeight: 700,
                       background: activeTopic === i ? "rgba(232,92,26,0.2)" : "rgba(255,255,255,0.08)",
                       borderRadius: "4px",
@@ -554,7 +495,7 @@ export default function BlogHero() {
                 background: V.orange,
                 color: "white",
                 fontFamily: FONT_BODY,
-                fontSize: "14px",
+                fontSize: "15px",
                 fontWeight: 600,
                 padding: "16px 28px",
                 border: "none",
@@ -602,7 +543,7 @@ export default function BlogHero() {
                 border: "none",
                 color: V.muted,
                 fontFamily: FONT_BODY,
-                fontSize: "13px",
+                fontSize: "12px",
                 fontWeight: 500,
                 padding: 0,
                 textDecoration: "none",
@@ -658,7 +599,7 @@ export default function BlogHero() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "11px",
+                    fontSize: "15px",
                     fontWeight: 700,
                     marginLeft: i === 0 ? 0 : "-8px",
                     color: V.orange,
@@ -696,7 +637,7 @@ export default function BlogHero() {
             </div>
             <p
               style={{
-                fontSize: "13px",
+                fontSize: "12px",
                 color: V.muted,
                 lineHeight: 1.5,
                 fontFamily: FONT_BODY,
@@ -709,6 +650,8 @@ export default function BlogHero() {
               en technologie et innovation.
             </p>
           </motion.div>
+
+
         </div>
       </section>
     </>

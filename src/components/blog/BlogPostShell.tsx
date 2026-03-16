@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Share2, Linkedin, Twitter, Link2, Facebook } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTASection from "@/components/layout/CTASection";
 import { blogPosts, type BlogPost } from "@/lib/blog-data";
 
 const ease = [0.6, 0.08, 0.02, 0.99] as const;
@@ -89,10 +90,10 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.8rem",
-                color: "rgba(255,255,255,0.4)",
+                color: "rgba(255, 255, 255, 0.28)",
                 textDecoration: "none",
-                fontFamily: "Futura, sans-serif",
-                fontSize: "1.2rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "1.6rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 transition: "color 0.3s ease",
@@ -126,8 +127,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 border: `1px solid ${post.categoryColor}55`,
                 borderRadius: "2rem",
                 color: post.categoryColor,
-                fontFamily: "Futura, sans-serif",
-                fontSize: "1.2rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "1.6rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.12em",
               }}
@@ -140,7 +141,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           <motion.h1
             style={{
               fontSize: "var(--font-50)",
-              fontFamily: "Futura, sans-serif",
+              fontFamily: "var(--font-body)",
               fontWeight: 900,
               textTransform: "uppercase",
               lineHeight: 1.0,
@@ -210,8 +211,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                     border: "1px solid rgba(211,84,0,0.2)",
                     borderRadius: "2rem",
                     color: "rgba(255,255,255,0.45)",
-                    fontFamily: "Futura, sans-serif",
-                    fontSize: "1.1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "2rem",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -282,8 +283,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               >
                 <p
                   style={{
-                    fontFamily: "Futura, sans-serif",
-                    fontSize: "1.1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "2rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
@@ -314,8 +315,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               >
                 <p
                   style={{
-                    fontFamily: "Futura, sans-serif",
-                    fontSize: "1.1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "2rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
@@ -363,8 +364,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                         <h4
                           style={{
                             color: "rgba(255,255,255,0.8)",
-                            fontSize: "1.25rem",
-                            fontFamily: "Futura, sans-serif",
+                            fontSize: "1.7rem",
+                            fontFamily: "var(--font-body)",
                             fontWeight: 600,
                             lineHeight: 1.3,
                             marginBottom: "0.5rem",
@@ -380,8 +381,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                         <span
                           style={{
                             color: "rgba(255,255,255,0.3)",
-                            fontSize: "1rem",
-                            fontFamily: "Futura, sans-serif",
+                            fontSize: "1.4rem",
+                            fontFamily: "var(--font-body)",
                             textTransform: "uppercase",
                           }}
                         >
@@ -404,8 +405,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               >
                 <p
                   style={{
-                    fontFamily: "Futura, sans-serif",
-                    fontSize: "1.1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "2rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
@@ -424,8 +425,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                         border: "1px solid rgba(211,84,0,0.25)",
                         borderRadius: "2rem",
                         color: "rgba(255,255,255,0.5)",
-                        fontFamily: "Futura, sans-serif",
-                        fontSize: "1rem",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "1.4rem",
                       }}
                     >
                       {kw}
@@ -445,7 +446,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
             <h2
               style={{
                 fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 color: "#fff",
@@ -470,6 +471,14 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
         </section>
       )}
 
+      <CTASection
+        eyebrow="Besoin d'expertise ?"
+        title="Parlons de votre projet"
+        description="Nos équipes sont prêtes à vous accompagner dans votre transformation digitale et vos défis technologiques."
+        buttonText="Contactez-nous"
+        buttonHref="/contact"
+      />
+
       <FooterStrip />
     </div>
   );
@@ -481,7 +490,7 @@ function MetaItem({ label, value }: { label: string; value: string }) {
     <div>
       <p
         style={{
-          fontFamily: "Futura, sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: "1rem",
           textTransform: "uppercase",
           letterSpacing: "0.12em",
@@ -493,8 +502,8 @@ function MetaItem({ label, value }: { label: string; value: string }) {
       </p>
       <p
         style={{
-          fontFamily: "Futura, sans-serif",
-          fontSize: "1.3rem",
+          fontFamily: "var(--font-body)",
+          fontSize: "1.8rem",
           color: "rgba(255,255,255,0.7)",
         }}
       >
@@ -572,7 +581,7 @@ function ContentSection({
         <h2
           style={{
             fontSize: "var(--font-25)",
-            fontFamily: "Futura, sans-serif",
+            fontFamily: "var(--font-body)",
             fontWeight: 900,
             textTransform: "uppercase",
             color: section.isConclusion ? categoryColor : "#fff",
@@ -592,10 +601,10 @@ function ContentSection({
               key={pi}
               style={{
                 color: "rgba(255,255,255,0.65)",
-                fontSize: "1.5rem",
+                fontSize: "2rem",
                 lineHeight: 1.8,
                 marginBottom: "1.8rem",
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
               }}
             >
               {para}
@@ -621,9 +630,9 @@ function ContentSection({
                 display: "flex",
                 gap: "1.5rem",
                 color: "rgba(255,255,255,0.6)",
-                fontSize: "1.45rem",
+                fontSize: "1.9rem",
                 lineHeight: 1.7,
-                fontFamily: "Futura, sans-serif",
+                fontFamily: "var(--font-body)",
               }}
             >
               <span
@@ -789,7 +798,7 @@ function RelatedArticleCard({
                     border: `1px solid ${post.categoryColor}44`,
                     borderRadius: "2rem",
                     color: post.categoryColor,
-                    fontFamily: "Futura, sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: "1rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
@@ -802,7 +811,7 @@ function RelatedArticleCard({
               <h3
                 style={{
                   fontSize: "1.8rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 800,
                   color: "#fff",
                   lineHeight: 1.2,
@@ -819,7 +828,7 @@ function RelatedArticleCard({
               <p
                 style={{
                   color: "rgba(255,255,255,0.4)",
-                  fontSize: "1.3rem",
+                  fontSize: "1.8rem",
                   lineHeight: 1.6,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -845,8 +854,8 @@ function RelatedArticleCard({
                 <span
                   style={{
                     color: "rgba(255,255,255,0.3)",
-                    fontSize: "1.1rem",
-                    fontFamily: "Futura, sans-serif",
+                    fontSize: "2rem",
+                    fontFamily: "var(--font-body)",
                     textTransform: "uppercase",
                   }}
                 >
@@ -855,8 +864,8 @@ function RelatedArticleCard({
                 <span
                   style={{
                     color: "rgba(255,255,255,0.3)",
-                    fontSize: "1.1rem",
-                    fontFamily: "Futura, sans-serif",
+                    fontSize: "2rem",
+                    fontFamily: "var(--font-body)",
                     textTransform: "uppercase",
                   }}
                 >
@@ -866,7 +875,7 @@ function RelatedArticleCard({
               <span
                 style={{
                   color: "#D35400",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: "1.1rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
