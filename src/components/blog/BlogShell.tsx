@@ -3,19 +3,29 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";
 import { blogPosts, categories } from "@/lib/blog-data";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 
+/* ── Background layers ─────────────────── */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+
 export default function BlogShell() {
   const containerRef = useRef(null);
   return (
     <div ref={containerRef} style={{ background: V.bg, minHeight: "100vh", position: "relative" }}>
-      
+      {/* ── Background layers globaux ── */}
+      <WaveTerrain />
+      <Cursor />
+      <Grain />
+
       {/* ── HERO ── */}
-      <div 
-        style={{ 
+      <div
+        style={{
           position: "relative",
           zIndex: 1
         }}
@@ -82,7 +92,7 @@ export default function BlogShell() {
               className="section-header-title"
               style={{
                 fontSize: "clamp(3.5rem, 5vw, 5.5rem)",
-                fontFamily: "'Bebas Neue', Futura, sans-serif",
+                fontFamily: "var(--font-display)",
                 fontWeight: 400,
                 color: V.cream,
                 textTransform: "uppercase" as const,
@@ -227,11 +237,11 @@ export default function BlogShell() {
                         <span style={{ fontSize: "1rem", fontWeight: 500, color: V.muted, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: FONT_BODY }}>Analyses</span>
                       </div>
 
-                      <h3 style={{ 
-                        fontSize: "3.4rem", 
-                        fontFamily: "'Bebas Neue', Futura, sans-serif", 
-                        fontWeight: 400, 
-                        color: V.cream, 
+                      <h3 style={{
+                        fontSize: "3.4rem",
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 400,
+                        color: V.cream,
                         margin: 0,
                         letterSpacing: "0.05em",
                         textTransform: "uppercase",
@@ -364,7 +374,7 @@ export default function BlogShell() {
           <h2
             style={{
               fontSize: "var(--font-50)",
-              fontFamily: "Futura, sans-serif",
+              fontFamily: "var(--font-display)",
               fontWeight: 900,
               textTransform: "uppercase",
               color: "#fff",
@@ -504,7 +514,7 @@ function FeaturedCard({
                   background: `${post.categoryColor}22`,
                   border: `1px solid ${post.categoryColor}55`,
                   color: post.categoryColor,
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "1.1rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
@@ -518,7 +528,7 @@ function FeaturedCard({
                   background: "rgba(243,156,18,0.12)",
                   border: "1px solid rgba(243,156,18,0.4)",
                   color: "#F39C12",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "1.1rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
@@ -569,7 +579,7 @@ function FeaturedCard({
                 style={{
                   color: "rgba(255,255,255,0.35)",
                   fontSize: "1.1rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
                 }}
@@ -580,7 +590,7 @@ function FeaturedCard({
                 style={{
                   color: "rgba(255,255,255,0.35)",
                   fontSize: "1.1rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
                 }}
@@ -688,7 +698,7 @@ function ArticleCard({
                   border: `1px solid ${post.categoryColor}44`,
                   borderRadius: "2rem",
                   color: post.categoryColor,
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "1rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
@@ -743,7 +753,7 @@ function ArticleCard({
                 style={{
                   color: "rgba(255,255,255,0.3)",
                   fontSize: "1.1rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
                 }}
@@ -754,7 +764,7 @@ function ArticleCard({
                 style={{
                   color: "rgba(255,255,255,0.3)",
                   fontSize: "1.1rem",
-                  fontFamily: "Futura, sans-serif",
+                  fontFamily: "var(--font-display)",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
                 }}
