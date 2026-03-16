@@ -83,37 +83,7 @@ function CustomCursor() {
   );
 }
 
-/* ═══════════════════════════════════════════════ */
-/* ═══ Scroll Progress Bar ═══ */
-/* ═══════════════════════════════════════════════ */
-function ProgressBar() {
-  const [width, setWidth] = useState(0);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      setWidth(pct);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        height: "2px",
-        background: V.orange,
-        boxShadow: `0 0 12px ${V.orangeGlow}`,
-        zIndex: 999,
-        width: `${width}%`,
-        transition: "width 0.1s linear",
-      }}
-    />
-  );
-}
 
 /* ═══════════════════════════════════════════════ */
 /* ═══ BlogHero ═══ */
@@ -122,6 +92,7 @@ export default function BlogHero() {
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
   const [activeTopic, setActiveTopic] = useState(0);
+  const [hasUserSelected, setHasUserSelected] = useState(false);
   const [topCategories, setTopCategories] = useState<{label: string; value: string; count: number}[]>([]);
 
   useEffect(() => {
@@ -139,9 +110,7 @@ export default function BlogHero() {
 
   return (
     <>
-
     <CustomCursor />
-    <ProgressBar />
 
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
@@ -382,48 +351,12 @@ export default function BlogHero() {
             <span style={{ color: V.dim }}> › </span>
             <span style={{ padding: "0 6px" }}>Blog</span>
             <span style={{ color: V.dim }}> › </span>
-            <span style={{ padding: "0 6px" }}>Toutes les rubriques</span>
+            <span style={{ padding: "0 6px", color: hasUserSelected && topCategories[activeTopic]?.label ? V.orange : V.dim }}>
+              {hasUserSelected && topCategories[activeTopic]?.label ? topCategories[activeTopic].label : "Toutes les rubriques"}
+            </span>
           </motion.nav>
 
-          {/* Live badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15, ease }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "rgba(82,201,122,0.1)",
-              border: "1px solid rgba(82,201,122,0.25)",
-              borderRadius: "100px",
-              padding: "6px 14px",
-              width: "fit-content",
-            }}
-          >
-            <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: V.green,
-                boxShadow: `0 0 8px ${V.green}`,
-                animation: "blink 1.8s ease-in-out infinite",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "11px",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase" as const,
-                color: V.green,
-                fontFamily: FONT_BODY,
-              }}
-            >
-              Dernier article · il y a 2h
-            </span>
-          </motion.div>
+        
 
           {/* Headline */}
           <motion.h1
@@ -490,7 +423,10 @@ export default function BlogHero() {
               {topCategories.map((cat, i) => (
                 <button
                   key={cat.value}
-                  onClick={() => setActiveTopic(i)}
+                  onClick={() => {
+                    setActiveTopic(i);
+                    setHasUserSelected(true);
+                  }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -709,6 +645,8 @@ export default function BlogHero() {
               en technologie et innovation.
             </p>
           </motion.div>
+
+
         </div>
       </section>
     </>
