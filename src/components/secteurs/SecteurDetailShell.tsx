@@ -185,6 +185,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               animate={{ y: "0%", opacity: 1 }}
               transition={{ duration: 0.85, delay: 0.32, ease: [...EASE] }}
               style={{
+                fontFamily: "var(--font-display)",
                 fontWeight: 900,
                 fontSize: "clamp(3.5rem, 9vw, 12rem)",
                 lineHeight: 0.9,
@@ -204,6 +205,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             style={{
+              fontFamily: "var(--font-body)",
               color: "#ffffff",
               fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
               fontStyle: "italic",
@@ -239,6 +241,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               </p>
               <p
                 style={{
+                  fontFamily: "var(--font-body)",
                   color: "#ffffff",
                   fontSize: "clamp(1rem, 1.4vw, 1.4rem)",
                   letterSpacing: "0.08em",
@@ -309,6 +312,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
           </div>
             <h2
               style={{
+                fontFamily: "var(--font-display)",
                 fontWeight: 900,
                 fontSize: "clamp(1.8rem, 3.5vw, 3.5rem)",
                 textTransform: "uppercase",
@@ -332,6 +336,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
           >
             <p
               style={{
+                fontFamily: "var(--font-body)",
                 color: "#ffffff",
                 fontSize: "clamp(1.4rem, 2vw, 1.8rem)",
                 lineHeight: 1.75,
@@ -379,6 +384,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
           </div>
           <h2
             style={{
+              fontFamily: "var(--font-display)",
               fontWeight: 900,
               fontSize: "clamp(2rem, 4vw, 4.5rem)",
               textTransform: "uppercase",
@@ -427,6 +433,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               />
               <p
                 style={{
+                  fontFamily: "var(--font-body)",
                   color: "#ffffff",
                   fontSize: "clamp(1.3rem, 1.8vw, 1.8rem)",
                   lineHeight: 1.55,
@@ -481,6 +488,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
           </p>
           <h2
             style={{
+              fontFamily: "var(--font-display)",
               fontWeight: 900,
               fontSize: "clamp(3rem, 7vw, 8rem)",
               textTransform: "uppercase",
@@ -496,6 +504,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
           </h2>
           <p
             style={{
+              fontFamily: "var(--font-body)",
               color: "#ffffff",
               fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)",
               lineHeight: 1.65,

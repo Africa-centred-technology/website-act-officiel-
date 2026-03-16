@@ -134,7 +134,7 @@ function WordChars({
               lineHeight: 1,
               letterSpacing: "-0.03em",
               textShadow: "0px 12px 40px rgba(0,0,0,0.6)",
-              fontFamily: "'Geist', sans-serif",
+              fontFamily: "var(--font-display)",
             }}
             initial={initial}
             animate={target}
@@ -312,21 +312,50 @@ export default function RoomEntree() {
             <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4, duration: 1.2, ease: "easeOut" }}
               style={{
                 marginTop: "2.5rem",
                 color: "rgba(255,255,255,0.85)",
-                letterSpacing: "0.45em",
+                letterSpacing: "0.22em",
                 textTransform: "uppercase",
                 fontWeight: 600,
-                fontSize: "clamp(0.9rem, 1.8vw, 1.4rem)",
+                fontSize: "clamp(0.75rem, 1.5vw, 1.15rem)",
                 textShadow: "0px 4px 15px rgba(0,0,0,0.5)",
-                fontFamily: "'Geist', sans-serif",
+                fontFamily: "var(--font-body)",
+                textAlign: "right",
+                display: "inline-flex",
+                alignItems: "center"
               }}
             >
-              Let's spark the change
+              {"Innovating Today, Transforming Tomorrow".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.4 + index * 0.05, duration: 0 }}
+                  style={{ display: "inline-block" }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+              {/* Le curseur clignotant de la machine à écrire */}
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ 
+                  delay: 1.4,
+                  duration: 0.8, 
+                  repeat: Infinity, 
+                  ease: "linear" 
+                }}
+                style={{
+                  display: "inline-block",
+                  width: "12px",
+                  height: "clamp(0.75rem, 1.5vw, 1.15rem)",
+                  backgroundColor: "#D35400",
+                  marginLeft: "8px",
+                  verticalAlign: "middle"
+                }}
+              />
             </motion.p>
           </div>
 

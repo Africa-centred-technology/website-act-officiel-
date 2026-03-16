@@ -1,106 +1,192 @@
 "use client";
 
 import React from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
+import { PROJECTS } from "@/lib/data/projects";
 
 export default function RoomPortail() {
-    const mx = useMotionValue(0);
-    const my = useMotionValue(0);
-    const midX = useSpring(mx, { stiffness: 62, damping: 22 });
-    const midY = useSpring(my, { stiffness: 62, damping: 22 });
-
-    const onMouseMove = (e: React.MouseEvent) => {
-        mx.set((e.clientX / window.innerWidth - 0.5) * 2);
-        my.set((e.clientY / window.innerHeight - 0.5) * 2);
-    };
+    // Logos des entreprises clientes
+    const clients = [
+        { name: "Lear", logo: "/logo_entreprise_partenaire/Logo_Lear.png" },
+        { name: "Yoozak", logo: "/logo_entreprise_partenaire/logo_Yoozak.png" },
+        { name: "GreenSIG", logo: "/logo_entreprise_partenaire/logo_green_sig.png" },
+    ];
 
     return (
-        <div
-            onMouseMove={onMouseMove}
-            className="relative flex flex-col items-center justify-center overflow-hidden room-pad text-center"
-            style={{ width: "100%", height: "100%" }}
-        >
+        <div className="h-full w-full overflow-hidden relative">
+            {/* Content Section */}
+            <div className=" overflow-y-auto overflow-x-hidden py-8 custom-scrollbar">
+                {/* Spacer léger entre navbar et contenu */}
+                <div className="h-12" />
 
+                <div className="w-full pt-32 md:pt-40 lg:pt-48">
 
-            <motion.div style={{ x: midX, y: midY, zIndex: 2 }} className="max-w-5xl flex flex-col items-center">
+                    {/* Conteneur des titres avec des padding importants pour éviter les extrêmes */}
+                    <div className="w-full px-8 md:px-12 lg:px-16 xl:px-20">
+                        {/* En-tête avec flex-row, aligné en bas et bordure en dessous pour correspondre à l'image */}
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-16">
+                            {/* Eyebrow - aligné à gauche et plus bas visuellement */}
+                            <motion.div
+                                className="flex items-center gap-3 mb-6 md:mb-2"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.55, delay: 0.05 }}
+                            >
+                                <span className="diamond diamond--sm" />
+                                <span style={{
+                                    fontFamily: "var(--font-display)",
+                                    fontSize: "0.75rem",
+                                    letterSpacing: "0.32em",
+                                    textTransform: "uppercase",
+                                    color: "rgba(255,255,255,0.4)",
+                                }}>
+                                    NOS RÉALISATIONS
+                                </span>
+                            </motion.div>
 
-                {/* Visual marker — pulse dot */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.2, ease: [0.04, 0.72, 0.08, 1.0] }}
-                    className="w-20 h-20 rounded-full border border-[rgba(211,84,0,0.3)] flex items-center justify-center mb-6 relative"
-                    style={{ background: "radial-gradient(circle, rgba(211,84,0,0.15) 0%, transparent 70%)" }}
-                >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#D35400] animate-ping absolute" />
-                    <div className="w-3 h-3 rounded-full bg-[#D35400]" />
-                </motion.div>
+                            {/* Titre Principal - aligné à droite */}
+                            <motion.h2
+                                initial={{ opacity: 0, y: 28 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.75, delay: 0.15 }}
+                                className="text-right"
+                                style={{
+                                    fontFamily: "var(--font-display)",
+                                    fontWeight: 900,
+                                    fontSize: "clamp(1.5rem, 3vw, 3.5rem)",
+                                    lineHeight: 0.9,
+                                    letterSpacing: "-0.02em",
+                                    textTransform: "uppercase",
+                                    color: "#fff",
+                                }}
+                            >
+                                NOS PROJETS &
+                                  <span style={{ color: "#D35400" }}> DÉFIS RELEVÉS</span>
+                            </motion.h2>
+                        </div>
+                    </div>
 
-                {/* Main Title */}
-                <motion.h2
-                    initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{ duration: 1, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.2 }}
-                    className="font-black uppercase text-white mb-2"
-                    style={{ fontSize: "clamp(3.2rem, 8vw, 7.5rem)", lineHeight: 1.0, fontFamily: "'Geist', sans-serif" }}
-                >
-                    DÉCOUVREZ LE <span className="text-[#D35400]">PORTAIL</span>
-                </motion.h2>
+                    {/* Spacer pour créer un espacement visible */}
+                    <div className="h-20" />
 
-                {/* Subtitle / Catchphrase */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
-                    className="font-bold uppercase tracking-[0.3em] text-[#D35400]/80 mb-10 text-center"
-                    style={{ fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)", fontFamily: "'Geist', sans-serif" }}
-                >
-                    La technologie pensée pour l’Afrique, conçue pour transformer le futur.
-                </motion.div>
+                    {/* Affichage horizontal des projets statiques */}
+                    <div className="w-full px-12 mb-24">
+                        <div className="flex gap-8 overflow-x-hidden flex-wrap md:flex-nowrap justify-center">
+                            {PROJECTS.slice(0, 4).map((project, idx) => (
+                                <motion.div
+                                    key={project.id}
+                                    initial={{ opacity: 0, x: -50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                                    className="group flex-shrink-0 w-[300px]"
+                                >
+                                    <div className="flex flex-col bg-white/5 rounded-xl overflow-hidden shadow-2xl h-[350px] border border-white/10 group-hover:border-[#D35400]/50 transition-colors duration-300">
+                                        {/* Partie 1 : Image (moitié supérieure) */}
+                                        <div className="relative w-full h-[180px] flex-shrink-0 overflow-hidden">
+                                            <img
+                                                src={project.image}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                            />
+                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                            <div className="absolute top-4 left-4 px-3 py-1 bg-[#D35400] text-white text-[10px] font-bold uppercase tracking-widest rounded shadow-md z-10">
+                                                {project.category}
+                                            </div>
+                                        </div>
 
-                {/* Main Description */}
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.65 }}
-                    className="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-16 max-w-3xl mx-auto"
-                    style={{ fontFamily: "'Geist', sans-serif" }}
-                >
-                    Africa Centred Technology développe des solutions digitales, des infrastructures intelligentes et des plateformes innovantes pour accompagner les entreprises africaines.
-                </motion.p>
+                                        {/* Partie 2 : Contenu (moitié inférieure) */}
+                                        <div className="p-6 flex flex-col flex-1">
+                                            {/* Meta */}
+                                            <div className="flex items-center gap-2 mb-3 mt-8">
+                                                <span className="w-6 h-px bg-[#D35400]" />
+                                                <span className="text-[#D35400] text-xs font-bold uppercase tracking-widest">
+                                                    {project.category}
+                                                </span>
+                                            </div>
 
-                {/* Three Actions — CTAs */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.85, ease: "easeOut" }}
-                    className="flex flex-col md:flex-row items-center justify-center gap-6"
-                >
-                    {[
-                        { label: "Découvrir nos services", href: "#" },
-                        { label: "Voir nos réalisations", href: "#" },
-                        { label: "Lire le blog", href: "#" }
-                    ].map((btn, idx) => (
-                        <Link
-                            key={idx}
-                            href={btn.href}
-                            className="group relative overflow-hidden px-8 py-4 border border-white/10 bg-white/5 hover:border-[#D35400]/50 transition-all duration-500 min-w-[240px]"
-                            style={{ fontFamily: "'Geist', sans-serif" }}
-                        >
-                            {/* Hover slide effect */}
-                            <div className="absolute inset-0 bg-[#D35400]/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                                            {/* Titre */}
+                                            <h2 className="text-white text-xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2 mb-8" style={{ fontFamily: "var(--font-display)" }}>
+                                                {project.title}
+                                            </h2>
 
-                            <span className="relative z-10 text-sm font-bold uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
-                                {btn.label}
+                                            {/* Description avec flex-1 pour pousser vers le bas si besoin, mais ici on limite les lignes */}
+                                            <p className="text-white/50 text-xl line-clamp-3 leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)" }}>
+                                                {project.description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Spacer entre cards et bouton */}
+                    <div className="h-16" />
+
+                    {/* Bouton CTA centré */}
+                    <div className="flex justify-center">
+                        <Link href="/projets" className="cta-btn" style={{ textDecoration: "none" }}>
+                            <span className="cta-btn__border" aria-hidden />
+                            <span className="cta-btn__blur" aria-hidden />
+                            <span className="cta-btn__background" aria-hidden />
+                            <span className="cta-btn__inner">
+                                <span className="cta-btn__icon" aria-hidden />
+                                <span className="cta-btn__text">Voir tous les projets</span>
                             </span>
-
-                            {/* Small decorative corner or diamond? Let's use a subtle edge line */}
-                            <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#D35400] group-hover:w-full transition-all duration-700" />
                         </Link>
-                    ))}
-                </motion.div>
-            </motion.div>
+                    </div>
+
+                    {/* Spacer entre projets et section clients */}
+                    <div className="h-20" />
+
+                    {/* Section: Ils nous font confiance - Défilement infini */}
+                    <div className="w-full pt-12 pb-6 border-t border-white/10">
+                        <h3 className="text-white/60 text-center text-sm uppercase tracking-widest mb-10 px-12" style={{ fontFamily: "var(--font-display)" }}>
+                            Ils nous font confiance
+                        </h3>
+                        <div className="relative overflow-hidden before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-24 before:bg-gradient-to-r before:from-black before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-24 after:bg-gradient-to-l after:from-black after:to-transparent">
+                            <motion.div
+                                className="flex w-max"
+                                animate={{
+                                    x: ["0%", "-50%"],
+                                }}
+                                transition={{
+                                    x: {
+                                        repeat: Infinity,
+                                        repeatType: "loop",
+                                        duration: 25,
+                                        ease: "linear",
+                                    },
+                                }}
+                            >
+                                {/* On répète la liste 2 fois pour le conteneur principal, avec les logos multipliés à l'intérieur pour remplir l'écran */}
+                                {[...Array(2)].map((_, setIdx) => (
+                                    <div key={`logo-set-${setIdx}`} className="flex flex-shrink-0 min-w-max gap-12 pr-12">
+                                        {[...clients, ...clients, ...clients, ...clients, ...clients, ...clients].map((client, idx) => (
+                                            <div
+                                                key={`logo-${setIdx}-${idx}`}
+                                                className="flex-shrink-0 w-28 h-16 flex items-center justify-center"
+                                            >
+                                                <div className="w-28 h-16 bg-white rounded-lg p-3 flex items-center justify-center shadow-lg">
+                                                    <img
+                                                        src={client.logo}
+                                                        alt={client.name}
+                                                        className="max-w-full max-h-full object-contain"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

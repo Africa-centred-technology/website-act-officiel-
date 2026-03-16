@@ -77,7 +77,7 @@ export default function RoomQuiSommesNous() {
                         >
                             <span className="diamond diamond--sm" />
                             <span style={{
-                                fontFamily: "Futura, system-ui, sans-serif",
+                                fontFamily: "var(--font-display)",
                                 fontSize: "1.1rem",
                                 letterSpacing: "0.32em",
                                 textTransform: "uppercase",
@@ -93,7 +93,7 @@ export default function RoomQuiSommesNous() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, delay: 0.15, ease: [...EASE] }}
                             style={{
-                                fontFamily: "Futura, system-ui, sans-serif",
+                                fontFamily: "var(--font-display)",
                                 fontWeight: 900,
                                 fontSize: "clamp(3.5rem, 7vw, 9rem)",
                                 lineHeight: 1.0,
@@ -114,19 +114,19 @@ export default function RoomQuiSommesNous() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 0.30, ease: [...EASE] }}
                             style={{
-                                fontFamily: "Futura, system-ui, sans-serif",
-                                fontSize: "clamp(1.2rem, 1.6vw, 1.45rem)",
-                                lineHeight: 1.75,
-                                color: "rgba(255,255,255,0.65)",
-                                maxWidth: "36rem",
+                                fontFamily: "var(--font-body)",
+                                fontSize: "clamp(1.35rem, 2vw, 1.75rem)",
+                                lineHeight: 1.6,
+                                color: "#ffffff",
+                                maxWidth: "48rem",
                                 marginBottom: "clamp(1.2rem, 2.5vw, 2rem)",
                             }}
                         >
-                            Chez ACT, nous sommes animés par une <strong style={{ color: "#fff" }}>raison d'être commune</strong> : libérer l'énergie humaine et technologique du continent.
+                            Chez ACT, nous sommes animés par une <strong style={{ color: "#fff" }}>raison d'être commune</strong> : libérer l'énergie humaine et technologique.
                             Née en <strong style={{ color: "#fff" }}>2026</strong> de la vision de{" "}
                             <strong style={{ color: "#fff" }}>Sohaib Baroud</strong>, nous allions une approche profondément humaine à la puissance de l'Intelligence Artificielle.
-                            Notre objectif : créer un <strong style={{ color: "#fff" }}>impact concret et durable</strong> pour transformer nos sociétés — et bâtir ensemble une{" "}
-                            <strong style={{ color: "#D35400" }}>souveraineté technologique africaine</strong>.
+                            Notre objectif : créer un <strong style={{ color: "#fff" }}>impact concret et durable</strong> pour transformer nos sociétés — et bâtir ensemble un{" "}
+                            <strong style={{ color: "#D35400" }}>écosystème numérique</strong>.
                         </motion.p>
 
                         {/* Stats bar */}
@@ -149,7 +149,7 @@ export default function RoomQuiSommesNous() {
                                     paddingLeft: i > 0 ? "1rem" : 0,
                                 }}>
                                     <div style={{
-                                        fontFamily: "Futura, system-ui, sans-serif",
+                                        fontFamily: "var(--font-display)",
                                         fontSize: "clamp(2.2rem, 3.5vw, 3.5rem)",
                                         fontWeight: 900,
                                         color: "#D35400",
@@ -157,7 +157,7 @@ export default function RoomQuiSommesNous() {
                                         marginBottom: "0.3rem",
                                     }}>{s.n}</div>
                                     <div style={{
-                                        fontFamily: "Futura, system-ui, sans-serif",
+                                        fontFamily: "var(--font-display)",
                                         fontSize: "1rem",
                                         letterSpacing: "0.2em",
                                         textTransform: "uppercase",
@@ -200,7 +200,7 @@ export default function RoomQuiSommesNous() {
                         >
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
                             <span style={{
-                                fontFamily: "Futura, system-ui, sans-serif",
+                                fontFamily: "var(--font-display)",
                                 fontSize: "1.05rem",
                                 letterSpacing: "0.30em",
                                 textTransform: "uppercase",
@@ -228,7 +228,7 @@ export default function RoomQuiSommesNous() {
                                 >
                                     {/* Icône */}
                                     <span style={{
-                                        fontFamily: "Futura, system-ui, sans-serif",
+                                        fontFamily: "var(--font-display)",
                                         fontSize: "1.3rem",
                                         color: "#D35400",
                                         flexShrink: 0,
@@ -239,7 +239,7 @@ export default function RoomQuiSommesNous() {
                                     {/* Contenu */}
                                     <div>
                                         <div style={{
-                                            fontFamily: "Futura, system-ui, sans-serif",
+                                            fontFamily: "var(--font-display)",
                                             fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)",
                                             fontWeight: 700,
                                             textTransform: "uppercase",
@@ -248,10 +248,10 @@ export default function RoomQuiSommesNous() {
                                             marginBottom: "0.45rem",
                                         }}>{v.titre}</div>
                                         <div style={{
-                                            fontFamily: "Futura, system-ui, sans-serif",
-                                            fontSize: "clamp(1.15rem, 1.4vw, 1.35rem)",
-                                            lineHeight: 1.65,
-                                            color: "rgba(255,255,255,0.7)",
+                                            fontFamily: "var(--font-body)",
+                                            fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                                            lineHeight: 1.6,
+                                            color: "#ffffff",
                                         }}>{v.desc}</div>
                                     </div>
                                 </motion.div>
@@ -272,8 +272,8 @@ export default function RoomQuiSommesNous() {
                         >
                             <div style={{ width: 2, alignSelf: "stretch", background: "linear-gradient(to bottom, #D35400, transparent)", flexShrink: 0 }} />
                             <p style={{
-                                fontFamily: "Futura, system-ui, sans-serif",
-                                fontSize: "clamp(1.1rem, 1.3vw, 1.3rem)",
+                                fontFamily: "var(--font-body)",
+                                fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
                                 lineHeight: 1.7,
                                 color: "rgba(255,255,255,0.55)",
                                 fontStyle: "italic",

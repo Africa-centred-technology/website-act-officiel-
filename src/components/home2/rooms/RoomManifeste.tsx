@@ -108,7 +108,7 @@ export default function RoomManifeste() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <span className="diamond diamond--sm" />
-            <span className="text-white/55 uppercase tracking-[0.3em]" style={{ fontSize: "1.15rem" }}>
+            <span className="text-white/55 uppercase tracking-[0.3em]" style={{ fontSize: "1.15rem", fontFamily: "var(--font-display)" }}>
               Notre Manifeste
             </span>
           </motion.div>
@@ -133,6 +133,7 @@ export default function RoomManifeste() {
                 letterSpacing: "-0.04em",
                 color: wi === 0 ? "rgba(255,255,255,0.4)" : "#ffffff",
                 transformOrigin: "50% 100%",
+                fontFamily: "var(--font-display)",
               }}
               initial={{ opacity: 0, scale: 0.82, rotateX: 14, filter: "blur(10px)" }}
               animate={{ opacity: 1, scale: 1, rotateX: 0, filter: "blur(0px)" }}
@@ -153,7 +154,7 @@ export default function RoomManifeste() {
           <motion.div style={{ maxWidth: "65rem", x: midX, perspective: "1100px" }}>
             <p
               className="font-bold uppercase"
-              style={{ fontSize: "clamp(1.2rem, 2vw, 2.4rem)", lineHeight: 1.45, letterSpacing: "0.01em" }}
+              style={{ fontSize: "clamp(1.2rem, 2vw, 2.4rem)", lineHeight: 1.45, letterSpacing: "0.01em", fontFamily: "var(--font-display)" }}
             >
               {words.map((w, i) => (
                 <Word key={i} word={w} index={i} total={words.length} />
@@ -171,7 +172,7 @@ export default function RoomManifeste() {
             style={{ x: fgX }}
           >
             <div style={{ width: 48, height: 2, background: "#D35400" }} />
-            <span className="text-white/70 uppercase font-medium" style={{ fontSize: "1.25rem", letterSpacing: "0.25em" }}>
+            <span className="text-white/70 uppercase font-medium" style={{ fontSize: "1.25rem", letterSpacing: "0.25em", fontFamily: "var(--font-display)" }}>
               SOHIAB BAROUD — Fondateur &amp; CEO, ACT
             </span>
           </motion.div>

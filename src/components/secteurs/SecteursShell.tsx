@@ -152,14 +152,14 @@ function AlbumSection() {
             </div>
 
             {/* Label - Sector Name First - ORANGE */}
-            <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", fontWeight: 900, textTransform: "uppercase", color: ORANGE, marginBottom: "0.6rem", letterSpacing: "0.04em" }}>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", fontWeight: 900, textTransform: "uppercase", color: ORANGE, marginBottom: "0.6rem", letterSpacing: "0.04em" }}>
               {s.label}
             </p>
 
             {/* Tagline - Second */}
             <p
               style={{
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: "var(--font-display)",
                 fontWeight: 700,
                 fontSize: "clamp(2rem, 3.5vw, 4rem)",
                 lineHeight: 1.05,
@@ -172,14 +172,14 @@ function AlbumSection() {
             </p>
 
             {/* Description - BIGGER */}
-            <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)", lineHeight: 1.75, maxWidth: "650px", marginBottom: "2.5rem", textAlign: "justify" }}>
+            <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)", lineHeight: 1.75, maxWidth: "650px", marginBottom: "2.5rem", textAlign: "justify" }}>
               {s.description.length > 350 ? s.description.slice(0, 350) + "…" : s.description}
             </p>
 
             {/* Services - BIGGER */}
             <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2.5rem", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               {s.services.slice(0, 3).map((svc) => (
-                <li key={svc} style={{ display: "flex", alignItems: "flex-start", gap: "0.85rem", color: "#ffffff", fontSize: "clamp(1.1rem, 1.35vw, 1.35rem)", lineHeight: 1.5 }}>
+                <li key={svc} style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "flex-start", gap: "0.85rem", color: "#ffffff", fontSize: "clamp(1.1rem, 1.35vw, 1.35rem)", lineHeight: 1.5 }}>
                   <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: s.color, flexShrink: 0, marginTop: "0.55rem" }} />
                   {svc}
                 </li>
@@ -192,7 +192,7 @@ function AlbumSection() {
                 <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(2rem, 3vw, 3rem)", fontWeight: 900, color: ORANGE, margin: "0 0 0.35rem", lineHeight: 1 }}>
                   {s.chiffre.value}
                 </p>
-                <p style={{ color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", margin: 0, lineHeight: 1.4, opacity: 0.85 }}>
+                <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", margin: 0, lineHeight: 1.4, opacity: 0.85 }}>
                   {s.chiffre.label}
                 </p>
               </div>
@@ -459,7 +459,7 @@ export default function SecteursShell() {
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{ duration: 0.85, delay: 0.18, ease: [...EASE] }}
-            style={{ fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
           >
             NOS DOMAINES
             <br />
@@ -474,7 +474,7 @@ export default function SecteursShell() {
           transition={{ duration: 0.65, delay: 0.42 }}
           style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "3rem" }}
         >
-          <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "700px", margin: 0, textAlign: "justify", flex: 1 }}>
+          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "700px", margin: 0, textAlign: "justify", flex: 1 }}>
             ACT intervient dans les secteurs stratégiques de l&apos;économie africaine, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.
           </p>
           <div style={{ display: "flex", gap: "3.5rem", flexWrap: "wrap" }}>
@@ -506,8 +506,8 @@ export default function SecteursShell() {
         }}
       >
         <p style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: "1.75rem", opacity: 0.85 }}>Votre secteur, notre expertise</p>
-        <h2 style={{ fontWeight: 900, fontSize: "clamp(2.5rem, 6vw, 6rem)", textTransform: "uppercase", lineHeight: 1, letterSpacing: "-0.02em", color: "#fff", marginBottom: "2rem" }}>Parlons de votre projet</h2>
-        <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.6, maxWidth: "800px", margin: "0 auto 3.5rem", opacity: 0.85, textAlign: "justify" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2.5rem, 6vw, 6rem)", textTransform: "uppercase", lineHeight: 1, letterSpacing: "-0.02em", color: "#fff", marginBottom: "2rem" }}>Parlons de votre projet</h2>
+        <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.6, maxWidth: "800px", margin: "0 auto 3.5rem", opacity: 0.85, textAlign: "justify" }}>
           Quelle que soit votre industrie, ACT dispose de l&apos;expertise technologique pour vous accompagner dans votre transformation digitale.
         </p>
         <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.85rem", padding: "1.4rem 3rem", background: ORANGE, color: "#fff", borderRadius: "0.6rem", textDecoration: "none", fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, transition: "background 0.2s ease" }} onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#b84700")} onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = ORANGE)}>

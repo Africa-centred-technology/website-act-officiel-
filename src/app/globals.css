@@ -32,8 +32,8 @@
   --font-20:  clamp(13px,  calc(1.8rem + 6px), 2rem);
   --font-18:  clamp(12px,  calc(1.6rem + 6px), 1.8rem);
 
-  --font-display: Futura, "Inter", system-ui, sans-serif;
-  --font-body:    Futura, "Inter", system-ui, sans-serif;
+  --font-display: "Lora", serif;
+  --font-body:    "Poppins", sans-serif;
 
   --ease-uptown: cubic-bezier(0.6, 0.08, 0.02, 0.99);
 }
@@ -61,7 +61,7 @@ html {
 body {
   background: #0A1410;
   color: #fff;
-  font-family: Futura, "Inter", system-ui, sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -72,6 +72,10 @@ body {
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-track { background: #0A1410; }
 ::-webkit-scrollbar-thumb { background: #D35400; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
 
 .overflow-wrapper { overflow: hidden; }
 

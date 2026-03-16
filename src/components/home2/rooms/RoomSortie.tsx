@@ -12,7 +12,8 @@ import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
-import FooterStrip from "@/components/layout/FooterStrip";
+import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
@@ -21,6 +22,98 @@ const NAV_LINKS = [
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
+
+const SOCIALS = [
+  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
+  { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
+];
+
+function Footer() {
+  return (
+    <motion.div
+      aria-label="Footer"
+      className="absolute left-0 right-0 pointer-events-auto"
+      style={{ bottom: "3rem", zIndex: 10, padding: "0 clamp(2.5rem, 6vw, 8rem)" }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1.1, duration: 0.7 }}
+    >
+      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+
+      <div className="text-left" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
+
+        {/* Col 1 — Contact */}
+        <div className="flex flex-col items-start">
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
+            <a href="mailto:contact@act.africa"
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Mail size={18} strokeWidth={1.6} />contact@act.africa
+            </a>
+            <a href="tel:+212694528498"
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: "1.15rem" }}>
+              <Phone size={18} strokeWidth={1.6} />+212 694-528498
+            </a>
+            <span className="flex items-center gap-3 text-white/40" style={{ fontSize: "1.15rem" }}>
+              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
+            </span>
+          </div>
+        </div>
+
+        {/* Col 2 — Réseaux Sociaux */}
+        <div className="flex flex-col items-start">
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
+            {SOCIALS.map(({ Icon, href, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
+                style={{ fontSize: "1.15rem" }}>
+                <Icon size={20} strokeWidth={1.5} />{label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Col 3 — Carrières + CTA */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.6rem" }}>
+          <div className="flex flex-col items-start text-left">
+            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
+            <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
+              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
+            </p>
+            <Link href="/careers"
+              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
+              style={{ fontSize: "1.05rem", letterSpacing: "0.1em" }}>
+              Postuler maintenant →
+            </Link>
+          </div>
+          <CTAButton href="/contact">Un projet en tête ?</CTAButton>
+        </div>
+
+      </div>
+
+      <div style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
+          © 2026 Africa Centred Technology. Tous droits réservés
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
+          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+            Politique de Confidentialité
+          </Link>
+          <span className="text-white/25">/</span>
+          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+            CGU
+          </Link>
+        </div>
+      </div>
+
+    </motion.div>
+  );
+}
 
 /** Button drifts toward cursor, snaps back on leave */
 function Magnetic({ children }: { children: React.ReactNode }) {
@@ -92,16 +185,17 @@ export default function RoomSortie() {
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
 
-  /* Deterministic particles */
+  /* Deterministic particles - more variety */
   const particles = useMemo(
     () =>
-      Array.from({ length: 22 }, (_, i) => ({
+      Array.from({ length: 35 }, (_, i) => ({
         id: i,
         x: (i * 47 + 11) % 100,
         y: (i * 67 + 23) % 100,
-        size: 1.5 + (i % 2),
-        dur: 4.5 + (i % 5) * 1.2,
-        delay: (i % 6) * 0.8,
+        size: 1 + (i % 4) * 0.5,
+        dur: 3.5 + (i % 7) * 1.5,
+        delay: (i % 8) * 0.6,
+        opacity: 0.4 + (i % 3) * 0.2,
       })),
     []
   );
@@ -117,16 +211,7 @@ export default function RoomSortie() {
       {/* ── Portal rings — expanding from centre on arrival ── */}
       <PortalRing />
 
-      {/* ── Deep BG: room label — blur-focus entry ── */}
-      <motion.span
-        className="block text-white/10 font-black uppercase absolute"
-        style={{ fontSize: "1.1rem", letterSpacing: "0.2em", top: "6%", x: bgX, y: bgY }}
-        initial={{ scale: 1.14, opacity: 0, filter: "blur(14px)" }}
-        animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 1.9, ease: [0.6, 0.08, 0.02, 0.99] }}
-      >
-        LA SORTIE
-      </motion.span>
+
 
       {/* ── Breathing ambient glow — bg layer ── */}
       <motion.div
@@ -135,7 +220,7 @@ export default function RoomSortie() {
         style={{
           width: "70vw",
           height: "40vw",
-          background: "radial-gradient(ellipse, rgba(211,84,0,0.09) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, rgba(211,84,0,0.12) 0%, rgba(211,84,0,0.05) 40%, transparent 70%)",
           borderRadius: "50%",
           top: "50%",
           left: "50%",
@@ -143,12 +228,30 @@ export default function RoomSortie() {
           translateY: "-50%",
           x: bgX,
           y: bgY,
+          filter: "blur(60px)",
         }}
-        animate={{ scale: [1, 1.22, 1] }}
+        animate={{ scale: [1, 1.22, 1], opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* ── Floating particles ── */}
+      {/* ── Secondary glow — adds depth ── */}
+      <motion.div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          width: "50vw",
+          height: "50vh",
+          background: "radial-gradient(circle, rgba(255,140,0,0.08) 0%, transparent 60%)",
+          borderRadius: "50%",
+          top: "30%",
+          left: "30%",
+          filter: "blur(80px)",
+        }}
+        animate={{ x: [0, 50, 0], y: [0, -30, 0], opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* ── Floating particles — enhanced with variety ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
         {particles.map((p) => (
           <motion.div
@@ -159,10 +262,15 @@ export default function RoomSortie() {
               top: `${p.y}%`,
               width: p.size,
               height: p.size,
-              background: "#D35400",
-              boxShadow: `0 0 ${p.size * 5}px rgba(211,84,0,0.6)`,
+              background: p.id % 2 === 0 ? "#D35400" : "#FF8C00",
+              boxShadow: `0 0 ${p.size * 6}px ${p.id % 2 === 0 ? 'rgba(211,84,0,0.7)' : 'rgba(255,140,0,0.5)'}`,
             }}
-            animate={{ y: [0, -30, 0], opacity: [0, 0.65, 0] }}
+            animate={{
+              y: [0, -40, 0],
+              x: [0, (p.id % 3 - 1) * 15, 0],
+              opacity: [0, p.opacity, 0],
+              scale: [0.8, 1, 0.8]
+            }}
             transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
           />
         ))}
@@ -186,55 +294,89 @@ export default function RoomSortie() {
 
         {/* Eyebrow centré */}
         <motion.div
-          className="flex items-center justify-center gap-3 mb-8"
+          className="flex items-center justify-center gap-3 mb-10 w-full"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.10 }}
         >
           <span className="diamond diamond--sm" />
           <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.88rem", letterSpacing: "0.38em", textTransform: "uppercase" }}>
-            Passez à l&apos;action
+            L&apos;Horizon
           </span>
           <span className="diamond diamond--sm" />
         </motion.div>
 
+        {/* ── Split gauche/droite : Logo ← | → Contenu ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "4rem", justifyContent: "space-between", width: "100%", transform: "translateY(-8vh)" }}>
 
-        {/* Subtext */}
-        <motion.p
-          className="text-white/65 mx-auto mb-12"
-          style={{ fontSize: "var(--font-20)", lineHeight: 1.7, maxWidth: "50rem" }}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.7 }}
-        >
-          Prêt à transformer vos défis en opportunités technologiques ?
-          ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.
-        </motion.p>
-
-        {/* CTAs — foreground, last to appear */}
-        <motion.div
-          className="flex flex-wrap items-center justify-center gap-8"
-          initial={{ opacity: 0, y: 18, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.7 }}
-          style={{ x: fgX, y: fgY }}
-        >
-          <Magnetic>
-            <CTAButton href="/contact">Démarrer un projet</CTAButton>
-          </Magnetic>
-          <Link
-            href="/services"
-            className="flex items-center gap-3 text-white/55 hover:text-white transition-colors uppercase"
-            style={{ fontSize: "1.2rem", letterSpacing: "0.12em" }}
+          {/* Left — Logo Continent */}
+          <motion.div
+            layoutId="logo-continent"
+            style={{ x: bgX, y: bgY, flexShrink: 0, zIndex: 10, paddingLeft: "clamp(2rem, 5vw, 6rem)" }}
+            initial={{ opacity: 0, scale: 0.7, x: -80, rotate: -3 }}
+            animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
+            exit={{ scale: 0.2, x: 400, y: 400, opacity: 0, rotate: 10 }}
+            transition={{ duration: 1.8, delay: 0.1, ease: [0.04, 0.72, 0.08, 1.0] }}
           >
-            <span className="diamond diamond--sm" />
-            Nos expertises IA
-          </Link>
-        </motion.div>
+            <img
+              src="/logo/logo_continent.png"
+              alt="Africa Continent Logo"
+              style={{
+                width: "clamp(30rem, 65vw, 75rem)",
+                height: "auto",
+                filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
+                opacity: 0.99,
+                pointerEvents: "none",
+                userSelect: "none",
+              }}
+            />
+          </motion.div>
+
+          {/* Right — Bloc aligné à droite pour le reste du contenu */}
+          <div 
+            className="flex flex-col items-end text-right flex-1" 
+            style={{ paddingRight: "clamp(2rem, 5vw, 6rem)" }}
+          >
+            {/* Titre principal avec effet depth */}
+            <motion.h1
+              className="text-white font-black uppercase mb-8"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(3rem, 8vw, 6.5rem)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+                maxWidth: "60rem",
+                background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.7) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+              initial={{ opacity: 0, scale: 0.85, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.9, ease }}
+            >
+              Le changement de demain commence <span style={{ color: "#D35400", WebkitTextFillColor: "#D35400" }}>Maintenant</span>
+            </motion.h1>
+
+            {/* Subtext */}
+            <motion.p
+              className="text-white/65 mb-12"
+              style={{ fontSize: "clamp(1.5rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem", fontFamily: "var(--font-body)" }}
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.35, duration: 0.7 }}
+            >
+              Prêt à transformer vos défis en opportunités technologiques ?
+              <br />
+              ACT accompagne entreprises et organisations dans la création de solutions innovantes et intelligentes.
+            </motion.p>
+          </div>
+        </div>
       </motion.div>
 
+
       {/* ── Footer strip — navigation, contact, socials ── */}
-      <FooterStrip />
+      <Footer />
     </div>
   );
 }
