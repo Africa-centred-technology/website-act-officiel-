@@ -28,7 +28,8 @@ export default function RoomPortail() {
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-16">
                             {/* Eyebrow - aligné à gauche et plus bas visuellement */}
                             <motion.div
-                                className="flex items-center gap-3 mb-6 md:mb-2"
+                                className="flex items-center gap-2.5 mb-5"
+                                style={{ marginLeft: "1rem", marginRight: "auto" }}
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
@@ -61,6 +62,8 @@ export default function RoomPortail() {
                                     letterSpacing: "-0.02em",
                                     textTransform: "uppercase",
                                     color: "#fff",
+                                    marginLeft: "auto",
+                                    marginRight: "1rem",
                                 }}
                             >
                                 NOS PROJETS &

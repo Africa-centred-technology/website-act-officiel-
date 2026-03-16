@@ -77,20 +77,17 @@ function Footer() {
           </div>
         </div>
 
-        {/* Col 3 — Carrières + CTA */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.6rem" }}>
-          <div className="flex flex-col items-start text-left">
-            <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
-            <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
-              Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-            </p>
-            <Link href="/careers"
-              className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
-              style={{ fontSize: "1.05rem", letterSpacing: "0.1em" }}>
-              Postuler maintenant →
-            </Link>
-          </div>
-          <CTAButton href="/contact">Un projet en tête ?</CTAButton>
+        {/* Col 3 — Carrières */}
+        <div className="flex flex-col items-start text-left">
+          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
+          <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
+            Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
+          </p>
+          <Link href="/careers"
+            className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
+            style={{ fontSize: "1.05rem", letterSpacing: "0.1em" }}>
+            Postuler maintenant →
+          </Link>
         </div>
 
       </div>
@@ -370,6 +367,15 @@ export default function RoomSortie() {
               <br />
               ACT accompagne entreprises et organisations dans la création de solutions innovantes et intelligentes.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+              style={{ marginTop: "2.5rem" }}
+            >
+              <CTAButton href="/contact">Démarrez un projet</CTAButton>
+            </motion.div>
           </div>
         </div>
       </motion.div>

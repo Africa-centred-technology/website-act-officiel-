@@ -37,7 +37,13 @@ export default function RoomBlog() {
                         
 
                     {/* Grid: 1 grand article à gauche + 2 petits articles à droite */}
-                    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 mb-8 items-start">
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "2.5fr 1fr",
+                        gap: "2rem",
+                        marginBottom: "2rem",
+                        alignItems: "start",
+                    }}>
                         {/* Grand article (gauche) */}
                         {blogPosts[0] && (
                             <motion.div
@@ -45,11 +51,25 @@ export default function RoomBlog() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6 }}
-                                className="group w-full flex flex-col h-full"
+                                className="group"
+                                style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    height: "100%",
+                                }}
                             >
                                 <Link href={`/blog/${blogPosts[0].slug}`} className="block w-full">
                                     {/* Image */}
-                                    <div className="relative w-full h-[300px] overflow-hidden mb-4 rounded-lg bg-white/5">
+                                    <div style={{
+                                        position: "relative",
+                                        width: "100%",
+                                        height: "300px",
+                                        overflow: "hidden",
+                                        marginBottom: "1rem",
+                                        borderRadius: "0.5rem",
+                                        backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                    }}>
                                         <img
                                             src={blogPosts[0].image}
                                             alt={blogPosts[0].title}
@@ -76,7 +96,13 @@ export default function RoomBlog() {
                         )}
 
                         {/* 2 petits articles (droite) */}
-                        <div className="flex flex-col gap-6 w-full h-auto">
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "1.5rem",
+                            width: "100%",
+                            height: "auto",
+                        }}>
                             {blogPosts.slice(1, 3).map((post, idx) => (
                                 <motion.div
                                     key={post.slug}
@@ -84,11 +110,20 @@ export default function RoomBlog() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.6, delay: (idx + 1) * 0.1 }}
-                                    className="group w-full flex-shrink-0"
+                                    className="group"
+                                    style={{
+                                        width: "100%",
+                                        flexShrink: 0,
+                                    }}
                                 >
                                     <Link href={`/blog/${post.slug}`} className="flex flex-col gap-2">
                                         {/* Image */}
-                                        <div className="w-full h-[110px] overflow-hidden rounded-lg">
+                                        <div style={{
+                                            width: "100%",
+                                            height: "110px",
+                                            overflow: "hidden",
+                                            borderRadius: "0.5rem",
+                                        }}>
                                             <img
                                                 src={post.image}
                                                 alt={post.title}

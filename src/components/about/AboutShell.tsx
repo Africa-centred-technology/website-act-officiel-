@@ -5,13 +5,27 @@ import React, {
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   motion, AnimatePresence,
   useMotionValue, useSpring, useInView,
 } from "framer-motion";
-import RoomBackground from "@/components/home2/RoomBackground";
-import FooterStrip from "@/components/layout/FooterStrip";
-import LogoPhase from "@/components/services/LogoPhase";
+import TeamSection from "./TeamSection";
+import { type TeamMember } from "./TeamMemberCard";
+import CTAButton from "@/components/ui/CTAButton";
+import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+
+/* ── Background layers (comme SecteursShell) ─────────────────── */
+const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+
+/* ── Réseaux sociaux ─────────────────────────────────────── */
+const SOCIALS = [
+  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
+  { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
+  { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
+];
 
 /* ══════════════════════════════════════════════════════════════════════
    CONSTANTS & DATA
@@ -51,23 +65,31 @@ const TIMELINE = [
     desc: "Consolidation de notre vision pan-africaine avec une équipe dynamique, agile et résolument tournée vers l'avenir du continent." },
 ];
 
-const TEAM = [
-  { name: "SOHAIB BAROUD",           role: "Fondateur & CEO",  img: "/Sohaid.png",
-    bio: "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux." },
-  { name: "MPIGA-ODOUMBA JESSE",     role: "Membre fondateur", img: "/MPIGA.png",
-    bio: "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale." },
-  { name: "A. B. DJOUROBI OMANDA",   role: "Membre fondateur", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-    bio: "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines." },
-  { name: "ELVIS-THEO AKIEME OYONO", role: "Membre fondateur", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
-    bio: "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent." },
-];
-
-/* Photo entry vectors (same as RoomGalerie) */
-const PHOTO_ENTRY = [
-  { x: "-18%", y: "8%",  scale: 0.80, blur: 10, delay: 0.05 },
-  { x:  "18%", y: "8%",  scale: 0.82, blur: 8,  delay: 0.18 },
-  { x: "-10%", y: "14%", scale: 0.87, blur: 5,  delay: 0.30 },
-  { x:  "10%", y: "14%", scale: 0.92, blur: 3,  delay: 0.42 },
+const TEAM: TeamMember[] = [
+  {
+    name: "SOHAIB BAROUD",
+    role: "Fondateur & CEO",
+    img: "/Sohaid.png",
+    bio: "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux."
+  },
+  {
+    name: "MPIGA-ODOUMBA JESSE",
+    role: "Membre fondateur",
+    img: "/MPIGA.png",
+    bio: "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
+  },
+  {
+    name: "A. B. DJOUROBI OMANDA",
+    role: "Membre fondateur",
+    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    bio: "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
+  },
+  {
+    name: "ELVIS-THEO AKIEME OYONO",
+    role: "Membre fondateur",
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
+    bio: "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
+  },
 ];
 
 const STAT_DEPTH = [
@@ -245,7 +267,6 @@ function SectionHero() {
   return (
     <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col justify-center about-sec-pad"
       style={{ minHeight: "100vh" }}>
-      <RoomBackground variant="about-histoire" />
       <ScanLine />
       <ParticleField />
       <AmbiantLines positions={["14%", "84%"]} />
@@ -412,7 +433,6 @@ function SectionStats() {
   return (
     <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
       style={{ minHeight: "100vh" }}>
-      <RoomBackground variant="about-chiffres" />
       <ScanLine />
 
       <SectionHeader eyebrow="Les chiffres qui parlent" title="NOS CHIFFRES" midX={midX} midY={midY} />
@@ -476,7 +496,6 @@ function SectionADN() {
   return (
     <section onMouseMove={onMouseMove} className="relative flex flex-col justify-center overflow-hidden about-sec-pad"
       style={{ minHeight: "100vh" }}>
-      <RoomBackground variant="about-adn" />
       <ScanLine />
       <AmbiantLines positions={["12%", "88%"]} />
 
@@ -523,7 +542,6 @@ function SectionValues() {
   return (
     <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
       style={{ minHeight: "100vh" }}>
-      <RoomBackground variant="about-valeurs" />
       <ScanLine />
 
       <SectionHeader eyebrow="Ce qui nous anime" title="NOS VALEURS" midX={midX} midY={midY} />
@@ -600,7 +618,6 @@ function SectionTimeline() {
   return (
     <section id="parcours" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
       style={{ minHeight: "100vh" }}>
-      <RoomBackground variant="about-parcours" />
       <ScanLine />
       <AmbiantLines positions={["10%", "90%"]} />
 
@@ -666,139 +683,6 @@ function SectionTimeline() {
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   SECTION 06 — L'ÉQUIPE  (RoomGalerie photo-grid pattern)
-   ══════════════════════════════════════════════════════════════════════ */
-function SectionTeam() {
-  const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
-  const [hovered, setHovered] = useState<number | null>(null);
-
-  return (
-    <section id="equipe" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
-      style={{ minHeight: "100vh" }}>
-      {/* Dark textured bg (no photo bg — team photos would clash) */}
-      <div className="absolute inset-0" style={{ background: "#070E1C", zIndex: 0 }} />
-      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 1,
-        background: "radial-gradient(ellipse 70% 60% at 30% 40%, rgba(211,84,0,0.09) 0%, transparent 65%)" }} />
-      {/* Mashrabiya-style canvas pattern */}
-      <MashrabiyaCanvas />
-      <ScanLine />
-      <ParticleField count={14} />
-      <AmbiantLines positions={["8%", "92%"]} />
-
-      <div className="relative" style={{ zIndex: 2 }}>
-        <SectionHeader eyebrow="Les fondateurs ACT" title="L'ÉQUIPE" midX={midX} midY={midY} />
-        <OrangeRule />
-      </div>
-
-      {/* 2×2 photo grid — each from its corner like RoomGalerie */}
-      <div className="about-2col-grid flex-1 relative" style={{ minHeight: "60vh", zIndex: 2 }}>
-        {TEAM.map((member, i) => {
-          const entry = PHOTO_ENTRY[i];
-          return (
-            <motion.div key={member.name}
-              initial={{ opacity: 0, x: entry.x, y: entry.y, scale: entry.scale, filter: `blur(${entry.blur}px)` }}
-              whileInView={{ opacity: 1, x: "0%", y: "0%", scale: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-              transition={{ duration: 0.85, delay: entry.delay, ease: [...EASE3D] }}
-              className="relative overflow-hidden"
-              onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
-              <Image src={member.img} alt={member.name} fill sizes="(max-width: 1400px) 50vw, 700px"
-                className="object-cover object-center"
-                style={{ transition: "transform 0.75s ease", transform: hovered === i ? "scale(1.07)" : "scale(1.0)" }} />
-              <div aria-hidden className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(3,6,10,0.94) 0%, rgba(3,6,10,0.22) 60%, transparent 100%)" }} />
-
-              {/* Default info bar */}
-              <div className="absolute bottom-0 left-0 right-0" style={{ padding: "1.8rem 2.2rem" }}>
-                <div className="flex items-end justify-between">
-                  <div>
-                    <span className="block text-white/28 uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.22em", marginBottom: "0.3rem" }}>
-                      {member.role}
-                    </span>
-                    <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.1rem, 1.7vw, 1.9rem)", lineHeight: 1.1 }}>
-                      {member.name}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-
-              {/* Hover overlay — clip-path wipe */}
-              <AnimatePresence>
-                {hovered === i && (
-                  <motion.div initial={{ clipPath: "inset(100% 0% 0% 0%)" }} animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
-                    exit={{ clipPath: "inset(100% 0% 0% 0%)" }}
-                    transition={{ duration: 0.45, ease: [...EASE3D] }}
-                    className="absolute inset-0 flex flex-col justify-center"
-                    style={{ background: "rgba(3,6,10,0.88)", padding: "2.2rem" }}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="diamond diamond--sm" />
-                      <span className="text-[#D35400] uppercase" style={{ fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                        {member.role}
-                      </span>
-                    </div>
-                    <h3 className="font-black uppercase text-white mb-3" style={{ fontSize: "clamp(1.3rem, 2.2vw, 2.3rem)", lineHeight: 1.05 }}>
-                      {member.name}
-                    </h3>
-                    <div style={{ width: 28, height: 1, background: "#D35400", marginBottom: "1rem" }} />
-                    <p className="text-white/68" style={{ fontSize: "clamp(1rem, 1.3vw, 1.4rem)", lineHeight: 1.68 }}>
-                      {member.bio}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-/** Mashrabiya CSS canvas (client-only) */
-function MashrabiyaCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let rafId = 0;
-    let t = 0;
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize();
-    window.addEventListener("resize", resize, { passive: true });
-    const draw = () => {
-      const W = canvas.width, H = canvas.height;
-      ctx.clearRect(0, 0, W, H);
-      const cell = 44;
-      ctx.strokeStyle = "rgba(211,84,0,0.045)";
-      ctx.lineWidth = 0.5;
-      for (let y = 0; y < H + cell; y += cell) {
-        for (let x = 0; x < W + cell; x += cell) {
-          const d = cell * 0.32;
-          ctx.beginPath(); ctx.moveTo(x, y - d); ctx.lineTo(x + d, y); ctx.lineTo(x, y + d); ctx.lineTo(x - d, y); ctx.closePath(); ctx.stroke();
-        }
-      }
-      const gA = 0.10 + Math.sin(t * 0.32) * 0.04;
-      const g = ctx.createRadialGradient(W * 0.3, H * 0.4, 0, W * 0.3, H * 0.4, W * 0.5);
-      g.addColorStop(0, `rgba(211,84,0,${gA})`); g.addColorStop(1, "transparent");
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    };
-    const loop = () => { t += 0.016; draw(); rafId = requestAnimationFrame(loop); };
-    rafId = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(rafId); window.removeEventListener("resize", resize); };
-  }, []);
-  return <canvas ref={canvasRef} aria-hidden className="absolute inset-0" style={{ width: "100%", height: "100%", zIndex: 1 }} />;
-}
-
-/* ── Footer strip partagé avec RoomSortie ───────────────────────── */
-const ABOUT_NAV_LINKS = [
-  { href: "/",         label: "Accueil"     },
-  { href: "/services", label: "Services"    },
-  { href: "/projects", label: "Réalisations"},
-  { href: "/blog",     label: "Blog"        },
-  { href: "/contact",  label: "Contact"     },
-];
 
 /* ══════════════════════════════════════════════════════════════════════
    SECTION 07 — L'HORIZON  (RoomSortie CTA pattern)
@@ -809,7 +693,6 @@ function SectionCTA() {
   return (
     <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col items-center justify-center text-center about-sec-pad"
       style={{ minHeight: "100vh" }}>
-      <RoomBackground variant="about-cta" />
       <PortalRings />
       <ParticleField count={22} />
       <AmbiantLines positions={["18%", "82%"]} />
@@ -889,168 +772,113 @@ function SectionCTA() {
       </motion.div>
 
       {/* ── Footer strip ── */}
-      <FooterStrip />
+      <motion.div
+        aria-label="Footer"
+        className="relative w-full pointer-events-auto mt-32"
+        style={{ zIndex: 10, padding: "0 clamp(2.5rem, 6vw, 8rem)" }}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+
+        <div className="text-left" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)", marginBottom: "2.8rem" }}>
+
+          {/* Col 1 — Contact */}
+          <div className="flex flex-col items-start">
+            <p className="uppercase font-black text-white/55" style={{ fontFamily: "var(--font-display)", fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
+              <a href="mailto:contact@act.africa"
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
+                <Mail size={18} strokeWidth={1.6} />contact@act.africa
+              </a>
+              <a href="tel:+212694528498"
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
+                <Phone size={18} strokeWidth={1.6} />+212 694-528498
+              </a>
+              <span className="flex items-center gap-3 text-white/40" style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
+                <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
+              </span>
+            </div>
+          </div>
+
+          {/* Col 2 — Réseaux Sociaux */}
+          <div className="flex flex-col items-start">
+            <p className="uppercase font-black text-white/55" style={{ fontFamily: "var(--font-display)", fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
+              {SOCIALS.map(({ Icon, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
+                  style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
+                  <Icon size={20} strokeWidth={1.5} />{label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Col 3 — Carrières + CTA */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.6rem" }}>
+            <div className="flex flex-col items-start text-left">
+              <p className="uppercase font-black text-white/55" style={{ fontFamily: "var(--font-display)", fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
+              <p className="text-white/60" style={{ fontFamily: "var(--font-body)", fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
+                Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
+              </p>
+              <Link href="/careers"
+                className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
+                style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", letterSpacing: "0.1em" }}>
+                Postuler maintenant →
+              </Link>
+            </div>
+            <CTAButton href="/contact">Un projet en tête ?</CTAButton>
+          </div>
+
+        </div>
+
+        <div style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }} />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+          <span className="text-white/40 uppercase" style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", letterSpacing: "0.08em" }}>
+            © 2026 Africa Centred Technology. Tous droits réservés
+          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
+            <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem" }}>
+              Politique de Confidentialité
+            </Link>
+            <span className="text-white/25">/</span>
+            <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem" }}>
+              CGU
+            </Link>
+          </div>
+        </div>
+
+      </motion.div>
     </section>
   );
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   ROOMS — liste des sections About (même pattern que Shell.tsx home)
-   ══════════════════════════════════════════════════════════════════════ */
-const ABOUT_ROOMS = [
-  { id: "histoire", label: "NOTRE HISTOIRE", number: "01", Component: SectionHero     },
-  { id: "chiffres", label: "NOS CHIFFRES",   number: "02", Component: SectionStats    },
-  { id: "adn",      label: "NOTRE ADN",       number: "03", Component: SectionADN     },
-  { id: "valeurs",  label: "NOS VALEURS",     number: "04", Component: SectionValues  },
-  { id: "parcours", label: "LE PARCOURS",     number: "05", Component: SectionTimeline},
-  { id: "equipe",   label: "L'ÉQUIPE",        number: "06", Component: SectionTeam    },
-  { id: "horizon",  label: "L'HORIZON",       number: "07", Component: SectionCTA     },
-];
-
-const THROTTLE_MS = 1300;
-
-/* ── Navigation basse (calquée sur SpatialNav) ──────────────────── */
-function AboutNav({
-  rooms, current, onGoTo,
-}: { rooms: typeof ABOUT_ROOMS; current: number; onGoTo: (i: number) => void }) {
-  const total = rooms.length;
-  return (
-    <div className="fixed bottom-0 left-0 w-full" style={{ zIndex: 50, pointerEvents: "none" }}>
-      {/* Barre de progression */}
-      <div style={{ height: 1, background: "rgba(255,255,255,0.05)", marginBottom: "2rem", position: "relative" }}>
-        <motion.div
-          style={{ position: "absolute", left: 0, top: 0, height: "100%", background: "#D35400", originX: 0 }}
-          animate={{ width: `${((current + 1) / total) * 100}%` }}
-          transition={{ type: "spring", stiffness: 140, damping: 24 }}
-        />
-      </div>
-      {/* Rangée : spacer | points | flèches */}
-      <div className="flex items-end justify-between"
-        style={{ padding: "0 clamp(1.5rem, 4vw, 5rem) 2.5rem" }}>
-        <div style={{ minWidth: "clamp(8rem, 25vw, 14rem)" }} />
-
-        {/* Points centrés */}
-        <div className="flex items-center gap-2"
-          style={{ position: "absolute", left: "50%", bottom: "3.2rem", transform: "translateX(-50%)", pointerEvents: "auto" }}>
-          {rooms.map((r, i) => (
-            <button key={r.id} onClick={() => onGoTo(i)} aria-label={r.label}
-              style={{ padding: "10px 6px", background: "none", border: "none" }}>
-              <motion.div
-                animate={{ width: i === current ? 28 : 5, background: i === current ? "#D35400" : "rgba(255,255,255,0.15)" }}
-                transition={{ type: "spring", stiffness: 320, damping: 28 }}
-                style={{ height: 4, borderRadius: 99 }}
-              />
-            </button>
-          ))}
-        </div>
-
-        {/* Flèches */}
-        <div className="flex items-center gap-1" style={{ pointerEvents: "auto" }}>
-          <button onClick={() => onGoTo(current - 1)} disabled={current === 0}
-            style={{ background: "none", border: "none", padding: "12px 16px", fontSize: "1.5rem",
-              fontWeight: 900, lineHeight: 1, transition: "color 0.2s",
-              color: current === 0 ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.4)" }}>←</button>
-          <button onClick={() => onGoTo(current + 1)} disabled={current === total - 1}
-            style={{ background: "none", border: "none", padding: "12px 16px", fontSize: "1.5rem",
-              fontWeight: 900, lineHeight: 1, transition: "color 0.2s",
-              color: current === total - 1 ? "rgba(255,255,255,0.1)" : "#D35400" }}>→</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════════════
-   MAIN SHELL — rooms fullscreen avec navigation roue / clavier / touch
+   MAIN SHELL — Page scrollable normale avec toutes les sections
    ══════════════════════════════════════════════════════════════════════ */
 export default function AboutShell() {
-  const [current, setCurrent]     = useState(0);
-  const [portalDone, setPortalDone] = useState(false);
-  const throttleRef  = useRef(false);
-  const currentRef   = useRef(0);
-  const touchStartY  = useRef(0);
-  const total        = ABOUT_ROOMS.length;
-
-  const goTo = useCallback((i: number) => {
-    if (throttleRef.current) return;
-    const clamped = Math.max(0, Math.min(total - 1, i));
-    if (clamped === currentRef.current) return;
-    throttleRef.current = true;
-    currentRef.current  = clamped;
-    setCurrent(clamped);
-    setTimeout(() => { throttleRef.current = false; }, THROTTLE_MS);
-  }, [total]);
-
-  /* Roue souris */
-  useEffect(() => {
-    if (!portalDone) return;
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      goTo(currentRef.current + (e.deltaY > 0 ? 1 : -1));
-    };
-    window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
-  }, [portalDone, goTo]);
-
-  /* Clavier */
-  useEffect(() => {
-    if (!portalDone) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown" || e.key === "PageDown") goTo(currentRef.current + 1);
-      if (e.key === "ArrowUp"   || e.key === "PageUp")   goTo(currentRef.current - 1);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [portalDone, goTo]);
-
-  /* Touch swipe */
-  useEffect(() => {
-    if (!portalDone) return;
-    const onStart = (e: TouchEvent) => { touchStartY.current = e.touches[0].clientY; };
-    const onEnd   = (e: TouchEvent) => {
-      const diff = touchStartY.current - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 50) goTo(currentRef.current + (diff > 0 ? 1 : -1));
-    };
-    window.addEventListener("touchstart", onStart, { passive: true });
-    window.addEventListener("touchend",   onEnd,   { passive: true });
-    return () => { window.removeEventListener("touchstart", onStart); window.removeEventListener("touchend", onEnd); };
-  }, [portalDone, goTo]);
-
   return (
-    <>
-      {/* Intro LogoPhase */}
-      <AnimatePresence>
-        {!portalDone && (
-          <motion.div key="logo-intro"
-            style={{ position: "fixed", inset: 0, background: "#070E1C", zIndex: 9998 }}
-            exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.4 }}>
-            <LogoPhase onDone={() => setPortalDone(true)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div style={{ background: "#070E1C", minHeight: "100vh", overflowX: "hidden", position: "relative" }}>
+      {/* ── Background layers globaux ── */}
+      <WaveTerrain />
+      <Cursor />
+      <Grain />
 
-      {portalDone && (
-        <>
-          {/* Conteneur rooms fullscreen */}
-          <div style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#070E1C" }}>
-            <AnimatePresence mode="wait">
-              {ABOUT_ROOMS.map((room, i) => i === current && (
-                <motion.div key={room.id}
-                  style={{ position: "absolute", inset: 0 }}
-                  initial={{ opacity: 0, scale: 1.04, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, scale: 1,    filter: "blur(0px)" }}
-                  exit={{    opacity: 0, scale: 0.97,  filter: "blur(5px)" }}
-                  transition={{ duration: 0.62, ease: [0.6, 0.08, 0.02, 0.99] }}>
-                  <room.Component />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation basse */}
-          <AboutNav rooms={ABOUT_ROOMS} current={current} onGoTo={goTo} />
-        </>
-      )}
-    </>
+      {/* Toutes les sections empilées verticalement */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <SectionHero />
+        <SectionStats />
+        <SectionADN />
+        <SectionValues />
+        <SectionTimeline />
+        <TeamSection team={TEAM} />
+        <SectionCTA />
+      </div>
+    </div>
   );
 }
