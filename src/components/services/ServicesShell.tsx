@@ -7,7 +7,7 @@ import {
   motion, AnimatePresence,
   useScroll, useMotionValue, useSpring, useTransform,
 } from "framer-motion";
-import CTAButton from "@/components/ui/CTAButton";
+import CTASection from "@/components/layout/CTASection";
 
 /* ══════════════════════════════════════════════════════
    Background layers
@@ -829,53 +829,6 @@ function HeroSection() {
   );
 }
 
-/* ══════════════════════════════════════════════════════
-   CTA SECTION
-   ══════════════════════════════════════════════════════ */
-function CTASection() {
-  return (
-    <section style={{
-      minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-      background: "#030810", position: "relative", overflow: "hidden", padding: "clamp(4rem, 7vw, 8rem) clamp(1.5rem, 4.5vw, 5.5rem)",
-    }}>
-      <div aria-hidden style={{
-        position: "absolute", inset: 0, zIndex: 0,
-        background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${ORANGE}0C 0%, transparent 68%)`
-      }} />
-      <div style={{ position: "relative", zIndex: 1, textAlign: "center", maxWidth: "52rem" }}>
-        <motion.div style={{ display: "flex", justifyContent: "center", marginBottom: "2.5rem" }}
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7 }}>
-          <Diamond size="0.7rem" />
-        </motion.div>
-        <motion.h2 className="font-black uppercase"
-          style={{ fontSize: "var(--font-50)", letterSpacing: "-0.02em", lineHeight: 1.0, marginBottom: "2rem" }}
-          initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}>
-          Construisons l&apos;avenir<br /><span style={{ color: ORANGE }}>ensemble</span>
-        </motion.h2>
-        <motion.p style={{ fontSize: "var(--font-20)", color: "#ffffff", lineHeight: 1.7, marginBottom: "4rem" }}
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
-          Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h.
-        </motion.p>
-        <motion.div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "2.5rem", flexWrap: "wrap" }}
-          initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>
-          <CTAButton href="/contact">Démarrer votre projet</CTAButton>
-          <Link href="/about" style={{
-            display: "inline-flex", alignItems: "center", gap: "0.7rem",
-            color: "#ffffff", fontSize: "clamp(1.05rem, 1.3vw, 1.2rem)",
-            letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
-          }}>
-            <Diamond size="0.42rem" />
-            Découvrir ACT
-          </Link>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
 /* ══════════════════════════════════════════════════════
    SERVICES JOURNEY — scroll-driven rooms
@@ -973,7 +926,12 @@ export default function ServicesShell() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <HeroSection />
         <ServicesJourney />
-        <CTASection />
+        <CTASection
+          eyebrow="Votre projet"
+          title="Construisons l'avenir ensemble"
+          description="Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h."
+          buttonText="Démarrer votre projet"
+        />
       </div>
     </div>
   );

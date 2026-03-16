@@ -26,6 +26,7 @@ const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 import { SERVICES, type Service } from "@/lib/data/services";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTASection from "@/components/layout/CTASection";
 
 const EASE  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -895,151 +896,6 @@ function RelatedServices({ svc }: { svc: Service }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════
-   7 · CTA — image pleine largeur + gradient fort
-   ═══════════════════════════════════════════════════════ */
-function CtaSection({ svc }: { svc: Service }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-
-  const prev = SERVICES[SERVICES.findIndex(s => s.slug === svc.slug) - 1];
-  const next = SERVICES[SERVICES.findIndex(s => s.slug === svc.slug) + 1];
-
-  return (
-    <section ref={ref} style={{ position: "relative", overflow: "hidden",
-      padding: "clamp(5rem, 9vw, 9rem) clamp(1.5rem, 5vw, 3rem)" }}>
-
-      {/* Image pleine largeur Ken Burns */}
-      <motion.div style={{ position: "absolute", inset: 0, zIndex: 0, y: imgY }}>
-        <KenBurns
-          src={svc.heroImage} alt=""
-          duration={30} fromScale={1.0} toScale={1.08}
-          fromX="-2%" toX="2%"
-        />
-      </motion.div>
-
-      {/* Overlay gradient service */}
-      <div aria-hidden style={{
-        position: "absolute", inset: 0, zIndex: 1,
-        background: svc.bg, opacity: 0.6,
-        mixBlendMode: "multiply",
-      }} />
-      <div aria-hidden style={{
-        position: "absolute", inset: 0, zIndex: 2,
-        background: "linear-gradient(160deg, rgba(3,5,8,0.95) 0%, rgba(3,5,8,0.65) 50%, rgba(3,5,8,0.97) 100%)",
-      }} />
-      {/* Bloom accent centré */}
-      <div aria-hidden style={{
-        position: "absolute", inset: 0, zIndex: 3,
-        background: `radial-gradient(ellipse 55% 50% at 50% 40%, ${svc.accent}22 0%, transparent 70%)`,
-      }} />
-
-      <div style={{ position: "relative", zIndex: 4, maxWidth: "1180px", margin: "0 auto" }}>
-        <motion.div
-          initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
-          variants={stagger(0)} style={{ textAlign: "center" }}>
-
-          <motion.p variants={fadeUp} style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(0.85rem, 1vw, 1rem)",
-            letterSpacing: "0.28em", textTransform: "uppercase",
-            color: svc.accent, marginBottom: "1.2rem", fontWeight: 700,
-          }}>Travaillons ensemble</motion.p>
-
-          <motion.h2 variants={fadeUp} style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(28px, 4.5vw, 5.5rem)",
-            fontWeight: 500, color: "#fff", lineHeight: 1.1, marginBottom: "1.2rem",
-          }}>Intéressé par ce service ?</motion.h2>
-
-          <motion.p variants={fadeUp} style={{
-            fontSize: "clamp(15px, 1.2vw, 1.35rem)",
-            color: "#ffffff", maxWidth: "520px",
-            margin: "0 auto 3rem",
-          }}>Parlons de votre projet en 30 minutes — sans engagement.</motion.p>
-
-          <motion.div variants={fadeUp} style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            gap: "1.25rem", flexWrap: "wrap",
-          }}>
-            <Link href="/contact" style={{
-              display: "inline-flex", alignItems: "center", gap: "0.75rem",
-              padding: "1rem 2.5rem",
-              background: svc.accent, color: "#fff", borderRadius: "0.5rem",
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)",
-              letterSpacing: "0.14em", textTransform: "uppercase",
-              textDecoration: "none", fontWeight: 500,
-            }}>
-              Démarrer un projet
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
-            <Link href="/services" style={{
-              display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              padding: "1rem 2rem",
-              background: "transparent", color: "#ffffff",
-              border: "1px solid rgba(255,255,255,0.4)", borderRadius: "0.5rem",
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)",
-              letterSpacing: "0.14em", textTransform: "uppercase", textDecoration: "none",
-            }}>← Tous les services</Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Nav prev / next */}
-        {(prev || next) && (
-          <motion.div
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            style={{
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              marginTop: "5rem", paddingTop: "2.5rem",
-              borderTop: "1px solid rgba(255,255,255,0.07)", gap: "1rem",
-            }}>
-            {prev ? (
-              <Link href={`/services/${prev.slug}`} style={{ textDecoration: "none", flex: 1 }}>
-                <motion.div whileHover={{ x: -4 }} transition={{ duration: 0.25 }}
-                  style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <span style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.25)" }}>←</span>
-                  <div>
-                    <p style={{ fontSize: "clamp(10px, 0.68rem, 0.72rem)",
-                      color: "rgba(255,255,255,0.25)", letterSpacing: "0.2em",
-                      textTransform: "uppercase", marginBottom: "0.2rem" }}>Service précédent</p>
-                    <p style={{ fontSize: "clamp(12px, 0.85rem, 0.9rem)",
-                      color: "rgba(255,255,255,0.55)", fontFamily: "Futura, system-ui, sans-serif" }}>
-                      {prev.title.replace(/\n/g, " ")}
-                    </p>
-                  </div>
-                </motion.div>
-              </Link>
-            ) : <div />}
-            {next ? (
-              <Link href={`/services/${next.slug}`} style={{ textDecoration: "none", flex: 1, textAlign: "right" }}>
-                <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.25 }}
-                  style={{ display: "flex", alignItems: "center", gap: "1rem", justifyContent: "flex-end" }}>
-                  <div>
-                    <p style={{ fontSize: "clamp(10px, 0.68rem, 0.72rem)",
-                      color: "rgba(255,255,255,0.25)", letterSpacing: "0.2em",
-                      textTransform: "uppercase", marginBottom: "0.2rem" }}>Service suivant</p>
-                    <p style={{ fontSize: "clamp(12px, 0.85rem, 0.9rem)",
-                      color: "rgba(255,255,255,0.55)", fontFamily: "Futura, system-ui, sans-serif" }}>
-                      {next.title.replace(/\n/g, " ")}
-                    </p>
-                  </div>
-                  <span style={{ fontSize: "1.2rem", color: svc.accent }}>→</span>
-                </motion.div>
-              </Link>
-            ) : <div />}
-          </motion.div>
-        )}
-      </div>
-    </section>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════
    STICKY HEADER
@@ -1116,7 +972,12 @@ export default function ServiceDetailShell({ svc }: { svc: Service }) {
         <BenefitsSection svc={svc} />
         <DeliverablesSection svc={svc} />
         <RelatedServices svc={svc} />
-        <CtaSection svc={svc} />
+        <CTASection
+          eyebrow="Travaillons ensemble"
+          title="Intéressé par ce service ?"
+          description="Parlons de votre projet en 30 minutes — sans engagement."
+          buttonText="Démarrer un projet"
+        />
         <FooterStrip />
       </div>
     </div>

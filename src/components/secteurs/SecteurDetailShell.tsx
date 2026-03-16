@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle, Settings, Wifi, Leaf, TrendingUp, ShoppingCart, Building2, Landmark } from "lucide-react";
 import type { Secteur } from "@/lib/secteurs-data";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTASection from "@/components/layout/CTASection";
 
 /* ── Tokens ─────────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
@@ -450,148 +451,12 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
       </section>
 
       {/* ── CTA section ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        style={{
-          padding: "clamp(5rem, 8vw, 8rem) clamp(1.5rem, 6vw, 8rem)",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* Glow bg */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `radial-gradient(ellipse 60% 50% at 50% 50%, ${secteur.color}10 0%, transparent 70%)`,
-            pointerEvents: "none",
-          }}
-        />
-
-        <div style={{ position: "relative", zIndex: 2 }}>
-          <p
-            style={{
-              color: "#ffffff",
-              fontSize: "clamp(1.1rem, 1.5vw, 1.5rem)",
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              marginBottom: "1.5rem",
-              opacity: 0.85,
-            }}
-          >
-            Passons à l&apos;action
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 900,
-              fontSize: "clamp(3rem, 7vw, 8rem)",
-              textTransform: "uppercase",
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-              color: "#fff",
-              marginBottom: "2rem",
-            }}
-          >
-            Votre projet
-            <br />
-            <span style={{ color: secteur.color }}>nous intéresse</span>
-          </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              color: "#ffffff",
-              fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)",
-              lineHeight: 1.65,
-              maxWidth: "600px",
-              margin: "0 auto 3rem",
-              textAlign: "justify",
-              opacity: 0.9,
-            }}
-          >
-            Discutons de votre contexte et explorons ensemble comment la technologie peut créer de la valeur dans votre organisation.
-          </p>
-          <div
-            style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}
-          >
-            <Link
-              href="/contact"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.65rem",
-                padding: "1rem 2.25rem",
-                background: ORANGE,
-                color: "#fff",
-                borderRadius: "0.6rem",
-                textDecoration: "none",
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(0.9rem, 1.2vw, 1.2rem)",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                transition: "background 0.2s ease",
-              }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.background = "#b84700")
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.background = ORANGE)
-              }
-            >
-              Démarrer un projet
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
-            <Link
-              href="/secteurs"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.65rem",
-                padding: "1rem 2.25rem",
-                background: "transparent",
-                color: "#ffffff",
-                borderRadius: "0.6rem",
-                border: "1px solid rgba(255,255,255,0.15)",
-                textDecoration: "none",
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "0.8rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                fontWeight: 500,
-                transition: "border-color 0.2s, color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.borderColor = "rgba(255,255,255,0.4)";
-                el.style.color = "#fff";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.borderColor = "rgba(255,255,255,0.15)";
-                el.style.color = "rgba(255,255,255,0.65)";
-              }}
-            >
-              <ArrowLeft size={14} />
-              Tous les secteurs
-            </Link>
-          </div>
-        </div>
-      </motion.section>
+      <CTASection
+        eyebrow="Passons à l'action"
+        title="Votre projet nous intéresse"
+        description="Discutons de votre contexte et explorons ensemble comment la technologie peut créer de la valeur dans votre organisation."
+        buttonText="Démarrer un projet"
+      />
 
       {/* ── Footer ── */}
       <FooterStrip />

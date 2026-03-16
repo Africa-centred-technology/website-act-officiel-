@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { PROJECTS, CATEGORIES } from "@/lib/data/projects";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTASection from "@/components/layout/CTASection";
 
 /* ── Shared home2 background layers (same as Shell.tsx) ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -454,61 +455,12 @@ export default function RealisationsShell() {
       </section>
 
       {/* ══ CTA BAND ════════════════════════════════════════════════════ */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        style={{
-          position: "relative", zIndex: 2, overflow: "hidden",
-          padding: "clamp(5rem,8vw,9rem) clamp(1.5rem,6vw,8rem)",
-          background: "rgba(7,14,28,0.70)",
-          borderTop: "1px solid rgba(211,84,0,0.18)",
-          textAlign: "center",
-        }}
-      >
-        <div aria-hidden style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(211,84,0,0.08) 0%, transparent 70%)",
-        }} />
-
-        <p style={{ color: ORANGE, fontSize: "clamp(1rem, 1.4vw, 1.35rem)", fontWeight: 700, letterSpacing: "0.38em", textTransform: "uppercase", marginBottom: "1.5rem" }}>
-          Votre projet, notre expertise
-        </p>
-
-        <div style={{ overflow: "hidden", marginBottom: "1.5rem" }}>
-          <motion.h2
-            initial={{ y: "100%" }}
-            whileInView={{ y: "0%" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.85, ease: [...EASE] }}
-            style={{ fontWeight: 900, fontSize: "clamp(2rem, 6vw, 7rem)", textTransform: "uppercase", lineHeight: 0.92, letterSpacing: "-0.025em", color: "#fff", margin: 0 }}
-          >
-            Parlons de votre projet
-          </motion.h2>
-        </div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          style={{ color: "#ffffff", fontSize: "clamp(1rem, 1.4vw, 1.25rem)", lineHeight: 1.65, maxWidth: "500px", margin: "0 auto 3rem" }}
-        >
-          ACT dispose de l&apos;expertise technologique pour vous accompagner
-          dans votre transformation digitale, quelle que soit votre industrie.
-        </motion.p>
-
-        <Link href="/contact" className="cta-btn">
-          <div className="cta-btn__border" />
-          <div className="cta-btn__blur" />
-          <div className="cta-btn__background" />
-          <div className="cta-btn__inner">
-            <span className="cta-btn__icon" />
-            <span className="cta-btn__text">Démarrer un projet</span>
-          </div>
-        </Link>
-      </motion.section>
+      <CTASection
+        eyebrow="Votre projet, notre expertise"
+        title="Parlons de votre projet"
+        description="ACT dispose de l'expertise technologique pour vous accompagner dans votre transformation digitale, quelle que soit votre industrie."
+        buttonText="Démarrer un projet"
+      />
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════ */}
       <FooterStrip />

@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { secteurs } from "@/lib/secteurs-data";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTASection from "@/components/layout/CTASection";
 
 /* ── Background layers ─────────────────────────────────────── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -492,29 +493,7 @@ export default function SecteursShell() {
       <AlbumSection />
 
       {/* ── CTA band ── */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        style={{
-          padding: "clamp(5rem, 9vw, 10rem) clamp(2rem, 8vw, 10rem)",
-          background: "rgba(211,84,0,0.06)",
-          borderTop: "1px solid rgba(211,84,0,0.18)",
-          borderBottom: "1px solid rgba(211,84,0,0.18)",
-          textAlign: "center",
-        }}
-      >
-        <p style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: "1.75rem", opacity: 0.85 }}>Votre secteur, notre expertise</p>
-        <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2.5rem, 6vw, 6rem)", textTransform: "uppercase", lineHeight: 1, letterSpacing: "-0.02em", color: "#fff", marginBottom: "2rem" }}>Parlons de votre projet</h2>
-        <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.6, maxWidth: "800px", margin: "0 auto 3.5rem", opacity: 0.85, textAlign: "justify" }}>
-          Quelle que soit votre industrie, ACT dispose de l&apos;expertise technologique pour vous accompagner dans votre transformation digitale.
-        </p>
-        <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.85rem", padding: "1.4rem 3rem", background: ORANGE, color: "#fff", borderRadius: "0.6rem", textDecoration: "none", fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, transition: "background 0.2s ease" }} onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#b84700")} onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = ORANGE)}>
-          Démarrer un projet
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-        </Link>
-      </motion.section>
+      <CTASection />
 
       {/* ── Footer ── */}
       <FooterStrip />
