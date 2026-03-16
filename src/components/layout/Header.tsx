@@ -2,13 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
 
+const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+
 /* ── Tokens ─────────────────────────────────────────────── */
 const ORANGE = "#D35400";
+const BG_DARK = "#070E1C";
 
 /* ── Data ───────────────────────────────────────────────── */
 const SAVOIR_FAIRE_MENU = [
@@ -263,14 +267,15 @@ export default function Header() {
               right: 0,
               minHeight: "100vh",
               maxHeight: "100vh",
-              background: "rgba(10, 20, 16, 0.98)",
+              background: "rgba(7, 14, 28, 0.98)",
               backdropFilter: "blur(20px)",
               zIndex: 300,
               paddingBottom: "10rem",
               overflowY: "auto",
             }}
           >
-            <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <Grain />
+            <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", position: "relative", zIndex: 1 }}>
               <Link href="/" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: "1.8rem", color: "#fff", textDecoration: "none", fontWeight: 700, textTransform: "uppercase" }}>
                 Accueil
               </Link>
