@@ -33,44 +33,41 @@ function Footer() {
   return (
     <motion.div
       aria-label="Footer"
-      className="absolute left-0 right-0 pointer-events-auto"
-      style={{ bottom: "3rem", zIndex: 10, padding: "0 clamp(2.5rem, 6vw, 8rem)" }}
+      className="relative md:absolute left-0 right-0 pointer-events-auto mt-16 md:mt-0 md:bottom-12"
+      style={{ zIndex: 10 }}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1, duration: 0.7 }}
     >
-      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+      <div className="hidden md:block w-full h-px bg-[#D35400]/40 mb-12" />
 
-      <div className="text-left" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem", marginBottom: "2.8rem" }}>
+      <div className="text-left grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-12 px-4 md:px-[clamp(2.5rem,6vw,8rem)]">
 
         {/* Col 1 — Contact */}
-        <div className="flex flex-col items-start">
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
+        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          <p className="uppercase font-black text-white/55 text-base tracking-[0.3em] mb-6">Contact</p>
+          <div className="flex flex-col items-center md:items-start gap-4">
             <a href="mailto:contact@act.africa"
-              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-lg">
               <Mail size={18} strokeWidth={1.6} />contact@act.africa
             </a>
             <a href="tel:+212694528498"
-              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
-              style={{ fontSize: "1.15rem" }}>
+              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-lg">
               <Phone size={18} strokeWidth={1.6} />+212 694-528498
             </a>
-            <span className="flex items-center gap-3 text-white/40" style={{ fontSize: "1.15rem" }}>
+            <span className="flex items-center gap-3 text-white/40 text-lg">
               <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
             </span>
           </div>
         </div>
 
         {/* Col 2 — Réseaux Sociaux */}
-        <div className="flex flex-col items-start">
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
+        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          <p className="uppercase font-black text-white/55 text-base tracking-[0.3em] mb-6">Réseaux Sociaux</p>
+          <div className="flex flex-col items-center md:items-start gap-4">
             {SOCIALS.map(({ Icon, href, label }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
-                style={{ fontSize: "1.15rem" }}>
+                className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors text-lg">
                 <Icon size={20} strokeWidth={1.5} />{label}
               </a>
             ))}
@@ -78,31 +75,30 @@ function Footer() {
         </div>
 
         {/* Col 3 — Carrières */}
-        <div className="flex flex-col items-start text-left">
-          <p className="uppercase font-black text-white/55" style={{ fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
-          <p className="text-white/60" style={{ fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
+        <div className="flex flex-col items-center md:items-start text-center md:text-left mt-8 md:mt-0">
+          <p className="uppercase font-black text-white/55 text-base tracking-[0.3em] mb-5">Carrières</p>
+          <p className="text-white/60 text-lg leading-relaxed mb-4 max-w-[280px]">
             Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
           </p>
           <Link href="/careers"
-            className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
-            style={{ fontSize: "1.05rem", letterSpacing: "0.1em" }}>
+            className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black text-base tracking-[0.1em]">
             Postuler maintenant →
           </Link>
         </div>
 
       </div>
 
-      <div style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }} />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-        <span className="text-white/40 uppercase" style={{ fontSize: "0.92rem", letterSpacing: "0.08em" }}>
+      <div className="w-full h-px bg-white/10 mb-6" />
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4 md:px-[clamp(2.5rem,6vw,8rem)] pb-8 md:pb-0">
+        <span className="text-white/40 uppercase text-center md:text-left text-sm tracking-[0.08em]">
           © 2026 Africa Centred Technology. Tous droits réservés
         </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
-          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+        <div className="flex items-center gap-6">
+          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase text-sm">
             Politique de Confidentialité
           </Link>
-          <span className="text-white/25">/</span>
-          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontSize: "0.92rem" }}>
+          <span className="text-white/25 hidden md:inline">/</span>
+          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase text-sm">
             CGU
           </Link>
         </div>
@@ -200,8 +196,7 @@ export default function RoomSortie() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative overflow-hidden flex flex-col items-center justify-center text-center room-pad"
-      style={{ width: "100%", height: "100%" }}
+      className="room-container relative overflow-hidden flex flex-col items-center justify-center text-center room-pad w-full min-h-screen md:h-full"
     >
 
 
@@ -304,7 +299,7 @@ export default function RoomSortie() {
         </motion.div>
 
         {/* ── Split gauche/droite : Logo ← | → Contenu ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: "4rem", justifyContent: "space-between", width: "100%", transform: "translateY(-8vh)" }}>
+        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 justify-between w-full md:translate-y-[-8vh]">
 
           {/* Left — Logo Continent */}
           <motion.div
@@ -315,24 +310,26 @@ export default function RoomSortie() {
             exit={{ scale: 0.2, x: 400, y: 400, opacity: 0, rotate: 10 }}
             transition={{ duration: 1.8, delay: 0.1, ease: [0.04, 0.72, 0.08, 1.0] }}
           >
-            <img
-              src="/logo/logo_continent.png"
-              alt="Africa Continent Logo"
-              style={{
-                width: "clamp(30rem, 65vw, 75rem)",
-                height: "auto",
-                filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
-                opacity: 0.99,
-                pointerEvents: "none",
-                userSelect: "none",
-              }}
-            />
+            <Link href="/">
+              <img
+                src="/logo/logo_continent.png"
+                alt="ACT - Africa Centred Technology"
+                style={{
+                  width: "clamp(30rem, 65vw, 75rem)",
+                  height: "auto",
+                  filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
+                  opacity: 0.99,
+                  pointerEvents: "none",
+                  userSelect: "none",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
           </motion.div>
 
           {/* Right — Bloc aligné à droite pour le reste du contenu */}
           <div 
-            className="flex flex-col items-end text-right flex-1" 
-            style={{ paddingRight: "clamp(2rem, 5vw, 6rem)" }}
+            className="flex flex-col items-center md:items-end text-center md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)]" 
           >
             {/* Titre principal avec effet depth */}
             <motion.h1

@@ -113,26 +113,30 @@ function AlbumSection() {
   return (
     <section
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "stretch",
         overflow: "hidden",
         position: "relative",
         paddingLeft: "clamp(1.5rem, 6vw, 8rem)",
         paddingRight: "clamp(1.5rem, 3vw, 3rem)",
+        paddingTop: "4rem",
+        paddingBottom: "4rem",
       }}
+      className="flex-col lg:flex-row flex-wrap lg:flex-nowrap"
     >
       {/* ── LEFT: Text Content ──────────────────────────── */}
       <div
         style={{
-          flex: "0 0 52%",
+          flex: "1 1 100%", // Start at 100% width on mobile
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          paddingRight: "3rem",
+          paddingRight: "clamp(0px, 3vw, 3rem)",
           position: "relative",
           zIndex: 2,
         }}
+        className="lg:flex-[0_0_52%] mb-12 lg:mb-0"
       >
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
@@ -162,11 +166,11 @@ function AlbumSection() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 700,
-                fontSize: "clamp(2rem, 3.5vw, 4rem)",
-                lineHeight: 1.05,
-                letterSpacing: "-0.02em",
+                fontSize: "clamp(1.75rem, 3.5vw, 4rem)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.01em",
                 color: "#ffffff",
-                margin: "0 0 2rem",
+                margin: "0 0 1.5rem",
               }}
             >
               {s.tagline}
@@ -219,16 +223,19 @@ function AlbumSection() {
       {/* ── RIGHT: Photo Cards Stack ("hand of cards") ──── */}
       <div
         style={{
-          flex: "0 0 48%",
+          flex: "1 1 50%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          paddingTop: "5vh",
-          paddingBottom: "5vh",
-          paddingRight: "2rem",
+          paddingTop: "2vh",
+          paddingBottom: "2vh",
+          paddingRight: "clamp(0px, 2vw, 2rem)",
           position: "relative",
           overflow: "visible",
+          minWidth: "300px",
+          minHeight: "450px"
         }}
+        className="w-full lg:w-1/2"
       >
         {/* Wrapper for all stacked cards */}
         <div
@@ -241,7 +248,7 @@ function AlbumSection() {
           style={{
             width: "100%",
             maxWidth: "420px",
-            height: "min(72vh, 580px)",
+            height: "min(60vh, 520px)",
             position: "relative",
             cursor: isDragging ? "grabbing" : "grab",
             userSelect: "none",
@@ -386,8 +393,8 @@ function AlbumSection() {
         </div>
       </div>
 
-      {/* Vertical divider */}
-      <div style={{ position: "absolute", left: "52%", top: "15%", bottom: "15%", width: "1px", background: "rgba(255,255,255,0.05)", pointerEvents: "none" }} />
+      {/* Vertical divider - hidden on mobile */}
+      <div className="hidden lg:block" style={{ position: "absolute", left: "52%", top: "15%", bottom: "15%", width: "1px", background: "rgba(255,255,255,0.05)", pointerEvents: "none" }} />
     </section>
   );
 }
@@ -473,13 +480,13 @@ export default function SecteursShell() {
           initial={{ opacity: 0, y: 16 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.65, delay: 0.42 }}
-          style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "3rem" }}
+          style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "2.5rem" }}
         >
-          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "700px", margin: 0, textAlign: "justify", flex: 1 }}>
+          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", lineHeight: 1.6, maxWidth: "700px", margin: 0, textAlign: "justify", flex: "1 1 100%", order: 2 }} className="lg:flex-1 lg:order-1">
             ACT intervient dans les secteurs stratégiques de l&apos;économie africaine, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.
           </p>
-          <div style={{ display: "flex", gap: "3.5rem", flexWrap: "wrap" }}>
-            {[{ value: "7", label: "Secteurs" }, { value: "15+", label: "Projets" }, { value: "100%", label: "Impact africain" }].map(({ value, label }) => (
+          <div style={{ display: "flex", gap: "clamp(1.5rem, 5vw, 3.5rem)", flexWrap: "wrap", order: 1 }} className="lg:order-2">
+            {[{ value: "7", label: "Secteurs" }, { value: "15+", label: "Projets" }, { value: "100%", label: "Impact" }].map(({ value, label }) => (
               <div key={label}>
                 <p style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 900, color: ORANGE, margin: 0, lineHeight: 1 }}>{value}</p>
                 <p style={{ color: "#ffffff", fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "0.4rem", opacity: 0.8 }}>{label}</p>

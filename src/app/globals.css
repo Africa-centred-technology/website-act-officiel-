@@ -211,13 +211,7 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom-color: rgba(211, 84, 0, 0.12);
 }
 
-/* Hide on scroll down */
-body[data-scrolling-direction="down"][data-scrolling-started="true"] .navbar {
-  opacity: 0; pointer-events: none;
-}
-body[data-scrolling-direction="up"] .navbar {
-  opacity: 1; pointer-events: auto;
-}
+/* Navbar always visible, no scroll hide overrides */
 
 .navbar-flex {
   display: grid;
@@ -226,13 +220,16 @@ body[data-scrolling-direction="up"] .navbar {
   padding: 1.4rem 2.8rem;
 }
 
-/* Mobile: simple flex — burger right */
+/* Mobile: flex between logo and burger */
 @media (max-width: 1023px) {
   .navbar-flex {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 0.85rem 1.4rem;
+  }
+  .navbar-navigation {
+    display: none !important;
   }
 }
 
@@ -360,12 +357,7 @@ body[data-scrolling-direction="up"] .navbar {
   }
 }
 
-/* ── Mobile: hide navbar entirely, show only floating button ── */
-@media (max-width: 1023px) {
-  .navbar { display: none !important; }
-}
-
-/* ── Floating MENU button — mobile only ── */
+/* ── Floating MENU button — mobile only (if used separately) ── */
 .mobile-menu-btn {
   display: none; /* hidden on desktop */
 }

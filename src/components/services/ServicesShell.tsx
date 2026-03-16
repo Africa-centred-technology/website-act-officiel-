@@ -839,6 +839,15 @@ function ServicesJourney() {
   const navigating = useRef(false);
   const currentRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  /* Mobile detection */
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 900);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const { scrollYProgress } = useScroll({ target: containerRef });
 
@@ -871,6 +880,34 @@ function ServicesJourney() {
   }, []);
 
   const svc = SERVICES[current];
+
+  /* Mobile fallback: render all services as scrollable sections */
+  if (isMobile) {
+    return (
+      <div style={{ background: "#070E1C", padding: "5rem 1rem" }}>
+        {SERVICES.map((service, idx) => (
+          <div key={idx} style={{ marginBottom: "4rem", padding: "1.5rem", background: "rgba(255,255,255,0.03)", borderRadius: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: service.accent }} />
+              <span style={{ fontSize: "0.85rem", color: service.accent, letterSpacing: "0.2em", textTransform: "uppercase" }}>
+                Pôle {service.poleN} · {service.pole}
+              </span>
+            </div>
+            <h2 style={{ fontSize: "1.75rem", fontWeight: 900, textTransform: "uppercase", color: "#fff", marginBottom: "1rem", lineHeight: 1.1 }}>
+              {service.title}
+            </h2>
+            <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+              {service.intro}
+            </p>
+            <Link href="/services" style={{ display: "inline-block", padding: "0.75rem 1.5rem", background: service.accent, color: "#fff", textDecoration: "none", borderRadius: "0.5rem", fontSize: "0.9rem", textTransform: "uppercase", fontWeight: 600 }}>
+              En savoir plus
+            </Link>
+          </div>
+        ))}
+        <CTASection />
+      </div>
+    );
+  }
 
   return (
     <>

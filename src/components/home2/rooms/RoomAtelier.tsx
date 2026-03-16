@@ -176,7 +176,7 @@ function ServiceCard({ svc, index }: { svc: (typeof services)[0]; index: number 
       />
 
       {/* Contenu asymétrique */}
-      <div style={{
+      <div className="mobile-flex-col" style={{
         display: "flex", alignItems: "center",
         gap: "2rem",
         padding: "2.5rem 0 2.5rem 0",

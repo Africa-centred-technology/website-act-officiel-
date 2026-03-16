@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 import SpatialNav from "@/components/home2/SpatialNav";
@@ -130,12 +131,27 @@ export default function Home2Shell() {
   const currentRef = useRef(0);
   const navigating = useRef(false);
   const touchStartY = useRef(0);
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
-  /* Lock body scroll — each room fills 100vh */
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+  /* Mobile detection */
+  React.useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 900);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  /* Lock body scroll — each room fills 100vh (desktop only) */
+  useEffect(() => {
+    if (isMobile) {
+      document.body.style.overflow = "auto";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobile]);
 
   /* Core navigation — ref-tracked to avoid stale closures in listeners */
   const goTo = useCallback((idx: number) => {
@@ -194,6 +210,69 @@ export default function Home2Shell() {
   }, [step]);
 
   const { Component } = ROOMS[current];
+
+  // Prevent SSR hydration mismatch and flash
+  if (!mounted) {
+    return (
+      <div style={{ background: "#070E1C", minHeight: "100vh", width: "100vw" }} />
+    );
+  }
+
+  /* Mobile fallback: render all rooms as scrollable sections */
+  if (isMobile) {
+    return (
+      <div style={{ background: "#070E1C", minHeight: "100vh" }}>
+        <style>{`
+          @media (max-width: 900px) {
+            .room-content { 
+              overflow-x: hidden !important; 
+            }
+            .room-content [style*="gridTemplateColumns"] {
+              grid-template-columns: 1fr !important;
+              gap: 3rem !important;
+            }
+            .mobile-flex-col {
+              flex-direction: column !important;
+              gap: 3rem !important;
+              justify-content: center !important;
+              align-items: center !important;
+              text-align: center !important;
+              transform: none !important;
+            }
+            .mobile-txt-center {
+              text-align: center !important;
+              align-items: center !important;
+            }
+            .footer-container {
+              position: relative !important;
+              bottom: auto !important;
+              margin-top: 4rem !important;
+              padding: 0 1rem !important;
+            }
+            .room-content > div {
+              height: auto !important;
+              min-height: 100% !important;
+            }
+          }
+        `}</style>
+        {ROOMS.map((room, idx) => (
+          <div 
+            key={room.id} 
+            className="room-content"
+            style={{ 
+              minHeight: "100vh", 
+              padding: "2rem",
+              paddingTop: idx === 0 ? "8rem" : "5rem",
+              borderBottom: "1px solid rgba(255,255,255,0.05)",
+              overflowX: "hidden",
+            }}
+          >
+            <room.Component />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -256,11 +335,13 @@ export default function Home2Shell() {
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 1.2, ease: [0.04, 0.72, 0.08, 1.0] }}
           >
-            <img
-              src="/logo/logo_continent.png"
-              alt=""
-              className="w-[clamp(6rem,15vw,20rem)] h-auto filter brightness-90 contrast-110"
-            />
+            <Link href="/">
+              <img
+                src="/logo/logo_continent.png"
+                alt="ACT - Africa Centred Technology"
+                className="w-[clamp(6rem,15vw,20rem)] h-auto filter brightness-90 contrast-110 cursor-pointer"
+              />
+            </Link>
           </motion.div>
         )}
       </div>

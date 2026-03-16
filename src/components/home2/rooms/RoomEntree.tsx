@@ -16,6 +16,7 @@
  */
 
 import React, { useMemo } from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -279,7 +280,7 @@ export default function RoomEntree() {
         </motion.div>
 
         {/* ── Split gauche/droite : Logo ← | → AFRICA / CENTRED / TECHNOLOGY ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: "4rem", justifyContent: "space-between", width: "100%" }}>
+        <div className="mobile-flex-col" style={{ display: "flex", alignItems: "center", gap: "4rem", justifyContent: "space-between", width: "100%" }}>
 
           {/* Left — Logo Continent */}
           <motion.div
@@ -290,23 +291,26 @@ export default function RoomEntree() {
             exit={{ scale: 0.2, x: 400, y: 400, opacity: 0, rotate: 10 }}
             transition={{ duration: 1.8, delay: 0.1, ease: BURST }}
           >
-            <img
-              src="/logo/logo_continent.png"
-              alt="Africa Continent Logo"
-              style={{
-                width: "clamp(30rem, 65vw, 75rem)",
-                height: "auto",
-                filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
+            <Link href="/">
+              <img
+                src="/logo/logo_continent.png"
+                alt="ACT - Africa Centred Technology"
+                style={{
+                  width: "clamp(30rem, 65vw, 75rem)",
+                  height: "auto",
+                  filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
                 opacity: 0.99,
                 pointerEvents: "none",
                 userSelect: "none",
+                cursor: "pointer",
               }}
-            />
+              />
+            </Link>
           </motion.div>
 
 
           {/* Right — mots empilés, alignés à droite, perspective 3D */}
-          <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
+          <div className="mobile-txt-center" style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
             <WordChars text="AFRICA" delay={0.10} fx="rollIn" stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
             <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.5rem, 5vw, 7rem)" />
             <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
