@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -275,7 +276,8 @@ export default function Header() {
             }}
           >
             <Grain />
-            <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", position: "relative", zIndex: 1 }}>
+            <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", position: "relative", zIndex: 1, minHeight: "85vh" }}>
+
               <Link href="/" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: "1.8rem", color: "#fff", textDecoration: "none", fontWeight: 700, textTransform: "uppercase" }}>
                 Accueil
               </Link>
@@ -304,6 +306,23 @@ export default function Header() {
                     {item.label}
                   </Link>
                 ))}
+              </div>
+
+              {/* Logo in Menu Mobile - Centered Bottom & Large */}
+              <div style={{ marginTop: "auto", paddingTop: "4rem", display: "flex", justifyContent: "center", width: "100%" }}>
+                <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                  <Image 
+                    src="/logo/logo_continent.png" 
+                    alt="ACT Logo Continent" 
+                    width={260} 
+                    height={260}
+                    style={{ 
+                      objectFit: "contain",
+                      opacity: 0.9,
+                      filter: "brightness(1.1)"
+                    }}
+                  />
+                </Link>
               </div>
             </div>
           </motion.div>
