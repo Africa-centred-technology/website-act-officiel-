@@ -322,7 +322,7 @@ export default function RealisationsShell() {
           transition={{ delay: 1.05, duration: 0.7 }}
           style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", marginTop: "3rem" }}
         >
-          <p style={{ color: "#ffffff", fontSize: "clamp(1rem, 1.4vw, 1.28rem)", lineHeight: 1.7, maxWidth: "540px" }}>
+          <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.7, maxWidth: "600px" }}>
             Découvrez nos projets qui transforment les entreprises africaines et créent un impact
             durable sur le continent. Technologies de pointe, résultats mesurables.
           </p>
@@ -333,10 +333,10 @@ export default function RealisationsShell() {
               { value: "100%", label: "Satisfaction"     },
             ].map(({ value, label }) => (
               <div key={label} style={{ textAlign: "right" }}>
-                <p style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 900, color: ORANGE, margin: 0, lineHeight: 1 }}>
+                <p style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: ORANGE, margin: 0, lineHeight: 1 }}>
                   {value}
                 </p>
-                <p style={{ color: ORANGE, fontSize: "clamp(0.95rem, 1.3vw, 1.25rem)", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", marginTop: "0.4rem" }}>
+                <p style={{ color: ORANGE, fontSize: "clamp(1rem, 1.5vw, 1.5rem)", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", marginTop: "0.4rem" }}>
                   {label}
                 </p>
               </div>
@@ -365,49 +365,51 @@ export default function RealisationsShell() {
       {/* ══ FILTER BAR ═════════════════════════════════════════════════ */}
       <div style={{
         position: "sticky", top: 0, zIndex: 50,
-        background: "rgba(7,14,28,0.92)", backdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        padding: "1.2rem clamp(1.5rem, 6vw, 8rem)",
-        display: "flex", alignItems: "center",
-        gap: "clamp(0.5rem, 1.5vw, 1rem)", flexWrap: "wrap",
+        background: "rgba(7,14,28,0.95)", backdropFilter: "blur(20px)",
+        borderBottom: "1px solid rgba(211,84,0,0.2)",
+        padding: "2rem clamp(1.5rem, 6vw, 8rem)",
       }}>
-        <span style={{
-          color: "#ffffff", fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "clamp(0.85rem, 1.1vw, 1rem)", letterSpacing: "0.25em", textTransform: "uppercase", marginRight: "0.5rem",
-        }}>
-          Filtrer
-        </span>
-        {CATEGORIES.map((cat) => {
-          const isActive = activeCategory === cat;
-          const count = cat === "Tous" ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
-          return (
-            <motion.button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              whileTap={{ scale: 0.94 }}
-              style={{
-                background: isActive ? ORANGE : "rgba(255,255,255,0.04)",
-                border: isActive ? `1px solid ${ORANGE}` : "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "2rem",
-                padding: "0.5rem 1.3rem",
-                color: isActive ? "#fff" : "rgba(255,255,255,0.45)",
-                fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700,
-                fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em", textTransform: "uppercase",
-                cursor: "pointer", transition: "all 0.25s ease",
-                display: "flex", alignItems: "center", gap: "0.5rem", minHeight: 40,
-              }}
-            >
-              {cat}
-              <span style={{
-                background: isActive ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.08)",
-                borderRadius: "1rem", padding: "0.1rem 0.5rem",
-                fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)", lineHeight: 1.4, color: "#ffffff",
-              }}>
-                {count}
-              </span>
-            </motion.button>
-          );
-        })}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+          <span style={{
+            color: "#ffffff", fontFamily: "Futura, system-ui, sans-serif",
+            fontSize: "clamp(1.1rem, 1.6vw, 1.6rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700,
+          }}>
+            Filtrer par catégorie
+          </span>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+            {CATEGORIES.map((cat) => {
+              const isActive = activeCategory === cat;
+              const count = cat === "Tous" ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
+              return (
+                <motion.button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    background: isActive ? ORANGE : "transparent",
+                    border: `2px solid ${isActive ? ORANGE : "rgba(255,255,255,0.15)"}`,
+                    borderRadius: "0.5rem",
+                    padding: "0.75rem 1.5rem",
+                    color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
+                    fontFamily: "Futura, system-ui, sans-serif", fontWeight: 600,
+                    fontSize: "clamp(0.95rem, 1.3vw, 1.3rem)", letterSpacing: "0.08em", textTransform: "uppercase",
+                    cursor: "pointer", transition: "all 0.3s ease",
+                    display: "flex", alignItems: "center", gap: "0.75rem",
+                  }}
+                >
+                  {cat}
+                  <span style={{
+                    background: isActive ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.1)",
+                    borderRadius: "0.3rem", padding: "0.2rem 0.5rem",
+                    fontSize: "clamp(0.8rem, 1vw, 1rem)", fontWeight: 700, color: "#ffffff",
+                  }}>
+                    {count}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* ══ GRID ════════════════════════════════════════════════════════ */}
