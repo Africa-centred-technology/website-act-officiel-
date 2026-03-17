@@ -129,119 +129,123 @@ export default function Header() {
             )}
           </Link>
 
-          {/* Notre savoir-faire - Menu dropdown - hidden on mobile */}
-          <div
-            className="hidden md:block relative ml-auto"
-            onMouseEnter={() => setSavoirFaireOpen(true)}
-            onMouseLeave={() => setSavoirFaireOpen(false)}
-          >
-            <button
-              className={`navbar-navigation__link${isSavoirFaireActive ? " --is-active" : ""}`}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-              }}
+          {/* Navigation container - right aligned */}
+          <div className="hidden md:flex items-center" style={{ gap: "clamp(1.5rem, 2.5vw, 2.5rem)", marginLeft: "auto" }}>
+            
+            {/* Notre savoir-faire - Menu dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setSavoirFaireOpen(true)}
+              onMouseLeave={() => setSavoirFaireOpen(false)}
             >
-              Notre savoir-faire
-              <motion.svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                animate={{ rotate: savoirFaireOpen ? 180 : 0 }}
-                transition={{ duration: 0.25 }}
+              <button
+                className={`navbar-navigation__link${isSavoirFaireActive ? " --is-active" : ""}`}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
               >
-                <path d="M6 9l6 6 6-6" />
-              </motion.svg>
-              {isSavoirFaireActive && (
-                <motion.span layoutId="nav-dot"
-                  style={{
-                    position: "absolute", bottom: "-5px", left: "50%",
-                    translateX: "-50%",
-                    width: 3, height: 3, borderRadius: "50%", background: ORANGE,
-                    display: "block",
-                  }}
-                />
-              )}
-            </button>
+                Notre savoir-faire
+                <motion.svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  animate={{ rotate: savoirFaireOpen ? 180 : 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </motion.svg>
+                {isSavoirFaireActive && (
+                  <motion.span layoutId="nav-dot"
+                    style={{
+                      position: "absolute", bottom: "-5px", left: "50%",
+                      translateX: "-50%",
+                      width: 3, height: 3, borderRadius: "50%", background: ORANGE,
+                      display: "block",
+                    }}
+                  />
+                )}
+              </button>
 
-            <DropdownMenu items={SAVOIR_FAIRE_MENU} isOpen={savoirFaireOpen} />
-          </div>
+              <DropdownMenu items={SAVOIR_FAIRE_MENU} isOpen={savoirFaireOpen} />
+            </div>
 
-          {/* Nous découvrir - Menu dropdown */}
-          <div
-            className="hidden md:block relative"
-            onMouseEnter={() => setNousDecouvrirOpen(true)}
-            onMouseLeave={() => setNousDecouvrirOpen(false)}
-          >
-            <button
-              className={`navbar-navigation__link${isNousDecouvrirActive ? " --is-active" : ""}`}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-              }}
+            {/* Nous découvrir - Menu dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setNousDecouvrirOpen(true)}
+              onMouseLeave={() => setNousDecouvrirOpen(false)}
             >
-              Nous découvrir
-              <motion.svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                animate={{ rotate: nousDecouvrirOpen ? 180 : 0 }}
-                transition={{ duration: 0.25 }}
+              <button
+                className={`navbar-navigation__link${isNousDecouvrirActive ? " --is-active" : ""}`}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
               >
-                <path d="M6 9l6 6 6-6" />
-              </motion.svg>
-              {isNousDecouvrirActive && (
-                <motion.span layoutId="nav-dot"
-                  style={{
-                    position: "absolute", bottom: "-5px", left: "50%",
-                    translateX: "-50%",
-                    width: 3, height: 3, borderRadius: "50%", background: ORANGE,
-                    display: "block",
-                  }}
-                />
-              )}
-            </button>
+                Nous découvrir
+                <motion.svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  animate={{ rotate: nousDecouvrirOpen ? 180 : 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </motion.svg>
+                {isNousDecouvrirActive && (
+                  <motion.span layoutId="nav-dot"
+                    style={{
+                      position: "absolute", bottom: "-5px", left: "50%",
+                      translateX: "-50%",
+                      width: 3, height: 3, borderRadius: "50%", background: ORANGE,
+                      display: "block",
+                    }}
+                  />
+                )}
+              </button>
 
-            <DropdownMenu items={NOUS_DECOUVRIR_MENU} isOpen={nousDecouvrirOpen} />
+              <DropdownMenu items={NOUS_DECOUVRIR_MENU} isOpen={nousDecouvrirOpen} />
+            </div>
+
+            {/* Navigation links */}
+            <ul className="navbar-navigation flex items-center" style={{
+              gap: "clamp(1.5rem, 2.5vw, 2.5rem)",
+            }}>
+              {NAV_LINKS.map((link) => (
+                <li key={link.key} style={{ position: "relative" }}>
+                  <Link href={link.href}
+                    className={`navbar-navigation__link${isActive(link.key) ? " --is-active" : ""}`}>
+                    {link.label}
+                    {isActive(link.key) && (
+                      <motion.span layoutId="nav-dot"
+                        style={{
+                          position: "absolute", bottom: "-5px", left: "50%",
+                          translateX: "-50%",
+                          width: 3, height: 3, borderRadius: "50%", background: ORANGE,
+                          display: "block",
+                        }}
+                      />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-
-          {/* Navigation links - hidden on mobile */}
-          <ul className="navbar-navigation hidden md:flex items-center" style={{
-            gap: "clamp(1.2rem, 2.5vw, 2.5rem)",
-          }}>
-            {NAV_LINKS.map((link) => (
-              <li key={link.key} style={{ position: "relative" }}>
-                <Link href={link.href}
-                  className={`navbar-navigation__link${isActive(link.key) ? " --is-active" : ""}`}>
-                  {link.label}
-                  {isActive(link.key) && (
-                    <motion.span layoutId="nav-dot"
-                      style={{
-                        position: "absolute", bottom: "-5px", left: "50%",
-                        translateX: "-50%",
-                        width: 3, height: 3, borderRadius: "50%", background: ORANGE,
-                        display: "block",
-                      }}
-                    />
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
 
           {/* Mobile hamburger button */}
           <button
