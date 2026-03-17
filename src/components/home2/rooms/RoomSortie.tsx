@@ -12,8 +12,7 @@ import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
-
+import FooterRoomSortie from "@/components/layout/FooterRoomSortie";
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
@@ -22,91 +21,6 @@ const NAV_LINKS = [
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
-
-const SOCIALS = [
-  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
-  { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
-];
-
-function Footer() {
-  return (
-    <motion.div
-      aria-label="Footer"
-      className="relative md:absolute left-0 right-0 pointer-events-auto mt-16 md:mt-0 md:bottom-12"
-      style={{ zIndex: 10 }}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.1, duration: 0.7 }}
-    >
-      <div className="hidden md:block w-full h-px bg-[#D35400]/40 mb-12" />
-
-      <div className="text-left grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-12 px-4 md:px-[clamp(2.5rem,6vw,8rem)]">
-
-        {/* Col 1 — Contact */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <p className="uppercase font-black text-white/55 text-base tracking-[0.3em] mb-6">Contact</p>
-          <div className="flex flex-col items-center md:items-start gap-4">
-            <a href="mailto:contact@act.africa"
-              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-lg">
-              <Mail size={18} strokeWidth={1.6} />contact@act.africa
-            </a>
-            <a href="tel:+212694528498"
-              className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-lg">
-              <Phone size={18} strokeWidth={1.6} />+212 694-528498
-            </a>
-            <span className="flex items-center gap-3 text-white/40 text-lg">
-              <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
-            </span>
-          </div>
-        </div>
-
-        {/* Col 2 — Réseaux Sociaux */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <p className="uppercase font-black text-white/55 text-base tracking-[0.3em] mb-6">Réseaux Sociaux</p>
-          <div className="flex flex-col items-center md:items-start gap-4">
-            {SOCIALS.map(({ Icon, href, label }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors text-lg">
-                <Icon size={20} strokeWidth={1.5} />{label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Col 3 — Carrières */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left mt-8 md:mt-0">
-          <p className="uppercase font-black text-white/55 text-base tracking-[0.3em] mb-5">Carrières</p>
-          <p className="text-white/60 text-lg leading-relaxed mb-4 max-w-[280px]">
-            Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-          </p>
-          <Link href="/careers"
-            className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black text-base tracking-[0.1em]">
-            Postuler maintenant →
-          </Link>
-        </div>
-
-      </div>
-
-      <div className="w-full h-px bg-white/10 mb-6" />
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4 md:px-[clamp(2.5rem,6vw,8rem)] pb-8 md:pb-0">
-        <span className="text-white/40 uppercase text-center md:text-left text-sm tracking-[0.08em]">
-          © 2026 Africa Centred Technology. Tous droits réservés
-        </span>
-        <div className="flex items-center gap-6">
-          <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase text-sm">
-            Politique de Confidentialité
-          </Link>
-          <span className="text-white/25 hidden md:inline">/</span>
-          <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase text-sm">
-            CGU
-          </Link>
-        </div>
-      </div>
-
-    </motion.div>
-  );
-}
 
 /** Button drifts toward cursor, snaps back on leave */
 function Magnetic({ children }: { children: React.ReactNode }) {
@@ -196,7 +110,7 @@ export default function RoomSortie() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="room-container relative overflow-hidden flex flex-col items-center justify-center text-center room-pad w-full min-h-screen md:h-full"
+      className="room-container relative flex flex-col items-center justify-center text-center room-pad w-full min-h-screen md:h-full"
     >
 
 
@@ -328,8 +242,8 @@ export default function RoomSortie() {
           </motion.div>
 
           {/* Right — Bloc aligné à droite pour le reste du contenu */}
-          <div 
-            className="flex flex-col items-center md:items-end text-center md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)]" 
+          <div
+            className="flex flex-col items-center md:items-end text-center md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)]"
           >
             {/* Titre principal avec effet depth */}
             <motion.h1
@@ -379,7 +293,7 @@ export default function RoomSortie() {
 
 
       {/* ── Footer strip — navigation, contact, socials ── */}
-      <Footer />
+      <FooterRoomSortie />
     </div>
   );
 }

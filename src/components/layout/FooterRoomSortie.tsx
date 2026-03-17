@@ -5,36 +5,30 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
-const ORANGE = "#D35400";
-const BG = "#070E1C";
-
-const FOOTER_SOCIALS = [
+const SOCIALS = [
   { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
   { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
   { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
 ];
 
-interface FooterStripProps {
-  style?: React.CSSProperties;
-}
-
-export default function FooterStrip({ style }: FooterStripProps = {}) {
+export default function FooterRoomSortie() {
+  const ORANGE = "#D35400";
   return (
     <motion.div
       aria-label="Footer"
+      className="relative md:absolute pointer-events-auto mt-16 md:mt-0 md:bottom-28 w-full left-0 right-0"
+      style={{ zIndex: 10, padding: "clamp(2rem,3vw,3rem) clamp(1.5rem, 6vw, 8rem) clamp(2rem, 4vw, 3rem)", textAlign: "left" }}
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7 }}
-      style={{ background: BG, padding: "clamp(3rem,5vw,5rem) clamp(1.5rem, 6vw, 8rem) clamp(4rem, 7vw, 6rem)", ...style }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1.1, duration: 0.7 }}
     >
-      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
+      <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "2rem" }} />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)", marginBottom: "2.8rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)", marginBottom: "2rem" }}>
 
         {/* Col 1 — Contact */}
         <div>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "0.6rem", opacity: 0.9 }}>
             Contact
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -58,11 +52,11 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
 
         {/* Col 2 — Réseaux Sociaux */}
         <div>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "0.6rem", opacity: 0.9 }}>
             Réseaux Sociaux
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {FOOTER_SOCIALS.map(({ Icon, href, label }) => (
+            {SOCIALS.map(({ Icon, href, label }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
                 style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
@@ -75,7 +69,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
 
         {/* Col 3 — Carrières */}
         <div>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.2rem", opacity: 0.9 }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "0.6rem", opacity: 0.9 }}>
             Carrières
           </p>
           <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", lineHeight: 1.6, marginBottom: "0.9rem", maxWidth: "300px", opacity: 0.85 }}>
@@ -109,6 +103,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
           </Link>
         </div>
       </div>
+
     </motion.div>
   );
 }

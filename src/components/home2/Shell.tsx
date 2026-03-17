@@ -304,7 +304,6 @@ export default function Home2Shell() {
           left: 0,
           right: 0,
           bottom: 0,
-          overflow: "hidden",
         }}
       >
         <AnimatePresence mode="sync" custom={dir}>
@@ -318,7 +317,6 @@ export default function Home2Shell() {
             style={{
               position: "absolute",
               inset: 0,
-              overflow: "hidden",
             }}
           >
             <Component />
