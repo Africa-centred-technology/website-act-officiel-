@@ -352,7 +352,7 @@ export default function RoomPortail() {
                     )}
 
                     {/* Spacer entre cards et bouton */}
-                    <div className="h-16" />
+                    <div className={screenSize === 'mobile' ? "h-32" : "h-16"} />
 
                     {/* Bouton CTA centré */}
                     <div className="flex justify-center">
