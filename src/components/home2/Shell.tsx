@@ -221,7 +221,14 @@ export default function Home2Shell() {
   /* Mobile fallback: render all rooms as scrollable sections */
   if (isMobile) {
     return (
-      <div style={{ background: "#070E1C", minHeight: "100vh" }}>
+      <div style={{ background: "#070E1C", minHeight: "100vh", position: "relative" }}>
+        
+        {/* Animated Background layers for Mobile */}
+        <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0, pointerEvents: "none" }}>
+          <WaveTerrain />
+          <Grain />
+        </div>
+
         <style>{`
           @media (max-width: 900px) {
             .room-content { 
@@ -255,21 +262,26 @@ export default function Home2Shell() {
             }
           }
         `}</style>
-        {ROOMS.map((room, idx) => (
-          <div 
-            key={room.id} 
-            className="room-content"
-            style={{ 
-              minHeight: "100vh", 
-              padding: "2rem",
-              paddingTop: idx === 0 ? "8rem" : "5rem",
-              borderBottom: "1px solid rgba(255,255,255,0.05)",
-              overflowX: "hidden",
-            }}
-          >
-            <room.Component />
-          </div>
-        ))}
+        
+        {/* Rooms container above the background */}
+        <div style={{ position: "relative", zIndex: 1, pointerEvents: "none" }}>
+          {ROOMS.map((room, idx) => (
+            <div 
+              key={room.id} 
+              className="room-content pointer-events-auto"
+              style={{ 
+                minHeight: "100vh", 
+                padding: "2rem",
+                paddingTop: idx === 0 ? "8rem" : "5rem",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+                overflowX: "hidden",
+                position: "relative",
+              }}
+            >
+              <room.Component />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

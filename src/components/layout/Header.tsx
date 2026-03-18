@@ -130,7 +130,7 @@ export default function Header() {
           </Link>
 
           {/* Navigation container - right aligned */}
-          <div className="hidden md:flex items-center" style={{ gap: "clamp(1.5rem, 2.5vw, 2.5rem)", marginLeft: "auto" }}>
+          <div className="hidden lg:flex items-center" style={{ gap: "clamp(1.5rem, 2.5vw, 2.5rem)", marginLeft: "auto" }}>
             
             {/* Notre savoir-faire - Menu dropdown */}
             <div
@@ -250,7 +250,7 @@ export default function Header() {
           {/* Mobile hamburger button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden relative p-2 bg-transparent border-none cursor-pointer flex items-center justify-center text-white z-[301]"
+            className="lg:hidden relative p-2 bg-transparent border-none cursor-pointer flex items-center justify-center text-white z-[301]"
             aria-label="Menu"
           >
             {mobileMenuOpen ? <X size={32} color="#fff" /> : <Menu size={32} color="#fff" />}

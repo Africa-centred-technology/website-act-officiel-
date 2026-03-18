@@ -1,18 +1,48 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { blogPosts } from "@/lib/blog-data";
 
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
+
 export default function RoomBlog() {
+    const screenSize = useMediaQuery();
     return (
         <div className="h-full w-full overflow-hidden relative flex flex-col">
             {/* Spacer léger entre navbar et contenu */}
             <div className="h-12" />
 
             {/* Hero Section */}
-            <div className="w-full py-8 px-8 md:px-12 border-b border-white/10">
+            <div className="w-full border-b border-white/10" style={{
+                paddingTop: screenSize === 'mobile' ? '2rem' : '2rem',
+                paddingBottom: screenSize === 'mobile' ? '2rem' : '2rem',
+                paddingLeft: screenSize === 'mobile' ? '1.5rem' : screenSize === 'tablet' ? '2rem' : '3rem',
+                paddingRight: screenSize === 'mobile' ? '1.5rem' : screenSize === 'tablet' ? '2rem' : '3rem',
+            }}>
                 <div className="max-w-6xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
@@ -20,10 +50,16 @@ export default function RoomBlog() {
                         transition={{ duration: 0.8 }}
                         className="text-center"
                     >
-                        <h1 className="text-white text-6xl md:text-7xl font-black uppercase mb-3" style={{ fontFamily: "var(--font-display)" }}>
+                        <h1 className="text-white font-black uppercase mb-3" style={{
+                            fontFamily: "var(--font-display)",
+                            fontSize: screenSize === 'mobile' ? 'clamp(2.5rem, 10vw, 4rem)' : screenSize === 'tablet' ? 'clamp(3rem, 8vw, 5rem)' : 'clamp(3.5rem, 7vw, 7rem)',
+                        }}>
                              <span className="text-[#D35400]">BLOG</span>
                         </h1>
-                        <p className="text-white/60 text-lg md:text-xl" style={{ fontFamily: "var(--font-body)" }}>
+                        <p className="text-white/60" style={{
+                            fontFamily: "var(--font-body)",
+                            fontSize: screenSize === 'mobile' ? 'clamp(1rem, 3.5vw, 1.3rem)' : screenSize === 'tablet' ? 'clamp(1.1rem, 2.5vw, 1.5rem)' : 'clamp(1.2rem, 2vw, 1.5rem)',
+                        }}>
                             Actualités, Insights & Tendances Tech
                         </p>
                     </motion.div>
@@ -32,15 +68,20 @@ export default function RoomBlog() {
 
             {/* Content Section */}
             <div className="flex-1 overflow-hidden flex items-center justify-center">
-                <section className="px-8 md:px-12 py-6">
+                <section style={{
+                    paddingLeft: screenSize === 'mobile' ? '1.5rem' : screenSize === 'tablet' ? '2rem' : '3rem',
+                    paddingRight: screenSize === 'mobile' ? '1.5rem' : screenSize === 'tablet' ? '2rem' : '3rem',
+                    paddingTop: screenSize === 'mobile' ? '1.5rem' : '1.5rem',
+                    paddingBottom: screenSize === 'mobile' ? '1.5rem' : '1.5rem',
+                }}>
                     <div className="w-full max-w-6xl mx-auto">
-                        
 
-                    {/* Grid: 1 grand article à gauche + 2 petits articles à droite */}
+
+                    {/* Grid: 1 grand article à gauche + 2 petits articles à droite (desktop) ou colonne unique (mobile/tablette) */}
                     <div style={{
                         display: "grid",
-                        gridTemplateColumns: "2.5fr 1fr",
-                        gap: "2rem",
+                        gridTemplateColumns: screenSize === 'desktop' ? "2.5fr 1fr" : "1fr",
+                        gap: screenSize === 'mobile' ? '1.5rem' : '2rem',
                         marginBottom: "2rem",
                         alignItems: "start",
                     }}>
@@ -64,7 +105,7 @@ export default function RoomBlog() {
                                     <div style={{
                                         position: "relative",
                                         width: "100%",
-                                        height: "300px",
+                                        height: screenSize === 'mobile' ? '200px' : screenSize === 'tablet' ? '250px' : '300px',
                                         overflow: "hidden",
                                         marginBottom: "1rem",
                                         borderRadius: "0.5rem",
@@ -79,27 +120,36 @@ export default function RoomBlog() {
                                     {/* Meta */}
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="w-8 h-px bg-[#D35400]" />
-                                        <span className="text-[#D35400] text-xl font-bold uppercase tracking-widest">
+                                        <span className="text-[#D35400] font-bold uppercase tracking-widest" style={{
+                                            fontSize: screenSize === 'mobile' ? 'clamp(0.75rem, 3vw, 1rem)' : screenSize === 'tablet' ? 'clamp(0.85rem, 2.5vw, 1.1rem)' : 'clamp(0.9rem, 1.8vw, 1.25rem)',
+                                        }}>
                                             {blogPosts[0].category}
                                         </span>
                                     </div>
                                     {/* Titre */}
-                                    <h3 className="text-white text-2xl md:text-3xl font-bold leading-tight mb-3 group-hover:text-[#D35400] transition-colors line-clamp-2" style={{ fontFamily: "var(--font-display)" }}>
+                                    <h3 className="text-white font-bold leading-tight mb-3 group-hover:text-[#D35400] transition-colors line-clamp-2" style={{
+                                        fontFamily: "var(--font-display)",
+                                        fontSize: screenSize === 'mobile' ? 'clamp(1.3rem, 5vw, 1.8rem)' : screenSize === 'tablet' ? 'clamp(1.5rem, 4vw, 2rem)' : 'clamp(1.8rem, 3vw, 3rem)',
+                                    }}>
                                         {blogPosts[0].title}
                                     </h3>
                                     {/* Excerpt */}
-                                    <p className="text-white text-2xl leading-relaxed line-clamp-2" style={{ fontFamily: "var(--font-body)" }}>
+                                    <p className="text-white leading-relaxed line-clamp-2" style={{
+                                        fontFamily: "var(--font-body)",
+                                        fontSize: screenSize === 'mobile' ? 'clamp(1rem, 4vw, 1.3rem)' : screenSize === 'tablet' ? 'clamp(1.1rem, 3vw, 1.5rem)' : 'clamp(1.3rem, 2.5vw, 2rem)',
+                                    }}>
                                         {blogPosts[0].excerpt}
                                     </p>
                                 </Link>
                             </motion.div>
                         )}
 
-                        {/* 2 petits articles (droite) */}
+                        {/* 2 petits articles (droite sur desktop, dessous sur mobile/tablette) */}
                         <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "1.5rem",
+                            display: screenSize === 'desktop' ? "flex" : "grid",
+                            flexDirection: screenSize === 'desktop' ? "column" : undefined,
+                            gridTemplateColumns: screenSize === 'tablet' ? "1fr 1fr" : screenSize === 'mobile' ? "1fr" : undefined,
+                            gap: screenSize === 'mobile' ? '1.5rem' : '1.5rem',
                             width: "100%",
                             height: "auto",
                         }}>
@@ -120,7 +170,7 @@ export default function RoomBlog() {
                                         {/* Image */}
                                         <div style={{
                                             width: "100%",
-                                            height: "110px",
+                                            height: screenSize === 'mobile' ? '150px' : screenSize === 'tablet' ? '130px' : '110px',
                                             overflow: "hidden",
                                             borderRadius: "0.5rem",
                                         }}>
@@ -133,12 +183,17 @@ export default function RoomBlog() {
                                         {/* Meta */}
                                         <div className="flex items-center gap-2">
                                             <span className="w-6 h-px bg-[#D35400]" />
-                                            <span className="text-[#D35400] text-xl font-bold uppercase tracking-widest">
+                                            <span className="text-[#D35400] font-bold uppercase tracking-widest" style={{
+                                                fontSize: screenSize === 'mobile' ? 'clamp(0.7rem, 3vw, 0.95rem)' : screenSize === 'tablet' ? 'clamp(0.75rem, 2.5vw, 1rem)' : 'clamp(0.85rem, 1.8vw, 1.25rem)',
+                                            }}>
                                                 {post.category}
                                             </span>
                                         </div>
                                         {/* Titre */}
-                                        <h3 className="text-white text-xl md:text-2xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2" style={{ fontFamily: "var(--font-display)" }}>
+                                        <h3 className="text-white font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2" style={{
+                                            fontFamily: "var(--font-display)",
+                                            fontSize: screenSize === 'mobile' ? 'clamp(1.1rem, 4.5vw, 1.5rem)' : screenSize === 'tablet' ? 'clamp(1.2rem, 3.5vw, 1.7rem)' : 'clamp(1.25rem, 2.5vw, 2rem)',
+                                        }}>
                                             {post.title}
                                         </h3>
                                     </Link>

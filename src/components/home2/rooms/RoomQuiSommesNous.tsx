@@ -1,10 +1,34 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 
 const EASE = [0.04, 0.72, 0.08, 1.0] as const;
+
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
 
 const VALEURS = [
     {
@@ -41,6 +65,7 @@ export default function RoomQuiSommesNous() {
     const my = useMotionValue(0);
     const midX = useSpring(mx, { stiffness: 55, damping: 22 });
     const midY = useSpring(my, { stiffness: 55, damping: 22 });
+    const screenSize = useMediaQuery();
 
     const onMouseMove = (e: React.MouseEvent) => {
         mx.set((e.clientX / window.innerWidth - 0.5) * 2);
@@ -58,11 +83,11 @@ export default function RoomQuiSommesNous() {
                 style={{ x: midX, y: midY, zIndex: 2, width: "100%" }}
                 className="relative"
             >
-                {/* ── Layout deux colonnes ── */}
+                {/* ── Layout adaptatif selon la taille d'écran ── */}
                 <div style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "clamp(2rem, 5vw, 6rem)",
+                    gridTemplateColumns: screenSize === 'desktop' ? "1fr 1fr" : "1fr",
+                    gap: screenSize === 'mobile' ? "3rem" : "clamp(2rem, 5vw, 6rem)",
                     alignItems: "start",
                 }}>
 
@@ -95,12 +120,13 @@ export default function RoomQuiSommesNous() {
                             style={{
                                 fontFamily: "var(--font-display)",
                                 fontWeight: 900,
-                                fontSize: "clamp(3.5rem, 7vw, 9rem)",
+                                fontSize: screenSize === 'mobile' ? "clamp(2.5rem, 10vw, 4rem)" : screenSize === 'tablet' ? "clamp(3rem, 8vw, 5rem)" : "clamp(3.5rem, 7vw, 9rem)",
                                 lineHeight: 1.0,
                                 letterSpacing: "-0.02em",
                                 textTransform: "uppercase",
                                 color: "#fff",
                                 marginBottom: "clamp(1rem, 2vw, 1.8rem)",
+                                textAlign: "left",
                             }}
                         >
                             AFRICA<br />
@@ -115,11 +141,12 @@ export default function RoomQuiSommesNous() {
                             transition={{ duration: 0.7, delay: 0.30, ease: [...EASE] }}
                             style={{
                                 fontFamily: "var(--font-body)",
-                                fontSize: "clamp(1.35rem, 2vw, 1.75rem)",
+                                fontSize: screenSize === 'mobile' ? "clamp(1.1rem, 4vw, 1.4rem)" : "clamp(1.35rem, 2vw, 1.75rem)",
                                 lineHeight: 1.6,
                                 color: "#ffffff",
                                 maxWidth: "48rem",
                                 marginBottom: "clamp(1.2rem, 2.5vw, 2rem)",
+                                textAlign: "left",
                             }}
                         >
                             Chez ACT, nous sommes animés par une <strong style={{ color: "#fff" }}>raison d'être commune</strong> : libérer l'énergie humaine et technologique.
@@ -136,21 +163,27 @@ export default function RoomQuiSommesNous() {
                             transition={{ duration: 0.6, delay: 0.45, ease: [...EASE] }}
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(4, 1fr)",
-                                borderTop: "1px solid rgba(255,255,255,0.1)",
+                                gridTemplateColumns: screenSize === 'desktop' ? "repeat(4, 1fr)" : "repeat(2, 1fr)",
+                                gap: screenSize === 'desktop' ? "0" : "1rem",
+                                borderTop: screenSize === 'desktop' ? "1px solid rgba(255,255,255,0.1)" : "none",
                                 marginBottom: "clamp(1.5rem, 3vw, 2.5rem)",
                             }}
                         >
                             {STATS.map((s, i) => (
                                 <div key={i} style={{
-                                    padding: "1rem 0",
-                                    borderRight: i < 3 ? "1px solid rgba(255,255,255,0.1)" : "none",
-                                    paddingRight: "1rem",
-                                    paddingLeft: i > 0 ? "1rem" : 0,
+                                    paddingTop: screenSize === 'desktop' ? "1rem" : "1.5rem",
+                                    paddingBottom: screenSize === 'desktop' ? "1rem" : "1.5rem",
+                                    paddingRight: screenSize === 'desktop' ? "1rem" : "1.5rem",
+                                    paddingLeft: screenSize === 'desktop' ? (i > 0 ? "1rem" : "0") : "1.5rem",
+                                    borderRight: screenSize === 'desktop' && i < 3 ? "1px solid rgba(255,255,255,0.1)" : "none",
+                                    border: screenSize !== 'desktop' ? "1px solid rgba(255,255,255,0.1)" : "none",
+                                    borderRadius: screenSize !== 'desktop' ? "0.5rem" : "0",
+                                    backgroundColor: screenSize !== 'desktop' ? "rgba(255,255,255,0.02)" : "transparent",
+                                    textAlign: "left",
                                 }}>
                                     <div style={{
                                         fontFamily: "var(--font-display)",
-                                        fontSize: "clamp(2.2rem, 3.5vw, 3.5rem)",
+                                        fontSize: screenSize === 'mobile' ? "clamp(2rem, 6vw, 3rem)" : "clamp(2.2rem, 3.5vw, 3.5rem)",
                                         fontWeight: 900,
                                         color: "#D35400",
                                         lineHeight: 1,
@@ -158,7 +191,7 @@ export default function RoomQuiSommesNous() {
                                     }}>{s.n}</div>
                                     <div style={{
                                         fontFamily: "var(--font-display)",
-                                        fontSize: "1rem",
+                                        fontSize: screenSize === 'mobile' ? "0.85rem" : "1rem",
                                         letterSpacing: "0.2em",
                                         textTransform: "uppercase",
                                         color: "rgba(255,255,255,0.5)",
@@ -167,26 +200,28 @@ export default function RoomQuiSommesNous() {
                             ))}
                         </motion.div>
 
-                        {/* CTA */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.55, delay: 0.60, ease: [...EASE] }}
-                        >
-                            <Link
-                                href="/about"
-                                className="cta-btn"
-                                style={{ textDecoration: "none" }}
+                        {/* CTA - Desktop uniquement */}
+                        {screenSize === 'desktop' && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.55, delay: 0.60, ease: [...EASE] }}
                             >
-                                <span className="cta-btn__border" aria-hidden />
-                                <span className="cta-btn__blur" aria-hidden />
-                                <span className="cta-btn__background" aria-hidden />
-                                <span className="cta-btn__inner">
-                                    <span className="cta-btn__icon" aria-hidden />
-                                    <span className="cta-btn__text">Notre histoire</span>
-                                </span>
-                            </Link>
-                        </motion.div>
+                                <Link
+                                    href="/about"
+                                    className="cta-btn"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <span className="cta-btn__border" aria-hidden />
+                                    <span className="cta-btn__blur" aria-hidden />
+                                    <span className="cta-btn__background" aria-hidden />
+                                    <span className="cta-btn__inner">
+                                        <span className="cta-btn__icon" aria-hidden />
+                                        <span className="cta-btn__text">Notre histoire</span>
+                                    </span>
+                                </Link>
+                            </motion.div>
+                        )}
                     </div>
 
                     {/* ── COLONNE DROITE — Valeurs ── */}
@@ -211,7 +246,12 @@ export default function RoomQuiSommesNous() {
                         </motion.div>
 
                         {/* Grille valeurs */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+                        <div style={{
+                            display: screenSize === 'tablet' ? "grid" : "flex",
+                            gridTemplateColumns: screenSize === 'tablet' ? "repeat(2, 1fr)" : undefined,
+                            flexDirection: screenSize !== 'tablet' ? "column" : undefined,
+                            gap: screenSize === 'tablet' ? "1rem" : "0"
+                        }}>
                             {VALEURS.map((v, i) => (
                                 <motion.div
                                     key={v.titre}
@@ -220,16 +260,19 @@ export default function RoomQuiSommesNous() {
                                     transition={{ duration: 0.65, delay: 0.25 + i * 0.10, ease: [...EASE] }}
                                     style={{
                                         display: "flex",
-                                        gap: "1.2rem",
+                                        gap: screenSize === 'mobile' ? "1rem" : "1.2rem",
                                         alignItems: "flex-start",
-                                        padding: "1.1rem 0",
-                                        borderBottom: "1px solid rgba(255,255,255,0.08)",
+                                        padding: screenSize === 'tablet' ? "1.5rem" : screenSize === 'mobile' ? "1rem 0" : "1.1rem 0",
+                                        borderBottom: screenSize !== 'tablet' ? "1px solid rgba(255,255,255,0.08)" : "none",
+                                        border: screenSize === 'tablet' ? "1px solid rgba(255,255,255,0.08)" : "none",
+                                        borderRadius: screenSize === 'tablet' ? "0.5rem" : "0",
+                                        backgroundColor: screenSize === 'tablet' ? "rgba(255,255,255,0.02)" : "transparent",
                                     }}
                                 >
                                     {/* Icône */}
                                     <span style={{
                                         fontFamily: "var(--font-display)",
-                                        fontSize: "1.3rem",
+                                        fontSize: screenSize === 'mobile' ? "1.1rem" : "1.3rem",
                                         color: "#D35400",
                                         flexShrink: 0,
                                         marginTop: "0.1rem",
@@ -240,7 +283,7 @@ export default function RoomQuiSommesNous() {
                                     <div>
                                         <div style={{
                                             fontFamily: "var(--font-display)",
-                                            fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)",
+                                            fontSize: screenSize === 'mobile' ? "clamp(1.2rem, 4vw, 1.5rem)" : "clamp(1.4rem, 1.8vw, 1.8rem)",
                                             fontWeight: 700,
                                             textTransform: "uppercase",
                                             letterSpacing: "0.12em",
@@ -249,7 +292,7 @@ export default function RoomQuiSommesNous() {
                                         }}>{v.titre}</div>
                                         <div style={{
                                             fontFamily: "var(--font-body)",
-                                            fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                                            fontSize: screenSize === 'mobile' ? "clamp(1rem, 3.5vw, 1.3rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
                                             lineHeight: 1.6,
                                             color: "#ffffff",
                                         }}>{v.desc}</div>
@@ -273,10 +316,11 @@ export default function RoomQuiSommesNous() {
                             <div style={{ width: 2, alignSelf: "stretch", background: "linear-gradient(to bottom, #D35400, transparent)", flexShrink: 0 }} />
                             <p style={{
                                 fontFamily: "var(--font-body)",
-                                fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                                fontSize: screenSize === 'mobile' ? "clamp(1rem, 3.5vw, 1.3rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
                                 lineHeight: 1.7,
                                 color: "rgba(255,255,255,0.55)",
                                 fontStyle: "italic",
+                                textAlign: "left",
                             }}>
                                 « Contribuer à l'émergence d'un écosystème technologique fort,
                                 innovant et autonome — où l'Afrique devient productrice,
@@ -286,6 +330,34 @@ export default function RoomQuiSommesNous() {
                     </div>
 
                 </div>
+
+                {/* CTA - Mobile et Tablette uniquement (en bas) */}
+                {screenSize !== 'desktop' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.55, delay: 0.60, ease: [...EASE] }}
+                        style={{
+                            marginTop: "3rem",
+                            display: "flex",
+                            justifyContent: "flex-start"
+                        }}
+                    >
+                        <Link
+                            href="/about"
+                            className="cta-btn"
+                            style={{ textDecoration: "none" }}
+                        >
+                            <span className="cta-btn__border" aria-hidden />
+                            <span className="cta-btn__blur" aria-hidden />
+                            <span className="cta-btn__background" aria-hidden />
+                            <span className="cta-btn__inner">
+                                <span className="cta-btn__icon" aria-hidden />
+                                <span className="cta-btn__text">Notre histoire</span>
+                            </span>
+                        </Link>
+                    </motion.div>
+                )}
             </motion.div>
         </div>
     );
