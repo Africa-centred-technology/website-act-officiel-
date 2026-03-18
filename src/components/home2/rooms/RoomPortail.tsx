@@ -123,10 +123,10 @@ export default function RoomPortail() {
                     {/* Conteneur des titres avec des padding importants pour éviter les extrêmes */}
                     <div className="w-full px-8 md:px-12 lg:px-16 xl:px-20">
                         {/* En-tête avec flex-row, aligné en bas et bordure en dessous pour correspondre à l'image */}
-                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-16">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-16" style={{ gap: "1.5rem" }}>
                             {/* Eyebrow - aligné à gauche et plus bas visuellement */}
                             <motion.div
-                                className="flex items-center gap-2.5 mb-5"
+                                className="flex items-center gap-2.5 mb-9"
                                 style={{ marginLeft: "1rem", marginRight: "auto" }}
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
@@ -136,7 +136,7 @@ export default function RoomPortail() {
                                 <span className="diamond diamond--sm" />
                                 <span style={{
                                     fontFamily: "var(--font-display)",
-                                    fontSize: "0.75rem",
+                                    fontSize: screenSize === 'mobile' ? "0.65rem" : screenSize === 'tablet' ? "0.7rem" : "0.75rem",
                                     letterSpacing: "0.32em",
                                     textTransform: "uppercase",
                                     color: "rgba(255,255,255,0.4)",
@@ -155,7 +155,7 @@ export default function RoomPortail() {
                                 style={{
                                     fontFamily: "var(--font-display)",
                                     fontWeight: 900,
-                                    fontSize: "clamp(1.5rem, 3vw, 3.5rem)",
+                                    fontSize: screenSize === 'mobile' ? "clamp(1.2rem, 6vw, 2rem)" : screenSize === 'tablet' ? "clamp(1.4rem, 4vw, 2.5rem)" : "clamp(1.5rem, 3vw, 3.5rem)",
                                     lineHeight: 0.9,
                                     letterSpacing: "-0.02em",
                                     textTransform: "uppercase",
@@ -248,17 +248,17 @@ export default function RoomPortail() {
 
                                     if (absPos > 3) return null;
 
-                                    const rotationMap: Record<number, number> = { 0: 0, 1: 6, 2: -4.5, 3: 9 };
-                                    const translateXMap: Record<number, number> = { 0: 0, 1: 25, 2: -18, 3: 40 };
-                                    const translateYMap: Record<number, number> = { 0: 0, 1: 8, 2: 14, 3: 20 };
-                                    const scaleMap: Record<number, number> = { 0: 1, 1: 0.95, 2: 0.90, 3: 0.85 };
-                                    const opacityMap: Record<number, number> = { 0: 1, 1: 0.85, 2: 0.65, 3: 0.45 };
+                                    const rotationMap: Record<number, number> = { 0: 0, 1: 2, 2: -2, 3: 1 };
+                                    const translateXMap: Record<number, number> = { 0: 0, 1: 10, 2: -10, 3: 15 };
+                                    const translateYMap: Record<number, number> = { 0: 0, 1: 15, 2: 30, 3: 45 };
+                                    const scaleMap: Record<number, number> = { 0: 1, 1: 0.96, 2: 0.92, 3: 0.88 };
+                                    const opacityMap: Record<number, number> = { 0: 1, 1: 0.9, 2: 0.6, 3: 0.3 };
 
                                     const rot = (rotationMap[absPos] || 0) * (relPos < 0 ? -1 : 1);
                                     const tx = (translateXMap[absPos] || 0) * (relPos < 0 ? -1 : 1);
                                     const ty = translateYMap[absPos] || 0;
-                                    const sc = scaleMap[absPos] || 0.85;
-                                    const op = opacityMap[absPos] || 0.45;
+                                    const sc = scaleMap[absPos] || 0.88;
+                                    const op = opacityMap[absPos] || 0.3;
                                     const zIdx = 10 - absPos;
 
                                     return (
@@ -269,17 +269,17 @@ export default function RoomPortail() {
                                                 inset: isActive ? undefined : 0,
                                                 width: '100%',
                                                 height: '100%',
-                                                borderRadius: '1rem',
+                                                borderRadius: '1.2rem',
                                                 overflow: 'hidden',
                                                 transform: `rotate(${rot}deg) translate(${tx}px, ${ty}px) scale(${sc})`,
                                                 transformOrigin: 'center 85%',
                                                 zIndex: zIdx,
                                                 opacity: op,
-                                                boxShadow: isActive ? '0 32px 80px rgba(0,0,0,0.55)' : '0 16px 50px rgba(0,0,0,0.40)',
+                                                boxShadow: isActive ? '0 25px 60px rgba(0,0,0,0.6)' : '0 10px 30px rgba(0,0,0,0.3)',
                                                 pointerEvents: isActive ? 'auto' : 'none',
-                                                transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, box-shadow 0.5s ease',
+                                                transition: 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease',
                                             }}
-                                            className="flex flex-col bg-white/5 border border-white/10"
+                                            className="flex flex-col bg-[#0A1410] border border-white/10 shadow-2xl"
                                         >
                                             <div className="relative w-full flex-1 overflow-hidden">
                                                 <img src={project.image} alt={project.title} className="w-full h-full object-cover" />

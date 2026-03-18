@@ -128,26 +128,30 @@ export default function RoomManifeste() {
 
       {/* ── Header adaptatif selon la taille d'écran ── */}
       <motion.div
-        className="flex items-center gap-6 mb-12"
+        className="flex items-center gap-6"
         style={{
           x: midX,
           y: midY,
           flexDirection: screenSize === 'desktop' ? 'row' : 'column',
           alignItems: screenSize === 'desktop' ? 'center' : 'flex-start',
-          gap: screenSize === 'desktop' ? '1.5rem' : '1rem',
+          gap: screenSize === 'desktop' ? '1.5rem' : '0.5rem',
+          marginBottom: screenSize === 'mobile' ? '4rem' : screenSize === 'tablet' ? '2.5rem' : '3rem',
         }}
       >
         {/* Left: eyebrow + "04" */}
         <div style={{ flexShrink: 0 }}>
           <motion.div
-            className="flex items-center gap-3 mb-3"
+            className="flex items-center gap-3"
+            style={{
+              marginBottom: screenSize === 'desktop' ? '0.75rem' : '0.5rem'
+            }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <span className="diamond diamond--sm" />
             <span className="text-white/55 uppercase tracking-[0.3em]" style={{
-              fontSize: screenSize === 'mobile' ? "0.95rem" : "1.15rem",
+              fontSize: screenSize === 'mobile' ? "0.75rem" : screenSize === 'tablet' ? "0.85rem" : "1.15rem",
               fontFamily: "var(--font-display)"
             }}>
               Notre Manifeste
@@ -184,6 +188,7 @@ export default function RoomManifeste() {
                 color: wi === 0 ? "rgba(255,255,255,0.4)" : "#ffffff",
                 transformOrigin: "50% 100%",
                 fontFamily: "var(--font-display)",
+                marginBottom: wi === 0 ? (screenSize === 'mobile' ? "0.7rem" : "0.3rem") : 0,
               }}
               initial={{ opacity: 0, scale: 0.82, rotateX: 14, filter: "blur(10px)" }}
               animate={{ opacity: 1, scale: 1, rotateX: 0, filter: "blur(0px)" }}
@@ -210,7 +215,7 @@ export default function RoomManifeste() {
             <p
               className="font-bold uppercase"
               style={{
-                fontSize: screenSize === 'mobile' ? "clamp(1rem, 4.5vw, 1.5rem)" : screenSize === 'tablet' ? "clamp(1.2rem, 3vw, 1.8rem)" : "clamp(1.2rem, 2vw, 2.4rem)",
+                fontSize: screenSize === 'mobile' ? "12px" : screenSize === 'tablet' ? "clamp(1.2rem, 3vw, 1.8rem)" : "clamp(1.2rem, 2vw, 2.4rem)",
                 lineHeight: 1.45,
                 letterSpacing: "0.01em",
                 fontFamily: "var(--font-display)"

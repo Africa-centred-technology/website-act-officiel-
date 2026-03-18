@@ -103,7 +103,7 @@ export default function RoomQuiSommesNous() {
                             <span className="diamond diamond--sm" />
                             <span style={{
                                 fontFamily: "var(--font-display)",
-                                fontSize: "1.1rem",
+                                fontSize: screenSize === 'mobile' ? "0.8rem" : screenSize === 'tablet' ? "0.95rem" : "1.1rem",
                                 letterSpacing: "0.32em",
                                 textTransform: "uppercase",
                                 color: "rgba(255,255,255,0.28)",
@@ -120,7 +120,7 @@ export default function RoomQuiSommesNous() {
                             style={{
                                 fontFamily: "var(--font-display)",
                                 fontWeight: 900,
-                                fontSize: screenSize === 'mobile' ? "clamp(2.5rem, 10vw, 4rem)" : screenSize === 'tablet' ? "clamp(3rem, 8vw, 5rem)" : "clamp(3.5rem, 7vw, 9rem)",
+                                fontSize: screenSize === 'mobile' ? "clamp(1.8rem, 8vw, 3rem)" : screenSize === 'tablet' ? "clamp(2.2rem, 6vw, 4rem)" : "clamp(3.5rem, 7vw, 9rem)",
                                 lineHeight: 1.0,
                                 letterSpacing: "-0.02em",
                                 textTransform: "uppercase",
@@ -141,7 +141,7 @@ export default function RoomQuiSommesNous() {
                             transition={{ duration: 0.7, delay: 0.30, ease: [...EASE] }}
                             style={{
                                 fontFamily: "var(--font-body)",
-                                fontSize: screenSize === 'mobile' ? "clamp(1.1rem, 4vw, 1.4rem)" : "clamp(1.35rem, 2vw, 1.75rem)",
+                                fontSize: screenSize === 'mobile' ? "clamp(0.9rem, 3.5vw, 1.1rem)" : screenSize === 'tablet' ? "clamp(1rem, 2.5vw, 1.3rem)" : "clamp(1.35rem, 2vw, 1.75rem)",
                                 lineHeight: 1.6,
                                 color: "#ffffff",
                                 maxWidth: "48rem",
@@ -183,7 +183,7 @@ export default function RoomQuiSommesNous() {
                                 }}>
                                     <div style={{
                                         fontFamily: "var(--font-display)",
-                                        fontSize: screenSize === 'mobile' ? "clamp(2rem, 6vw, 3rem)" : "clamp(2.2rem, 3.5vw, 3.5rem)",
+                                        fontSize: screenSize === 'mobile' ? "clamp(1.5rem, 5vw, 2.2rem)" : screenSize === 'tablet' ? "clamp(1.8rem, 4vw, 2.8rem)" : "clamp(2.2rem, 3.5vw, 3.5rem)",
                                         fontWeight: 900,
                                         color: "#D35400",
                                         lineHeight: 1,
@@ -191,7 +191,7 @@ export default function RoomQuiSommesNous() {
                                     }}>{s.n}</div>
                                     <div style={{
                                         fontFamily: "var(--font-display)",
-                                        fontSize: screenSize === 'mobile' ? "0.85rem" : "1rem",
+                                        fontSize: screenSize === 'mobile' ? "0.7rem" : screenSize === 'tablet' ? "0.8rem" : "1rem",
                                         letterSpacing: "0.2em",
                                         textTransform: "uppercase",
                                         color: "rgba(255,255,255,0.5)",
@@ -236,7 +236,7 @@ export default function RoomQuiSommesNous() {
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
                             <span style={{
                                 fontFamily: "var(--font-display)",
-                                fontSize: "1.05rem",
+                                fontSize: screenSize === 'mobile' ? "0.8rem" : screenSize === 'tablet' ? "0.9rem" : "1.05rem",
                                 letterSpacing: "0.30em",
                                 textTransform: "uppercase",
                                 color: "rgba(255,255,255,0.4)",
@@ -272,7 +272,7 @@ export default function RoomQuiSommesNous() {
                                     {/* Icône */}
                                     <span style={{
                                         fontFamily: "var(--font-display)",
-                                        fontSize: screenSize === 'mobile' ? "1.1rem" : "1.3rem",
+                                        fontSize: screenSize === 'mobile' ? "0.95rem" : screenSize === 'tablet' ? "1.1rem" : "1.3rem",
                                         color: "#D35400",
                                         flexShrink: 0,
                                         marginTop: "0.1rem",
@@ -283,7 +283,7 @@ export default function RoomQuiSommesNous() {
                                     <div>
                                         <div style={{
                                             fontFamily: "var(--font-display)",
-                                            fontSize: screenSize === 'mobile' ? "clamp(1.2rem, 4vw, 1.5rem)" : "clamp(1.4rem, 1.8vw, 1.8rem)",
+                                            fontSize: screenSize === 'mobile' ? "clamp(0.95rem, 3.5vw, 1.2rem)" : screenSize === 'tablet' ? "clamp(1.1rem, 2.5vw, 1.4rem)" : "clamp(1.4rem, 1.8vw, 1.8rem)",
                                             fontWeight: 700,
                                             textTransform: "uppercase",
                                             letterSpacing: "0.12em",
@@ -292,7 +292,7 @@ export default function RoomQuiSommesNous() {
                                         }}>{v.titre}</div>
                                         <div style={{
                                             fontFamily: "var(--font-body)",
-                                            fontSize: screenSize === 'mobile' ? "clamp(1rem, 3.5vw, 1.3rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
+                                            fontSize: screenSize === 'mobile' ? "clamp(0.85rem, 3vw, 1rem)" : screenSize === 'tablet' ? "clamp(0.95rem, 2vw, 1.15rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
                                             lineHeight: 1.6,
                                             color: "#ffffff",
                                         }}>{v.desc}</div>
@@ -316,7 +316,7 @@ export default function RoomQuiSommesNous() {
                             <div style={{ width: 2, alignSelf: "stretch", background: "linear-gradient(to bottom, #D35400, transparent)", flexShrink: 0 }} />
                             <p style={{
                                 fontFamily: "var(--font-body)",
-                                fontSize: screenSize === 'mobile' ? "clamp(1rem, 3.5vw, 1.3rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
+                                fontSize: screenSize === 'mobile' ? "clamp(0.85rem, 3vw, 1rem)" : screenSize === 'tablet' ? "clamp(0.95rem, 2vw, 1.15rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
                                 lineHeight: 1.7,
                                 color: "rgba(255,255,255,0.55)",
                                 fontStyle: "italic",
@@ -340,7 +340,7 @@ export default function RoomQuiSommesNous() {
                         style={{
                             marginTop: "3rem",
                             display: "flex",
-                            justifyContent: "flex-start"
+                            justifyContent: "center" // Centré sur mobile et tablette
                         }}
                     >
                         <Link

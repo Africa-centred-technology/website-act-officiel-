@@ -8,9 +8,33 @@
  * 3-layer parallax gives the workshop its spatial volume.
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
+
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
 
 const services = [
   {
@@ -141,10 +165,119 @@ function DescBlock({ svc, hovered, width }: { svc: (typeof services)[0]; hovered
   );
 }
 
-function ServiceCard({ svc, index }: { svc: (typeof services)[0]; index: number }) {
+function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; index: number; screenSize: 'mobile' | 'tablet' | 'desktop' }) {
   const [hovered, setHovered] = useState(false);
   const layout = LAYOUT[index];
 
+  // Version simplifiée pour mobile et tablette
+  if (screenSize !== 'desktop') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.15 }}
+        style={{
+          padding: screenSize === 'mobile' ? '1.5rem 0' : '2rem 0',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+        }}
+      >
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: screenSize === 'mobile' ? '1rem' : '1.5rem',
+          padding: '0 3rem', // Increased uniform padding for perfect alignment
+        }}>
+          {/* Numéro + Tag */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{
+              fontSize: screenSize === 'mobile' ? '3rem' : '3.5rem',
+              fontWeight: 900,
+              color: 'rgba(211,84,0,0.3)',
+              lineHeight: 1,
+              fontFamily: 'var(--font-display)',
+              paddingLeft: '0.2rem',
+            }}>
+              {svc.n}
+            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span className="diamond diamond--sm" />
+              <span style={{
+                color: '#D35400',
+                fontSize: screenSize === 'mobile' ? '0.7rem' : '0.8rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                fontFamily: 'var(--font-display)',
+              }}>
+                {svc.tag}
+              </span>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div style={{
+            width: '100%',
+            height: screenSize === 'mobile' ? '180px' : '220px',
+            borderRadius: '0.5rem',
+            overflow: 'hidden',
+            border: '1px solid rgba(255,255,255,0.1)',
+          }}>
+            <img
+              src={svc.img}
+              alt={svc.title}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'grayscale(60%) brightness(0.7)',
+              }}
+            />
+          </div>
+
+          {/* Titre */}
+          <h3 style={{
+            fontWeight: 900,
+            textTransform: 'uppercase',
+            color: '#fff',
+            lineHeight: 1.1,
+            fontSize: screenSize === 'mobile' ? 'clamp(1.2rem, 5vw, 1.8rem)' : 'clamp(1.5rem, 3.5vw, 2.2rem)',
+            fontFamily: 'var(--font-display)',
+          }}>
+            {svc.title.replace(/\n/g, ' ')}
+          </h3>
+
+          {/* Description */}
+          <p style={{
+            fontSize: screenSize === 'mobile' ? 'clamp(0.9rem, 3.5vw, 1.1rem)' : 'clamp(1rem, 2.5vw, 1.3rem)',
+            lineHeight: 1.6,
+            color: 'rgba(255,255,255,0.65)',
+            fontFamily: 'var(--font-body)',
+          }}>
+            {svc.desc}
+          </p>
+
+          {/* Lien */}
+          <Link href={svc.href} style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            color: '#D35400',
+            fontSize: screenSize === 'mobile' ? '0.75rem' : '0.85rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            fontWeight: 600,
+            marginTop: '0.5rem',
+          }}>
+            <span style={{ width: '1.5rem', height: '1px', background: 'currentColor', display: 'block' }} />
+            Découvrir
+          </Link>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Version desktop (originale)
   return (
     <motion.div
       initial={{ opacity: 0, x: -40 }}
@@ -228,6 +361,7 @@ function ServiceCard({ svc, index }: { svc: (typeof services)[0]; index: number 
 }
 
 export default function RoomAtelier() {
+  const screenSize = useMediaQuery();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const midX = useSpring(mx, { stiffness: 62, damping: 22 });
@@ -242,7 +376,12 @@ export default function RoomAtelier() {
     <div
       onMouseMove={onMouseMove}
       className="relative flex flex-col overflow-hidden room-pad"
-      style={{ width: "100%", height: "100%" }}
+      style={{ 
+        width: "100%", 
+        height: "100%",
+        paddingLeft: screenSize === 'mobile' ? '2.5rem' : undefined,
+        paddingRight: screenSize === 'mobile' ? '2.5rem' : undefined
+      }}
     >
 
 
@@ -253,7 +392,7 @@ export default function RoomAtelier() {
         style={{ x: midX, y: midY, fontFamily: "var(--font-display)" }}
       >
         {/* Left: eyebrow + label */}
-        <div style={{ flexShrink: 0, paddingBottom: "1rem" }}>
+        <div style={{ flexShrink: 0, paddingBottom: screenSize === 'mobile' ? '0.5rem' : '1rem' }}>
           <motion.div
             className="flex items-center gap-3 mb-2"
             initial={{ opacity: 0, x: -16 }}
@@ -261,14 +400,28 @@ export default function RoomAtelier() {
             transition={{ duration: 0.5, delay: 0.04 }}
           >
             <span className="diamond diamond--sm" />
-            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 500 }}>
+            <span style={{
+              color: "rgba(255,255,255,0.35)",
+              fontSize: screenSize === 'mobile' ? '0.65rem' : screenSize === 'tablet' ? '0.75rem' : '0.85rem',
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              fontWeight: 500
+            }}>
               Audit & Ingénierie
             </span>
           </motion.div>
         </div>
 
         {/* Right: "Ce que nous proposons" chars */}
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", alignItems: "baseline", flex: 1, textAlign: "right", gap: "0.1em" }}>
+        <div style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: screenSize === 'desktop' ? 'flex-end' : 'flex-start',
+          alignItems: "baseline",
+          flex: 1,
+          textAlign: screenSize === 'desktop' ? 'right' : 'left',
+          gap: "0.1em"
+        }}>
           {"Ce que nous proposons".split("").map((ch, ci) => {
             const isOrange = ci >= 12;
             return (
@@ -277,7 +430,11 @@ export default function RoomAtelier() {
                 className="font-black uppercase"
                 style={{
                   display: "inline-block",
-                  fontSize: "clamp(2rem, 4.5vw, 5.5rem)",
+                  fontSize: screenSize === 'mobile'
+                    ? "clamp(1.5rem, 6vw, 2.5rem)"
+                    : screenSize === 'tablet'
+                      ? "clamp(2rem, 5vw, 3.5rem)"
+                      : "clamp(2rem, 4.5vw, 5.5rem)",
                   lineHeight: 0.9,
                   color: isOrange ? "#D35400" : "#ffffff",
                   letterSpacing: "-0.04em",
@@ -303,7 +460,7 @@ export default function RoomAtelier() {
       {/* ── 3 bandes verticales ── */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
         {services.map((svc, i) => (
-          <ServiceCard key={svc.n} svc={svc} index={i} />
+          <ServiceCard key={svc.n} svc={svc} index={i} screenSize={screenSize} />
         ))}
       </div>
     </div>
