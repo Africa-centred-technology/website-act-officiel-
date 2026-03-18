@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
@@ -9,7 +9,32 @@ import { useSearchParams } from "next/navigation";
 import { blogPosts, categories } from "@/lib/blog-data";
 import FooterStrip from "@/components/layout/FooterStrip";
 
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
+
 export default function BlogArticlesShell() {
+  const screenSize = useMediaQuery();
   const searchParams = useSearchParams();
   const initialCat = searchParams.get("cat") || "all";
 
@@ -19,6 +44,7 @@ export default function BlogArticlesShell() {
   const postsIncrement = 6;
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true });
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filtered = blogPosts.filter((p) => {
     const cat = p.category
@@ -113,7 +139,7 @@ export default function BlogArticlesShell() {
 
             <h1
               style={{
-                fontSize: "clamp(5rem, 10vw, 9rem)",
+                fontSize: screenSize === 'mobile' ? "clamp(3rem, 10vw, 5rem)" : screenSize === 'tablet' ? "clamp(4rem, 8vw, 7rem)" : "clamp(5rem, 10vw, 9rem)",
                 fontFamily: "var(--font-display)",
                 lineHeight: 0.9,
                 color: "#fff",
@@ -134,11 +160,11 @@ export default function BlogArticlesShell() {
 
             <p
               style={{
-                fontSize: "2rem",
+                fontSize: screenSize === 'mobile' ? '1.4rem' : screenSize === 'tablet' ? '1.7rem' : '2rem',
                 color: "rgba(255,255,255,0.45)",
                 lineHeight: 1.6,
                 maxWidth: "50rem",
-                marginBottom: "4rem",
+                marginBottom: screenSize === 'mobile' ? '3rem' : '4rem',
               }}
             >
               {activeCategory === "all"
@@ -243,75 +269,172 @@ export default function BlogArticlesShell() {
               </div>
             </div>
 
-            {/* Category Tabs */}
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "3.5rem",
-                paddingBottom: "1.8rem",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-              }}
-            >
-              {categories.map((cat) => {
-                const isActive = activeCategory === cat.value;
-                const count = getCategoryCount(cat.value);
-                return (
-                  <button
-                    key={cat.value}
-                    onClick={() => handleCategoryChange(cat.value)}
-                    style={{
-                      position: "relative",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1rem",
-                      background: "none",
-                      border: "none",
-                      color: isActive ? "#e85c1a" : "rgba(255,255,255,0.45)",
-                      fontFamily: "var(--font-body)",
-                      fontSize: "2rem",
-                      fontWeight: isActive ? 600 : 400,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      padding: 0,
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.7)";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.45)";
-                    }}
+            {/* Category Tabs / Filters */}
+            {screenSize === 'mobile' ? (
+              <div style={{ position: "relative", marginBottom: "1rem", zIndex: 10 }}>
+                <button
+                  onClick={() => setShowMobileFilters(!showMobileFilters)}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "1.4rem",
+                    background: "rgba(255,255,255,0.02)",
+                    border: showMobileFilters ? "1px solid #e85c1a" : "1px solid rgba(255,255,255,0.08)",
+                    borderRadius: "0.8rem",
+                    color: "#fff",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "1.5rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <span style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                    <span style={{ color: "rgba(255,255,255,0.5)", fontWeight: 400 }}>Filtre :</span> 
+                    <span style={{ color: "#e85c1a" }}>{activeCatLabel}</span>
+                  </span>
+                  <motion.svg 
+                    width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e85c1a" strokeWidth="2.5"
+                    animate={{ rotate: showMobileFilters ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    {cat.label}
-                    <span
+                    <path d="M6 9l6 6 6-6" />
+                  </motion.svg>
+                </button>
+
+                {/* Dropdown list */}
+                <motion.div
+                  initial={false}
+                  animate={{ height: showMobileFilters ? "auto" : 0, opacity: showMobileFilters ? 1 : 0 }}
+                  style={{
+                    overflow: "hidden",
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    right: 0,
+                    background: "#0d1b2e",
+                    borderBottom: showMobileFilters ? "1px solid rgba(255,255,255,0.08)" : "none",
+                    borderLeft: showMobileFilters ? "1px solid rgba(255,255,255,0.08)" : "none",
+                    borderRight: showMobileFilters ? "1px solid rgba(255,255,255,0.08)" : "none",
+                    borderRadius: "0 0 0.8rem 0.8rem",
+                    marginTop: "-0.2rem",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "column", padding: "1rem" }}>
+                    {categories.map((cat) => {
+                      const isActive = activeCategory === cat.value;
+                      const count = getCategoryCount(cat.value);
+                      return (
+                        <button
+                          key={cat.value}
+                          onClick={() => {
+                            handleCategoryChange(cat.value);
+                            setShowMobileFilters(false);
+                          }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            padding: "1.2rem",
+                            background: isActive ? "rgba(232,92,26,0.1)" : "transparent",
+                            border: "none",
+                            borderRadius: "0.4rem",
+                            color: isActive ? "#e85c1a" : "#fff",
+                            fontFamily: "var(--font-body)",
+                            fontSize: "1.4rem",
+                            textAlign: "left",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {cat.label}
+                          <span style={{ 
+                            background: isActive ? "rgba(232,92,26,0.2)" : "rgba(255,255,255,0.05)", 
+                            padding: "0.2rem 0.6rem", 
+                            borderRadius: "1rem", 
+                            fontSize: "1.1rem",
+                            color: isActive ? "#e85c1a" : "rgba(255,255,255,0.5)",
+                          }}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: '3.5rem',
+                  paddingBottom: '1.8rem',
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                }}
+              >
+                {categories.map((cat) => {
+                  const isActive = activeCategory === cat.value;
+                  const count = getCategoryCount(cat.value);
+                  return (
+                    <button
+                      key={cat.value}
+                      onClick={() => handleCategoryChange(cat.value)}
                       style={{
-                        padding: "0.25rem 0.8rem",
-                        background: isActive ? "rgba(232,92,26,0.15)" : "rgba(255,255,255,0.05)",
-                        color: isActive ? "#e85c1a" : "rgba(255,255,255,0.3)",
-                        borderRadius: "1.5rem",
-                        fontSize: "1.6rem",
-                        fontWeight: 600,
+                        position: "relative",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: '1rem',
+                        background: "none",
+                        border: "none",
+                        color: isActive ? "#e85c1a" : "rgba(255,255,255,0.45)",
+                        fontFamily: "var(--font-body)",
+                        fontSize: screenSize === 'tablet' ? '1.7rem' : '2rem',
+                        fontWeight: isActive ? 600 : 400,
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        padding: 0,
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.7)";
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.45)";
                       }}
                     >
-                      {count}
-                    </span>
-                    {/* Active Line under the tab */}
-                    {isActive && (
-                      <div
+                      {cat.label}
+                      <span
                         style={{
-                          position: "absolute",
-                          bottom: "-1.6rem",
-                          left: 0,
-                          right: 0,
-                          height: "2px",
-                          background: "#e85c1a",
+                          padding: "0.25rem 0.8rem",
+                          background: isActive ? "rgba(232,92,26,0.15)" : "rgba(255,255,255,0.05)",
+                          color: isActive ? "#e85c1a" : "rgba(255,255,255,0.3)",
+                          borderRadius: "1.5rem",
+                          fontSize: "1.6rem",
+                          fontWeight: 600,
                         }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                      >
+                        {count}
+                      </span>
+                      {/* Active Line under the tab */}
+                      {isActive && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "-1.6rem",
+                            left: 0,
+                            right: 0,
+                            height: "2px",
+                            background: "#e85c1a",
+                          }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Found Articles Count */}
             <div

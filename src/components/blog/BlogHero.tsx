@@ -28,6 +28,30 @@ export const FONT_BODY    = "var(--font-body)";
 
 const AFRICA_PATH = "M50 5C35 5 22 12 18 22c-4 10-2 20-6 28-4 8-7 14-4 24 3 10 12 16 18 26 6 10 10 18 18 23 8 5 16 2 22-5 6-7 8-16 14-24 6-8 12-14 12-24 0-10-6-18-8-26-2-8 0-18-6-26C72 10 62 5 50 5Z";
 
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
+
 /* ═══════════════════════════════════════════════ */
 /* ═══ Custom Cursor Component ═══ */
 /* ═══════════════════════════════════════════════ */
@@ -89,6 +113,7 @@ function CustomCursor() {
 /* ═══ BlogHero ═══ */
 /* ═══════════════════════════════════════════════ */
 export default function BlogHero() {
+  const screenSize = useMediaQuery();
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
   const [activeTopic, setActiveTopic] = useState(0);
@@ -114,23 +139,6 @@ export default function BlogHero() {
 
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-        @media (max-width: 992px) {
-          .hero-grid { 
-            grid-template-columns: 1fr !important; 
-            min-height: auto !important; 
-          }
-          .hero-left { 
-            border-right: none !important; 
-            border-bottom: 1px solid ${V.border}; 
-            padding: 6rem 2rem 4rem 2rem !important; 
-          }
-          .hero-right { 
-            padding: 4rem 2rem !important; 
-          }
-          .title-display {
-            font-size: clamp(50px, 12vw, 90px) !important;
-          }
-        }
       `}</style>
 
       {/* ── HERO SECTION ── */}
@@ -139,8 +147,8 @@ export default function BlogHero() {
         className="hero-grid"
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          minHeight: "calc(100vh - 6rem)",
+          gridTemplateColumns: screenSize === 'desktop' ? "1fr 1fr" : "1fr",
+          minHeight: screenSize === 'mobile' ? "auto" : "calc(100vh - 6rem)",
         }}
       >
         {/* ═══ LEFT: Giant title + stats ═══ */}
@@ -148,11 +156,12 @@ export default function BlogHero() {
           className="hero-left"
           style={{
             position: "relative",
-            borderRight: `1px solid ${V.border}`,
+            borderRight: screenSize === 'desktop' ? `1px solid ${V.border}` : "none",
+            borderBottom: screenSize !== 'desktop' ? `1px solid ${V.border}` : "none",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "8rem 6.4rem",
+            padding: screenSize === 'mobile' ? "6rem 2rem 4rem 2rem" : screenSize === 'tablet' ? "6rem 3rem 4rem 3rem" : "8rem 6.4rem",
             overflow: "hidden",
           }}
         >
@@ -181,7 +190,7 @@ export default function BlogHero() {
             className="title-display"
             style={{
               fontFamily: FONT_DISPLAY,
-              fontSize: "clamp(70px, 11vw, 140px)",
+              fontSize: screenSize === 'mobile' ? "clamp(50px, 12vw, 90px)" : screenSize === 'tablet' ? "clamp(60px, 10vw, 110px)" : "clamp(70px, 11vw, 140px)",
               lineHeight: 0.9,
               letterSpacing: "-0.01em",
               color: V.cream,
@@ -261,15 +270,15 @@ export default function BlogHero() {
             </span>
           </motion.div>
 
-          {/* Stats brick */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.15, ease }}
+            className="stats-container"
             style={{
               display: "flex",
               gap: 0,
-              marginTop: "52px",
+              marginTop: screenSize === 'mobile' ? "2rem" : "clamp(2rem, 5vw, 52px)",
               position: "relative",
               zIndex: 1,
               border: `1px solid ${V.border}`,
@@ -277,6 +286,7 @@ export default function BlogHero() {
               overflow: "hidden",
               background: V.surface,
               width: "fit-content",
+              flexWrap: screenSize === 'mobile' ? 'wrap' : 'nowrap',
             }}
           >
             {[
@@ -286,16 +296,19 @@ export default function BlogHero() {
             ].map((stat, i) => (
               <div
                 key={stat.label}
+                className="stat-item"
                 style={{
-                  padding: "20px 32px",
+                  padding: screenSize === 'mobile' ? "15px 20px" : "20px 32px",
                   display: "flex",
                   flexDirection: "column",
                   gap: "4px",
                   position: "relative",
+                  width: screenSize === 'mobile' && i < 2 ? 'calc(50% - 0.5px)' : 'auto',
                 }}
               >
                 {i > 0 && (
                   <div
+                    className="stat-divider"
                     style={{
                       position: "absolute",
                       left: 0,
@@ -306,12 +319,12 @@ export default function BlogHero() {
                     }}
                   />
                 )}
-                <span style={{ fontFamily: FONT_DISPLAY, fontSize: "38px", color: V.orange, lineHeight: 1 }}>
+                <span style={{ fontFamily: FONT_DISPLAY, fontSize: "clamp(28px, 4vw, 38px)", color: V.orange, lineHeight: 1 }}>
                   {stat.num}
                 </span>
                 <span
                   style={{
-                    fontSize: "15px",
+                    fontSize: "clamp(12px, 2vw, 15px)",
                     fontWeight: 500,
                     letterSpacing: "0.12em",
                     textTransform: "uppercase" as const,
@@ -333,8 +346,8 @@ export default function BlogHero() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "8rem 7.2rem",
-            gap: "32px",
+            padding: screenSize === 'mobile' ? "4rem 2rem" : screenSize === 'tablet' ? "6rem 3rem" : "8rem 7.2rem",
+            gap: screenSize === 'mobile' ? "24px" : "32px",
           }}
         >
           {/* Breadcrumb */}
@@ -345,19 +358,20 @@ export default function BlogHero() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 0,
+              flexWrap: "wrap",
+              gap: "4px",
               fontSize: "13px",
               color: V.dim,
               letterSpacing: "0.08em",
               fontFamily: FONT_BODY,
             }}
           >
-            <span style={{ padding: "0 6px", color: V.cream, fontWeight: 600 }}>Accueil</span>
+            <span style={{ color: V.cream, fontWeight: 600 }}>Accueil</span>
             <span style={{ color: V.dim }}> › </span>
-            <span style={{ padding: "0 6px" }}>Blog</span>
+            <span>Blog</span>
             <span style={{ color: V.dim }}> › </span>
-            <span style={{ padding: "0 6px", color: hasUserSelected && topCategories[activeTopic]?.label ? V.orange : V.dim }}>
-              {hasUserSelected && topCategories[activeTopic]?.label ? topCategories[activeTopic].label : "Toutes les rubriques"}
+            <span style={{ color: hasUserSelected && topCategories[activeTopic]?.label ? V.orange : V.dim }}>
+               {hasUserSelected && topCategories[activeTopic]?.label ? topCategories[activeTopic].label : "Toutes les rubriques"}
             </span>
           </motion.nav>
 
@@ -370,7 +384,7 @@ export default function BlogHero() {
             transition={{ duration: 0.7, delay: 0.25, ease }}
             style={{
               fontFamily: FONT_SERIF,
-              fontSize: "clamp(28px, 3vw, 44px)",
+              fontSize: screenSize === 'mobile' ? "clamp(22px, 5vw, 32px)" : screenSize === 'tablet' ? "clamp(26px, 4vw, 38px)" : "clamp(28px, 3vw, 44px)",
               lineHeight: 1.2,
               color: V.cream,
               fontWeight: 400,
@@ -389,7 +403,7 @@ export default function BlogHero() {
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.35, ease }}
             style={{
-              fontSize: "16px",
+              fontSize: screenSize === 'mobile' ? "14px" : "16px",
               lineHeight: 1.75,
               color: V.muted,
               maxWidth: "500px",
@@ -413,7 +427,7 @@ export default function BlogHero() {
           >
             <div
               style={{
-                fontSize: "15px",
+                fontSize: screenSize === 'mobile' ? "12px" : "15px",
                 fontWeight: 600,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase" as const,
@@ -424,7 +438,7 @@ export default function BlogHero() {
             >
               Explorer par thème
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: screenSize === 'mobile' ? "6px" : "8px" }}>
               {topCategories.map((cat, i) => (
                 <button
                   key={cat.value}
@@ -435,12 +449,12 @@ export default function BlogHero() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "7px",
-                    padding: "9px 16px",
+                    gap: screenSize === 'mobile' ? "5px" : "7px",
+                    padding: screenSize === 'mobile' ? "7px 12px" : "9px 16px",
                     borderRadius: "8px",
                     border: activeTopic === i ? `1px solid ${V.orange}` : `1px solid ${V.border}`,
                     background: activeTopic === i ? V.orangeLt : V.surface,
-                    fontSize: "14px",
+                    fontSize: screenSize === 'mobile' ? "12px" : "14px",
                     fontWeight: 500,
                     color: activeTopic === i ? V.cream : V.muted,
                     cursor: "none",
@@ -495,9 +509,9 @@ export default function BlogHero() {
                 background: V.orange,
                 color: "white",
                 fontFamily: FONT_BODY,
-                fontSize: "15px",
+                fontSize: screenSize === 'mobile' ? "13px" : "15px",
                 fontWeight: 600,
-                padding: "16px 28px",
+                padding: screenSize === 'mobile' ? "14px 22px" : "16px 28px",
                 border: "none",
                 borderRadius: "10px",
                 textDecoration: "none",
@@ -519,8 +533,8 @@ export default function BlogHero() {
             >
               Voir les articles · {activeLabel}
               <svg
-                width="16"
-                height="16"
+                width={screenSize === 'mobile' ? "14" : "16"}
+                height={screenSize === 'mobile' ? "14" : "16"}
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

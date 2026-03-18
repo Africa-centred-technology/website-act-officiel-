@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -9,12 +9,37 @@ import { blogPosts, categories } from "@/lib/blog-data";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
+
 /* ── Background layers ─────────────────── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
 export default function BlogShell() {
+  const screenSize = useMediaQuery();
   const containerRef = useRef(null);
   return (
     <div ref={containerRef} style={{ background: V.bg, minHeight: "100vh", position: "relative" }}>
@@ -42,7 +67,7 @@ export default function BlogShell() {
       */}
       <section
         style={{
-          padding: "12rem 0",
+          padding: screenSize === 'mobile' ? "6rem 0" : screenSize === 'tablet' ? "8rem 0" : "12rem 0",
           borderTop: `1px solid ${V.border}`,
           borderBottom: `1px solid ${V.border}`,
           background: V.bg,
@@ -91,7 +116,7 @@ export default function BlogShell() {
             <h2
               className="section-header-title"
               style={{
-                fontSize: "clamp(3.5rem, 5vw, 5.5rem)",
+                fontSize: screenSize === 'mobile' ? "clamp(2.5rem, 8vw, 3.5rem)" : screenSize === 'tablet' ? "clamp(3rem, 6vw, 4.5rem)" : "clamp(3.5rem, 5vw, 5.5rem)",
                 fontFamily: "var(--font-display)",
                 fontWeight: 400,
                 color: V.cream,
@@ -106,9 +131,9 @@ export default function BlogShell() {
 
             <p style={{
               color: V.muted,
-              fontSize: "16px",
+              fontSize: screenSize === 'mobile' ? '14px' : '16px',
               maxWidth: "58rem",
-              margin: "2rem auto 0",
+              margin: screenSize === 'mobile' ? "1.5rem auto 0" : "2rem auto 0",
               lineHeight: 1.8,
               fontFamily: FONT_BODY,
             }}>
@@ -153,7 +178,7 @@ export default function BlogShell() {
                     style={{
                       display: "block",
                       position: "relative",
-                      height: "38rem",
+                      height: screenSize === 'mobile' ? "28rem" : screenSize === 'tablet' ? "32rem" : "38rem",
                       borderRadius: "24px",
                       overflow: "hidden",
                       textDecoration: "none",
@@ -211,34 +236,34 @@ export default function BlogShell() {
                     }} />
                     
                     {/* Content */}
-                    <div style={{ 
-                      position: "absolute", 
-                      bottom: 0, 
-                      left: 0, 
-                      right: 0, 
-                      padding: "4.8rem 4rem 4rem", 
-                      zIndex: 3, 
-                      display: "flex", 
-                      flexDirection: "column", 
-                      gap: "1.4rem"
+                    <div style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      padding: screenSize === 'mobile' ? "2.5rem 2rem 2rem" : screenSize === 'tablet' ? "3.5rem 2.5rem 2.5rem" : "4.8rem 4rem 4rem",
+                      zIndex: 3,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: screenSize === 'mobile' ? '0.8rem' : screenSize === 'tablet' ? '1rem' : '1.4rem'
                     }}>
                       <div style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "0.8rem",
-                        padding: "0.6rem 1.4rem",
+                        gap: screenSize === 'mobile' ? "0.6rem" : "0.8rem",
+                        padding: screenSize === 'mobile' ? "0.5rem 1.2rem" : "0.6rem 1.4rem",
                         background: "rgba(0,0,0,0.25)",
                         border: "1px solid rgba(255,255,255,0.12)",
                         borderRadius: "100px",
                         backdropFilter: "blur(12px)",
                         width: "fit-content"
                       }}>
-                        <span style={{ fontSize: "1.2rem", fontWeight: 700, color: V.orange, fontFamily: FONT_BODY }}>{articleCount}</span>
-                        <span style={{ fontSize: "1rem", fontWeight: 500, color: V.muted, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: FONT_BODY }}>Analyses</span>
+                        <span style={{ fontSize: screenSize === 'mobile' ? "1.1rem" : "1.2rem", fontWeight: 700, color: V.orange, fontFamily: FONT_BODY }}>{articleCount}</span>
+                        <span style={{ fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem", fontWeight: 500, color: V.muted, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: FONT_BODY }}>Analyses</span>
                       </div>
 
                       <h3 style={{
-                        fontSize: "3.4rem",
+                        fontSize: screenSize === 'mobile' ? "2rem" : screenSize === 'tablet' ? "2.5rem" : "3.4rem",
                         fontFamily: "var(--font-display)",
                         fontWeight: 400,
                         color: V.cream,
@@ -247,17 +272,17 @@ export default function BlogShell() {
                         textTransform: "uppercase",
                         lineHeight: 1,
                       }}>{cat.label}</h3>
-                      
+
                       {cat.description && (
-                        <p style={{ 
-                          color: V.muted, 
-                          fontSize: "1.5rem", 
-                          lineHeight: 1.6, 
+                        <p style={{
+                          color: V.muted,
+                          fontSize: screenSize === 'mobile' ? "1.1rem" : screenSize === 'tablet' ? "1.3rem" : "1.5rem",
+                          lineHeight: 1.6,
                           margin: 0,
                           maxWidth: "90%",
-                          display: "-webkit-box", 
-                          WebkitLineClamp: 2, 
-                          WebkitBoxOrient: "vertical", 
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
                           overflow: "hidden",
                           fontFamily: FONT_BODY,
                           fontWeight: 400
@@ -265,20 +290,20 @@ export default function BlogShell() {
                       )}
 
                       {/* Explore badge — appears on hover */}
-                      <div 
+                      <div
                         className="explore-btn"
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "1rem",
-                          marginTop: "0.8rem",
+                          gap: screenSize === 'mobile' ? "0.8rem" : "1rem",
+                          marginTop: screenSize === 'mobile' ? "0.6rem" : "0.8rem",
                           transform: "translateY(20px)",
                           opacity: 0,
                           transition: "all 0.6s cubic-bezier(0.2, 1, 0.2, 1)",
                         }}
                       >
-                        <span style={{ color: V.orange, fontSize: "1.2rem", fontWeight: 700, fontFamily: FONT_BODY, letterSpacing: "0.05em", textTransform: "uppercase" }}>Explorer</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={V.orange} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <span style={{ color: V.orange, fontSize: screenSize === 'mobile' ? "1.1rem" : "1.2rem", fontWeight: 700, fontFamily: FONT_BODY, letterSpacing: "0.05em", textTransform: "uppercase" }}>Explorer</span>
+                        <svg width={screenSize === 'mobile' ? "12" : "14"} height={screenSize === 'mobile' ? "12" : "14"} viewBox="0 0 24 24" fill="none" stroke={V.orange} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
                       </div>

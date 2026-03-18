@@ -142,10 +142,10 @@ function TitleBlock({ svc, width }: { svc: (typeof services)[0]; width: string }
 function DescBlock({ svc, hovered, width }: { svc: (typeof services)[0]; hovered: boolean; width: string }) {
   return (
     <div style={{ width, flexShrink: 0 }}>
-      <p style={{ 
-        fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)", 
-        lineHeight: 1.65, 
-        color: hovered ? "#ffffff" : "rgba(255,255,255,0.45)", 
+      <p style={{
+        fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)",
+        lineHeight: 1.65,
+        color: hovered ? "#ffffff" : "rgba(255,255,255,0.45)",
         marginBottom: "0.7rem",
         fontFamily: "var(--font-body)",
         transition: "color 0.4s ease, font-size 0.4s ease"
@@ -185,10 +185,16 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
           display: 'flex',
           flexDirection: 'column',
           gap: screenSize === 'mobile' ? '1rem' : '1.5rem',
-          padding: '0 3rem', // Increased uniform padding for perfect alignment
+          padding: '0', // Full width container
         }}>
-          {/* Numéro + Tag */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          {/* Numéro + Tag — Padding left for alignment */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingLeft: '3rem',
+            paddingRight: '2rem'
+          }}>
             <span style={{
               fontSize: screenSize === 'mobile' ? '3rem' : '3.5rem',
               fontWeight: 900,
@@ -214,10 +220,11 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
             </div>
           </div>
 
-          {/* Image */}
+          {/* Image — Shorter left margin, fills more on the right */}
           <div style={{
-            width: '100%',
-            height: screenSize === 'mobile' ? '180px' : '220px',
+            width: 'calc(100% - 1rem)',
+            marginLeft: '1rem',
+            height: screenSize === 'mobile' ? '200px' : '240px',
             borderRadius: '0.5rem',
             overflow: 'hidden',
             border: '1px solid rgba(255,255,255,0.1)',
@@ -234,7 +241,7 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
             />
           </div>
 
-          {/* Titre */}
+          {/* Titre — Aligned with the stack margin */}
           <h3 style={{
             fontWeight: 900,
             textTransform: 'uppercase',
@@ -242,21 +249,25 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
             lineHeight: 1.1,
             fontSize: screenSize === 'mobile' ? 'clamp(1.2rem, 5vw, 1.8rem)' : 'clamp(1.5rem, 3.5vw, 2.2rem)',
             fontFamily: 'var(--font-display)',
+            paddingLeft: '3rem',
+            paddingRight: '1.5rem', // Reduced to avoid too much empty space
           }}>
             {svc.title.replace(/\n/g, ' ')}
           </h3>
 
-          {/* Description */}
+          {/* Description — Aligned with the stack margin */}
           <p style={{
             fontSize: screenSize === 'mobile' ? 'clamp(0.9rem, 3.5vw, 1.1rem)' : 'clamp(1rem, 2.5vw, 1.3rem)',
             lineHeight: 1.6,
             color: 'rgba(255,255,255,0.65)',
             fontFamily: 'var(--font-body)',
+            paddingLeft: '3rem',
+            paddingRight: '1.5rem', // Reduced to avoid too much empty space
           }}>
             {svc.desc}
           </p>
 
-          {/* Lien */}
+          {/* Lien — Aligned with the stack margin */}
           <Link href={svc.href} style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -268,6 +279,7 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
             textDecoration: 'none',
             fontWeight: 600,
             marginTop: '0.5rem',
+            paddingLeft: '3rem',
           }}>
             <span style={{ width: '1.5rem', height: '1px', background: 'currentColor', display: 'block' }} />
             Découvrir
@@ -376,11 +388,10 @@ export default function RoomAtelier() {
     <div
       onMouseMove={onMouseMove}
       className="relative flex flex-col overflow-hidden room-pad"
-      style={{ 
-        width: "100%", 
+      style={{
+        width: "100%",
         height: "100%",
-        paddingLeft: screenSize === 'mobile' ? '2.5rem' : undefined,
-        paddingRight: screenSize === 'mobile' ? '2.5rem' : undefined
+        // Mobile padding is now handled by individual cards for better precision
       }}
     >
 

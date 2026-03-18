@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
@@ -11,7 +11,32 @@ import { blogPosts, type BlogPost } from "@/lib/blog-data";
 
 const ease = [0.6, 0.08, 0.02, 0.99] as const;
 
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
+
 export default function BlogPostShell({ post }: { post: BlogPost }) {
+  const screenSize = useMediaQuery();
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
 
@@ -39,11 +64,11 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
       <section
         ref={heroRef}
         style={{
-          paddingTop: "14rem",
-          paddingBottom: "8rem",
+          paddingTop: screenSize === 'mobile' ? "10rem" : screenSize === 'tablet' ? "12rem" : "14rem",
+          paddingBottom: screenSize === 'mobile' ? "5rem" : screenSize === 'tablet' ? "6rem" : "8rem",
           position: "relative",
           overflow: "hidden",
-          minHeight: "75vh",
+          minHeight: screenSize === 'mobile' ? "60vh" : "75vh",
           display: "flex",
           alignItems: "flex-end",
         }}
@@ -82,7 +107,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
             initial={{ opacity: 0, x: -20 }}
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, ease }}
-            style={{ marginBottom: "3rem" }}
+            style={{ marginBottom: screenSize === 'mobile' ? "2rem" : "3rem" }}
           >
             <Link
               href="/blog"
@@ -93,7 +118,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 color: "rgba(255, 255, 255, 0.28)",
                 textDecoration: "none",
                 fontFamily: "var(--font-body)",
-                fontSize: "1.6rem",
+                fontSize: screenSize === 'mobile' ? "1.2rem" : "1.6rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 transition: "color 0.3s ease",
@@ -115,20 +140,20 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
             initial={{ opacity: 0, y: 20 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1, ease }}
-            style={{ marginBottom: "2.5rem" }}
+            style={{ marginBottom: screenSize === 'mobile' ? "1.5rem" : "2.5rem" }}
           >
             <span
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.6rem",
-                padding: "0.6rem 1.6rem",
+                padding: screenSize === 'mobile' ? "0.5rem 1.2rem" : "0.6rem 1.6rem",
                 background: `${post.categoryColor}20`,
                 border: `1px solid ${post.categoryColor}55`,
                 borderRadius: "2rem",
                 color: post.categoryColor,
                 fontFamily: "var(--font-body)",
-                fontSize: "1.6rem",
+                fontSize: screenSize === 'mobile' ? "1.2rem" : "1.6rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.12em",
               }}
@@ -140,14 +165,14 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           {/* Title */}
           <motion.h1
             style={{
-              fontSize: "var(--font-50)",
+              fontSize: screenSize === 'mobile' ? "clamp(2.5rem, 8vw, 4rem)" : screenSize === 'tablet' ? "clamp(3.5rem, 6vw, 5rem)" : "var(--font-50)",
               fontFamily: "var(--font-body)",
               fontWeight: 900,
               textTransform: "uppercase",
               lineHeight: 1.0,
               letterSpacing: "-0.02em",
               color: "#fff",
-              marginBottom: "3rem",
+              marginBottom: screenSize === 'mobile' ? "2rem" : "3rem",
               maxWidth: "90rem",
             }}
             initial={{ opacity: 0, y: 40 }}
@@ -163,18 +188,18 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               display: "flex",
               flexWrap: "wrap",
               alignItems: "center",
-              gap: "2.5rem",
-              paddingTop: "2rem",
+              gap: screenSize === 'mobile' ? "1.5rem" : "2.5rem",
+              paddingTop: screenSize === 'mobile' ? "1.5rem" : "2rem",
               borderTop: "1px solid rgba(255,255,255,0.07)",
             }}
             initial={{ opacity: 0 }}
             animate={heroInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.3, ease }}
           >
-            <MetaItem label="Date" value={post.date} />
-            <MetaItem label="Lecture" value={post.readTime} />
-            <MetaItem label="Format" value={post.format} />
-            <MetaItem label="Cible" value={post.target} />
+            <MetaItem label="Date" value={post.date} screenSize={screenSize} />
+            <MetaItem label="Lecture" value={post.readTime} screenSize={screenSize} />
+            <MetaItem label="Format" value={post.format} screenSize={screenSize} />
+            <MetaItem label="Cible" value={post.target} screenSize={screenSize} />
           </motion.div>
         </div>
       </section>
@@ -185,8 +210,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           className="container"
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 34rem",
-            gap: "8rem",
+            gridTemplateColumns: screenSize === 'desktop' ? "1fr 34rem" : "1fr",
+            gap: screenSize === 'mobile' ? '4rem' : screenSize === 'tablet' ? '6rem' : '8rem',
           }}
         >
           {/* Article body */}
@@ -196,9 +221,9 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "0.8rem",
-                marginBottom: "5rem",
-                paddingBottom: "3rem",
+                gap: screenSize === 'mobile' ? "0.6rem" : "0.8rem",
+                marginBottom: screenSize === 'mobile' ? "3rem" : "5rem",
+                paddingBottom: screenSize === 'mobile' ? "2rem" : "3rem",
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
               }}
             >
@@ -206,13 +231,13 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <span
                   key={kw}
                   style={{
-                    padding: "0.4rem 1.2rem",
+                    padding: screenSize === 'mobile' ? "0.3rem 1rem" : "0.4rem 1.2rem",
                     background: "rgba(211,84,0,0.08)",
                     border: "1px solid rgba(211,84,0,0.2)",
                     borderRadius: "2rem",
                     color: "rgba(255,255,255,0.45)",
                     fontFamily: "var(--font-body)",
-                    fontSize: "2rem",
+                    fontSize: screenSize === 'mobile' ? "1.3rem" : "2rem",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -223,7 +248,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
 
             {/* Sections */}
             {post.sections.map((section, i) => (
-              <ContentSection key={i} section={section} index={i} categoryColor={post.categoryColor} />
+              <ContentSection key={i} section={section} index={i} categoryColor={post.categoryColor} screenSize={screenSize} />
             ))}
 
             {/* Back + Share row */}
@@ -234,7 +259,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 borderTop: "1px solid rgba(255,255,255,0.07)",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent: screenSize === 'mobile' ? "center" : "space-between",
                 flexWrap: "wrap",
                 gap: "2rem",
               }}
@@ -265,17 +290,17 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           <aside className="blog-sidebar">
             <div
               style={{
-                position: "sticky",
-                top: "12rem",
+                position: screenSize === 'desktop' ? "sticky" : "static",
+                top: screenSize === 'desktop' ? "12rem" : "auto",
                 display: "flex",
                 flexDirection: "column",
-                gap: "4rem",
+                gap: screenSize === 'mobile' ? '3rem' : '4rem',
               }}
             >
               {/* Share Section */}
               <div
                 style={{
-                  padding: "3rem",
+                  padding: screenSize === 'mobile' ? "2rem" : "3rem",
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.07)",
                   borderRadius: "1.2rem",
@@ -284,30 +309,30 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <p
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontSize: "2rem",
+                    fontSize: screenSize === 'mobile' ? "1.4rem" : "2rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
-                    marginBottom: "2rem",
+                    marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.8rem",
                   }}
                 >
-                  <Share2 size={14} /> Partager l&apos;article
+                  <Share2 size={screenSize === 'mobile' ? 12 : 14} /> Partager l&apos;article
                 </p>
-                <div style={{ display: "flex", gap: "1.5rem" }}>
-                  <ShareIcon icon={<Linkedin size={18} />} label="LinkedIn" />
-                  <ShareIcon icon={<Twitter size={18} />} label="Twitter" />
-                  <ShareIcon icon={<Facebook size={18} />} label="Facebook" />
-                  <ShareIcon icon={<Link2 size={18} />} label="Copier" />
+                <div style={{ display: "flex", gap: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
+                  <ShareIcon icon={<Linkedin size={screenSize === 'mobile' ? 16 : 18} />} label="LinkedIn" />
+                  <ShareIcon icon={<Twitter size={screenSize === 'mobile' ? 16 : 18} />} label="Twitter" />
+                  <ShareIcon icon={<Facebook size={screenSize === 'mobile' ? 16 : 18} />} label="Facebook" />
+                  <ShareIcon icon={<Link2 size={screenSize === 'mobile' ? 16 : 18} />} label="Copier" />
                 </div>
               </div>
 
               {/* Other Articles Section */}
               <div
                 style={{
-                  padding: "3rem",
+                  padding: screenSize === 'mobile' ? "2rem" : "3rem",
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.07)",
                   borderRadius: "1.2rem",
@@ -316,11 +341,11 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <p
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontSize: "2rem",
+                    fontSize: screenSize === 'mobile' ? "1.4rem" : "2rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
-                    marginBottom: "2.5rem",
+                    marginBottom: screenSize === 'mobile' ? "2rem" : "2.5rem",
                   }}
                 >
                   Articles récents
@@ -364,7 +389,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                         <h4
                           style={{
                             color: "rgba(255,255,255,0.8)",
-                            fontSize: "1.7rem",
+                            fontSize: screenSize === 'mobile' ? "1.4rem" : "1.7rem",
                             fontFamily: "var(--font-body)",
                             fontWeight: 600,
                             lineHeight: 1.3,
@@ -381,7 +406,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                         <span
                           style={{
                             color: "rgba(255,255,255,0.3)",
-                            fontSize: "1.4rem",
+                            fontSize: screenSize === 'mobile' ? "1.2rem" : "1.4rem",
                             fontFamily: "var(--font-body)",
                             textTransform: "uppercase",
                           }}
@@ -397,7 +422,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               {/* Keywords (Sidebar version) */}
               <div
                 style={{
-                  padding: "3rem",
+                  padding: screenSize === 'mobile' ? "2rem" : "3rem",
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.07)",
                   borderRadius: "1.2rem",
@@ -406,7 +431,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <p
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontSize: "2rem",
+                    fontSize: screenSize === 'mobile' ? "1.4rem" : "2rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
@@ -415,18 +440,18 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 >
                   Mots-clés
                 </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: screenSize === 'mobile' ? "0.6rem" : "0.8rem" }}>
                   {post.keywords.map((kw) => (
                     <span
                       key={kw}
                       style={{
-                        padding: "0.4rem 1rem",
+                        padding: screenSize === 'mobile' ? "0.3rem 0.8rem" : "0.4rem 1rem",
                         background: "rgba(211,84,0,0.1)",
                         border: "1px solid rgba(211,84,0,0.25)",
                         borderRadius: "2rem",
                         color: "rgba(255,255,255,0.5)",
                         fontFamily: "var(--font-body)",
-                        fontSize: "1.4rem",
+                        fontSize: screenSize === 'mobile' ? "1.2rem" : "1.4rem",
                       }}
                     >
                       {kw}
@@ -441,16 +466,16 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
 
       {/* ── RELATED POSTS ── */}
       {relatedPosts.length > 0 && (
-        <section style={{ paddingBottom: "10rem" }}>
+        <section style={{ paddingBottom: screenSize === 'mobile' ? "6rem" : "10rem" }}>
           <div className="container">
             <h2
               style={{
-                fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
+                fontSize: screenSize === 'mobile' ? "clamp(2rem, 6vw, 2.5rem)" : "clamp(2.5rem, 4vw, 3.5rem)",
                 fontFamily: "var(--font-body)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 color: "#fff",
-                marginBottom: "4rem",
+                marginBottom: screenSize === 'mobile' ? "3rem" : "4rem",
                 textAlign: "center",
               }}
             >
@@ -460,11 +485,11 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 34rem), 1fr))",
-                gap: "3rem",
+                gap: screenSize === 'mobile' ? "2rem" : "3rem",
               }}
             >
               {relatedPosts.map((rp, i) => (
-                <RelatedArticleCard key={rp.slug} relatedPost={rp} index={i} />
+                <RelatedArticleCard key={rp.slug} relatedPost={rp} index={i} screenSize={screenSize} />
               ))}
             </div>
           </div>
@@ -485,13 +510,13 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
 }
 
 /* ─── Meta Item ─── */
-function MetaItem({ label, value }: { label: string; value: string }) {
+function MetaItem({ label, value, screenSize }: { label: string; value: string; screenSize: 'mobile' | 'tablet' | 'desktop' }) {
   return (
     <div>
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: "1rem",
+          fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem",
           textTransform: "uppercase",
           letterSpacing: "0.12em",
           color: "rgba(255,255,255,0.3)",
@@ -503,7 +528,7 @@ function MetaItem({ label, value }: { label: string; value: string }) {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: "1.8rem",
+          fontSize: screenSize === 'mobile' ? "1.4rem" : "1.8rem",
           color: "rgba(255,255,255,0.7)",
         }}
       >
@@ -552,10 +577,12 @@ function ContentSection({
   section,
   index,
   categoryColor,
+  screenSize,
 }: {
   section: BlogPost["sections"][0];
   index: number;
   categoryColor: string;
+  screenSize: 'mobile' | 'tablet' | 'desktop';
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -567,10 +594,10 @@ function ContentSection({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.04, ease: [0.6, 0.08, 0.02, 0.99] }}
       style={{
-        marginBottom: "5rem",
+        marginBottom: screenSize === 'mobile' ? "3rem" : "5rem",
         ...(section.isConclusion
           ? {
-            padding: "3rem 3.5rem",
+            padding: screenSize === 'mobile' ? "2rem 1.5rem" : "3rem 3.5rem",
             background: `${categoryColor}0D`,
             borderLeft: `3px solid ${categoryColor}`,
           }
@@ -580,12 +607,12 @@ function ContentSection({
       {section.title && (
         <h2
           style={{
-            fontSize: "var(--font-25)",
+            fontSize: screenSize === 'mobile' ? "clamp(1.8rem, 5vw, 2.5rem)" : screenSize === 'tablet' ? "clamp(2rem, 4vw, 3rem)" : "var(--font-25)",
             fontFamily: "var(--font-body)",
             fontWeight: 900,
             textTransform: "uppercase",
             color: section.isConclusion ? categoryColor : "#fff",
-            marginBottom: "2rem",
+            marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
             lineHeight: 1.1,
             letterSpacing: "-0.01em",
           }}
@@ -601,9 +628,9 @@ function ContentSection({
               key={pi}
               style={{
                 color: "rgba(255,255,255,0.65)",
-                fontSize: "2rem",
+                fontSize: screenSize === 'mobile' ? "1.5rem" : "2rem",
                 lineHeight: 1.8,
-                marginBottom: "1.8rem",
+                marginBottom: screenSize === 'mobile' ? "1.5rem" : "1.8rem",
                 fontFamily: "var(--font-body)",
               }}
             >
@@ -617,10 +644,10 @@ function ContentSection({
         <ul
           style={{
             listStyle: "none",
-            margin: "2rem 0",
+            margin: screenSize === 'mobile' ? "1.5rem 0" : "2rem 0",
             display: "flex",
             flexDirection: "column",
-            gap: "1.2rem",
+            gap: screenSize === 'mobile' ? "1rem" : "1.2rem",
           }}
         >
           {section.list.map((item, li) => (
@@ -628,9 +655,9 @@ function ContentSection({
               key={li}
               style={{
                 display: "flex",
-                gap: "1.5rem",
+                gap: screenSize === 'mobile' ? "1rem" : "1.5rem",
                 color: "rgba(255,255,255,0.6)",
-                fontSize: "1.9rem",
+                fontSize: screenSize === 'mobile' ? "1.4rem" : "1.9rem",
                 lineHeight: 1.7,
                 fontFamily: "var(--font-body)",
               }}
@@ -706,9 +733,11 @@ function ContentSection({
 function RelatedArticleCard({
   relatedPost: post,
   index,
+  screenSize,
 }: {
   relatedPost: BlogPost;
   index: number;
+  screenSize: 'mobile' | 'tablet' | 'desktop';
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
@@ -758,7 +787,7 @@ function RelatedArticleCard({
             style={{
               position: "relative",
               width: "100%",
-              height: "22rem",
+              height: screenSize === 'mobile' ? "18rem" : "22rem",
               flexShrink: 0,
               overflow: "hidden",
             }}
@@ -782,7 +811,7 @@ function RelatedArticleCard({
           {/* Content */}
           <div
             style={{
-              padding: "2.5rem 3rem 3rem",
+              padding: screenSize === 'mobile' ? "2rem 2rem 2.5rem" : "2.5rem 3rem 3rem",
               display: "flex",
               flexDirection: "column",
               flex: 1,
@@ -790,16 +819,16 @@ function RelatedArticleCard({
           >
             <div>
               {/* Category */}
-              <div style={{ marginBottom: "1.5rem" }}>
+              <div style={{ marginBottom: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
                 <span
                   style={{
-                    padding: "0.4rem 1rem",
+                    padding: screenSize === 'mobile' ? "0.3rem 0.8rem" : "0.4rem 1rem",
                     background: `${post.categoryColor}18`,
                     border: `1px solid ${post.categoryColor}44`,
                     borderRadius: "2rem",
                     color: post.categoryColor,
                     fontFamily: "var(--font-body)",
-                    fontSize: "1rem",
+                    fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
                   }}
@@ -810,12 +839,12 @@ function RelatedArticleCard({
 
               <h3
                 style={{
-                  fontSize: "1.8rem",
+                  fontSize: screenSize === 'mobile' ? "1.5rem" : "1.8rem",
                   fontFamily: "var(--font-body)",
                   fontWeight: 800,
                   color: "#fff",
                   lineHeight: 1.2,
-                  marginBottom: "1.2rem",
+                  marginBottom: screenSize === 'mobile' ? "1rem" : "1.2rem",
                   display: "-webkit-box",
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: "vertical",
@@ -828,7 +857,7 @@ function RelatedArticleCard({
               <p
                 style={{
                   color: "rgba(255,255,255,0.4)",
-                  fontSize: "1.8rem",
+                  fontSize: screenSize === 'mobile' ? "1.4rem" : "1.8rem",
                   lineHeight: 1.6,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -846,15 +875,15 @@ function RelatedArticleCard({
                 alignItems: "center",
                 justifyContent: "space-between",
                 marginTop: "auto",
-                paddingTop: "2rem",
+                paddingTop: screenSize === 'mobile' ? "1.5rem" : "2rem",
                 borderTop: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <div style={{ display: "flex", gap: "1.5rem" }}>
+              <div style={{ display: "flex", gap: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
                 <span
                   style={{
                     color: "rgba(255,255,255,0.3)",
-                    fontSize: "2rem",
+                    fontSize: screenSize === 'mobile' ? "1.3rem" : "2rem",
                     fontFamily: "var(--font-body)",
                     textTransform: "uppercase",
                   }}
@@ -864,7 +893,7 @@ function RelatedArticleCard({
                 <span
                   style={{
                     color: "rgba(255,255,255,0.3)",
-                    fontSize: "2rem",
+                    fontSize: screenSize === 'mobile' ? "1.3rem" : "2rem",
                     fontFamily: "var(--font-body)",
                     textTransform: "uppercase",
                   }}
@@ -876,7 +905,7 @@ function RelatedArticleCard({
                 style={{
                   color: "#D35400",
                   fontFamily: "var(--font-body)",
-                  fontSize: "1.1rem",
+                  fontSize: screenSize === 'mobile' ? "1rem" : "1.1rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
                 }}
