@@ -1,10 +1,34 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
+
+// Hook pour détecter la taille d'écran
+function useMediaQuery() {
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  return screenSize;
+}
 
 /* ── Data ──────────────────────────────────────────────── */
 const CONTACT_INFO = [
@@ -112,6 +136,7 @@ function SLabel({ children }: { children: React.ReactNode }) {
    MAIN
    ══════════════════════════════════════════════════════════ */
 export default function ContactShell() {
+  const screenSize = useMediaQuery();
   const [form, setForm] = useState({
     name: "", email: "", company: "", phone: "", subject: "", budget: "", message: "",
   });
@@ -127,24 +152,43 @@ export default function ContactShell() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1400));
-    setSending(false);
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setForm({ name: "", email: "", company: "", phone: "", subject: "", budget: "", message: "" });
-    }, 4000);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'envoi");
+      }
+
+      setSending(false);
+      setSent(true);
+
+      setTimeout(() => {
+        setSent(false);
+        setForm({ name: "", email: "", company: "", phone: "", subject: "", budget: "", message: "" });
+      }, 4000);
+    } catch (error) {
+      console.error("Erreur:", error);
+      setSending(false);
+      alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+    }
   };
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    padding: "0.9rem 1.2rem",
+    padding: screenSize === 'mobile' ? "0.8rem 1rem" : "0.9rem 1.2rem",
     background: "rgba(255,255,255,0.04)",
     border: "1px solid rgba(255,255,255,0.09)",
     borderRadius: "0.5rem",
     color: "#fff",
     fontFamily: "Futura, system-ui, sans-serif",
-    fontSize: "var(--font-18)",
+    fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
     outline: "none",
     transition: "border-color 0.25s",
     boxSizing: "border-box",
@@ -160,11 +204,15 @@ export default function ContactShell() {
         className="contact-hero"
         style={{
           position: "relative",
-          minHeight: "80vh",
+          minHeight: screenSize === 'mobile' ? "70vh" : screenSize === 'tablet' ? "75vh" : "80vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          padding: "clamp(9rem, 16vh, 14rem) clamp(1.5rem, 6vw, 8rem) clamp(4rem, 8vh, 7rem)",
+          padding: screenSize === 'mobile'
+            ? "8rem 1.5rem 3rem"
+            : screenSize === 'tablet'
+            ? "10rem 2.5rem 4rem"
+            : "clamp(9rem, 16vh, 14rem) clamp(1.5rem, 6vw, 8rem) clamp(4rem, 8vh, 7rem)",
           overflow: "hidden",
         }}
       >
@@ -178,10 +226,23 @@ export default function ContactShell() {
           initial={{ opacity: 0, x: -20 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7 }}
-          style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem", position: "relative", zIndex: 1 }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: screenSize === 'mobile' ? "0.7rem" : "1rem",
+            marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
+            position: "relative",
+            zIndex: 1
+          }}
         >
           <span className="diamond diamond--sm" />
-          <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "1rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
+          <span style={{
+            fontFamily: "Futura, system-ui, sans-serif",
+            fontSize: screenSize === 'mobile' ? "0.8rem" : screenSize === 'tablet' ? "0.9rem" : "1rem",
+            letterSpacing: "0.28em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.35)"
+          }}>
             Consultation Gratuite
           </span>
         </motion.div>
@@ -191,7 +252,20 @@ export default function ContactShell() {
           initial={{ opacity: 0, y: 40 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.6, 0.08, 0.02, 0.99] }}
-          style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900, textTransform: "uppercase", fontSize: "var(--font-90)", lineHeight: 0.95, marginBottom: "2.5rem", position: "relative", zIndex: 1 }}
+          style={{
+            fontFamily: "Futura, system-ui, sans-serif",
+            fontWeight: 900,
+            textTransform: "uppercase",
+            fontSize: screenSize === 'mobile'
+              ? "clamp(3.5rem, 12vw, 5rem)"
+              : screenSize === 'tablet'
+              ? "clamp(5rem, 10vw, 7rem)"
+              : "var(--font-90)",
+            lineHeight: 0.95,
+            marginBottom: screenSize === 'mobile' ? "2rem" : "2.5rem",
+            position: "relative",
+            zIndex: 1
+          }}
         >
           <span style={{ color: "rgba(255,255,255,0.9)" }}>Construisons</span>
           <br />
@@ -199,12 +273,27 @@ export default function ContactShell() {
         </motion.h1>
 
         {/* Sub + contact info row */}
-        <div className="contact-hero-bottom" style={{ position: "relative", zIndex: 1 }}>
+        <div
+          className="contact-hero-bottom"
+          style={{
+            position: "relative",
+            zIndex: 1,
+            display: screenSize === 'desktop' ? 'flex' : 'block',
+            justifyContent: 'space-between',
+            gap: screenSize === 'desktop' ? '2rem' : '0'
+          }}
+        >
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.4 }}
-            style={{ color: "rgba(255,255,255,0.45)", fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: 500 }}
+            style={{
+              color: "rgba(255,255,255,0.45)",
+              fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-20)",
+              lineHeight: 1.72,
+              maxWidth: screenSize === 'mobile' ? '100%' : 500,
+              marginBottom: screenSize === 'mobile' ? "2rem" : screenSize === 'tablet' ? "2.5rem" : "0"
+            }}
           >
             Vous avez une vision ? Nous avons l'expertise pour la concrétiser. Discutons de votre
             projet et découvrez comment ACT peut transformer vos ambitions en réalité.
@@ -224,17 +313,19 @@ export default function ContactShell() {
                 key={c.val}
                 href={c.href}
                 style={{
-                  display: "flex", alignItems: "center", gap: "0.85rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.85rem",
                   color: "rgba(255,255,255,0.55)",
                   fontFamily: "Futura, system-ui, sans-serif",
-                  fontSize: "var(--font-20)",
+                  fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-20)",
                   textDecoration: "none",
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#D35400")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.55)")}
               >
-                <c.Icon size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                <c.Icon size={screenSize === 'mobile' ? 16 : 18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
                 {c.val}
               </a>
             ))}
@@ -251,8 +342,24 @@ export default function ContactShell() {
       </section>
 
       {/* ── CONTACT INFO CARDS ──────────────────────────── */}
-      <section style={{ padding: "clamp(4rem,7vw,7rem) clamp(1.5rem,6vw,8rem)" }}>
-        <div className="contact-cards-grid">
+      <section style={{
+        padding: screenSize === 'mobile'
+          ? "3rem 1.5rem"
+          : screenSize === 'tablet'
+          ? "4rem 2.5rem"
+          : "clamp(4rem,7vw,7rem) clamp(1.5rem,6vw,8rem)"
+      }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: screenSize === 'mobile'
+              ? "1fr"
+              : screenSize === 'tablet'
+              ? "repeat(2, 1fr)"
+              : "repeat(4, 1fr)",
+            gap: screenSize === 'mobile' ? "1.5rem" : screenSize === 'tablet' ? "2rem" : "2.5rem"
+          }}
+        >
           {CONTACT_INFO.map((c, i) => (
             <motion.a
               key={c.label}
@@ -266,7 +373,7 @@ export default function ContactShell() {
                 background: "rgba(255,255,255,0.025)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: "1rem",
-                padding: "clamp(1.5rem,3vw,2.2rem)",
+                padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
                 textDecoration: "none",
                 transition: "border-color 0.3s, transform 0.3s",
               }}
@@ -284,24 +391,44 @@ export default function ContactShell() {
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  width: 44,
-                  height: 44,
+                  width: screenSize === 'mobile' ? 38 : 44,
+                  height: screenSize === 'mobile' ? 38 : 44,
                   background: "rgba(211,84,0,0.1)",
                   border: "1px solid rgba(211,84,0,0.2)",
                   borderRadius: "0.6rem",
-                  marginBottom: "1.2rem",
+                  marginBottom: screenSize === 'mobile' ? "1rem" : "1.2rem",
                   color: "#D35400",
                 }}
               >
-                <c.Icon size={20} strokeWidth={1.8} />
+                <c.Icon size={screenSize === 'mobile' ? 18 : 20} strokeWidth={1.8} />
               </div>
-              <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#D35400", marginBottom: "0.8rem" }}>
+              <p style={{
+                fontFamily: "Futura, system-ui, sans-serif",
+                fontSize: screenSize === 'mobile' ? "0.6rem" : "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                color: "#D35400",
+                marginBottom: "0.8rem"
+              }}>
                 {c.label}
               </p>
               {c.lines.map((l) => (
-                <p key={l} style={{ color: "rgba(255,255,255,0.55)", fontSize: "var(--font-18)", lineHeight: 1.6 }}>{l}</p>
+                <p key={l} style={{
+                  color: "rgba(255,255,255,0.55)",
+                  fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
+                  lineHeight: 1.6
+                }}>{l}</p>
               ))}
-              <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#D35400", marginTop: "1.2rem" }}>
+              <p style={{
+                fontFamily: "Futura, system-ui, sans-serif",
+                fontWeight: 700,
+                fontSize: screenSize === 'mobile' ? "0.65rem" : "0.72rem",
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#D35400",
+                marginTop: "1.2rem"
+              }}>
                 {c.cta}
               </p>
             </motion.a>
@@ -314,23 +441,46 @@ export default function ContactShell() {
         id="form"
         ref={formRef}
         style={{
-          padding: "0 clamp(1.5rem,6vw,8rem) clamp(5rem,9vw,9rem)",
+          padding: screenSize === 'mobile'
+            ? "0 1.5rem 4rem"
+            : screenSize === 'tablet'
+            ? "0 2.5rem 6rem"
+            : "0 clamp(1.5rem,6vw,8rem) clamp(5rem,9vw,9rem)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
         }}
       >
-        <div style={{ paddingTop: "clamp(4rem,7vw,7rem)" }}>
+        <div style={{
+          paddingTop: screenSize === 'mobile' ? "3rem" : screenSize === 'tablet' ? "4rem" : "clamp(4rem,7vw,7rem)"
+        }}>
           <SLabel>Formulaire de contact</SLabel>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7 }}
-            style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900, textTransform: "uppercase", fontSize: "var(--font-50)", lineHeight: 1.05, marginBottom: "clamp(3rem,5vw,5rem)" }}
+            style={{
+              fontFamily: "Futura, system-ui, sans-serif",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              fontSize: screenSize === 'mobile'
+                ? "clamp(2.5rem, 8vw, 3.5rem)"
+                : screenSize === 'tablet'
+                ? "clamp(3rem, 6vw, 4.5rem)"
+                : "var(--font-50)",
+              lineHeight: 1.05,
+              marginBottom: screenSize === 'mobile' ? "2.5rem" : screenSize === 'tablet' ? "3rem" : "clamp(3rem,5vw,5rem)"
+            }}
           >
             Décrivez votre <span style={{ color: "#D35400" }}>Projet</span>
           </motion.h2>
         </div>
 
-        <div className="contact-form-layout">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: screenSize === 'desktop' ? "1fr 38rem" : "1fr",
+            gap: screenSize === 'mobile' ? "2.5rem" : screenSize === 'tablet' ? "3rem" : "4rem"
+          }}
+        >
           {/* ─── FORM ─── */}
           <motion.form
             initial={{ opacity: 0, y: 30 }}
@@ -341,7 +491,7 @@ export default function ContactShell() {
               background: "rgba(255,255,255,0.025)",
               border: "1px solid rgba(255,255,255,0.07)",
               borderRadius: "1rem",
-              padding: "clamp(2rem,4vw,3.5rem)",
+              padding: screenSize === 'mobile' ? "2rem 1.5rem" : screenSize === 'tablet' ? "2.5rem 2rem" : "clamp(2rem,4vw,3.5rem)",
               position: "relative",
               overflow: "hidden",
             }}
@@ -350,9 +500,25 @@ export default function ContactShell() {
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(to right,#D35400,#F39C12)" }} />
 
             {/* Row 1 */}
-            <div className="form-row" style={{ marginBottom: "1.4rem" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: screenSize === 'mobile' ? "1fr" : "1fr 1fr",
+                gap: screenSize === 'mobile' ? "1.2rem" : "1.5rem",
+                marginBottom: "1.4rem"
+              }}
+            >
               <div>
-                <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Nom complet *</label>
+                <label style={{
+                  display: "block",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.6rem"
+                }}>Nom complet *</label>
                 <input
                   required
                   type="text"
@@ -365,7 +531,16 @@ export default function ContactShell() {
                 />
               </div>
               <div>
-                <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Email *</label>
+                <label style={{
+                  display: "block",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.6rem"
+                }}>Email *</label>
                 <input
                   required
                   type="email"
@@ -380,9 +555,25 @@ export default function ContactShell() {
             </div>
 
             {/* Row 2 */}
-            <div className="form-row" style={{ marginBottom: "1.4rem" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: screenSize === 'mobile' ? "1fr" : "1fr 1fr",
+                gap: screenSize === 'mobile' ? "1.2rem" : "1.5rem",
+                marginBottom: "1.4rem"
+              }}
+            >
               <div>
-                <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Entreprise</label>
+                <label style={{
+                  display: "block",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.6rem"
+                }}>Entreprise</label>
                 <input
                   type="text"
                   value={form.company}
@@ -394,7 +585,16 @@ export default function ContactShell() {
                 />
               </div>
               <div>
-                <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Téléphone</label>
+                <label style={{
+                  display: "block",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.6rem"
+                }}>Téléphone</label>
                 <input
                   type="tel"
                   value={form.phone}
@@ -408,9 +608,25 @@ export default function ContactShell() {
             </div>
 
             {/* Row 3 */}
-            <div className="form-row" style={{ marginBottom: "1.4rem" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: screenSize === 'mobile' ? "1fr" : "1fr 1fr",
+                gap: screenSize === 'mobile' ? "1.2rem" : "1.5rem",
+                marginBottom: "1.4rem"
+              }}
+            >
               <div>
-                <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Type de projet *</label>
+                <label style={{
+                  display: "block",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.6rem"
+                }}>Type de projet *</label>
                 <select
                   required
                   value={form.subject}
@@ -430,7 +646,16 @@ export default function ContactShell() {
                 </select>
               </div>
               <div>
-                <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Budget estimé</label>
+                <label style={{
+                  display: "block",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.6rem"
+                }}>Budget estimé</label>
                 <select
                   value={form.budget}
                   onChange={(e) => setForm({ ...form, budget: e.target.value })}
@@ -448,8 +673,17 @@ export default function ContactShell() {
             </div>
 
             {/* Message */}
-            <div style={{ marginBottom: "2rem" }}>
-              <label style={{ display: "block", fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.6rem" }}>Votre projet *</label>
+            <div style={{ marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem" }}>
+              <label style={{
+                display: "block",
+                fontFamily: "Futura, system-ui, sans-serif",
+                fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.4)",
+                marginBottom: "0.6rem"
+              }}>Votre projet *</label>
               <textarea
                 required
                 value={form.message}
@@ -537,7 +771,11 @@ export default function ContactShell() {
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.25 }}
             className="contact-sidebar"
-          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: screenSize === 'mobile' ? "1.5rem" : "1.5rem"
+            }}
           >
             {/* Engagements */}
             <div
@@ -545,7 +783,7 @@ export default function ContactShell() {
                 background: "rgba(211,84,0,0.05)",
                 border: "1px solid rgba(211,84,0,0.15)",
                 borderRadius: "1rem",
-                padding: "clamp(1.5rem,3vw,2.2rem)",
+                padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
               }}
             >
               <SLabel>Nos engagements</SLabel>
@@ -553,7 +791,11 @@ export default function ContactShell() {
                 {ENGAGEMENTS.map((e, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.9rem" }}>
                     <span style={{ color: "#D35400", fontWeight: 900, flexShrink: 0, marginTop: "0.1rem" }}>✓</span>
-                    <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "var(--font-18)", lineHeight: 1.6 }}>{e}</span>
+                    <span style={{
+                      color: "rgba(255,255,255,0.55)",
+                      fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
+                      lineHeight: 1.6
+                    }}>{e}</span>
                   </div>
                 ))}
               </div>
@@ -565,11 +807,16 @@ export default function ContactShell() {
                 background: "rgba(255,255,255,0.025)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: "1rem",
-                padding: "clamp(1.5rem,3vw,2.2rem)",
+                padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
               }}
             >
               <SLabel>Préférez-vous appeler ?</SLabel>
-              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "var(--font-18)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
+              <p style={{
+                color: "rgba(255,255,255,0.45)",
+                fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
+                lineHeight: 1.7,
+                marginBottom: screenSize === 'mobile' ? "1.2rem" : "1.5rem"
+              }}>
                 Parlez directement à un expert ACT. Disponible du Lun au Ven de 8h à 18h.
               </p>
               <a
@@ -583,10 +830,10 @@ export default function ContactShell() {
                   color: "#fff",
                   fontFamily: "Futura, system-ui, sans-serif",
                   fontWeight: 700,
-                  fontSize: "0.78rem",
+                  fontSize: screenSize === 'mobile' ? "0.7rem" : "0.78rem",
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
-                  padding: "1rem 1.5rem",
+                  padding: screenSize === 'mobile' ? "0.9rem 1.3rem" : "1rem 1.5rem",
                   borderRadius: "0.5rem",
                   textDecoration: "none",
                   transition: "background 0.25s",
@@ -594,7 +841,7 @@ export default function ContactShell() {
                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#b84a00")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#D35400")}
               >
-                <Phone size={16} strokeWidth={1.8} /> +212 694-528498
+                <Phone size={screenSize === 'mobile' ? 14 : 16} strokeWidth={1.8} /> +212 694-528498
               </a>
             </div>
 
@@ -604,7 +851,7 @@ export default function ContactShell() {
                 background: "rgba(255,255,255,0.025)",
                 border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: "1rem",
-                padding: "clamp(1.5rem,3vw,2.2rem)",
+                padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
               }}
             >
               <SLabel>Suivez-nous</SLabel>
@@ -656,7 +903,11 @@ export default function ContactShell() {
       {/* ── FAQ ─────────────────────────────────────────── */}
       <section
         style={{
-          padding: "clamp(5rem,9vw,9rem) clamp(1.5rem,6vw,8rem)",
+          padding: screenSize === 'mobile'
+            ? "4rem 1.5rem"
+            : screenSize === 'tablet'
+            ? "5rem 2.5rem"
+            : "clamp(5rem,9vw,9rem) clamp(1.5rem,6vw,8rem)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
           textAlign: "center",
         }}
@@ -669,7 +920,18 @@ export default function ContactShell() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7 }}
-          style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900, textTransform: "uppercase", fontSize: "var(--font-50)", lineHeight: 1.05, marginBottom: "clamp(3rem,5vw,5rem)" }}
+          style={{
+            fontFamily: "Futura, system-ui, sans-serif",
+            fontWeight: 900,
+            textTransform: "uppercase",
+            fontSize: screenSize === 'mobile'
+              ? "clamp(2.5rem, 8vw, 3.5rem)"
+              : screenSize === 'tablet'
+              ? "clamp(3rem, 6vw, 4.5rem)"
+              : "var(--font-50)",
+            lineHeight: 1.05,
+            marginBottom: screenSize === 'mobile' ? "2.5rem" : screenSize === 'tablet' ? "3rem" : "clamp(3rem,5vw,5rem)"
+          }}
         >
           Questions <span style={{ color: "#D35400" }}>Fréquentes</span>
         </motion.h2>
@@ -699,21 +961,46 @@ export default function ContactShell() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    gap: "1rem",
-                    padding: "clamp(1.1rem,2vw,1.5rem) clamp(1.2rem,2.5vw,1.8rem)",
+                    gap: screenSize === 'mobile' ? "0.8rem" : "1rem",
+                    padding: screenSize === 'mobile'
+                      ? "1.2rem 1.3rem"
+                      : screenSize === 'tablet'
+                      ? "1.3rem 1.5rem"
+                      : "clamp(1.1rem,2vw,1.5rem) clamp(1.2rem,2.5vw,1.8rem)",
                     background: "none",
                     border: "none",
                     cursor: "pointer",
                     textAlign: "left",
                   }}
                 >
-                  <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700, fontSize: "var(--font-20)", color: isOpen ? "#D35400" : "#fff", lineHeight: 1.4, transition: "color 0.25s" }}>
+                  <span style={{
+                    fontFamily: "Futura, system-ui, sans-serif",
+                    fontWeight: 700,
+                    fontSize: screenSize === 'mobile' ? "1.5rem" : screenSize === 'tablet' ? "1.7rem" : "var(--font-20)",
+                    color: isOpen ? "#D35400" : "#fff",
+                    lineHeight: 1.4,
+                    transition: "color 0.25s"
+                  }}>
                     {faq.q}
                   </span>
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                    style={{ display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, width: 32, height: 32, background: isOpen ? "#D35400" : "rgba(255,255,255,0.07)", borderRadius: "0.35rem", color: "#fff", fontWeight: 900, fontSize: "1.3rem", lineHeight: 1, transition: "background 0.25s" }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      width: screenSize === 'mobile' ? 28 : 32,
+                      height: screenSize === 'mobile' ? 28 : 32,
+                      background: isOpen ? "#D35400" : "rgba(255,255,255,0.07)",
+                      borderRadius: "0.35rem",
+                      color: "#fff",
+                      fontWeight: 900,
+                      fontSize: screenSize === 'mobile' ? "1.1rem" : "1.3rem",
+                      lineHeight: 1,
+                      transition: "background 0.25s"
+                    }}
                   >
                     +
                   </motion.span>
@@ -727,7 +1014,18 @@ export default function ContactShell() {
                       transition={{ duration: 0.35, ease: [0.6, 0.08, 0.02, 0.99] }}
                       style={{ overflow: "hidden" }}
                     >
-                      <p style={{ padding: "0 clamp(1.2rem,2.5vw,1.8rem) clamp(1.1rem,2vw,1.5rem)", color: "rgba(255,255,255,0.5)", fontSize: "var(--font-18)", lineHeight: 1.78, borderLeft: "2px solid #D35400", marginLeft: "clamp(1.2rem,2.5vw,1.8rem)" }}>
+                      <p style={{
+                        padding: screenSize === 'mobile'
+                          ? "0 1.3rem 1.2rem"
+                          : screenSize === 'tablet'
+                          ? "0 1.5rem 1.3rem"
+                          : "0 clamp(1.2rem,2.5vw,1.8rem) clamp(1.1rem,2vw,1.5rem)",
+                        color: "rgba(255,255,255,0.5)",
+                        fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
+                        lineHeight: 1.78,
+                        borderLeft: "2px solid #D35400",
+                        marginLeft: screenSize === 'mobile' ? "1.3rem" : screenSize === 'tablet' ? "1.5rem" : "clamp(1.2rem,2.5vw,1.8rem)"
+                      }}>
                         {faq.a}
                       </p>
                     </motion.div>
