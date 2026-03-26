@@ -285,9 +285,8 @@ export default function RoomSortie() {
               transition={{ delay: 0.5, duration: 0.7 }}
               style={{ 
                 marginTop: "2.5rem",
-                alignSelf: "center", // Aligné au centre sur mobile
               }}
-              className="md:self-end" // Reste à droite sur Desktop
+              className="self-center md:self-end" // Centre sur mobile, Droite sur Desktop
             >
               <CTAButton href="/contact">Démarrez un projet</CTAButton>
             </motion.div>

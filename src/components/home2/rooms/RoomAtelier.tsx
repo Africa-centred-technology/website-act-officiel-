@@ -42,7 +42,7 @@ const services = [
     title: "Pôle\nDéveloppement\nTechnologique",
     tag: "Ingénierie",
     desc: "Solutions sur mesure, plateformes robustes et développement logiciel adapté aux enjeux de chaque client.",
-    href: "/services#dev",
+    href: "/poles/developpement-technologique",
     img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80",
   },
   {
@@ -50,7 +50,7 @@ const services = [
     title: "Pôle\nConseil",
     tag: "Stratégie IT",
     desc: "Accompagnement stratégique, audit technologique et transformation globale pour accélérer votre croissance.",
-    href: "/services#conseil",
+    href: "/poles/conseil-strategie-it",
     img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80",
   },
   {
@@ -58,7 +58,7 @@ const services = [
     title: "Pôle\nFormation",
     tag: "Transmission",
     desc: "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents de demain.",
-    href: "/services#formation",
+    href: "/poles/formation",
     img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
   },
 ];
@@ -302,10 +302,10 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
       {/* Ligne de séparation pleine largeur */}
       <div style={{
         position: "absolute", top: 0, left: `-${layout.marginLeft}`, right: 0,
-        height: "1px",
+        height: "2px",
         background: hovered
-          ? "linear-gradient(to right, rgba(211,84,0,0.6), rgba(211,84,0,0.1))"
-          : "rgba(255,255,255,0.06)",
+          ? "linear-gradient(to right, rgba(211,84,0,0.8), rgba(211,84,0,0.2))"
+          : "rgba(255,255,255,0.2)",
         transition: "background 0.4s",
       }} />
 

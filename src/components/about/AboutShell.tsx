@@ -13,6 +13,7 @@ import {
 import TeamSection from "./TeamSection";
 import { type TeamMember } from "./TeamMemberCard";
 import CTAButton from "@/components/ui/CTAButton";
+import FooterStrip from "@/components/layout/FooterStrip";
 import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
 /* ── Background layers (comme SecteursShell) ─────────────────── */
@@ -79,7 +80,7 @@ const TEAM: TeamMember[] = [
     bio: "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
   },
   {
-    name: "A. B. DJOUROBI OMANDA",
+    name: "Aldrin Bruno DJOUROBI OMANDA",
     role: "Membre fondateur",
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
     bio: "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
@@ -297,7 +298,7 @@ function SectionHero() {
           initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.60, delay: 0.04 }}>
           <span className="diamond diamond--sm" />
           <span className="text-white/40 uppercase" style={{ fontSize: "1.05rem", letterSpacing: "0.32em" }}>
-            Africa Centred Technology · Fondée en 2023
+            Africa Centred Technology · Fondée en 2026
           </span>
         </motion.div>
 
@@ -335,7 +336,7 @@ function SectionHero() {
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }} />
         <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "44rem" }}
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
-          Depuis 2023, nous accompagnons les entreprises africaines pour en faire
+          Depuis 2026, nous accompagnons les entreprises africaines pour en faire
           des leaders technologiques mondiaux — avec l&apos;énergie d&apos;une startup et
           une compréhension profonde du continent.
         </motion.p>
@@ -770,90 +771,6 @@ function SectionCTA() {
           </Link>
         </motion.div>
       </motion.div>
-
-      {/* ── Footer strip ── */}
-      <motion.div
-        aria-label="Footer"
-        className="relative w-full pointer-events-auto mt-32"
-        style={{ zIndex: 10, padding: "0 clamp(2.5rem, 6vw, 8rem)" }}
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-      >
-        <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
-
-        <div className="text-left" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)", marginBottom: "2.8rem" }}>
-
-          {/* Col 1 — Contact */}
-          <div className="flex flex-col items-start">
-            <p className="uppercase font-black text-white/55" style={{ fontFamily: "var(--font-display)", fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Contact</p>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
-              <a href="mailto:contact@act.africa"
-                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
-                style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
-                <Mail size={18} strokeWidth={1.6} />contact@act.africa
-              </a>
-              <a href="tel:+212694528498"
-                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
-                style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
-                <Phone size={18} strokeWidth={1.6} />+212 694-528498
-              </a>
-              <span className="flex items-center gap-3 text-white/40" style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
-                <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc
-              </span>
-            </div>
-          </div>
-
-          {/* Col 2 — Réseaux Sociaux */}
-          <div className="flex flex-col items-start">
-            <p className="uppercase font-black text-white/55" style={{ fontFamily: "var(--font-display)", fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.6rem" }}>Réseaux Sociaux</p>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.1rem" }}>
-              {SOCIALS.map(({ Icon, href, label }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-white/70 hover:text-[#D35400] transition-colors"
-                  style={{ fontFamily: "var(--font-body)", fontSize: "1.15rem" }}>
-                  <Icon size={20} strokeWidth={1.5} />{label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Col 3 — Carrières + CTA */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1.6rem" }}>
-            <div className="flex flex-col items-start text-left">
-              <p className="uppercase font-black text-white/55" style={{ fontFamily: "var(--font-display)", fontSize: "1rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>Carrières</p>
-              <p className="text-white/60" style={{ fontFamily: "var(--font-body)", fontSize: "1.1rem", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "240px" }}>
-                Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-              </p>
-              <Link href="/careers"
-                className="text-[#D35400] hover:text-[#F39C12] transition-colors uppercase font-black"
-                style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", letterSpacing: "0.1em" }}>
-                Postuler maintenant →
-              </Link>
-            </div>
-            <CTAButton href="/contact">Un projet en tête ?</CTAButton>
-          </div>
-
-        </div>
-
-        <div style={{ height: 1, background: "rgba(255,255,255,0.08)", marginBottom: "1.4rem" }} />
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-          <span className="text-white/40 uppercase" style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", letterSpacing: "0.08em" }}>
-            © 2026 Africa Centred Technology. Tous droits réservés
-          </span>
-          <div style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}>
-            <Link href="/privacy" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem" }}>
-              Politique de Confidentialité
-            </Link>
-            <span className="text-white/25">/</span>
-            <Link href="/terms" className="text-white/40 hover:text-white/70 transition-colors uppercase" style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem" }}>
-              CGU
-            </Link>
-          </div>
-        </div>
-
-      </motion.div>
     </section>
   );
 }
@@ -878,6 +795,7 @@ export default function AboutShell() {
         <SectionTimeline />
         <TeamSection team={TEAM} />
         <SectionCTA />
+        <FooterStrip />
       </div>
     </div>
   );

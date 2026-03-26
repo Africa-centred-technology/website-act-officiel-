@@ -17,6 +17,7 @@ const BG_DARK = "#070E1C";
 
 /* ── Data ───────────────────────────────────────────────── */
 const SAVOIR_FAIRE_MENU = [
+  { href: "/poles", label: "Nos Pôles d'Excellence", key: "poles", description: "" },
   { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
   { href: "/services", label: "Nos Services", key: "services", description: "" },
   { href: "/about#partenaires", label: "Nos Partenaires", key: "partenaires", description: "" },
@@ -31,7 +32,7 @@ const NOUS_DECOUVRIR_MENU = [
 
 const NAV_LINKS = [
   { href: "/blog", label: "Blog", key: "blog" },
-  { href: "/universite", label: "ACT-université", key: "universite" },
+  { href: "https://elearning.africacentredtechnology.com/", label: "ACT-université", key: "universite" },
   { href: "/contact", label: "Contactez-nous", key: "contact" },
 ];
 
@@ -455,7 +456,7 @@ export default function Header() {
               {/* Blog + Université */}
               {[
                 { label: "Blog", href: "/blog" },
-                { label: "ACT-Université", href: "/universite" },
+                { label: "ACT-Université", href: "https://elearning.africacentredtechnology.com/" },
               ].map((item, i) => (
                 <motion.div key={item.label} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.29 + i * 0.07, duration: 0.35 }}>
                   <Link

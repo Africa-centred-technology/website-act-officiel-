@@ -200,46 +200,81 @@ export default function RoomManifeste() {
         </div>
       </motion.div>
 
-      {/* ── Main Content : Text ── */}
-      <div>
-        {/* Word-by-word reveal — mid layer */}
-        <motion.div style={{ maxWidth: "65rem", x: midX, perspective: "1100px" }}>
-          <p
-            className="font-bold uppercase"
+      {/* ── Main Content : Text + Image Side by Side ── */}
+      <div style={{
+        display: 'flex',
+        gap: screenSize === 'desktop' ? '4rem' : '3rem',
+        alignItems: screenSize === 'desktop' ? 'center' : 'flex-start',
+        flexDirection: screenSize === 'desktop' ? 'row' : 'column',
+        width: '100%',
+      }}>
+        {/* Left Side: Text Content */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {/* Word-by-word reveal — mid layer */}
+          <motion.div style={{ maxWidth: "65rem", x: midX, perspective: "1100px" }}>
+            <p
+              className="font-bold uppercase"
+              style={{
+                fontSize: screenSize === 'mobile' ? "12px" : screenSize === 'tablet' ? "clamp(1.2rem, 3vw, 1.8rem)" : "clamp(1.2rem, 2vw, 2.4rem)",
+                lineHeight: 1.45,
+                letterSpacing: "0.01em",
+                fontFamily: "var(--font-display)"
+              }}
+            >
+              {words.map((w, i) => (
+                <Word key={i} word={w} index={i} total={words.length} />
+              ))}
+              <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
+            </p>
+          </motion.div>
+
+          {/* Attribution — foreground accent */}
+          <motion.div
+            className="flex items-center gap-5"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
             style={{
-              fontSize: screenSize === 'mobile' ? "12px" : screenSize === 'tablet' ? "clamp(1.2rem, 3vw, 1.8rem)" : "clamp(1.2rem, 2vw, 2.4rem)",
-              lineHeight: 1.45,
-              letterSpacing: "0.01em",
-              fontFamily: "var(--font-display)"
+              x: fgX,
+              marginTop: screenSize === 'mobile' ? '2rem' : screenSize === 'tablet' ? '2.5rem' : '3rem',
+              flexWrap: 'wrap',
             }}
           >
-            {words.map((w, i) => (
-              <Word key={i} word={w} index={i} total={words.length} />
-            ))}
-            <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
-          </p>
-        </motion.div>
+            <div style={{ width: screenSize === 'mobile' ? 32 : 48, height: 2, background: "#D35400" }} />
+            <span className="text-white/70 uppercase font-medium" style={{
+              fontSize: screenSize === 'mobile' ? "0.85rem" : screenSize === 'tablet' ? "1rem" : "1.25rem",
+              letterSpacing: "0.25em",
+              fontFamily: "var(--font-display)"
+            }}>
+              SOHIAB BAROUD — Fondateur &amp; CEO, ACT
+            </span>
+          </motion.div>
+        </div>
 
-        {/* Attribution — foreground accent */}
+        {/* Right Side: Manifeste Image */}
         <motion.div
-          className="flex items-center gap-5"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
           style={{
-            x: fgX,
-            marginTop: screenSize === 'mobile' ? '2rem' : screenSize === 'tablet' ? '2.5rem' : '3rem',
-            flexWrap: 'wrap',
+            width: screenSize === 'desktop' ? '600px' : '100%',
+            flexShrink: 0,
           }}
+          initial={{ opacity: 0, scale: 0.9, x: 40 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: ease3D }}
         >
-          <div style={{ width: screenSize === 'mobile' ? 32 : 48, height: 2, background: "#D35400" }} />
-          <span className="text-white/70 uppercase font-medium" style={{
-            fontSize: screenSize === 'mobile' ? "0.85rem" : screenSize === 'tablet' ? "1rem" : "1.25rem",
-            letterSpacing: "0.25em",
-            fontFamily: "var(--font-display)"
-          }}>
-            SOHIAB BAROUD — Fondateur &amp; CEO, ACT
-          </span>
+          <div className="relative group">
+            {/* Soft Glow */}
+            <div className="absolute -inset-10 bg-[#D35400]/10 blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
+
+            <img
+              src="/Sohaib_baroud_Manifeste.png"
+              alt="Notre Manifeste"
+              className="relative w-full h-auto grayscale-[15%] hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-[1.02]"
+              style={{
+                boxShadow: "0 40px 100px -20px rgba(0,0,0,0.8)",
+                borderRadius: screenSize === 'mobile' ? '1rem' : screenSize === 'tablet' ? '1.5rem' : '1.5rem',
+              }}
+            />
+          </div>
         </motion.div>
       </div>
     </div>
