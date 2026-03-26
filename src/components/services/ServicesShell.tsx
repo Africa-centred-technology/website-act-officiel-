@@ -152,7 +152,7 @@ const SERVICES: Svc[] = [
     video: "https://cdn.pixabay.com/video/2017/07/23/10854-226632941_large.mp4",
   },
   {
-    n: "06", pole: "Conseil & Formation", poleN: "II", accent: GOLD,
+    n: "06", pole: "Conseil", poleN: "II", accent: GOLD,
     bg: "radial-gradient(ellipse 85% 75% at 40% 50%, #1A1708 0%, #050C18 55%, #030810 100%)",
     title: "Conseil Stratégique\n& Transformation",
     tagline: "La stratégie avant l'outil",
@@ -175,7 +175,7 @@ const SERVICES: Svc[] = [
     video: "https://cdn.pixabay.com/video/2022/10/31/137265-766326232_large.mp4",
   },
   {
-    n: "07", pole: "Conseil & Formation", poleN: "II", accent: GOLD,
+    n: "07", pole: "Conseil", poleN: "II", accent: GOLD,
     bg: "radial-gradient(ellipse 80% 80% at 75% 30%, #080F1A 0%, #050C18 55%, #030810 100%)",
     title: "Conseil Opérationnel\n& Métier",
     tagline: "Comprendre avant de numériser",
@@ -194,7 +194,7 @@ const SERVICES: Svc[] = [
     video: "https://cdn.pixabay.com/video/2024/03/01/202560-918431383_large.mp4",
   },
   {
-    n: "08", pole: "Conseil & Formation", poleN: "II", accent: GOLD,
+    n: "08", pole: "Formation", poleN: "III", accent: GOLD,
     bg: "radial-gradient(ellipse 90% 70% at 25% 75%, #051A0A 0%, #050C18 55%, #030810 100%)",
     title: "Formation\n& Développement\ndes Compétences",
     tagline: "La souveraineté passe par les talents africains",
@@ -793,7 +793,7 @@ function HeroSection() {
           <motion.p style={{ fontSize: "var(--font-20)", color: "#ffffff", lineHeight: 1.7, maxWidth: "36rem" }}
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 0.65 }}>
-            Deux pôles complémentaires — Ingénierie et Conseil — couvrant l&apos;intégralité de la chaîne de valeur de la transformation digitale africaine.
+            Trois pôles complémentaires — Ingénierie, Conseil et Formation — couvrant l&apos;intégralité de la chaîne de valeur de la transformation digitale africaine.
           </motion.p>
 
           <motion.div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.5rem" }}

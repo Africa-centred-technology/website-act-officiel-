@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { SERVICES, POLE_I, POLE_II, type Service } from "@/lib/data/services";
+import { SERVICES, POLE_I, POLE_II, POLE_III, type Service } from "@/lib/data/services";
 
 /* ── Variants ─────────────────────────────────────── */
 const fadeUp = {
@@ -16,132 +16,110 @@ const stagger = (delay = 0) => ({
 });
 
 /* ── Icône SVG inline ─────────────────────────────── */
-function SvcIcon({ path, color }: { path: string; color: string }) {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-      stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d={path} />
-    </svg>
-  );
-}
-
-/* ── Carte service ────────────────────────────────── */
 function ServiceCard({ svc, index }: { svc: Service; index: number }) {
-  const isGold = svc.poleN === "II";
-
   return (
-    <motion.div variants={fadeUp}>
-      <Link href={`/services/${svc.slug}`} style={{ textDecoration: "none", display: "block" }}>
+    <motion.div variants={fadeUp} style={{ position: "relative", padding: "0 12px", marginBottom: "4rem" }}>
+      <Link href={`/services/${svc.slug}`} style={{ textDecoration: "none", display: "block", position: "relative" }}>
+        {/* Conteneur Image avec overflow controlé */}
         <motion.article
-          whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.6, 0.08, 0.02, 0.99] } }}
+          whileHover={{ scale: 1.02 }}
+          className="relative group overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500"
           style={{
-            position: "relative",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.07)",
-            borderRadius: "1.2rem",
-            padding: "2.4rem 2.4rem 2rem",
+            aspectRatio: "1 / 1",
+            background: "#0a0a0a",
             cursor: "pointer",
-            overflow: "hidden",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.4rem",
-            transition: "border-color 0.3s",
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.borderColor = `${svc.accent}55`;
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
+            maxWidth: "300px",
+            margin: "0 auto",
           }}
         >
-          {/* Glow de fond au hover */}
-          <div aria-hidden style={{
-            position: "absolute", inset: 0, borderRadius: "1.2rem",
-            background: `radial-gradient(ellipse 60% 50% at 20% 80%, ${svc.accent}0D 0%, transparent 70%)`,
-            pointerEvents: "none",
-          }} />
+          {/* Image de fond avec effet Ken Burns au hover */}
+          <motion.img
+            src={svc.heroImage}
+            alt={svc.title}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+            style={{
+              opacity: 0.75,
+              filter: "brightness(0.85)",
+            }}
+          />
 
-          {/* Ligne accent top */}
-          <div aria-hidden style={{
-            position: "absolute", top: 0, left: "2.4rem", right: "2.4rem", height: "1px",
-            background: `linear-gradient(90deg, ${svc.accent}80, transparent)`,
-          }} />
+          {/* Overlay dégradé pour la profondeur */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
+            style={{
+              background: "linear-gradient(to top, rgba(3,10,24,0.95) 0%, transparent 100%)",
+            }}
+          />
 
-          {/* Header : numéro + icône */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{
-              width: 40, height: 40, borderRadius: "0.6rem",
-              background: `${svc.accent}12`,
-              border: `1px solid ${svc.accent}30`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <SvcIcon path={svc.icon} color={svc.accent} />
-            </div>
+          {/* Halo d'accentuation subtil */}
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
+            style={{
+              background: `radial-gradient(circle at 50% 100%, ${svc.accent}88 0%, transparent 60%)`,
+            }}
+          />
+
+          {/* Cadre de focus et numéro */}
+          <div className="absolute inset-4 border border-white/0 group-hover:border-white/10 rounded-xl transition-all duration-500 pointer-events-none" />
+          <div className="absolute top-6 left-6 font-bold text-white/10 group-hover:text-white/30 transition-colors duration-500 text-6xl select-none" style={{ fontFamily: "Futura" }}>
+            {svc.n}
           </div>
-
-          {/* Titre */}
-          <h3 style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(16px, 1.35rem, 1.5rem)",
-            fontWeight: 500,
-            color: "#fff",
-            lineHeight: 1.25,
-            whiteSpace: "pre-line",
-            flex: 1,
-          }}>
-            {svc.title}
-          </h3>
-
-          {/* Tagline */}
-          <p style={{
-            fontSize: "clamp(12px, 0.85rem, 0.95rem)",
-            color: "rgba(255,255,255,0.45)",
-            letterSpacing: "0.04em",
-            fontStyle: "italic",
-          }}>
-            {svc.tagline}
-          </p>
-
-          {/* Bénéfices pills */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-            {svc.benefits.slice(0, 3).map(b => (
-              <span key={b} style={{
-                fontSize: "clamp(10px, 0.72rem, 0.78rem)",
-                letterSpacing: "0.06em",
-                color: `${svc.accent}CC`,
-                background: `${svc.accent}12`,
-                border: `1px solid ${svc.accent}25`,
-                borderRadius: "2rem",
-                padding: "0.25rem 0.75rem",
-                whiteSpace: "nowrap",
-              }}>
-                {b}
-              </span>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.5rem",
-            marginTop: "0.4rem",
-            fontSize: "clamp(11px, 0.78rem, 0.85rem)",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: svc.accent,
-            fontFamily: "Futura, system-ui, sans-serif",
-          }}>
-            <span>Découvrir</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-              stroke={svc.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
+          
+          {/* Reflet lumineux furtif */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
         </motion.article>
+
+        {/* Le bloc de titre (Exactement comme sur la capture) */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "0", // Calé complètement bas
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "70%", // Largeur encore plus réduite
+            maxWidth: "260px",
+            display: "flex",
+            justifyContent: "center",
+            zIndex: 10,
+          }}
+          className="transition-transform duration-500 group-hover:-translate-y-1"
+        >
+          <div
+            style={{
+              background: "#20232A", // Gris sombre uni sans effet blur
+              padding: "1.5rem 1rem", // Plus haut
+              borderRadius: "0.25rem 0.25rem 0 0", // Coins arrondis seulement en haut
+              boxShadow: "0 -5px 20px rgba(0,0,0,0.3)",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: "12rem", // Encore plus haut
+            }}
+          >
+
+            <h1 style={{
+              fontFamily: "var(--font-heading), system-ui, sans-serif",
+              fontSize: "2rem",
+              fontWeight: 900,
+              color: "#fff",
+              lineHeight: 1.3,
+              textAlign: "center",
+              margin: 0,
+            }}>
+              {svc.title}
+            </h1>
+
+
+          </div>
+        </div>
       </Link>
     </motion.div>
   );
 }
+
+
 
 /* ── Section pôle ─────────────────────────────────── */
 function PoleSection({
@@ -187,10 +165,9 @@ function PoleSection({
       <motion.div
         initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}
         variants={stagger(delay + 0.1)}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
-          gap: "1.25rem",
+          gap: "2rem 2rem",
         }}
       >
         {services.map((svc, i) => (
@@ -257,8 +234,8 @@ export default function ServicesGrid() {
               lineHeight: 1.75,
               color: "rgba(255,255,255,0.55)",
             }}>
-              Deux pôles d'expertise complémentaires — l'ingénierie technologique pour construire,
-              le conseil et la formation pour durer. Ensemble, ils forment une proposition unique
+              Trois pôles d'expertise complémentaires — l'ingénierie technologique pour construire,
+              le conseil pour structurer et la formation pour durer. Ensemble, ils forment une proposition unique
               taillée pour les organisations africaines.
             </p>
 
@@ -276,7 +253,13 @@ export default function ServicesGrid() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#F39C12" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle II — Conseil & Formation
+                  Pôle II — Conseil
+                </span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#16a34a" }} />
+                <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
+                  Pôle III — Formation
                 </span>
               </div>
             </div>
@@ -297,8 +280,14 @@ export default function ServicesGrid() {
 
         {/* ── Pôle II ── */}
         <PoleSection
-          number="II" label="Conseil & Formation"
+          number="II" label="Conseil"
           accent="#F39C12" services={POLE_II} delay={0.15}
+        />
+
+        {/* ── Pôle III ── */}
+        <PoleSection
+          number="III" label="Formation"
+          accent="#16a34a" services={POLE_III} delay={0.2}
         />
 
         {/* ── CTA bas de page ── */}

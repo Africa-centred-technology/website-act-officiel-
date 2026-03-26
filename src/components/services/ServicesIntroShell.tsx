@@ -19,6 +19,7 @@ import FooterStrip from "@/components/layout/FooterStrip";
 
 const ORANGE = "#D35400";
 const GOLD = "#F39C12";
+const GREEN = "#d45d1ddc";
 
 /* ── Background layers (same as SecteursShell for uniformity) ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -34,7 +35,7 @@ type Phase = "logo" | "services";
 /* LogoPhase, useParticleCanvas, sampleOffscreenText → ./LogoPhase.tsx */
 
 /* ══════════════════════════════════════════════════════════
-   SERVICE CARD — entrée staggerée + hover CSS natif
+   SERVICE CARD — Design avec Titre qui dépasse sur les côtés
    ══════════════════════════════════════════════════════════ */
 function ServiceCard({
   svc, index, onEnter,
@@ -44,74 +45,117 @@ function ServiceCard({
 }) {
   return (
     <motion.div
-      className="svc-card"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
       transition={{
-        opacity: { duration: 0.4 },
-        y: { duration: 0.55, delay: index * 0.07, ease: [...BURST] },
+        opacity: { duration: 0.4, delay: index * 0.05 },
+        scale: { duration: 0.55, delay: index * 0.05, ease: [...BURST] },
+      }}
+      className="group"
+      style={{
+        position: "relative",
+        cursor: "pointer",
+        padding: "0 24px", // Augmentation pour réduire la carte et espacer les titres
       }}
       onClick={() => onEnter(index)}
-      style={{
-        "--svc-accent": svc.accent,
-        position: "relative", overflow: "hidden",
-        borderRadius: "0.8rem", cursor: "pointer",
-        minHeight: "clamp(180px, 22vh, 270px)",
-        display: "flex", flexDirection: "column",
-      } as React.CSSProperties}
     >
-      {/* Image */}
-      <div className="svc-card__img" aria-hidden style={{
-        position: "absolute", inset: 0,
-        backgroundImage: `url(${svc.heroImage})`,
-        backgroundSize: "cover", backgroundPosition: "center",
-      }} />
+      {/* Conteneur Image (avec overflow:hidden) */}
+      <div style={{
+        position: "relative",
+        borderRadius: "1rem",
+        overflow: "hidden",
+        width: "100%",
+        aspectRatio: "1 / 1",
+        background: "#0a0a0a",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+        transition: "transform 0.5s ease",
+        maxWidth: "300px",
+        margin: "0 auto",
+      }} className="group-hover:scale-[1.02]">
 
-      {/* Gradient de profondeur */}
-      <div className="svc-card__depth" aria-hidden style={{ position: "absolute", inset: 0 }} />
+        {/* Image de fond avec effet Ken Burns au hover */}
+        <motion.div
+          className="absolute inset-0 transition-transform duration-1000 group-hover:scale-110"
+          style={{
+            backgroundImage: `url(${svc.heroImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.75,
+            filter: "brightness(0.85)",
+          }}
+        />
 
-      {/* Halo accent */}
-      <div className="svc-card__halo" aria-hidden style={{ position: "absolute", inset: 0 }} />
+        {/* Overlay dégradé pour la profondeur */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to top, rgba(3,10,24,0.95) 0%, transparent 66%)",
+            pointerEvents: "none",
+          }}
+        />
 
-      {/* Barre top */}
-      <div className="svc-card__topbar" aria-hidden style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 2,
-        background: `linear-gradient(90deg, ${svc.accent}, transparent 65%)`,
-      }} />
+        {/* Halo d'accentuation subtil */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at 50% 100%, ${svc.accent}88 0%, transparent 60%)`,
+          }}
+        />
 
-      {/* Icône filigrane */}
-      <div className="svc-card__icon" aria-hidden style={{
-        position: "absolute", right: "1rem", bottom: "1rem",
-      }}>
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-          stroke={svc.accent} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-          <path d={svc.icon} />
-        </svg>
+        {/* Cadre de focus et numéro */}
+        <div className="absolute inset-3 border border-white/0 group-hover:border-white/10 rounded-lg transition-all duration-500 pointer-events-none" />
+        <div className="absolute top-4 left-4 font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 text-5xl select-none" style={{ fontFamily: "Futura" }}>
+          {svc.n}
+        </div>
+
+        {/* Reflet lumineux furtif */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
       </div>
 
-      {/* Contenu */}
-      <div style={{
-        position: "relative", zIndex: 1,
-        padding: "1.4rem 1.5rem 1.2rem",
-        display: "flex", flexDirection: "column", flex: 1, gap: "0.65rem",
-      }}>
-        <h3 style={{
-          fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "clamp(1rem, 1.3vw, 1.4rem)",
-          fontWeight: 500, color: "#fff",
-          lineHeight: 1.22, whiteSpace: "pre-line", flex: 1,
-        }}>{svc.title}</h3>
+      {/* Le bloc de titre décalé */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "0",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "70%", // Largeur plus réduite
+          maxWidth: "260px",
+          display: "flex",
+          justifyContent: "center",
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+        className="transition-transform duration-500 group-hover:-translate-y-2"
+      >
+        <div
+          style={{
+            background: "#20232A",
+            padding: "1.5rem 1rem",
+            borderRadius: "0.25rem 0.25rem 0 0",
+            boxShadow: "0 -5px 20px rgba(0,0,0,0.3)",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "9.5rem", // Beaucoup plus haut
+          }}
+        >
 
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-          <p className="svc-card__tagline" style={{
-            fontSize: "clamp(0.85rem, 1.1vw, 1.15rem)",
-            color: "#ffffff",
-            fontStyle: "italic", lineHeight: 1.35, maxWidth: "82%",
-          }}>{svc.tagline}</p>
-          <svg className="svc-card__arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
-            stroke={svc.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+          <h2 style={{
+            fontFamily: "var(--font-heading), system-ui, sans-serif",
+            fontSize: "2rem",
+            fontWeight: 900,
+            color: "#fff",
+            lineHeight: 1.3,
+            textAlign: "center",
+            margin: 0,
+          }}>
+            {svc.title}
+          </h2>
         </div>
       </div>
     </motion.div>
@@ -191,16 +235,18 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}
         >
           <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "680px", margin: 0, textAlign: "justify", flex: 1 }}>
-            ACT déploie deux pôles complémentaires — Ingénierie Technologique &amp; Conseil — pour couvrir l&apos;intégralité des besoins de transformation digitale des entreprises africaines.
+            ACT déploie trois pôles complémentaires — Ingénierie Technologique, Conseil &amp; Formation — pour couvrir l&apos;intégralité des besoins de transformation digitale des entreprises africaines.
           </p>
-          <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
-            {[{ label: "Pôle I · Ingénierie", color: ORANGE }, { label: "Pôle II · Conseil", color: GOLD }].map(p => (
+            {[
+              { label: "Pôle I · Ingénierie", color: ORANGE },
+              { label: "Pôle II · Conseil", color: GOLD },
+              { label: "Pôle III · Formation", color: GREEN }
+            ].map(p => (
               <div key={p.label} style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: p.color, flexShrink: 0, boxShadow: `0 0 7px ${p.color}` }} />
                 <span style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)", color: "#ffffff", letterSpacing: "0.12em", textTransform: "uppercase" }}>{p.label}</span>
               </div>
             ))}
-          </div>
         </motion.div>
       </div>
 
@@ -220,7 +266,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
             </span>
             <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${ORANGE}50, transparent)` }} />
           </div>
-          <div className="svc-overview-grid" style={{ gap: "1.2rem" }}>
+          <div className="svc-overview-grid" style={{ gap: "3.5rem 2.5rem" }}>
             {SERVICES.filter(s => s.poleN === "I").map(svc => (
               <ServiceCard key={svc.slug} svc={svc} index={SERVICES.indexOf(svc)} onEnter={onEnter} />
             ))}
@@ -232,12 +278,28 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: GOLD, flexShrink: 0, boxShadow: `0 0 6px ${GOLD}` }} />
             <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${GOLD}CC`, whiteSpace: "nowrap" }}>
-              Pôle II — Conseil &amp; Formation
+              Pôle II — Conseil
             </span>
             <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${GOLD}50, transparent)` }} />
           </div>
-          <div className="svc-overview-grid" style={{ gap: "1.2rem" }}>
+          <div className="svc-overview-grid" style={{ gap: "2.5rem 1rem" }}>
             {SERVICES.filter(s => s.poleN === "II").map(svc => (
+              <ServiceCard key={svc.slug} svc={svc} index={SERVICES.indexOf(svc)} onEnter={onEnter} />
+            ))}
+          </div>
+        </div>
+
+        {/* ── Pôle III ── */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: GREEN, flexShrink: 0, boxShadow: `0 0 6px ${GREEN}` }} />
+            <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${GREEN}CC`, whiteSpace: "nowrap" }}>
+              Pôle III — Formation
+            </span>
+            <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${GREEN}50, transparent)` }} />
+          </div>
+          <div className="svc-overview-grid" style={{ gap: "2.5rem 1rem" }}>
+            {SERVICES.filter(s => s.poleN === "III").map(svc => (
               <ServiceCard key={svc.slug} svc={svc} index={SERVICES.indexOf(svc)} onEnter={onEnter} />
             ))}
           </div>
@@ -251,69 +313,8 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
       <style>{`
         /* ── Grid responsive ── */
         .svc-overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-        @media (max-width: 1100px) { .svc-overview-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 900px) { .svc-overview-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 640px)  { .svc-overview-grid { grid-template-columns: 1fr !important; } }
-
-        /* ── Card base ── */
-        .svc-card {
-          border: 1px solid rgba(255,255,255,0.08);
-          transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-          min-height: clamp(200px, 26vh, 300px) !important;
-        }
-        .svc-card__img {
-          opacity: 0.62;
-          transition: opacity 0.5s ease, transform 0.65s ease;
-        }
-        .svc-card__depth {
-          background: linear-gradient(to bottom, rgba(7,14,28,0.22) 0%, rgba(7,14,28,0.72) 52%, rgba(7,14,28,0.97) 100%);
-          transition: background 0.5s ease;
-        }
-        .svc-card__halo {
-          background: radial-gradient(ellipse 80% 70% at 15% 80%, color-mix(in srgb, var(--svc-accent) 13%, transparent) 0%, transparent 65%);
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-        .svc-card__topbar {
-          transform: scaleX(0.15);
-          transform-origin: left;
-          transition: transform 0.45s ease;
-        }
-        .svc-card__icon { opacity: 0.05; transition: opacity 0.35s ease; }
-        .svc-card__dot  { box-shadow: 0 0 4px var(--svc-accent); transition: box-shadow 0.35s ease; }
-        .svc-card__tagline { transition: color 0.35s ease; }
-        .svc-card__arrow {
-          opacity: 0.25;
-          transform: translateX(0);
-          transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        /* ── Hover state ── */
-        .svc-overview-grid:has(.svc-card:hover) .svc-card:not(:hover) {
-          opacity: 0.4;
-          transform: scale(0.97);
-        }
-        .svc-card:hover {
-          transform: scale(1.025);
-          border-color: color-mix(in srgb, var(--svc-accent) 50%, transparent);
-          box-shadow: 0 8px 32px color-mix(in srgb, var(--svc-accent) 18%, transparent),
-                      0 0 0 1px color-mix(in srgb, var(--svc-accent) 22%, transparent);
-        }
-        .svc-card:hover .svc-card__img {
-          opacity: 0.85;
-          transform: scale(1.06);
-        }
-        .svc-card:hover .svc-card__depth {
-          background: linear-gradient(to bottom, rgba(7,14,28,0.08) 0%, rgba(7,14,28,0.60) 55%, rgba(7,14,28,0.93) 100%);
-        }
-        .svc-card:hover .svc-card__halo   { opacity: 1; }
-        .svc-card:hover .svc-card__topbar { transform: scaleX(1); }
-        .svc-card:hover .svc-card__icon   { opacity: 0.20; }
-        .svc-card:hover .svc-card__dot    { box-shadow: 0 0 10px var(--svc-accent); }
-        .svc-card:hover .svc-card__tagline { color: rgba(255,255,255,0.55); }
-        .svc-card:hover .svc-card__arrow {
-          opacity: 1;
-          transform: translateX(4px);
-        }
       `}</style>
     </motion.div>
   );

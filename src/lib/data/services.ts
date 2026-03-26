@@ -12,7 +12,7 @@ export interface Service {
   slug: string;
   n: string;
   pole: string;
-  poleN: "I" | "II";
+  poleN: "I" | "II" | "III";
   accent: string;
   bg: string;
   icon: string;          // SVG path (viewBox 0 0 24 24)
@@ -258,7 +258,7 @@ export const SERVICES: Service[] = [
   /* ── 06 ─────────────────────────────────────────────── */
   {
     slug: "conseil-strategique",
-    n: "06", pole: "Conseil & Formation", poleN: "II", accent: GOLD,
+    n: "06", pole: "Conseil", poleN: "II", accent: GOLD,
     bg: "radial-gradient(ellipse 85% 75% at 40% 50%, #1A1708 0%, #050C18 55%, #030810 100%)",
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
     title: "Conseil Stratégique\n& Transformation",
@@ -297,7 +297,7 @@ export const SERVICES: Service[] = [
   /* ── 07 ─────────────────────────────────────────────── */
   {
     slug: "conseil-operationnel",
-    n: "07", pole: "Conseil & Formation", poleN: "II", accent: GOLD,
+    n: "07", pole: "Conseil", poleN: "II", accent: GOLD,
     bg: "radial-gradient(ellipse 80% 80% at 75% 30%, #080F1A 0%, #050C18 55%, #030810 100%)",
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
     title: "Conseil Opérationnel\n& Métier",
@@ -340,51 +340,94 @@ export const SERVICES: Service[] = [
 
   /* ── 08 ─────────────────────────────────────────────── */
   {
-    slug: "formation-competences",
-    n: "08", pole: "Conseil & Formation", poleN: "II", accent: GOLD,
+    slug: "formation-sur-mesure",
+    n: "08", pole: "Formation", poleN: "III", accent: "#16a34a",
     bg: "radial-gradient(ellipse 90% 70% at 25% 75%, #051A0A 0%, #050C18 55%, #030810 100%)",
     icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
-    title: "Formation\n& Développement\ndes Compétences",
-    tagline: "La souveraineté passe par les talents africains",
-    intro: "Les meilleurs systèmes tombent en désuétude si personne ne peut les maintenir. La formation n'est pas un service accessoire chez ACT — c'est une condition existentielle de la souveraineté technologique africaine. Il ne s'agit pas d'enseigner à utiliser des outils, mais de former des experts capables de concevoir, d'adapter, d'innover et de transmettre à leur tour. Chaque programme est construit sur un diagnostic préalable des besoins réels, illustré d'exemples africains concrets, avec apprentissage par la pratique sur des données et problématiques issues du secteur de l'organisation.",
+    title: "Formation\nSur Mesure",
+    tagline: "Des programmes adaptés à vos besoins",
+    intro: "Les meilleurs systèmes tombent en désuétude si personne ne peut les maintenir. La formation sur mesure ACT n'est pas un service accessoire — c'est une condition existentielle de la souveraineté technologique africaine. Chaque programme est construit sur un diagnostic préalable des besoins réels de votre organisation, illustré d'exemples africains concrets, avec apprentissage par la pratique sur des données et problématiques issues de votre secteur.",
     subs: [
       {
-        title: "Formation sur Mesure (Présentiel)",
+        title: "Formation Présentielle Sur Mesure",
         desc: "Format privilégié d'ACT pour les programmes de transformation : immersion totale, échanges riches, feedback immédiat et dynamique collective. Les équipes développent un langage commun et une culture partagée qui perdure bien au-delà de la formation. Formateurs locaux et internationaux pour un équilibre entre expertise globale et connaissance des réalités africaines.",
       },
       {
-        title: "Formation en Ligne",
+        title: "Formation à Distance Personnalisée",
         desc: "Conçue pour les contraintes africaines : modules légers, smartphone-first, consultables hors-ligne (15–30 min). Plateforme avec forums, sessions live et projets en groupe pour recréer une dynamique communautaire à distance. Les apprenants font partie d'une communauté apprenante africaine — jamais seuls face à leurs écrans.",
       },
       {
         title: "Modèle Intégré Conseil & Formation",
-        desc: "La formation se fait pendant la mission, pas avant ou après. Les experts ACT travaillent aux côtés des équipes client, expliquent leurs choix, partagent leurs méthodes, documentent leurs décisions. Résultat : l'organisation obtient une solution qui fonctionne ET ses équipes savent la maintenir et la faire évoluer. Former pour ne plus être indispensable — la marque d'un partenaire de développement authentique.",
+        desc: "La formation se fait pendant la mission, pas avant ou après. Les experts ACT travaillent aux côtés des équipes client, expliquent leurs choix, partagent leurs méthodes, documentent leurs décisions. Résultat : l'organisation obtient une solution qui fonctionne ET ses équipes savent la maintenir et la faire évoluer.",
       },
     ],
     benefits: [
       "Équipes autonomes et souveraines",
       "Savoir-faire ancré dans les réalités africaines",
-      "Souveraineté technologique progressive",
-      "Écosystème numérique local renforcé",
+      "Programmes adaptés à vos besoins spécifiques",
+      "Accompagnement personnalisé de vos équipes",
     ],
     deliverables: [
       "Parcours de formation personnalisé",
-      "Supports pédagogiques complets",
+      "Supports pédagogiques sur mesure",
       "Évaluations & certifications",
-      "Communauté apprenante activée",
+      "Suivi post-formation 3 mois",
     ],
     video: "https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4",
     heroImage: "/images/poles/pole-formation.jpg",
     subImages: [
       "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+
+  /* ── 09 ─────────────────────────────────────────────── */
+  {
+    slug: "catalogue-formations",
+    n: "09", pole: "Formation", poleN: "III", accent: "#16a34a",
+    bg: "radial-gradient(ellipse 90% 70% at 75% 25%, #0A1505 0%, #050C18 55%, #030810 100%)",
+    icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+    title: "Catalogue\nde Formations",
+    tagline: "ACT University - Apprenez à votre rythme",
+    intro: "ACT University propose un catalogue complet de formations en ligne et présentielles couvrant l'ensemble des compétences technologiques essentielles pour l'Afrique. De la data science au développement web, du cloud computing à l'IA, nos programmes sont conçus par des experts africains pour des apprenants africains, avec des exemples concrets tirés de notre continent.",
+    subs: [
+      {
+        title: "Formations Techniques",
+        desc: "Développement Web & Mobile (React, Next.js, Flutter), Data Science & Machine Learning, Cloud Computing (AWS, Azure), DevOps & CI/CD, Cybersécurité, Architecture Logicielle. Programmes complets avec projets pratiques et certifications reconnues.",
+      },
+      {
+        title: "Formations Business & Stratégie",
+        desc: "Transformation Digitale, Product Management, Gestion de Projet Agile, Data-Driven Decision Making, Leadership Digital. Pour les décideurs et managers qui pilotent la transformation de leurs organisations.",
+      },
+      {
+        title: "Formations Spécialisées",
+        desc: "IA Générative & Agents Intelligents, Big Data & Analytics, SIG & Géomatique, Blockchain, IoT. Programmes avancés pour les professionnels qui veulent maîtriser les technologies émergentes.",
+      },
+    ],
+    benefits: [
+      "Catalogue complet de formations certifiantes",
+      "Apprentissage flexible (en ligne & présentiel)",
+      "Contenus adaptés au contexte africain",
+      "Communauté d'apprenants active",
+    ],
+    deliverables: [
+      "Accès plateforme ACT University",
+      "Supports de cours téléchargeables",
+      "Certificats de réussite",
+      "Accès communauté alumni",
+    ],
+    video: "https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4",
+    heroImage: "/images/poles/pole-formation.jpg",
+    subImages: [
       "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
     ],
   },
 ];
 
 export const POLE_I  = SERVICES.filter(s => s.poleN === "I");
 export const POLE_II = SERVICES.filter(s => s.poleN === "II");
+export const POLE_III = SERVICES.filter(s => s.poleN === "III");
 
 export function getServiceBySlug(slug: string): Service | undefined {
   return SERVICES.find(s => s.slug === slug);

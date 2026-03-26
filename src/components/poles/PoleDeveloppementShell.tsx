@@ -51,39 +51,38 @@ const COLOR = "#D35400";
 const services = [
   {
     icon: Code,
-    title: "Développement Full-Stack",
-    description: "Applications web et mobile performantes avec les technologies modernes : React, Next.js, Node.js, Python, Django.",
-    features: ["SPA & PWA", "API RESTful & GraphQL", "Applications temps réel"]
+    title: "Ingénierie Logicielle",
+    description: "Conception et développement de solutions logicielles robustes et scalables avec les dernières technologies.",
+    features: ["Applications Web & Mobile", "Microservices & API", "Solutions sur mesure"],
+    image: "/images/services/Ingéneurie_logicielle.jpg"
+  },
+  {
+    icon: Cpu,
+    title: "Intelligence Artificielle Agentique",
+    description: "Développement de systèmes d'IA autonomes capables de prendre des décisions intelligentes et d'automatiser des processus complexes.",
+    features: ["Agents intelligents", "Apprentissage automatique", "Automation avancée"],
+    image: "/images/services/Agentic_AI.jpg"
+  },
+  {
+    icon: Database,
+    title: "Big Data & Intelligence Artificielle",
+    description: "Traitement et analyse de grandes masses de données combinées à l'IA pour extraire des insights stratégiques.",
+    features: ["Data Analytics", "Machine Learning", "Visualisation de données"],
+    image: "/images/services/big-data-and-et-artificial-intelligence.jpg"
   },
   {
     icon: Cloud,
     title: "Architecture Cloud",
-    description: "Conception et déploiement d'infrastructures scalables et sécurisées sur AWS, Azure et Google Cloud Platform.",
-    features: ["Infrastructure as Code", "Microservices", "Serverless Computing"]
-  },
-  {
-    icon: Smartphone,
-    title: "Développement Mobile",
-    description: "Applications natives et cross-platform pour iOS et Android avec React Native et Flutter.",
-    features: ["UI/UX natif", "Performances optimales", "Synchronisation offline"]
+    description: "Conception et déploiement d'infrastructures cloud natives, scalables et sécurisées.",
+    features: ["Infrastructure as Code", "Microservices", "Serverless Computing"],
+    image: "/images/services/architerture.png"
   },
   {
     icon: Database,
-    title: "Solutions Data",
-    description: "Conception de bases de données, pipelines ETL, data warehousing et solutions d'analyse de données.",
-    features: ["PostgreSQL, MongoDB", "Data pipelines", "Business Intelligence"]
-  },
-  {
-    icon: GitBranch,
-    title: "DevOps & CI/CD",
-    description: "Automatisation des déploiements, intégration et livraison continues, monitoring et observabilité.",
-    features: ["Docker & Kubernetes", "GitHub Actions, GitLab CI", "Monitoring 24/7"]
-  },
-  {
-    icon: Shield,
-    title: "Sécurité Applicative",
-    description: "Audit de sécurité, tests de pénétration, implémentation de best practices OWASP.",
-    features: ["Audit de code", "Pentest applications", "Conformité RGPD"]
+    title: "Systèmes d'Information Géographique",
+    description: "Solutions SIG pour la collecte, l'analyse et la visualisation de données géospatiales.",
+    features: ["Cartographie interactive", "Analyse spatiale", "Géolocalisation"],
+    image: "/images/services/sig.jpg"
   },
 ];
 
@@ -284,77 +283,115 @@ export default function PoleDeveloppementShell() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-          gap: '2rem',
+          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+          gap: screenSize === 'mobile' ? '1.5rem' : '2.5rem',
         }}>
           {services.map((service, i) => {
             const Icon = service.icon;
+            const [isHovered, setIsHovered] = useState(false);
             return (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.15 }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(255,255,255,0.02)',
+                  border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.08)',
                   borderRadius: '1rem',
-                  padding: screenSize === 'mobile' ? '2rem 1.5rem' : '2.5rem',
-                  transition: 'all 0.3s ease',
-                }}
-                whileHover={{
-                  borderColor: COLOR,
-                  y: -8
+                  overflow: 'hidden',
+                  transition: 'all 0.4s ease',
+                  transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+                  boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : 'none',
                 }}
               >
+                {/* Image Header */}
                 <div style={{
-                  width: '4rem',
-                  height: '4rem',
-                  borderRadius: '0.75rem',
-                  background: `${COLOR}22`,
-                  border: `1px solid ${COLOR}44`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '1.5rem',
+                  position: 'relative',
+                  height: screenSize === 'mobile' ? '180px' : '220px',
+                  overflow: 'hidden',
+                  background: 'rgba(0,0,0,0.3)',
                 }}>
-                  <Icon size={28} color={COLOR} />
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.6s ease, filter 0.4s ease',
+                      transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+                      filter: isHovered ? 'grayscale(0%) brightness(0.8)' : 'grayscale(40%) brightness(0.6)',
+                    }}
+                  />
+                  {/* Gradient overlay */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.4) 50%, rgba(7,14,28,0.95) 100%)`,
+                  }} />
+                  {/* Icon badge */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '1rem',
+                    left: '1.5rem',
+                    width: '3.5rem',
+                    height: '3.5rem',
+                    borderRadius: '0.75rem',
+                    background: `${COLOR}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: `0 8px 24px ${COLOR}66`,
+                  }}>
+                    <Icon size={24} color="#fff" />
+                  </div>
                 </div>
-                <h3 style={{
-                  fontSize: screenSize === 'mobile' ? '1.3rem' : '1.5rem',
-                  fontWeight: 800,
-                  marginBottom: '1rem',
-                  fontFamily: 'var(--font-display)',
-                  color: '#fff'
+
+                {/* Content */}
+                <div style={{
+                  padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
                 }}>
-                  {service.title}
-                </h3>
-                <p style={{
-                  fontSize: '1rem',
-                  lineHeight: 1.6,
-                  color: 'rgba(255,255,255,0.65)',
-                  marginBottom: '1.5rem',
-                  fontFamily: 'var(--font-body)'
-                }}>
-                  {service.description}
-                </p>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {service.features.map((feature, fi) => (
-                    <li key={fi} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      marginBottom: '0.5rem',
-                      fontSize: '0.9rem',
-                      color: 'rgba(255,255,255,0.55)',
-                      fontFamily: 'var(--font-body)'
-                    }}>
-                      <CheckCircle2 size={16} color={COLOR} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                  <h3 style={{
+                    fontSize: screenSize === 'mobile' ? '1.3rem' : '1.6rem',
+                    fontWeight: 900,
+                    marginBottom: '1rem',
+                    fontFamily: 'var(--font-display)',
+                    color: '#fff',
+                    textTransform: 'uppercase',
+                    lineHeight: 1.2,
+                  }}>
+                    {service.title}
+                  </h3>
+                  <p style={{
+                    fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
+                    lineHeight: 1.6,
+                    color: 'rgba(255,255,255,0.65)',
+                    marginBottom: '1.5rem',
+                    fontFamily: 'var(--font-body)'
+                  }}>
+                    {service.description}
+                  </p>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {service.features.map((feature, fi) => (
+                      <li key={fi} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.9rem',
+                        color: 'rgba(255,255,255,0.55)',
+                        fontFamily: 'var(--font-body)'
+                      }}>
+                        <CheckCircle2 size={16} color={COLOR} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </motion.div>
             );
           })}
