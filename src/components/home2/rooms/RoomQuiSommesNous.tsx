@@ -55,7 +55,7 @@ const VALEURS = [
 
 const STATS = [
     { n: "2026", label: "Fondée" },
-    { n: "4", label: "Collaborateurs" },
+    { n: "8", label: "Collaborateurs" },
     { n: "5+", label: "Domaines" },
     { n: "∞", label: "Ambition" },
 ];
@@ -149,11 +149,10 @@ export default function RoomQuiSommesNous() {
                                 textAlign: "left",
                             }}
                         >
-                            Chez ACT, nous sommes animés par une <strong style={{ color: "#fff" }}>raison d'être commune</strong> : libérer l'énergie humaine et technologique.
-                            Née en <strong style={{ color: "#fff" }}>2026</strong> de la vision de{" "}
-                            <strong style={{ color: "#fff" }}>Sohaib Baroud</strong>, nous allions une approche profondément humaine à la puissance de l'Intelligence Artificielle.
-                            Notre objectif : créer un <strong style={{ color: "#fff" }}>impact concret et durable</strong> pour transformer nos sociétés — et bâtir ensemble un{" "}
-                            <strong style={{ color: "#D35400" }}>écosystème numérique</strong>.
+                            Nous sommes une startup guidée par une <strong style={{ color: "#fff" }}>raison d’être commune</strong> : libérer l'énergie humaine et technologique.
+                            Une approche profondément humaine y est cultivée{" "}
+                            ,renforcée par la puissance de l’Intelligence Artificielle.
+                            L’ambition est de générer un impact concret et durable, afin de transformer les sociétés et de contribuer à la construction d’un écosystème numérique collaboratif.
                         </motion.p>
 
                         {/* Stats bar */}
@@ -201,27 +200,7 @@ export default function RoomQuiSommesNous() {
                         </motion.div>
 
                         {/* CTA - Desktop uniquement */}
-                        {screenSize === 'desktop' && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.55, delay: 0.60, ease: [...EASE] }}
-                            >
-                                <Link
-                                    href="/about"
-                                    className="cta-btn"
-                                    style={{ textDecoration: "none" }}
-                                >
-                                    <span className="cta-btn__border" aria-hidden />
-                                    <span className="cta-btn__blur" aria-hidden />
-                                    <span className="cta-btn__background" aria-hidden />
-                                    <span className="cta-btn__inner">
-                                        <span className="cta-btn__icon" aria-hidden />
-                                        <span className="cta-btn__text">Notre histoire</span>
-                                    </span>
-                                </Link>
-                            </motion.div>
-                        )}
+                       
                     </div>
 
                     {/* ── COLONNE DROITE — Valeurs ── */}
@@ -343,19 +322,6 @@ export default function RoomQuiSommesNous() {
                             justifyContent: "center" // Centré sur mobile et tablette
                         }}
                     >
-                        <Link
-                            href="/about"
-                            className="cta-btn"
-                            style={{ textDecoration: "none" }}
-                        >
-                            <span className="cta-btn__border" aria-hidden />
-                            <span className="cta-btn__blur" aria-hidden />
-                            <span className="cta-btn__background" aria-hidden />
-                            <span className="cta-btn__inner">
-                                <span className="cta-btn__icon" aria-hidden />
-                                <span className="cta-btn__text">Notre histoire</span>
-                            </span>
-                        </Link>
                     </motion.div>
                 )}
             </motion.div>

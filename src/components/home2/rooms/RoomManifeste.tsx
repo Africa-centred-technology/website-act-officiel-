@@ -254,8 +254,10 @@ export default function RoomManifeste() {
         {/* Right Side: Manifeste Image */}
         <motion.div
           style={{
-            width: screenSize === 'desktop' ? '600px' : '100%',
+            width: screenSize === 'desktop' ? '450px' : '100%',
             flexShrink: 0,
+            position: "relative",
+            left: screenSize === 'desktop' ? "-40px" : "0",
           }}
           initial={{ opacity: 0, scale: 0.9, x: 40 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -266,10 +268,12 @@ export default function RoomManifeste() {
             <div className="absolute -inset-10 bg-[#D35400]/10 blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
 
             <img
-              src="/Sohaib_baroud_Manifeste.png"
+              src="/Manifeste.png"
               alt="Notre Manifeste"
-              className="relative w-full h-auto grayscale-[15%] hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-[1.02]"
+              className="relative w-full grayscale-[15%] hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-[1.02] object-cover"
               style={{
+                height: screenSize === 'desktop' ? '500px' : 'auto',
+                objectPosition: 'top',
                 boxShadow: "0 40px 100px -20px rgba(0,0,0,0.8)",
                 borderRadius: screenSize === 'mobile' ? '1rem' : screenSize === 'tablet' ? '1.5rem' : '1.5rem',
               }}

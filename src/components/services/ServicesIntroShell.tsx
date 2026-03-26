@@ -6,19 +6,12 @@
  * Phases :
  *  "logo"     → Streaks lumineuses depuis les 4 bords → forment ACT → dispersent
  *  "services" → 8 cards avec images, sans numérotation
- *  "entering" → Portail zoom sur le service sélectionné
- *  "room"     → ServiceRoomShell
- *
- * Particle system (v2) :
- *  - 300 particules en forme de comètes (ellipses allongées dans le sens du vecteur)
- *  - Entrée depuis les 4 bords (pas depuis le centre)
- *  - Trail effect : canvas semi-transparent entre chaque frame
- *  - 3 phases accélérées : stream (0-1s) → glow (1-1.7s) → disperse (1.7-2.5s)
  */
 
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SERVICES, type Service } from "@/lib/data/services";
 import LogoPhase from "./LogoPhase";
@@ -32,13 +25,11 @@ const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ss
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
-const ServiceRoomShell = dynamic(() => import("./ServiceRoomShell"), { ssr: false });
-
 /* ── Tokens ───────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
 
-type Phase = "logo" | "services" | "entering" | "room";
+type Phase = "logo" | "services";
 
 /* LogoPhase, useParticleCanvas, sampleOffscreenText → ./LogoPhase.tsx */
 
@@ -329,94 +320,18 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   PORTAL TRANSITION
-   ══════════════════════════════════════════════════════════ */
-function PortalTransition({ svc }: { svc: Service }) {
-  return (
-    <motion.div
-      style={{
-        position: "absolute", inset: 0, zIndex: 20,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: "#070E1C", overflow: "hidden",
-      }}
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-    >
-      {/* Burst radial */}
-      <motion.div aria-hidden style={{
-        position: "absolute", inset: 0,
-        background: `radial-gradient(ellipse 60% 55% at 50% 50%, ${svc.accent}55 0%, transparent 70%)`,
-      }}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: [0, 1.8, 3], opacity: [0, 0.9, 0] }}
-        transition={{ duration: 1.0, ease: [...BURST] }}
-      />
-
-      {/* Vignette tunnel */}
-      <motion.div aria-hidden style={{
-        position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 90% 88% at 50% 50%, transparent 14%, rgba(0,0,0,0.88) 100%)",
-      }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1, 0.4, 0] }}
-        transition={{ duration: 1.2, times: [0, 0.08, 0.5, 1] }}
-      />
-
-      {/* Titre du service qui zoome */}
-      <motion.div
-        initial={{ scale: 0.4, opacity: 0 }}
-        animate={{ scale: [0.4, 1.1, 18], opacity: [0, 1, 0] }}
-        transition={{ duration: 1.2, ease: [...BURST] }}
-        style={{
-          fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "clamp(28px, 5vw, 6rem)",
-          fontWeight: 500, color: svc.accent,
-          letterSpacing: "0.06em", lineHeight: 1,
-          textAlign: "center", whiteSpace: "pre-line",
-          userSelect: "none",
-        }}
-      >{svc.title}</motion.div>
-
-      {/* Particules burst */}
-      {Array.from({ length: 24 }, (_, i) => {
-        const angle = (i / 24) * Math.PI * 2;
-        const dist = 200 + Math.random() * 180;
-        return (
-          <motion.div key={i} aria-hidden style={{
-            position: "absolute", width: 3, height: 3,
-            borderRadius: "50%", background: svc.accent,
-            left: "50%", top: "50%",
-          }}
-            initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
-            animate={{
-              x: Math.cos(angle) * dist,
-              y: Math.sin(angle) * dist,
-              opacity: 0, scale: 0,
-            }}
-            transition={{ duration: 0.85, delay: 0.05, ease: "easeOut" }}
-          />
-        );
-      })}
-    </motion.div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════
    COMPOSANT PRINCIPAL
    ══════════════════════════════════════════════════════════ */
 export default function ServicesIntroShell() {
   const [phase, setPhase] = useState<Phase>("logo");
-  const [selected, setSelected] = useState(0);
+  const router = useRouter();
 
   const handleLogoDone = useCallback(() => setPhase("services"), []);
 
   const handleEnterService = useCallback((idx: number) => {
-    setSelected(idx);
-    setPhase("entering");
-    setTimeout(() => setPhase("room"), 1400);
-  }, []);
-
-  const svc = SERVICES[selected];
+    const svc = SERVICES[idx];
+    router.push(`/services/${svc.slug}`);
+  }, [router]);
 
   return (
     <div style={{
@@ -446,24 +361,7 @@ export default function ServicesIntroShell() {
           </motion.div>
         )}
 
-        {phase === "entering" && (
-          <motion.div key="entering" style={{ position: "absolute", inset: 0, zIndex: 20 }}>
-            <PortalTransition svc={svc} />
-          </motion.div>
-        )}
-
       </AnimatePresence>
-
-      {/* Room */}
-      {(phase === "entering" || phase === "room") && (
-        <motion.div
-          style={{ position: "absolute", inset: 0, zIndex: 5 }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: phase === "room" ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: phase === "room" ? 0.1 : 0 }}>
-          <ServiceRoomShell initialIndex={selected} />
-        </motion.div>
-      )}
     </div>
   );
 }

@@ -373,7 +373,7 @@ export default function RoomPortail() {
                     {/* Section: Ils nous font confiance - Défilement infini */}
                     <div className="w-full pt-12 pb-6 border-t border-white/10">
                         <h3 className="text-white/60 text-center text-sm uppercase tracking-widest mb-10 px-12" style={{ fontFamily: "var(--font-display)" }}>
-                            Ils nous font confiance
+                            Ils nous ont fait confiance
                         </h3>
                         <div className="relative overflow-hidden before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-24 before:bg-gradient-to-r before:from-black before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-24 after:bg-gradient-to-l after:from-black after:to-transparent">
                             <motion.div

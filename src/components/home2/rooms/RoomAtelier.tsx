@@ -11,6 +11,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
+import { POLES } from "@/lib/data/poles";
+
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -36,32 +38,15 @@ function useMediaQuery() {
   return screenSize;
 }
 
-const services = [
-  {
-    n: "01",
-    title: "Pôle\nDéveloppement\nTechnologique",
-    tag: "Ingénierie",
-    desc: "Solutions sur mesure, plateformes robustes et développement logiciel adapté aux enjeux de chaque client.",
-    href: "/poles/developpement-technologique",
-    img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    n: "02",
-    title: "Pôle\nConseil",
-    tag: "Stratégie IT",
-    desc: "Accompagnement stratégique, audit technologique et transformation globale pour accélérer votre croissance.",
-    href: "/poles/conseil-strategie-it",
-    img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    n: "03",
-    title: "Pôle\nFormation",
-    tag: "Transmission",
-    desc: "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents de demain.",
-    href: "/poles/formation",
-    img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
-  },
-];
+const services = POLES.map(p => ({
+  n: p.n,
+  title: p.titleWithBreaks,
+  tag: p.tag,
+  desc: p.desc,
+  href: p.href,
+  img: p.img,
+}));
+
 
 /* Stagger offset + internal column proportions — asymétrie délibérée par carte */
 const LAYOUT = [

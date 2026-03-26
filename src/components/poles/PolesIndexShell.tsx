@@ -12,6 +12,8 @@ import dynamic from "next/dynamic";
 import { Code, Users, GraduationCap, ArrowRight } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
+import { POLES } from "@/lib/data/poles";
+
 
 /* ── Background layers ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -42,41 +44,8 @@ function useMediaQuery() {
   return screenSize;
 }
 
-const poles = [
-  {
-    id: "developpement-technologique",
-    number: "01",
-    title: "Développement Technologique",
-    tagline: "L'excellence technique au service de vos ambitions",
-    description: "Conception et déploiement de solutions technologiques sur mesure qui transforment vos idées en produits concrets.",
-    color: "#D35400",
-    icon: Code,
-    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=1200&q=80",
-    stats: { left: "50+", leftLabel: "Projets", right: "30+", rightLabel: "Clients" }
-  },
-  {
-    id: "conseil-strategie-it",
-    number: "02",
-    title: "Conseil & Stratégie IT",
-    tagline: "Votre partenaire stratégique pour la transformation digitale",
-    description: "Accompagnement stratégique et opérationnel dans votre transformation numérique, de l'audit au pilotage de projets.",
-    color: "#2563eb",
-    icon: Users,
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80",
-    stats: { left: "100+", leftLabel: "Audits", right: "45+", rightLabel: "Entreprises" }
-  },
-  {
-    id: "formation",
-    number: "03",
-    title: "Formation & Développement",
-    tagline: "Former les talents qui construiront l'Afrique de demain",
-    description: "Démocratisation de l'accès aux compétences technologiques via formations certifiantes, ateliers et bootcamps.",
-    color: "#16a34a",
-    icon: GraduationCap,
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
-    stats: { left: "2000+", leftLabel: "Apprenants", right: "15+", rightLabel: "Partenaires" }
-  },
-];
+const poles = POLES;
+
 
 /* ══════════════════════════════════════════════════════════
    HERO SECTION
