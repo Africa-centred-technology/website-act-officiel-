@@ -3,7 +3,8 @@
 **Secteur :** Commerce & Marketing  
 **Niveau :** Initiation à intermédiaire  
 **Durée :** 2 journées (14h)  
-**Format :** Présentiel ou distanciel  
+**Format :** Présentiel ou distanciel 
+**Catégorie :** Intelligence artificielle
 
 ---
 

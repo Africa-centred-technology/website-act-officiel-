@@ -4,6 +4,7 @@
 **Niveau :** Avancé  
 **Durée :** 3 journées (21h)  
 **Format :** Présentiel  
+**Catégorie :** Intelligence artificielle
 
 ---
 

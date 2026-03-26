@@ -4,6 +4,7 @@
 **Niveau :** Initiation à intermédiaire  
 **Durée :** 2h30 — 3h (demi-journée)  
 **Format :** Présentiel ou distanciel  
+**Catégorie :** Intelligence artificielle
 
 ---
 

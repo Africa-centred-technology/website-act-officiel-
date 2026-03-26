@@ -5,6 +5,7 @@
 **Durée :** 2 journées (14h)  
 **Format :** Présentiel  
 **Parcours :** Claude Code — 3/3
+**Catégorie :** Intelligence artificielle
 
 ---
 

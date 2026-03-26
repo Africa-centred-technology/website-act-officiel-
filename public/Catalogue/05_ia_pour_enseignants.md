@@ -4,6 +4,7 @@
 **Niveau :** Initiation à intermédiaire  
 **Durée :** 2 journées (14h)  
 **Format :** Présentiel ou hybride  
+**Catégorie :** Intelligence artificielle
 
 ---
 

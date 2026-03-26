@@ -3,7 +3,8 @@
 **Secteur :** Jeunes & Étudiants  
 **Niveau :** Initiation  
 **Durée :** 1 journée (7h)  
-**Format :** Présentiel ou distanciel  
+**Format :** Présentiel ou distanciel 
+**Catégorie :** Intelligence artificielle
 
 ---
 

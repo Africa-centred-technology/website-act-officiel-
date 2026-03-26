@@ -3,7 +3,9 @@
 **Secteur :** Transversal — tous métiers  
 **Niveau :** Intermédiaire  
 **Durée :** 1 journée (7h)  
-**Format :** Présentiel ou distanciel  
+**Format :** Présentiel ou distanciel 
+**Catégorie :** Intelligence artificielle
+
 
 ---
 

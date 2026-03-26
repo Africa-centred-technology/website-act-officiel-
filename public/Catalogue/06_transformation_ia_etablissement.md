@@ -4,6 +4,7 @@
 **Niveau :** Intermédiaire à avancé  
 **Durée :** 1 journée (7h)  
 **Format :** Présentiel  
+**Catégorie :** Intelligence artificielle
 
 ---
 
