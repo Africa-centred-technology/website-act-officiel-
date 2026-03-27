@@ -268,7 +268,7 @@ export default function RoomManifeste() {
             <div className="absolute -inset-10 bg-[#D35400]/10 blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
 
             <img
-              src="/Manifeste.png"
+              src="/images/Manifeste.png"
               alt="Notre Manifeste"
               className="relative w-full grayscale-[15%] hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-[1.02] object-cover"
               style={{

@@ -29,6 +29,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-productivite-quotidienne",
     "title": "Intégrer l'IA dans sa pratique professionnelle",
     "secteur": "Transversal — tous métiers",
+    "categorie": "Intelligence artificielle",
     "niveau": "Initiation",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -102,6 +103,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "prompt-engineering",
     "title": "Maîtriser le Prompt Engineering",
     "secteur": "Transversal — tous métiers",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -184,6 +186,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-ethique-responsabilite",
     "title": "IA, Biais et Responsabilité",
     "secteur": "Transversal — tous métiers",
+    "categorie": "Intelligence artificielle",
     "niveau": "Initiation à intermédiaire",
     "duree": "2h30 — 3h (demi-journée)",
     "format": "Présentiel ou distanciel",
@@ -249,6 +252,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "automatisation-no-code",
     "title": "Automatisation intelligente avec l'IA",
     "secteur": "Transversal — tous métiers",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire",
     "duree": "2 journées (14h)",
     "format": "Présentiel ou distanciel",
@@ -266,21 +270,40 @@ export const FORMATIONS: Formation[] = [
     "programme": [
       {
         "module": "Jour 1 — Concevoir et construire ses premiers workflows",
+        "details": []
+      },
+      {
+        "module": "Module 1 — La logique de l'automatisation (1h)",
         "details": [
           "Qu'est-ce qu'un workflow automatisé ?",
           "Identifier les processus à fort potentiel d'automatisation",
           "Les outils du marché : Make, n8n, Zapier — comparaison et choix selon les usages",
-          "La notion de déclencheur, d'action et de condition",
+          "La notion de déclencheur, d'action et de condition"
+        ]
+      },
+      {
+        "module": "Module 2 — Prise en main de l'outil (2h)",
+        "details": [
           "Interface et logique de Make (outil principal de la formation)",
           "Créer son premier scénario : connecter deux applications",
           "Déclencheurs : email, formulaire, agenda, webhook",
           "Actions : créer, modifier, envoyer, notifier",
-          "Atelier guidé : automatisation d'un processus simple pas-à-pas",
+          "Atelier guidé : automatisation d'un processus simple pas-à-pas"
+        ]
+      },
+      {
+        "module": "Module 3 — Travailler avec les données (2h)",
+        "details": [
           "Manipuler et transformer des données dans un workflow",
           "Conditions, filtres et branchements",
           "Itérations : traiter une liste d'éléments automatiquement",
           "Gestion des erreurs et des cas limites",
-          "Atelier : automatisation d'un traitement de données récurrent",
+          "Atelier : automatisation d'un traitement de données récurrent"
+        ]
+      },
+      {
+        "module": "Module 4 — Cas pratiques métier (2h)",
+        "details": [
           "Automatiser le traitement des emails entrants",
           "Générer des rapports automatiques depuis un tableur",
           "Synchroniser des informations entre plusieurs outils",
@@ -289,19 +312,38 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 2 — Intégrer l'IA dans ses automatisations",
+        "details": []
+      },
+      {
+        "module": "Module 5 — Connecter l'IA à ses workflows (2h)",
         "details": [
           "Intégrer ChatGPT / Claude dans un scénario Make",
           "Traitement intelligent de texte : résumé, classification, extraction d'informations",
           "Génération automatique de contenu structuré",
-          "Atelier : workflow avec analyse IA d'un document entrant",
+          "Atelier : workflow avec analyse IA d'un document entrant"
+        ]
+      },
+      {
+        "module": "Module 6 — Automatisations avancées (2h)",
+        "details": [
           "Workflows multi-étapes avec logique conditionnelle complexe",
           "Traitement de fichiers : PDF, tableurs, images",
           "Notifications intelligentes et alertes contextuelles",
-          "Atelier : construire un workflow complet de bout en bout",
+          "Atelier : construire un workflow complet de bout en bout"
+        ]
+      },
+      {
+        "module": "Module 7 — De la maquette au déploiement (1h30)",
+        "details": [
           "Tester et valider un workflow avant mise en production",
           "Surveiller l'exécution et gérer les erreurs",
           "Documentation et maintenance d'une automatisation",
-          "Bonnes pratiques de sécurité et de confidentialité des données",
+          "Bonnes pratiques de sécurité et de confidentialité des données"
+        ]
+      },
+      {
+        "module": "Module 8 — Plan d'action individuel (30min)",
+        "details": [
           "Chaque participant identifie 3 automatisations à déployer dans les 30 jours",
           "Priorisation selon l'impact et la faisabilité",
           "Ressources pour continuer à progresser de manière autonome"
@@ -321,6 +363,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-pour-enseignants",
     "title": "L'IA comme outil pédagogique",
     "secteur": "Éducation & Formation",
+    "categorie": "Intelligence artificielle",
     "niveau": "Initiation à intermédiaire",
     "duree": "2 journées (14h)",
     "format": "Présentiel ou hybride",
@@ -338,16 +381,30 @@ export const FORMATIONS: Formation[] = [
     "programme": [
       {
         "module": "Jour 1 — Comprendre et s'approprier l'IA en contexte pédagogique",
+        "details": []
+      },
+      {
+        "module": "Module 1 — L'IA dans la salle de classe : état des lieux (1h30)",
         "details": [
           "Ce que font réellement les étudiants avec l'IA (et depuis quand)",
           "Les usages détournés : tricherie, paraphrase, génération de devoirs",
           "Les usages légitimes et constructifs à reconnaître et encourager",
-          "Comment repositionner l'enseignant face à l'IA : du transmetteur au guide",
+          "Comment repositionner l'enseignant face à l'IA : du transmetteur au guide"
+        ]
+      },
+      {
+        "module": "Module 2 — L'IA comme assistant de conception pédagogique (2h)",
+        "details": [
           "Générer des plans de cours et séquences pédagogiques",
           "Produire des supports de cours, fiches de synthèse, glossaires",
           "Adapter un contenu à différents niveaux ou profils d'apprenants",
           "Créer des scénarios pédagogiques différenciés",
-          "Atelier : chaque participant conçoit une séquence pédagogique avec l'IA",
+          "Atelier : chaque participant conçoit une séquence pédagogique avec l'IA"
+        ]
+      },
+      {
+        "module": "Module 3 — Concevoir des exercices et évaluations avec l'IA (2h)",
+        "details": [
           "Générer des batteries d'exercices variés et progressifs",
           "Créer des QCM, études de cas, mises en situation",
           "Personnaliser les exercices selon les profils d'apprenants",
@@ -357,20 +414,39 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 2 — Repenser l'évaluation et accompagner les apprenants",
+        "details": []
+      },
+      {
+        "module": "Module 4 — Évaluer à l'ère de l'IA (2h)",
         "details": [
           "Pourquoi les évaluations traditionnelles sont fragilisées par l'IA",
           "Concevoir des évaluations IA-résistantes : oral, processus, portfolio, création",
           "L'évaluation de la capacité à utiliser l'IA de manière critique",
           "Détection des contenus générés par IA : outils, limites et posture éthique",
-          "Atelier : repenser une évaluation existante pour l'adapter au contexte IA",
+          "Atelier : repenser une évaluation existante pour l'adapter au contexte IA"
+        ]
+      },
+      {
+        "module": "Module 5 — Enseigner avec et sur l'IA (1h30)",
+        "details": [
           "Intégrer l'IA comme objet d'apprentissage dans ses cours",
           "Activités pédagogiques exploitant l'IA : débat, analyse critique, co-création",
           "Développer l'esprit critique des apprenants face aux sorties IA",
-          "Exemples d'activités réussies dans différents contextes disciplinaires",
+          "Exemples d'activités réussies dans différents contextes disciplinaires"
+        ]
+      },
+      {
+        "module": "Module 6 — Construire sa politique d'usage (1h)",
+        "details": [
           "Rédiger une charte d'usage de l'IA pour sa classe ou son établissement",
           "Communiquer clairement les règles aux apprenants et aux parents",
           "Dialogue avec la direction et les collègues : comment embarquer l'institution",
-          "Les ressources institutionnelles et réglementaires à connaître",
+          "Les ressources institutionnelles et réglementaires à connaître"
+        ]
+      },
+      {
+        "module": "Module 7 — Plan d'action et mise en réseau (1h)",
+        "details": [
           "Chaque participant définit 3 changements concrets à intégrer dès la prochaine session",
           "Construction d'un réseau de pairs pour continuer à partager les pratiques",
           "Ressources pour rester informé des évolutions"
@@ -391,6 +467,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "transformation-ia-etablissement",
     "title": "Conduire la transformation IA d'un établissement",
     "secteur": "Éducation & Formation",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire à avancé",
     "duree": "1 journée (7h)",
     "format": "Présentiel",
@@ -470,6 +547,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-sante",
     "title": "IA et Pratiques de Santé",
     "secteur": "Santé",
+    "categorie": "Intelligence artificielle",
     "niveau": "Initiation à intermédiaire",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -546,6 +624,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-marketing-communication",
     "title": "L'IA au service du Marketing et de la Communication",
     "secteur": "Commerce & Marketing",
+    "categorie": "Intelligence artificielle",
     "niveau": "Initiation à intermédiaire",
     "duree": "2 journées (14h)",
     "format": "Présentiel ou distanciel",
@@ -563,21 +642,40 @@ export const FORMATIONS: Formation[] = [
     "programme": [
       {
         "module": "Jour 1 — Créer du contenu avec l'IA",
+        "details": []
+      },
+      {
+        "module": "Module 1 — L'IA dans l'écosystème marketing (1h)",
         "details": [
           "Panorama des outils IA pour le marketing : texte, image, vidéo, audio",
           "Ce que l'IA change dans la production de contenu",
-          "Les risques à éviter : contenu générique, perte de voix de marque, problèmes légaux",
+          "Les risques à éviter : contenu générique, perte de voix de marque, problèmes légaux"
+        ]
+      },
+      {
+        "module": "Module 2 — Production de contenu texte avec l'IA (2h)",
+        "details": [
           "Rédiger des posts réseaux sociaux adaptés à chaque plateforme",
           "Créer des newsletters engageantes et personnalisées",
           "Produire des fiches produits, landing pages et pages web",
           "Rédiger des scripts pour vidéos, podcasts et présentations",
           "Adapter le ton et le style à son identité de marque",
-          "Atelier : production de contenu pour ses propres canaux",
+          "Atelier : production de contenu pour ses propres canaux"
+        ]
+      },
+      {
+        "module": "Module 3 — Création visuelle assistée par l'IA (2h)",
+        "details": [
           "Les outils de génération d'images : Midjourney, DALL-E, Adobe Firefly",
           "Créer des visuels cohérents avec son identité graphique",
           "Générer des déclinaisons pour différents formats et plateformes",
           "Limites légales et droits d'auteur dans la création visuelle IA",
-          "Atelier : création de visuels pour une campagne réelle",
+          "Atelier : création de visuels pour une campagne réelle"
+        ]
+      },
+      {
+        "module": "Module 4 — Construire un calendrier éditorial avec l'IA (1h)",
+        "details": [
           "Générer des idées de contenu en volume avec l'IA",
           "Structurer un plan éditorial mensuel ou trimestriel",
           "Adapter les contenus à la saisonnalité et aux actualités",
@@ -586,20 +684,39 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 2 — Analyser, personnaliser et automatiser",
+        "details": []
+      },
+      {
+        "module": "Module 5 — Analyse marketing avec l'IA (2h)",
         "details": [
           "Analyser des données clients et de performance avec l'IA",
           "Interpréter des rapports analytics et en extraire des insights",
           "Veille concurrentielle et analyse des tendances assistées par l'IA",
           "Segmentation client augmentée : identifier les profils à fort potentiel",
-          "Atelier : analyse de ses propres données marketing",
+          "Atelier : analyse de ses propres données marketing"
+        ]
+      },
+      {
+        "module": "Module 6 — Personnalisation à grande échelle (1h30)",
+        "details": [
           "Personnaliser les emails et les communications selon le profil client",
           "Adapter les messages selon le parcours d'achat",
           "A/B testing assisté par l'IA",
-          "Recommandations de contenu personnalisées",
+          "Recommandations de contenu personnalisées"
+        ]
+      },
+      {
+        "module": "Module 7 — Automatiser son workflow marketing (1h30)",
+        "details": [
           "Connecter les outils IA à son CRM et ses plateformes marketing",
           "Automatiser la publication, la modération et les réponses de premier niveau",
           "Mettre en place des flux de nurturing intelligents",
-          "Atelier : conception d'un mini-workflow automatisé",
+          "Atelier : conception d'un mini-workflow automatisé"
+        ]
+      },
+      {
+        "module": "Module 8 — Maintenir la cohérence de marque (1h)",
+        "details": [
           "Définir et encoder sa voix de marque pour l'IA",
           "Créer un guide de style pour ses prompts marketing",
           "Processus de validation éditoriale dans un workflow IA",
@@ -621,6 +738,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-ecommerce",
     "title": "Optimiser son activité e-commerce avec l'IA",
     "secteur": "Commerce & Marketing",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -708,6 +826,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "piloter-transformation-ia",
     "title": "Piloter la transformation IA de son organisation",
     "secteur": "RH & Management",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire à avancé",
     "duree": "1 journée (7h)",
     "format": "Présentiel",
@@ -795,6 +914,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-finance",
     "title": "L'IA appliquée à la Finance et au Contrôle de Gestion",
     "secteur": "Finance & Comptabilité",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -873,6 +993,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "developpement-assiste-ia",
     "title": "Développement assisté par l'IA",
     "secteur": "IT & Technique",
+    "categorie": "Intelligence artificielle",
     "niveau": "Intermédiaire",
     "duree": "2 journées (14h)",
     "format": "Présentiel ou distanciel",
@@ -890,20 +1011,39 @@ export const FORMATIONS: Formation[] = [
     "programme": [
       {
         "module": "Jour 1 — Intégrer l'IA dans son workflow de développement",
+        "details": []
+      },
+      {
+        "module": "Module 1 — Panorama des outils IA pour les développeurs (1h)",
         "details": [
           "GitHub Copilot, Cursor, Claude, ChatGPT, Gemini : comparatif et cas d'usage",
           "Les modèles de langage et le code : comment ils génèrent, pourquoi ils se trompent",
           "Intégration dans VSCode, JetBrains et autres IDEs",
-          "Configuration et personnalisation de son environnement",
+          "Configuration et personnalisation de son environnement"
+        ]
+      },
+      {
+        "module": "Module 2 — Génération de code efficace (2h)",
+        "details": [
           "Techniques de prompting spécifiques au code",
           "Complétion de code vs génération à partir de descriptions",
           "Générer des fonctions, des classes, des modules complets",
           "Travailler avec plusieurs fichiers et maintenir le contexte",
-          "Atelier : développement d'un mini-projet guidé par l'IA",
+          "Atelier : développement d'un mini-projet guidé par l'IA"
+        ]
+      },
+      {
+        "module": "Module 3 — Documentation et commentaires automatisés (1h)",
+        "details": [
           "Générer de la documentation technique à partir du code",
           "Écrire des README, des docstrings et des commentaires avec l'IA",
           "Maintenir la documentation à jour dans un projet existant",
-          "Atelier : documentation d'un module de code existant",
+          "Atelier : documentation d'un module de code existant"
+        ]
+      },
+      {
+        "module": "Module 4 — Génération et automatisation des tests (2h)",
+        "details": [
           "Générer des tests unitaires avec l'IA",
           "Tests d'intégration et scénarios de bout en bout assistés par l'IA",
           "Identifier les cas limites et les edge cases avec l'IA",
@@ -913,21 +1053,40 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 2 — Cas d'usage avancés et posture critique",
+        "details": []
+      },
+      {
+        "module": "Module 5 — Refactoring et compréhension de code legacy (2h)",
         "details": [
           "Utiliser l'IA pour comprendre rapidement un code inconnu",
           "Refactoring assisté : améliorer la lisibilité et la performance",
           "Identifier les bugs et les vulnérabilités avec l'IA",
           "Migration et modernisation de code existant",
-          "Atelier : refactoring d'un module legacy réel",
+          "Atelier : refactoring d'un module legacy réel"
+        ]
+      },
+      {
+        "module": "Module 6 — Débogage et résolution de problèmes (1h30)",
+        "details": [
           "Déboguer avec l'IA : stratégies et limites",
           "Analyser les stack traces et les logs avec l'IA",
           "Expliquer et résoudre les erreurs complexes",
-          "Atelier : débogage d'un ensemble de bugs préparés",
+          "Atelier : débogage d'un ensemble de bugs préparés"
+        ]
+      },
+      {
+        "module": "Module 7 — Limites, risques et bonnes pratiques (1h30)",
+        "details": [
           "Quand ne pas faire confiance au code généré par l'IA",
           "Sécurité : les vulnérabilités que l'IA peut introduire sans le signaler",
           "Propriété intellectuelle et licences dans le code généré",
           "Construire un workflow de validation du code IA avant mise en production",
-          "Les bonnes pratiques de l'équipe qui intègre l'IA dans son processus",
+          "Les bonnes pratiques de l'équipe qui intègre l'IA dans son processus"
+        ]
+      },
+      {
+        "module": "Module 8 — Construire son workflow IA de développement (1h)",
+        "details": [
           "Assembler un environnement de développement augmenté par l'IA",
           "Définir ses règles d'usage en équipe",
           "Mesurer le gain de productivité réel",
@@ -949,6 +1108,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "de-idee-au-projet-ia",
     "title": "De l'idée au projet IA en entreprise",
     "secteur": "IT & Technique",
+    "categorie": "Intelligence artificielle",
     "niveau": "Avancé",
     "duree": "3 journées (21h)",
     "format": "Présentiel",
@@ -966,17 +1126,31 @@ export const FORMATIONS: Formation[] = [
     "programme": [
       {
         "module": "Jour 1 — Cadrer et concevoir son projet IA",
+        "details": []
+      },
+      {
+        "module": "Module 1 — Identifier le bon problème (2h)",
         "details": [
           "Pourquoi la plupart des projets IA échouent dès la phase de cadrage",
           "Du symptôme au problème réel : techniques de cadrage de problème",
           "Les questions à se poser avant de penser à la solution",
           "Quel type d'IA pour quel type de problème : classification, génération, prédiction, recommandation, automatisation",
-          "Atelier : cadrage d'un problème métier réel en groupes",
+          "Atelier : cadrage d'un problème métier réel en groupes"
+        ]
+      },
+      {
+        "module": "Module 2 — Évaluer la faisabilité (2h)",
+        "details": [
           "Les conditions nécessaires à un projet IA : données, compétences, infrastructure",
           "Audit des données disponibles : qualité, volumétrie, accessibilité",
           "Estimation de la complexité technique et du risque projet",
           "Build vs Buy : construire sa propre solution ou intégrer une solution existante ?",
-          "Atelier : grille de faisabilité appliquée aux cas des participants",
+          "Atelier : grille de faisabilité appliquée aux cas des participants"
+        ]
+      },
+      {
+        "module": "Module 3 — Concevoir la solution (3h)",
+        "details": [
           "Architecture fonctionnelle d'une solution IA : composantes clés",
           "Les briques technologiques à connaître : LLM, RAG, fine-tuning, agents, ML classique",
           "Concevoir l'interface humain-machine d'une solution IA",
@@ -986,17 +1160,31 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 2 — Construire et piloter",
+        "details": []
+      },
+      {
+        "module": "Module 4 — Méthode projet adaptée à l'IA (2h)",
         "details": [
           "Pourquoi les méthodes projet classiques ne suffisent pas pour l'IA",
           "L'approche itérative et expérimentale dans les projets IA",
           "Construire un MVP IA : définir le périmètre minimal viable",
           "Gestion des incertitudes et des résultats non déterministes",
-          "Jalons et points de décision spécifiques aux projets IA",
+          "Jalons et points de décision spécifiques aux projets IA"
+        ]
+      },
+      {
+        "module": "Module 5 — Données : collecter, préparer, maintenir (2h)",
+        "details": [
           "Stratégie de collecte et d'enrichissement des données",
           "Nettoyage et préparation des données : enjeux pratiques",
           "Annotation et labellisation : quand c'est nécessaire, comment l'organiser",
           "Gouvernance des données dans un projet IA",
-          "Atelier : plan de préparation des données pour son projet",
+          "Atelier : plan de préparation des données pour son projet"
+        ]
+      },
+      {
+        "module": "Module 6 — Évaluer et sélectionner une solution ou un prestataire IA (2h)",
+        "details": [
           "Grille d'évaluation des solutions IA du marché",
           "Comment lire une démo IA sans se faire impressionner à tort",
           "Contractualiser avec un prestataire IA : clauses clés, indicateurs de performance",
@@ -1006,15 +1194,29 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 3 — Déployer, mesurer et pérenniser",
+        "details": []
+      },
+      {
+        "module": "Module 7 — Déploiement et conduite du changement (2h)",
         "details": [
           "Stratégies de déploiement : pilote, déploiement progressif, big bang",
           "Former et accompagner les utilisateurs finaux d'une solution IA",
           "Gérer les résistances et les peurs liées à l'IA",
-          "Communiquer sur le projet en interne et en externe",
+          "Communiquer sur le projet en interne et en externe"
+        ]
+      },
+      {
+        "module": "Module 8 — Mesurer l'impact réel (2h)",
+        "details": [
           "Définir des indicateurs pertinents : performance technique vs valeur métier",
           "Mettre en place un dispositif de suivi post-déploiement",
           "Détecter les dérives du modèle et maintenir la qualité dans le temps",
-          "Boucle d'amélioration continue d'une solution IA",
+          "Boucle d'amélioration continue d'une solution IA"
+        ]
+      },
+      {
+        "module": "Module 9 — Gouvernance et responsabilité (2h)",
+        "details": [
           "Qui décide quoi dans un projet IA : rôles et responsabilités",
           "Gestion des risques spécifiques à l'IA : biais, opacité, dépendance",
           "Réglementation applicable : RGPD, AI Act, responsabilité en cas d'incident",
@@ -1037,6 +1239,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "ia-etudiants-jeunes-professionnels",
     "title": "L'IA pour les étudiants et jeunes professionnels",
     "secteur": "Jeunes & Étudiants",
+    "categorie": "Intelligence artificielle",
     "niveau": "Initiation",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -1122,6 +1325,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "claude-code-debutant",
     "title": "Claude Code — Niveau Débutant : Prendre en main l'assistant IA pour développeurs",
     "secteur": "IT & Technique",
+    "categorie": "Intelligence artificielle",
     "niveau": "Débutant",
     "duree": "1 journée (7h)",
     "format": "Présentiel ou distanciel",
@@ -1214,6 +1418,7 @@ export const FORMATIONS: Formation[] = [
     "slug": "claude-code-perfectionnement",
     "title": "Claude Code — Perfectionnement : Construire des agents et architectures IA pour le développement",
     "secteur": "IT & Technique",
+    "categorie": "Intelligence artificielle",
     "niveau": "Avancé",
     "duree": "2 journées (14h)",
     "format": "Présentiel",
@@ -1232,18 +1437,32 @@ export const FORMATIONS: Formation[] = [
     "programme": [
       {
         "module": "Jour 1 — Construire ses propres agents avec l'Agent SDK",
+        "details": []
+      },
+      {
+        "module": "Module 1 — Architecture des agents de développement (1h30)",
         "details": [
           "De Claude Code à l'Agent SDK : comprendre les couches d'abstraction",
           "Les composantes d'un agent : outils, contexte, permissions, boucles d'action",
           "Patterns d'architecture d'agents : réactif, planificateur, multi-étapes",
           "Quand construire son propre agent vs utiliser Claude Code directement",
-          "Étude de cas : architecture d'agents de développement réels (compliance financière, cybersécurité, revue de code automatisée)",
+          "Étude de cas : architecture d'agents de développement réels (compliance financière, cybersécurité, revue de code automatisée)"
+        ]
+      },
+      {
+        "module": "Module 2 — Construire avec l'Agent SDK (2h30)",
+        "details": [
           "Installation et configuration de l'Agent SDK",
           "Créer son premier agent personnalisé : structure de base, gestion du contexte",
           "Implémenter des outils personnalisés pour son agent",
           "Gestion des permissions et des confirmations humaines",
           "Context management : garder les sessions longues efficaces sans exploser le context window",
-          "Atelier : construction d'un agent de développement personnalisé pour un cas métier réel",
+          "Atelier : construction d'un agent de développement personnalisé pour un cas métier réel"
+        ]
+      },
+      {
+        "module": "Module 3 — Architectures multi-agents avec subagents (2h)",
+        "details": [
           "Le pattern subagent : déléguer des tâches spécialisées en parallèle",
           "Concevoir l'orchestration entre un agent principal et ses subagents",
           "Cas d'usage : agent principal qui orchestre un subagent backend + un subagent frontend + un subagent tests",
@@ -1254,29 +1473,53 @@ export const FORMATIONS: Formation[] = [
       },
       {
         "module": "Jour 2 — MCP avancé, production et gouvernance",
+        "details": []
+      },
+      {
+        "module": "Module 4 — Construire ses propres serveurs MCP (2h30)",
         "details": [
           "Architecture d'un serveur MCP : ressources, outils, prompts",
           "Construire un serveur MCP en Python ou TypeScript",
           "Exposer ses propres données et outils internes à Claude Code",
           "Authentification et sécurisation d'un serveur MCP",
           "Déploiement d'un serveur MCP : local, self-hosted, cloud",
-          "Atelier : chaque participant construit et déploie un serveur MCP connecté à un système interne réel",
+          "Atelier : chaque participant construit et déploie un serveur MCP connecté à un système interne réel"
+        ]
+      },
+      {
+        "module": "Module 5 — Intégration API Anthropic avancée (1h30)",
+        "details": [
           "Utiliser l'API Anthropic directement pour construire des workflows de développement",
           "Extended thinking : quand et comment l'activer pour des tâches de raisonnement complexes",
           "Gestion du context window sur des projets de grande taille",
           "Streaming et gestion des réponses longues",
-          "Optimisation des coûts : choisir le bon modèle selon la tâche (Haiku vs Sonnet vs Opus)",
+          "Optimisation des coûts : choisir le bon modèle selon la tâche (Haiku vs Sonnet vs Opus)"
+        ]
+      },
+      {
+        "module": "Module 6 — Sécurité, gouvernance et production (1h30)",
+        "details": [
           "Les risques spécifiques aux agents autonomes en production",
           "Prompt injection et attaques sur les agents : comprendre et se défendre",
           "Concevoir un système de permissions granulaires pour ses agents",
           "Audit trail : tracer et inspecter les actions d'un agent en production",
           "Construire des points de contrôle humain dans des workflows autonomes",
-          "Conformité et réglementation pour les systèmes IA en production (AI Act, RGPD)",
+          "Conformité et réglementation pour les systèmes IA en production (AI Act, RGPD)"
+        ]
+      },
+      {
+        "module": "Module 7 — Mesurer, optimiser et faire évoluer (1h)",
+        "details": [
           "Métriques de performance pour les agents de développement",
           "Le Claude Code Analytics API : exploiter les données d'usage en production",
           "Détecter les dérives de comportement et les régressions dans le temps",
           "Stratégies d'amélioration continue : CLAUDE.md, fine-tuning de prompts système, mise à jour des outils",
-          "Construire une roadmap d'évolution pour ses agents",
+          "Construire une roadmap d'évolution pour ses agents"
+        ]
+      },
+      {
+        "module": "Module 8 — Présentation des projets (1h30)",
+        "details": [
           "Chaque participant ou équipe présente l'agent ou l'architecture construite pendant la formation",
           "Revue par les pairs : points forts, risques identifiés, pistes d'amélioration",
           "Discussion collective sur les cas d'usage les plus prometteurs dans chaque contexte",

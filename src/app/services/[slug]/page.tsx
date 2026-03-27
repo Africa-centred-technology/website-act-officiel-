@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { SERVICES, getServiceBySlug } from "@/lib/data/services";
-import ServiceDetailShell from "@/components/services/ServiceDetailShell";
+import PoleIngenieurieShell from "@/components/services/PoleIngenieurieShell";
+import PoleConseilShell from "@/components/services/PoleConseilShell";
+import PoleFormationShell from "@/components/services/PoleFormationShell";
 
 /* Pré-génère toutes les pages au build */
 export function generateStaticParams() {
@@ -28,5 +30,15 @@ export default async function ServiceDetailPage({
 
   if (!svc) notFound();
 
-  return <ServiceDetailShell svc={svc} />;
+  // Routage vers le composant spécifique selon le pôle
+  if (svc.poleN === "I") {
+    return <PoleIngenieurieShell svc={svc} />;
+  } else if (svc.poleN === "II") {
+    return <PoleConseilShell svc={svc} />;
+  } else if (svc.poleN === "III") {
+    return <PoleFormationShell svc={svc} />;
+  }
+
+  // Fallback (ne devrait jamais arriver)
+  notFound();
 }

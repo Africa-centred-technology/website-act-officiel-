@@ -1,8 +1,9 @@
 "use client";
 
 /**
- * ServiceDetailShell — Page de détail immersive d'un service ACT.
+ * PoleConseilShell — Page de détail pour le Pôle II - Conseil & Stratégie
  *
+ * Design spécifique avec thématique business/stratégie
  * Images animées :
  *  · Hero        — heroImage Ken Burns derrière le gradient, bloom au scroll
  *  · Intro       — heroImage en panneau latéral avec parallax scroll
@@ -946,7 +947,7 @@ function StickyHeader({ svc }: { svc: Service }) {
 /* ═══════════════════════════════════════════════════════
    EXPORT PRINCIPAL
    ═══════════════════════════════════════════════════════ */
-export default function ServiceDetailShell({ svc }: { svc: Service }) {
+export default function PoleConseilShell({ svc }: { svc: Service }) {
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
 
   return (

@@ -1,8 +1,9 @@
 "use client";
 
 /**
- * ServiceDetailShell — Page de détail immersive d'un service ACT.
+ * PoleIngenieurieShell — Page de détail pour le Pôle I - Ingénierie Technologique
  *
+ * Design spécifique avec thématique tech/code
  * Images animées :
  *  · Hero        — heroImage Ken Burns derrière le gradient, bloom au scroll
  *  · Intro       — heroImage en panneau latéral avec parallax scroll
@@ -28,6 +29,9 @@ import { SERVICES, type Service } from "@/lib/data/services";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import CatalogueSection from "@/components/formations/CatalogueSection";
+
+// Couleur fixe du site - ne change jamais
+const ORANGE = "#D35400";
 
 const EASE  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -946,7 +950,7 @@ function StickyHeader({ svc }: { svc: Service }) {
 /* ═══════════════════════════════════════════════════════
    EXPORT PRINCIPAL
    ═══════════════════════════════════════════════════════ */
-export default function ServiceDetailShell({ svc }: { svc: Service }) {
+export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
 
   return (

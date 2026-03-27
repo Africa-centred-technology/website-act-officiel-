@@ -727,24 +727,22 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Cursor none — disable on touch devices */
 @media (hover: none) and (pointer: coarse) {
-  .cursor-none,
-  .cursor-none * { cursor: auto !important; }
   button, a { cursor: pointer !important; }
 }
 
 /* ══════════════════════════════════════════════════════
-   HOME2 — Custom Cursor
+   HOME2 — Custom Cursor (DÉSACTIVÉ)
    ══════════════════════════════════════════════════════ */
-.cursor-none,
+/* .cursor-none,
 .cursor-none * {
   cursor: none !important;
-}
+} */
 
 /* Work accordion rows + holo cards: custom cursor on desktop only */
-@media (hover: hover) and (pointer: fine) {
+/* @media (hover: hover) and (pointer: fine) {
   .ax-work-btn { cursor: none !important; }
   .holo-card-wrap { cursor: none !important; }
-}
+} */
 
 /* ══════════════════════════════════════════════════════
    RÉALISATIONS PAGE — Responsive

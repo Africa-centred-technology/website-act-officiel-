@@ -8,6 +8,8 @@ import {
   useScroll, useMotionValue, useSpring, useTransform,
 } from "framer-motion";
 import CTASection from "@/components/layout/CTASection";
+import { FORMATIONS } from "@/lib/data/formations";
+import CatalogueSection from "@/components/formations/CatalogueSection";
 
 /* ══════════════════════════════════════════════════════
    Background layers
@@ -831,9 +833,201 @@ function HeroSection() {
 
 
 /* ══════════════════════════════════════════════════════
+   CATALOGUE PANEL — accordion par catégorie
+   ══════════════════════════════════════════════════════ */
+function CataloguePanel({ svc }: { svc: Svc }) {
+  // Grouper les formations par secteur
+  const grouped = useMemo(() => {
+    const map: Record<string, typeof FORMATIONS> = {};
+    FORMATIONS.forEach(f => {
+      const key = f.secteur || "Autres";
+      if (!map[key]) map[key] = [];
+      map[key].push(f);
+    });
+    return Object.entries(map);
+  }, []);
+
+  const [openCat, setOpenCat] = useState<string | null>(grouped[0]?.[0] ?? null);
+
+  return (
+    <div onMouseMove={() => {}} style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+      {/* Background */}
+      <div aria-hidden style={{ position: "absolute", inset: 0, background: svc.bg, zIndex: 0 }} />
+      <ScanLine color={svc.accent} />
+
+      {/* Content */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 2,
+        display: "flex", flexDirection: "row",
+        padding: "clamp(2rem, 5vw, 5rem) clamp(2rem, 5.5vw, 5.5rem) clamp(3rem, 6vw, 6rem)",
+        gap: "3rem",
+        overflow: "hidden",
+      }}>
+        {/* Colonne gauche — header */}
+        <div style={{ flexShrink: 0, width: "clamp(220px, 28vw, 340px)", display: "flex", flexDirection: "column", gap: "1.5rem", justifyContent: "flex-start", paddingTop: "0.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <Diamond size="0.45rem" color={svc.accent} />
+            <span style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", color: "#ffffff", letterSpacing: "0.28em", textTransform: "uppercase", fontWeight: 700 }}>
+              Pôle {svc.poleN} · {svc.pole}
+            </span>
+          </div>
+          <div style={{ overflow: "hidden" }}>
+            {svc.title.split("\n").map((line, i) => (
+              <div key={i} style={{ overflow: "hidden" }}>
+                <motion.h2
+                  className="font-black uppercase"
+                  style={{ fontSize: "clamp(1.8rem, 3.2vw, 4.2rem)", lineHeight: 0.95, letterSpacing: "-0.03em", color: i === 0 ? "#fff" : svc.accent, display: "block" }}
+                  initial={{ y: "110%" }} animate={{ y: "0%" }}
+                  transition={{ duration: 1.05, delay: i * 0.12, ease: [...BURST] }}
+                >
+                  {line}
+                </motion.h2>
+              </div>
+            ))}
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.7, duration: 0.8, ease: [...EASE] }}
+            style={{ height: 1, background: `${svc.accent}88`, originX: 0 }}
+          />
+          <motion.p
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.6 }}
+            style={{ fontSize: "clamp(0.88rem, 1.1vw, 1.05rem)", color: "rgba(255,255,255,0.65)", lineHeight: 1.65 }}
+          >
+            {svc.tagline}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0, duration: 0.5 }}
+          >
+            <Link href="/contact" style={{
+              display: "inline-flex", alignItems: "center", gap: "0.6rem",
+              padding: "0.65rem 1.4rem",
+              border: `1px solid ${svc.accent}55`,
+              color: svc.accent, fontSize: "0.8rem",
+              letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700,
+            }}>
+              <Diamond size="0.35rem" color={svc.accent} />
+              Formation sur mesure
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Colonne droite — accordion */}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 0, overflowY: "auto", paddingRight: "0.5rem" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.55 }}
+            style={{ marginBottom: "1.2rem" }}
+          >
+            <p style={{ fontSize: "clamp(0.78rem, 0.9vw, 0.9rem)", color: "rgba(255,255,255,0.3)", letterSpacing: "0.22em", textTransform: "uppercase" }}>
+              {FORMATIONS.length} formations disponibles
+            </p>
+          </motion.div>
+
+          {grouped.map(([categorie, formations], gi) => (
+            <motion.div
+              key={categorie}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + gi * 0.07, duration: 0.45 }}
+            >
+              {/* Header catégorie */}
+              <button
+                onClick={() => setOpenCat(openCat === categorie ? null : categorie)}
+                style={{
+                  width: "100%", background: "none", border: "none", cursor: "pointer",
+                  display: "flex", alignItems: "center", gap: "0.85rem",
+                  padding: "0.85rem 0",
+                  borderBottom: `1px solid rgba(255,255,255,0.08)`,
+                }}
+              >
+                <motion.span
+                  animate={{ rotate: openCat === categorie ? 45 : 0 }}
+                  transition={{ duration: 0.25 }}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    width: 20, height: 20, flexShrink: 0,
+                    border: `1.5px solid ${svc.accent}`,
+                    borderRadius: "50%",
+                  }}
+                >
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M5 1v8M1 5h8" stroke={svc.accent} strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </motion.span>
+                <span style={{
+                  fontWeight: 700, fontSize: "clamp(0.85rem, 1.05vw, 1rem)",
+                  color: openCat === categorie ? svc.accent : "rgba(255,255,255,0.85)",
+                  letterSpacing: "0.04em", textAlign: "left", transition: "color 0.2s",
+                }}>
+                  {categorie}
+                </span>
+                <span style={{ marginLeft: "auto", fontSize: "0.78rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em" }}>
+                  {formations.length}
+                </span>
+              </button>
+
+              {/* Liste des formations */}
+              <AnimatePresence initial={false}>
+                {openCat === categorie && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    <div style={{ paddingBottom: "0.5rem" }}>
+                      {formations.map((f, fi) => (
+                        <Link
+                          key={f.slug}
+                          href={`/formations/${f.slug}`}
+                          style={{ textDecoration: "none", display: "block" }}
+                        >
+                          <motion.div
+                            initial={{ opacity: 0, x: 8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            whileHover={{ x: 6 }}
+                            transition={{ delay: fi * 0.04, duration: 0.18 }}
+                            style={{
+                              display: "flex", alignItems: "center", gap: "0.75rem",
+                              padding: "0.65rem 0 0.65rem 1.8rem",
+                              borderBottom: "1px solid rgba(255,255,255,0.04)",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: `${svc.accent}88`, flexShrink: 0 }} />
+                            <span style={{ flex: 1, fontSize: "clamp(0.82rem, 1vw, 0.95rem)", color: "rgba(255,255,255,0.75)", lineHeight: 1.4 }}>
+                              {f.title}
+                            </span>
+                            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", flexShrink: 0 }}>
+                              {f.duree}
+                            </span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={svc.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.6 }}>
+                              <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                          </motion.div>
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════
    SERVICES JOURNEY — scroll-driven rooms
    ══════════════════════════════════════════════════════ */
-function ServicesJourney() {
+function ServicesJourney({ onCurrentChange }: { onCurrentChange?: (n: string) => void }) {
   const [current, setCurrent] = useState(0);
   const [dir, setDir] = useState(1);
   const navigating = useRef(false);
@@ -864,6 +1058,7 @@ function ServicesJourney() {
         setDir(d);
         currentRef.current = next;
         setCurrent(next);
+        onCurrentChange?.(SERVICES[next].n);
         navigating.current = true;
         setTimeout(() => { navigating.current = false; }, THROTTLE);
       }
@@ -931,7 +1126,7 @@ function ServicesJourney() {
                 exit="exit"
                 style={{ position: "absolute", inset: 0, overflow: "hidden" }}
               >
-                <ServicePanel svc={svc} />
+                {svc.n === "09" ? <CataloguePanel svc={svc} /> : <ServicePanel svc={svc} />}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -952,6 +1147,9 @@ function ServicesJourney() {
    SHELL
    ══════════════════════════════════════════════════════ */
 export default function ServicesShell() {
+  const [currentN, setCurrentN] = useState("01");
+  const isCatalogue = currentN === "09";
+
   return (
     <div style={{ background: "#070E1C", minHeight: "100vh", position: "relative" }}>
       {/* Background layers */}
@@ -962,13 +1160,17 @@ export default function ServicesShell() {
       </div>
       <div style={{ position: "relative", zIndex: 1 }}>
         <HeroSection />
-        <ServicesJourney />
-        <CTASection
-          eyebrow="Votre projet"
-          title="Construisons l'avenir ensemble"
-          description="Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h."
-          buttonText="Démarrer votre projet"
-        />
+        <ServicesJourney onCurrentChange={setCurrentN} />
+        {isCatalogue ? (
+          <CatalogueSection />
+        ) : (
+          <CTASection
+            eyebrow="Votre projet"
+            title="Construisons l'avenir ensemble"
+            description="Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h."
+            buttonText="Démarrer votre projet"
+          />
+        )}
       </div>
     </div>
   );

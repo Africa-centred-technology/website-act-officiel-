@@ -46,7 +46,7 @@ export default function CustomCursor() {
 
   return (
     <>
-      <style>{`body, * { cursor: none !important; }`}</style>
+      {/* <style>{`body, * { cursor: none !important; }`}</style> */}
       <div
         ref={cursorRef}
         style={{
@@ -61,6 +61,7 @@ export default function CustomCursor() {
           transform: "translate(-50%, -50%)",
           transition: "transform 0.1s, width 0.25s, height 0.25s, background 0.25s",
           mixBlendMode: "screen" as const,
+          display: "none", // Désactivé
         }}
       />
     </>
