@@ -32,8 +32,8 @@ const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ss
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
-const COLOR = "#F39C12"; // Gold color for formations
-const ACCENT = "#D35400"; // Orange accent
+const COLOR = "#D35400"; // Orange principal d'ACT
+const ACCENT = "#E67E22"; // Accent plus clair
 
 // Catégories disponibles
 const categories = [
@@ -56,10 +56,10 @@ const niveaux = [
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
 function getNiveauColor(niveau: string): string {
-  if (niveau.includes("Initiation") || niveau.includes("Débutant")) return "#16a34a";
-  if (niveau.includes("Intermédiaire")) return "#F39C12";
-  if (niveau.includes("Avancé")) return "#D35400";
-  return "#9333ea";
+  if (niveau.includes("Initiation") || niveau.includes("Débutant")) return "#E67E22";
+  if (niveau.includes("Intermédiaire")) return "#D35400";
+  if (niveau.includes("Avancé")) return "#A04000";
+  return "#D35400";
 }
 
 export default function FormationsShell() {

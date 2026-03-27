@@ -345,27 +345,27 @@ export const SERVICES: Service[] = [
     bg: "radial-gradient(ellipse 90% 70% at 75% 25%, #0A1505 0%, #050C18 55%, #030810 100%)",
     icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
     title: "Catalogue\nde Formations",
-    tagline: "ACT University - Apprenez à votre rythme",
+    tagline: "Se former aujourd’hui, c’est réussir demain",
     intro: "Se former aux compétences digitales est devenu incontournable. Nos formations en intelligence artificielle — comme l'intégration de l'IA au quotidien — permettent à tout professionnel de gagner en productivité et de faire de l'IA un véritable levier de performance. Au-delà de ces compétences transversales, c'est toute une culture numérique qu'il est essentiel d'acquérir pour répondre aux enjeux concrets du marché.Conçues par des experts du continent à partir de cas réels, ces formations offrent des compétences opérationnelles immédiatement mobilisable",
     subs: [
       {
         title: "Formations Techniques",
-        desc: "Développement Web & Mobile (React, Next.js, Flutter), Data Science & Machine Learning, Cloud Computing (AWS, Azure), DevOps & CI/CD, Cybersécurité, Architecture Logicielle. Programmes complets avec projets pratiques et certifications reconnues.",
+        desc: "Maîtrisez les compétences techniques essentielles pour concevoir, déployer et sécuriser des solutions numériques robustes. Des programmes conçus pour répondre aux besoins concrets du marché, avec une approche pratique et opérationnelle.",
       },
       {
         title: "Formations Business & Stratégie",
-        desc: "Transformation Digitale, Product Management, Gestion de Projet Agile, Data-Driven Decision Making, Leadership Digital. Pour les décideurs et managers qui pilotent la transformation de leurs organisations.",
+        desc: "Pilotez la transformation numérique de votre organisation. Acquérez les méthodes et la vision stratégique nécessaires pour manager des projets innovants, prendre des décisions data-driven et fédérer vos équipes autour des enjeux digitaux.",
       },
       {
         title: "Formations Spécialisées",
-        desc: "IA Générative & Agents Intelligents, Big Data & Analytics, SIG & Géomatique, Blockchain, IoT. Programmes avancés pour les professionnels qui veulent maîtriser les technologies émergentes.",
+        desc: "Des programmes conçus pour ceux qui veulent se démarquer. Approfondissez des expertises de niche, développez des compétences rares et devenez une référence dans votre domaine",
       },
     ],
     benefits: [
-      "Catalogue complet de formations certifiantes",
+      "En Afrique, 61% des entreprises jugent les compétences en numerique importantes pour leur succès — nos formations vous préparent à cette demande",
       "Apprentissage flexible (en ligne & présentiel)",
-      "Contenus adaptés au contexte africain",
-      "Communauté d'apprenants active",
+      "Contenus adaptés au contexte d'entreprises",
+      "Des formateurs experts du continent",
     ],
     deliverables: [
       "Accès plateforme ACT University",
@@ -377,6 +377,7 @@ export const SERVICES: Service[] = [
     heroImage: "/images/poles/pole-formation.jpg",
     subImages: [
       "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
     ],
   },

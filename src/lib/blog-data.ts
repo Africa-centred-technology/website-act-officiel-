@@ -624,6 +624,374 @@ sudo WAZUH_MANAGER="IP_DU_SERVEUR" bash wazuh-install.sh -agent`,
       },
     ],
   },
+  {
+    slug: "architecture-microservices-afrique-guide-pratique",
+    title: "Architecture microservices en Afrique : guide pratique pour réussir votre migration",
+    category: "Code & Dev",
+    categoryColor: "#D35400",
+    format: "Guide technique",
+    wordCount: "~2 800",
+    keywords: ["microservices Afrique", "architecture logicielle", "migration microservices", "scalabilité Afrique"],
+    target: "Architectes logiciels, CTO, développeurs seniors",
+    excerpt: "Les architectures monolithiques montrent leurs limites face aux besoins de scalabilité des entreprises africaines en croissance. Les microservices promettent agilité et évolutivité — mais leur adoption mal préparée peut mener au chaos. Voici un guide pragmatique pour réussir votre transition.",
+    date: "Mars 2026",
+    readTime: "12 min",
+    image: "/blog/lucid-origin_Donne_moi_une_image_simple_qui_passe_avec_ce_titre_Cybersécurité_2026_l_ère_d-0.jpg",
+    featured: true,
+    sections: [
+      {
+        content: "Les architectures monolithiques ont bien servi la première génération de startups africaines. Simples à développer, faciles à déployer sur un seul serveur, elles permettaient de livrer rapidement. Mais face à la croissance — plus d'utilisateurs, plus de fonctionnalités, plus de marchés — le monolithe devient un goulot d'étranglement. Chaque modification risque de casser l'application entière, les déploiements deviennent anxiogènes, et scaler nécessite de dupliquer tout le système même si seule une partie est surchargée.",
+      },
+      {
+        title: "1. Pourquoi les microservices ? Les vrais avantages",
+        content: "Les microservices résolvent des problèmes réels de croissance :",
+        list: [
+          "Scalabilité ciblée : Scaler uniquement les services sous pression (ex: le service de paiement pendant le Black Friday) plutôt que toute l'application.",
+          "Déploiements indépendants : Mettre à jour le service de notifications sans toucher au service de facturation, réduisant les risques et accélérant les cycles de release.",
+          "Résilience : Un service défaillant n'abat pas tout le système si les dépendances sont bien gérées (circuit breakers, timeouts).",
+          "Choix technologiques flexibles : Utiliser Node.js pour un service temps réel, Python pour un service d'IA, Go pour un service haute performance.",
+        ],
+      },
+      {
+        title: "2. Les pièges à éviter absolument",
+        content: "La migration vers les microservices échoue souvent pour des raisons prévisibles :",
+        list: [
+          "Découpage prématuré : Passer aux microservices avant d'avoir une vraie complexité métier crée une complexité technique inutile.",
+          "Micro-services nano : Créer trop de services minuscules génère une explosion de la complexité opérationnelle (déploiements, monitoring, debugging).",
+          "Sous-estimer la complexité réseau : Les appels entre services introduisent latence, pannes réseau et problèmes de cohérence des données.",
+          "Négliger l'observabilité : Sans tracing distribué, logs centralisés et métriques, debugger devient un cauchemar.",
+        ],
+      },
+      {
+        title: "3. Stratégie de migration progressive",
+        content: "La bonne approche consiste à migrer par étapes, en commençant par extraire les services les plus autonomes :",
+        list: [
+          "Étape 1 : Identifier les limites métier naturelles (ex: gestion des utilisateurs, paiements, inventaire, notifications).",
+          "Étape 2 : Extraire UN service à la fois, en commençant par le plus découplé (souvent les notifications ou les rapports).",
+          "Étape 3 : Mettre en place l'infrastructure de support AVANT la migration : API Gateway, service mesh (Istio/Linkerd), observabilité (Prometheus + Grafana + Jaeger).",
+          "Étape 4 : Migrer progressivement les données en maintenant temporairement une synchronisation bidirectionnelle.",
+          "Étape 5 : Consolider l'apprentissage et itérer sur le prochain service.",
+        ],
+      },
+      {
+        title: "4. Stack technologique recommandée pour l'Afrique",
+        content: "Compte tenu des contraintes énergétiques et de connectivité africaines, privilégier des technologies légères et résilientes :",
+        list: [
+          "API Gateway : Kong (open-source), Traefik ou AWS API Gateway si vous êtes sur le cloud.",
+          "Communication inter-services : REST pour la simplicité, gRPC pour les appels haute fréquence.",
+          "Orchestration : Kubernetes (K8s) est le standard. K3s pour les environnements avec ressources limitées.",
+          "Bases de données : PostgreSQL pour les données transactionnelles, MongoDB pour les données flexibles, Redis pour le cache.",
+          "Messaging : RabbitMQ ou Kafka pour la communication asynchrone entre services.",
+          "Observabilité : Stack ELK (Elasticsearch + Logstash + Kibana) ou stack Grafana (Loki + Prometheus + Tempo + Grafana).",
+        ],
+      },
+      {
+        title: "5. Cas pratique : Migration d'une fintech africaine",
+        content: "Prenons l'exemple d'une fintech mobile-first opérant dans 3 pays africains. Initialement monolithique (Django + PostgreSQL), l'application gérait comptes utilisateurs, KYC, portefeuilles, transferts et micro-prêts. Voici comment ils ont migré :\n\nService 1 extrait : Notifications (SMS + push + email). Service découplé avec peu de dépendances, communiquant via message queue (RabbitMQ).\n\nService 2 : KYC / Vérification d'identité. Service critique nécessitant appels à des APIs externes (vérification ID, reconnaissance faciale). Isolé pour des raisons de conformité et performance.\n\nService 3 : Micro-prêts. Logique métier complexe avec modèles de scoring, nécessitant scaling indépendant pendant les pics de demande.\n\nRésultat après 8 mois : Temps de déploiement réduit de 72 heures à 15 minutes, scalabilité ciblée permettant de gérer 10x plus de transactions pendant les pics, et équipes autonomes capables de livrer en parallèle.",
+      },
+      {
+        title: "Conclusion : Commencer petit, penser grand",
+        content: "Les microservices ne sont pas une architecture miracle — c'est un compromis conscient entre complexité technique et agilité organisationnelle. Pour les entreprises africaines, la clé du succès réside dans une migration progressive, une infrastructure d'observabilité solide, et une discipline architecturale stricte. Ne migrez pas par effet de mode — migrez quand la douleur du monolithe dépasse le coût de la complexité distribuée.",
+        isConclusion: true,
+      },
+    ],
+  },
+  {
+    slug: "developpement-mobile-afrique-2026-flutter-vs-react-native",
+    title: "Développement mobile en Afrique 2026 : Flutter vs React Native, quel framework choisir ?",
+    category: "Code & Dev",
+    categoryColor: "#D35400",
+    format: "Comparatif technique",
+    wordCount: "~2 200",
+    keywords: ["Flutter vs React Native", "développement mobile Afrique", "app mobile cross-platform", "framework mobile 2026"],
+    target: "Développeurs mobile, startups, CTOs",
+    excerpt: "L'Afrique est un continent mobile-first où 80% des connexions internet se font via smartphone. Choisir le bon framework mobile peut déterminer le succès ou l'échec d'un projet. En 2026, Flutter et React Native dominent le marché cross-platform — mais lequel correspond à vos besoins ?",
+    date: "Mars 2026",
+    readTime: "9 min",
+    image: "/blog/lucid-origin_Donne_moi_une_image_simple_qui_passe_avec_ce_titre_Les_10_compétences_tech_les_-0.jpg",
+    sections: [
+      {
+        content: "L'Afrique est un continent mobile-first où plus de 80% des connexions internet se font via smartphone. Les applications mobiles ne sont pas un « nice-to-have » — elles sont le canal principal de distribution de services. Dans ce contexte, choisir le bon framework peut déterminer le succès ou l'échec d'un projet.\n\nEn 2026, deux frameworks dominent le marché du développement cross-platform : Flutter (Google) et React Native (Meta). Les deux permettent d'écrire un code unique qui fonctionne sur iOS et Android. Mais leurs philosophies, performances et écosystèmes diffèrent profondément.",
+      },
+      {
+        title: "1. Performance : Flutter prend l'avantage",
+        content: "Flutter compile en code natif ARM (iOS) et en bytecode optimisé (Android), ce qui lui donne des performances très proches du natif. React Native utilise un pont JavaScript qui communique avec les modules natifs, introduisant une latence perceptible dans certains scénarios (animations complexes, listes longues).\n\nPour l'Afrique : Sur des appareils Android entry-level (2-4 Go RAM), très répandus sur le continent, Flutter offre une fluidité supérieure. React Native reste performant mais demande plus d'optimisations manuelles.",
+      },
+      {
+        title: "2. Écosystème et packages : React Native plus mature",
+        content: "React Native bénéficie d'un écosystème JavaScript gigantesque (npm). Presque toutes les bibliothèques web JS sont compatibles ou ont des équivalents React Native. Flutter utilise Pub.dev, un écosystème plus jeune mais en croissance rapide.\n\nPour l'Afrique : Si votre projet nécessite des intégrations avec des services de paiement locaux (Wave, MTN Mobile Money, Orange Money), React Native a souvent des packages communautaires plus matures. Flutter rattrape son retard mais avec un délai.",
+      },
+      {
+        title: "3. UI et design : philosophies opposées",
+        content: "Flutter impose son propre moteur de rendu (Skia) qui dessine chaque pixel. Résultat : une UI parfaitement identique sur iOS et Android, au prix d'un look parfois « non-natif ». React Native utilise les composants natifs de chaque plateforme, donnant un look naturellement adapté à chaque OS.\n\nPour l'Afrique : Si votre application cible principalement Android (le cas de 85%+ des apps africaines), l'avantage « natif iOS » de React Native perd de sa pertinence. Flutter permet un design custom cohérent.",
+      },
+      {
+        title: "4. Courbe d'apprentissage",
+        content: "React Native : Si vos développeurs connaissent React (web), la transition est très rapide. Dart (langage de Flutter) : Syntaxe proche de Java/Kotlin/TypeScript, facile à apprendre mais nécessite un investissement initial.\n\nPour l'Afrique : Le pool de développeurs JavaScript/React est plus large en Afrique que celui de développeurs Dart. React Native permet de réutiliser des compétences existantes.",
+      },
+      {
+        title: "5. Support entreprise et communauté",
+        content: "React Native est utilisé par Facebook, Instagram, Shopify, Microsoft. Flutter est utilisé par Google Ads, Alibaba, BMW, Nubank. Les deux ont des communautés actives et un support corporate solide.\n\nPour l'Afrique : Les deux frameworks sont viables à long terme. Flutter a une documentation légèrement supérieure et des mises à jour plus fréquentes.",
+      },
+      {
+        title: "Verdict : quel framework pour quel projet ?",
+        content: "Choisissez Flutter si :",
+        list: [
+          "Vous créez une app avec beaucoup d'animations et d'interactions complexes (fintech, e-commerce avec catalogue visuel)",
+          "Vous ciblez principalement Android avec des devices entry-level",
+          "Vous voulez un design custom cohérent multi-plateformes",
+          "Votre équipe peut investir dans l'apprentissage de Dart",
+        ],
+      },
+      {
+        content: "Choisissez React Native si :",
+        list: [
+          "Votre équipe a déjà des compétences React/JavaScript",
+          "Vous avez besoin d'intégrations complexes avec des SDKs tiers (paiement, analytics, etc.)",
+          "Vous voulez réutiliser du code entre web et mobile (avec React Native Web)",
+          "Vous privilégiez un écosystème mature de packages",
+        ],
+      },
+      {
+        title: "Conclusion",
+        content: "En 2026, les deux frameworks sont excellents. Flutter a l'avantage performance et cohérence visuelle. React Native a l'avantage écosystème et compétences disponibles. Pour la majorité des projets africains (fintech, e-commerce, services publics), Flutter est le choix recommandé grâce à sa performance sur devices Android modestes. Mais si votre équipe maîtrise déjà React, React Native reste une option solide qui livrera des résultats de qualité.",
+        isConclusion: true,
+      },
+    ],
+  },
+  {
+    slug: "ci-cd-afrique-github-actions-gitlab-ci",
+    title: "CI/CD pour les équipes africaines : GitHub Actions vs GitLab CI en 2026",
+    category: "Code & Dev",
+    categoryColor: "#D35400",
+    format: "Tutoriel comparatif",
+    wordCount: "~2 400",
+    keywords: ["CI/CD Afrique", "GitHub Actions", "GitLab CI", "DevOps Afrique", "automatisation déploiement"],
+    target: "DevOps engineers, développeurs, CTOs",
+    excerpt: "L'intégration et le déploiement continus (CI/CD) ne sont plus réservés aux grandes entreprises tech. En 2026, toute équipe de développement africaine peut automatiser ses tests et déploiements. GitHub Actions et GitLab CI dominent le marché — voici comment choisir et implémenter.",
+    date: "Mars 2026",
+    readTime: "10 min",
+    image: "/blog/lucid-origin_Donne_moi_une_image_simple_qui_passe_avec_ce_titre_Cybersécurité_2026_l_ère_d-0.jpg",
+    sections: [
+      {
+        content: "L'intégration et le déploiement continus (CI/CD) transforment radicalement la façon dont les équipes livrent du logiciel. Au lieu de déploiements manuels anxiogènes le vendredi soir, les développeurs commitent leur code, et une chaîne automatisée exécute les tests, build l'application, et la déploie en production — le tout en quelques minutes, des dizaines de fois par jour.\n\nEn 2026, deux plateformes dominent le marché CI/CD : GitHub Actions (intégré à GitHub) et GitLab CI (intégré à GitLab). Les deux sont puissantes, mais répondent à des besoins différents.",
+      },
+      {
+        title: "1. GitHub Actions : simplicité et écosystème",
+        content: "GitHub Actions s'intègre nativement à GitHub, le service d'hébergement Git le plus populaire au monde. Son approche par « workflows » YAML et son marketplace de 20 000+ actions pré-construites le rendent accessible.",
+        list: [
+          "Points forts : Écosystème d'actions communautaires immense, intégration native GitHub, interface intuitive, runners gratuits (2000 min/mois pour les repos privés).",
+          "Points faibles : Moins de contrôle granulaire que GitLab CI, pricing qui peut devenir élevé pour les gros projets.",
+        ],
+      },
+      {
+        title: "2. GitLab CI : puissance et contrôle total",
+        content: "GitLab CI fait partie de la plateforme GitLab complète (repo Git + CI/CD + registry Docker + monitoring). C'est un outil DevOps complet, plus complexe mais plus flexible.",
+        list: [
+          "Points forts : Self-hosted possible (crucial pour la souveraineté des données), pipelines complexes avec DAG, artifacts et cache sophistiqués, gratuit en self-hosted.",
+          "Points faibles : Courbe d'apprentissage plus raide, interface moins intuitive que GitHub.",
+        ],
+      },
+      {
+        title: "3. Comparaison : critères décisifs pour l'Afrique",
+        content: "Plusieurs facteurs spécifiques au contexte africain influencent le choix :",
+        list: [
+          "Souveraineté des données : GitLab peut être hébergé localement (on-premise ou cloud privé africain), crucial pour les projets gouvernementaux ou bancaires. GitHub reste hébergé aux USA.",
+          "Connectivité : Les deux fonctionnent bien avec une connexion internet stable, mais GitLab self-hosted permet de continuer à travailler même en cas de coupure internet prolongée.",
+          "Coûts : GitHub Actions facture au-delà de 2000 minutes/mois. GitLab CI self-hosted est gratuit (seuls les coûts d'infrastructure comptent).",
+          "Compétences : GitHub Actions est plus facile à prendre en main pour une équipe débutante en DevOps.",
+        ],
+      },
+      {
+        title: "4. Exemple pratique : Pipeline CI/CD complet",
+        content: "Voici un pipeline typique pour une application web (Node.js + React) :",
+        code: {
+          lang: "yaml",
+          content: `# .github/workflows/deploy.yml (GitHub Actions)
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to production
+        run: |
+          # Commandes de déploiement
+          ssh user@server 'cd /var/www && git pull && npm install && pm2 restart app'`,
+        },
+      },
+      {
+        title: "5. Recommandations par type de projet",
+        content: "Choisissez GitHub Actions si :",
+        list: [
+          "Votre code est déjà sur GitHub et votre équipe connaît l'écosystème GitHub",
+          "Vous voulez démarrer rapidement sans gérer d'infrastructure",
+          "Vous construisez une startup avec des besoins standards (web app, mobile app)",
+          "Votre budget permet 50-200$/mois pour les minutes de build",
+        ],
+      },
+      {
+        content: "Choisissez GitLab CI si :",
+        list: [
+          "Vous avez des contraintes de souveraineté des données (gouvernement, banque, santé)",
+          "Vous voulez héberger toute votre stack DevOps en interne",
+          "Vous avez des pipelines très complexes avec beaucoup de jobs parallèles",
+          "Vous avez l'expertise pour maintenir une instance GitLab self-hosted",
+        ],
+      },
+      {
+        title: "6. Pour aller plus loin : bonnes pratiques CI/CD",
+        content: "Quelle que soit la plateforme choisie, respectez ces principes :",
+        list: [
+          "Fail fast : Les tests doivent échouer rapidement en cas de problème (< 5 min idéalement)",
+          "Caching intelligent : Cachez les dépendances npm/pip pour accélérer les builds",
+          "Secrets sécurisés : Ne jamais commiter de clés API ou mots de passe, utilisez les gestionnaires de secrets",
+          "Déploiements progressifs : Déployez d'abord sur un environnement de staging avant la production",
+          "Monitoring post-déploiement : Surveillez les erreurs et les performances après chaque release",
+        ],
+      },
+      {
+        title: "Conclusion",
+        content: "En 2026, ne pas avoir de CI/CD est un handicap compétitif majeur. Les équipes avec CI/CD livrent 10x plus souvent, avec 5x moins de bugs en production. Pour la majorité des équipes africaines, GitHub Actions offre le meilleur rapport simplicité/puissance. GitLab CI reste le choix optimal pour les organisations nécessitant souveraineté et contrôle total. L'important n'est pas l'outil — c'est d'automatiser dès maintenant.",
+        isConclusion: true,
+      },
+    ],
+  },
+  {
+    slug: "api-rest-graphql-afrique-2026",
+    title: "REST vs GraphQL en 2026 : quel style d'API pour votre projet africain ?",
+    category: "Code & Dev",
+    categoryColor: "#D35400",
+    format: "Guide technique",
+    wordCount: "~2 000",
+    keywords: ["REST vs GraphQL", "API design", "développement API Afrique", "architecture API"],
+    target: "Développeurs backend, architectes API, CTOs",
+    excerpt: "Les APIs sont l'épine dorsale de toute application moderne. REST domine depuis 15 ans, mais GraphQL gagne du terrain. En 2026, quel style d'API convient le mieux aux contraintes africaines de connectivité et de performance ?",
+    date: "Mars 2026",
+    readTime: "8 min",
+    image: "/blog/lucid-origin_Donne_moi_une_image_simple_qui_passe_avec_ce_titre_Cybersécurité_2026_l_ère_d-0.jpg",
+    sections: [
+      {
+        content: "Les APIs (Application Programming Interfaces) sont l'épine dorsale invisible de toute application moderne. Chaque fois qu'une app mobile affiche des données, effectue un paiement, ou envoie une notification, elle communique avec un serveur via une API.\n\nDepuis 15 ans, REST (Representational State Transfer) domine le paysage des APIs. Mais depuis 2015, GraphQL (développé par Facebook) gagne du terrain en promettant de résoudre les limitations de REST. En 2026, lequel choisir pour un projet africain ?",
+      },
+      {
+        title: "1. REST : la simplicité qui scale",
+        content: "REST structure les APIs autour de ressources (users, orders, products) accessibles via des URLs et des verbes HTTP standards (GET, POST, PUT, DELETE).\n\nAvantages pour l'Afrique :",
+        list: [
+          "Simplicité : Tout développeur comprend REST. Pas de courbe d'apprentissage.",
+          "Caching natif : Les réponses REST peuvent être cachées par les CDN et navigateurs, réduisant la charge serveur et accélérant les réponses.",
+          "Debugging facile : curl, Postman, les outils REST sont universels.",
+          "Performance prévisible : Chaque endpoint fait une chose précise, facile à optimiser.",
+        ],
+      },
+      {
+        content: "Inconvénients :",
+        list: [
+          "Over-fetching : Un endpoint retourne souvent plus de données que nécessaire (ex: GET /users retourne nom, email, adresse, téléphone... alors que vous vouliez juste le nom).",
+          "Under-fetching : Vous devez faire plusieurs requêtes pour assembler les données (ex: GET /user/123 puis GET /user/123/orders puis GET /order/456/items).",
+          "Versioning : Faire évoluer une API REST nécessite souvent de créer /v2/users à côté de /v1/users.",
+        ],
+      },
+      {
+        title: "2. GraphQL : la flexibilité au prix de la complexité",
+        content: "GraphQL permet au client de décrire exactement quelles données il veut dans une seule requête. Le serveur retourne uniquement ce qui est demandé.\n\nAvantages pour l'Afrique :",
+        list: [
+          "Réduction drastique des requêtes réseau : Un seul appel GraphQL peut remplacer 5-10 appels REST, crucial pour les connexions mobiles à latence élevée.",
+          "Économie de bande passante : Le client demande uniquement les champs nécessaires, réduisant le volume de données transférées.",
+          "Pas de versioning : L'API évolue en ajoutant des champs, les anciens clients continuent de fonctionner.",
+        ],
+      },
+      {
+        content: "Inconvénients :",
+        list: [
+          "Complexité backend : Implémenter GraphQL correctement (avec DataLoader pour éviter le problème N+1) demande expertise.",
+          "Caching complexe : Le caching HTTP standard ne fonctionne pas, il faut des solutions spécialisées (Apollo Client, Relay).",
+          "Courbe d'apprentissage : Les équipes doivent apprendre GraphQL côté frontend ET backend.",
+          "Risque de requêtes coûteuses : Un client malveillant (ou mal optimisé) peut demander trop de données imbriquées et surcharger le serveur.",
+        ],
+      },
+      {
+        title: "3. Contexte africain : quand choisir quoi ?",
+        content: "Choisissez REST si :",
+        list: [
+          "Votre API est publique et sera consommée par des développeurs externes (REST est le standard universel)",
+          "Votre équipe backend est junior ou a peu d'expérience GraphQL",
+          "Votre use case est simple (CRUD basique : créer/lire/modifier/supprimer des ressources)",
+          "Vous voulez un caching HTTP standard (Cloudflare, Fastly, Varnish)",
+        ],
+      },
+      {
+        content: "Choisissez GraphQL si :",
+        list: [
+          "Vous développez une app mobile avec des besoins de données variables selon les écrans",
+          "Vous opérez dans des zones à connectivité limitée et voulez minimiser les aller-retours réseau",
+          "Vous avez une équipe backend expérimentée capable d'optimiser les requêtes GraphQL",
+          "Votre frontend et backend sont développés par la même équipe (startup, produit interne)",
+        ],
+      },
+      {
+        title: "4. L'approche hybride : le meilleur des deux mondes",
+        content: "En 2026, beaucoup d'entreprises adoptent une approche hybride :",
+        list: [
+          "REST pour les APIs publiques, webhooks, intégrations tierces",
+          "GraphQL pour les apps mobiles/web internes nécessitant flexibilité et performance",
+          "gRPC (un troisième concurrent) pour la communication inter-services dans une architecture microservices",
+        ],
+      },
+      {
+        title: "5. Exemple pratique : e-commerce mobile-first",
+        content: "Imaginons une app e-commerce au Nigeria. Page d'accueil : afficher catégories + produits populaires + bannières promo. Avec REST, cela nécessite 3 appels : GET /categories, GET /products?popular=true, GET /banners.\n\nAvec GraphQL, un seul appel :",
+        code: {
+          lang: "graphql",
+          content: `query HomePage {
+  categories {
+    id
+    name
+    image
+  }
+  popularProducts(limit: 10) {
+    id
+    name
+    price
+    image
+  }
+  banners {
+    image
+    link
+  }
+}`,
+        },
+      },
+      {
+        content: "Sur une connexion 3G avec 300ms de latence, REST prend 900ms+ (3 requêtes séquentielles), GraphQL prend 300ms (1 requête). La différence d'expérience utilisateur est énorme.",
+      },
+      {
+        title: "Conclusion",
+        content: "En 2026, REST reste le choix par défaut solide et éprouvé. GraphQL est le choix premium pour les équipes qui maîtrisent la technologie et qui optimisent pour l'expérience mobile. Pour un projet africain typique (fintech, marketplace, service public), commencez avec REST. Si votre app mobile devient complexe et que les performances réseau deviennent critiques, envisagez GraphQL pour les endpoints les plus sollicités. L'approche hybride est souvent la plus pragmatique.",
+        isConclusion: true,
+      },
+    ],
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

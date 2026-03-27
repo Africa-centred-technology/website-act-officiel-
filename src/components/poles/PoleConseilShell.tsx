@@ -46,7 +46,7 @@ function useMediaQuery() {
   return screenSize;
 }
 
-const COLOR = "#2563eb";
+const COLOR = "#D35400";
 
 const services = [
   {

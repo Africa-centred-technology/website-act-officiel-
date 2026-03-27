@@ -18,8 +18,8 @@ import LogoPhase from "./LogoPhase";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 const ORANGE = "#D35400";
-const GOLD = "#F39C12";
-const GREEN = "#d45d1ddc";
+const GOLD = "#D35400";
+const GREEN = "#D35400";
 
 /* ── Background layers (same as SecteursShell for uniformity) ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });

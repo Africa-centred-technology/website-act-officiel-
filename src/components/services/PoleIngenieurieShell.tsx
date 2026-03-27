@@ -492,11 +492,14 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
       }}>{String(index + 1).padStart(2, "0")}</motion.div>
 
       {/* ── Panneau IMAGE ── */}
-      <div style={{
-        order: isEven ? 1 : 2,
-        position: "relative", overflow: "hidden",
-        minHeight: "440px",
-      }}>
+      <div 
+        className="sub-panel-image"
+        style={{
+          order: isEven ? 1 : 2,
+          position: "relative", overflow: "hidden",
+          minHeight: "440px",
+        }}
+      >
         {img ? (
           <>
             {/* Photo Ken Burns avec parallax */}
@@ -523,18 +526,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
               background: `radial-gradient(ellipse 80% 70% at ${isEven ? "30%" : "70%"} 50%, ${accent}22 0%, transparent 70%)`,
               zIndex: 2, mixBlendMode: "screen",
             }} />
-            {/* Code service */}
-            <div style={{
-              position: "absolute", zIndex: 3,
-              [isEven ? "right" : "left"]: "2rem",
-              bottom: "2rem",
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(40px, 7vw, 100px)",
-              fontWeight: 700, color: `${accent}28`,
-              letterSpacing: "-0.04em", lineHeight: 1,
-              userSelect: "none",
-            }} aria-hidden>
-            </div>
           </>
         ) : (
           /* Fallback gradient si pas d'image */
@@ -543,11 +534,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
               position: "absolute", inset: 0,
               background: `radial-gradient(ellipse 90% 80% at ${isEven ? "80%" : "20%"} 50%, ${accent}20 0%, ${accent}06 55%, transparent 100%)`,
             }} />
-            <div style={{
-              position: "absolute", inset: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-            </div>
           </>
         )}
         {/* Barre accent latérale */}
@@ -565,13 +551,16 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
       </div>
 
       {/* ── Panneau CONTENU ── */}
-      <motion.div style={{
-        order: isEven ? 2 : 1,
-        padding: "clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 4.5rem)",
-        display: "flex", flexDirection: "column", justifyContent: "center",
-        position: "relative", zIndex: 1,
-        x: textX,
-      }}>
+      <motion.div 
+        className="sub-panel-content"
+        style={{
+          order: isEven ? 2 : 1,
+          padding: "clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 4.5rem)",
+          display: "flex", flexDirection: "column", justifyContent: "center",
+          position: "relative", zIndex: 1,
+          x: textX,
+        }}
+      >
         <motion.div variants={fadeUp} style={{
           display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.5rem",
         }}>
@@ -593,7 +582,13 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
         }}>{sub.desc}</motion.p>
       </motion.div>
 
-      <style>{`@media(max-width:768px){.sub-panel{grid-template-columns:1fr!important}}`}</style>
+      <style>{`
+        @media(max-width:768px){
+          .sub-panel{grid-template-columns:1fr!important}
+          .sub-panel-content{order:1!important}
+          .sub-panel-image{order:2!important}
+        }
+      `}</style>
     </motion.div>
   );
 }
@@ -602,10 +597,10 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
    4 · BÉNÉFICES — image en fond avec bloom
    ═══════════════════════════════════════════════════════ */
 const BENEFIT_ICONS = [
-  "M13 10V3L4 14h7v7l9-11h-7z",
-  "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-  "M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
-  "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  "M13 2L3 14h9v8l10-12h-9l1-8z", // Bolt/Zap
+  "M18 20V10 M12 20V4 M6 20v-6", // Chart
+  "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", // Shield
+  "M12 15a3 3 0 100-6 3 3 0 000 6z M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z", // Settings
 ];
 
 function BenefitsSection({ svc }: { svc: Service }) {
@@ -649,7 +644,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
                 fontFamily: "Futura, system-ui, sans-serif",
                 fontSize: "clamp(0.85rem, 1vw, 1rem)",
                 letterSpacing: "0.28em", textTransform: "uppercase", color: ORANGE, fontWeight: 700,
-              }}>Ce que vous gagnez</span>
+              }}>Pourquoi opter pour nos services</span>
               <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${ORANGE}60, transparent)` }} />
             </motion.div>
 

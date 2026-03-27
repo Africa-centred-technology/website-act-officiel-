@@ -28,7 +28,9 @@ const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false }
 import { SERVICES, type Service } from "@/lib/data/services";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
-import CatalogueSection from "@/components/formations/CatalogueSection";
+import FormationsCarousel from "@/components/formations/FormationsCarousel";
+
+const ORANGE = "#D35400";
 
 const EASE  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
@@ -160,7 +162,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
 
   const fxCycle: CharFx[] = ["rollIn", "burstOut", "riseUp"];
   const titleLines  = svc.title.split("\n");
-  const titleColors = ["#ffffff", svc.accent, "#ffffff"];
+  const titleColors = ["#ffffff", ORANGE, "#ffffff"];
 
   return (
     <div ref={heroRef} style={{ position: "relative", height: "100vh", overflow: "hidden" }}
@@ -202,16 +204,16 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
       }} />
 
       {/* Orbit arc */}
-      <OrbitArc label={svc.tagline} accent={svc.accent} />
+      <OrbitArc label={svc.tagline} accent={ORANGE} />
 
       {/* Scan-line */}
-      <ScanLine accent={svc.accent} />
+      <ScanLine accent={ORANGE} />
 
 
       {/* Sun pulse */}
       <motion.div aria-hidden style={{
         position: "absolute", width: "80vw", height: "50vw",
-        background: `radial-gradient(ellipse, ${svc.accent}18 0%, ${svc.accent}06 45%, transparent 72%)`,
+        background: `radial-gradient(ellipse, ${ORANGE}18 0%, ${ORANGE}06 45%, transparent 72%)`,
         borderRadius: "50%", top: "50%", left: "50%",
         translateX: "-50%", translateY: "-50%",
         x: bgX, y: bgY, zIndex: 2,
@@ -226,7 +228,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           <motion.div key={p.id} className="absolute rounded-full" style={{
             left: `${p.x}%`, top: `${p.y}%`,
             width: p.size, height: p.size,
-            background: svc.accent, boxShadow: `0 0 ${p.size * 7}px ${svc.accent}77`,
+            background: ORANGE, boxShadow: `0 0 ${p.size * 7}px ${ORANGE}77`,
           }}
             animate={{ y: [0, -44, 0], opacity: [0, 0.55, 0] }}
             transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
@@ -266,10 +268,10 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           <span style={{ color: "rgba(255,255,255,0.5)" }}>›</span>
           <span style={{
             marginLeft: "auto",
-            background: `${svc.accent}16`, border: `1px solid ${svc.accent}40`,
+            background: `${ORANGE}16`, border: `1px solid ${ORANGE}40`,
             borderRadius: "2rem", padding: "0.28rem 0.9rem",
             fontSize: "clamp(0.85rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em",
-            textTransform: "uppercase", color: svc.accent,
+            textTransform: "uppercase", color: ORANGE,
           }}>
             Pôle {svc.poleN} · {svc.pole}
           </span>
@@ -292,7 +294,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
         <motion.div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.6 }}>
-          <motion.div style={{ width: 50, height: 2, background: svc.accent, borderRadius: 1 }}
+          <motion.div style={{ width: 50, height: 2, background: ORANGE, borderRadius: 1 }}
             initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
             transition={{ delay: 1.05, duration: 0.7, ease: [...EASE] }} />
           <p style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.6rem)",
@@ -306,7 +308,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4, duration: 0.6 }}>
           <motion.div style={{
             width: 1, height: 48,
-            background: `linear-gradient(to bottom, transparent, ${svc.accent}CC, transparent)`,
+            background: `linear-gradient(to bottom, transparent, ${ORANGE}CC, transparent)`,
           }}
             animate={{ scaleY: [0.3, 1, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
@@ -360,41 +362,14 @@ function IntroSection({ svc }: { svc: Service }) {
             "{svc.intro}"
           </motion.p>
 
-          <motion.div variants={fadeUp} style={{
-            display: "flex", alignItems: "center", gap: "1rem",
-            padding: "1.5rem 1.8rem",
-            background: `${svc.accent}0C`,
-            border: `1px solid ${svc.accent}25`, borderRadius: "0.8rem",
-          }}>
-            <div style={{
-              width: 48, height: 48, flexShrink: 0,
-              background: `${svc.accent}18`, border: `1px solid ${svc.accent}35`,
-              borderRadius: "0.7rem",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                stroke={svc.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d={svc.icon} />
-              </svg>
-            </div>
-            <div>
-              <p style={{ fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(14px, 1.1vw, 1.2rem)", color: "#fff", marginBottom: "0.2rem" }}>
-                {svc.subs.length} sous-services · {svc.benefits.length} avantages · {svc.deliverables.length} livrables
-              </p>
-              <p style={{ fontSize: "clamp(12px, 0.95vw, 1.05rem)",
-                color: svc.accent, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
-                Pôle {svc.poleN} — {svc.pole}
-              </p>
-            </div>
-          </motion.div>
+     
         </motion.div>
       </motion.div>
 
       {/* Image animée */}
       <motion.div style={{
         position: "relative", overflow: "hidden", minHeight: "520px",
-        borderLeft: `1px solid ${svc.accent}18`,
+        borderLeft: `1px solid ${ORANGE}18`,
         opacity: imgReveal,
       }}>
         {/* Image Ken Burns */}
@@ -414,7 +389,7 @@ function IntroSection({ svc }: { svc: Service }) {
         {/* Teinte accent */}
         <div aria-hidden style={{
           position: "absolute", inset: 0,
-          background: `radial-gradient(ellipse 70% 60% at 60% 50%, ${svc.accent}20 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse 70% 60% at 60% 50%, ${ORANGE}20 0%, transparent 70%)`,
           zIndex: 2, mixBlendMode: "screen",
         }} />
         {/* Grain texture */}
@@ -425,7 +400,7 @@ function IntroSection({ svc }: { svc: Service }) {
         {/* Scan-line miniature */}
         <motion.div aria-hidden style={{
           position: "absolute", left: 0, right: 0, height: 1, zIndex: 4,
-          background: `linear-gradient(to right, transparent, ${svc.accent}AA, transparent)`,
+          background: `linear-gradient(to right, transparent, ${ORANGE}AA, transparent)`,
         }}
           initial={{ top: "-2px" }}
           animate={{ top: ["−2px", "102%"] }}
@@ -468,11 +443,14 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
     >
 
       {/* ── Panneau IMAGE ── */}
-      <div style={{
-        order: isEven ? 1 : 2,
-        position: "relative", overflow: "hidden",
-        minHeight: "440px",
-      }}>
+      <div 
+        className="sub-panel-image"
+        style={{
+          order: isEven ? 1 : 2,
+          position: "relative", overflow: "hidden",
+          minHeight: "440px",
+        }}
+      >
         {img ? (
           <>
             {/* Photo Ken Burns avec parallax */}
@@ -499,18 +477,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
               background: `radial-gradient(ellipse 80% 70% at ${isEven ? "30%" : "70%"} 50%, ${accent}22 0%, transparent 70%)`,
               zIndex: 2, mixBlendMode: "screen",
             }} />
-            {/* Code service */}
-            <div style={{
-              position: "absolute", zIndex: 3,
-              [isEven ? "right" : "left"]: "2rem",
-              bottom: "2rem",
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(40px, 7vw, 100px)",
-              fontWeight: 700, color: `${accent}28`,
-              letterSpacing: "-0.04em", lineHeight: 1,
-              userSelect: "none",
-            }} aria-hidden>
-            </div>
           </>
         ) : (
           /* Fallback gradient si pas d'image */
@@ -519,11 +485,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
               position: "absolute", inset: 0,
               background: `radial-gradient(ellipse 90% 80% at ${isEven ? "80%" : "20%"} 50%, ${accent}20 0%, ${accent}06 55%, transparent 100%)`,
             }} />
-            <div style={{
-              position: "absolute", inset: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-            </div>
           </>
         )}
         {/* Barre accent latérale */}
@@ -541,13 +502,16 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
       </div>
 
       {/* ── Panneau CONTENU ── */}
-      <motion.div style={{
-        order: isEven ? 2 : 1,
-        padding: "clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 4.5rem)",
-        display: "flex", flexDirection: "column", justifyContent: "center",
-        position: "relative", zIndex: 1,
-        x: textX,
-      }}>
+      <motion.div 
+        className="sub-panel-content"
+        style={{
+          order: isEven ? 2 : 1,
+          padding: "clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 4.5rem)",
+          display: "flex", flexDirection: "column", justifyContent: "center",
+          position: "relative", zIndex: 1,
+          x: textX,
+        }}
+      >
         <motion.div variants={fadeUp} style={{
           display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.5rem",
         }}>
@@ -569,7 +533,13 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
         }}>{sub.desc}</motion.p>
       </motion.div>
 
-      <style>{`@media(max-width:768px){.sub-panel{grid-template-columns:1fr!important}}`}</style>
+      <style>{`
+        @media(max-width:768px){
+          .sub-panel{grid-template-columns:1fr!important}
+          .sub-panel-content{order:1!important}
+          .sub-panel-image{order:2!important}
+        }
+      `}</style>
     </motion.div>
   );
 }
@@ -578,10 +548,10 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
    4 · BÉNÉFICES — image en fond avec bloom
    ═══════════════════════════════════════════════════════ */
 const BENEFIT_ICONS = [
-  "M13 10V3L4 14h7v7l9-11h-7z",
-  "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-  "M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
-  "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2a8 8 0 100-16 8 8 0 000 16zM12 15a3 3 0 100-6 3 3 0 000 6z", // Target
+  "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm1-10V7h-2v7h6v-2h-4z", // Clock
+  "M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM10 5h4v2h-4V5z", // Briefcase
+  "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 7a4 4 0 100-8 4 4 0 000 8z M23 21v-2a4 4 0 00-3-3.87 M16 3.13a4 4 0 010 7.75", // Users
 ];
 
 function BenefitsSection({ svc }: { svc: Service }) {
@@ -605,7 +575,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
       }} />
       <div aria-hidden style={{
         position: "absolute", inset: 0, zIndex: 2,
-        background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${svc.accent}12 0%, transparent 70%)`,
+        background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${ORANGE}12 0%, transparent 70%)`,
       }} />
 
       <div style={{
@@ -620,13 +590,13 @@ function BenefitsSection({ svc }: { svc: Service }) {
             <motion.div variants={fadeUp} style={{
               display: "flex", alignItems: "center", gap: "1rem", marginBottom: "3.5rem",
             }}>
-              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, transparent, ${svc.accent}60)` }} />
+              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, transparent, ${ORANGE}60)` }} />
               <span style={{
                 fontFamily: "Futura, system-ui, sans-serif",
                 fontSize: "clamp(0.85rem, 1vw, 1rem)",
-                letterSpacing: "0.28em", textTransform: "uppercase", color: svc.accent, fontWeight: 700,
-              }}>Ce que vous gagnez</span>
-              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${svc.accent}60, transparent)` }} />
+                letterSpacing: "0.28em", textTransform: "uppercase", color: ORANGE, fontWeight: 700,
+              }}>Pourquoi opter pour nos services</span>
+              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${ORANGE}60, transparent)` }} />
             </motion.div>
 
             <div style={{
@@ -639,8 +609,8 @@ function BenefitsSection({ svc }: { svc: Service }) {
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: [...EASE] } }}
                   style={{
                     background: "rgba(255,255,255,0.04)",
-                    border: `1px solid ${svc.accent}22`,
-                    borderTop: `2px solid ${svc.accent}`,
+                    border: `1px solid ${ORANGE}22`,
+                    borderTop: `2px solid ${ORANGE}`,
                     borderRadius: "0.8rem",
                     padding: "2rem 1.8rem",
                     position: "relative", overflow: "hidden",
@@ -648,16 +618,16 @@ function BenefitsSection({ svc }: { svc: Service }) {
                   }}>
                   <div aria-hidden style={{
                     position: "absolute", inset: 0,
-                    background: `radial-gradient(ellipse 70% 70% at 50% 110%, ${svc.accent}0E 0%, transparent 70%)`,
+                    background: `radial-gradient(ellipse 70% 70% at 50% 110%, ${ORANGE}0E 0%, transparent 70%)`,
                   }} />
                   <div style={{
                     width: 44, height: 44, marginBottom: "1.2rem",
-                    background: `${svc.accent}16`, border: `1px solid ${svc.accent}35`,
+                    background: `${ORANGE}16`, border: `1px solid ${ORANGE}35`,
                     borderRadius: "0.6rem",
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke={svc.accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      stroke={ORANGE} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d={BENEFIT_ICONS[i % BENEFIT_ICONS.length]} />
                     </svg>
                   </div>
@@ -690,13 +660,12 @@ function DeliverablesSection({ svc }: { svc: Service }) {
 
   return (
     <section ref={ref} style={{
-      display: "grid", gridTemplateColumns: "1fr 1fr",
       borderTop: "1px solid rgba(255,255,255,0.05)",
+      padding: "clamp(4rem, 7vw, 7rem) clamp(1.5rem, 5vw, 3rem)",
       overflow: "hidden",
-    }} className="deliv-grid">
-
-      {/* Timeline */}
-      <div style={{ padding: "clamp(4rem, 7vw, 7rem) clamp(2rem, 5vw, 5rem)" }}>
+      position: "relative"
+    }}>
+      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <motion.div
           initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
           variants={stagger(0)}>
@@ -705,172 +674,43 @@ function DeliverablesSection({ svc }: { svc: Service }) {
             fontSize: "clamp(0.85rem, 1vw, 1rem)",
             letterSpacing: "0.28em", textTransform: "uppercase",
             color: "#ffffff", marginBottom: "3rem", fontWeight: 700,
-          }}>Ce que vous recevez</motion.p>
+            textAlign: "center"
+          }}>Votre parcours en vidéo</motion.p>
 
-          <div style={{ position: "relative", display: "flex", flexDirection: "column" }}>
-            <div style={{
-              position: "absolute", left: "22px", top: 0, bottom: 0, width: 1,
-              background: "rgba(255,255,255,0.06)", overflow: "hidden",
-            }}>
-              <motion.div style={{
-                position: "absolute", top: 0, left: 0, right: 0,
-                background: `linear-gradient(to bottom, ${svc.accent}, ${svc.accent}44)`,
-                height: lineH,
-              }} />
-            </div>
-
-            {svc.deliverables.map((d, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [...EASE] }}
-                style={{
-                  display: "flex", alignItems: "flex-start", gap: "1.75rem",
-                  padding: "1.5rem 0",
-                  borderBottom: i < svc.deliverables.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                }}>
-                <div style={{
-                  flexShrink: 0, width: 44, height: 44, borderRadius: "50%",
-                  background: `${svc.accent}14`, border: `1px solid ${svc.accent}40`,
-                  display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1,
-                }}>
-                  <span style={{
-                    fontFamily: "Futura, system-ui, sans-serif",
-                    fontSize: "clamp(10px, 0.7rem, 0.74rem)", color: svc.accent, letterSpacing: "0.1em",
-                  }}>{String(i + 1).padStart(2, "0")}</span>
-                </div>
-                <div style={{ paddingTop: "0.7rem" }}>
-                  <p style={{ fontSize: "clamp(15px, 1.2vw, 1.3rem)",
-                    color: "#ffffff", lineHeight: 1.55 }}>{d}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div 
+            style={{ 
+              position: "relative", 
+              width: "100%", 
+              aspectRatio: "16 / 9", 
+              minHeight: "300px",
+              borderRadius: "1rem", 
+              overflow: "hidden", 
+              border: `1px solid ${ORANGE}40`,
+              boxShadow: `0 20px 40px rgba(0,0,0,0.5), 0 0 20px ${ORANGE}20`,
+              background: "#000"
+            }}
+          >
+            <video 
+              autoPlay 
+              muted 
+              loop 
+              playsInline 
+              controls
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            >
+              <source src="https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4" type="video/mp4" />
+              Votre navigateur ne supporte pas la lecture de vidéos.
+            </video>
+            {/* Overlay gradient subtil */}
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)", pointerEvents: "none" }} />
           </div>
         </motion.div>
       </div>
-
-      {/* Image d'ambiance avec parallax */}
-      <div style={{ position: "relative", overflow: "hidden", minHeight: "400px" }}>
-        <motion.div style={{ position: "absolute", inset: 0, y: imgY }}>
-          <KenBurns
-            src={sideImg} alt=""
-            duration={26} fromScale={1.0} toScale={1.1}
-            fromX="2%" toX="-2%"
-          />
-        </motion.div>
-        <div aria-hidden style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to right, rgba(3,5,8,0.8) 0%, rgba(3,5,8,0.2) 60%, rgba(3,5,8,0.6) 100%)",
-          zIndex: 1,
-        }} />
-        <div aria-hidden style={{
-          position: "absolute", inset: 0, zIndex: 2,
-          background: `radial-gradient(ellipse 60% 55% at 70% 50%, ${svc.accent}1A 0%, transparent 70%)`,
-          mixBlendMode: "screen",
-        }} />
-        {/* Texte flottant */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [...EASE] }}
-          style={{
-            position: "absolute", bottom: "3rem", left: "2.5rem", right: "2.5rem", zIndex: 3,
-          }}>
-          <p style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(22px, 2.5vw, 3rem)",
-            fontWeight: 500, color: "#fff", lineHeight: 1.1,
-            marginBottom: "0.8rem",
-          }}>
-            {svc.deliverables.length} livrables<br />
-            <span style={{ color: svc.accent }}>concrets</span>
-          </p>
-          <p style={{ fontSize: "clamp(13px, 1vw, 1.15rem)",
-            color: "#ffffff", letterSpacing: "0.06em" }}>
-            Documentation · Formation · Support
-          </p>
-        </motion.div>
-      </div>
-
-      <style>{`@media(max-width:768px){.deliv-grid{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════════════════
-   6 · SERVICES CONNEXES
-   ═══════════════════════════════════════════════════════ */
-function RelatedServices({ svc }: { svc: Service }) {
-  const related = SERVICES.filter(s => s.poleN === svc.poleN && s.slug !== svc.slug).slice(0, 3);
-  if (!related.length) return null;
 
-  return (
-    <section style={{
-      background: "rgba(255,255,255,0.015)",
-      borderTop: "1px solid rgba(255,255,255,0.05)",
-      padding: "clamp(3.5rem, 6vw, 6rem) clamp(1.5rem, 5vw, 3rem)",
-    }}>
-      <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
-        <motion.div
-          initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
-          variants={stagger(0)}>
-          <motion.div variants={fadeUp} style={{
-            display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.5rem",
-          }}>
-            <p style={{
-              fontFamily: "Futura, system-ui, sans-serif",
-              fontSize: "clamp(0.85rem, 1vw, 1rem)",
-              letterSpacing: "0.28em", textTransform: "uppercase", color: "#ffffff", fontWeight: 700,
-            }}>Services du Pôle {svc.poleN}</p>
-            <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.06)" }} />
-          </motion.div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${related.length}, 1fr)`,
-            gap: "1.25rem",
-          }} className="related-grid">
-            {related.map(r => (
-              <motion.div key={r.slug} variants={fadeUp}>
-                <Link href={`/services/${r.slug}`} style={{ textDecoration: "none", display: "block" }}>
-                  <motion.div whileHover={{ y: -5, borderColor: `${r.accent}55` }}
-                    transition={{ duration: 0.28, ease: [...EASE] }}
-                    style={{
-                      position: "relative", overflow: "hidden",
-                      padding: "1.8rem",
-                      background: "rgba(255,255,255,0.025)",
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      borderRadius: "0.8rem", cursor: "pointer",
-                    }}>
-                    {/* Mini image de fond */}
-                    <div style={{ position: "absolute", inset: 0, opacity: 0.15 }}>
-                      <KenBurns src={r.heroImage} alt="" duration={30} fromScale={1.0} toScale={1.08} />
-                    </div>
-                    <div aria-hidden style={{
-                      position: "absolute", inset: 0,
-                      background: "rgba(3,5,8,0.75)",
-                    }} />
-                    <div style={{ position: "relative", zIndex: 1 }}>
-                      <p style={{
-                        fontFamily: "Futura, system-ui, sans-serif",
-                        fontSize: "clamp(13px, 0.95rem, 1rem)",
-                        fontWeight: 500, color: "#fff", whiteSpace: "pre-line",
-                        lineHeight: 1.2, marginBottom: "0.6rem",
-                      }}>{r.title}</p>
-                      <p style={{ fontSize: "clamp(11px, 0.75rem, 0.8rem)",
-                        color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>{r.tagline}</p>
-                    </div>
-                  </motion.div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-      <style>{`@media(max-width:768px){.related-grid{grid-template-columns:1fr!important}}`}</style>
-    </section>
-  );
-}
 
 
 /* ═══════════════════════════════════════════════════════
@@ -891,7 +731,7 @@ function StickyHeader({ svc }: { svc: Service }) {
       style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         background: "rgba(7,14,28,0.92)", backdropFilter: "blur(20px)",
-        borderBottom: `1px solid ${svc.accent}30`,
+        borderBottom: `1px solid ${ORANGE}30`,
         padding: "0.9rem clamp(1.5rem, 4vw, 3rem)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
@@ -908,10 +748,10 @@ function StickyHeader({ svc }: { svc: Service }) {
         }}>{svc.title.replace(/\n/g, " ")}</span>
       </div>
       <span style={{
-        background: `${svc.accent}18`, border: `1px solid ${svc.accent}35`,
+        background: `${ORANGE}18`, border: `1px solid ${ORANGE}35`,
         borderRadius: "2rem", padding: "0.25rem 0.8rem",
         fontSize: "clamp(10px, 0.68rem, 0.72rem)",
-        letterSpacing: "0.16em", textTransform: "uppercase", color: svc.accent,
+        letterSpacing: "0.16em", textTransform: "uppercase", color: ORANGE,
         fontFamily: "Futura, system-ui, sans-serif",
       }}>Pôle {svc.poleN}</span>
     </motion.div>
@@ -940,24 +780,14 @@ export default function PoleFormationShell({ svc }: { svc: Service }) {
           {svc.subs.map((sub, i) => (
             <SubServicePanel
               key={i} sub={sub} index={i}
-              accent={svc.accent} svcN={svc.n}
+              accent={ORANGE} svcN={svc.n}
               img={svc.subImages[i]}
             />
           ))}
         </div>
         <BenefitsSection svc={svc} />
         <DeliverablesSection svc={svc} />
-        <RelatedServices svc={svc} />
-        {svc.n === "09" ? (
-          <CatalogueSection />
-        ) : (
-          <CTASection
-            eyebrow="Travaillons ensemble"
-            title="Intéressé par ce service ?"
-            description="Parlons de votre projet en 30 minutes — sans engagement."
-            buttonText="Démarrer un projet"
-          />
-        )}
+        <FormationsCarousel />
         <FooterStrip />
       </div>
     </div>

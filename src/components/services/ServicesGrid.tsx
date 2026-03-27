@@ -181,7 +181,7 @@ export default function ServicesGrid() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#0A1410",
+      background: "#070E1C",
       paddingTop: "clamp(6rem, 10vw, 9rem)",
       paddingBottom: "6rem",
     }}>
@@ -247,13 +247,13 @@ export default function ServicesGrid() {
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#F39C12" }} />
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
                   Pôle II — Conseil
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#16a34a" }} />
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
                   Pôle III — Formation
                 </span>
@@ -277,13 +277,13 @@ export default function ServicesGrid() {
         {/* ── Pôle II ── */}
         <PoleSection
           number="II" label="Conseil"
-          accent="#F39C12" services={POLE_II} delay={0.15}
+          accent="#D35400" services={POLE_II} delay={0.15}
         />
 
         {/* ── Pôle III ── */}
         <PoleSection
           number="III" label="Formation"
-          accent="#16a34a" services={POLE_III} delay={0.2}
+          accent="#D35400" services={POLE_III} delay={0.2}
         />
 
         {/* ── CTA bas de page ── */}

@@ -10,7 +10,7 @@ const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ss
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
 
-const GREEN = "#16a34a";
+const ORANGE = "#D35400";
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
 /* ── Accordion Item ─────────────────────────────────── */
@@ -86,7 +86,7 @@ function Badge({ label, accent }: { label: string; accent: string }) {
 
 /* ── Main Component ─────────────────────────────────── */
 export default function FormationDetailShell({ formation }: { formation: Formation }) {
-  const accent = GREEN;
+  const accent = ORANGE;
 
   return (
     <div style={{ background: "#070E1C", minHeight: "100vh", color: "#fff", position: "relative" }}>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FORMATIONS } from "@/lib/data/formations";
 
-const GREEN = "#16a34a";
+const ORANGE = "#D35400";
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
 export default function CatalogueSection() {
@@ -25,14 +25,14 @@ export default function CatalogueSection() {
   return (
     <section style={{
       background: "rgba(0,0,0,0.35)",
-      borderTop: `1px solid ${GREEN}22`,
+      borderTop: `1px solid ${ORANGE}22`,
       padding: "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 8rem)",
       position: "relative",
     }}>
       {/* Ambient glow */}
       <div aria-hidden style={{
         position: "absolute", inset: 0, pointerEvents: "none",
-        background: `radial-gradient(ellipse 70% 50% at 50% 0%, ${GREEN}0D 0%, transparent 60%)`,
+        background: `radial-gradient(ellipse 70% 50% at 50% 0%, ${ORANGE}0D 0%, transparent 60%)`,
       }} />
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative", zIndex: 1 }}>
@@ -45,8 +45,8 @@ export default function CatalogueSection() {
               viewport={{ once: true }} transition={{ duration: 0.55 }}
               style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}
             >
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: GREEN, boxShadow: `0 0 8px ${GREEN}` }} />
-              <span style={{ fontSize: "0.8rem", color: GREEN, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: ORANGE, boxShadow: `0 0 8px ${ORANGE}` }} />
+              <span style={{ fontSize: "0.8rem", color: ORANGE, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700 }}>
                 Pôle III · Formation
               </span>
             </motion.div>
@@ -60,7 +60,7 @@ export default function CatalogueSection() {
               }}
             >
               Catalogue<br />
-              <span style={{ color: GREEN }}>de Formations</span>
+              <span style={{ color: ORANGE }}>de Formations</span>
             </motion.h2>
           </div>
 
@@ -71,8 +71,8 @@ export default function CatalogueSection() {
             <Link href="/contact" style={{
               display: "inline-flex", alignItems: "center", gap: "0.6rem",
               padding: "0.75rem 1.5rem",
-              border: `1px solid ${GREEN}55`,
-              color: GREEN, textDecoration: "none",
+              border: `1px solid ${ORANGE}55`,
+              color: ORANGE, textDecoration: "none",
               fontSize: "0.8rem", fontWeight: 700,
               letterSpacing: "0.18em", textTransform: "uppercase",
             }}>
@@ -101,7 +101,7 @@ export default function CatalogueSection() {
         <motion.div
           initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }}
           viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.9, ease: [...EASE] }}
-          style={{ height: 1, background: `linear-gradient(90deg, ${GREEN}44, transparent)`, originX: 0, marginBottom: "2rem" }}
+          style={{ height: 1, background: `linear-gradient(90deg, ${ORANGE}44, transparent)`, originX: 0, marginBottom: "2rem" }}
         />
 
         {/* Accordion par catégorie */}
@@ -121,7 +121,7 @@ export default function CatalogueSection() {
                   width: "100%", background: "none", border: "none", cursor: "pointer",
                   display: "flex", alignItems: "center", gap: "1rem",
                   padding: "1.1rem 0",
-                  borderBottom: `1px solid ${openCat === categorie ? GREEN + "44" : "rgba(255,255,255,0.08)"}`,
+                  borderBottom: `1px solid ${openCat === categorie ? ORANGE + "44" : "rgba(255,255,255,0.08)"}`,
                   transition: "border-color 0.2s",
                 }}
               >
@@ -132,7 +132,7 @@ export default function CatalogueSection() {
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center",
                     width: 22, height: 22, flexShrink: 0,
-                    border: `1.5px solid ${openCat === categorie ? GREEN : "rgba(255,255,255,0.3)"}`,
+                    border: `1.5px solid ${openCat === categorie ? ORANGE : "rgba(255,255,255,0.3)"}`,
                     borderRadius: "50%",
                     transition: "border-color 0.2s",
                   }}
@@ -140,7 +140,7 @@ export default function CatalogueSection() {
                   <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
                     <path
                       d="M5 1v8M1 5h8"
-                      stroke={openCat === categorie ? GREEN : "rgba(255,255,255,0.5)"}
+                      stroke={openCat === categorie ? ORANGE : "rgba(255,255,255,0.5)"}
                       strokeWidth="1.5" strokeLinecap="round"
                     />
                   </svg>
@@ -149,7 +149,7 @@ export default function CatalogueSection() {
                 {/* Nom de la catégorie */}
                 <span style={{
                   fontWeight: 700, fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)",
-                  color: openCat === categorie ? GREEN : "rgba(255,255,255,0.85)",
+                  color: openCat === categorie ? ORANGE : "rgba(255,255,255,0.85)",
                   letterSpacing: "0.04em", textAlign: "left",
                   transition: "color 0.2s", flex: 1,
                 }}>
@@ -192,7 +192,7 @@ export default function CatalogueSection() {
                               transition: "background 0.2s",
                             }}
                           >
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: `${GREEN}66`, flexShrink: 0 }} />
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: `${ORANGE}66`, flexShrink: 0 }} />
                             <span style={{ flex: 1, fontSize: "clamp(0.85rem, 1vw, 0.97rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.45 }}>
                               {f.title}
                             </span>
@@ -202,7 +202,7 @@ export default function CatalogueSection() {
                             <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.2)", whiteSpace: "nowrap", flexShrink: 0 }}>
                               {f.duree}
                             </span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
                               <path d="M5 12h14M12 5l7 7-7 7" />
                             </svg>
                           </motion.div>

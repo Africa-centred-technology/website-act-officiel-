@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
+import { blogPosts } from "@/lib/blog-data";
 
 /* ── Background layers ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -250,6 +251,55 @@ export default function PoleDeveloppementShell() {
         </div>
       </section>
 
+      {/* Stats Section */}
+      <section style={{
+        padding: screenSize === 'mobile' ? '3rem 1.5rem' : '4rem 4rem',
+        maxWidth: '1400px',
+        margin: '0 auto',
+      }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+          gap: screenSize === 'mobile' ? '2rem' : '3rem',
+          textAlign: 'center',
+        }}>
+          {[
+            { value: "50+", label: "Projets livrés" },
+            { value: "98%", label: "Satisfaction client" },
+            { value: "8+", label: "Ans d'expérience" },
+            { value: "25+", label: "Technologies" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <div style={{
+                fontSize: screenSize === 'mobile' ? '3rem' : '4rem',
+                fontWeight: 900,
+                color: COLOR,
+                fontFamily: 'var(--font-display)',
+                lineHeight: 1,
+                marginBottom: '0.5rem',
+              }}>
+                {stat.value}
+              </div>
+              <div style={{
+                fontSize: screenSize === 'mobile' ? '0.9rem' : '1rem',
+                color: 'rgba(255,255,255,0.6)',
+                fontFamily: 'var(--font-body)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+              }}>
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* Services Grid */}
       <section id="services" style={{
         padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
@@ -398,73 +448,7 @@ export default function PoleDeveloppementShell() {
         </div>
       </section>
 
-      {/* Technologies */}
-      <section style={{
-        padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
-        background: 'rgba(255,255,255,0.02)',
-      }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{
-              fontSize: screenSize === 'mobile' ? 'clamp(2rem, 7vw, 3rem)' : 'clamp(3rem, 5vw, 4.5rem)',
-              fontWeight: 900,
-              marginBottom: '3rem',
-              textAlign: 'center',
-              fontFamily: 'var(--font-display)',
-              textTransform: 'uppercase'
-            }}
-          >
-            Stack <span style={{ color: COLOR }}>Technologique</span>
-          </motion.h2>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-            gap: '1.5rem',
-          }}>
-            {technologies.map((tech, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '0.75rem',
-                  padding: '1.5rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                }}
-              >
-                <span style={{
-                  fontSize: '0.75rem',
-                  color: COLOR,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.15em',
-                  fontWeight: 700,
-                  fontFamily: 'var(--font-display)'
-                }}>
-                  {tech.category}
-                </span>
-                <span style={{
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
-                  color: '#fff',
-                  fontFamily: 'var(--font-body)'
-                }}>
-                  {tech.name}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Process */}
       <section style={{
@@ -536,6 +520,309 @@ export default function PoleDeveloppementShell() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section style={{
+        padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
+        maxWidth: '1400px',
+        margin: '0 auto',
+      }}>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{
+            fontSize: screenSize === 'mobile' ? 'clamp(2rem, 7vw, 3rem)' : 'clamp(3rem, 5vw, 4.5rem)',
+            fontWeight: 900,
+            marginBottom: '3rem',
+            fontFamily: 'var(--font-display)',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+          }}
+        >
+          Pourquoi nous <span style={{ color: COLOR }}>choisir</span>
+        </motion.h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? '1fr' : 'repeat(2, 1fr)',
+          gap: screenSize === 'mobile' ? '1.5rem' : '2rem',
+        }}>
+          {[
+            {
+              icon: Zap,
+              title: "Livraison Rapide",
+              desc: "Méthode agile et sprints courts pour des livraisons incrémentales et une mise en production rapide."
+            },
+            {
+              icon: Shield,
+              title: "Qualité & Sécurité",
+              desc: "Tests automatisés, code reviews systématiques et conformité aux standards de sécurité internationaux."
+            },
+            {
+              icon: GitBranch,
+              title: "Évolutivité",
+              desc: "Architecture modulaire et scalable qui grandit avec vos besoins sans réécriture complète."
+            },
+            {
+              icon: CheckCircle2,
+              title: "Support Continu",
+              desc: "Accompagnement post-livraison, formation des équipes et maintenance proactive de vos solutions."
+            },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                style={{
+                  padding: screenSize === 'mobile' ? '2rem' : '2.5rem',
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '1rem',
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = `${COLOR}66`;
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = `0 12px 40px ${COLOR}22`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div style={{
+                  width: '3rem',
+                  height: '3rem',
+                  borderRadius: '0.5rem',
+                  background: `${COLOR}22`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '1.5rem',
+                }}>
+                  <Icon size={24} color={COLOR} />
+                </div>
+                <h3 style={{
+                  fontSize: screenSize === 'mobile' ? '1.3rem' : '1.5rem',
+                  fontWeight: 800,
+                  marginBottom: '1rem',
+                  color: '#fff',
+                  fontFamily: 'var(--font-display)',
+                }}>
+                  {item.title}
+                </h3>
+                <p style={{
+                  fontSize: '1rem',
+                  lineHeight: 1.6,
+                  color: 'rgba(255,255,255,0.65)',
+                  fontFamily: 'var(--font-body)',
+                }}>
+                  {item.desc}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Blog Articles */}
+      <section style={{
+        padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
+        maxWidth: '1400px',
+        margin: '0 auto',
+      }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{ marginBottom: '3rem' }}
+        >
+          <h2 style={{
+            fontSize: screenSize === 'mobile' ? 'clamp(2rem, 7vw, 3rem)' : 'clamp(3rem, 5vw, 4.5rem)',
+            fontWeight: 900,
+            marginBottom: '1rem',
+            fontFamily: 'var(--font-display)',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+          }}>
+            Articles <span style={{ color: COLOR }}>Développement</span>
+          </h2>
+          <p style={{
+            fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
+            color: 'rgba(255,255,255,0.65)',
+            maxWidth: '700px',
+            fontFamily: 'var(--font-body)',
+            textAlign: 'center',
+            margin: '0 auto',
+          }}>
+            Guides techniques, tutoriels et bonnes pratiques pour le développement logiciel
+          </p>
+        </motion.div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+          gap: screenSize === 'mobile' ? '1.5rem' : '2rem',
+        }}>
+          {blogPosts
+            .filter(post => post.category === "Code & Dev")
+            .slice(0, 4)
+            .map((post, i) => (
+              <motion.article
+                key={post.slug}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '1rem',
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = `${COLOR}66`;
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = `0 12px 40px ${COLOR}22`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <div style={{
+                    position: 'relative',
+                    height: screenSize === 'mobile' ? '160px' : '200px',
+                    overflow: 'hidden',
+                    background: 'rgba(0,0,0,0.3)',
+                  }}>
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        filter: 'brightness(0.7)',
+                      }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      top: '1rem',
+                      left: '1rem',
+                      padding: '0.4rem 0.8rem',
+                      background: COLOR,
+                      borderRadius: '0.25rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                    }}>
+                      {post.format}
+                    </div>
+                  </div>
+
+                  <div style={{
+                    padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      marginBottom: '1rem',
+                      fontSize: '0.85rem',
+                      color: 'rgba(255,255,255,0.5)',
+                    }}>
+                      <span>{post.readTime}</span>
+                      <span>•</span>
+                      <span>{post.date}</span>
+                    </div>
+
+                    <h3 style={{
+                      fontSize: screenSize === 'mobile' ? '1.2rem' : '1.4rem',
+                      fontWeight: 800,
+                      marginBottom: '0.75rem',
+                      fontFamily: 'var(--font-display)',
+                      color: '#fff',
+                      lineHeight: 1.3,
+                    }}>
+                      {post.title}
+                    </h3>
+
+                    <p style={{
+                      fontSize: '0.95rem',
+                      lineHeight: 1.6,
+                      color: 'rgba(255,255,255,0.65)',
+                      marginBottom: '1.5rem',
+                      fontFamily: 'var(--font-body)',
+                    }}>
+                      {post.excerpt.slice(0, 150)}...
+                    </p>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      color: COLOR,
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
+                    }}>
+                      Lire l'article
+                      <ArrowRight size={16} />
+                    </div>
+                  </div>
+                </Link>
+              </motion.article>
+            ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          style={{
+            textAlign: 'center',
+            marginTop: '3rem',
+          }}
+        >
+          <Link href="/blog?category=code-dev">
+            <button style={{
+              background: 'transparent',
+              border: `1px solid ${COLOR}`,
+              color: COLOR,
+              padding: screenSize === 'mobile' ? '1rem 2rem' : '1.2rem 3rem',
+              fontSize: screenSize === 'mobile' ? '0.9rem' : '1rem',
+              fontWeight: 700,
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+              borderRadius: '0.25rem',
+              fontFamily: 'var(--font-display)',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = `${COLOR}22`;
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}>
+              Voir tous les articles Code & Dev
+            </button>
+          </Link>
+        </motion.div>
       </section>
 
       {/* CTA */}
