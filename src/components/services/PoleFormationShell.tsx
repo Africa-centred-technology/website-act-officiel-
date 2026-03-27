@@ -422,15 +422,6 @@ function IntroSection({ svc }: { svc: Service }) {
           position: "absolute", inset: 0, zIndex: 3,
           backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px)",
         }} />
-        {/* Badge numéro service */}
-        <div style={{
-          position: "absolute", top: "2rem", right: "2rem", zIndex: 4,
-          fontFamily: "Futura, system-ui, sans-serif",
-          fontSize: "clamp(60px, 10vw, 130px)",
-          fontWeight: 700, color: `${svc.accent}18`,
-          letterSpacing: "-0.04em", lineHeight: 1,
-          userSelect: "none",
-        }} aria-hidden>{svc.n}</div>
         {/* Scan-line miniature */}
         <motion.div aria-hidden style={{
           position: "absolute", left: 0, right: 0, height: 1, zIndex: 4,
@@ -475,18 +466,6 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
       }}
       className="sub-panel"
     >
-      {/* Numéro fantôme derrière */}
-      <motion.div aria-hidden style={{
-        position: "absolute",
-        [isEven ? "right" : "left"]: "1%",
-        top: "50%", translateY: "-50%",
-        fontFamily: "Futura, system-ui, sans-serif",
-        fontSize: "clamp(80px, 16vw, 220px)",
-        fontWeight: 700, color: `${accent}04`,
-        letterSpacing: "-0.04em", lineHeight: 1,
-        userSelect: "none", pointerEvents: "none",
-        y: numberY, zIndex: 0,
-      }}>{String(index + 1).padStart(2, "0")}</motion.div>
 
       {/* ── Panneau IMAGE ── */}
       <div style={{
@@ -872,11 +851,6 @@ function RelatedServices({ svc }: { svc: Service }) {
                       background: "rgba(3,5,8,0.75)",
                     }} />
                     <div style={{ position: "relative", zIndex: 1 }}>
-                      <span style={{
-                        fontFamily: "Futura, system-ui, sans-serif",
-                        fontSize: "clamp(0.8rem, 1vw, 1rem)",
-                        letterSpacing: "0.2em", color: r.accent, display: "block", marginBottom: "0.7rem", fontWeight: 700,
-                      }}>{r.n}</span>
                       <p style={{
                         fontFamily: "Futura, system-ui, sans-serif",
                         fontSize: "clamp(13px, 0.95rem, 1rem)",

@@ -60,11 +60,7 @@ function ServiceCard({ svc, index }: { svc: Service; index: number }) {
             }}
           />
 
-          {/* Cadre de focus et numéro */}
           <div className="absolute inset-4 border border-white/0 group-hover:border-white/10 rounded-xl transition-all duration-500 pointer-events-none" />
-          <div className="absolute top-6 left-6 font-bold text-white/10 group-hover:text-white/30 transition-colors duration-500 text-6xl select-none" style={{ fontFamily: "Futura" }}>
-            {svc.n}
-          </div>
           
           {/* Reflet lumineux furtif */}
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />

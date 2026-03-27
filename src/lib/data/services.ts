@@ -66,7 +66,7 @@ export const SERVICES: Service[] = [
       "Tableau de bord de performance",
     ],
     video: "https://cdn.pixabay.com/video/2019/05/06/23355-334950213_large.mp4",
-    heroImage: "/images/poles/pole-it.jpg",
+    heroImage: "/images/services/Ingéneurie_logicielle.jpg",
     subImages: [
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
@@ -110,7 +110,7 @@ export const SERVICES: Service[] = [
       "Guide de gouvernance IA",
     ],
     video: "https://cdn.pixabay.com/video/2023/07/24/173103-848555583_large.mp4",
-    heroImage: "/images/poles/pole-it.jpg",
+    heroImage: "/images/services/Agentic_AI.jpg",
     subImages: [
       "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
@@ -154,7 +154,7 @@ export const SERVICES: Service[] = [
       "Documentation technique complète",
     ],
     video: "https://cdn.pixabay.com/video/2024/11/05/240062_large.mp4",
-    heroImage: "/images/poles/pole-it.jpg",
+    heroImage: "/images/services/architerture.png",
     subImages: [
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
@@ -207,7 +207,7 @@ export const SERVICES: Service[] = [
       "Charte IA & gouvernance",
     ],
     video: "https://cdn.pixabay.com/video/2020/01/30/31772-388253161_large.mp4",
-    heroImage: "/images/poles/pole-it.jpg",
+    heroImage: "/images/services/big-data-and-et-artificial-intelligence.jpg",
     subImages: [
       "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80",
@@ -248,9 +248,9 @@ export const SERVICES: Service[] = [
       "Protocole de mise à jour des données",
     ],
     video: "https://cdn.pixabay.com/video/2017/07/23/10854-226632941_large.mp4",
-    heroImage: "/images/poles/pole-it.jpg",
+    heroImage: "/images/services/sig.jpg",
     subImages: [
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80",
+      "/images/services/sig-1.jpg",
       "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?auto=format&fit=crop&w=1200&q=80",
     ],
   },
@@ -338,49 +338,6 @@ export const SERVICES: Service[] = [
     ],
   },
 
-  /* ── 08 ─────────────────────────────────────────────── */
-  {
-    slug: "formation-sur-mesure",
-    n: "08", pole: "Formation", poleN: "III", accent: "#16a34a",
-    bg: "radial-gradient(ellipse 90% 70% at 25% 75%, #051A0A 0%, #050C18 55%, #030810 100%)",
-    icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
-    title: "Formation\nSur Mesure",
-    tagline: "Des programmes adaptés à vos besoins",
-    intro: "Les meilleurs systèmes tombent en désuétude si personne ne peut les maintenir. La formation sur mesure ACT n'est pas un service accessoire — c'est une condition existentielle de la souveraineté technologique africaine. Chaque programme est construit sur un diagnostic préalable des besoins réels de votre organisation, illustré d'exemples africains concrets, avec apprentissage par la pratique sur des données et problématiques issues de votre secteur.",
-    subs: [
-      {
-        title: "Formation Présentielle Sur Mesure",
-        desc: "Format privilégié d'ACT pour les programmes de transformation : immersion totale, échanges riches, feedback immédiat et dynamique collective. Les équipes développent un langage commun et une culture partagée qui perdure bien au-delà de la formation. Formateurs locaux et internationaux pour un équilibre entre expertise globale et connaissance des réalités africaines.",
-      },
-      {
-        title: "Formation à Distance Personnalisée",
-        desc: "Conçue pour les contraintes africaines : modules légers, smartphone-first, consultables hors-ligne (15–30 min). Plateforme avec forums, sessions live et projets en groupe pour recréer une dynamique communautaire à distance. Les apprenants font partie d'une communauté apprenante africaine — jamais seuls face à leurs écrans.",
-      },
-      {
-        title: "Modèle Intégré Conseil & Formation",
-        desc: "La formation se fait pendant la mission, pas avant ou après. Les experts ACT travaillent aux côtés des équipes client, expliquent leurs choix, partagent leurs méthodes, documentent leurs décisions. Résultat : l'organisation obtient une solution qui fonctionne ET ses équipes savent la maintenir et la faire évoluer.",
-      },
-    ],
-    benefits: [
-      "Équipes autonomes et souveraines",
-      "Savoir-faire ancré dans les réalités africaines",
-      "Programmes adaptés à vos besoins spécifiques",
-      "Accompagnement personnalisé de vos équipes",
-    ],
-    deliverables: [
-      "Parcours de formation personnalisé",
-      "Supports pédagogiques sur mesure",
-      "Évaluations & certifications",
-      "Suivi post-formation 3 mois",
-    ],
-    video: "https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4",
-    heroImage: "/images/poles/pole-formation.jpg",
-    subImages: [
-      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200&q=80",
-    ],
-  },
-
   /* ── 09 ─────────────────────────────────────────────── */
   {
     slug: "catalogue-formations",
@@ -389,7 +346,7 @@ export const SERVICES: Service[] = [
     icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
     title: "Catalogue\nde Formations",
     tagline: "ACT University - Apprenez à votre rythme",
-    intro: "ACT University propose un catalogue complet de formations en ligne et présentielles couvrant l'ensemble des compétences technologiques essentielles pour l'Afrique. De la data science au développement web, du cloud computing à l'IA, nos programmes sont conçus par des experts africains pour des apprenants africains, avec des exemples concrets tirés de notre continent.",
+    intro: "Se former aux compétences digitales est devenu incontournable. Nos formations en intelligence artificielle — comme l'intégration de l'IA au quotidien — permettent à tout professionnel de gagner en productivité et de faire de l'IA un véritable levier de performance. Au-delà de ces compétences transversales, c'est toute une culture numérique qu'il est essentiel d'acquérir pour répondre aux enjeux concrets du marché.Conçues par des experts du continent à partir de cas réels, ces formations offrent des compétences opérationnelles immédiatement mobilisable",
     subs: [
       {
         title: "Formations Techniques",

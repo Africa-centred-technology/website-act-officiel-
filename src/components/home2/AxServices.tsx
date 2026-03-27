@@ -102,12 +102,7 @@ function HoloCard({ svc, index }: { svc: (typeof services)[0]; index: number }) 
         {/* Content */}
         <div className="relative" style={{ zIndex: 3 }}>
           {/* Number */}
-          <span
-            className="font-black text-white/06 select-none block"
-            style={{ fontSize: "clamp(4rem, 8vw, 9.5rem)", lineHeight: 1, marginBottom: "2.5rem" }}
-          >
-            {svc.n}
-          </span>
+
 
           {/* Tag */}
           <div className="flex items-center gap-2 mb-5">
