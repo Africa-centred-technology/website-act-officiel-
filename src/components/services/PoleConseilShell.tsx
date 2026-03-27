@@ -30,6 +30,9 @@ import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import CatalogueSection from "@/components/formations/CatalogueSection";
 
+// Couleur fixe du site - ne change jamais
+const ORANGE = "#D35400";
+
 const EASE  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
 
@@ -88,13 +91,13 @@ function ScanLine({ accent }: { accent: string }) {
   );
 }
 
-function OrbitArc({ label, accent }: { label: string; accent: string }) {
+function OrbitArc({ label }: { label: string }) {
   return (
     <motion.div aria-hidden className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 1 }}
       animate={{ rotate: 360 }} transition={{ duration: 120, ease: "linear", repeat: Infinity }}>
       <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
         <defs><path id="heroOrbitD" d="M 50,50 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" /></defs>
-        <text style={{ fontSize: "2.6", fill: `${accent}14`, fontWeight: 700, letterSpacing: "0.8" }}>
+        <text style={{ fontSize: "2.6", fill: `${ORANGE}14`, fontWeight: 700, letterSpacing: "0.8" }}>
           <textPath href="#heroOrbitD">{`${label.toUpperCase()} · `.repeat(6)}</textPath>
         </text>
       </svg>
@@ -160,7 +163,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
 
   const fxCycle: CharFx[] = ["rollIn", "burstOut", "riseUp"];
   const titleLines  = svc.title.split("\n");
-  const titleColors = ["#ffffff", svc.accent, "#ffffff"];
+  const titleColors = ["#ffffff", ORANGE, "#ffffff"];
 
   return (
     <div ref={heroRef} style={{ position: "relative", height: "100vh", overflow: "hidden" }}
@@ -202,16 +205,16 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
       }} />
 
       {/* Orbit arc */}
-      <OrbitArc label={svc.tagline} accent={svc.accent} />
+      <OrbitArc label={svc.tagline} />
 
       {/* Scan-line */}
-      <ScanLine accent={svc.accent} />
+      <ScanLine accent={ORANGE} />
 
 
       {/* Sun pulse */}
       <motion.div aria-hidden style={{
         position: "absolute", width: "80vw", height: "50vw",
-        background: `radial-gradient(ellipse, ${svc.accent}18 0%, ${svc.accent}06 45%, transparent 72%)`,
+        background: `radial-gradient(ellipse, ${ORANGE}18 0%, ${ORANGE}06 45%, transparent 72%)`,
         borderRadius: "50%", top: "50%", left: "50%",
         translateX: "-50%", translateY: "-50%",
         x: bgX, y: bgY, zIndex: 2,
@@ -226,7 +229,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           <motion.div key={p.id} className="absolute rounded-full" style={{
             left: `${p.x}%`, top: `${p.y}%`,
             width: p.size, height: p.size,
-            background: svc.accent, boxShadow: `0 0 ${p.size * 7}px ${svc.accent}77`,
+            background: ORANGE, boxShadow: `0 0 ${p.size * 7}px ${ORANGE}77`,
           }}
             animate={{ y: [0, -44, 0], opacity: [0, 0.55, 0] }}
             transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
@@ -266,10 +269,10 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           <span style={{ color: "rgba(255,255,255,0.5)" }}>›</span>
           <span style={{
             marginLeft: "auto",
-            background: `${svc.accent}16`, border: `1px solid ${svc.accent}40`,
+            background: `${ORANGE}16`, border: `1px solid ${ORANGE}40`,
             borderRadius: "2rem", padding: "0.28rem 0.9rem",
             fontSize: "clamp(0.85rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em",
-            textTransform: "uppercase", color: svc.accent,
+            textTransform: "uppercase", color: ORANGE,
           }}>
             Pôle {svc.poleN} · {svc.pole}
           </span>
@@ -292,7 +295,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
         <motion.div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.6 }}>
-          <motion.div style={{ width: 50, height: 2, background: svc.accent, borderRadius: 1 }}
+          <motion.div style={{ width: 50, height: 2, background: ORANGE, borderRadius: 1 }}
             initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
             transition={{ delay: 1.05, duration: 0.7, ease: [...EASE] }} />
           <p style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.6rem)",
@@ -306,7 +309,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4, duration: 0.6 }}>
           <motion.div style={{
             width: 1, height: 48,
-            background: `linear-gradient(to bottom, transparent, ${svc.accent}CC, transparent)`,
+            background: `linear-gradient(to bottom, transparent, ${ORANGE}CC, transparent)`,
           }}
             animate={{ scaleY: [0.3, 1, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
@@ -363,17 +366,17 @@ function IntroSection({ svc }: { svc: Service }) {
           <motion.div variants={fadeUp} style={{
             display: "flex", alignItems: "center", gap: "1rem",
             padding: "1.5rem 1.8rem",
-            background: `${svc.accent}0C`,
-            border: `1px solid ${svc.accent}25`, borderRadius: "0.8rem",
+            background: `${ORANGE}0C`,
+            border: `1px solid ${ORANGE}25`, borderRadius: "0.8rem",
           }}>
             <div style={{
               width: 48, height: 48, flexShrink: 0,
-              background: `${svc.accent}18`, border: `1px solid ${svc.accent}35`,
+              background: `${ORANGE}18`, border: `1px solid ${ORANGE}35`,
               borderRadius: "0.7rem",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                stroke={svc.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                stroke={ORANGE} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d={svc.icon} />
               </svg>
             </div>
@@ -383,7 +386,7 @@ function IntroSection({ svc }: { svc: Service }) {
                 {svc.subs.length} sous-services · {svc.benefits.length} avantages · {svc.deliverables.length} livrables
               </p>
               <p style={{ fontSize: "clamp(12px, 0.95vw, 1.05rem)",
-                color: svc.accent, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
+                color: ORANGE, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
                 Pôle {svc.poleN} — {svc.pole}
               </p>
             </div>
@@ -394,7 +397,7 @@ function IntroSection({ svc }: { svc: Service }) {
       {/* Image animée */}
       <motion.div style={{
         position: "relative", overflow: "hidden", minHeight: "520px",
-        borderLeft: `1px solid ${svc.accent}18`,
+        borderLeft: `1px solid ${ORANGE}18`,
         opacity: imgReveal,
       }}>
         {/* Image Ken Burns */}
@@ -414,7 +417,7 @@ function IntroSection({ svc }: { svc: Service }) {
         {/* Teinte accent */}
         <div aria-hidden style={{
           position: "absolute", inset: 0,
-          background: `radial-gradient(ellipse 70% 60% at 60% 50%, ${svc.accent}20 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse 70% 60% at 60% 50%, ${ORANGE}20 0%, transparent 70%)`,
           zIndex: 2, mixBlendMode: "screen",
         }} />
         {/* Grain texture */}
@@ -427,14 +430,14 @@ function IntroSection({ svc }: { svc: Service }) {
           position: "absolute", top: "2rem", right: "2rem", zIndex: 4,
           fontFamily: "Futura, system-ui, sans-serif",
           fontSize: "clamp(60px, 10vw, 130px)",
-          fontWeight: 700, color: `${svc.accent}18`,
+          fontWeight: 700, color: `${ORANGE}18`,
           letterSpacing: "-0.04em", lineHeight: 1,
           userSelect: "none",
         }} aria-hidden>{svc.n}</div>
         {/* Scan-line miniature */}
         <motion.div aria-hidden style={{
           position: "absolute", left: 0, right: 0, height: 1, zIndex: 4,
-          background: `linear-gradient(to right, transparent, ${svc.accent}AA, transparent)`,
+          background: `linear-gradient(to right, transparent, ${ORANGE}AA, transparent)`,
         }}
           initial={{ top: "-2px" }}
           animate={{ top: ["−2px", "102%"] }}
@@ -626,7 +629,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
       }} />
       <div aria-hidden style={{
         position: "absolute", inset: 0, zIndex: 2,
-        background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${svc.accent}12 0%, transparent 70%)`,
+        background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${ORANGE}12 0%, transparent 70%)`,
       }} />
 
       <div style={{
@@ -641,13 +644,13 @@ function BenefitsSection({ svc }: { svc: Service }) {
             <motion.div variants={fadeUp} style={{
               display: "flex", alignItems: "center", gap: "1rem", marginBottom: "3.5rem",
             }}>
-              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, transparent, ${svc.accent}60)` }} />
+              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, transparent, ${ORANGE}60)` }} />
               <span style={{
                 fontFamily: "Futura, system-ui, sans-serif",
                 fontSize: "clamp(0.85rem, 1vw, 1rem)",
-                letterSpacing: "0.28em", textTransform: "uppercase", color: svc.accent, fontWeight: 700,
+                letterSpacing: "0.28em", textTransform: "uppercase", color: ORANGE, fontWeight: 700,
               }}>Ce que vous gagnez</span>
-              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${svc.accent}60, transparent)` }} />
+              <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${ORANGE}60, transparent)` }} />
             </motion.div>
 
             <div style={{
@@ -660,8 +663,8 @@ function BenefitsSection({ svc }: { svc: Service }) {
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: [...EASE] } }}
                   style={{
                     background: "rgba(255,255,255,0.04)",
-                    border: `1px solid ${svc.accent}22`,
-                    borderTop: `2px solid ${svc.accent}`,
+                    border: `1px solid ${ORANGE}22`,
+                    borderTop: `2px solid ${ORANGE}`,
                     borderRadius: "0.8rem",
                     padding: "2rem 1.8rem",
                     position: "relative", overflow: "hidden",
@@ -669,16 +672,16 @@ function BenefitsSection({ svc }: { svc: Service }) {
                   }}>
                   <div aria-hidden style={{
                     position: "absolute", inset: 0,
-                    background: `radial-gradient(ellipse 70% 70% at 50% 110%, ${svc.accent}0E 0%, transparent 70%)`,
+                    background: `radial-gradient(ellipse 70% 70% at 50% 110%, ${ORANGE}0E 0%, transparent 70%)`,
                   }} />
                   <div style={{
                     width: 44, height: 44, marginBottom: "1.2rem",
-                    background: `${svc.accent}16`, border: `1px solid ${svc.accent}35`,
+                    background: `${ORANGE}16`, border: `1px solid ${ORANGE}35`,
                     borderRadius: "0.6rem",
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke={svc.accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      stroke={ORANGE} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d={BENEFIT_ICONS[i % BENEFIT_ICONS.length]} />
                     </svg>
                   </div>
@@ -735,7 +738,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
             }}>
               <motion.div style={{
                 position: "absolute", top: 0, left: 0, right: 0,
-                background: `linear-gradient(to bottom, ${svc.accent}, ${svc.accent}44)`,
+                background: `linear-gradient(to bottom, ${ORANGE}, ${ORANGE}44)`,
                 height: lineH,
               }} />
             </div>
@@ -752,12 +755,12 @@ function DeliverablesSection({ svc }: { svc: Service }) {
                 }}>
                 <div style={{
                   flexShrink: 0, width: 44, height: 44, borderRadius: "50%",
-                  background: `${svc.accent}14`, border: `1px solid ${svc.accent}40`,
+                  background: `${ORANGE}14`, border: `1px solid ${ORANGE}40`,
                   display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1,
                 }}>
                   <span style={{
                     fontFamily: "Futura, system-ui, sans-serif",
-                    fontSize: "clamp(10px, 0.7rem, 0.74rem)", color: svc.accent, letterSpacing: "0.1em",
+                    fontSize: "clamp(10px, 0.7rem, 0.74rem)", color: ORANGE, letterSpacing: "0.1em",
                   }}>{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <div style={{ paddingTop: "0.7rem" }}>
@@ -786,7 +789,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
         }} />
         <div aria-hidden style={{
           position: "absolute", inset: 0, zIndex: 2,
-          background: `radial-gradient(ellipse 60% 55% at 70% 50%, ${svc.accent}1A 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse 60% 55% at 70% 50%, ${ORANGE}1A 0%, transparent 70%)`,
           mixBlendMode: "screen",
         }} />
         {/* Texte flottant */}
@@ -804,7 +807,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
             marginBottom: "0.8rem",
           }}>
             {svc.deliverables.length} livrables<br />
-            <span style={{ color: svc.accent }}>concrets</span>
+            <span style={{ color: ORANGE }}>concrets</span>
           </p>
           <p style={{ fontSize: "clamp(13px, 1vw, 1.15rem)",
             color: "#ffffff", letterSpacing: "0.06em" }}>
@@ -917,7 +920,7 @@ function StickyHeader({ svc }: { svc: Service }) {
       style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         background: "rgba(7,14,28,0.92)", backdropFilter: "blur(20px)",
-        borderBottom: `1px solid ${svc.accent}30`,
+        borderBottom: `1px solid ${ORANGE}30`,
         padding: "0.9rem clamp(1.5rem, 4vw, 3rem)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
@@ -934,10 +937,10 @@ function StickyHeader({ svc }: { svc: Service }) {
         }}>{svc.title.replace(/\n/g, " ")}</span>
       </div>
       <span style={{
-        background: `${svc.accent}18`, border: `1px solid ${svc.accent}35`,
+        background: `${ORANGE}18`, border: `1px solid ${ORANGE}35`,
         borderRadius: "2rem", padding: "0.25rem 0.8rem",
         fontSize: "clamp(10px, 0.68rem, 0.72rem)",
-        letterSpacing: "0.16em", textTransform: "uppercase", color: svc.accent,
+        letterSpacing: "0.16em", textTransform: "uppercase", color: ORANGE,
         fontFamily: "Futura, system-ui, sans-serif",
       }}>Pôle {svc.poleN}</span>
     </motion.div>
@@ -966,7 +969,7 @@ export default function PoleConseilShell({ svc }: { svc: Service }) {
           {svc.subs.map((sub, i) => (
             <SubServicePanel
               key={i} sub={sub} index={i}
-              accent={svc.accent} svcN={svc.n}
+              accent={ORANGE} svcN={svc.n}
               img={svc.subImages[i]}
             />
           ))}
