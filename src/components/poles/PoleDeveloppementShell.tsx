@@ -53,6 +53,7 @@ const services = [
   {
     icon: Code,
     title: "Ingénierie Logicielle",
+    slug: "ingenierie-logicielle",
     description: "Conception et développement de solutions logicielles robustes et scalables avec les dernières technologies.",
     features: ["Applications Web & Mobile", "Microservices & API", "Solutions sur mesure"],
     image: "/images/services/Ingéneurie_logicielle.jpg"
@@ -60,6 +61,7 @@ const services = [
   {
     icon: Cpu,
     title: "Intelligence Artificielle Agentique",
+    slug: "automatisation-ia",
     description: "Développement de systèmes d'IA autonomes capables de prendre des décisions intelligentes et d'automatiser des processus complexes.",
     features: ["Agents intelligents", "Apprentissage automatique", "Automation avancée"],
     image: "/images/services/Agentic_AI.jpg"
@@ -67,6 +69,7 @@ const services = [
   {
     icon: Database,
     title: "Big Data & Intelligence Artificielle",
+    slug: "data-intelligence-artificielle",
     description: "Traitement et analyse de grandes masses de données combinées à l'IA pour extraire des insights stratégiques.",
     features: ["Data Analytics", "Machine Learning", "Visualisation de données"],
     image: "/images/services/big-data-and-et-artificial-intelligence.jpg"
@@ -74,6 +77,7 @@ const services = [
   {
     icon: Cloud,
     title: "Architecture Cloud",
+    slug: "architecture-infrastructure",
     description: "Conception et déploiement d'infrastructures cloud natives, scalables et sécurisées.",
     features: ["Infrastructure as Code", "Microservices", "Serverless Computing"],
     image: "/images/services/architerture.png"
@@ -81,20 +85,14 @@ const services = [
   {
     icon: Database,
     title: "Systèmes d'Information Géographique",
+    slug: "geomatique-sig",
     description: "Solutions SIG pour la collecte, l'analyse et la visualisation de données géospatiales.",
     features: ["Cartographie interactive", "Analyse spatiale", "Géolocalisation"],
     image: "/images/services/sig.jpg"
   },
 ];
 
-const technologies = [
-  { name: "React / Next.js", category: "Frontend" },
-  { name: "Node.js / Python", category: "Backend" },
-  { name: "PostgreSQL / MongoDB", category: "Database" },
-  { name: "Docker / Kubernetes", category: "DevOps" },
-  { name: "AWS / Azure / GCP", category: "Cloud" },
-  { name: "React Native / Flutter", category: "Mobile" },
-];
+
 
 const process = [
   { step: "01", title: "Analyse & Cadrage", desc: "Audit de l'existant, définition du périmètre et des objectifs" },
@@ -253,10 +251,36 @@ export default function PoleDeveloppementShell() {
 
       {/* Stats Section */}
       <section style={{
-        padding: screenSize === 'mobile' ? '3rem 1.5rem' : '4rem 4rem',
+        padding: screenSize === 'mobile' ? '3rem 1.5rem' : '6rem 4rem 4rem',
         maxWidth: '1400px',
         margin: '0 auto',
       }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{ textAlign: 'center', marginBottom: '4rem' }}
+        >
+          <h2 style={{
+            fontSize: screenSize === 'mobile' ? '1.5rem' : '2.2rem',
+            fontWeight: 800,
+            color: '#fff',
+            fontFamily: 'var(--font-display)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            lineHeight: 1.2
+          }}>
+            L'impact pour les entreprises qui <br />
+            <span style={{ color: COLOR }}>adoptent nos solutions</span>
+          </h2>
+          <div style={{
+            width: '60px',
+            height: '2px',
+            background: COLOR,
+            margin: '1.5rem auto 0',
+            borderRadius: '1px'
+          }} />
+        </motion.div>
         <div style={{
           display: 'grid',
           gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
@@ -264,10 +288,10 @@ export default function PoleDeveloppementShell() {
           textAlign: 'center',
         }}>
           {[
-            { value: "50+", label: "Projets livrés" },
-            { value: "98%", label: "Satisfaction client" },
-            { value: "8+", label: "Ans d'expérience" },
-            { value: "25+", label: "Technologies" },
+            { value: "+25%", label: "De croissance moyenne" },
+            { value: "-30%", label: "De coûts opérationnels" },
+            { value: "+60%", label: "De performance décisions" },
+            { value: "x2", label: "De productivité technique" },
           ].map((stat, i) => (
             <motion.div
               key={i}
@@ -275,9 +299,16 @@ export default function PoleDeveloppementShell() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
+              style={{
+                padding: '2rem',
+                background: 'rgba(255,255,255,0.02)',
+                border: '1px solid rgba(255,255,255,0.05)',
+                borderRadius: '1rem',
+              }}
             >
+              
               <div style={{
-                fontSize: screenSize === 'mobile' ? '3rem' : '4rem',
+                fontSize: screenSize === 'mobile' ? '2.5rem' : '3.5rem',
                 fontWeight: 900,
                 color: COLOR,
                 fontFamily: 'var(--font-display)',
@@ -287,7 +318,7 @@ export default function PoleDeveloppementShell() {
                 {stat.value}
               </div>
               <div style={{
-                fontSize: screenSize === 'mobile' ? '0.9rem' : '1rem',
+                fontSize: screenSize === 'mobile' ? '0.85rem' : '0.95rem',
                 color: 'rgba(255,255,255,0.6)',
                 fontFamily: 'var(--font-body)',
                 textTransform: 'uppercase',
@@ -340,109 +371,131 @@ export default function PoleDeveloppementShell() {
             const Icon = service.icon;
             const [isHovered, setIsHovered] = useState(false);
             return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '1rem',
-                  overflow: 'hidden',
-                  transition: 'all 0.4s ease',
-                  transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-                  boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : 'none',
-                }}
-              >
-                {/* Image Header */}
-                <div style={{
-                  position: 'relative',
-                  height: screenSize === 'mobile' ? '180px' : '220px',
-                  overflow: 'hidden',
-                  background: 'rgba(0,0,0,0.3)',
-                }}>
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.6s ease, filter 0.4s ease',
-                      transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-                      filter: isHovered ? 'grayscale(0%) brightness(0.8)' : 'grayscale(40%) brightness(0.6)',
-                    }}
-                  />
-                  {/* Gradient overlay */}
+              <Link href={`/services/${service.slug}`} key={i} style={{ textDecoration: 'none' }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  style={{
+                    height: '100%',
+                    background: 'rgba(255,255,255,0.02)',
+                    border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '1rem',
+                    overflow: 'hidden',
+                    transition: 'all 0.4s ease',
+                    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+                    boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {/* Image Header */}
                   <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.4) 50%, rgba(7,14,28,0.95) 100%)`,
-                  }} />
-                  {/* Icon badge */}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '1rem',
-                    left: '1.5rem',
-                    width: '3.5rem',
-                    height: '3.5rem',
-                    borderRadius: '0.75rem',
-                    background: `${COLOR}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: `0 8px 24px ${COLOR}66`,
+                    position: 'relative',
+                    height: screenSize === 'mobile' ? '180px' : '220px',
+                    overflow: 'hidden',
+                    background: 'rgba(0,0,0,0.3)',
                   }}>
-                    <Icon size={24} color="#fff" />
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.6s ease, filter 0.4s ease',
+                        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+                        filter: isHovered ? 'grayscale(0%) brightness(0.8)' : 'grayscale(40%) brightness(0.6)',
+                      }}
+                    />
+                    {/* Gradient overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.4) 50%, rgba(7,14,28,0.95) 100%)`,
+                    }} />
+                    {/* Icon badge */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '1rem',
+                      left: '1.5rem',
+                      width: '3.5rem',
+                      height: '3.5rem',
+                      borderRadius: '0.75rem',
+                      background: `${COLOR}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: `0 8px 24px ${COLOR}66`,
+                    }}>
+                      <Icon size={24} color="#fff" />
+                    </div>
                   </div>
-                </div>
 
-                {/* Content */}
-                <div style={{
-                  padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
-                }}>
-                  <h3 style={{
-                    fontSize: screenSize === 'mobile' ? '1.3rem' : '1.6rem',
-                    fontWeight: 900,
-                    marginBottom: '1rem',
-                    fontFamily: 'var(--font-display)',
-                    color: '#fff',
-                    textTransform: 'uppercase',
-                    lineHeight: 1.2,
+                  {/* Content */}
+                  <div style={{
+                    padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
                   }}>
-                    {service.title}
-                  </h3>
-                  <p style={{
-                    fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
-                    lineHeight: 1.6,
-                    color: 'rgba(255,255,255,0.65)',
-                    marginBottom: '1.5rem',
-                    fontFamily: 'var(--font-body)'
-                  }}>
-                    {service.description}
-                  </p>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    {service.features.map((feature, fi) => (
-                      <li key={fi} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        marginBottom: '0.5rem',
-                        fontSize: '0.9rem',
-                        color: 'rgba(255,255,255,0.55)',
-                        fontFamily: 'var(--font-body)'
-                      }}>
-                        <CheckCircle2 size={16} color={COLOR} />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
+                    <h3 style={{
+                      fontSize: screenSize === 'mobile' ? '1.3rem' : '1.6rem',
+                      fontWeight: 900,
+                      marginBottom: '1rem',
+                      fontFamily: 'var(--font-display)',
+                      color: '#fff',
+                      textTransform: 'uppercase',
+                      lineHeight: 1.2,
+                    }}>
+                      {service.title}
+                    </h3>
+                    <p style={{
+                      fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
+                      lineHeight: 1.6,
+                      color: 'rgba(255,255,255,0.65)',
+                      marginBottom: '1.5rem',
+                      fontFamily: 'var(--font-body)',
+                      flex: 1,
+                    }}>
+                      {service.description}
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
+                      {service.features.map((feature, fi) => (
+                        <li key={fi} style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          marginBottom: '0.5rem',
+                          fontSize: '0.9rem',
+                          color: 'rgba(255,255,255,0.55)',
+                          fontFamily: 'var(--font-body)'
+                        }}>
+                          <CheckCircle2 size={16} color={COLOR} />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA link */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.6rem',
+                      color: isHovered ? '#fff' : COLOR,
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.1em',
+                      transition: 'all 0.3s ease',
+                    }}>
+                      En savoir plus <ArrowRight size={18} />
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
             );
           })}
         </div>
@@ -652,7 +705,7 @@ export default function PoleDeveloppementShell() {
             textTransform: 'uppercase',
             textAlign: 'center',
           }}>
-            Articles <span style={{ color: COLOR }}>Développement</span>
+            Ce que nous <span style={{ color: COLOR }}>publions</span> sur le sujet 
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
@@ -662,128 +715,151 @@ export default function PoleDeveloppementShell() {
             textAlign: 'center',
             margin: '0 auto',
           }}>
-            Guides techniques, tutoriels et bonnes pratiques pour le développement logiciel
           </p>
         </motion.div>
 
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
-          gap: screenSize === 'mobile' ? '1.5rem' : '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: screenSize === 'mobile' ? '2rem' : '4rem',
         }}>
           {blogPosts
-            .filter(post => post.category === "Code & Dev")
-            .slice(0, 4)
-            .map((post, i) => (
-              <motion.article
-                key={post.slug}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '1rem',
-                  overflow: 'hidden',
-                  transition: 'all 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = `${COLOR}66`;
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = `0 12px 40px ${COLOR}22`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <div style={{
-                    position: 'relative',
-                    height: screenSize === 'mobile' ? '160px' : '200px',
+            .filter(post => ["Code & Dev", "Data & IA", "Cloud & Infra", "Tech Trends"].includes(post.category))
+            .slice(0, 3)
+            .map((post, i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <motion.article
+                  key={post.slug}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  style={{
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '1.5rem',
                     overflow: 'hidden',
-                    background: 'rgba(0,0,0,0.3)',
-                  }}>
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        filter: 'brightness(0.7)',
-                      }}
-                    />
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = `${COLOR}66`;
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = `0 12px 40px ${COLOR}22`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <div style={{
-                      position: 'absolute',
-                      top: '1rem',
-                      left: '1rem',
-                      padding: '0.4rem 0.8rem',
-                      background: COLOR,
-                      borderRadius: '0.25rem',
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
+                      display: 'grid',
+                      gridTemplateColumns: screenSize === 'mobile' ? '1fr' : (isEven ? '0.5fr 1.5fr' : '1.5fr 0.5fr'),
+                      alignItems: 'stretch',
                     }}>
-                      {post.format}
+                      {/* Image - Order controlled with flex or just placement for even/odd */}
+                      <div style={{
+                        position: 'relative',
+                        height: screenSize === 'mobile' ? '200px' : 'auto',
+                        minHeight: screenSize === 'mobile' ? '200px' : '300px',
+                        overflow: 'hidden',
+                        background: 'rgba(0,0,0,0.3)',
+                        order: (screenSize !== 'mobile' && !isEven) ? 2 : 1,
+                      }}>
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            filter: 'brightness(0.7)',
+                          }}
+                        />
+                        <div style={{
+                          position: 'absolute',
+                          top: '1.5rem',
+                          left: '1.5rem',
+                          padding: '0.4rem 0.8rem',
+                          background: COLOR,
+                          borderRadius: '0.25rem',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          zIndex: 2,
+                        }}>
+                          {post.format}
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div style={{
+                        padding: screenSize === 'mobile' ? '1.5rem' : '3rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        order: (screenSize !== 'mobile' && !isEven) ? 1 : 2,
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '1rem',
+                          marginBottom: '1.5rem',
+                          fontSize: '0.9rem',
+                          color: 'rgba(255,255,255,0.5)',
+                        }}>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ width: 6, height: 6, borderRadius: '50%', background: COLOR }} />
+                            {post.readTime}
+                          </span>
+                          <span>•</span>
+                          <span>{post.date}</span>
+                        </div>
+
+                        <h3 style={{
+                          fontSize: screenSize === 'mobile' ? '1.4rem' : '2.2rem',
+                          fontWeight: 900,
+                          marginBottom: '1.5rem',
+                          fontFamily: 'var(--font-display)',
+                          color: '#fff',
+                          lineHeight: 1.2,
+                          textTransform: 'uppercase',
+                        }}>
+                          {post.title}
+                        </h3>
+
+                        <p style={{
+                          fontSize: screenSize === 'mobile' ? '1rem' : '1.15rem',
+                          lineHeight: 1.7,
+                          color: 'rgba(255,255,255,0.7)',
+                          marginBottom: '2.5rem',
+                          fontFamily: 'var(--font-body)',
+                        }}>
+                          {post.excerpt}
+                        </p>
+
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.75rem',
+                          color: COLOR,
+                          fontSize: '1rem',
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.1em',
+                        }}>
+                          Lire l'article complet
+                          <ArrowRight size={20} />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  <div style={{
-                    padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
-                  }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.75rem',
-                      marginBottom: '1rem',
-                      fontSize: '0.85rem',
-                      color: 'rgba(255,255,255,0.5)',
-                    }}>
-                      <span>{post.readTime}</span>
-                      <span>•</span>
-                      <span>{post.date}</span>
-                    </div>
-
-                    <h3 style={{
-                      fontSize: screenSize === 'mobile' ? '1.2rem' : '1.4rem',
-                      fontWeight: 800,
-                      marginBottom: '0.75rem',
-                      fontFamily: 'var(--font-display)',
-                      color: '#fff',
-                      lineHeight: 1.3,
-                    }}>
-                      {post.title}
-                    </h3>
-
-                    <p style={{
-                      fontSize: '0.95rem',
-                      lineHeight: 1.6,
-                      color: 'rgba(255,255,255,0.65)',
-                      marginBottom: '1.5rem',
-                      fontFamily: 'var(--font-body)',
-                    }}>
-                      {post.excerpt.slice(0, 150)}...
-                    </p>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      color: COLOR,
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                    }}>
-                      Lire l'article
-                      <ArrowRight size={16} />
-                    </div>
-                  </div>
-                </Link>
-              </motion.article>
-            ))}
+                  </Link>
+                </motion.article>
+              );
+            })}
         </div>
 
         <motion.div
@@ -796,32 +872,7 @@ export default function PoleDeveloppementShell() {
             marginTop: '3rem',
           }}
         >
-          <Link href="/blog?category=code-dev">
-            <button style={{
-              background: 'transparent',
-              border: `1px solid ${COLOR}`,
-              color: COLOR,
-              padding: screenSize === 'mobile' ? '1rem 2rem' : '1.2rem 3rem',
-              fontSize: screenSize === 'mobile' ? '0.9rem' : '1rem',
-              fontWeight: 700,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              borderRadius: '0.25rem',
-              fontFamily: 'var(--font-display)',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = `${COLOR}22`;
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-              Voir tous les articles Code & Dev
-            </button>
-          </Link>
+     
         </motion.div>
       </section>
 

@@ -14,6 +14,7 @@ export interface Formation {
   duree: string;
   format: string;
   parcours?: string;
+  prix?: string;
   accroche: string;
   publicCible: string;
   prerequis: string;

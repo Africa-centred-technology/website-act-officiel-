@@ -2,7 +2,7 @@
 
 /**
  * FormationsShell — Page catalogue de formations IA
- * Design unique avec système de filtres, recherche et catalogue interactif
+ * Design unique avec système de filtres avancés, recherche et catalogue interactif
  */
 
 import React, { useState, useMemo } from "react";
@@ -23,6 +23,8 @@ import {
   Award,
   Target,
   TrendingUp,
+  ArrowUpDown,
+  DollarSign,
 } from "lucide-react";
 import { FORMATIONS, type Formation } from "@/lib/data/formations";
 import FooterStrip from "@/components/layout/FooterStrip";
@@ -53,6 +55,14 @@ const niveaux = [
   ...Array.from(new Set(FORMATIONS.map(f => f.niveau)))
 ];
 
+// Options de tri
+const sortOptions = [
+  { value: "recent", label: "Plus récentes" },
+  { value: "title", label: "Titre (A-Z)" },
+  { value: "duree", label: "Durée" },
+  { value: "niveau", label: "Niveau" },
+];
+
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
 function getNiveauColor(niveau: string): string {
@@ -67,12 +77,13 @@ export default function FormationsShell() {
   const [selectedCategorie, setSelectedCategorie] = useState("Toutes");
   const [selectedSecteur, setSelectedSecteur] = useState("Tous");
   const [selectedNiveau, setSelectedNiveau] = useState("Tous");
+  const [sortBy, setSortBy] = useState("recent");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
 
-  // Filtrage des formations
+  // Filtrage et tri des formations
   const filteredFormations = useMemo(() => {
-    return FORMATIONS.filter(formation => {
+    let filtered = FORMATIONS.filter(formation => {
       const matchSearch = searchQuery === "" ||
         formation.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         formation.accroche.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -89,14 +100,32 @@ export default function FormationsShell() {
 
       return matchSearch && matchCategorie && matchSecteur && matchNiveau;
     });
-  }, [searchQuery, selectedCategorie, selectedSecteur, selectedNiveau]);
+
+    // Tri
+    switch (sortBy) {
+      case "title":
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "duree":
+        filtered.sort((a, b) => a.duree.localeCompare(b.duree));
+        break;
+      case "niveau":
+        filtered.sort((a, b) => a.niveau.localeCompare(b.niveau));
+        break;
+      default:
+        // "recent" - garde l'ordre par défaut
+        break;
+    }
+
+    return filtered;
+  }, [searchQuery, selectedCategorie, selectedSecteur, selectedNiveau, sortBy]);
 
   // Stats du catalogue
   const stats = [
     { label: "Formations", value: FORMATIONS.length.toString(), icon: BookOpen },
-    { label: "Parcours", value: Array.from(new Set(FORMATIONS.map(f => f.categorie))).length.toString(), icon: Target },
+    { label: "Catégories", value: Array.from(new Set(FORMATIONS.map(f => f.categorie))).length.toString(), icon: Target },
     { label: "Secteurs", value: Array.from(new Set(FORMATIONS.map(f => f.secteur))).length.toString(), icon: Users },
-    { label: "Certifications", value: "15+", icon: Award },
+    { label: "Niveaux", value: Array.from(new Set(FORMATIONS.map(f => f.niveau))).length.toString(), icon: Award },
   ];
 
   return (
@@ -125,8 +154,16 @@ export default function FormationsShell() {
         }}>
           {/* Gradient accent */}
           <motion.div
-            className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full"
-            style={{ background: `${COLOR}20`, filter: 'blur(120px)' }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '600px',
+              height: '600px',
+              borderRadius: '50%',
+              background: `${COLOR}20`,
+              filter: 'blur(120px)',
+            }}
             animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
             transition={{ duration: 10, repeat: Infinity }}
           />
@@ -138,7 +175,8 @@ export default function FormationsShell() {
               animate={{ opacity: 1, y: 0 }}
               style={{
                 display: "flex", alignItems: "center", gap: "0.5rem",
-                marginBottom: "2rem", fontSize: "0.9rem", letterSpacing: "0.1em",
+                marginBottom: "2rem", fontSize: "1rem", letterSpacing: "0.1em",
+                fontFamily: "var(--font-body)",
               }}>
               <Link href="/" style={{ color: "#ffffff80", textDecoration: "none" }}>Accueil</Link>
               <ChevronRight size={16} color="#ffffff40" />
@@ -151,9 +189,9 @@ export default function FormationsShell() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-                <Sparkles size={32} color={COLOR} />
+                <Sparkles size={36} color={COLOR} />
                 <h1 style={{
-                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                  fontSize: "var(--font-50)",
                   fontWeight: 900,
                   lineHeight: 1,
                   letterSpacing: "-0.02em",
@@ -165,13 +203,14 @@ export default function FormationsShell() {
               </div>
 
               <p style={{
-                fontSize: "clamp(1.1rem, 1.5vw, 1.4rem)",
+                fontSize: "var(--font-20)",
                 lineHeight: 1.7,
-                color: "rgba(255,255,255,0.7)",
-                maxWidth: "800px",
+                color: "rgba(255,255,255,0.75)",
+                maxWidth: "900px",
                 marginBottom: "3rem",
+                fontFamily: "var(--font-body)",
               }}>
-                Développez vos compétences en Intelligence Artificielle avec nos formations
+                Développez vos compétences avec nos formations
                 pratiques conçues pour tous les niveaux et tous les secteurs d'activité.
               </p>
             </motion.div>
@@ -183,7 +222,7 @@ export default function FormationsShell() {
               transition={{ delay: 0.3 }}
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
                 gap: "1.5rem",
                 marginBottom: "4rem",
               }}>
@@ -197,9 +236,9 @@ export default function FormationsShell() {
                     padding: "1.5rem",
                     textAlign: "center",
                   }}>
-                    <Icon size={24} color={COLOR} style={{ margin: "0 auto 0.75rem" }} />
+                    <Icon size={28} color={COLOR} style={{ margin: "0 auto 0.75rem" }} />
                     <p style={{
-                      fontSize: "2rem",
+                      fontSize: "2.5rem",
                       fontWeight: 900,
                       color: COLOR,
                       lineHeight: 1,
@@ -208,7 +247,7 @@ export default function FormationsShell() {
                     }}>
                       {stat.value}
                     </p>
-                    <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
+                    <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)" }}>
                       {stat.label}
                     </p>
                   </div>
@@ -223,11 +262,11 @@ export default function FormationsShell() {
               transition={{ delay: 0.4 }}
               style={{
                 position: "relative",
-                maxWidth: "800px",
+                maxWidth: "900px",
                 margin: "0 auto",
               }}>
               <Search
-                size={20}
+                size={25}
                 color={COLOR}
                 style={{ position: "absolute", left: "1.5rem", top: "50%", transform: "translateY(-50%)" }}
               />
@@ -238,14 +277,15 @@ export default function FormationsShell() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "1.25rem 1.5rem 1.25rem 3.5rem",
+                  padding: "1.4rem 1.5rem 1.4rem 4rem",
                   background: "rgba(255,255,255,0.05)",
                   border: `1px solid ${COLOR}40`,
                   borderRadius: "1rem",
-                  fontSize: "1rem",
+                  fontSize: "1.05rem",
                   color: "#fff",
                   outline: "none",
                   transition: "all 0.3s ease",
+                  fontFamily: "var(--font-body)",
                 }}
                 onFocus={(e) => {
                   e.currentTarget.style.background = "rgba(255,255,255,0.08)";
@@ -269,7 +309,7 @@ export default function FormationsShell() {
                     cursor: "pointer",
                     color: "rgba(255,255,255,0.5)",
                   }}>
-                  <X size={20} />
+                  <X size={22} />
                 </button>
               )}
             </motion.div>
@@ -295,22 +335,46 @@ export default function FormationsShell() {
               flexWrap: "wrap",
               gap: "1rem",
             }}>
-              <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)" }}>
-                <strong style={{ color: COLOR }}>{filteredFormations.length}</strong> formation{filteredFormations.length > 1 ? "s" : ""} trouvée{filteredFormations.length > 1 ? "s" : ""}
+              <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
+                <strong style={{ color: COLOR, fontSize: "1.3rem" }}>{filteredFormations.length}</strong> formation{filteredFormations.length > 1 ? "s" : ""} trouvée{filteredFormations.length > 1 ? "s" : ""}
               </p>
 
-              <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+                {/* Sort */}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <ArrowUpDown size={24} color={COLOR} />
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    style={{
+                      padding: "0.75rem 1.2rem",
+                      background: "rgba(255,255,255,0.05)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "0.5rem",
+                      color: "#fff",
+                      fontSize: "1rem",
+                      cursor: "pointer",
+                      fontFamily: "var(--font-body)",
+                    }}>
+                    {sortOptions.map(option => (
+                      <option key={option.value} value={option.value} style={{ background: "#0A1410" }}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 {/* View mode toggle */}
                 <div style={{
                   display: "flex",
                   background: "rgba(255,255,255,0.05)",
                   borderRadius: "0.5rem",
-                  padding: "0.25rem",
+                  padding: "0.3rem",
                 }}>
                   <button
                     onClick={() => setViewMode("grid")}
                     style={{
-                      padding: "0.5rem 1rem",
+                      padding: "0.75rem 1.2rem",
                       background: viewMode === "grid" ? COLOR : "transparent",
                       border: "none",
                       borderRadius: "0.375rem",
@@ -318,16 +382,18 @@ export default function FormationsShell() {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.5rem",
+                      gap: "0.6rem",
                       transition: "all 0.2s",
+                      fontFamily: "var(--font-body)",
+                      fontSize: "1rem",
                     }}>
-                    <Grid3x3 size={16} />
+                    <Grid3x3 size={20} />
                     Grille
                   </button>
                   <button
                     onClick={() => setViewMode("list")}
                     style={{
-                      padding: "0.5rem 1rem",
+                      padding: "0.75rem 1.2rem",
                       background: viewMode === "list" ? COLOR : "transparent",
                       border: "none",
                       borderRadius: "0.375rem",
@@ -335,10 +401,12 @@ export default function FormationsShell() {
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.5rem",
+                      gap: "0.6rem",
                       transition: "all 0.2s",
+                      fontFamily: "var(--font-body)",
+                      fontSize: "1rem",
                     }}>
-                    <List size={16} />
+                    <List size={20} />
                     Liste
                   </button>
                 </div>
@@ -347,7 +415,7 @@ export default function FormationsShell() {
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   style={{
-                    padding: "0.75rem 1.5rem",
+                    padding: "0.85rem 1.8rem",
                     background: showFilters ? COLOR : "rgba(255,255,255,0.05)",
                     border: `1px solid ${showFilters ? COLOR : "rgba(255,255,255,0.1)"}`,
                     borderRadius: "0.5rem",
@@ -355,11 +423,13 @@ export default function FormationsShell() {
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.5rem",
+                    gap: "0.75rem",
                     fontWeight: 600,
                     transition: "all 0.2s",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "1rem",
                   }}>
-                  <Filter size={16} />
+                  <Filter size={22} />
                   Filtres
                 </button>
               </div>
@@ -383,16 +453,53 @@ export default function FormationsShell() {
                     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                     gap: "2rem",
                   }}>
+                    {/* Catégorie */}
+                    <div>
+                      <label style={{
+                        display: "block",
+                        marginBottom: "0.75rem",
+                        fontSize: "0.95rem",
+                        fontWeight: 700,
+                        color: COLOR,
+                        letterSpacing: "0.05em",
+                        textTransform: "uppercase",
+                        fontFamily: "var(--font-body)",
+                      }}>
+                        Catégorie
+                      </label>
+                      <select
+                        value={selectedCategorie}
+                        onChange={(e) => setSelectedCategorie(e.target.value)}
+                        style={{
+                          width: "100%",
+                          padding: "0.85rem",
+                          background: "rgba(255,255,255,0.05)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          borderRadius: "0.5rem",
+                          color: "#fff",
+                          fontSize: "1rem",
+                          cursor: "pointer",
+                          fontFamily: "var(--font-body)",
+                        }}>
+                        {categories.map(cat => (
+                          <option key={cat} value={cat} style={{ background: "#0A1410" }}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     {/* Secteur */}
                     <div>
                       <label style={{
                         display: "block",
                         marginBottom: "0.75rem",
-                        fontSize: "0.9rem",
+                        fontSize: "0.95rem",
                         fontWeight: 700,
                         color: COLOR,
                         letterSpacing: "0.05em",
                         textTransform: "uppercase",
+                        fontFamily: "var(--font-body)",
                       }}>
                         Secteur
                       </label>
@@ -401,13 +508,14 @@ export default function FormationsShell() {
                         onChange={(e) => setSelectedSecteur(e.target.value)}
                         style={{
                           width: "100%",
-                          padding: "0.75rem",
+                          padding: "0.85rem",
                           background: "rgba(255,255,255,0.05)",
                           border: "1px solid rgba(255,255,255,0.1)",
                           borderRadius: "0.5rem",
                           color: "#fff",
                           fontSize: "1rem",
                           cursor: "pointer",
+                          fontFamily: "var(--font-body)",
                         }}>
                         {secteurs.map(secteur => (
                           <option key={secteur} value={secteur} style={{ background: "#0A1410" }}>
@@ -422,11 +530,12 @@ export default function FormationsShell() {
                       <label style={{
                         display: "block",
                         marginBottom: "0.75rem",
-                        fontSize: "0.9rem",
+                        fontSize: "0.95rem",
                         fontWeight: 700,
                         color: COLOR,
                         letterSpacing: "0.05em",
                         textTransform: "uppercase",
+                        fontFamily: "var(--font-body)",
                       }}>
                         Niveau
                       </label>
@@ -435,13 +544,14 @@ export default function FormationsShell() {
                         onChange={(e) => setSelectedNiveau(e.target.value)}
                         style={{
                           width: "100%",
-                          padding: "0.75rem",
+                          padding: "0.85rem",
                           background: "rgba(255,255,255,0.05)",
                           border: "1px solid rgba(255,255,255,0.1)",
                           borderRadius: "0.5rem",
                           color: "#fff",
                           fontSize: "1rem",
                           cursor: "pointer",
+                          fontFamily: "var(--font-body)",
                         }}>
                         {niveaux.map(niveau => (
                           <option key={niveau} value={niveau} style={{ background: "#0A1410" }}>
@@ -459,10 +569,11 @@ export default function FormationsShell() {
                           setSelectedSecteur("Tous");
                           setSelectedNiveau("Tous");
                           setSearchQuery("");
+                          setSortBy("recent");
                         }}
                         style={{
                           width: "100%",
-                          padding: "0.75rem",
+                          padding: "0.85rem",
                           background: "rgba(255,255,255,0.05)",
                           border: "1px solid rgba(255,255,255,0.1)",
                           borderRadius: "0.5rem",
@@ -470,6 +581,7 @@ export default function FormationsShell() {
                           cursor: "pointer",
                           fontWeight: 600,
                           transition: "all 0.2s",
+                          fontFamily: "var(--font-body)",
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.background = ACCENT;
@@ -479,7 +591,7 @@ export default function FormationsShell() {
                           e.currentTarget.style.background = "rgba(255,255,255,0.05)";
                           e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
                         }}>
-                        Réinitialiser
+                        Réinitialiser tout
                       </button>
                     </div>
                   </div>
@@ -507,16 +619,17 @@ export default function FormationsShell() {
                     textAlign: "center",
                     padding: "4rem 2rem",
                   }}>
-                  <BookOpen size={64} color={COLOR} style={{ margin: "0 auto 1.5rem", opacity: 0.5 }} />
+                  <BookOpen size={72} color={COLOR} style={{ margin: "0 auto 1.5rem", opacity: 0.5 }} />
                   <h3 style={{
-                    fontSize: "1.5rem",
+                    fontSize: "var(--font-25)",
                     fontWeight: 700,
                     marginBottom: "1rem",
                     color: "#fff",
+                    fontFamily: "var(--font-display)",
                   }}>
                     Aucune formation trouvée
                   </h3>
-                  <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "2rem" }}>
+                  <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "2rem", fontSize: "1.1rem", fontFamily: "var(--font-body)" }}>
                     Essayez de modifier vos filtres ou votre recherche
                   </p>
                   <button
@@ -525,6 +638,7 @@ export default function FormationsShell() {
                       setSelectedSecteur("Tous");
                       setSelectedNiveau("Tous");
                       setSearchQuery("");
+                      setSortBy("recent");
                     }}
                     style={{
                       padding: "1rem 2rem",
@@ -534,6 +648,8 @@ export default function FormationsShell() {
                       color: "#fff",
                       fontWeight: 700,
                       cursor: "pointer",
+                      fontSize: "1rem",
+                      fontFamily: "var(--font-body)",
                     }}>
                     Réinitialiser les filtres
                   </button>
@@ -596,24 +712,26 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
               {/* Tags */}
               <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
                 <span style={{
-                  padding: "0.35rem 0.75rem",
+                  padding: "0.4rem 0.85rem",
                   background: `${niveauColor}20`,
                   color: niveauColor,
-                  fontSize: "0.75rem",
+                  fontSize: "0.8rem",
                   fontWeight: 700,
                   borderRadius: "0.375rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase",
+                  fontFamily: "var(--font-body)",
                 }}>
                   {formation.niveau}
                 </span>
                 <span style={{
-                  padding: "0.35rem 0.75rem",
+                  padding: "0.4rem 0.85rem",
                   background: `${COLOR}20`,
                   color: COLOR,
-                  fontSize: "0.75rem",
+                  fontSize: "0.8rem",
                   fontWeight: 600,
                   borderRadius: "0.375rem",
+                  fontFamily: "var(--font-body)",
                 }}>
                   {formation.secteur}
                 </span>
@@ -621,7 +739,7 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
 
               {/* Title */}
               <h3 style={{
-                fontSize: "1.5rem",
+                fontSize: "var(--font-20)",
                 fontWeight: 800,
                 marginBottom: "0.75rem",
                 color: "#fff",
@@ -632,33 +750,34 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
 
               {/* Accroche */}
               <p style={{
-                fontSize: "1rem",
+                fontSize: "var(--font-18)",
                 lineHeight: 1.6,
-                color: "rgba(255,255,255,0.65)",
+                color: "rgba(255,255,255,0.7)",
                 marginBottom: "1rem",
+                fontFamily: "var(--font-body)",
               }}>
-                {formation.accroche.substring(0, 150)}...
+                {formation.accroche.substring(0, 180)}...
               </p>
 
               {/* Meta info */}
-              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <Clock size={16} color={COLOR} />
-                  <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}>
+                  <Clock size={18} color={COLOR} />
+                  <span style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
                     {formation.duree}
                   </span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <Users size={16} color={COLOR} />
-                  <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}>
+                  <Users size={18} color={COLOR} />
+                  <span style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
                     {formation.format}
                   </span>
                 </div>
-                {formation.parcours && (
+                {formation.prix && (
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <TrendingUp size={16} color={COLOR} />
-                    <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}>
-                      {formation.parcours}
+                    <DollarSign size={18} color={COLOR} />
+                    <span style={{ fontSize: "1rem", color: COLOR, fontWeight: 700, fontFamily: "var(--font-body)" }}>
+                      {formation.prix}
                     </span>
                   </div>
                 )}
@@ -672,11 +791,12 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
               gap: "0.5rem",
               color: COLOR,
               fontWeight: 700,
-              fontSize: "0.95rem",
+              fontSize: "1rem",
               whiteSpace: "nowrap",
+              fontFamily: "var(--font-body)",
             }}>
               Voir détails
-              <ChevronRight size={20} />
+              <ChevronRight size={22} />
             </div>
           </div>
         </Link>
@@ -707,14 +827,15 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
         {/* Tags */}
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
           <span style={{
-            padding: "0.35rem 0.75rem",
+            padding: "0.4rem 0.85rem",
             background: `${niveauColor}20`,
             color: niveauColor,
-            fontSize: "0.7rem",
+            fontSize: "0.75rem",
             fontWeight: 700,
             borderRadius: "0.375rem",
             letterSpacing: "0.05em",
             textTransform: "uppercase",
+            fontFamily: "var(--font-body)",
           }}>
             {formation.niveau}
           </span>
@@ -722,7 +843,7 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
 
         {/* Title */}
         <h3 style={{
-          fontSize: "1.4rem",
+          fontSize: "var(--font-20)",
           fontWeight: 800,
           marginBottom: "1rem",
           color: "#fff",
@@ -734,24 +855,57 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
 
         {/* Secteur */}
         <p style={{
-          fontSize: "0.85rem",
+          fontSize: "0.9rem",
           color: COLOR,
           marginBottom: "1rem",
           fontWeight: 600,
+          fontFamily: "var(--font-body)",
         }}>
           {formation.secteur}
         </p>
 
         {/* Accroche */}
         <p style={{
-          fontSize: "0.95rem",
+          fontSize: "var(--font-18)",
           lineHeight: 1.6,
-          color: "rgba(255,255,255,0.6)",
+          color: "rgba(255,255,255,0.65)",
           marginBottom: "1.5rem",
           flex: 1,
+          fontFamily: "var(--font-body)",
         }}>
-          {formation.accroche.substring(0, 120)}...
+          {formation.accroche.substring(0, 130)}...
         </p>
+
+        {/* Prix si disponible */}
+        {formation.prix && (
+          <div style={{
+            background: `${COLOR}15`,
+            border: `1px solid ${COLOR}40`,
+            borderRadius: "0.5rem",
+            padding: "1rem",
+            marginBottom: "1.5rem",
+            textAlign: "center",
+          }}>
+            <p style={{
+              fontSize: "0.75rem",
+              color: "rgba(255,255,255,0.5)",
+              marginBottom: "0.25rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              fontFamily: "var(--font-body)",
+            }}>
+              Tarif
+            </p>
+            <p style={{
+              fontSize: "1.5rem",
+              fontWeight: 900,
+              color: COLOR,
+              fontFamily: "var(--font-display)",
+            }}>
+              {formation.prix}
+            </p>
+          </div>
+        )}
 
         {/* Meta info */}
         <div style={{
@@ -762,14 +916,14 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
           borderTop: "1px solid rgba(255,255,255,0.08)",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Clock size={16} color={COLOR} />
-            <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
+            <Clock size={18} color={COLOR} />
+            <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
               {formation.duree}
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Users size={16} color={COLOR} />
-            <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>
+            <Users size={18} color={COLOR} />
+            <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
               {formation.format}
             </span>
           </div>
@@ -784,10 +938,10 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
           paddingTop: "1.5rem",
           borderTop: "1px solid rgba(255,255,255,0.08)",
         }}>
-          <span style={{ color: COLOR, fontWeight: 700, fontSize: "0.9rem" }}>
+          <span style={{ color: COLOR, fontWeight: 700, fontSize: "0.95rem", fontFamily: "var(--font-body)" }}>
             En savoir plus
           </span>
-          <ChevronRight size={20} color={COLOR} />
+          <ChevronRight size={22} color={COLOR} />
         </div>
       </Link>
     </motion.div>

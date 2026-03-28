@@ -32,7 +32,7 @@ const NOUS_DECOUVRIR_MENU = [
 
 const NAV_LINKS = [
   { href: "/blog", label: "Blog", key: "blog" },
-  { href: "https://elearning.africacentredtechnology.com/", label: "ACT-université", key: "universite" },
+  { href: "https://elearning.africacentredtechnology.com/", label: "ACT-University", key: "universite" },
   { href: "/contact", label: "Contactez-nous", key: "contact" },
 ];
 

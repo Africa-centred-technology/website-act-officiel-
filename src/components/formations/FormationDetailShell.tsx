@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Formation } from "@/lib/data/formations";
+import { Formation, FORMATIONS } from "@/lib/data/formations";
+import { Clock, Users, BarChart3, BookOpen, CheckCircle2, ArrowRight } from "lucide-react";
+import FooterStrip from "@/components/layout/FooterStrip";
 
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
@@ -13,80 +15,14 @@ const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false }
 const ORANGE = "#D35400";
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
-/* ── Accordion Item ─────────────────────────────────── */
-function AccordionItem({ title, children, accent }: { title: string; children: React.ReactNode; accent: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          width: "100%", background: "none", border: "none", cursor: "pointer",
-          display: "flex", alignItems: "center", gap: "1rem",
-          padding: "1.1rem 0", textAlign: "left",
-        }}
-      >
-        <motion.span
-          animate={{ rotate: open ? 45 : 0 }}
-          transition={{ duration: 0.22 }}
-          style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            width: 24, height: 24, flexShrink: 0,
-            border: `1.5px solid ${accent}`,
-            borderRadius: "50%",
-          }}
-        >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M5 1v8M1 5h8" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </motion.span>
-        <span style={{
-          fontWeight: 700, fontSize: "clamp(0.95rem, 1.1vw, 1.05rem)",
-          color: open ? accent : "rgba(255,255,255,0.9)",
-          letterSpacing: "0.02em", transition: "color 0.2s",
-        }}>
-          {title}
-        </span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="body"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
-            style={{ overflow: "hidden" }}
-          >
-            <div style={{ paddingBottom: "1.5rem", paddingLeft: "2.5rem" }}>
-              {children}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-/* ── Badge ─────────────────────────────────────────── */
-function Badge({ label, accent }: { label: string; accent: string }) {
-  return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: "0.4rem",
-      padding: "0.3rem 0.75rem",
-      border: `1px solid ${accent}44`,
-      borderRadius: "0.25rem",
-      fontSize: "0.78rem", color: accent,
-      letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700,
-    }}>
-      {label}
-    </span>
-  );
-}
-
 /* ── Main Component ─────────────────────────────────── */
 export default function FormationDetailShell({ formation }: { formation: Formation }) {
   const accent = ORANGE;
+
+  // Trouver 3 formations similaires (même secteur ou catégorie)
+  const formationsSimilaires = FORMATIONS
+    .filter(f => f.id !== formation.id && (f.secteur === formation.secteur || f.categorie === formation.categorie))
+    .slice(0, 3);
 
   return (
     <div style={{ background: "#070E1C", minHeight: "100vh", color: "#fff", position: "relative" }}>
@@ -105,282 +41,650 @@ export default function FormationDetailShell({ formation }: { formation: Formati
       />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "1100px", margin: "0 auto", padding: "clamp(6rem, 10vw, 9rem) clamp(1.5rem, 5vw, 3rem) 6rem" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", padding: "clamp(6rem, 10vw, 9rem) clamp(1.5rem, 5vw, 3rem) 6rem" }}>
 
         {/* Breadcrumb */}
         <motion.div
           initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "2.5rem", flexWrap: "wrap" }}
+          style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "3rem", flexWrap: "wrap" }}
         >
-          <Link href="/services" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.82rem", textDecoration: "none", letterSpacing: "0.1em" }}>
+          <Link href="/services" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", textDecoration: "none", letterSpacing: "0.1em" }}>
             Services
           </Link>
           <span style={{ color: "rgba(255,255,255,0.2)" }}>›</span>
-          <Link href="/services" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.82rem", textDecoration: "none", letterSpacing: "0.1em" }}>
+          <Link href="/services" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", textDecoration: "none", letterSpacing: "0.1em" }}>
             Catalogue de Formations
           </Link>
           <span style={{ color: "rgba(255,255,255,0.2)" }}>›</span>
-          <span style={{ color: accent, fontSize: "0.82rem", letterSpacing: "0.1em" }}>{formation.secteur}</span>
+          <span style={{ color: accent, fontSize: "0.9rem", letterSpacing: "0.1em" }}>{formation.secteur}</span>
         </motion.div>
 
-        {/* Hero */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "3rem", alignItems: "start", marginBottom: "4rem" }}>
-          <div>
-            {/* Secteur + niveau */}
-            <motion.div
-              initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55, delay: 0.1 }}
-              style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}
-            >
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: accent, boxShadow: `0 0 8px ${accent}` }} />
-              <span style={{ fontSize: "0.82rem", color: accent, letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 700 }}>
+        {/* Hero Section avec Image et Caractéristiques */}
+        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "4rem", marginBottom: "5rem", alignItems: "start" }}>
+
+          {/* Left — Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            style={{ position: "relative" }}
+          >
+            <div style={{
+              position: "relative",
+              width: "100%",
+              height: "500px",
+              borderRadius: "1rem",
+              overflow: "hidden",
+              border: `1px solid ${accent}33`,
+            }}>
+              <img
+                src="/images/poles/pole-formation.jpg"
+                alt={formation.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.3) 50%, rgba(7,14,28,0.9) 100%)",
+              }} />
+
+              {/* Secteur badge sur l'image */}
+              <div style={{
+                position: "absolute",
+                top: "1.5rem",
+                left: "1.5rem",
+                padding: "0.6rem 1.2rem",
+                background: accent,
+                borderRadius: "0.5rem",
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+              }}>
+                {formation.secteur}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right — Caractéristiques */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            {/* Catégorie + niveau */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+              <span style={{ width: 10, height: 10, borderRadius: "50%", background: accent, boxShadow: `0 0 12px ${accent}` }} />
+              <span style={{ fontSize: "0.9rem", color: accent, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>
                 Pôle III · Formation
               </span>
-              <span style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
-              <span style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em" }}>
-                {formation.secteur}
-              </span>
-            </motion.div>
+            </div>
 
             {/* Title */}
-            <div style={{ overflow: "hidden", marginBottom: "1.5rem" }}>
-              <motion.h1
-                initial={{ y: "100%", opacity: 0 }} animate={{ y: "0%", opacity: 1 }}
-                transition={{ duration: 0.85, delay: 0.15, ease: [...EASE] }}
-                style={{
-                  fontSize: "clamp(1.8rem, 4vw, 3.8rem)", fontWeight: 900,
-                  lineHeight: 1.05, letterSpacing: "-0.02em",
-                  textTransform: "uppercase", color: "#fff", margin: 0,
-                }}
-              >
-                {formation.title}
-              </motion.h1>
-            </div>
+            <h1 style={{
+              fontSize: "var(--font-40)",
+              fontWeight: 900,
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+              textTransform: "uppercase",
+              color: "#fff",
+              marginBottom: "2rem",
+              fontFamily: "var(--font-display)",
+            }}>
+              {formation.title}
+            </h1>
 
             {/* Accroche */}
-            <motion.p
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              style={{
-                fontSize: "clamp(1rem, 1.3vw, 1.2rem)", color: "rgba(255,255,255,0.7)",
-                lineHeight: 1.7, maxWidth: "640px",
-              }}
-            >
+            <p style={{
+              fontSize: "var(--font-20)",
+              color: "rgba(255,255,255,0.75)",
+              lineHeight: 1.7,
+              marginBottom: "3rem",
+              fontFamily: "var(--font-body)",
+            }}>
               {formation.accroche}
-            </motion.p>
-          </div>
+            </p>
 
-          {/* Info card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.55 }}
-            style={{
-              background: "rgba(255,255,255,0.03)",
-              border: `1px solid ${accent}33`,
-              borderRadius: "0.75rem",
-              padding: "1.5rem",
-              minWidth: "200px",
-              flexShrink: 0,
-            }}
-          >
-            {[
-              { icon: "⏱", label: "Durée", value: formation.duree },
-              { icon: "📍", label: "Format", value: formation.format },
-              { icon: "📊", label: "Niveau", value: formation.niveau },
-              ...(formation.parcours ? [{ icon: "🎓", label: "Parcours", value: formation.parcours }] : []),
-            ].map(item => (
-              <div key={item.label} style={{ marginBottom: "1rem" }}>
-                <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>
-                  {item.icon} {item.label}
-                </p>
-                <p style={{ fontSize: "0.9rem", color: "#fff", fontWeight: 600 }}>{item.value}</p>
-              </div>
-            ))}
-            <div style={{ marginTop: "1.5rem", paddingTop: "1rem", borderTop: `1px solid ${accent}22` }}>
-              <Link href="/contact" style={{
-                display: "block", textAlign: "center",
-                padding: "0.75rem 1rem",
-                background: accent,
-                color: "#fff", textDecoration: "none",
-                borderRadius: "0.4rem",
-                fontSize: "0.82rem", fontWeight: 700,
-                letterSpacing: "0.12em", textTransform: "uppercase",
-              }}>
-                S'inscrire
-              </Link>
+            {/* Caractéristiques Grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1.5rem",
+              marginBottom: "3rem",
+            }}>
+              {[
+                { icon: Clock, label: "Durée", value: formation.duree },
+                { icon: BookOpen, label: "Format", value: formation.format },
+                { icon: BarChart3, label: "Niveau", value: formation.niveau },
+                { icon: Users, label: "Catégorie", value: formation.categorie },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: `1px solid ${accent}33`,
+                    borderRadius: "0.75rem",
+                    padding: "1.5rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                    <item.icon size={24} color={accent} />
+                    <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.15em", textTransform: "uppercase", margin: 0, fontFamily: "var(--font-body)" }}>
+                      {item.label}
+                    </p>
+                  </div>
+                  <p style={{ fontSize: "var(--font-18)", color: "#fff", fontWeight: 600, margin: 0, fontFamily: "var(--font-body)" }}>{item.value}</p>
+                </motion.div>
+              ))}
             </div>
+
+            {/* Prix si disponible */}
+            {formation.prix && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.85, duration: 0.5 }}
+                style={{
+                  background: `linear-gradient(135deg, ${accent}22, ${accent}11)`,
+                  border: `2px solid ${accent}`,
+                  borderRadius: "0.75rem",
+                  padding: "2rem",
+                  marginBottom: "2rem",
+                  textAlign: "center",
+                }}
+              >
+                <p style={{
+                  fontSize: "0.9rem",
+                  color: "rgba(255,255,255,0.6)",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  marginBottom: "0.75rem",
+                  fontFamily: "var(--font-body)",
+                }}>
+                  Tarif
+                </p>
+                <p style={{
+                  fontSize: "var(--font-40)",
+                  fontWeight: 900,
+                  color: accent,
+                  lineHeight: 1,
+                  fontFamily: "var(--font-display)",
+                  marginBottom: "0.5rem",
+                }}>
+                  {formation.prix}
+                </p>
+                <p style={{
+                  fontSize: "0.85rem",
+                  color: "rgba(255,255,255,0.5)",
+                  fontFamily: "var(--font-body)",
+                }}>
+                  par participant
+                </p>
+              </motion.div>
+            )}
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.5 }}
+            >
+              <Link href="/contact" style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.75rem",
+                padding: "1.2rem 2rem",
+                background: accent,
+                color: "#fff",
+                textDecoration: "none",
+                borderRadius: "0.5rem",
+                fontSize: "1rem",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = `0 10px 30px ${accent}66`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
+              }}>
+                S'inscrire à cette formation
+                <ArrowRight size={20} />
+              </Link>
+              <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
+                Réponse sous 48h ouvrées
+              </p>
+            </motion.div>
           </motion.div>
         </div>
 
         {/* Divider */}
         <motion.div
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-          transition={{ delay: 0.7, duration: 0.9, ease: [...EASE] }}
-          style={{ height: 1, background: `linear-gradient(90deg, ${accent}55, transparent)`, originX: 0, marginBottom: "3rem" }}
+          transition={{ delay: 1, duration: 0.9, ease: [...EASE] }}
+          style={{ height: 1, background: `linear-gradient(90deg, ${accent}55, transparent)`, originX: 0, marginBottom: "5rem" }}
         />
 
-        {/* Two-column layout */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "4rem", alignItems: "start" }}>
+        {/* Content Sections - Plus de listes déroulantes, tout affiché */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: "4rem", marginBottom: "5rem" }}>
 
-          {/* Left — accordion details */}
+          {/* Left — Contenu principal */}
           <div>
             {/* Public cible */}
-            <AccordionItem title="Public cible" accent={accent}>
-              <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontSize: "0.95rem" }}>
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              style={{ marginBottom: "4rem" }}
+            >
+              <h2 style={{
+                fontSize: "var(--font-35)",
+                fontWeight: 900,
+                marginBottom: "1.5rem",
+                color: "#fff",
+                textTransform: "uppercase",
+                fontFamily: "var(--font-display)",
+              }}>
+                <span style={{ color: accent }}>Public</span> cible
+              </h2>
+              <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "var(--font-18)", fontFamily: "var(--font-body)" }}>
                 {formation.publicCible}
               </p>
-            </AccordionItem>
+            </motion.section>
+
+            {/* Prérequis */}
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              style={{ marginBottom: "4rem" }}
+            >
+              <h2 style={{
+                fontSize: "var(--font-35)",
+                fontWeight: 900,
+                marginBottom: "1.5rem",
+                color: "#fff",
+                textTransform: "uppercase",
+                fontFamily: "var(--font-display)",
+              }}>
+                <span style={{ color: accent }}>Prérequis</span>
+              </h2>
+              <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "var(--font-18)", fontFamily: "var(--font-body)" }}>
+                {formation.prerequis}
+              </p>
+            </motion.section>
 
             {/* Objectifs */}
-            <AccordionItem title="Objectifs pédagogiques" accent={accent}>
-              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              style={{ marginBottom: "4rem" }}
+            >
+              <h2 style={{
+                fontSize: "var(--font-35)",
+                fontWeight: 900,
+                marginBottom: "1.5rem",
+                color: "#fff",
+                textTransform: "uppercase",
+                fontFamily: "var(--font-display)",
+              }}>
+                Objectifs <span style={{ color: accent }}>pédagogiques</span>
+              </h2>
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {formation.objectifs.map((obj, i) => (
-                  <li key={i} style={{ display: "flex", gap: "0.65rem", alignItems: "flex-start" }}>
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: accent, flexShrink: 0, marginTop: "0.45em" }} />
-                    <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.92rem", lineHeight: 1.6 }}>{obj}</span>
-                  </li>
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}
+                  >
+                    <CheckCircle2 size={24} color={accent} style={{ flexShrink: 0, marginTop: "0.2em" }} />
+                    <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "var(--font-18)", lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{obj}</span>
+                  </motion.li>
                 ))}
               </ul>
-            </AccordionItem>
+            </motion.section>
 
             {/* Programme */}
-            <AccordionItem title="Programme et modules" accent={accent}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              style={{ marginBottom: "4rem" }}
+            >
+              <h2 style={{
+                fontSize: "var(--font-35)",
+                fontWeight: 900,
+                marginBottom: "2rem",
+                color: "#fff",
+                textTransform: "uppercase",
+                fontFamily: "var(--font-display)",
+              }}>
+                Programme <span style={{ color: accent }}>& modules</span>
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
                 {formation.programme.map((mod, mi) => (
-                  <div key={mi}>
-                    <p style={{ fontWeight: 700, color: accent, fontSize: "0.88rem", marginBottom: "0.5rem", letterSpacing: "0.04em" }}>
+                  <motion.div
+                    key={mi}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: mi * 0.1 }}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      border: `1px solid ${accent}33`,
+                      borderRadius: "0.75rem",
+                      padding: "2rem",
+                    }}
+                  >
+                    <h3 style={{ fontWeight: 800, color: accent, fontSize: "var(--font-20)", marginBottom: "1rem", letterSpacing: "0.02em", fontFamily: "var(--font-display)" }}>
                       {mod.module}
-                    </p>
-                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                    </h3>
+                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                       {mod.details.map((d, di) => (
-                        <li key={di} style={{ display: "flex", gap: "0.55rem", alignItems: "flex-start" }}>
-                          <span style={{ color: `${accent}88`, fontSize: "0.8rem", marginTop: "0.3em", flexShrink: 0 }}>—</span>
-                          <span style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.88rem", lineHeight: 1.55 }}>{d}</span>
+                        <li key={di} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                          <span style={{ color: accent, fontSize: "1.2rem", marginTop: "0.2em", flexShrink: 0 }}>•</span>
+                          <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "var(--font-18)", lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{d}</span>
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </AccordionItem>
+            </motion.section>
 
-            {/* Prérequis */}
-            <AccordionItem title="Prérequis" accent={accent}>
-              <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontSize: "0.95rem" }}>
-                {formation.prerequis}
-              </p>
-            </AccordionItem>
-
-            {/* Méthode */}
-            <AccordionItem title="Méthode pédagogique" accent={accent}>
-              <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontSize: "0.95rem" }}>
+            {/* Méthode pédagogique */}
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              style={{ marginBottom: "4rem" }}
+            >
+              <h2 style={{
+                fontSize: "var(--font-35)",
+                fontWeight: 900,
+                marginBottom: "1.5rem",
+                color: "#fff",
+                textTransform: "uppercase",
+                fontFamily: "var(--font-display)",
+              }}>
+                Méthode <span style={{ color: accent }}>pédagogique</span>
+              </h2>
+              <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "var(--font-18)", fontFamily: "var(--font-body)" }}>
                 {formation.methode}
               </p>
-            </AccordionItem>
-
-            {/* S'inscrire */}
-            <AccordionItem title="S'inscrire" accent={accent}>
-              <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontSize: "0.95rem", marginBottom: "1rem" }}>
-                Pour vous inscrire ou obtenir plus d'informations sur cette formation, contactez notre équipe.
-              </p>
-              <Link href="/contact" style={{
-                display: "inline-flex", alignItems: "center", gap: "0.6rem",
-                padding: "0.7rem 1.5rem",
-                background: accent, color: "#fff", textDecoration: "none",
-                borderRadius: "0.4rem", fontSize: "0.85rem", fontWeight: 700,
-                letterSpacing: "0.1em", textTransform: "uppercase",
-              }}>
-                Nous contacter
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </AccordionItem>
+            </motion.section>
           </div>
 
-          {/* Right — livrables + contact */}
+          {/* Right — Sidebar sticky */}
           <div style={{ position: "sticky", top: "7rem" }}>
 
             {/* Ce que vous repartez avec */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.9, duration: 0.55 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.2, duration: 0.55 }}
               style={{
-                background: "rgba(255,255,255,0.025)",
+                background: "rgba(255,255,255,0.03)",
                 border: `1px solid ${accent}33`,
                 borderRadius: "0.75rem",
-                padding: "1.75rem",
-                marginBottom: "1.5rem",
+                padding: "2rem",
+                marginBottom: "2rem",
               }}
             >
-              <h3 style={{ fontSize: "0.8rem", color: accent, letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 700, marginBottom: "1.2rem" }}>
+              <h3 style={{ fontSize: "1.1rem", color: accent, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700, marginBottom: "1.5rem", fontFamily: "var(--font-body)" }}>
                 Ce que vous repartez avec
               </h3>
-              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {formation.livrables.map((l, i) => (
-                  <li key={i} style={{ display: "flex", gap: "0.65rem", alignItems: "flex-start" }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "0.2em" }}>
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                    <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.88rem", lineHeight: 1.55 }}>{l}</span>
+                  <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    <CheckCircle2 size={22} color={accent} style={{ flexShrink: 0, marginTop: "0.1em" }} />
+                    <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "var(--font-18)", lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{l}</span>
                   </li>
                 ))}
               </ul>
             </motion.div>
 
-            {/* Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.05, duration: 0.5 }}
-              style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.5rem" }}
-            >
-              <Badge label={formation.niveau} accent={accent} />
-              <Badge label={formation.format} accent={accent} />
-            </motion.div>
-
             {/* CTA */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.15, duration: 0.5 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
             >
               <Link href="/contact" style={{
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.75rem",
                 padding: "1rem 1.5rem",
-                background: accent, color: "#fff", textDecoration: "none",
+                background: accent,
+                color: "#fff",
+                textDecoration: "none",
                 borderRadius: "0.5rem",
-                fontSize: "0.88rem", fontWeight: 700,
-                letterSpacing: "0.14em", textTransform: "uppercase",
+                fontSize: "0.9rem",
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
                 width: "100%",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = `0 8px 20px ${accent}66`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}>
                 Demander cette formation
               </Link>
-              <p style={{ textAlign: "center", marginTop: "0.75rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.3)" }}>
-                Réponse sous 48h ouvrées
-              </p>
             </motion.div>
+
+            {/* Parcours si disponible */}
+            {formation.parcours && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4, duration: 0.5 }}
+                style={{
+                  marginTop: "2rem",
+                  padding: "1.5rem",
+                  background: "rgba(255,255,255,0.02)",
+                  border: `1px solid ${accent}22`,
+                  borderRadius: "0.75rem",
+                }}
+              >
+                <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+                  🎓 Parcours
+                </p>
+                <p style={{ fontSize: "0.95rem", color: "#fff", fontWeight: 600, margin: 0 }}>{formation.parcours}</p>
+              </motion.div>
+            )}
           </div>
         </div>
 
+        {/* Formations similaires */}
+        {formationsSimilaires.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            style={{ marginTop: "6rem" }}
+          >
+            <h2 style={{
+              fontSize: "var(--font-40)",
+              fontWeight: 900,
+              marginBottom: "3rem",
+              color: "#fff",
+              textTransform: "uppercase",
+              textAlign: "center",
+              fontFamily: "var(--font-display)",
+            }}>
+              Formations qui pourraient <span style={{ color: accent }}>vous intéresser</span>
+            </h2>
+
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+              gap: "2rem",
+            }}>
+              {formationsSimilaires.map((f, i) => (
+                <motion.article
+                  key={f.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: `1px solid ${accent}33`,
+                    borderRadius: "1rem",
+                    overflow: "hidden",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = accent;
+                    e.currentTarget.style.transform = "translateY(-8px)";
+                    e.currentTarget.style.boxShadow = `0 15px 40px ${accent}33`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = `${accent}33`;
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  <Link href={`/formations/${f.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+                    <div style={{
+                      position: "relative",
+                      height: "220px",
+                      overflow: "hidden",
+                      background: "rgba(0,0,0,0.3)",
+                    }}>
+                      <img
+                        src="/images/poles/pole-formation.jpg"
+                        alt={f.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          filter: "brightness(0.7)",
+                        }}
+                      />
+                      <div style={{
+                        position: "absolute",
+                        top: "1rem",
+                        left: "1rem",
+                        padding: "0.4rem 0.8rem",
+                        background: accent,
+                        borderRadius: "0.25rem",
+                        fontSize: "0.7rem",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                      }}>
+                        {f.niveau}
+                      </div>
+                    </div>
+
+                    <div style={{ padding: "2rem" }}>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.75rem",
+                        marginBottom: "1rem",
+                        fontSize: "0.8rem",
+                        color: "rgba(255,255,255,0.5)",
+                      }}>
+                        <Clock size={14} />
+                        <span>{f.duree}</span>
+                        <span>•</span>
+                        <span>{f.format}</span>
+                      </div>
+
+                      <h3 style={{
+                        fontSize: "var(--font-20)",
+                        fontWeight: 800,
+                        marginBottom: "1rem",
+                        color: "#fff",
+                        lineHeight: 1.3,
+                        fontFamily: "var(--font-display)",
+                      }}>
+                        {f.title}
+                      </h3>
+
+                      <p style={{
+                        fontSize: "var(--font-18)",
+                        lineHeight: 1.6,
+                        color: "rgba(255,255,255,0.7)",
+                        marginBottom: "1.5rem",
+                        fontFamily: "var(--font-body)",
+                      }}>
+                        {f.accroche.slice(0, 120)}...
+                      </p>
+
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        color: accent,
+                        fontSize: "0.9rem",
+                        fontWeight: 700,
+                      }}>
+                        En savoir plus
+                        <ArrowRight size={16} />
+                      </div>
+                    </div>
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Back link */}
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
-          style={{ marginTop: "5rem", paddingTop: "2rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.5 }}
+          style={{ marginTop: "6rem", paddingTop: "3rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}
         >
           <Link href="/services" style={{
-            display: "inline-flex", alignItems: "center", gap: "0.5rem",
-            color: "rgba(255,255,255,0.4)", fontSize: "0.82rem",
-            textDecoration: "none", letterSpacing: "0.1em",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            color: "rgba(255,255,255,0.5)",
+            fontSize: "0.9rem",
+            textDecoration: "none",
+            letterSpacing: "0.1em",
             transition: "color 0.2s",
-          }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = accent; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
-            Retour au catalogue
+            Retour au catalogue de formations
           </Link>
         </motion.div>
       </div>
+
+      {/* Footer */}
+      <FooterStrip />
     </div>
   );
 }
