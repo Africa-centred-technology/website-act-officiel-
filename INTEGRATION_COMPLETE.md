@@ -31,13 +31,7 @@ L'intégration Shopify pour votre catalogue de formations est maintenant prête 
 
 ## 🚀 Prochaines étapes
 
-### 1. Configuration Shopify (OBLIGATOIRE)
 
-#### a) Configurer le domaine
-Éditez `.env.local` et remplacez :
-```env
-NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=votre-boutique.myshopify.com
-```
 
 
 

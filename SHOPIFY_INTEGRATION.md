@@ -8,11 +8,7 @@ Ce document explique comment utiliser l'intégration Shopify dans votre site vit
 
 Les identifiants Shopify sont déjà configurés dans `.env.local` :
 
-```env
-NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=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
-NEXT_PUBLIC_SHOPIFY_CLIENT_ID=b283ec79776aa5583fa095cb7172afaf
-NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=votre-boutique.myshopify.com
-```
+
 
 ⚠️ **Important** : Vous devez remplacer `votre-boutique.myshopify.com` par le nom de domaine réel de votre boutique Shopify.
 
