@@ -20,6 +20,7 @@ const SAVOIR_FAIRE_MENU = [
   { href: "/poles", label: "Nos Pôles d'Excellence", key: "poles", description: "" },
   { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
   { href: "/services", label: "Nos Services", key: "services", description: "" },
+  { href: "/formations", label: "Catalogue de Formations", key: "formations", description: "" },
   { href: "/about#partenaires", label: "Nos Partenaires", key: "partenaires", description: "" },
 ];
 
