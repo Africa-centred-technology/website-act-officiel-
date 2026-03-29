@@ -700,8 +700,9 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
         transition={{ duration: 0.3, ease: EASE }}
         style={{
           background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.08)",
-          borderLeft: `4px solid ${niveauColor}`,
+          borderStyle: "solid",
+          borderWidth: "1px 1px 1px 4px",
+          borderColor: `rgba(255,255,255,0.08) rgba(255,255,255,0.08) rgba(255,255,255,0.08) ${niveauColor}`,
           borderRadius: "0.75rem",
           padding: "2rem",
           cursor: "pointer",
@@ -815,8 +816,9 @@ function FormationCard({ formation, viewMode }: { formation: Formation; viewMode
       transition={{ duration: 0.3, ease: EASE }}
       style={{
         background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderTop: `3px solid ${niveauColor}`,
+        borderStyle: "solid",
+        borderWidth: "3px 1px 1px 1px",
+        borderColor: `${niveauColor} rgba(255,255,255,0.08) rgba(255,255,255,0.08) rgba(255,255,255,0.08)`,
         borderRadius: "0.75rem",
         padding: "2rem",
         cursor: "pointer",

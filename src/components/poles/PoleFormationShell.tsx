@@ -12,7 +12,6 @@ import {
   GraduationCap,
   BookOpen,
   Users,
-  Award,
   Laptop,
   Target,
   TrendingUp,
@@ -21,11 +20,14 @@ import {
   ArrowRight,
   ExternalLink,
   Zap,
-  Shield
+  Shield,
+  Sparkles,
+  MousePointer2
 } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { blogPosts } from "@/lib/blog-data";
+import { FORMATIONS } from "@/lib/data/formations";
 
 /* ── Background layers ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -52,53 +54,54 @@ function useMediaQuery() {
 
 const COLOR = "#D35400";
 
+// Sélection de 6 formations représentatives pour l'affichage en vedette
 const programs = [
   {
-    icon: Laptop,
-    title: "ACT University",
-    slug: "formation-sur-mesure",
-    description: "Plateforme e-learning avec plus de 100 modules couvrant développement web, data science, cybersécurité et cloud computing.",
-    features: ["Parcours structurés", "Exercices pratiques", "Certificats reconnus"],
+    icon: Sparkles,
+    title: FORMATIONS[0].title,
+    slug: FORMATIONS[0].slug,
+    description: FORMATIONS[0].accroche,
+    features: FORMATIONS[0].objectifs.slice(0, 3),
     image: "/images/poles/pole-formation.jpg"
   },
   {
     icon: Target,
-    title: "Bootcamps Intensifs",
-    slug: "formation-sur-mesure",
-    description: "Programmes accélérés de 8 à 12 semaines pour une reconversion professionnelle ou une montée en compétences rapide.",
-    features: ["Formation pratique", "Projets réels", "Garantie employabilité"],
+    title: FORMATIONS[1].title,
+    slug: FORMATIONS[1].slug,
+    description: FORMATIONS[1].accroche,
+    features: FORMATIONS[1].objectifs.slice(0, 3),
     image: "/images/poles/pole-formation.jpg"
   },
   {
-    icon: Users,
-    title: "Formation en Entreprise",
-    slug: "formation-sur-mesure",
-    description: "Programmes sur mesure pour vos équipes : upskilling, reskilling et accompagnement à l'adoption de nouvelles technologies.",
-    features: ["Sur mesure", "Intra-entreprise", "Coaching individuel"],
+    icon: Zap,
+    title: FORMATIONS[3].title, // Automatisation
+    slug: FORMATIONS[3].slug,
+    description: FORMATIONS[3].accroche,
+    features: FORMATIONS[3].objectifs.slice(0, 3),
     image: "/images/poles/pole-formation.jpg"
   },
   {
     icon: BookOpen,
-    title: "Ateliers & Masterclass",
-    slug: "formation-sur-mesure",
-    description: "Sessions courtes et ciblées sur des sujets pointus : IA générative, DevOps, architecture cloud, cybersécurité...",
-    features: ["Experts métier", "Format court", "Hands-on labs"],
+    title: FORMATIONS[4].title, // IA pour enseignants
+    slug: FORMATIONS[4].slug,
+    description: FORMATIONS[4].accroche,
+    features: FORMATIONS[4].objectifs.slice(0, 3),
     image: "/images/poles/pole-formation.jpg"
   },
   {
-    icon: Award,
-    title: "Certifications",
-    slug: "formation-sur-mesure",
-    description: "Préparation aux certifications professionnelles reconnues : AWS, Azure, Google Cloud, CompTIA, CISSP...",
-    features: ["Taux de réussite élevé", "Support personnalisé", "Examens blancs"],
+    icon: MousePointer2,
+    title: FORMATIONS[7].title, // IA Marketing
+    slug: FORMATIONS[7].slug,
+    description: FORMATIONS[7].accroche,
+    features: FORMATIONS[7].objectifs.slice(0, 3),
     image: "/images/poles/pole-formation.jpg"
   },
   {
-    icon: Globe,
-    title: "Mentorat & Coaching",
-    slug: "formation-sur-mesure",
-    description: "Accompagnement personnalisé par des professionnels expérimentés pour accélérer votre progression.",
-    features: ["1-to-1 mentoring", "Career coaching", "Code reviews"],
+    icon: Shield,
+    title: FORMATIONS[6].title, // IA Santé
+    slug: FORMATIONS[6].slug,
+    description: FORMATIONS[6].accroche,
+    features: FORMATIONS[6].objectifs.slice(0, 3),
     image: "/images/poles/pole-formation.jpg"
   },
 ];
@@ -124,11 +127,7 @@ const pedagogy = [
     title: "Communauté Active",
     desc: "Intégration dans un réseau d'apprenants et de professionnels pour échanger et collaborer."
   },
-  {
-    step: "05",
-    title: "Certification Reconnue",
-    desc: "Validation officielle des compétences acquises, valorisable sur le marché du travail."
-  },
+
 ];
 
 export default function PoleFormationShell() {
@@ -303,8 +302,8 @@ export default function PoleFormationShell() {
             letterSpacing: '0.05em',
             lineHeight: 1.2
           }}>
-            L'impact de nos formations sur <br />
-            <span style={{ color: COLOR }}>la carrière de nos apprenants</span>
+           Pourquoi choisir les formations de <br />
+            <span style={{ color: COLOR }}>ACT</span>
           </h2>
           <div style={{
             width: '60px',
@@ -403,7 +402,7 @@ export default function PoleFormationShell() {
             const Icon = program.icon;
             const [isHovered, setIsHovered] = useState(false);
             return (
-              <Link href={`/services/${program.slug}`} key={i} style={{ textDecoration: 'none' }}>
+              <Link href={`/formations/${program.slug}`} key={i} style={{ textDecoration: 'none' }}>
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -644,9 +643,9 @@ export default function PoleFormationShell() {
               desc: "Professionnels en activité qui partagent leur expérience terrain et leurs meilleures pratiques."
             },
             {
-              icon: Award,
-              title: "Certifications Reconnues",
-              desc: "Diplômes et certificats valorisés par les entreprises pour booster votre employabilité."
+              icon: Laptop,
+              title: "Projets Réels",
+              desc: "Travail sur des projets réels et personnalisées selon votre secteur d'activité."
             },
             {
               icon: TrendingUp,
@@ -754,7 +753,7 @@ export default function PoleFormationShell() {
           gap: screenSize === 'mobile' ? '2rem' : '4rem',
         }}>
           {blogPosts
-            .filter(post => ["Learning & Skills", "Career & Growth", "Tech Trends"].includes(post.category))
+            .filter(post => ["Carrière & Skills", "Tech Trends", "Data & IA"].includes(post.category))
             .slice(0, 3)
             .map((post, i) => {
               const isEven = i % 2 === 0;

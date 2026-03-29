@@ -22,11 +22,10 @@ const poles = {
   },
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
   const pole = poles[params.slug as keyof typeof poles];
 
   if (!pole) {
@@ -47,7 +46,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function PolePage({ params }: { params: { slug: string } }) {
+export default async function PolePage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const pole = poles[params.slug as keyof typeof poles];
 
   if (!pole) {

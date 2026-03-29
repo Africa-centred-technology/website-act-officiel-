@@ -3,7 +3,7 @@ import FormationDetailShell from "@/components/formations/FormationDetailShell";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -11,7 +11,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const formation = FORMATIONS.find((f) => f.slug === params.slug);
+  const { slug } = await params;
+  const formation = FORMATIONS.find((f) => f.slug === slug);
   if (!formation) return { title: "Formation introuvable" };
   return {
     title: `${formation.title} — ACT Formations`,
@@ -19,8 +20,9 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default function FormationPage({ params }: Props) {
-  const formation = FORMATIONS.find((f) => f.slug === params.slug);
+export default async function FormationPage({ params }: Props) {
+  const { slug } = await params;
+  const formation = FORMATIONS.find((f) => f.slug === slug);
   if (!formation) notFound();
   return <FormationDetailShell formation={formation} />;
 }
