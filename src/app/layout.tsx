@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description:
     "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
   keywords: ["IA", "Afrique", "Transformation digitale", "Ingénierie", "Innovation"],
+  icons: {
+    icon: "/logo/logo.png",
+    apple: "/logo/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
