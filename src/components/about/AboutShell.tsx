@@ -82,13 +82,13 @@ const TEAM: TeamMember[] = [
   {
     name: "Aldrin DJOUROBI",
     role: "Membre fondateur",
-    img: "/images/Equipe/Aldrin.jpg",
+    img: "/images/Equipe/Aldrin.png",
     bio: "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
   },
   {
     name: "ELVIS-THEO AKIEME OYONO",
     role: "Membre fondateur",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
+    img: "/images/Equipe/elvis.png",
     bio: "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
   },
 ];

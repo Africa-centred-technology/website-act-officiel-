@@ -186,11 +186,7 @@ export const SERVICES: Service[] = [
       },
       {
         title: "Intelligence Artificielle",
-        desc: "Solutions IA appliquées aux domaines critiques africains : santé (aide au diagnostic), agriculture (recommandations agronomiques), éducation (analyse des performances), finance (détection de fraude, analyse de risque). Chaque solution est conçue selon des principes d'IA responsable : transparence, équité et supervision humaine.",
-      },
-      {
-        title: "Gouvernance de l'IA",
-        desc: "Cadres de gouvernance pour une IA maîtrisée : définition des politiques d'usage, mise en place de comités d'éthique, audit et documentation des systèmes IA, formation des dirigeants et équipes à la culture data & IA. Passer d'une gestion intuitive à une gestion pilotée par les données.",
+        desc: "Solutions IA appliquées aux domaines spécifiques : santé (aide au diagnostic), agriculture (recommandations agronomiques), éducation (analyse des performances), finance (détection de fraude, analyse de risque). Chaque solution est conçue selon des principes d'IA responsable : transparence, équité et supervision humaine.",
       },
     ],
     benefits: [

@@ -67,7 +67,7 @@ export const POLES: Pole[] = [
     tagline: "Former les talents qui construiront l'Afrique de demain",
     tag: "Transmission",
     description: "Démocratisation de l'accès aux compétences technologiques via formations certifiantes, ateliers et bootcamps.",
-    desc: "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents de demain.",
+    desc: "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents.",
     color: "#16a34a",
     icon: GraduationCap,
     image: "/images/poles/pole-formation.jpg",

@@ -187,27 +187,29 @@ export default function RoomPortail() {
                                         className="group"
                                         style={{ flexShrink: 0, width: '300px' }}
                                     >
-                                        <div className="flex flex-col bg-white/5 rounded-xl overflow-hidden shadow-2xl h-[350px] border border-white/10 group-hover:border-[#D35400]/50 transition-colors duration-300">
-                                            <div className="relative w-full h-[180px] flex-shrink-0 overflow-hidden">
-                                                <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                                                <div className="absolute top-4 left-4 px-3 py-1 bg-[#D35400] text-white text-[10px] font-bold uppercase tracking-widest rounded shadow-md z-10">
-                                                    {project.category}
+                                        <Link href={`/projects/${project.id}`} style={{ textDecoration: "none" }}>
+                                            <div className="flex flex-col bg-white/5 rounded-xl overflow-hidden shadow-2xl h-[350px] border border-white/10 group-hover:border-[#D35400]/50 transition-colors duration-300">
+                                                <div className="relative w-full h-[180px] flex-shrink-0 overflow-hidden">
+                                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                                    <div className="absolute top-4 left-4 px-3 py-1 bg-[#D35400] text-white text-[10px] font-bold uppercase tracking-widest rounded shadow-md z-10">
+                                                        {project.category}
+                                                    </div>
+                                                </div>
+                                                <div className="p-6 flex flex-col flex-1">
+                                                    <div className="flex items-center gap-2 mb-3 mt-8">
+                                                        <span className="w-6 h-px bg-[#D35400]" />
+                                                        <span className="text-[#D35400] text-xs font-bold uppercase tracking-widest">{project.category}</span>
+                                                    </div>
+                                                    <h2 className="text-white text-xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2 mb-8" style={{ fontFamily: "var(--font-display)" }}>
+                                                        {project.title}
+                                                    </h2>
+                                                    <p className="text-white/50 text-xl line-clamp-3 leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)" }}>
+                                                        {project.description}
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <div className="p-6 flex flex-col flex-1">
-                                                <div className="flex items-center gap-2 mb-3 mt-8">
-                                                    <span className="w-6 h-px bg-[#D35400]" />
-                                                    <span className="text-[#D35400] text-xs font-bold uppercase tracking-widest">{project.category}</span>
-                                                </div>
-                                                <h2 className="text-white text-xl font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2 mb-8" style={{ fontFamily: "var(--font-display)" }}>
-                                                    {project.title}
-                                                </h2>
-                                                <p className="text-white/50 text-xl line-clamp-3 leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)" }}>
-                                                    {project.description}
-                                                </p>
-                                            </div>
-                                        </div>
+                                        </Link>
                                     </motion.div>
                                 ))}
                             </div>
@@ -281,69 +283,71 @@ export default function RoomPortail() {
                                             }}
                                             className="flex flex-col bg-[#0A1410] border border-white/10 shadow-2xl"
                                         >
-                                            <div className="relative w-full flex-1 overflow-hidden">
-                                                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                                                <div className="absolute inset-0 bg-black/40" />
-                                                <div className="absolute top-4 left-4 px-3 py-1 bg-[#D35400] text-white text-[10px] font-bold uppercase tracking-widest rounded shadow-md z-10">
-                                                    {project.category}
-                                                </div>
+                                            <Link href={`/projects/${project.id}`} style={{ textDecoration: "none", display: "flex", flexDirection: "column", height: "100%" }}>
+                                                <div className="relative w-full flex-1 overflow-hidden">
+                                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                                                    <div className="absolute inset-0 bg-black/40" />
+                                                    <div className="absolute top-4 left-4 px-3 py-1 bg-[#D35400] text-white text-[10px] font-bold uppercase tracking-widest rounded shadow-md z-10">
+                                                        {project.category}
+                                                    </div>
 
-                                                {isActive && (
-                                                    <>
-                                                        <button
-                                                            onClick={(e) => { e.stopPropagation(); go(-1); }}
-                                                            style={{
-                                                                position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)',
-                                                                zIndex: 20, width: '2.4rem', height: '2.4rem', borderRadius: '50%',
-                                                                border: '1px solid rgba(255,255,255,0.25)', background: 'rgba(0,0,0,0.40)',
-                                                                backdropFilter: 'blur(8px)', color: '#fff', display: 'flex',
-                                                                alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-                                                            }}
-                                                        >
-                                                            <ChevronLeft size={16} strokeWidth={2.5} />
-                                                        </button>
-                                                        <button
-                                                            onClick={(e) => { e.stopPropagation(); go(1); }}
-                                                            style={{
-                                                                position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)',
-                                                                zIndex: 20, width: '2.4rem', height: '2.4rem', borderRadius: '50%',
-                                                                border: '1px solid rgba(255,255,255,0.25)', background: 'rgba(0,0,0,0.40)',
-                                                                backdropFilter: 'blur(8px)', color: '#fff', display: 'flex',
-                                                                alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-                                                            }}
-                                                        >
-                                                            <ChevronRight size={16} strokeWidth={2.5} />
-                                                        </button>
-                                                        <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', zIndex: 20, display: 'flex', gap: '0.35rem' }}>
-                                                            {PROJECTS.slice(0, 4).map((_, di) => (
-                                                                <button
-                                                                    key={di}
-                                                                    onClick={(e) => { e.stopPropagation(); goTo(di); }}
-                                                                    style={{
-                                                                        width: di === active ? '1.2rem' : '0.35rem',
-                                                                        height: '0.35rem',
-                                                                        borderRadius: '4px',
-                                                                        background: di === active ? '#fff' : 'rgba(255,255,255,0.35)',
-                                                                        border: 'none',
-                                                                        padding: 0,
-                                                                        cursor: 'pointer',
-                                                                        transition: 'width 0.35s ease, background 0.35s ease',
-                                                                    }}
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </div>
-                                            <div className="p-4 flex flex-col bg-white/5" style={{ flexShrink: 0 }}>
-                                                <div className="flex items-center gap-2 mb-2">
-                                                    <span className="w-6 h-px bg-[#D35400]" />
-                                                    <span className="text-[#D35400] text-xs font-bold uppercase tracking-widest">{project.category}</span>
+                                                    {isActive && (
+                                                        <>
+                                                            <button
+                                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); go(-1); }}
+                                                                style={{
+                                                                    position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)',
+                                                                    zIndex: 20, width: '2.4rem', height: '2.4rem', borderRadius: '50%',
+                                                                    border: '1px solid rgba(255,255,255,0.25)', background: 'rgba(0,0,0,0.40)',
+                                                                    backdropFilter: 'blur(8px)', color: '#fff', display: 'flex',
+                                                                    alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                                                                }}
+                                                            >
+                                                                <ChevronLeft size={16} strokeWidth={2.5} />
+                                                            </button>
+                                                            <button
+                                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); go(1); }}
+                                                                style={{
+                                                                    position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)',
+                                                                    zIndex: 20, width: '2.4rem', height: '2.4rem', borderRadius: '50%',
+                                                                    border: '1px solid rgba(255,255,255,0.25)', background: 'rgba(0,0,0,0.40)',
+                                                                    backdropFilter: 'blur(8px)', color: '#fff', display: 'flex',
+                                                                    alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                                                                }}
+                                                            >
+                                                                <ChevronRight size={16} strokeWidth={2.5} />
+                                                            </button>
+                                                            <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', zIndex: 20, display: 'flex', gap: '0.35rem' }}>
+                                                                {PROJECTS.slice(0, 4).map((_, di) => (
+                                                                    <button
+                                                                        key={di}
+                                                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); goTo(di); }}
+                                                                        style={{
+                                                                            width: di === active ? '1.2rem' : '0.35rem',
+                                                                            height: '0.35rem',
+                                                                            borderRadius: '4px',
+                                                                            background: di === active ? '#fff' : 'rgba(255,255,255,0.35)',
+                                                                            border: 'none',
+                                                                            padding: 0,
+                                                                            cursor: 'pointer',
+                                                                            transition: 'width 0.35s ease, background 0.35s ease',
+                                                                        }}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        </>
+                                                    )}
                                                 </div>
-                                                <h2 className="text-white text-lg font-bold leading-tight line-clamp-2" style={{ fontFamily: "var(--font-display)" }}>
-                                                    {project.title}
-                                                </h2>
-                                            </div>
+                                                <div className="p-4 flex flex-col bg-white/5" style={{ flexShrink: 0 }}>
+                                                    <div className="flex items-center gap-2 mb-2">
+                                                        <span className="w-6 h-px bg-[#D35400]" />
+                                                        <span className="text-[#D35400] text-xs font-bold uppercase tracking-widest">{project.category}</span>
+                                                    </div>
+                                                    <h2 className="text-white text-lg font-bold leading-tight line-clamp-2" style={{ fontFamily: "var(--font-display)" }}>
+                                                        {project.title}
+                                                    </h2>
+                                                </div>
+                                            </Link>
                                         </div>
                                     );
                                 })}
@@ -356,7 +360,7 @@ export default function RoomPortail() {
 
                     {/* Bouton CTA centré */}
                     <div className="flex justify-center">
-                        <Link href="/projets" className="cta-btn" style={{ textDecoration: "none" }}>
+                        <Link href="/projects" className="cta-btn" style={{ textDecoration: "none" }}>
                             <span className="cta-btn__border" aria-hidden />
                             <span className="cta-btn__blur" aria-hidden />
                             <span className="cta-btn__background" aria-hidden />
