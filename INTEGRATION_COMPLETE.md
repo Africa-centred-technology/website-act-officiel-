@@ -35,8 +35,8 @@ L'intégration Shopify pour votre catalogue de formations est maintenant prête 
 
 #### b) Vérifier les identifiants
 Vos identifiants sont déjà configurés :
-- ✅ Storefront Access Token: `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`
-- ✅ Client ID: `b283ec79776aa5583fa095cb7172afaf`
+- ✅ Storefront Access Token: `VOTRE_TOKEN_ICI`
+- ✅ Client ID: `VOTRE_CLIENT_ID_ICI`
 
 ### 2. Configurer les formations dans Shopify
 
