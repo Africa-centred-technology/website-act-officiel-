@@ -646,69 +646,6 @@ function BenefitsSection({ svc }: { svc: Service }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════
-   5 · LIVRABLES — timeline avec image d'ambiance
-   ═══════════════════════════════════════════════════════ */
-function DeliverablesSection({ svc }: { svc: Service }) {
-  const ref  = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const lineH = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "100%"]);
-  const imgY  = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-
-  /* Image latérale (subImages[0] si disponible) */
-  const sideImg = svc.subImages[svc.subImages.length - 1] ?? svc.heroImage;
-
-  return (
-    <section ref={ref} style={{
-      borderTop: "1px solid rgba(255,255,255,0.05)",
-      padding: "clamp(4rem, 7vw, 7rem) clamp(1.5rem, 5vw, 3rem)",
-      overflow: "hidden",
-      position: "relative"
-    }}>
-      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-        <motion.div
-          initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
-          variants={stagger(0)}>
-          <motion.p variants={fadeUp} style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(0.85rem, 1vw, 1rem)",
-            letterSpacing: "0.28em", textTransform: "uppercase",
-            color: "#ffffff", marginBottom: "3rem", fontWeight: 700,
-            textAlign: "center"
-          }}>Votre parcours en vidéo</motion.p>
-
-          <div 
-            style={{ 
-              position: "relative", 
-              width: "100%", 
-              aspectRatio: "16 / 9", 
-              minHeight: "300px",
-              borderRadius: "1rem", 
-              overflow: "hidden", 
-              border: `1px solid ${ORANGE}40`,
-              boxShadow: `0 20px 40px rgba(0,0,0,0.5), 0 0 20px ${ORANGE}20`,
-              background: "#000"
-            }}
-          >
-            <video 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
-              controls
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            >
-              <source src="https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4" type="video/mp4" />
-              Votre navigateur ne supporte pas la lecture de vidéos.
-            </video>
-            {/* Overlay gradient subtil */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)", pointerEvents: "none" }} />
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
 
 
@@ -786,7 +723,6 @@ export default function PoleFormationShell({ svc }: { svc: Service }) {
           ))}
         </div>
         <BenefitsSection svc={svc} />
-        <DeliverablesSection svc={svc} />
         <FormationsCarousel />
         <FooterStrip />
       </div>

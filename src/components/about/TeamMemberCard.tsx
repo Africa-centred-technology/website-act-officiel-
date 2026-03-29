@@ -59,15 +59,7 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
             boxShadow: "0 4px 15px rgba(211,84,0,0.4)",
           }}
         >
-          <span
-            className="text-white font-black uppercase tracking-wider"
-            style={{
-              fontSize: "0.7rem",
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            ⭐ Fondateur
-          </span>
+        
         </div>
       )}
 
@@ -95,11 +87,12 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
         />
       </div>
 
-      {/* Contenu par défaut */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+      {/* Contenu textuel */}
+      <div className="absolute inset-0 p-12 flex flex-col justify-end z-20 pointer-events-none">
         <motion.div
           animate={{ y: isHovered ? -10 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4, ease: [...EASE3D] }}
+          className="pointer-events-auto"
         >
           {/* Role */}
           <div className="flex items-center gap-2 mb-2">
@@ -119,10 +112,11 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
 
           {/* Nom */}
           <h3
-            className="text-white font-black uppercase leading-tight mb-3"
+            className="text-white font-black uppercase leading-tight"
             style={{
               fontSize: isFounder ? "clamp(1.5rem, 2.2vw, 2rem)" : "clamp(1.3rem, 2vw, 1.8rem)",
               fontFamily: "var(--font-display)",
+              marginBottom: isHovered ? "0.5rem" : "0.8rem",
             }}
           >
             {member.name}
@@ -134,78 +128,35 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
               height: isFounder ? 3 : 2,
               background: isFounder ? "#F39C12" : "#D35400",
               originX: 0,
+              marginBottom: isHovered ? "1.5rem" : "0",
             }}
             animate={{ width: isHovered ? "100%" : isFounder ? "40%" : "30%" }}
             transition={{ duration: 0.4 }}
           />
-        </motion.div>
-      </div>
 
-      {/* Overlay hover avec bio */}
-      <AnimatePresence>
-        {isHovered && (
+          {/* Bio (Animée) */}
           <motion.div
-            initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
-            animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
-            exit={{ clipPath: "inset(100% 0% 0% 0%)" }}
-            transition={{ duration: 0.5, ease: [...EASE3D] }}
-            className="absolute inset-0 flex flex-col justify-end p-6 z-20"
-            style={{
-              background: "rgba(7,14,28,0.96)",
-              backdropFilter: "blur(8px)",
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ 
+              opacity: isHovered ? 1 : 0, 
+              height: isHovered ? "auto" : 0,
             }}
+            transition={{ duration: 0.4, ease: [...EASE3D] }}
+            style={{ overflow: "hidden" }}
           >
-            {/* Role */}
-            <div className="flex items-center gap-2 mb-3">
-              <span className="diamond diamond--sm" style={{ background: isFounder ? "#F39C12" : "#D35400" }} />
-              <span
-                className="uppercase tracking-widest"
-                style={{
-                  fontSize: isFounder ? "0.8rem" : "0.75rem",
-                  fontFamily: "var(--font-display)",
-                  color: isFounder ? "#F39C12" : "#D35400",
-                  fontWeight: isFounder ? 900 : 400,
-                }}
-              >
-                {member.role}
-              </span>
-            </div>
-
-            {/* Nom */}
-            <h3
-              className="text-white font-black uppercase leading-tight mb-4"
-              style={{
-                fontSize: isFounder ? "clamp(1.7rem, 2.5vw, 2.3rem)" : "clamp(1.5rem, 2.2vw, 2rem)",
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              {member.name}
-            </h3>
-
-            {/* Ligne décorative */}
-            <div
-              style={{
-                width: isFounder ? "80px" : "60px",
-                height: isFounder ? 3 : 2,
-                background: isFounder ? "#F39C12" : "#D35400",
-                marginBottom: "1rem",
-              }}
-            />
-
-            {/* Bio */}
             <p
               className="text-white/80 leading-relaxed"
               style={{
-                fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
+                fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
                 fontFamily: "var(--font-body)",
-                lineHeight: 1.7,
+                lineHeight: 1.6,
               }}
             >
               {member.bio}
             </p>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </motion.div>
+      </div>
 
       {/* Effet de scan */}
       <div

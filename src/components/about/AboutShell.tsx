@@ -70,19 +70,19 @@ const TEAM: TeamMember[] = [
   {
     name: "SOHAIB BAROUD",
     role: "Fondateur & CEO",
-    img: "/Sohaid.png",
+    img: "/images/Equipe/sohaib_baroud.jpg",
     bio: "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux."
   },
   {
     name: "MPIGA-ODOUMBA JESSE",
     role: "Membre fondateur",
-    img: "/MPIGA.png",
+    img: "/images/Equipe/MPIGA.png",
     bio: "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
   },
   {
-    name: "Aldrin Bruno DJOUROBI OMANDA",
+    name: "Aldrin DJOUROBI",
     role: "Membre fondateur",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    img: "/images/Equipe/Aldrin.jpg",
     bio: "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
   },
   {

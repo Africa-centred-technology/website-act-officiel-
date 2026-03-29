@@ -363,34 +363,7 @@ function IntroSection({ svc }: { svc: Service }) {
             "{svc.intro}"
           </motion.p>
 
-          <motion.div variants={fadeUp} style={{
-            display: "flex", alignItems: "center", gap: "1rem",
-            padding: "1.5rem 1.8rem",
-            background: `${ORANGE}0C`,
-            border: `1px solid ${ORANGE}25`, borderRadius: "0.8rem",
-          }}>
-            <div style={{
-              width: 48, height: 48, flexShrink: 0,
-              background: `${ORANGE}18`, border: `1px solid ${ORANGE}35`,
-              borderRadius: "0.7rem",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-                stroke={ORANGE} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d={svc.icon} />
-              </svg>
-            </div>
-            <div>
-              <p style={{ fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: "clamp(14px, 1.1vw, 1.2rem)", color: "#fff", marginBottom: "0.2rem" }}>
-                {svc.subs.length} sous-services · {svc.benefits.length} avantages · {svc.deliverables.length} livrables
-              </p>
-              <p style={{ fontSize: "clamp(12px, 0.95vw, 1.05rem)",
-                color: ORANGE, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
-                Pôle {svc.poleN} — {svc.pole}
-              </p>
-            </div>
-          </motion.div>
+       
         </motion.div>
       </motion.div>
 
@@ -698,123 +671,6 @@ function BenefitsSection({ svc }: { svc: Service }) {
 /* ═══════════════════════════════════════════════════════
    5 · LIVRABLES — timeline avec image d'ambiance
    ═══════════════════════════════════════════════════════ */
-function DeliverablesSection({ svc }: { svc: Service }) {
-  const ref  = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const lineH = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "100%"]);
-  const imgY  = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-
-  /* Image latérale (subImages[0] si disponible) */
-  const sideImg = svc.subImages[svc.subImages.length - 1] ?? svc.heroImage;
-
-  return (
-    <section ref={ref} style={{
-      display: "grid", gridTemplateColumns: "1fr 1fr",
-      borderTop: "1px solid rgba(255,255,255,0.05)",
-      overflow: "hidden",
-    }} className="deliv-grid">
-
-      {/* Timeline */}
-      <div style={{ padding: "clamp(4rem, 7vw, 7rem) clamp(2rem, 5vw, 5rem)" }}>
-        <motion.div
-          initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}
-          variants={stagger(0)}>
-          <motion.p variants={fadeUp} style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(0.85rem, 1vw, 1rem)",
-            letterSpacing: "0.28em", textTransform: "uppercase",
-            color: "#ffffff", marginBottom: "3rem", fontWeight: 700,
-          }}>Ce que vous recevez</motion.p>
-
-          <div style={{ position: "relative", display: "flex", flexDirection: "column" }}>
-            <div style={{
-              position: "absolute", left: "22px", top: 0, bottom: 0, width: 1,
-              background: "rgba(255,255,255,0.06)", overflow: "hidden",
-            }}>
-              <motion.div style={{
-                position: "absolute", top: 0, left: 0, right: 0,
-                background: `linear-gradient(to bottom, ${ORANGE}, ${ORANGE}44)`,
-                height: lineH,
-              }} />
-            </div>
-
-            {svc.deliverables.map((d, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [...EASE] }}
-                style={{
-                  display: "flex", alignItems: "flex-start", gap: "1.75rem",
-                  padding: "1.5rem 0",
-                  borderBottom: i < svc.deliverables.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                }}>
-                <div style={{
-                  flexShrink: 0, width: 44, height: 44, borderRadius: "50%",
-                  background: `${ORANGE}14`, border: `1px solid ${ORANGE}40`,
-                  display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1,
-                }}>
-                  <span style={{
-                    fontFamily: "Futura, system-ui, sans-serif",
-                    fontSize: "clamp(10px, 0.7rem, 0.74rem)", color: ORANGE, letterSpacing: "0.1em",
-                  }}>{String(i + 1).padStart(2, "0")}</span>
-                </div>
-                <div style={{ paddingTop: "0.7rem" }}>
-                  <p style={{ fontSize: "clamp(15px, 1.2vw, 1.3rem)",
-                    color: "#ffffff", lineHeight: 1.55 }}>{d}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Image d'ambiance avec parallax */}
-      <div style={{ position: "relative", overflow: "hidden", minHeight: "400px" }}>
-        <motion.div style={{ position: "absolute", inset: 0, y: imgY }}>
-          <KenBurns
-            src={sideImg} alt=""
-            duration={26} fromScale={1.0} toScale={1.1}
-            fromX="2%" toX="-2%"
-          />
-        </motion.div>
-        <div aria-hidden style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to right, rgba(3,5,8,0.8) 0%, rgba(3,5,8,0.2) 60%, rgba(3,5,8,0.6) 100%)",
-          zIndex: 1,
-        }} />
-        <div aria-hidden style={{
-          position: "absolute", inset: 0, zIndex: 2,
-          background: `radial-gradient(ellipse 60% 55% at 70% 50%, ${ORANGE}1A 0%, transparent 70%)`,
-          mixBlendMode: "screen",
-        }} />
-        {/* Texte flottant */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [...EASE] }}
-          style={{
-            position: "absolute", bottom: "3rem", left: "2.5rem", right: "2.5rem", zIndex: 3,
-          }}>
-          <p style={{
-            fontFamily: "Futura, system-ui, sans-serif",
-            fontSize: "clamp(22px, 2.5vw, 3rem)",
-            fontWeight: 500, color: "#fff", lineHeight: 1.1,
-            marginBottom: "0.8rem",
-          }}>
-            {svc.deliverables.length} livrables<br />
-            <span style={{ color: ORANGE }}>concrets</span>
-          </p>
-          <p style={{ fontSize: "clamp(13px, 1vw, 1.15rem)",
-            color: "#ffffff", letterSpacing: "0.06em" }}>
-            Documentation · Formation · Support
-          </p>
-        </motion.div>
-      </div>
-
-      <style>{`@media(max-width:768px){.deliv-grid{grid-template-columns:1fr!important}}`}</style>
-    </section>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════
    6 · SERVICES CONNEXES
@@ -970,7 +826,6 @@ export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
           ))}
         </div>
         <BenefitsSection svc={svc} />
-        <DeliverablesSection svc={svc} />
         <RelatedServices svc={svc} />
         {svc.n === "09" ? (
           <CatalogueSection />
