@@ -13,6 +13,8 @@ dist/
 *.tsbuildinfo
 next-env.d.ts
 
+docs
+
 # ─── Environment variables ───────────────────────────
 .env
 .env.local
