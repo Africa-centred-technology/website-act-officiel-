@@ -90,7 +90,7 @@ export default function BlogArticlesShell() {
   };
 
   return (
-    <div style={{ background: "#070E1C", minHeight: "100vh" }}>
+    <div style={{ background: "var(--bg-primary)", minHeight: "100vh" }}>
       {/* ── HEADER ── */}
       <section
         ref={headerRef}
@@ -142,7 +142,7 @@ export default function BlogArticlesShell() {
                 fontSize: screenSize === 'mobile' ? "clamp(3rem, 10vw, 5rem)" : screenSize === 'tablet' ? "clamp(4rem, 8vw, 7rem)" : "clamp(5rem, 10vw, 9rem)",
                 fontFamily: "var(--font-display)",
                 lineHeight: 0.9,
-                color: "#fff",
+                color: "var(--text-primary)",
                 marginBottom: "1.5rem",
                 textTransform: "uppercase",
               }}
@@ -161,7 +161,7 @@ export default function BlogArticlesShell() {
             <p
               style={{
                 fontSize: screenSize === 'mobile' ? '1.4rem' : screenSize === 'tablet' ? '1.7rem' : '2rem',
-                color: "rgba(255,255,255,0.45)",
+                color: "var(--text-muted)",
                 lineHeight: 1.6,
                 maxWidth: "50rem",
                 marginBottom: screenSize === 'mobile' ? '3rem' : '4rem',
@@ -172,7 +172,7 @@ export default function BlogArticlesShell() {
                 : `Découvrez tous nos articles dans la rubrique ${activeCatLabel}.`}
             </p>
 
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", width: "100%", marginBottom: "4rem" }} />
+            <div style={{ height: "1px", background: "var(--border-color)", width: "100%", marginBottom: "4rem" }} />
           </motion.div>
         </div>
       </section>
@@ -199,7 +199,7 @@ export default function BlogArticlesShell() {
                   left: "1.2rem",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  color: "rgba(255,255,255,0.3)",
+                  color: "var(--text-muted)",
                   pointerEvents: "none",
                 }}
               />
@@ -211,10 +211,10 @@ export default function BlogArticlesShell() {
                 style={{
                   width: "100%",
                   padding: "1rem 1.2rem 1rem 3.8rem",
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border-color)",
                   borderRadius: "0.6rem",
-                  color: "#fff",
+                  color: "var(--text-primary)",
                   fontFamily: "var(--font-body)",
                   fontSize: "1.7rem",
                   outline: "none",
@@ -222,11 +222,11 @@ export default function BlogArticlesShell() {
                 }}
                 onFocus={(e) => {
                   e.currentTarget.style.borderColor = "#e85c1a";
-                  e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                  e.currentTarget.style.background = "var(--bg-glass)";
                 }}
                 onBlur={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                  e.currentTarget.style.borderColor = "var(--border-color)";
+                  e.currentTarget.style.background = "var(--bg-card)";
                 }}
               />
               <div
@@ -243,10 +243,10 @@ export default function BlogArticlesShell() {
                 <span
                   style={{
                     padding: "0.2rem 0.5rem",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "var(--bg-glass)",
+                    border: "1px solid var(--border-color)",
                     borderRadius: "0.3rem",
-                    color: "rgba(255,255,255,0.3)",
+                    color: "var(--text-muted)",
                     fontSize: "0.85rem",
                     fontFamily: "monospace",
                   }}
@@ -256,10 +256,10 @@ export default function BlogArticlesShell() {
                 <span
                   style={{
                     padding: "0.2rem 0.5rem",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "var(--bg-glass)",
+                    border: "1px solid var(--border-color)",
                     borderRadius: "0.3rem",
-                    color: "rgba(255,255,255,0.3)",
+                    color: "var(--text-muted)",
                     fontSize: "0.85rem",
                     fontFamily: "monospace",
                   }}
@@ -280,10 +280,10 @@ export default function BlogArticlesShell() {
                     alignItems: "center",
                     justifyContent: "space-between",
                     padding: "1.4rem",
-                    background: "rgba(255,255,255,0.02)",
-                    border: showMobileFilters ? "1px solid #e85c1a" : "1px solid rgba(255,255,255,0.08)",
+                    background: "var(--bg-card)",
+                    border: showMobileFilters ? "1px solid #e85c1a" : "1px solid var(--border-color)",
                     borderRadius: "0.8rem",
-                    color: "#fff",
+                    color: "var(--text-primary)",
                     fontFamily: "var(--font-body)",
                     fontSize: "1.5rem",
                     fontWeight: 600,
@@ -292,7 +292,7 @@ export default function BlogArticlesShell() {
                   }}
                 >
                   <span style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <span style={{ color: "rgba(255,255,255,0.5)", fontWeight: 400 }}>Filtre :</span> 
+                    <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>Filtre :</span>
                     <span style={{ color: "#e85c1a" }}>{activeCatLabel}</span>
                   </span>
                   <motion.svg 
@@ -314,13 +314,13 @@ export default function BlogArticlesShell() {
                     top: "100%",
                     left: 0,
                     right: 0,
-                    background: "#0d1b2e",
-                    borderBottom: showMobileFilters ? "1px solid rgba(255,255,255,0.08)" : "none",
-                    borderLeft: showMobileFilters ? "1px solid rgba(255,255,255,0.08)" : "none",
-                    borderRight: showMobileFilters ? "1px solid rgba(255,255,255,0.08)" : "none",
+                    background: "var(--bg-secondary)",
+                    borderBottom: showMobileFilters ? "1px solid var(--border-color)" : "none",
+                    borderLeft: showMobileFilters ? "1px solid var(--border-color)" : "none",
+                    borderRight: showMobileFilters ? "1px solid var(--border-color)" : "none",
                     borderRadius: "0 0 0.8rem 0.8rem",
                     marginTop: "-0.2rem",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                    boxShadow: "var(--shadow-lg)",
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column", padding: "1rem" }}>
@@ -342,7 +342,7 @@ export default function BlogArticlesShell() {
                             background: isActive ? "rgba(232,92,26,0.1)" : "transparent",
                             border: "none",
                             borderRadius: "0.4rem",
-                            color: isActive ? "#e85c1a" : "#fff",
+                            color: isActive ? "#e85c1a" : "var(--text-primary)",
                             fontFamily: "var(--font-body)",
                             fontSize: "1.4rem",
                             textAlign: "left",
@@ -350,12 +350,12 @@ export default function BlogArticlesShell() {
                           }}
                         >
                           {cat.label}
-                          <span style={{ 
-                            background: isActive ? "rgba(232,92,26,0.2)" : "rgba(255,255,255,0.05)", 
-                            padding: "0.2rem 0.6rem", 
-                            borderRadius: "1rem", 
+                          <span style={{
+                            background: isActive ? "rgba(232,92,26,0.2)" : "var(--bg-glass)",
+                            padding: "0.2rem 0.6rem",
+                            borderRadius: "1rem",
                             fontSize: "1.1rem",
-                            color: isActive ? "#e85c1a" : "rgba(255,255,255,0.5)",
+                            color: isActive ? "#e85c1a" : "var(--text-muted)",
                           }}>
                             {count}
                           </span>
@@ -372,7 +372,7 @@ export default function BlogArticlesShell() {
                   flexWrap: "wrap",
                   gap: '3.5rem',
                   paddingBottom: '1.8rem',
-                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  borderBottom: "1px solid var(--border-color)",
                 }}
               >
                 {categories.map((cat) => {
@@ -389,7 +389,7 @@ export default function BlogArticlesShell() {
                         gap: '1rem',
                         background: "none",
                         border: "none",
-                        color: isActive ? "#e85c1a" : "rgba(255,255,255,0.45)",
+                        color: isActive ? "#e85c1a" : "var(--text-muted)",
                         fontFamily: "var(--font-body)",
                         fontSize: screenSize === 'tablet' ? '1.7rem' : '2rem',
                         fontWeight: isActive ? 600 : 400,
@@ -398,18 +398,18 @@ export default function BlogArticlesShell() {
                         padding: 0,
                       }}
                       onMouseEnter={(e) => {
-                        if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.7)";
+                        if (!isActive) e.currentTarget.style.color = "var(--text-secondary)";
                       }}
                       onMouseLeave={(e) => {
-                        if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.45)";
+                        if (!isActive) e.currentTarget.style.color = "var(--text-muted)";
                       }}
                     >
                       {cat.label}
                       <span
                         style={{
                           padding: "0.25rem 0.8rem",
-                          background: isActive ? "rgba(232,92,26,0.15)" : "rgba(255,255,255,0.05)",
-                          color: isActive ? "#e85c1a" : "rgba(255,255,255,0.3)",
+                          background: isActive ? "rgba(232,92,26,0.15)" : "var(--bg-glass)",
+                          color: isActive ? "#e85c1a" : "var(--text-muted)",
                           borderRadius: "1.5rem",
                           fontSize: "1.6rem",
                           fontWeight: 600,
@@ -441,16 +441,16 @@ export default function BlogArticlesShell() {
               style={{
                 paddingTop: "0",
                 paddingBottom: "1rem",
-                color: "rgba(255,255,255,0.35)",
+                color: "var(--text-muted)",
                 fontFamily: "var(--font-body)",
                 fontSize: "1.7rem",
               }}
             >
-              <span style={{ color: "#fff", fontWeight: 700, fontSize: "1.9rem" }}>{filtered.length}</span> articles trouvés
+              <span style={{ color: "var(--text-primary)", fontWeight: 700, fontSize: "1.9rem" }}>{filtered.length}</span> articles trouvés
             </div>
 
             {/* Small divider line under found articles count */}
-            <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", width: "100%", marginBottom: "1rem" }} />
+            <div style={{ height: "1px", background: "var(--border-color)", width: "100%", marginBottom: "1rem" }} />
 
           </div>
 
@@ -520,7 +520,7 @@ export default function BlogArticlesShell() {
               style={{
                 textAlign: "center",
                 padding: "8rem 0",
-                color: "rgba(255,255,255,0.3)",
+                color: "var(--text-muted)",
                 fontSize: "var(--font-18)",
                 fontFamily: "var(--font-body)",
                 textTransform: "uppercase",
@@ -614,13 +614,13 @@ function ArticleCard({
                 background: "rgba(0,0,0,0.6)",
                 padding: "0.4rem 0.8rem",
                 borderRadius: "0.4rem",
-                color: "rgba(255,255,255,0.7)",
+                color: "var(--text-inverse)",
                 fontSize: "1.5rem",
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
                 fontFamily: "var(--font-body)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                border: "1px solid var(--border-light)",
               }}
             >
               <Clock size={18} /> {post.readTime}
@@ -661,7 +661,7 @@ function ArticleCard({
                   fontSize: "2.2rem",
                   fontFamily: "var(--font-body)",
                   fontWeight: 800,
-                  color: "#fff",
+                  color: "var(--text-primary)",
                   lineHeight: 1.2,
                   marginBottom: "1rem",
                   display: "-webkit-box",
@@ -699,8 +699,8 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
       >
         <div
           style={{
-            background: "#0d1b2e",
-            border: "1px solid rgba(255,255,255,0.05)",
+            background: "var(--bg-secondary)",
+            border: "1px solid var(--border-light)",
             borderRadius: "1.2rem",
             overflow: "hidden",
             display: "grid",
@@ -715,7 +715,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
           }}
           onMouseLeave={(e) => {
             const el = e.currentTarget as HTMLDivElement;
-            el.style.borderColor = "rgba(255,255,255,0.05)";
+            el.style.borderColor = "var(--border-light)";
             el.style.transform = "translateY(0)";
           }}
         >
@@ -732,7 +732,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
               style={{
                 position: "absolute",
                 inset: 0,
-                background: `linear-gradient(to right, transparent 30%, #0d1b2e)`,
+                background: `linear-gradient(to right, transparent 30%, var(--bg-secondary))`,
               }}
             />
             {/* Top Left Badge */}
@@ -793,7 +793,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(3.2rem, 5vw, 5rem)",
-                color: "#fff",
+                color: "var(--text-primary)",
                 lineHeight: 1.1,
                 marginBottom: "2rem",
               }}
@@ -803,7 +803,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
 
             <p
               style={{
-                color: "rgba(255,255,255,0.45)",
+                color: "var(--text-muted)",
                 fontSize: "1.8rem",
                 lineHeight: 1.6,
                 marginBottom: "4rem",
@@ -820,7 +820,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
             <div
               style={{
                 marginTop: "auto",
-                borderTop: "1px solid rgba(255,255,255,0.06)",
+                borderTop: "1px solid var(--border-color)",
                 paddingTop: "2.5rem",
                 display: "flex",
                 alignItems: "center",
@@ -834,7 +834,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
                   display: "flex",
                   alignItems: "center",
                   gap: "0.8rem",
-                  color: "rgba(255,255,255,0.35)",
+                  color: "var(--text-muted)",
                   fontSize: "1.6rem",
                   fontFamily: "var(--font-body)",
                 }}

@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 
@@ -360,6 +361,11 @@ export default function Header() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Theme Toggle - Desktop & Mobile */}
+          <div style={{ marginLeft: isMobile ? "auto" : "0" }}>
+            <ThemeToggle disabled={true} />
           </div>
 
           {/* Mobile hamburger button */}

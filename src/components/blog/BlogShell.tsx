@@ -42,7 +42,7 @@ export default function BlogShell() {
   const screenSize = useMediaQuery();
   const containerRef = useRef(null);
   return (
-    <div ref={containerRef} style={{ background: V.bg, minHeight: "100vh", position: "relative" }}>
+    <div ref={containerRef} style={{ background: "var(--bg-primary)", minHeight: "100vh", position: "relative" }}>
       {/* ── Background layers globaux ── */}
       <WaveTerrain />
       <Cursor />
@@ -68,9 +68,9 @@ export default function BlogShell() {
       <section
         style={{
           padding: screenSize === 'mobile' ? "6rem 0" : screenSize === 'tablet' ? "8rem 0" : "12rem 0",
-          borderTop: `1px solid ${V.border}`,
-          borderBottom: `1px solid ${V.border}`,
-          background: V.bg,
+          borderTop: `1px solid var(--border-color)`,
+          borderBottom: `1px solid var(--border-color)`,
+          background: "var(--bg-primary)",
           position: "relative",
           overflow: "hidden",
           zIndex: 10,
@@ -119,7 +119,7 @@ export default function BlogShell() {
                 fontSize: screenSize === 'mobile' ? "clamp(2.5rem, 8vw, 3.5rem)" : screenSize === 'tablet' ? "clamp(3rem, 6vw, 4.5rem)" : "clamp(3.5rem, 5vw, 5.5rem)",
                 fontFamily: "var(--font-display)",
                 fontWeight: 400,
-                color: V.cream,
+                color: "var(--text-primary)",
                 textTransform: "uppercase" as const,
                 letterSpacing: "0.05em",
                 margin: 0,
@@ -130,7 +130,7 @@ export default function BlogShell() {
             </h2>
 
             <p style={{
-              color: V.muted,
+              color: "var(--text-muted)",
               fontSize: screenSize === 'mobile' ? '14px' : '16px',
               maxWidth: "58rem",
               margin: screenSize === 'mobile' ? "1.5rem auto 0" : "2rem auto 0",
@@ -182,10 +182,10 @@ export default function BlogShell() {
                       borderRadius: "24px",
                       overflow: "hidden",
                       textDecoration: "none",
-                      border: `1px solid ${V.border}`,
-                      background: V.surface,
+                      border: `1px solid var(--border-color)`,
+                      background: "var(--bg-card)",
                       transition: "transform 0.7s cubic-bezier(0.2, 1, 0.2, 1), border-color 0.4s, box-shadow 0.7s",
-                      boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)",
+                      boxShadow: "var(--shadow-lg)",
                     }}
                     onMouseEnter={(e) => {
                       const el = e.currentTarget;
@@ -202,8 +202,8 @@ export default function BlogShell() {
                     onMouseLeave={(e) => {
                       const el = e.currentTarget;
                       el.style.transform = "translateY(0) scale(1)";
-                      el.style.borderColor = V.border;
-                      el.style.boxShadow = "0 25px 50px -12px rgba(0,0,0,0.5)";
+                      el.style.borderColor = "var(--border-color)";
+                      el.style.boxShadow = "var(--shadow-lg)";
                       const img = el.querySelector('.cat-img') as HTMLImageElement;
                       if (img) img.style.transform = "scale(1) rotate(0deg)";
                       const exploreBtn = el.querySelector('.explore-btn') as HTMLElement;
@@ -266,7 +266,7 @@ export default function BlogShell() {
                         fontSize: screenSize === 'mobile' ? "2rem" : screenSize === 'tablet' ? "2.5rem" : "3.4rem",
                         fontFamily: "var(--font-display)",
                         fontWeight: 400,
-                        color: V.cream,
+                        color: "var(--text-primary)",
                         margin: 0,
                         letterSpacing: "0.05em",
                         textTransform: "uppercase",
@@ -275,7 +275,7 @@ export default function BlogShell() {
 
                       {cat.description && (
                         <p style={{
-                          color: V.muted,
+                          color: "var(--text-muted)",
                           fontSize: screenSize === 'mobile' ? "1.1rem" : screenSize === 'tablet' ? "1.3rem" : "1.5rem",
                           lineHeight: 1.6,
                           margin: 0,

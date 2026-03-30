@@ -22,6 +22,25 @@
   --color-act-gold:       #F39C12;
   --color-act-cream:      #FCF9F2;
 
+  /* Theme-aware colors (will be overridden by data-theme) */
+  --bg-primary: #070E1C;
+  --bg-secondary: #0A1410;
+  --bg-tertiary: #1B3022;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #E0E0E0;
+  --text-muted: #A0A0A0;
+  --text-inverse: #0A1410;
+
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+
   /* Clone-style font scale (rem-based, driven by root clamp) */
   --font-180: clamp(80px,  calc(16rem + 6px), 18rem);
   --font-90:  clamp(44px,  calc(8.5rem + 6px), 9rem);
@@ -887,4 +906,409 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 160px 160px;
   opacity: 0.032;
   mix-blend-mode: overlay;
+}
+
+/* ══════════════════════════════════════════════════════
+   THEME SYSTEM - Dark & Light Mode
+   ══════════════════════════════════════════════════════ */
+
+/* Dark Theme (default) */
+[data-theme="dark"] {
+  --bg-primary: #070E1C;
+  --bg-secondary: #0A1410;
+  --bg-tertiary: #1B3022;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #E0E0E0;
+  --text-muted: #A0A0A0;
+  --text-inverse: #0A1410;
+
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  /* Navbar scrolled background */
+  --navbar-bg-scrolled: rgba(5, 9, 18, 0.88);
+  
+  /* Menu overlay */
+  --menu-bg: #0A1410;
+  
+  /* Grain overlay */
+  --grain-opacity: 0.032;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --bg-primary: #F0F4F8;
+  --bg-secondary: #E1E8ED;
+  --bg-tertiary: #D4DCE3;
+  --bg-card: rgba(255, 255, 255, 0.6);
+  --bg-glass: rgba(255, 255, 255, 0.5);
+
+  --text-primary: #1A2F3A;
+  --text-secondary: #2E4A5C;
+  --text-muted: #5A7A8F;
+  --text-inverse: #FFFFFF;
+
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.05);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* Navbar scrolled background */
+  --navbar-bg-scrolled: rgba(255, 255, 255, 0.92);
+  
+  /* Menu overlay */
+  --menu-bg: #FCF9F2;
+  
+  /* Grain overlay */
+  --grain-opacity: 0.015;
+}
+
+/* Theme transition smooth */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Appliquer les variables aux éléments existants */
+[data-theme="light"] .navbar--scrolled {
+  background: var(--navbar-bg-scrolled);
+  backdrop-filter: blur(22px) saturate(1.1);
+  -webkit-backdrop-filter: blur(22px) saturate(1.1);
+  border-bottom-color: rgba(211, 84, 0, 0.15);
+}
+
+[data-theme="light"] .menu-flex {
+  background: var(--menu-bg);
+}
+
+[data-theme="light"] .grain-overlay {
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+}
+
+/* Navbar links en light mode */
+[data-theme="light"] .navbar-navigation__link {
+  color: rgba(10, 20, 16, 0.6);
+}
+
+[data-theme="light"] .navbar-navigation__link:hover {
+  color: rgba(10, 20, 16, 0.95);
+}
+
+[data-theme="light"] .navbar-navigation__link.--is-active {
+  color: #0A1410;
+}
+
+/* Hamburger en light mode */
+[data-theme="light"] .navbar-hamburger {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .navbar-hamburger:hover {
+  border-color: rgba(211, 84, 0, 0.35);
+  background: rgba(211, 84, 0, 0.04);
+}
+
+[data-theme="light"] .navbar-hamburger__line {
+  background: #0A1410;
+}
+
+[data-theme="light"] .navbar-hamburger__label {
+  color: rgba(10, 20, 16, 0.55);
+}
+
+[data-theme="light"] .navbar-hamburger:hover .navbar-hamburger__label,
+[data-theme="light"] .navbar-hamburger--open .navbar-hamburger__label {
+  color: rgba(10, 20, 16, 0.85);
+}
+
+/* Menu navigation en light mode */
+[data-theme="light"] .menu-navigation__link {
+  color: rgba(10, 20, 16, 0.35);
+}
+
+[data-theme="light"] .menu-navigation__link:hover,
+[data-theme="light"] .menu-navigation__link.--is-active {
+  color: #0A1410;
+}
+
+/* CTA Button text en light mode */
+[data-theme="light"] .cta-btn__text {
+  color: #FFFFFF;
+}
+
+/* Section label en light mode */
+[data-theme="light"] .section-label {
+  color: rgba(10, 20, 16, 0.6);
+}
+
+/* ══════════════════════════════════════════════════════
+   GLOBAL APPLICATION STYLES - Theme Aware
+   ══════════════════════════════════════════════════════ */
+
+/* Apply theme colors globally to body and main elements */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Light mode - adjust body and main backgrounds */
+[data-theme="light"] body {
+  background: linear-gradient(to bottom, #F0F4F8 0%, #E1E8ED 100%);
+}
+
+/* Light mode - sections backgrounds */
+[data-theme="light"] section {
+  background-color: transparent;
+}
+
+[data-theme="light"] section[style*="background: #0A1410"],
+[data-theme="light"] section[style*="background: #070E1C"],
+[data-theme="light"] section[style*="background: #1B3022"] {
+  background: var(--bg-secondary) !important;
+}
+
+/* Light mode - cards and containers */
+[data-theme="light"] [style*="background: rgba(255,255,255,0.03)"],
+[data-theme="light"] [style*="background: rgba(255,255,255,0.05)"],
+[data-theme="light"] [style*="background: rgba(255, 255, 255, 0.03)"] {
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Light mode - text colors */
+[data-theme="light"] [style*="color: #fff"],
+[data-theme="light"] [style*="color: #FFF"],
+[data-theme="light"] [style*="color: #FFFFFF"],
+[data-theme="light"] [style*="color: white"] {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] [style*="color: rgba(255,255,255,"] {
+  color: rgba(10, 20, 16, 0.8) !important;
+}
+
+/* Light mode - borders */
+[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,"],
+[data-theme="light"] [style*="borderBottom: '1px solid rgba(255,255,255,"] {
+  border-color: var(--border-color) !important;
+}
+
+/* Light mode - headings */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: var(--text-primary);
+}
+
+/* Light mode - paragraphs */
+[data-theme="light"] p {
+  color: var(--text-secondary);
+}
+
+/* Light mode - links (keep ACT orange for both themes) */
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: #D35400;
+}
+
+/* Light mode - maintain ACT brand colors */
+[data-theme="light"] [style*="color: #D35400"],
+[data-theme="light"] [style*="background: #D35400"],
+[data-theme="light"] [style*="color: #F39C12"],
+[data-theme="light"] [style*="background: #F39C12"] {
+  /* Keep ACT brand colors unchanged */
+}
+
+/* Light mode - shadows adjustment */
+[data-theme="light"] [style*="box-shadow"] {
+  box-shadow: var(--shadow-md);
+}
+
+/* Light mode - glass morphism effects */
+[data-theme="light"] [style*="backdrop-filter: blur"] {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Light mode - footer */
+[data-theme="light"] footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Light mode - custom scrollbar */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(10, 20, 16, 0.3);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 20, 16, 0.5);
+}
+
+/* ══════════════════════════════════════════════════════
+   TEXTES - Adaptation complète au light mode
+   ══════════════════════════════════════════════════════ */
+
+/* Tous les textes s'adaptent automatiquement */
+[data-theme="light"] * {
+  color: var(--text-primary);
+}
+
+/* Titres et headings */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: var(--text-primary) !important;
+}
+
+/* Paragraphes et texte de base */
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] div {
+  color: var(--text-secondary);
+}
+
+/* Textes avec couleur blanche inline */
+[data-theme="light"] [style*="color: #fff"],
+[data-theme="light"] [style*="color: #FFF"],
+[data-theme="light"] [style*="color: #FFFFFF"],
+[data-theme="light"] [style*="color: white"],
+[data-theme="light"] [style*='color: #fff'],
+[data-theme="light"] [style*='color: #FFF'],
+[data-theme="light"] [style*='color: #FFFFFF'],
+[data-theme="light"] [style*='color: white'] {
+  color: var(--text-primary) !important;
+}
+
+/* Textes avec opacité (rgba blanc) → bleu foncé */
+[data-theme="light"] [style*="color: rgba(255,255,255,0.9)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.8)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.7)"] {
+  color: rgba(26, 47, 58, 0.95) !important;
+}
+
+[data-theme="light"] [style*="color: rgba(255,255,255,0.6)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.5)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.45)"] {
+  color: rgba(46, 74, 92, 0.85) !important;
+}
+
+[data-theme="light"] [style*="color: rgba(255,255,255,0.4)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.35)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.3)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.25)"] {
+  color: rgba(90, 122, 143, 0.7) !important;
+}
+
+[data-theme="light"] [style*="color: rgba(255,255,255,0.2)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.15)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.1)"],
+[data-theme="light"] [style*="color: rgba(255,255,255,0.05)"] {
+  color: rgba(90, 122, 143, 0.5) !important;
+}
+
+/* Classes communes de texte */
+[data-theme="light"] .text-white {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-gray-200,
+[data-theme="light"] .text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .text-gray-400,
+[data-theme="light"] .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+
+/* Conserver les couleurs de marque ACT */
+[data-theme="light"] [style*="color: #D35400"],
+[data-theme="light"] [style*='color: #D35400'],
+[data-theme="light"] [style*="color: #F39C12"],
+[data-theme="light"] [style*='color: #F39C12'] {
+  color: #D35400 !important; /* Forcer le orange ACT */
+}
+
+/* Labels et petits textes */
+[data-theme="light"] label,
+[data-theme="light"] small,
+[data-theme="light"] .text-sm {
+  color: var(--text-muted) !important;
+}
+
+/* Liens - garder la couleur héritée mais hover orange */
+[data-theme="light"] a {
+  color: inherit;
+}
+
+[data-theme="light"] a:hover {
+  color: #D35400 !important;
+}
+
+/* Boutons - texte selon le contexte */
+[data-theme="light"] button {
+  color: var(--text-primary);
+}
+
+/* Inputs et formulaires */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  color: var(--text-primary) !important;
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Navigation et menus */
+[data-theme="light"] nav,
+[data-theme="light"] nav * {
+  color: var(--text-primary);
+}
+
+/* Footer */
+[data-theme="light"] footer,
+[data-theme="light"] footer * {
+  color: var(--text-secondary);
+}
+
+/* Code et pre */
+[data-theme="light"] code,
+[data-theme="light"] pre {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Tables */
+[data-theme="light"] table,
+[data-theme="light"] th,
+[data-theme="light"] td {
+  color: var(--text-primary);
+  border-color: var(--border-color) !important;
 }

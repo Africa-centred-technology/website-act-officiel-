@@ -59,7 +59,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
     .slice(0, 3);
 
   return (
-    <div style={{ background: "#070E1C", minHeight: "100vh" }}>
+    <div style={{ background: "var(--bg-primary)", minHeight: "100vh" }}>
       {/* ── HERO ── */}
       <section
         ref={heroRef}
@@ -95,7 +95,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to bottom, transparent 0%, transparent 30%, rgba(7,14,28,0.9) 85%, #070E1C 100%)",
+            background: "linear-gradient(to bottom, transparent 0%, transparent 30%, rgba(var(--bg-primary-rgb, 7,14,28),0.9) 85%, var(--bg-primary) 100%)",
             zIndex: 1,
             pointerEvents: "none",
           }}
@@ -171,7 +171,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               textTransform: "uppercase",
               lineHeight: 1.0,
               letterSpacing: "-0.02em",
-              color: "#fff",
+              color: "var(--text-primary)",
               marginBottom: screenSize === 'mobile' ? "2rem" : "3rem",
               maxWidth: "90rem",
             }}
@@ -190,7 +190,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               alignItems: "center",
               gap: screenSize === 'mobile' ? "1.5rem" : "2.5rem",
               paddingTop: screenSize === 'mobile' ? "1.5rem" : "2rem",
-              borderTop: "1px solid rgba(255,255,255,0.07)",
+              borderTop: "1px solid var(--border-color)",
             }}
             initial={{ opacity: 0 }}
             animate={heroInView ? { opacity: 1 } : {}}
@@ -224,7 +224,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 gap: screenSize === 'mobile' ? "0.6rem" : "0.8rem",
                 marginBottom: screenSize === 'mobile' ? "3rem" : "5rem",
                 paddingBottom: screenSize === 'mobile' ? "2rem" : "3rem",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                borderBottom: "1px solid var(--border-color)",
               }}
             >
               {post.keywords.map((kw) => (
@@ -256,7 +256,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               style={{
                 marginTop: "8rem",
                 paddingTop: "4rem",
-                borderTop: "1px solid rgba(255,255,255,0.07)",
+                borderTop: "1px solid var(--border-color)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: screenSize === 'mobile' ? "center" : "space-between",
@@ -301,8 +301,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               <div
                 style={{
                   padding: screenSize === 'mobile' ? "2rem" : "3rem",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border-color)",
                   borderRadius: "1.2rem",
                 }}
               >
@@ -333,8 +333,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               <div
                 style={{
                   padding: screenSize === 'mobile' ? "2rem" : "3rem",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border-color)",
                   borderRadius: "1.2rem",
                 }}
               >
@@ -423,8 +423,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               <div
                 style={{
                   padding: screenSize === 'mobile' ? "2rem" : "3rem",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border-color)",
                   borderRadius: "1.2rem",
                 }}
               >
@@ -474,7 +474,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 fontFamily: "var(--font-body)",
                 fontWeight: 900,
                 textTransform: "uppercase",
-                color: "#fff",
+                color: "var(--text-primary)",
                 marginBottom: screenSize === 'mobile' ? "3rem" : "4rem",
                 textAlign: "center",
               }}
@@ -759,8 +759,8 @@ function RelatedArticleCard({
       >
         <div
           style={{
-            background: "rgba(255,255,255,0.025)",
-            border: "1px solid rgba(255,255,255,0.07)",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border-color)",
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -772,13 +772,13 @@ function RelatedArticleCard({
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLDivElement;
             el.style.borderColor = `${post.categoryColor}66`;
-            el.style.background = "rgba(255,255,255,0.04)";
+            el.style.background = "var(--bg-glass)";
             el.style.transform = "translateY(-4px)";
           }}
           onMouseLeave={(e) => {
             const el = e.currentTarget as HTMLDivElement;
-            el.style.borderColor = "rgba(255,255,255,0.07)";
-            el.style.background = "rgba(255,255,255,0.025)";
+            el.style.borderColor = "var(--border-color)";
+            el.style.background = "var(--bg-card)";
             el.style.transform = "translateY(0)";
           }}
         >
@@ -842,7 +842,7 @@ function RelatedArticleCard({
                   fontSize: screenSize === 'mobile' ? "1.5rem" : "1.8rem",
                   fontFamily: "var(--font-body)",
                   fontWeight: 800,
-                  color: "#fff",
+                  color: "var(--text-primary)",
                   lineHeight: 1.2,
                   marginBottom: screenSize === 'mobile' ? "1rem" : "1.2rem",
                   display: "-webkit-box",
@@ -856,7 +856,7 @@ function RelatedArticleCard({
 
               <p
                 style={{
-                  color: "rgba(255,255,255,0.4)",
+                  color: "var(--text-muted)",
                   fontSize: screenSize === 'mobile' ? "1.4rem" : "1.8rem",
                   lineHeight: 1.6,
                   display: "-webkit-box",

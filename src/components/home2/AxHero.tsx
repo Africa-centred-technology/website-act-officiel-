@@ -68,13 +68,17 @@ export default function AxHero() {
     >
       {/* Bottom vignette — blends hero into next section */}
       <div
-        className="absolute bottom-0 left-0 w-full pointer-events-none"
+        className="absolute bottom-0 left-0 w-full pointer-events-none hero-gradient"
         style={{
           height: "40%",
-          background: "linear-gradient(to top, #03060A 0%, transparent 100%)",
           zIndex: 3,
         }}
       />
+      <style>{`
+        .hero-gradient {
+          background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+        }
+      `}</style>
 
       {/* Left vignette — keeps text readable */}
       <div

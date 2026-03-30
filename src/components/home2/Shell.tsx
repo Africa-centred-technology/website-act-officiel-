@@ -214,14 +214,14 @@ export default function Home2Shell() {
   // Prevent SSR hydration mismatch and flash
   if (!mounted) {
     return (
-      <div style={{ background: "#070E1C", minHeight: "100vh", width: "100vw" }} />
+      <div style={{ background: "var(--bg-primary)", minHeight: "100vh", width: "100vw" }} />
     );
   }
 
   /* Mobile fallback: render all rooms as scrollable sections */
   if (isMobile) {
     return (
-      <div style={{ background: "#070E1C", minHeight: "100vh", position: "relative" }}>
+      <div style={{ background: "var(--bg-primary)", minHeight: "100vh", position: "relative" }}>
         
         {/* Animated Background layers for Mobile */}
         <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0, pointerEvents: "none" }}>
@@ -289,7 +289,7 @@ export default function Home2Shell() {
   return (
     <div
       style={{
-        background: "#070E1C",
+        background: "var(--bg-primary)",
         width: "100vw",
         height: "100vh",
         overflow: "hidden",

@@ -195,7 +195,7 @@ export default function WaveTerrain() {
         inset: 0,
         zIndex: 0,
         pointerEvents: "none",
-        background: "#070E1C",
+        background: "var(--bg-primary)",
         transition: "opacity 0.4s",
       }}
     />
