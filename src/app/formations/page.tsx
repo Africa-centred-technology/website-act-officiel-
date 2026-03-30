@@ -1,9 +1,8 @@
-import FormationsShell from "@/components/formations/FormationsShell";
+import FormationsShell from '@/components/formations/FormationsShell';
 
 export const metadata = {
-  title: "Catalogue de Formations IA | ACT",
-  description:
-    "Découvrez notre catalogue complet de formations en Intelligence Artificielle : du niveau débutant à expert, pour tous les secteurs d'activité.",
+  title: 'Nos Formations | ACT',
+  description: 'Découvrez notre catalogue de formations en Intelligence Artificielle et transformation digitale.',
 };
 
 export default function FormationsPage() {

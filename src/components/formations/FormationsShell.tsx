@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * FormationsShell — Page catalogue de formations IA
- * Design unique avec système de filtres avancés, recherche et catalogue interactif
+ * FormationsShell — Page catalogue de formations IA (Version Unifiée)
+ * Supporte les données Shopify avec fallback statique automatique
  */
 
 import React, { useState, useMemo } from "react";
@@ -19,14 +19,17 @@ import {
   ChevronRight,
   X,
   Grid3x3,
-  List,
+  List as ListIcon,
   Award,
   Target,
-  TrendingUp,
   ArrowUpDown,
-  DollarSign,
+  Tag,
+  Loader2,
+  AlertCircle
 } from "lucide-react";
-import { FORMATIONS, type Formation } from "@/lib/data/formations";
+import { useShopifyFormations } from "@/hooks/useShopifyFormations";
+import { ShopifyProduct } from "@/lib/data/shopify";
+import { FORMATIONS } from "@/lib/data/formations";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 /* ── Background layers ── */
@@ -36,43 +39,37 @@ const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false }
 
 const COLOR = "#D35400"; // Orange principal d'ACT
 const ACCENT = "#E67E22"; // Accent plus clair
-
-// Catégories disponibles
-const categories = [
-  "Toutes",
-  ...Array.from(new Set(FORMATIONS.map(f => f.categorie)))
-];
-
-// Secteurs disponibles
-const secteurs = [
-  "Tous",
-  ...Array.from(new Set(FORMATIONS.map(f => f.secteur)))
-];
-
-// Niveaux disponibles
-const niveaux = [
-  "Tous",
-  ...Array.from(new Set(FORMATIONS.map(f => f.niveau)))
-];
-
-// Options de tri
-const sortOptions = [
-  { value: "recent", label: "Plus récentes" },
-  { value: "title", label: "Titre (A-Z)" },
-  { value: "duree", label: "Durée" },
-  { value: "niveau", label: "Niveau" },
-];
-
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
-function getNiveauColor(niveau: string): string {
+/**
+ * Helper pour la couleur du niveau
+ */
+function getNiveauColor(niveau: string = ""): string {
   if (niveau.includes("Initiation") || niveau.includes("Débutant")) return "#E67E22";
   if (niveau.includes("Intermédiaire")) return "#D35400";
   if (niveau.includes("Avancé")) return "#A04000";
   return "#D35400";
 }
 
+/**
+ * Helper pour formater le prix
+ */
+function formatPrice(amount: string, currency: string) {
+  const value = parseFloat(amount);
+  if (isNaN(value) || value === 0) return "Nous consulter";
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: currency,
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
 export default function FormationsShell() {
+  const { formations: shopifyFormations, loading, error, isFallback } = useShopifyFormations();
+  
+  // Utiliser les formations Shopify si disponibles, sinon utiliser les formations statiques
+  const formationsData = isFallback ? FORMATIONS : shopifyFormations;
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategorie, setSelectedCategorie] = useState("Toutes");
   const [selectedSecteur, setSelectedSecteur] = useState("Tous");
@@ -81,52 +78,62 @@ export default function FormationsShell() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
 
-  // Filtrage et tri des formations
+  // Extraire les options de filtrage dynamiquement
+  const categories = useMemo(() => [
+    "Toutes",
+    ...Array.from(new Set(formationsData.map(f => (f as any).categorie?.value || (f as any).categorie).filter(Boolean)))
+  ], [formationsData]);
+
+  const secteurs = useMemo(() => [
+    "Tous",
+    ...Array.from(new Set(formationsData.map(f => (f as any).secteur?.value || (f as any).secteur).filter(Boolean)))
+  ], [formationsData]);
+
+  const niveaux = useMemo(() => [
+    "Tous",
+    ...Array.from(new Set(formationsData.map(f => (f as any).niveau?.value || (f as any).niveau).filter(Boolean)))
+  ], [formationsData]);
+
+  // Filtrage et tri
   const filteredFormations = useMemo(() => {
-    let filtered = FORMATIONS.filter(formation => {
-      const matchSearch = searchQuery === "" ||
-        formation.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        formation.accroche.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        formation.secteur.toLowerCase().includes(searchQuery.toLowerCase());
+    let filtered = formationsData.filter(f => {
+      const title = (f as any).title?.toLowerCase() || "";
+      const accroche = (f as any).accroche?.value?.toLowerCase() || (f as any).accroche?.toLowerCase() || "";
+      const secteur = (f as any).secteur?.value?.toLowerCase() || (f as any).secteur?.toLowerCase() || "";
+      const search = searchQuery.toLowerCase();
 
-      const matchCategorie = selectedCategorie === "Toutes" ||
-        formation.categorie === selectedCategorie;
+      const matchSearch = searchQuery === "" || 
+        title.includes(search) || 
+        accroche.includes(search) || 
+        secteur.includes(search);
 
-      const matchSecteur = selectedSecteur === "Tous" ||
-        formation.secteur === selectedSecteur;
+      const catValue = (f as any).categorie?.value || (f as any).categorie;
+      const sectValue = (f as any).secteur?.value || (f as any).secteur;
+      const nivValue = (f as any).niveau?.value || (f as any).niveau;
 
-      const matchNiveau = selectedNiveau === "Tous" ||
-        formation.niveau === selectedNiveau;
+      const matchCategorie = selectedCategorie === "Toutes" || catValue === selectedCategorie;
+      const matchSecteur = selectedSecteur === "Tous" || sectValue === selectedSecteur;
+      const matchNiveau = selectedNiveau === "Tous" || nivValue === selectedNiveau;
 
       return matchSearch && matchCategorie && matchSecteur && matchNiveau;
     });
 
-    // Tri
-    switch (sortBy) {
-      case "title":
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "duree":
-        filtered.sort((a, b) => a.duree.localeCompare(b.duree));
-        break;
-      case "niveau":
-        filtered.sort((a, b) => a.niveau.localeCompare(b.niveau));
-        break;
-      default:
-        // "recent" - garde l'ordre par défaut
-        break;
-    }
+    // Tri simple par titre
+    if (sortBy === "title") filtered.sort((a, b) => (a as any).title.localeCompare((b as any).title));
 
     return filtered;
-  }, [searchQuery, selectedCategorie, selectedSecteur, selectedNiveau, sortBy]);
+  }, [formationsData, searchQuery, selectedCategorie, selectedSecteur, selectedNiveau, sortBy]);
 
-  // Stats du catalogue
-  const stats = [
-    { label: "Formations", value: FORMATIONS.length.toString(), icon: BookOpen },
-    { label: "Catégories", value: Array.from(new Set(FORMATIONS.map(f => f.categorie))).length.toString(), icon: Target },
-    { label: "Secteurs", value: Array.from(new Set(FORMATIONS.map(f => f.secteur))).length.toString(), icon: Users },
-    { label: "Niveaux", value: Array.from(new Set(FORMATIONS.map(f => f.niveau))).length.toString(), icon: Award },
-  ];
+  if (loading) {
+    return (
+      <div style={{ background: '#070E1C', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <Loader2 className="animate-spin" size={48} color={COLOR} style={{ margin: '0 auto 1.5rem' }} />
+          <p style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)' }}>Chargement du catalogue...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -136,7 +143,6 @@ export default function FormationsShell() {
       position: 'relative',
       color: '#fff',
     }}>
-      {/* ── Background layers ── */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
         <WaveTerrain />
         <Grain />
@@ -144,536 +150,140 @@ export default function FormationsShell() {
       </div>
 
       <div style={{ position: "relative", zIndex: 1 }}>
-        {/* ═══════════════════════════════════════════════════════
-            HERO SECTION
-        ═══════════════════════════════════════════════════════ */}
-        <section style={{
-          padding: "8rem clamp(1.5rem, 5vw, 6rem) 4rem",
-          position: "relative",
-          overflow: "hidden",
-        }}>
-          {/* Gradient accent */}
-          <motion.div
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '600px',
-              height: '600px',
-              borderRadius: '50%',
-              background: `${COLOR}20`,
-              filter: 'blur(120px)',
-            }}
-            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 10, repeat: Infinity }}
-          />
-
-          <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative" }}>
-            {/* Breadcrumb */}
-            <motion.nav
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{
-                display: "flex", alignItems: "center", gap: "0.5rem",
-                marginBottom: "2rem", fontSize: "1rem", letterSpacing: "0.1em",
-                fontFamily: "var(--font-body)",
-              }}>
-              <Link href="/" style={{ color: "#ffffff80", textDecoration: "none" }}>Accueil</Link>
-              <ChevronRight size={16} color="#ffffff40" />
-              <span style={{ color: COLOR, fontWeight: 600 }}>Formations</span>
+        {/* HERO */}
+        <section style={{ padding: "8rem clamp(1.5rem, 5vw, 6rem) 4rem", position: "relative" }}>
+          <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+            <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", opacity: 0.6 }}>
+              <Link href="/" style={{ color: "#fff", textDecoration: "none" }}>Accueil</Link>
+              <ChevronRight size={16} />
+              <span style={{ color: COLOR }}>Formations</span>
             </motion.nav>
 
-            {/* Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}>
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
                 <Sparkles size={36} color={COLOR} />
-                <h1 style={{
-                  fontSize: "var(--font-50)",
-                  fontWeight: 900,
-                  lineHeight: 1,
-                  letterSpacing: "-0.02em",
-                  fontFamily: "var(--font-display)",
-                  textTransform: "uppercase",
-                }}>
+                <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 1 }}>
                   Catalogue de <span style={{ color: COLOR }}>Formations</span>
                 </h1>
               </div>
-
-              <p style={{
-                fontSize: "var(--font-20)",
-                lineHeight: 1.7,
-                color: "rgba(255,255,255,0.75)",
-                maxWidth: "900px",
-                marginBottom: "3rem",
-                fontFamily: "var(--font-body)",
-              }}>
-                Développez vos compétences avec nos formations
-                pratiques conçues pour tous les niveaux et tous les secteurs d'activité.
+              <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", maxWidth: "800px", marginTop: "1.5rem", lineHeight: 1.6 }}>
+                Développez vos compétences avec nos programmes intensifs conçus pour le monde de l'IA.
               </p>
             </motion.div>
 
-            {/* Stats rapides */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                gap: "1.5rem",
-                marginBottom: "4rem",
-              }}>
-              {stats.map((stat, i) => {
-                const Icon = stat.icon;
-                return (
-                  <div key={i} style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "0.75rem",
-                    padding: "1.5rem",
-                    textAlign: "center",
-                  }}>
-                    <Icon size={28} color={COLOR} style={{ margin: "0 auto 0.75rem" }} />
-                    <p style={{
-                      fontSize: "2.5rem",
-                      fontWeight: 900,
-                      color: COLOR,
-                      lineHeight: 1,
-                      marginBottom: "0.5rem",
-                      fontFamily: "var(--font-display)",
-                    }}>
-                      {stat.value}
-                    </p>
-                    <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)" }}>
-                      {stat.label}
-                    </p>
-                  </div>
-                );
-              })}
-            </motion.div>
-
-            {/* Search Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              style={{
-                position: "relative",
-                maxWidth: "900px",
-                margin: "0 auto",
-              }}>
-              <Search
-                size={25}
-                color={COLOR}
-                style={{ position: "absolute", left: "1.5rem", top: "50%", transform: "translateY(-50%)" }}
-              />
-              <input
-                type="text"
-                placeholder="Rechercher une formation par titre, secteur ou mot-clé..."
+            {/* SEARCH */}
+            <div style={{ marginTop: "3rem", position: "relative", maxWidth: "800px" }}>
+              <Search style={{ position: "absolute", left: "1.2rem", top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.4)" }} />
+              <input 
+                type="text" 
+                placeholder="Rechercher une formation..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "1.4rem 1.5rem 1.4rem 4rem",
-                  background: "rgba(255,255,255,0.05)",
-                  border: `1px solid ${COLOR}40`,
-                  borderRadius: "1rem",
-                  fontSize: "1.05rem",
-                  color: "#fff",
-                  outline: "none",
-                  transition: "all 0.3s ease",
-                  fontFamily: "var(--font-body)",
-                }}
-                onFocus={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                  e.currentTarget.style.borderColor = COLOR;
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.borderColor = `${COLOR}40`;
-                }}
+                style={{ width: "100%", padding: "1.2rem 1.2rem 1.2rem 3.5rem", background: "rgba(255,255,255,0.05)", border: `1px solid ${COLOR}40`, borderRadius: "0.75rem", color: "#fff", outline: "none" }}
               />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  style={{
-                    position: "absolute",
-                    right: "1.5rem",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "rgba(255,255,255,0.5)",
-                  }}>
-                  <X size={22} />
-                </button>
-              )}
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════
-            FILTERS & CONTROLS
-        ═══════════════════════════════════════════════════════ */}
-        <section style={{
-          padding: "2rem clamp(1.5rem, 5vw, 6rem)",
-          background: "rgba(255,255,255,0.02)",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-        }}>
-          <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-            {/* Top bar */}
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "1.5rem",
-              flexWrap: "wrap",
-              gap: "1rem",
-            }}>
-              <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
-                <strong style={{ color: COLOR, fontSize: "1.3rem" }}>{filteredFormations.length}</strong> formation{filteredFormations.length > 1 ? "s" : ""} trouvée{filteredFormations.length > 1 ? "s" : ""}
-              </p>
-
-              <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-                {/* Sort */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <ArrowUpDown size={24} color={COLOR} />
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    style={{
-                      padding: "0.75rem 1.2rem",
-                      background: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      borderRadius: "0.5rem",
-                      color: "#fff",
-                      fontSize: "1rem",
-                      cursor: "pointer",
-                      fontFamily: "var(--font-body)",
-                    }}>
-                    {sortOptions.map(option => (
-                      <option key={option.value} value={option.value} style={{ background: "#0A1410" }}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* View mode toggle */}
-                <div style={{
-                  display: "flex",
-                  background: "rgba(255,255,255,0.05)",
-                  borderRadius: "0.5rem",
-                  padding: "0.3rem",
-                }}>
-                  <button
-                    onClick={() => setViewMode("grid")}
-                    style={{
-                      padding: "0.75rem 1.2rem",
-                      background: viewMode === "grid" ? COLOR : "transparent",
-                      border: "none",
-                      borderRadius: "0.375rem",
-                      color: "#fff",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.6rem",
-                      transition: "all 0.2s",
-                      fontFamily: "var(--font-body)",
-                      fontSize: "1rem",
-                    }}>
-                    <Grid3x3 size={20} />
-                    Grille
-                  </button>
-                  <button
-                    onClick={() => setViewMode("list")}
-                    style={{
-                      padding: "0.75rem 1.2rem",
-                      background: viewMode === "list" ? COLOR : "transparent",
-                      border: "none",
-                      borderRadius: "0.375rem",
-                      color: "#fff",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.6rem",
-                      transition: "all 0.2s",
-                      fontFamily: "var(--font-body)",
-                      fontSize: "1rem",
-                    }}>
-                    <List size={20} />
-                    Liste
-                  </button>
-                </div>
-
-                {/* Filters toggle */}
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  style={{
-                    padding: "0.85rem 1.8rem",
-                    background: showFilters ? COLOR : "rgba(255,255,255,0.05)",
-                    border: `1px solid ${showFilters ? COLOR : "rgba(255,255,255,0.1)"}`,
-                    borderRadius: "0.5rem",
-                    color: "#fff",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.75rem",
-                    fontWeight: 600,
-                    transition: "all 0.2s",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "1rem",
-                  }}>
-                  <Filter size={22} />
-                  Filtres
-                </button>
+        {/* FILTERS BAR */}
+        <section style={{ padding: "1.5rem clamp(1.5rem, 5vw, 6rem)", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+            <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}>
+              <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
+            </p>
+            
+            <div style={{ display: "flex", gap: "1rem" }}>
+              <button 
+                onClick={() => setShowFilters(!showFilters)}
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: showFilters ? COLOR : "rgba(255,255,255,0.05)", border: "none", borderRadius: "0.5rem", color: "#fff", cursor: "pointer", transition: "0.2s" }}
+              >
+                <Filter size={18} />
+                Filtres
+              </button>
+              
+              <div style={{ display: "flex", background: "rgba(255,255,255,0.05)", padding: "0.25rem", borderRadius: "0.5rem" }}>
+                <button onClick={() => setViewMode("grid")} style={{ padding: "0.5rem", background: viewMode === "grid" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><Grid3x3 size={20}/></button>
+                <button onClick={() => setViewMode("list")} style={{ padding: "0.5rem", background: viewMode === "list" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><ListIcon size={20}/></button>
               </div>
             </div>
-
-            {/* Filters panel */}
-            <AnimatePresence>
-              {showFilters && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: EASE }}
-                  style={{ overflow: "hidden" }}>
-                  <div style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "0.75rem",
-                    padding: "2rem",
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                    gap: "2rem",
-                  }}>
-                    {/* Catégorie */}
-                    <div>
-                      <label style={{
-                        display: "block",
-                        marginBottom: "0.75rem",
-                        fontSize: "0.95rem",
-                        fontWeight: 700,
-                        color: COLOR,
-                        letterSpacing: "0.05em",
-                        textTransform: "uppercase",
-                        fontFamily: "var(--font-body)",
-                      }}>
-                        Catégorie
-                      </label>
-                      <select
-                        value={selectedCategorie}
-                        onChange={(e) => setSelectedCategorie(e.target.value)}
-                        style={{
-                          width: "100%",
-                          padding: "0.85rem",
-                          background: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: "0.5rem",
-                          color: "#fff",
-                          fontSize: "1rem",
-                          cursor: "pointer",
-                          fontFamily: "var(--font-body)",
-                        }}>
-                        {categories.map(cat => (
-                          <option key={cat} value={cat} style={{ background: "#0A1410" }}>
-                            {cat}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Secteur */}
-                    <div>
-                      <label style={{
-                        display: "block",
-                        marginBottom: "0.75rem",
-                        fontSize: "0.95rem",
-                        fontWeight: 700,
-                        color: COLOR,
-                        letterSpacing: "0.05em",
-                        textTransform: "uppercase",
-                        fontFamily: "var(--font-body)",
-                      }}>
-                        Secteur
-                      </label>
-                      <select
-                        value={selectedSecteur}
-                        onChange={(e) => setSelectedSecteur(e.target.value)}
-                        style={{
-                          width: "100%",
-                          padding: "0.85rem",
-                          background: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: "0.5rem",
-                          color: "#fff",
-                          fontSize: "1rem",
-                          cursor: "pointer",
-                          fontFamily: "var(--font-body)",
-                        }}>
-                        {secteurs.map(secteur => (
-                          <option key={secteur} value={secteur} style={{ background: "#0A1410" }}>
-                            {secteur}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Niveau */}
-                    <div>
-                      <label style={{
-                        display: "block",
-                        marginBottom: "0.75rem",
-                        fontSize: "0.95rem",
-                        fontWeight: 700,
-                        color: COLOR,
-                        letterSpacing: "0.05em",
-                        textTransform: "uppercase",
-                        fontFamily: "var(--font-body)",
-                      }}>
-                        Niveau
-                      </label>
-                      <select
-                        value={selectedNiveau}
-                        onChange={(e) => setSelectedNiveau(e.target.value)}
-                        style={{
-                          width: "100%",
-                          padding: "0.85rem",
-                          background: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: "0.5rem",
-                          color: "#fff",
-                          fontSize: "1rem",
-                          cursor: "pointer",
-                          fontFamily: "var(--font-body)",
-                        }}>
-                        {niveaux.map(niveau => (
-                          <option key={niveau} value={niveau} style={{ background: "#0A1410" }}>
-                            {niveau}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Reset button */}
-                    <div style={{ display: "flex", alignItems: "flex-end" }}>
-                      <button
-                        onClick={() => {
-                          setSelectedCategorie("Toutes");
-                          setSelectedSecteur("Tous");
-                          setSelectedNiveau("Tous");
-                          setSearchQuery("");
-                          setSortBy("recent");
-                        }}
-                        style={{
-                          width: "100%",
-                          padding: "0.85rem",
-                          background: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: "0.5rem",
-                          color: "#fff",
-                          cursor: "pointer",
-                          fontWeight: 600,
-                          transition: "all 0.2s",
-                          fontFamily: "var(--font-body)",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = ACCENT;
-                          e.currentTarget.style.borderColor = ACCENT;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                        }}>
-                        Réinitialiser tout
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════
-            CATALOGUE DE FORMATIONS
-        ═══════════════════════════════════════════════════════ */}
-        <section style={{
-          padding: "4rem clamp(1.5rem, 5vw, 6rem)",
-          minHeight: "60vh",
-        }}>
+        {/* FILTERS PANEL */}
+        <AnimatePresence>
+          {showFilters && (
+            <motion.section 
+              initial={{ height: 0, opacity: 0 }} 
+              animate={{ height: "auto", opacity: 1 }} 
+              exit={{ height: 0, opacity: 0 }}
+              style={{ overflow: "hidden", background: "rgba(255,255,255,0.01)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+            >
+              <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "2rem clamp(1.5rem, 5vw, 6rem)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem" }}>
+                <div>
+                  <label style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.8rem", textTransform: "uppercase", color: COLOR, fontWeight: 700 }}>Catégorie</label>
+                  <select value={selectedCategorie} onChange={(e) => setSelectedCategorie(e.target.value)} style={{ width: "100%", padding: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "0.4rem" }}>
+                    {categories.map(c => <option key={c} value={c} style={{ background: "#070E1C" }}>{c}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.8rem", textTransform: "uppercase", color: COLOR, fontWeight: 700 }}>Secteur</label>
+                  <select value={selectedSecteur} onChange={(e) => setSelectedSecteur(e.target.value)} style={{ width: "100%", padding: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "0.4rem" }}>
+                    {secteurs.map(s => <option key={s} value={s} style={{ background: "#070E1C" }}>{s}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.8rem", textTransform: "uppercase", color: COLOR, fontWeight: 700 }}>Niveau</label>
+                  <select value={selectedNiveau} onChange={(e) => setSelectedNiveau(e.target.value)} style={{ width: "100%", padding: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "0.4rem" }}>
+                    {niveaux.map(n => <option key={n} value={n} style={{ background: "#070E1C" }}>{n}</option>)}
+                  </select>
+                </div>
+              </div>
+            </motion.section>
+          )}
+        </AnimatePresence>
+
+        {/* RESULTS */}
+        <section style={{ padding: "4rem clamp(1.5rem, 5vw, 6rem)" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-            <AnimatePresence mode="wait">
-              {filteredFormations.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  style={{
-                    textAlign: "center",
-                    padding: "4rem 2rem",
-                  }}>
-                  <BookOpen size={72} color={COLOR} style={{ margin: "0 auto 1.5rem", opacity: 0.5 }} />
-                  <h3 style={{
-                    fontSize: "var(--font-25)",
-                    fontWeight: 700,
-                    marginBottom: "1rem",
-                    color: "#fff",
-                    fontFamily: "var(--font-display)",
-                  }}>
-                    Aucune formation trouvée
-                  </h3>
-                  <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "2rem", fontSize: "1.1rem", fontFamily: "var(--font-body)" }}>
-                    Essayez de modifier vos filtres ou votre recherche
+            {isFallback && !loading && (
+              <div style={{ 
+                background: "rgba(211, 84, 0, 0.1)", 
+                border: `1px solid ${COLOR}44`, 
+                padding: "1.5rem", 
+                borderRadius: "0.75rem", 
+                display: "flex", 
+                gap: "1rem", 
+                alignItems: "center", 
+                marginBottom: "2.5rem" 
+              }}>
+                <AlertCircle color={COLOR}/>
+                <div>
+                  <h4 style={{ fontWeight: 700, color: COLOR }}>Mode Consultation (Données locales)</h4>
+                  <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>
+                    La synchronisation avec la boutique Shopify est momentanément désactivée. 
+                    Vous consultez actuellement notre catalogue de secours.
                   </p>
-                  <button
-                    onClick={() => {
-                      setSelectedCategorie("Toutes");
-                      setSelectedSecteur("Tous");
-                      setSelectedNiveau("Tous");
-                      setSearchQuery("");
-                      setSortBy("recent");
-                    }}
-                    style={{
-                      padding: "1rem 2rem",
-                      background: COLOR,
-                      border: "none",
-                      borderRadius: "0.5rem",
-                      color: "#fff",
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontSize: "1rem",
-                      fontFamily: "var(--font-body)",
-                    }}>
-                    Réinitialiser les filtres
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.div
-                  layout
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: viewMode === "grid"
-                      ? "repeat(auto-fill, minmax(min(100%, 380px), 1fr))"
-                      : "1fr",
-                    gap: "2rem",
-                  }}>
-                  {filteredFormations.map((formation) => (
-                    <FormationCard
-                      key={formation.id}
-                      formation={formation}
-                      viewMode={viewMode}
-                    />
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+              </div>
+            )}
+
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(380px, 1fr))" : "1fr",
+              gap: "2.5rem" 
+            }}>
+              {filteredFormations.map((f: any) => (
+                <FormationCard key={f.id} formation={f} viewMode={viewMode} isShopify={!isFallback} />
+              ))}
+            </div>
+            
+            {(filteredFormations.length === 0 && !loading) && (
+              <div style={{ textAlign: "center", padding: "4rem" }}>
+                <BookOpen size={48} color={COLOR} style={{ opacity: 0.3, marginBottom: "1.5rem" }}/>
+                <h3>Aucun résultat pour cette recherche</h3>
+                <button onClick={() => { setSearchQuery(""); setSelectedCategorie("Toutes"); setSelectedSecteur("Tous"); setSelectedNiveau("Tous"); }} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>Réinitialiser les filtres</button>
+              </div>
+            )}
           </div>
         </section>
 
@@ -683,269 +293,81 @@ export default function FormationsShell() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════
-   FORMATION CARD COMPONENT
-   ═══════════════════════════════════════════════════════ */
-function FormationCard({ formation, viewMode }: { formation: Formation; viewMode: "grid" | "list" }) {
-  const niveauColor = getNiveauColor(formation.niveau);
+function FormationCard({ formation, viewMode, isShopify }: { formation: any; viewMode: "grid" | "list"; isShopify: boolean }) {
+  const niveauValue = isShopify ? formation.niveau?.value : formation.niveau;
+  const secteurValue = isShopify ? formation.secteur?.value : formation.secteur;
+  const accrocheValue = isShopify ? formation.accroche?.value : formation.accroche;
+  const dureeValue = isShopify ? formation.duree?.value : formation.duree;
+  const formatValue = isShopify ? formation.format?.value : formation.format;
+  const priceValue = isShopify ? formatPrice(formation.priceRange?.minVariantPrice?.amount, formation.priceRange?.minVariantPrice?.currencyCode) : (formation.prix || "Nous consulter");
+  const imageUrl = isShopify ? formation.featuredImage?.url : `/images/formations/${formation.slug}.jpg`;
+  const handle = isShopify ? formation.handle : formation.slug;
 
-  if (viewMode === "list") {
-    return (
-      <motion.div
-        layout
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        whileHover={{ x: 8 }}
-        transition={{ duration: 0.3, ease: EASE }}
-        style={{
-          background: "rgba(255,255,255,0.03)",
-          borderStyle: "solid",
-          borderWidth: "1px 1px 1px 4px",
-          borderColor: `rgba(255,255,255,0.08) rgba(255,255,255,0.08) rgba(255,255,255,0.08) ${niveauColor}`,
-          borderRadius: "0.75rem",
-          padding: "2rem",
-          cursor: "pointer",
-        }}>
-        <Link href={`/formations/${formation.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "2rem", flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: "300px" }}>
-              {/* Tags */}
-              <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
-                <span style={{
-                  padding: "0.4rem 0.85rem",
-                  background: `${niveauColor}20`,
-                  color: niveauColor,
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  borderRadius: "0.375rem",
-                  letterSpacing: "0.05em",
-                  textTransform: "uppercase",
-                  fontFamily: "var(--font-body)",
-                }}>
-                  {formation.niveau}
-                </span>
-                <span style={{
-                  padding: "0.4rem 0.85rem",
-                  background: `${COLOR}20`,
-                  color: COLOR,
-                  fontSize: "0.8rem",
-                  fontWeight: 600,
-                  borderRadius: "0.375rem",
-                  fontFamily: "var(--font-body)",
-                }}>
-                  {formation.secteur}
-                </span>
-              </div>
+  const color = getNiveauColor(niveauValue);
 
-              {/* Title */}
-              <h3 style={{
-                fontSize: "var(--font-20)",
-                fontWeight: 800,
-                marginBottom: "0.75rem",
-                color: "#fff",
-                fontFamily: "var(--font-display)",
-              }}>
-                {formation.title}
-              </h3>
-
-              {/* Accroche */}
-              <p style={{
-                fontSize: "var(--font-18)",
-                lineHeight: 1.6,
-                color: "rgba(255,255,255,0.7)",
-                marginBottom: "1rem",
-                fontFamily: "var(--font-body)",
-              }}>
-                {formation.accroche.substring(0, 180)}...
-              </p>
-
-              {/* Meta info */}
-              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", alignItems: "center" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <Clock size={18} color={COLOR} />
-                  <span style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
-                    {formation.duree}
-                  </span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <Users size={18} color={COLOR} />
-                  <span style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
-                    {formation.format}
-                  </span>
-                </div>
-                {formation.prix && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <DollarSign size={18} color={COLOR} />
-                    <span style={{ fontSize: "1rem", color: COLOR, fontWeight: 700, fontFamily: "var(--font-body)" }}>
-                      {formation.prix}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              color: COLOR,
-              fontWeight: 700,
-              fontSize: "1rem",
-              whiteSpace: "nowrap",
-              fontFamily: "var(--font-body)",
-            }}>
-              Voir détails
-              <ChevronRight size={22} />
-            </div>
-          </div>
-        </Link>
-      </motion.div>
-    );
-  }
-
-  // Grid view
   return (
-    <motion.div
+    <motion.div 
       layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
       whileHover={{ y: -8 }}
-      transition={{ duration: 0.3, ease: EASE }}
       style={{
         background: "rgba(255,255,255,0.03)",
-        borderStyle: "solid",
-        borderWidth: "3px 1px 1px 1px",
-        borderColor: `${niveauColor} rgba(255,255,255,0.08) rgba(255,255,255,0.08) rgba(255,255,255,0.08)`,
-        borderRadius: "0.75rem",
-        padding: "2rem",
-        cursor: "pointer",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "1rem",
+        overflow: "hidden",
         display: "flex",
-        flexDirection: "column",
-      }}>
-      <Link href={`/formations/${formation.slug}`} style={{ textDecoration: "none", color: "inherit", flex: 1, display: "flex", flexDirection: "column" }}>
-        {/* Tags */}
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-          <span style={{
-            padding: "0.4rem 0.85rem",
-            background: `${niveauColor}20`,
-            color: niveauColor,
-            fontSize: "0.75rem",
-            fontWeight: 700,
-            borderRadius: "0.375rem",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
-            fontFamily: "var(--font-body)",
-          }}>
-            {formation.niveau}
-          </span>
+        flexDirection: viewMode === "grid" ? "column" : "row",
+        position: "relative"
+      }}
+    >
+      {/* Badge Niveau */}
+      <div style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 1, padding: "0.3rem 0.8rem", background: `${color}cc`, backdropFilter: "blur(4px)", borderRadius: "2rem", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" }}>
+        {niveauValue || "Débutant"}
+      </div>
+
+      {/* Image */}
+      <div style={{ 
+        width: viewMode === "grid" ? "100%" : "300px", 
+        height: viewMode === "grid" ? "240px" : "100%", 
+        minHeight: "240px",
+        background: `linear-gradient(45deg, #0f172a, #1e293b), url(${imageUrl}) center/cover`,
+        backgroundBlendMode: "overlay"
+      }} />
+
+      {/* Content */}
+      <div style={{ padding: "2rem", flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
+          <Tag size={14} color={COLOR}/>
+          <span style={{ fontSize: "0.8rem", color: COLOR, fontWeight: 700, textTransform: "uppercase" }}>{secteurValue || "Transversal"}</span>
         </div>
 
-        {/* Title */}
-        <h3 style={{
-          fontSize: "var(--font-20)",
-          fontWeight: 800,
-          marginBottom: "1rem",
-          color: "#fff",
-          fontFamily: "var(--font-display)",
-          lineHeight: 1.2,
-        }}>
-          {formation.title}
-        </h3>
-
-        {/* Secteur */}
-        <p style={{
-          fontSize: "0.9rem",
-          color: COLOR,
-          marginBottom: "1rem",
-          fontWeight: 600,
-          fontFamily: "var(--font-body)",
-        }}>
-          {formation.secteur}
+        <h3 style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "var(--font-display)", marginBottom: "1rem" }}>{formation.title}</h3>
+        
+        <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.5rem", lineClamp: 2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          {accrocheValue || "Une formation pratique pour maîtriser les outils de demain."}
         </p>
 
-        {/* Accroche */}
-        <p style={{
-          fontSize: "var(--font-18)",
-          lineHeight: 1.6,
-          color: "rgba(255,255,255,0.65)",
-          marginBottom: "1.5rem",
-          flex: 1,
-          fontFamily: "var(--font-body)",
-        }}>
-          {formation.accroche.substring(0, 130)}...
-        </p>
-
-        {/* Prix si disponible */}
-        {formation.prix && (
-          <div style={{
-            background: `${COLOR}15`,
-            border: `1px solid ${COLOR}40`,
-            borderRadius: "0.5rem",
-            padding: "1rem",
-            marginBottom: "1.5rem",
-            textAlign: "center",
-          }}>
-            <p style={{
-              fontSize: "0.75rem",
-              color: "rgba(255,255,255,0.5)",
-              marginBottom: "0.25rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              fontFamily: "var(--font-body)",
-            }}>
-              Tarif
-            </p>
-            <p style={{
-              fontSize: "1.5rem",
-              fontWeight: 900,
-              color: COLOR,
-              fontFamily: "var(--font-display)",
-            }}>
-              {formation.prix}
-            </p>
+        <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", opacity: 0.6 }}>
+              <Clock size={16} color={COLOR} />
+              <span style={{ fontSize: "0.9rem" }}>{dureeValue || "7h"}</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", opacity: 0.6 }}>
+              <Users size={16} color={COLOR} />
+              <span style={{ fontSize: "0.9rem" }}>{formatValue || "Présentiel"}</span>
+            </div>
           </div>
-        )}
-
-        {/* Meta info */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.75rem",
-          paddingTop: "1.5rem",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Clock size={18} color={COLOR} />
-            <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
-              {formation.duree}
-            </span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Users size={18} color={COLOR} />
-            <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}>
-              {formation.format}
-            </span>
+          
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "1.3rem", fontWeight: 900, color: COLOR }}>{priceValue}</div>
           </div>
         </div>
 
-        {/* CTA */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: "1.5rem",
-          paddingTop: "1.5rem",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
-        }}>
-          <span style={{ color: COLOR, fontWeight: 700, fontSize: "0.95rem", fontFamily: "var(--font-body)" }}>
-            En savoir plus
-          </span>
-          <ChevronRight size={22} color={COLOR} />
-        </div>
-      </Link>
+        <Link href={`/formations/${handle}`} style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "0.5rem", color: "#fff", textDecoration: "none", fontWeight: 800, fontSize: "0.9rem", textTransform: "uppercase" }}>
+          Découvrir le programme 
+          <ChevronRight size={18} color={COLOR} />
+        </Link>
+      </div>
     </motion.div>
   );
 }

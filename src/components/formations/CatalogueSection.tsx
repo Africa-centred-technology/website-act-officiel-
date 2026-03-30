@@ -1,26 +1,43 @@
 "use client";
 
+/**
+ * CatalogueSection — Résumé interactif des formations par domaine
+ * Version unifiée supportant Shopify et Fallback statique
+ */
+
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useShopifyFormations } from "@/hooks/useShopifyFormations";
 import { FORMATIONS } from "@/lib/data/formations";
 
 const ORANGE = "#D35400";
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
 export default function CatalogueSection() {
-  // Regrouper par secteur
+  const { formations: shopifyFormations, loading, isFallback } = useShopifyFormations();
+  const formationsData = isFallback ? FORMATIONS : shopifyFormations;
+
+  // Regrouper par secteur (en gérant les types Shopify et Statiques)
   const grouped = useMemo(() => {
-    const map: Record<string, typeof FORMATIONS> = {};
-    FORMATIONS.forEach((f) => {
-      const key = f.secteur || "Autres";
-      if (!map[key]) map[key] = [];
-      map[key].push(f);
+    const map: Record<string, any[]> = {};
+    formationsData.forEach((f) => {
+      const secteurValue = (f as any).secteur?.value || (f as any).secteur || "Autres";
+      if (!map[secteurValue]) map[secteurValue] = [];
+      map[secteurValue].push(f);
     });
     return Object.entries(map);
-  }, []);
+  }, [formationsData]);
 
   const [openCat, setOpenCat] = useState<string | null>(null);
+
+  if (loading) {
+    return (
+      <section style={{ background: "rgba(0,0,0,0.35)", padding: "10rem 2rem", textAlign: "center" }}>
+        <p style={{ color: "rgba(255,255,255,0.5)" }}>Chargement du catalogue...</p>
+      </section>
+    );
+  }
 
   return (
     <section style={{
@@ -93,7 +110,7 @@ export default function CatalogueSection() {
             lineHeight: 1.7, maxWidth: "600px", marginBottom: "2.5rem",
           }}
         >
-          {FORMATIONS.length} programmes disponibles, organisés par domaine — du niveau initiation à expert.
+          {formationsData.length} programmes disponibles, organisés par domaine — du niveau initiation à expert.
           Cliquez sur une formation pour accéder au programme complet.
         </motion.p>
 
@@ -106,9 +123,9 @@ export default function CatalogueSection() {
 
         {/* Accordion par catégorie */}
         <div>
-          {grouped.map(([categorie, formations], gi) => (
+          {grouped.map(([secteur, formations], gi) => (
             <motion.div
-              key={categorie}
+              key={secteur}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -116,23 +133,23 @@ export default function CatalogueSection() {
             >
               {/* En-tête catégorie */}
               <button
-                onClick={() => setOpenCat(openCat === categorie ? null : categorie)}
+                onClick={() => setOpenCat(openCat === secteur ? null : secteur)}
                 style={{
                   width: "100%", background: "none", border: "none", cursor: "pointer",
                   display: "flex", alignItems: "center", gap: "1rem",
                   padding: "1.1rem 0",
-                  borderBottom: `1px solid ${openCat === categorie ? ORANGE + "44" : "rgba(255,255,255,0.08)"}`,
+                  borderBottom: `1px solid ${openCat === secteur ? ORANGE + "44" : "rgba(255,255,255,0.08)"}`,
                   transition: "border-color 0.2s",
                 }}
               >
                 {/* Icône +/- */}
                 <motion.span
-                  animate={{ rotate: openCat === categorie ? 45 : 0 }}
+                  animate={{ rotate: openCat === secteur ? 45 : 0 }}
                   transition={{ duration: 0.22 }}
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center",
                     width: 22, height: 22, flexShrink: 0,
-                    border: `1.5px solid ${openCat === categorie ? ORANGE : "rgba(255,255,255,0.3)"}`,
+                    border: `1.5px solid ${openCat === secteur ? ORANGE : "rgba(255,255,255,0.3)"}`,
                     borderRadius: "50%",
                     transition: "border-color 0.2s",
                   }}
@@ -140,7 +157,7 @@ export default function CatalogueSection() {
                   <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
                     <path
                       d="M5 1v8M1 5h8"
-                      stroke={openCat === categorie ? ORANGE : "rgba(255,255,255,0.5)"}
+                      stroke={openCat === secteur ? ORANGE : "rgba(255,255,255,0.5)"}
                       strokeWidth="1.5" strokeLinecap="round"
                     />
                   </svg>
@@ -149,11 +166,11 @@ export default function CatalogueSection() {
                 {/* Nom de la catégorie */}
                 <span style={{
                   fontWeight: 700, fontSize: "clamp(0.9rem, 1.1vw, 1.05rem)",
-                  color: openCat === categorie ? ORANGE : "rgba(255,255,255,0.85)",
+                  color: openCat === secteur ? ORANGE : "rgba(255,255,255,0.85)",
                   letterSpacing: "0.04em", textAlign: "left",
                   transition: "color 0.2s", flex: 1,
                 }}>
-                  {categorie}
+                  {secteur}
                 </span>
 
                 {/* Compteur */}
@@ -167,7 +184,7 @@ export default function CatalogueSection() {
 
               {/* Liste dépliable */}
               <AnimatePresence initial={false}>
-                {openCat === categorie && (
+                {openCat === secteur && (
                   <motion.div
                     key="list"
                     initial={{ height: 0, opacity: 0 }}
@@ -177,37 +194,44 @@ export default function CatalogueSection() {
                     style={{ overflow: "hidden" }}
                   >
                     <div style={{ paddingBottom: "0.75rem" }}>
-                      {formations.map((f, fi) => (
-                        <Link key={f.slug} href={`/formations/${f.slug}`} style={{ textDecoration: "none", display: "block" }}>
-                          <motion.div
-                            initial={{ opacity: 0, x: 10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: fi * 0.04, duration: 0.3 }}
-                            whileHover={{ x: 8, backgroundColor: "rgba(22,163,74,0.06)" }}
-                            style={{
-                              display: "flex", alignItems: "center", gap: "0.85rem",
-                              padding: "0.75rem 0 0.75rem 2.5rem",
-                              borderBottom: "1px solid rgba(255,255,255,0.04)",
-                              cursor: "pointer",
-                              transition: "background 0.2s",
-                            }}
-                          >
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: `${ORANGE}66`, flexShrink: 0 }} />
-                            <span style={{ flex: 1, fontSize: "clamp(0.85rem, 1vw, 0.97rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.45 }}>
-                              {f.title}
-                            </span>
-                            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", flexShrink: 0, padding: "0.15rem 0.45rem", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0.2rem" }}>
-                              {f.niveau}
-                            </span>
-                            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.2)", whiteSpace: "nowrap", flexShrink: 0 }}>
-                              {f.duree}
-                            </span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
-                              <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                          </motion.div>
-                        </Link>
-                      ))}
+                      {formations.map((f, fi) => {
+                        const handle = (f as any).handle || (f as any).slug;
+                        const title = (f as any).title;
+                        const niveau = (f as any).niveau?.value || (f as any).niveau;
+                        const duree = (f as any).duree?.value || (f as any).duree;
+
+                        return (
+                          <Link key={handle} href={`/formations/${handle}`} style={{ textDecoration: "none", display: "block" }}>
+                            <motion.div
+                              initial={{ opacity: 0, x: 10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: fi * 0.04, duration: 0.3 }}
+                              whileHover={{ x: 8, backgroundColor: "rgba(255,255,255,0.03)" }}
+                              style={{
+                                display: "flex", alignItems: "center", gap: "0.85rem",
+                                padding: "0.75rem 0 0.75rem 2.5rem",
+                                borderBottom: "1px solid rgba(255,255,255,0.04)",
+                                cursor: "pointer",
+                                transition: "background 0.2s",
+                              }}
+                            >
+                              <span style={{ width: 5, height: 5, borderRadius: "50%", background: `${ORANGE}66`, flexShrink: 0 }} />
+                              <span style={{ flex: 1, fontSize: "clamp(0.85rem, 1vw, 0.97rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.45 }}>
+                                {title}
+                              </span>
+                              <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", flexShrink: 0, padding: "0.15rem 0.45rem", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0.2rem" }}>
+                                {niveau}
+                              </span>
+                              <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.2)", whiteSpace: "nowrap", flexShrink: 0 }}>
+                                {duree}
+                              </span>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                              </svg>
+                            </motion.div>
+                          </Link>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 )}
