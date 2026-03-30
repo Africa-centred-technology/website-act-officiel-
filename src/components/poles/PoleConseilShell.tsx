@@ -25,6 +25,7 @@ import {
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { blogPosts } from "@/lib/blog-data";
+import CTAButton from "@/components/ui/CTAButton";
 
 /* ── Background layers ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -222,6 +223,148 @@ export default function PoleConseilShell() {
               </button>
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Why Consulting Matters Section */}
+      <section style={{
+        padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
+        background: 'rgba(255,255,255,0.02)',
+      }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ textAlign: 'center', marginBottom: '4rem' }}
+          >
+            <h2 style={{
+              fontSize: screenSize === 'mobile' ? '1.8rem' : '2.5rem',
+              fontWeight: 900,
+              color: '#fff',
+              fontFamily: 'var(--font-display)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              lineHeight: 1.2,
+              marginBottom: '1rem',
+            }}>
+              Pourquoi se faire <span style={{ color: COLOR }}>conseiller</span> est stratégique ?
+            </h2>
+            <p style={{
+              fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
+              color: 'rgba(255,255,255,0.65)',
+              maxWidth: '800px',
+              margin: '0 auto',
+              fontFamily: 'var(--font-body)',
+              lineHeight: 1.6,
+            }}>
+              Dans un environnement digital complexe, le conseil stratégique n'est pas une option, c'est un accélérateur de performance
+            </p>
+          </motion.div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+            gap: screenSize === 'mobile' ? '2rem' : '2.5rem',
+          }}>
+            {[
+              {
+                icon: TrendingUp,
+                stat: "70%",
+                label: "Des projets IT échouent",
+                description: "par manque de stratégie claire et d'alignement métier-technologie"
+              },
+              {
+                icon: Target,
+                stat: "3x",
+                label: "Plus de ROI",
+                description: "pour les entreprises qui investissent dans le conseil avant l'implémentation"
+              },
+              {
+                icon: Zap,
+                stat: "-40%",
+                label: "De coûts IT",
+                description: "grâce à l'optimisation stratégique et l'élimination des redondances"
+              },
+              {
+                icon: LineChart,
+                stat: "85%",
+                label: "Des dirigeants",
+                description: "estiment que le conseil externe accélère leur transformation digitale"
+              },
+            ].map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  style={{
+                    padding: screenSize === 'mobile' ? '2rem 1.5rem' : '2.5rem',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '1rem',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                  }}
+                  whileHover={{
+                    borderColor: `${COLOR}66`,
+                    y: -8,
+                    boxShadow: `0 12px 40px ${COLOR}22`,
+                  }}
+                >
+                  <div style={{
+                    width: '4rem',
+                    height: '4rem',
+                    borderRadius: '50%',
+                    background: `${COLOR}22`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1.5rem',
+                  }}>
+                    <Icon size={28} color={COLOR} />
+                  </div>
+
+                  <div style={{
+                    fontSize: screenSize === 'mobile' ? '3rem' : '4rem',
+                    fontWeight: 900,
+                    color: COLOR,
+                    fontFamily: 'var(--font-display)',
+                    lineHeight: 1,
+                    marginBottom: '1rem',
+                  }}>
+                    {item.stat}
+                  </div>
+
+                  <div style={{
+                    fontSize: screenSize === 'mobile' ? '1.1rem' : '1.25rem',
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontFamily: 'var(--font-display)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '1rem',
+                  }}>
+                    {item.label}
+                  </div>
+
+                  <p style={{
+                    fontSize: screenSize === 'mobile' ? '1rem' : '1.05rem',
+                    color: 'rgba(255,255,255,0.55)',
+                    fontFamily: 'var(--font-body)',
+                    lineHeight: 1.6,
+                  }}>
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+
+  
         </div>
       </section>
 

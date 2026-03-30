@@ -385,18 +385,18 @@ export default function PoleFormationShell() {
                   </div>
 
                   <div style={{
-                    fontSize: screenSize === 'mobile' ? '2.5rem' : '3.2rem',
+                    fontSize: screenSize === 'mobile' ? '3rem' : '4rem',
                     fontWeight: 900,
                     color: COLOR,
                     fontFamily: 'var(--font-display)',
                     lineHeight: 1,
-                    marginBottom: '0.75rem',
+                    marginBottom: '1rem',
                   }}>
                     {item.stat}
                   </div>
 
                   <div style={{
-                    fontSize: screenSize === 'mobile' ? '0.95rem' : '1.05rem',
+                    fontSize: screenSize === 'mobile' ? '1.1rem' : '1.25rem',
                     fontWeight: 700,
                     color: '#fff',
                     fontFamily: 'var(--font-display)',
@@ -408,10 +408,10 @@ export default function PoleFormationShell() {
                   </div>
 
                   <p style={{
-                    fontSize: '0.9rem',
+                    fontSize: screenSize === 'mobile' ? '1rem' : '1.05rem',
                     color: 'rgba(255,255,255,0.55)',
                     fontFamily: 'var(--font-body)',
-                    lineHeight: 1.5,
+                    lineHeight: 1.6,
                   }}>
                     {item.description}
                   </p>
@@ -612,21 +612,22 @@ export default function PoleFormationShell() {
             }}
           >
             <h3 style={{
-              fontSize: screenSize === 'mobile' ? '1.3rem' : '1.8rem',
+              fontSize: screenSize === 'mobile' ? '1.6rem' : '2.5rem',
               fontWeight: 800,
               color: '#fff',
               fontFamily: 'var(--font-display)',
-              marginBottom: '1rem',
+              marginBottom: '1.5rem',
+              lineHeight: 1.2,
             }}>
               L'investissement dans la formation, c'est l'investissement dans l'avenir
             </h3>
             <p style={{
-              fontSize: screenSize === 'mobile' ? '1rem' : '1.1rem',
+              fontSize: screenSize === 'mobile' ? '1.1rem' : '1.4rem',
               color: 'rgba(255,255,255,0.7)',
               fontFamily: 'var(--font-body)',
-              maxWidth: '700px',
-              margin: '0 auto 2rem',
-              lineHeight: 1.6,
+              maxWidth: '850px',
+              margin: '0 auto 2.5rem',
+              lineHeight: 1.7,
             }}>
               Les entreprises qui forment leurs équipes sont 2x plus susceptibles d'innover et 3x plus compétitives sur leur marché
             </p>

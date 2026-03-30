@@ -482,17 +482,10 @@ export default function SecteursShell() {
           transition={{ duration: 0.65, delay: 0.42 }}
           style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "2.5rem" }}
         >
-          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", lineHeight: 1.6, maxWidth: "700px", margin: 0, textAlign: "justify", flex: "1 1 100%", order: 2 }} className="lg:flex-1 lg:order-1">
-            ACT intervient dans les secteurs stratégiques de l&apos;économie africaine, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.
+          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)", lineHeight: 1.6, maxWidth: "700px", margin: 0, textAlign: "justify", flex: "1 1 100%", order: 2 }} className="lg:flex-1 lg:order-1">
+            ACT intervient dans de nombreux secteurs, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.
           </p>
-          <div style={{ display: "flex", gap: "clamp(1.5rem, 5vw, 3.5rem)", flexWrap: "wrap", order: 1 }} className="lg:order-2">
-            {[{ value: "7", label: "Secteurs" }, { value: "15+", label: "Projets" }, { value: "100%", label: "Impact" }].map(({ value, label }) => (
-              <div key={label}>
-                <p style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 900, color: ORANGE, margin: 0, lineHeight: 1 }}>{value}</p>
-                <p style={{ color: "#ffffff", fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "0.4rem", opacity: 0.8 }}>{label}</p>
-              </div>
-            ))}
-          </div>
+  
         </motion.div>
       </section>
 

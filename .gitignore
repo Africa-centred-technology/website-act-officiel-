@@ -12,6 +12,8 @@ dist/
 # ─── TypeScript ──────────────────────────────────────
 *.tsbuildinfo
 next-env.d.ts
+scripts/
+exports/
 
 # ─── Environment variables ───────────────────────────
 .env

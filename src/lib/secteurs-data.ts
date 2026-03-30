@@ -54,7 +54,7 @@ export const secteurs: Secteur[] = [
     label: "Agriculture & Géomatique",
     tagline: "Connaître son territoire pour mieux le développer",
     description:
-      "On ne peut pas développer ce qu'on ne connaît pas. ACT a développé une expertise en géomatique et en Systèmes d'Information Géographique (SIG) spécifiquement adaptée aux besoins et aux contraintes du contexte africain, pour une agriculture intelligente et une gestion territoriale précise.",
+      "On ne peut pas développer ce qu'on ne connaît pas. ACT a développé une expertise en géomatique et en Systèmes d'Information Géographique (SIG) spécifiquement adaptée aux besoins et aux contraintes du client, pour une agriculture intelligente et une gestion territoriale précise.",
     icon: "🌍",
     color: "#27AE60",
     image:
