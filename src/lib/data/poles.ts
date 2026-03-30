@@ -39,7 +39,7 @@ export const POLES: Pole[] = [
     image: "/images/poles/pole-it.jpg",
     img: "/images/poles/pole-it.jpg",
     href: "/poles/developpement-technologique",
-    stats: { left: "50+", leftLabel: "Projets", right: "30+", rightLabel: "Clients" }
+    stats: { left: "Sur-mesure", leftLabel: "Ingénierie", right: "Performance", rightLabel: "Robustesse" }
   },
   {
     id: "conseil-strategie-it",
@@ -51,12 +51,12 @@ export const POLES: Pole[] = [
     tag: "Stratégie IT",
     description: "Accompagnement stratégique et opérationnel dans votre transformation numérique, de l'audit au pilotage de projets.",
     desc: "Accompagnement stratégique, audit technologique et transformation globale pour accélérer votre croissance.",
-    color: "#2563eb",
+    color: "#D35400",
     icon: Users,
     image: "/images/poles/pole-conseil.jpg",
     img: "/images/poles/pole-conseil.jpg",
     href: "/poles/conseil-strategie-it",
-    stats: { left: "100+", leftLabel: "Audits", right: "45+", rightLabel: "Entreprises" }
+    stats: { left: "Audit 360°", leftLabel: "Diagnostic", right: "Stratégie", rightLabel: "Accompagnement" }
   },
   {
     id: "formation",
@@ -68,11 +68,11 @@ export const POLES: Pole[] = [
     tag: "Transmission",
     description: "Démocratisation de l'accès aux compétences technologiques via formations certifiantes, ateliers et bootcamps.",
     desc: "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents.",
-    color: "#16a34a",
+    color: "#D35400",
     icon: GraduationCap,
     image: "/images/poles/pole-formation.jpg",
     img: "/images/poles/pole-formation.jpg",
     href: "/poles/formation",
-    stats: { left: "2000+", leftLabel: "Apprenants", right: "15+", rightLabel: "Partenaires" }
+    stats: { left: "Certifiant", leftLabel: "Parcours", right: "Innovation", rightLabel: "Impact Local" }
   },
 ];

@@ -53,51 +53,19 @@ const COLOR = "#D35400";
 
 const services = [
   {
-    icon: FileSearch,
-    title: "Audit & Diagnostic IT",
-    slug: "audit-conseil-strategie",
-    description: "Analyse approfondie de votre système d'information : infrastructure, applications, processus, sécurité et gouvernance.",
-    features: ["Audit technique complet", "Cartographie SI", "Analyse de la dette technique"],
-    image: "/images/poles/pole-conseil.jpg"
-  },
-  {
     icon: Target,
-    title: "Stratégie Digitale",
-    slug: "strategie-transformation-digitale",
-    description: "Élaboration de votre feuille de route numérique alignée sur vos objectifs business et vos contraintes opérationnelles.",
-    features: ["Roadmap technologique", "Étude d'opportunité", "Plan de transformation"],
+    title: "Conseil Stratégique & Transformation",
+    slug: "conseil-strategique",
+    description: "La stratégie avant l'outil. Nous définissons votre vision cible et votre feuille de route digitale avant tout investissement technologique.",
+    features: ["Audit de maturité digitale", "Roadmap stratégique", "Conduite du changement"],
     image: "/images/poles/pole-conseil.jpg"
   },
   {
     icon: Briefcase,
-    title: "Pilotage de Projets IT",
-    slug: "audit-conseil-strategie",
-    description: "Gestion de bout en bout de vos projets technologiques : cadrage, planification, coordination et suivi.",
-    features: ["PMO dédié", "Méthodologie Agile/SCRUM", "Reporting transparent"],
-    image: "/images/poles/pole-conseil.jpg"
-  },
-  {
-    icon: TrendingUp,
-    title: "Optimisation des Coûts IT",
-    slug: "audit-conseil-strategie",
-    description: "Rationalisation de vos dépenses technologiques et amélioration du ROI de vos investissements IT.",
-    features: ["Analyse TCO", "Renegociation contrats", "Cloud cost optimization"],
-    image: "/images/poles/pole-conseil.jpg"
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovation & R&D",
-    slug: "audit-conseil-strategie",
-    description: "Veille technologique, POC et accompagnement dans l'adoption de technologies émergentes (IA, Blockchain, IoT).",
-    features: ["Prototypage rapide", "Proof of Concept", "Transfert de compétences"],
-    image: "/images/poles/pole-conseil.jpg"
-  },
-  {
-    icon: Shield,
-    title: "Gouvernance & Conformité",
-    slug: "audit-conseil-strategie",
-    description: "Mise en place de frameworks de gouvernance IT (ITIL, COBIT) et accompagnement à la conformité réglementaire.",
-    features: ["RGPD compliance", "ISO 27001", "Politiques de sécurité"],
+    title: "Conseil Opérationnel & Métier",
+    slug: "conseil-operationnel",
+    description: "L'excellence opérationnelle au service de la performance. Nous optimisons vos processus métiers réels avant de les numériser.",
+    features: ["Business Analysis terrain", "Optimisation des processus BPMN", "Alignement Stratégie-Outil"],
     image: "/images/poles/pole-conseil.jpg"
   },
 ];
@@ -257,86 +225,7 @@ export default function PoleConseilShell() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section style={{
-        padding: screenSize === 'mobile' ? '3rem 1.5rem' : '6rem 4rem 4rem',
-        maxWidth: '1400px',
-        margin: '0 auto',
-      }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
-        >
-          <h2 style={{
-            fontSize: screenSize === 'mobile' ? '1.5rem' : '2.2rem',
-            fontWeight: 800,
-            color: '#fff',
-            fontFamily: 'var(--font-display)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            lineHeight: 1.2
-          }}>
-            L'impact pour les entreprises qui <br />
-            <span style={{ color: COLOR }}>nous font confiance</span>
-          </h2>
-          <div style={{
-            width: '60px',
-            height: '2px',
-            background: COLOR,
-            margin: '1.5rem auto 0',
-            borderRadius: '1px'
-          }} />
-        </motion.div>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-          gap: screenSize === 'mobile' ? '2rem' : '3rem',
-          textAlign: 'center',
-        }}>
-          {[
-            { value: "100+", label: "Audits réalisés" },
-            { value: "45+", label: "Entreprises accompagnées" },
-            { value: "200+", label: "Projets pilotés" },
-            { value: "95%", label: "Taux de satisfaction" },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              style={{
-                padding: '2rem',
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                borderRadius: '1rem',
-              }}
-            >
-              <div style={{
-                fontSize: screenSize === 'mobile' ? '2.5rem' : '3.5rem',
-                fontWeight: 900,
-                color: COLOR,
-                fontFamily: 'var(--font-display)',
-                lineHeight: 1,
-                marginBottom: '0.5rem',
-              }}>
-                {stat.value}
-              </div>
-              <div style={{
-                fontSize: screenSize === 'mobile' ? '0.85rem' : '0.95rem',
-                color: 'rgba(255,255,255,0.6)',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-              }}>
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* ── Services Section ── */}
 
       {/* Services Grid */}
       <section id="services" style={{

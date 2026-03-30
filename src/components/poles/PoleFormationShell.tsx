@@ -28,6 +28,7 @@ import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { blogPosts } from "@/lib/blog-data";
 import { FORMATIONS } from "@/lib/data/formations";
+import CTAButton from "@/components/ui/CTAButton";
 
 /* ── Background layers ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
@@ -212,7 +213,7 @@ export default function PoleFormationShell() {
               fontFamily: 'var(--font-body)'
             }}
           >
-            Nous formons les talents qui construiront l'Afrique digitale de demain.
+            Former vos équipes pour construire une entreprise plus performante.
             Formations certifiantes, bootcamps intensifs et mentorat personnalisé pour accélérer votre carrière tech.
           </motion.p>
 
@@ -281,86 +282,149 @@ export default function PoleFormationShell() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Why Training Matters Section */}
       <section style={{
-        padding: screenSize === 'mobile' ? '3rem 1.5rem' : '6rem 4rem 4rem',
-        maxWidth: '1400px',
-        margin: '0 auto',
+        padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
+        background: 'rgba(255,255,255,0.02)',
       }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
-        >
-          <h2 style={{
-            fontSize: screenSize === 'mobile' ? '1.5rem' : '2.2rem',
-            fontWeight: 800,
-            color: '#fff',
-            fontFamily: 'var(--font-display)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            lineHeight: 1.2
-          }}>
-           Pourquoi choisir les formations de <br />
-            <span style={{ color: COLOR }}>ACT</span>
-          </h2>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ textAlign: 'center', marginBottom: '4rem' }}
+          >
+            <h2 style={{
+              fontSize: screenSize === 'mobile' ? '1.8rem' : '2.5rem',
+              fontWeight: 900,
+              color: '#fff',
+              fontFamily: 'var(--font-display)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              lineHeight: 1.2,
+              marginBottom: '1rem',
+            }}>
+              Pourquoi se former est <span style={{ color: COLOR }}>essentiel</span> aujourd'hui ?
+            </h2>
+            <p style={{
+              fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
+              color: 'rgba(255,255,255,0.65)',
+              maxWidth: '800px',
+              margin: '0 auto',
+              fontFamily: 'var(--font-body)',
+              lineHeight: 1.6,
+            }}>
+              Dans un monde en constante évolution, la formation continue n'est plus un luxe, c'est une nécessité stratégique
+            </p>
+          </motion.div>
+
           <div style={{
-            width: '60px',
-            height: '2px',
-            background: COLOR,
-            margin: '1.5rem auto 0',
-            borderRadius: '1px'
-          }} />
-        </motion.div>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-          gap: screenSize === 'mobile' ? '2rem' : '3rem',
-          textAlign: 'center',
-        }}>
-          {[
-            { value: "2000+", label: "Apprenants formés" },
-            { value: "15+", label: "Entreprises partenaires" },
-            { value: "100+", label: "Modules disponibles" },
-            { value: "85%", label: "Taux d'insertion pro" },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              style={{
-                padding: '2rem',
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                borderRadius: '1rem',
-              }}
-            >
-              <div style={{
-                fontSize: screenSize === 'mobile' ? '2.5rem' : '3.5rem',
-                fontWeight: 900,
-                color: COLOR,
-                fontFamily: 'var(--font-display)',
-                lineHeight: 1,
-                marginBottom: '0.5rem',
-              }}>
-                {stat.value}
-              </div>
-              <div style={{
-                fontSize: screenSize === 'mobile' ? '0.85rem' : '0.95rem',
-                color: 'rgba(255,255,255,0.6)',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-              }}>
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
+            display: 'grid',
+            gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+            gap: screenSize === 'mobile' ? '2rem' : '2.5rem',
+          }}>
+            {[
+              {
+                icon: TrendingUp,
+                stat: "87%",
+                label: "Des emplois de demain",
+                description: "nécessiteront des compétences qui n'existent pas encore aujourd'hui"
+              },
+              {
+                icon: Zap,
+                stat: "5 ans",
+                label: "Durée de vie d'une compétence",
+                description: "contre 30 ans il y a 20 ans. La formation continue est vitale"
+              },
+              {
+                icon: Target,
+                stat: "+40%",
+                label: "De productivité",
+                description: "pour les équipes formées aux nouveaux outils et technologies"
+              },
+              {
+                icon: Users,
+                stat: "94%",
+                label: "Des salariés",
+                description: "resteraient plus longtemps dans une entreprise qui investit dans leur formation"
+              },
+            ].map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  style={{
+                    padding: screenSize === 'mobile' ? '2rem 1.5rem' : '2.5rem',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '1rem',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                  }}
+                  whileHover={{
+                    borderColor: `${COLOR}66`,
+                    y: -8,
+                    boxShadow: `0 12px 40px ${COLOR}22`,
+                  }}
+                >
+                  <div style={{
+                    width: '4rem',
+                    height: '4rem',
+                    borderRadius: '50%',
+                    background: `${COLOR}22`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1.5rem',
+                  }}>
+                    <Icon size={28} color={COLOR} />
+                  </div>
+
+                  <div style={{
+                    fontSize: screenSize === 'mobile' ? '2.5rem' : '3.2rem',
+                    fontWeight: 900,
+                    color: COLOR,
+                    fontFamily: 'var(--font-display)',
+                    lineHeight: 1,
+                    marginBottom: '0.75rem',
+                  }}>
+                    {item.stat}
+                  </div>
+
+                  <div style={{
+                    fontSize: screenSize === 'mobile' ? '0.95rem' : '1.05rem',
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontFamily: 'var(--font-display)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '1rem',
+                  }}>
+                    {item.label}
+                  </div>
+
+                  <p style={{
+                    fontSize: '0.9rem',
+                    color: 'rgba(255,255,255,0.55)',
+                    fontFamily: 'var(--font-body)',
+                    lineHeight: 1.5,
+                  }}>
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+
+        
         </div>
       </section>
+
+      {/* ── Programs Section ── */}
 
       {/* Programs Grid */}
       <section id="programs" style={{
@@ -531,6 +595,45 @@ export default function PoleFormationShell() {
           })}
         </div>
       </section>
+
+        {/* Call-to-action */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            style={{
+              marginTop: '4rem',
+              textAlign: 'center',
+              padding: screenSize === 'mobile' ? '2rem 1.5rem' : '3rem',
+              background: `linear-gradient(135deg, ${COLOR}15, ${COLOR}08)`,
+              border: `1px solid ${COLOR}33`,
+              borderRadius: '1rem',
+            }}
+          >
+            <h3 style={{
+              fontSize: screenSize === 'mobile' ? '1.3rem' : '1.8rem',
+              fontWeight: 800,
+              color: '#fff',
+              fontFamily: 'var(--font-display)',
+              marginBottom: '1rem',
+            }}>
+              L'investissement dans la formation, c'est l'investissement dans l'avenir
+            </h3>
+            <p style={{
+              fontSize: screenSize === 'mobile' ? '1rem' : '1.1rem',
+              color: 'rgba(255,255,255,0.7)',
+              fontFamily: 'var(--font-body)',
+              maxWidth: '700px',
+              margin: '0 auto 2rem',
+              lineHeight: 1.6,
+            }}>
+              Les entreprises qui forment leurs équipes sont 2x plus susceptibles d'innover et 3x plus compétitives sur leur marché
+            </p>
+            <CTAButton href="/formations">
+              Voir toutes nos formations
+            </CTAButton>
+          </motion.div>
 
       {/* Pedagogy */}
       <section style={{

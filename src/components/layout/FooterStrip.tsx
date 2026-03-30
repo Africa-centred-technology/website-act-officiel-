@@ -48,7 +48,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
               style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
               onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}>
-              <Phone size={18} strokeWidth={1.6} />+212 694-528498
+              <Phone size={18} strokeWidth={1.6} />+212 662-777507
             </a>
             <span style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", opacity: 0.7 }}>
               <MapPin size={18} strokeWidth={1.6} />Casablanca, Maroc

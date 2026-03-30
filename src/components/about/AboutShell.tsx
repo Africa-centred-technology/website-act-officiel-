@@ -45,14 +45,14 @@ const MANIFESTO =
   "La technologie n'a de valeur que lorsqu'elle crée un impact réel. Nous ne nous contentons pas d'implémenter des technologies. Nous concevons des solutions qui créent de la valeur durable pour les organisations. En combinant intelligence artificielle, analyse de données et automatisation, nous aidons les entreprises à transformer leurs défis en opportunités et à construire les systèmes qui soutiendront leur croissance de demain.";
 
 const VALUES = [
-  { n: "01", title: "Innovation",    color: "#D35400",
-    desc: "Nous repoussons constamment les limites pour créer des solutions avant-gardistes qui anticipent les besoins de demain." },
-  { n: "02", title: "Excellence",    color: "#F39C12",
-    desc: "Chaque projet bénéficie de notre engagement indéfectible envers la qualité et les standards les plus élevés de l'industrie." },
-  { n: "03", title: "Impact Global", color: "#2C4A35",
-    desc: "Nous connectons l'Afrique au monde en exportant l'innovation africaine à l'échelle internationale." },
-  { n: "04", title: "Intégrité",     color: "#D35400",
-    desc: "Transparence, honnêteté et éthique guident chacune de nos interactions, construisant des partenariats durables." },
+  { n: "01", title: "Collaboration",    color: "#D35400",
+    desc: "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences." },
+  { n: "02", title: "Transmission",    color: "#F39C12",
+    desc: "Nous partageons nos connaissances et nos compétences pour renforcer les capacités locales et favoriser l'autonomie des entreprises." },
+  { n: "03", title: "Excellence", color: "#2C4A35",
+    desc: "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet." },
+  { n: "04", title: "Innovation",     color: "#D35400",
+    desc: "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets." },
 ];
 
 const TIMELINE = [

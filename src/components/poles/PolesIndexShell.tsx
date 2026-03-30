@@ -266,38 +266,44 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
             <div className="flex gap-6 mb-4">
               <div>
                 <p style={{
-                  fontSize: '1.8rem',
+                  fontSize: '1.6rem',
                   fontWeight: 900,
                   color: pole.color,
-                  lineHeight: 1,
+                  lineHeight: 1.1,
                   fontFamily: 'var(--font-display)',
+                  textTransform: 'uppercase',
                 }}>
                   {pole.stats.left}
                 </p>
                 <p style={{
-                  fontSize: '0.85rem',
+                  fontSize: '0.8rem',
                   color: 'rgba(255,255,255,0.45)',
                   marginTop: '0.25rem',
                   fontFamily: 'var(--font-body)',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
                 }}>
                   {pole.stats.leftLabel}
                 </p>
               </div>
               <div>
                 <p style={{
-                  fontSize: '1.8rem',
+                  fontSize: '1.6rem',
                   fontWeight: 900,
                   color: pole.color,
-                  lineHeight: 1,
+                  lineHeight: 1.1,
                   fontFamily: 'var(--font-display)',
+                  textTransform: 'uppercase',
                 }}>
                   {pole.stats.right}
                 </p>
                 <p style={{
-                  fontSize: '0.85rem',
+                  fontSize: '0.8rem',
                   color: 'rgba(255,255,255,0.45)',
                   marginTop: '0.25rem',
                   fontFamily: 'var(--font-body)',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
                 }}>
                   {pole.stats.rightLabel}
                 </p>
