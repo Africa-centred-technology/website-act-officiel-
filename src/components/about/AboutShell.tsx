@@ -42,7 +42,7 @@ const STATS = [
 ];
 
 const MANIFESTO =
-  "La technologie n'a de valeur que lorsqu'elle crée un impact réel. Nous ne nous contentons pas d'implémenter des technologies. Nous concevons des solutions qui créent de la valeur durable pour les organisations. En combinant intelligence artificielle, analyse de données et automatisation, nous aidons les entreprises à transformer leurs défis en opportunités et à construire les systèmes qui soutiendront leur croissance de demain.";
+  "La technologie n'a de valeur que lorsqu'elle crée un impact concret et mesurable. Chez ACT, nous ne nous contentons pas d'implémenter des outils : nous concevons des architectures systèmes qui optimisent le ROI et soutiennent la scalabilité des organisations. En combinant Intelligence Artificielle avancée, Ingénierie de Données et Automatisation Industrielle, nous transformons les défis technologiques complexes en avantages compétitifs durables.";
 
 const VALUES = [
   { n: "01", title: "Collaboration",    color: "#D35400",
@@ -65,6 +65,7 @@ const TIMELINE = [
   { year: "2026", title: "Cap 2030",      color: "#D35400",
     desc: "Consolidation de notre vision pan-africaine avec une équipe dynamique, agile et résolument tournée vers l'avenir du continent." },
 ];
+
 
 const TEAM: TeamMember[] = [
   {
@@ -286,7 +287,7 @@ function SectionHero() {
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
           <defs><path id="op01" d="M 50,50 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" /></defs>
           <text style={{ fontSize: "3.0", fill: "rgba(255,255,255,0.07)", fontWeight: 900, letterSpacing: "1.2", textTransform: "uppercase", fontFamily: "inherit" }}>
-            <textPath href="#op01">{"ACT · AFRICA CENTRED TECHNOLOGY · IA AFRICAINE · "}{" ACT · AFRICA CENTRED TECHNOLOGY · IA AFRICAINE · "}</textPath>
+          <textPath href="#op01">{"ACT · AFRICA CENTRED TECHNOLOGY · GLOBAL EXCELLENCE · "}{" ACT · AFRICA CENTRED TECHNOLOGY · GLOBAL EXCELLENCE · "}</textPath>
           </text>
         </svg>
       </motion.div>
@@ -298,7 +299,7 @@ function SectionHero() {
           initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.60, delay: 0.04 }}>
           <span className="diamond diamond--sm" />
           <span className="text-white/40 uppercase" style={{ fontSize: "1.05rem", letterSpacing: "0.32em" }}>
-            Africa Centred Technology · Fondée en 2026
+            Africa Centred Technology · Expertise & Ingénierie
           </span>
         </motion.div>
 
@@ -306,8 +307,8 @@ function SectionHero() {
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
             {[
-              { word: "NOTRE",   color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
-              { word: "HISTOIRE",color: "#D35400",  size: "clamp(2rem,  4.5vw, 6.5rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
+              { word: "NOTRE",   color: "#ffffff",            size: "clamp(2rem, 4.5vw, 6.5rem)",  fx: "rollIn",   delay: 0.10, stagger: 0.040 },
+              { word: "EXPERTISE",color: "#D35400",           size: "clamp(3.5rem, 8vw, 11rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
             ].map(({ word, color, size, fx, delay, stagger }) => (
               <div key={word} style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-end" }}>
                 {word.split("").map((ch, i) => {
@@ -334,11 +335,11 @@ function SectionHero() {
         {/* Rule + subtitle + CTAs */}
         <motion.div style={{ height: 1, background: "rgba(211,84,0,0.55)", originX: 0, marginTop: "2.8rem", marginBottom: "2rem" }}
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }} />
-        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "44rem" }}
+        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.6, maxWidth: "42rem" }}
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
-          Depuis 2026, nous accompagnons les entreprises africaines pour en faire
-          des leaders technologiques mondiaux — avec l&apos;énergie d&apos;une startup et
-          une compréhension profonde du continent.
+          Nous accompagnons les organisations dans leur transformation numérique
+          en déployant des solutions d&apos;intelligence artificielle et d&apos;ingénierie de données
+          de haut niveau — conçues pour la performance et le passage à l&apos;échelle.
         </motion.p>
         <motion.div className="flex flex-wrap items-center gap-8 mt-10"
           style={{ x: fgX, y: fgY }}
@@ -349,9 +350,9 @@ function SectionHero() {
             <div className="cta-btn__background" />
             <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">L'Équipe</span></div>
           </a>
-          <a href="#parcours" className="flex items-center gap-3 text-white/50 hover:text-white transition-colors uppercase"
+          <a href="#expertise" className="flex items-center gap-3 text-white/50 hover:text-white transition-colors uppercase"
             style={{ fontSize: "1.15rem", letterSpacing: "0.12em" }}>
-            <span className="diamond diamond--sm" />Notre parcours
+            <span className="diamond diamond--sm" />Notre approche
           </a>
         </motion.div>
       </motion.div>
@@ -500,7 +501,7 @@ function SectionADN() {
       <ScanLine />
       <AmbiantLines positions={["12%", "88%"]} />
 
-      <SectionHeader eyebrow="Notre ADN · Notre Mission" title="NOTRE ADN" midX={midX} midY={midY} />
+      <SectionHeader eyebrow="Vision · Impact · Expertise" title="NOTRE ADN" midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* Word-by-word manifesto */}
@@ -545,7 +546,7 @@ function SectionValues() {
       style={{ minHeight: "100vh" }}>
       <ScanLine />
 
-      <SectionHeader eyebrow="Ce qui nous anime" title="NOS VALEURS" midX={midX} midY={midY} />
+      <SectionHeader eyebrow="Nos piliers d'excellence" title="NOS STANDARDS" midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* 2×2 grid — each card from its own corner like RoomGalerie */}
@@ -568,9 +569,9 @@ function SectionValues() {
               <div className="absolute inset-0 flex flex-col justify-end" style={{ padding: "2.5rem" }}>
                 <div className="flex items-center gap-2 mb-3">
                   <span className="diamond diamond--sm" style={{ background: v.color }} />
-                  <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                    Valeur ACT
-                  </span>
+                    <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
+                      Standard ACT
+                    </span>
                 </div>
                 <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 3vw, 3.5rem)", lineHeight: 1.05 }}>
                   {v.title}
@@ -609,80 +610,6 @@ function SectionValues() {
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   SECTION 05 — NOTRE PARCOURS  (musée / timeline)
-   ══════════════════════════════════════════════════════════════════════ */
-function SectionTimeline() {
-  const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
-  const [active, setActive] = useState<string | null>(null);
-
-  return (
-    <section id="parcours" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
-      style={{ minHeight: "100vh" }}>
-      <ScanLine />
-      <AmbiantLines positions={["10%", "90%"]} />
-
-      <SectionHeader eyebrow="Notre parcours · 2023–2026" title="LE PARCOURS" midX={midX} midY={midY} />
-      <OrangeRule />
-
-      {/* Timeline — accordion accordion style (expand on hover/click) */}
-      <div className="flex-1 flex flex-col gap-2" style={{ minHeight: 0 }}>
-        {TIMELINE.map((item, i) => (
-          <motion.div key={item.year}
-            initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            transition={{ delay: 0.06 * i, duration: 0.7, ease: [...EASE3D] }}
-            onClick={() => setActive(active === item.year ? null : item.year)}
-            className="relative overflow-hidden cursor-pointer flex-1"
-            style={{ minHeight: active === item.year ? "auto" : "auto",
-              background: "rgba(8,18,32,0.72)", border: "1px solid rgba(255,255,255,0.06)",
-              borderLeft: `3px solid ${item.color}`,
-              transition: "flex 0.6s cubic-bezier(0.6,0.08,0.02,0.99)" }}>
-            {/* Scanner */}
-            <motion.div style={{ position: "absolute", bottom: 0, left: 0, height: "2px", width: "100%",
-              background: `linear-gradient(to right, transparent, ${item.color}, transparent)`,
-              boxShadow: `0 0 18px ${item.color}88` }}
-              animate={{ x: ["-100%", "200%"], opacity: [0, 1, 0] }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: i * 0.6 }} />
-
-            <div className="flex items-center gap-6" style={{ padding: "2rem 3rem" }}>
-              {/* Year */}
-              <motion.span className="font-black select-none flex-shrink-0"
-                style={{ fontSize: "clamp(3rem, 5vw, 7rem)", color: item.color, lineHeight: 1,
-                  opacity: active === item.year ? 1 : 0.35, transition: "opacity 0.4s" }}>
-                {item.year}
-              </motion.span>
-
-              {/* Separator */}
-              <div style={{ width: 1, height: "3rem", background: `${item.color}44`, flexShrink: 0 }} />
-
-              {/* Title */}
-              <div style={{ flex: 1 }}>
-                <span className="font-black uppercase text-white" style={{ fontSize: "clamp(1.5rem, 2.5vw, 3rem)", letterSpacing: "0.06em" }}>
-                  {item.title}
-                </span>
-                <AnimatePresence>
-                  {active === item.year && (
-                    <motion.p initial={{ opacity: 0, height: 0, y: -10 }} animate={{ opacity: 1, height: "auto", y: 0 }}
-                      exit={{ opacity: 0, height: 0, y: -10 }} transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="text-white/60" style={{ fontSize: "clamp(1.1rem, 1.5vw, 1.6rem)", lineHeight: 1.7, marginTop: "0.8rem" }}>
-                      {item.desc}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Arrow indicator */}
-              <motion.div animate={{ rotate: active === item.year ? 45 : 0 }}
-                transition={{ duration: 0.3 }}
-                style={{ width: "1.4rem", height: "1.4rem", background: item.color, transform: "rotate(-43deg)", flexShrink: 0 }} />
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -792,7 +719,6 @@ export default function AboutShell() {
         <SectionStats />
         <SectionADN />
         <SectionValues />
-        <SectionTimeline />
         <TeamSection team={TEAM} />
         <SectionCTA />
         <FooterStrip />
