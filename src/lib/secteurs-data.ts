@@ -49,25 +49,7 @@ export const secteurs: Secteur[] = [
     ],
     chiffre: { value: "+25%", label: "de revenus générés via les services digitaux" },
   },
-  {
-    slug: "agriculture",
-    label: "Agriculture & Géomatique",
-    tagline: "Piloter les territoires par la donnée",
-    description:
-      "La maîtrise des données territoriales est devenue un levier clé pour optimiser les performances agricoles et la gestion des ressources. ACT accompagne les organisations dans l’exploitation des technologies géospatiales et des Systèmes d’Information Géographique (SIG) afin d’améliorer la prise de décision, anticiper les évolutions et maximiser les rendements de manière durable.",
-    icon: "🌍",
-    color: "#27AE60",
-    image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=80",
-    services: [
-      "Cartographies numériques par données satellitaires",
-      "SIG pour planification urbaine & rurale",
-      "Suivi satellitaire des ressources naturelles",
-      "Agriculture de précision & estimation des rendements",
-      "Formation des agents publics aux outils SIG",
-    ],
-    chiffre: { value: "+20%", label: "d’optimisation des rendements agricoles" },
-  },
+ 
   {
     slug: "finance",
     label: "Finance & FinTech",
@@ -111,25 +93,6 @@ export const secteurs: Secteur[] = [
   },
 
   {
-    slug: "secteur-public",
-    label: "Secteur Public",
-    tagline: "Construire l'État africain du XXIe siècle",
-    description:
-      "La transformation digitale des États africains n'est pas seulement un enjeu d'efficacité administrative. C'est un enjeu de légitimité, de gouvernance et de développement économique. ACT accompagne les ministères, agences publiques et institutions gouvernementales africaines dans leur transformation numérique.",
-    icon: "🏛️",
-    color: "#E74C3C",
-    image:
-      "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=2400&q=80",
-    services: [
-      "Systèmes intégrés de gestion publique",
-      "E-gouvernement & services citoyens en ligne",
-      "Gouvernance numérique & cadres réglementaires",
-      "Formation des agents publics au digital",
-      "Ouverture des données gouvernementales (Open Data)",
-    ],
-    chiffre: { value: "100%", label: "des services publics peuvent être digitalisés" },
-  },
-  {
   slug: "sante",
   label: "Santé & MedTech",
   tagline: "Transformer les systèmes de santé par le digital",
@@ -148,4 +111,42 @@ export const secteurs: Secteur[] = [
   ],
   chiffre: { value: "+40%", label: "d’amélioration de l’efficacité des processus de soins" },
 },
+{
+  slug: "immobilier",
+  label: "Immobilier & PropTech",
+  tagline: "Optimiser les décisions immobilières par la donnée",
+  description:
+    "Le secteur immobilier évolue vers un modèle piloté par la donnée, où chaque décision d’investissement, de gestion ou de valorisation repose sur des analyses précises et en temps réel. ACT accompagne les promoteurs, investisseurs et gestionnaires d’actifs dans la digitalisation de leurs processus, l’optimisation de leurs portefeuilles et l’amélioration de la performance des actifs immobiliers.",
+  icon: "🏢",
+  color: "#34495E",
+  image:
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2400&q=80",
+  services: [
+    "Analyse de données immobilières & aide à l’investissement",
+    "Plateformes de gestion de biens (Property Management)",
+    "Modélisation des prix & prévision des tendances",
+    "Digitalisation des transactions & parcours client",
+    "Tableaux de bord de performance des actifs",
+  ],
+  chiffre: { value: "+25%", label: "d’optimisation de la rentabilité des actifs" },
+},
+{
+  slug: "education",
+  label: "Éducation & EdTech",
+  tagline: "Accélérer la transformation éducative par le digital",
+  description:
+    "L’éducation est le principal levier de développement des sociétés. Dans un monde en mutation rapide, les technologies digitales offrent des opportunités inédites pour transformer les systèmes éducatifs, améliorer l’accès au savoir et développer les compétences du futur. ACT accompagne les institutions éducatives, les organismes de formation et les acteurs EdTech dans la conception et le déploiement de solutions innovantes, centrées sur l’apprenant et alignées sur les enjeux du XXIe siècle.",
+  icon: "🎓",
+  color: "#2980B9",
+  image:
+    "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=2400&q=80",
+  services: [
+    "Plateformes d’apprentissage en ligne (LMS) & blended learning",
+    "Digitalisation des parcours étudiants & gestion administrative",
+    "Outils pédagogiques innovants & réalité augmentée",
+    "Analyse de données d’apprentissage & IA pour la personnalisation",
+    "Formation des enseignants aux outils numériques",
+  ],
+  chiffre: { value: "+35%", label: "d’amélioration de l’engagement des apprenants" },
+}
 ];
