@@ -222,7 +222,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
             transition={{ duration: 0.85, delay: 0.18, ease: [...EASE] }}
             style={{ fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
           >
-            NOS PÔLES
+            NOS SERVICES
             <br />
             <span style={{ color: ORANGE }}>D&apos;EXPERTISE</span>
           </motion.h1>
@@ -235,7 +235,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}
         >
           <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "680px", margin: 0, textAlign: "justify", flex: 1 }}>
-            ACT déploie trois pôles complémentaires — Ingénierie Technologique, Conseil &amp; Formation — pour couvrir l&apos;intégralité des besoins de transformation digitale des entreprises africaines.
+            ACT déploie des services complémentaires pour couvrir l&apos;intégralité des besoins de transformation digitale des entreprises.
           </p>
             {[
               { label: "Pôle I · Ingénierie", color: ORANGE },

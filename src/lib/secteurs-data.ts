@@ -129,4 +129,23 @@ export const secteurs: Secteur[] = [
     ],
     chiffre: { value: "100%", label: "des services publics peuvent être digitalisés" },
   },
+  {
+  slug: "sante",
+  label: "Santé & MedTech",
+  tagline: "Transformer les systèmes de santé par le digital",
+  description:
+    "Le secteur de la santé connaît une تحول profonde portée par les technologies digitales, la data et l’intelligence artificielle. ACT accompagne les établissements de santé, les organismes publics et les acteurs MedTech dans la modernisation de leurs systèmes, l’amélioration des parcours patients et l’optimisation des performances opérationnelles, tout en garantissant la sécurité et la conformité des données.",
+  icon: "🏥",
+  color: "#E84393",
+  image:
+    "https://images.unsplash.com/photo-1580281657527-47a7d9c1d09b?auto=format&fit=crop&w=2400&q=80",
+  services: [
+    "Digitalisation des parcours patients & dossiers médicaux",
+    "Systèmes d’information hospitaliers (SIH)",
+    "Analyse de données de santé & aide à la décision",
+    "Solutions de télémédecine & suivi à distance",
+    "Sécurité, conformité & gestion des données sensibles",
+  ],
+  chiffre: { value: "+40%", label: "d’amélioration de l’efficacité des processus de soins" },
+},
 ];

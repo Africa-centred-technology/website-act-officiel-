@@ -287,7 +287,7 @@ function SectionHero() {
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
           <defs><path id="op01" d="M 50,50 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" /></defs>
           <text style={{ fontSize: "3.0", fill: "rgba(255,255,255,0.07)", fontWeight: 900, letterSpacing: "1.2", textTransform: "uppercase", fontFamily: "inherit" }}>
-          <textPath href="#op01">{"ACT · AFRICA CENTRED TECHNOLOGY · GLOBAL EXCELLENCE · "}{" ACT · AFRICA CENTRED TECHNOLOGY · GLOBAL EXCELLENCE · "}</textPath>
+            <textPath href="#op01">{"ACT · AFRICA CENTRED TECHNOLOGY · IA AFRICAINE · "}{" ACT · AFRICA CENTRED TECHNOLOGY · IA AFRICAINE · "}</textPath>
           </text>
         </svg>
       </motion.div>
@@ -307,8 +307,8 @@ function SectionHero() {
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
             {[
-              { word: "NOTRE",   color: "#ffffff",            size: "clamp(2rem, 4.5vw, 6.5rem)",  fx: "rollIn",   delay: 0.10, stagger: 0.040 },
-              { word: "EXPERTISE",color: "#D35400",           size: "clamp(3.5rem, 8vw, 11rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
+              { word: "NOTRE",   color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
+              { word: "EXPERTISE",color: "#D35400",  size: "clamp(2rem,  4.5vw, 6.5rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
             ].map(({ word, color, size, fx, delay, stagger }) => (
               <div key={word} style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-end" }}>
                 {word.split("").map((ch, i) => {
@@ -335,7 +335,7 @@ function SectionHero() {
         {/* Rule + subtitle + CTAs */}
         <motion.div style={{ height: 1, background: "rgba(211,84,0,0.55)", originX: 0, marginTop: "2.8rem", marginBottom: "2rem" }}
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }} />
-        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.6, maxWidth: "42rem" }}
+        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "44rem" }}
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
           Nous accompagnons les organisations dans leur transformation numérique
           en déployant des solutions d&apos;intelligence artificielle et d&apos;ingénierie de données
