@@ -121,7 +121,7 @@ export default function RoomBlog() {
                                         <div className="flex items-center gap-2">
                                             <span className="w-6 h-px bg-[#D35400]" />
                                             <span className="text-[#D35400] font-bold uppercase tracking-widest" style={{
-                                                fontSize: screenSize === 'mobile' ? 'clamp(0.65rem, 2.5vw, 0.8rem)' : '0.9rem',
+                                                fontSize: screenSize === 'mobile' ? 'clamp(0.75rem, 2.5vw, 0.9rem)' : '1rem',
                                             }}>
                                                 {post.category}
                                             </span>
@@ -129,14 +129,14 @@ export default function RoomBlog() {
                                         {/* Titre */}
                                         <h3 className="text-white font-bold leading-tight group-hover:text-[#D35400] transition-colors line-clamp-2" style={{
                                             fontFamily: "var(--font-display)",
-                                            fontSize: screenSize === 'mobile' ? 'clamp(1rem, 4vw, 1.4rem)' : screenSize === 'tablet' ? 'clamp(1.1rem, 3vw, 1.5rem)' : '1.5rem',
+                                            fontSize: screenSize === 'mobile' ? 'clamp(1.1rem, 4vw, 1.5rem)' : screenSize === 'tablet' ? 'clamp(1.2rem, 3vw, 1.7rem)' : '1.85rem',
                                         }}>
                                             {post.title}
                                         </h3>
                                         {/* Excerpt */}
-                                        <p className="text-white/55 leading-relaxed line-clamp-2" style={{
+                                        <p className="text-white/65 leading-relaxed line-clamp-2" style={{
                                             fontFamily: "var(--font-body)",
-                                            fontSize: screenSize === 'mobile' ? 'clamp(0.85rem, 3.5vw, 1rem)' : '0.95rem',
+                                            fontSize: screenSize === 'mobile' ? 'clamp(0.9rem, 3.5vw, 1.05rem)' : '1.1rem',
                                         }}>
                                             {post.excerpt}
                                         </p>

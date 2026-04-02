@@ -375,8 +375,8 @@ export default function RoomPortail() {
                     <div className="h-20" />
 
                     {/* Section: Ils nous font confiance - Défilement infini */}
-                    <div className="w-full pt-12 pb-6 border-t border-white/10">
-                        <h3 className="text-white/60 text-center text-sm uppercase tracking-widest mb-10 px-12" style={{ fontFamily: "var(--font-display)" }}>
+                    <div className="w-full pt-12 pb-8 border-t border-white/10">
+                        <h3 className="text-white/80 text-center uppercase tracking-widest mb-12 px-12" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.3em" }}>
                             Ils nous ont fait confiance
                         </h3>
                         <div className="relative overflow-hidden before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-24 before:bg-gradient-to-r before:from-black before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-24 after:bg-gradient-to-l after:from-black after:to-transparent">
@@ -389,7 +389,7 @@ export default function RoomPortail() {
                                     x: {
                                         repeat: Infinity,
                                         repeatType: "loop",
-                                        duration: 25,
+                                        duration: 45,
                                         ease: "linear",
                                     },
                                 }}
@@ -400,13 +400,15 @@ export default function RoomPortail() {
                                         {[...clients, ...clients, ...clients, ...clients, ...clients, ...clients].map((client, idx) => (
                                             <div
                                                 key={`logo-${setIdx}-${idx}`}
-                                                className="flex-shrink-0 w-28 h-16 flex items-center justify-center"
+                                                className="flex-shrink-0 flex items-center justify-center"
+                                                style={{ width: '100px', height: '60px' }}
                                             >
-                                                <div className="w-28 h-16 bg-white rounded-lg p-3 flex items-center justify-center shadow-lg">
+                                                <div className="bg-white rounded-lg flex items-center justify-center shadow-lg" style={{ width: '100px', height: '60px', padding: '0.5rem' }}>
                                                     <img
                                                         src={client.logo}
                                                         alt={client.name}
-                                                        className="max-w-full max-h-full object-contain"
+                                                        className="object-contain"
+                                                        style={{ maxWidth: '100%', maxHeight: '100%' }}
                                                     />
                                                 </div>
                                             </div>

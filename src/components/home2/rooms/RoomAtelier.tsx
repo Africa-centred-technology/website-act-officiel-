@@ -55,9 +55,9 @@ const LAYOUT = [
   { delay: 0.30, marginLeft: "0%", titleW: "38%", descW: "36%", numSize: "clamp(4rem,7vw,8rem)", flip: false },
 ];
 
-function NumBlock({ n, hovered, size, img }: { n: string; hovered: boolean; size: string; img: string }) {
+function NumBlock({ n, hovered, size, img, href }: { n: string; hovered: boolean; size: string; img: string; href: string }) {
   return (
-    <div aria-hidden style={{ position: "relative", flexShrink: 0, width: "clamp(7rem,11vw,13rem)" }}>
+    <Link href={href} aria-label="Voir le pôle" style={{ display: "block", position: "relative", flexShrink: 0, width: "clamp(7rem,11vw,13rem)", textDecoration: "none" }}>
       {/* Thumbnail */}
       <div style={{
         width: "100%",
@@ -104,23 +104,23 @@ function NumBlock({ n, hovered, size, img }: { n: string; hovered: boolean; size
       }}>
         {n}
       </span>
-    </div>
+    </Link>
   );
 }
 
 function TitleBlock({ svc, width }: { svc: (typeof services)[0]; width: string }) {
   return (
-    <div style={{ width, flexShrink: 0 }}>
+    <Link href={svc.href} style={{ width, flexShrink: 0, display: "block", textDecoration: "none" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
         <span className="diamond diamond--sm" />
         <span style={{ color: "#D35400", fontSize: "0.95rem", letterSpacing: "0.20em", textTransform: "uppercase", fontWeight: 700, fontFamily: "var(--font-display)" }}>
           {svc.tag}
         </span>
       </div>
-      <h3 style={{ fontWeight: 900, textTransform: "uppercase", color: "#fff", lineHeight: 1.05, whiteSpace: "pre-line", fontSize: "clamp(1.5rem, 2.5vw, 3rem)", fontFamily: "var(--font-display)" }}>
+      <h3 style={{ fontWeight: 900, textTransform: "uppercase", color: "#fff", lineHeight: 1.05, whiteSpace: "pre-line", fontSize: "clamp(1.5rem, 2.5vw, 3rem)", fontFamily: "var(--font-display)", cursor: "pointer" }}>
         {svc.title}
       </h3>
-    </div>
+    </Link>
   );
 }
 
@@ -206,13 +206,15 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
           </div>
 
           {/* Image — Shorter left margin, fills more on the right */}
-          <div style={{
+          <Link href={svc.href} style={{
+            display: 'block',
             width: 'calc(100% - 1rem)',
             marginLeft: '1rem',
             height: screenSize === 'mobile' ? '200px' : '240px',
             borderRadius: '0.5rem',
             overflow: 'hidden',
             border: '1px solid rgba(255,255,255,0.1)',
+            textDecoration: 'none',
           }}>
             <img
               src={svc.img}
@@ -224,21 +226,24 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
                 filter: 'grayscale(60%) brightness(0.7)',
               }}
             />
-          </div>
+          </Link>
 
           {/* Titre — Aligned with the stack margin */}
-          <h3 style={{
-            fontWeight: 900,
-            textTransform: 'uppercase',
-            color: '#fff',
-            lineHeight: 1.1,
-            fontSize: screenSize === 'mobile' ? 'clamp(1.2rem, 5vw, 1.8rem)' : 'clamp(1.5rem, 3.5vw, 2.2rem)',
-            fontFamily: 'var(--font-display)',
-            paddingLeft: '3rem',
-            paddingRight: '1.5rem', // Reduced to avoid too much empty space
-          }}>
-            {svc.title.replace(/\n/g, ' ')}
-          </h3>
+          <Link href={svc.href} style={{ textDecoration: 'none' }}>
+            <h3 style={{
+              fontWeight: 900,
+              textTransform: 'uppercase',
+              color: '#fff',
+              lineHeight: 1.1,
+              fontSize: screenSize === 'mobile' ? 'clamp(1.2rem, 5vw, 1.8rem)' : 'clamp(1.5rem, 3.5vw, 2.2rem)',
+              fontFamily: 'var(--font-display)',
+              paddingLeft: '3rem',
+              paddingRight: '1.5rem',
+              cursor: 'pointer',
+            }}>
+              {svc.title.replace(/\n/g, ' ')}
+            </h3>
+          </Link>
 
           {/* Description — Aligned with the stack margin */}
           <p style={{
@@ -315,7 +320,7 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
 
         {/* Numéro — gauche si normal, droite si flip */}
         {!layout.flip && (
-          <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} />
+          <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} href={svc.href} />
         )}
 
         {/* Bloc titre */}
@@ -347,7 +352,7 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
         {/* flip: image d'abord, titre immédiatement à sa droite (Excentré vers la droite) */}
         {layout.flip && (
           <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginLeft: "clamp(2rem, 10vw, 15rem)" }}>
-            <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} />
+            <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} href={svc.href} />
             <TitleBlock svc={svc} width={layout.titleW} />
           </div>
         )}

@@ -68,18 +68,18 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
       <div className="relative z-10 max-w-6xl mx-auto text-center">
         {/* Eyebrow */}
         <motion.div
-          className="flex items-center justify-center gap-3 mb-6"
+          className="flex items-center justify-center gap-3 mb-12"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <span className="diamond diamond--sm" />
           <span style={{
-            color: "rgba(255,255,255,0.5)",
-            fontSize: screenSize === 'mobile' ? '0.75rem' : '0.95rem',
+            color: "rgba(255,255,255,0.7)",
+            fontSize: screenSize === 'mobile' ? '0.9rem' : '1.3rem',
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            fontWeight: 500,
+            fontWeight: 600,
             fontFamily: "var(--font-display)"
           }}>
             Notre Expertise
@@ -109,7 +109,7 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
         {/* Description */}
         <motion.p
           style={{
-            fontSize: screenSize === 'mobile' ? '1rem' : screenSize === 'tablet' ? '1.2rem' : '1.4rem',
+            fontSize: screenSize === 'mobile' ? '1.15rem' : screenSize === 'tablet' ? '1.35rem' : '1.5rem',
             lineHeight: 1.6,
             color: "rgba(255,255,255,0.65)",
             maxWidth: "50rem",
@@ -217,7 +217,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               </div>
               <span style={{
                 color: pole.color,
-                fontSize: '0.8rem',
+                fontSize: '1rem',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 fontWeight: 700,
@@ -242,7 +242,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
 
             {/* Tagline */}
             <p style={{
-              fontSize: screenSize === 'mobile' ? '0.9rem' : '1rem',
+              fontSize: screenSize === 'mobile' ? '1.05rem' : '1.15rem',
               fontWeight: 600,
               color: pole.color,
               marginBottom: '1rem',
@@ -253,7 +253,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
 
             {/* Description */}
             <p style={{
-              fontSize: screenSize === 'mobile' ? '0.9rem' : '1rem',
+              fontSize: screenSize === 'mobile' ? '1rem' : '1.1rem',
               lineHeight: 1.6,
               color: 'rgba(255,255,255,0.65)',
               marginBottom: '1.5rem',
@@ -313,7 +313,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
             {/* CTA */}
             <div className="flex items-center gap-2" style={{
               color: isHovered ? pole.color : 'rgba(255,255,255,0.5)',
-              fontSize: '0.9rem',
+              fontSize: '1rem',
               fontWeight: 700,
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
