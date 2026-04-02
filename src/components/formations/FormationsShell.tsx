@@ -1,8 +1,7 @@
 "use client";
 
 /**
- * FormationsShell — Page catalogue de formations IA (Version Unifiée)
- * Supporte les données Shopify avec fallback statique automatique
+ * FormationsShell — Page catalogue de formations IA
  */
 
 import React, { useState, useMemo } from "react";
@@ -27,8 +26,6 @@ import {
   Loader2,
   AlertCircle
 } from "lucide-react";
-import { useShopifyFormations } from "@/hooks/useShopifyFormations";
-import { ShopifyProduct } from "@/lib/data/shopify";
 import { FORMATIONS } from "@/lib/data/formations";
 import FooterStrip from "@/components/layout/FooterStrip";
 
@@ -65,11 +62,8 @@ function formatPrice(amount: string, currency: string) {
 }
 
 export default function FormationsShell() {
-  const { formations: shopifyFormations, loading, error, isFallback } = useShopifyFormations();
-  
-  // Utiliser les formations Shopify si disponibles, sinon utiliser les formations statiques
-  const formationsData = isFallback ? FORMATIONS : shopifyFormations;
-  
+  const formationsData = FORMATIONS;
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategorie, setSelectedCategorie] = useState("Toutes");
   const [selectedSecteur, setSelectedSecteur] = useState("Tous");
@@ -81,59 +75,44 @@ export default function FormationsShell() {
   // Extraire les options de filtrage dynamiquement
   const categories = useMemo(() => [
     "Toutes",
-    ...Array.from(new Set(formationsData.map(f => (f as any).categorie?.value || (f as any).categorie).filter(Boolean)))
+    ...Array.from(new Set(formationsData.map(f => f.categorie).filter(Boolean)))
   ], [formationsData]);
 
   const secteurs = useMemo(() => [
     "Tous",
-    ...Array.from(new Set(formationsData.map(f => (f as any).secteur?.value || (f as any).secteur).filter(Boolean)))
+    ...Array.from(new Set(formationsData.map(f => f.secteur).filter(Boolean)))
   ], [formationsData]);
 
   const niveaux = useMemo(() => [
     "Tous",
-    ...Array.from(new Set(formationsData.map(f => (f as any).niveau?.value || (f as any).niveau).filter(Boolean)))
+    ...Array.from(new Set(formationsData.map(f => f.niveau).filter(Boolean)))
   ], [formationsData]);
 
   // Filtrage et tri
   const filteredFormations = useMemo(() => {
     let filtered = formationsData.filter(f => {
-      const title = (f as any).title?.toLowerCase() || "";
-      const accroche = (f as any).accroche?.value?.toLowerCase() || (f as any).accroche?.toLowerCase() || "";
-      const secteur = (f as any).secteur?.value?.toLowerCase() || (f as any).secteur?.toLowerCase() || "";
+      const title = f.title?.toLowerCase() || "";
+      const accroche = f.accroche?.toLowerCase() || "";
+      const secteur = f.secteur?.toLowerCase() || "";
       const search = searchQuery.toLowerCase();
 
-      const matchSearch = searchQuery === "" || 
-        title.includes(search) || 
-        accroche.includes(search) || 
+      const matchSearch = searchQuery === "" ||
+        title.includes(search) ||
+        accroche.includes(search) ||
         secteur.includes(search);
 
-      const catValue = (f as any).categorie?.value || (f as any).categorie;
-      const sectValue = (f as any).secteur?.value || (f as any).secteur;
-      const nivValue = (f as any).niveau?.value || (f as any).niveau;
-
-      const matchCategorie = selectedCategorie === "Toutes" || catValue === selectedCategorie;
-      const matchSecteur = selectedSecteur === "Tous" || sectValue === selectedSecteur;
-      const matchNiveau = selectedNiveau === "Tous" || nivValue === selectedNiveau;
+      const matchCategorie = selectedCategorie === "Toutes" || f.categorie === selectedCategorie;
+      const matchSecteur = selectedSecteur === "Tous" || f.secteur === selectedSecteur;
+      const matchNiveau = selectedNiveau === "Tous" || f.niveau === selectedNiveau;
 
       return matchSearch && matchCategorie && matchSecteur && matchNiveau;
     });
 
     // Tri simple par titre
-    if (sortBy === "title") filtered.sort((a, b) => (a as any).title.localeCompare((b as any).title));
+    if (sortBy === "title") filtered.sort((a, b) => a.title.localeCompare(b.title));
 
     return filtered;
   }, [formationsData, searchQuery, selectedCategorie, selectedSecteur, selectedNiveau, sortBy]);
-
-  if (loading) {
-    return (
-      <div style={{ background: '#070E1C', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center' }}>
-          <Loader2 className="animate-spin" size={48} color={COLOR} style={{ margin: '0 auto 1.5rem' }} />
-          <p style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)' }}>Chargement du catalogue...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{
@@ -245,39 +224,17 @@ export default function FormationsShell() {
         {/* RESULTS */}
         <section style={{ padding: "4rem clamp(1.5rem, 5vw, 6rem)" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-            {isFallback && !loading && (
-              <div style={{ 
-                background: "rgba(211, 84, 0, 0.1)", 
-                border: `1px solid ${COLOR}44`, 
-                padding: "1.5rem", 
-                borderRadius: "0.75rem", 
-                display: "flex", 
-                gap: "1rem", 
-                alignItems: "center", 
-                marginBottom: "2.5rem" 
-              }}>
-                <AlertCircle color={COLOR}/>
-                <div>
-                  <h4 style={{ fontWeight: 700, color: COLOR }}>Mode Consultation (Données locales)</h4>
-                  <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>
-                    La synchronisation avec la boutique Shopify est momentanément désactivée. 
-                    Vous consultez actuellement notre catalogue de secours.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div style={{ 
-              display: "grid", 
+            <div style={{
+              display: "grid",
               gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(380px, 1fr))" : "1fr",
-              gap: "2.5rem" 
+              gap: "2.5rem"
             }}>
-              {filteredFormations.map((f: any) => (
-                <FormationCard key={f.id} formation={f} viewMode={viewMode} isShopify={!isFallback} />
+              {filteredFormations.map((f) => (
+                <FormationCard key={f.id} formation={f} viewMode={viewMode} />
               ))}
             </div>
-            
-            {(filteredFormations.length === 0 && !loading) && (
+
+            {filteredFormations.length === 0 && (
               <div style={{ textAlign: "center", padding: "4rem" }}>
                 <BookOpen size={48} color={COLOR} style={{ opacity: 0.3, marginBottom: "1.5rem" }}/>
                 <h3>Aucun résultat pour cette recherche</h3>
@@ -293,15 +250,15 @@ export default function FormationsShell() {
   );
 }
 
-function FormationCard({ formation, viewMode, isShopify }: { formation: any; viewMode: "grid" | "list"; isShopify: boolean }) {
-  const niveauValue = isShopify ? formation.niveau?.value : formation.niveau;
-  const secteurValue = isShopify ? formation.secteur?.value : formation.secteur;
-  const accrocheValue = isShopify ? formation.accroche?.value : formation.accroche;
-  const dureeValue = isShopify ? formation.duree?.value : formation.duree;
-  const formatValue = isShopify ? formation.format?.value : formation.format;
-  const priceValue = isShopify ? formatPrice(formation.priceRange?.minVariantPrice?.amount, formation.priceRange?.minVariantPrice?.currencyCode) : (formation.prix || "Nous consulter");
-  const imageUrl = isShopify ? formation.featuredImage?.url : `/images/formations/${formation.slug}.jpg`;
-  const handle = isShopify ? formation.handle : formation.slug;
+function FormationCard({ formation, viewMode }: { formation: any; viewMode: "grid" | "list" }) {
+  const niveauValue = formation.niveau;
+  const secteurValue = formation.secteur;
+  const accrocheValue = formation.accroche;
+  const dureeValue = formation.duree;
+  const formatValue = formation.format;
+  const priceValue = formation.prix || "Nous consulter";
+  const imageUrl = `/images/formations/${formation.slug}.jpg`;
+  const handle = formation.slug;
 
   const color = getNiveauColor(niveauValue);
 

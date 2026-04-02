@@ -41,8 +41,8 @@ const CONTACT_INFO = [
   },
   {
     label: "Email",
-    lines: ["contact@act.africa", "support@act.africa"],
-    href: "mailto:contact@act.africa",
+    lines: ["sohaib.baroud@a-ct.ma", "contact@act.africa", "support@act.africa"],
+    href: "mailto:sohaib.baroud@a-ct.ma",
     cta: "Écrire →",
     Icon: Mail,
   },

@@ -11,7 +11,8 @@
       "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|Type error|✓ Compiled|Failed to compile\\)\" | head -10)",
       "Bash(cd \"D:/website-act/website-act-officiel-\" && bun run build 2>&1 | grep -E \"\\(error TS|✓ Compiled|Failed|Error\\)\")",
       "Bash(cat:*)",
-      "Bash(timeout 60 bun run build:*)"
+      "Bash(timeout 60 bun run build:*)",
+      "Bash(rm:*)"
     ]
   }
 }

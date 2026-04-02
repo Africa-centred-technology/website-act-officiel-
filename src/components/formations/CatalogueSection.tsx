@@ -2,27 +2,24 @@
 
 /**
  * CatalogueSection — Résumé interactif des formations par domaine
- * Version unifiée supportant Shopify et Fallback statique
  */
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useShopifyFormations } from "@/hooks/useShopifyFormations";
 import { FORMATIONS } from "@/lib/data/formations";
 
 const ORANGE = "#D35400";
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
 export default function CatalogueSection() {
-  const { formations: shopifyFormations, loading, isFallback } = useShopifyFormations();
-  const formationsData = isFallback ? FORMATIONS : shopifyFormations;
+  const formationsData = FORMATIONS;
 
-  // Regrouper par secteur (en gérant les types Shopify et Statiques)
+  // Regrouper par secteur
   const grouped = useMemo(() => {
     const map: Record<string, any[]> = {};
     formationsData.forEach((f) => {
-      const secteurValue = (f as any).secteur?.value || (f as any).secteur || "Autres";
+      const secteurValue = f.secteur || "Autres";
       if (!map[secteurValue]) map[secteurValue] = [];
       map[secteurValue].push(f);
     });
@@ -30,14 +27,6 @@ export default function CatalogueSection() {
   }, [formationsData]);
 
   const [openCat, setOpenCat] = useState<string | null>(null);
-
-  if (loading) {
-    return (
-      <section style={{ background: "rgba(0,0,0,0.35)", padding: "10rem 2rem", textAlign: "center" }}>
-        <p style={{ color: "rgba(255,255,255,0.5)" }}>Chargement du catalogue...</p>
-      </section>
-    );
-  }
 
   return (
     <section style={{
@@ -195,10 +184,10 @@ export default function CatalogueSection() {
                   >
                     <div style={{ paddingBottom: "0.75rem" }}>
                       {formations.map((f, fi) => {
-                        const handle = (f as any).handle || (f as any).slug;
-                        const title = (f as any).title;
-                        const niveau = (f as any).niveau?.value || (f as any).niveau;
-                        const duree = (f as any).duree?.value || (f as any).duree;
+                        const handle = f.slug;
+                        const title = f.title;
+                        const niveau = f.niveau;
+                        const duree = f.duree;
 
                         return (
                           <Link key={handle} href={`/formations/${handle}`} style={{ textDecoration: "none", display: "block" }}>

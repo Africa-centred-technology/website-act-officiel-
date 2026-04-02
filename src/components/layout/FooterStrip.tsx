@@ -38,11 +38,11 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
             Contact
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <a href="mailto:contact@act.africa"
+            <a href="mailto:sohaib.baroud@a-ct.ma"
               style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
               onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}>
-              <Mail size={18} strokeWidth={1.6} />contact@act.africa
+              <Mail size={18} strokeWidth={1.6} />sohaib.baroud@a-ct.ma
             </a>
             <a href="tel:+212694528498"
               style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
@@ -56,7 +56,32 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
           </div>
         </div>
 
-        {/* Col 2 — Réseaux Sociaux */}
+        {/* Col 2 — Navigation */}
+        <div>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
+           Navigation
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {[
+              { href: "/", label: "Accueil" },
+              { href: "/about", label: "À Propos" },
+              { href: "/services", label: "Nos Services" },
+              { href: "/formations", label: "Catalogue de Formations" },
+              { href: "/projects", label: "Réalisations" },
+              { href: "/blog", label: "Blog" },
+              { href: "/contact", label: "Contact" },
+            ].map((link) => (
+              <Link key={link.label} href={link.href}
+                style={{ fontFamily: "var(--font-body)", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Col 3 — Réseaux Sociaux */}
         <div>
           <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
             Réseaux Sociaux
@@ -73,7 +98,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
           </div>
         </div>
 
-        {/* Col 3 — Carrières */}
+        {/* Col 4 — Carrières */}
         <div>
           <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.2rem", opacity: 0.9 }}>
             Carrières

@@ -224,7 +224,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           >
             NOS SERVICES
             <br />
-            <span style={{ color: ORANGE }}>D&apos;EXPERTISE</span>
+            <span style={{ color: ORANGE }}>&amp; SOLUTIONS</span>
           </motion.h1>
         </div>
 
