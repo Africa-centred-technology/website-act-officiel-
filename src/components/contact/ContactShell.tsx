@@ -3,8 +3,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube, Send } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTAButton from "@/components/ui/CTAButton";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -34,14 +35,14 @@ function useMediaQuery() {
 const CONTACT_INFO = [
   {
     label: "Téléphone",
-    lines: ["+212 694-528498", "+212 662-777507", "+212 779-635687"],
-    href: "tel:+212694528498",
+    lines: [ "+212 662-777507"],
+    href: "tel:+212662777507",
     cta: "Appeler →",
     Icon: Phone,
   },
   {
     label: "Email",
-    lines: ["sohaib.baroud@a-ct.ma", "contact@act.africa", "support@act.africa"],
+    lines: ["sohaib.baroud@a-ct.ma"],
     href: "mailto:sohaib.baroud@a-ct.ma",
     cta: "Écrire →",
     Icon: Mail,
@@ -55,7 +56,7 @@ const CONTACT_INFO = [
   },
   {
     label: "Horaires",
-    lines: ["Lun – Ven : 8h – 18h", "Sam : 9h – 13h"],
+    lines: ["Lundi au Samedi"],
     href: "#form",
     cta: "Planifier →",
     Icon: Clock,
@@ -65,29 +66,25 @@ const CONTACT_INFO = [
 const FAQS = [
   {
     q: "Comment démarrer un projet avec ACT ?",
-    a: "Contactez-nous via le formulaire ou par téléphone. Notre équipe vous recontactera sous 24h pour une première consultation gratuite où nous analyserons vos besoins.",
+    a: "Contactez-nous via le formulaire ou par téléphone. Notre équipe vous recontactera sous 24h pour une discussion où sur le besoins.",
   },
   {
     q: "Quels sont vos délais de livraison ?",
-    a: "Un MVP est livré en moyenne en 8–12 semaines avec des sprints de 2 semaines. Nous vous fournirons une estimation précise après analyse de votre projet.",
+    a: "Nous vous fournirons une estimation précise après analyse de votre projet.",
   },
   {
     q: "Proposez-vous un support après livraison ?",
-    a: "Oui, avec différentes formules de 3 mois à plusieurs années. Chaque projet inclut une période de garantie de 3 mois minimum.",
+    a: "Oui, avec différentes formules de 1 mois à plusieurs années. Chaque projet inclut une période de garantie de 2 mois minimum.",
   },
-  {
-    q: "Travaillez-vous avec des entreprises internationales ?",
-    a: "Absolument. Nous collaborons avec des entreprises du monde entier souhaitant s'implanter ou opérer en Afrique.",
-  },
+ 
   {
     q: "Quelles technologies utilisez-vous ?",
-    a: "Nous utilisons les technologies les plus adaptées à chaque projet : React, Next.js, Django, Python, IA/ML, SIG… Notre approche est technology-agnostic.",
+    a: "Nous utilisons les technologies les plus adaptées à chaque projet.Notre approche est technology-agnostic.",
   },
 ];
 
 const ENGAGEMENTS = [
   "Réponse garantie sous 24h ouvrées",
-  "Première consultation 100% gratuite",
   "Devis détaillé et transparent",
   "Confidentialité assurée (NDA disponible)",
 ];
@@ -307,7 +304,7 @@ export default function ContactShell() {
           >
             {[
               { Icon: Phone, val: "+212 694-528498", href: "tel:+212694528498" },
-              { Icon: Mail,  val: "contact@act.africa", href: "mailto:contact@act.africa" },
+              { Icon: Mail,  val: "sohaib.baroud@a-ct.ma", href: "mailto:sohaib.baroud@a-ct.ma" },
             ].map((c) => (
               <a
                 key={c.val}
@@ -341,100 +338,6 @@ export default function ContactShell() {
         />
       </section>
 
-      {/* ── CONTACT INFO CARDS ──────────────────────────── */}
-      <section style={{
-        padding: screenSize === 'mobile'
-          ? "3rem 1.5rem"
-          : screenSize === 'tablet'
-          ? "4rem 2.5rem"
-          : "clamp(4rem,7vw,7rem) clamp(1.5rem,6vw,8rem)"
-      }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: screenSize === 'mobile'
-              ? "1fr"
-              : screenSize === 'tablet'
-              ? "repeat(2, 1fr)"
-              : "repeat(4, 1fr)",
-            gap: screenSize === 'mobile' ? "1.5rem" : screenSize === 'tablet' ? "2rem" : "2.5rem"
-          }}
-        >
-          {CONTACT_INFO.map((c, i) => (
-            <motion.a
-              key={c.label}
-              href={c.href}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.65, delay: i * 0.08 }}
-              style={{
-                display: "block",
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "1rem",
-                padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
-                textDecoration: "none",
-                transition: "border-color 0.3s, transform 0.3s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(211,84,0,0.3)";
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
-                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: screenSize === 'mobile' ? 38 : 44,
-                  height: screenSize === 'mobile' ? 38 : 44,
-                  background: "rgba(211,84,0,0.1)",
-                  border: "1px solid rgba(211,84,0,0.2)",
-                  borderRadius: "0.6rem",
-                  marginBottom: screenSize === 'mobile' ? "1rem" : "1.2rem",
-                  color: "#D35400",
-                }}
-              >
-                <c.Icon size={screenSize === 'mobile' ? 18 : 20} strokeWidth={1.8} />
-              </div>
-              <p style={{
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontSize: screenSize === 'mobile' ? "0.6rem" : "0.68rem",
-                fontWeight: 700,
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                color: "#D35400",
-                marginBottom: "0.8rem"
-              }}>
-                {c.label}
-              </p>
-              {c.lines.map((l) => (
-                <p key={l} style={{
-                  color: "rgba(255,255,255,0.55)",
-                  fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
-                  lineHeight: 1.6
-                }}>{l}</p>
-              ))}
-              <p style={{
-                fontFamily: "Futura, system-ui, sans-serif",
-                fontWeight: 700,
-                fontSize: screenSize === 'mobile' ? "0.65rem" : "0.72rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#D35400",
-                marginTop: "1.2rem"
-              }}>
-                {c.cta}
-              </p>
-            </motion.a>
-          ))}
-        </div>
-      </section>
 
       {/* ── FORM + SIDEBAR ──────────────────────────────── */}
       <section
@@ -645,31 +548,7 @@ export default function ContactShell() {
                   <option value="autre" style={{ background: "#070e1c" }}>Autre</option>
                 </select>
               </div>
-              <div>
-                <label style={{
-                  display: "block",
-                  fontFamily: "Futura, system-ui, sans-serif",
-                  fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.28em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.4)",
-                  marginBottom: "0.6rem"
-                }}>Budget estimé</label>
-                <select
-                  value={form.budget}
-                  onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                  style={{ ...inputStyle, cursor: "pointer" }}
-                  onFocus={(e) => ((e.target as HTMLSelectElement).style.borderColor = "#D35400")}
-                  onBlur={(e) => ((e.target as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.09)")}
-                >
-                  <option value="" style={{ background: "#070e1c" }}>Sélectionnez une fourchette</option>
-                  <option value="small" style={{ background: "#070e1c" }}>5 000 – 15 000 MAD</option>
-                  <option value="medium" style={{ background: "#070e1c" }}>15 000 – 50 000 MAD</option>
-                  <option value="large" style={{ background: "#070e1c" }}>50 000 – 150 000 MAD</option>
-                  <option value="enterprise" style={{ background: "#070e1c" }}>150 000 MAD +</option>
-                </select>
-              </div>
+             
             </div>
 
             {/* Message */}
@@ -720,47 +599,16 @@ export default function ContactShell() {
                   </p>
                 </motion.div>
               ) : (
-                <motion.button
-                  key="btn"
-                  type="submit"
-                  disabled={sending}
-                  whileTap={{ scale: 0.97 }}
-                  style={{
-                    width: "100%",
-                    background: sending ? "rgba(211,84,0,0.6)" : "#D35400",
-                    border: "none",
-                    borderRadius: "0.5rem",
-                    padding: "1.2rem",
-                    color: "#fff",
-                    fontFamily: "Futura, system-ui, sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                    cursor: sending ? "wait" : "pointer",
-                    transition: "background 0.25s",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.8rem",
-                    minHeight: 48,
-                  }}
-                  onMouseEnter={(e) => { if (!sending) (e.currentTarget as HTMLElement).style.background = "#b84a00"; }}
-                  onMouseLeave={(e) => { if (!sending) (e.currentTarget as HTMLElement).style.background = "#D35400"; }}
-                >
-                  {sending ? (
-                    <>
-                      <motion.span
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        style={{ display: "inline-block", width: 16, height: 16, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%" }}
-                      />
-                      Envoi en cours…
-                    </>
-                  ) : (
-                    "Envoyer ma demande →"
-                  )}
-                </motion.button>
+                <div key="btn" style={{ width: "100%" }}>
+                  <CTAButton
+                    type="submit"
+                    className={sending ? "opacity-50 pointer-events-none w-full" : "w-full"}
+                    icon={<Send size={18} />}
+                    iconPosition="right"
+                  >
+                    {sending ? "Envoi en cours…" : "Envoyer ma demande"}
+                  </CTAButton>
+                </div>
               )}
             </AnimatePresence>
           </motion.form>
@@ -817,32 +665,15 @@ export default function ContactShell() {
                 lineHeight: 1.7,
                 marginBottom: screenSize === 'mobile' ? "1.2rem" : "1.5rem"
               }}>
-                Parlez directement à un expert ACT. Disponible du Lun au Ven de 8h à 18h.
+                Parlez directement à un conseiller d'ACT. Disponible du Lundi au Samedi.
               </p>
-              <a
+              <CTAButton
                 href="tel:+212694528498"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.6rem",
-                  background: "#D35400",
-                  color: "#fff",
-                  fontFamily: "Futura, system-ui, sans-serif",
-                  fontWeight: 700,
-                  fontSize: screenSize === 'mobile' ? "0.7rem" : "0.78rem",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  padding: screenSize === 'mobile' ? "0.9rem 1.3rem" : "1rem 1.5rem",
-                  borderRadius: "0.5rem",
-                  textDecoration: "none",
-                  transition: "background 0.25s",
-                }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#b84a00")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#D35400")}
+                icon={<Phone size={16} />}
+                className="w-full"
               >
-                <Phone size={screenSize === 'mobile' ? 14 : 16} strokeWidth={1.8} /> +212 694-528498
-              </a>
+                +212 694-528498
+              </CTAButton>
             </div>
 
             {/* Réseaux */}
@@ -897,6 +728,101 @@ export default function ContactShell() {
               </div>
             </div>
           </motion.aside>
+        </div>
+      </section>
+
+      {/* ── CONTACT INFO CARDS ──────────────────────────── */}
+      <section style={{
+        padding: screenSize === 'mobile'
+          ? "3rem 1.5rem"
+          : screenSize === 'tablet'
+          ? "4rem 2.5rem"
+          : "clamp(4rem,7vw,7rem) clamp(1.5rem,6vw,8rem)"
+      }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: screenSize === 'mobile'
+              ? "1fr"
+              : screenSize === 'tablet'
+              ? "repeat(2, 1fr)"
+              : "repeat(4, 1fr)",
+            gap: screenSize === 'mobile' ? "1.5rem" : screenSize === 'tablet' ? "2rem" : "2.5rem"
+          }}
+        >
+          {CONTACT_INFO.map((c, i) => (
+            <motion.a
+              key={c.label}
+              href={c.href}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.65, delay: i * 0.08 }}
+              style={{
+                display: "block",
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "1rem",
+                padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
+                textDecoration: "none",
+                transition: "border-color 0.3s, transform 0.3s",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(211,84,0,0.3)";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: screenSize === 'mobile' ? 38 : 44,
+                  height: screenSize === 'mobile' ? 38 : 44,
+                  background: "rgba(211,84,0,0.1)",
+                  border: "1px solid rgba(211,84,0,0.2)",
+                  borderRadius: "0.6rem",
+                  marginBottom: screenSize === 'mobile' ? "1rem" : "1.2rem",
+                  color: "#D35400",
+                }}
+              >
+                <c.Icon size={screenSize === 'mobile' ? 18 : 20} strokeWidth={1.8} />
+              </div>
+              <p style={{
+                fontFamily: "Futura, system-ui, sans-serif",
+                fontSize: screenSize === 'mobile' ? "0.6rem" : "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                color: "#D35400",
+                marginBottom: "0.8rem"
+              }}>
+                {c.label}
+              </p>
+              {c.lines.map((l) => (
+                <p key={l} style={{
+                  color: "rgba(255,255,255,0.55)",
+                  fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
+                  lineHeight: 1.6
+                }}>{l}</p>
+              ))}
+              <p style={{
+                fontFamily: "Futura, system-ui, sans-serif",
+                fontWeight: 700,
+                fontSize: screenSize === 'mobile' ? "0.65rem" : "0.72rem",
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#D35400",
+                marginTop: "1.2rem"
+              }}>
+                {c.cta}
+              </p>
+            </motion.a>
+          ))}
         </div>
       </section>
 

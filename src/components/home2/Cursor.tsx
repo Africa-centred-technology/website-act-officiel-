@@ -58,7 +58,7 @@ export default function Cursor() {
         aria-hidden
         style={{
           position:      "fixed",
-          zIndex:        9999,
+          zIndex:        99999,
           pointerEvents: "none",
           x:             dx,
           y:             dy,
@@ -82,7 +82,7 @@ export default function Cursor() {
         aria-hidden
         style={{
           position:      "fixed",
-          zIndex:        9996,
+          zIndex:        99998,
           pointerEvents: "none",
           x:             px,
           y:             py,

@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Formation, FORMATIONS } from "@/lib/data/formations";
 import { Clock, Users, BarChart3, BookOpen, CheckCircle2, ArrowRight } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTAButton from "@/components/ui/CTAButton";
+import FormationInscriptionModal from "@/components/formations/FormationInscriptionModal";
 
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
@@ -18,6 +20,7 @@ const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 /* ── Main Component ─────────────────────────────────── */
 export default function FormationDetailShell({ formation }: { formation: Formation }) {
   const accent = ORANGE;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Trouver 3 formations similaires (même secteur ou catégorie)
   const formationsSimilaires = FORMATIONS
@@ -194,28 +197,28 @@ export default function FormationDetailShell({ formation }: { formation: Formati
                   background: `linear-gradient(135deg, ${accent}22, ${accent}11)`,
                   border: `2px solid ${accent}`,
                   borderRadius: "0.75rem",
-                  padding: "2rem",
+                  padding: "1.25rem 2rem",
                   marginBottom: "2rem",
                   textAlign: "center",
                 }}
               >
                 <p style={{
-                  fontSize: "0.9rem",
+                  fontSize: "0.8rem",
                   color: "rgba(255,255,255,0.6)",
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
-                  marginBottom: "0.75rem",
+                  marginBottom: "0.25rem",
                   fontFamily: "var(--font-body)",
                 }}>
                   Tarif
                 </p>
                 <p style={{
-                  fontSize: "var(--font-40)",
+                  fontSize: "var(--font-25)",
                   fontWeight: 900,
                   color: accent,
                   lineHeight: 1,
                   fontFamily: "var(--font-display)",
-                  marginBottom: "0.5rem",
+                  marginBottom: "0.25rem",
                 }}>
                   {formation.prix}
                 </p>
@@ -235,33 +238,9 @@ export default function FormationDetailShell({ formation }: { formation: Formati
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.5 }}
             >
-              <Link href="/contact" style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.75rem",
-                padding: "1.2rem 2rem",
-                background: accent,
-                color: "#fff",
-                textDecoration: "none",
-                borderRadius: "0.5rem",
-                fontSize: "1rem",
-                fontWeight: 700,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = `0 10px 30px ${accent}66`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}>
+              <CTAButton onClick={() => setIsModalOpen(true)}>
                 S'inscrire à cette formation
-                <ArrowRight size={20} />
-              </Link>
+              </CTAButton>
               <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
                 Réponse sous 48h ouvrées
               </p>
@@ -465,33 +444,9 @@ export default function FormationDetailShell({ formation }: { formation: Formati
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.5 }}
             >
-              <Link href="/contact" style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.75rem",
-                padding: "1rem 1.5rem",
-                background: accent,
-                color: "#fff",
-                textDecoration: "none",
-                borderRadius: "0.5rem",
-                fontSize: "0.9rem",
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                width: "100%",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = `0 8px 20px ${accent}66`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}>
+              <CTAButton onClick={() => setIsModalOpen(true)}>
                 Demander cette formation
-              </Link>
+              </CTAButton>
             </motion.div>
 
             {/* Parcours si disponible */}
@@ -685,6 +640,14 @@ export default function FormationDetailShell({ formation }: { formation: Formati
 
       {/* Footer */}
       <FooterStrip />
+
+      {/* Modal d'inscription */}
+      <FormationInscriptionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        formationTitle={formation.title}
+        formationSlug={formation.slug}
+      />
     </div>
   );
 }

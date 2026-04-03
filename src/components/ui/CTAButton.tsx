@@ -10,15 +10,29 @@ interface CTAButtonProps {
   children: React.ReactNode;
   className?: string;
   external?: boolean;
+  type?: "button" | "submit" | "reset";
+  icon?: React.ReactNode;
+  iconPosition?: "left" | "right";
+  noIcon?: boolean;
 }
 
 /** Clone-signature glassmorphism button with diamond icon + gradient border */
 export default function CTAButton({
-  href, onClick, children, className = "", external = false,
+  href, onClick, children, className = "", external = false, type = "button", icon, iconPosition = "left", noIcon = false
 }: CTAButtonProps) {
-  const inner = (
-    <div className="cta-btn__inner">
+  const renderedIcon = !noIcon ? (
+    icon ? (
+      <span className="cta-btn__custom-icon" aria-hidden="true" style={{ color: "#D35400", display: "flex", alignItems: "center" }}>
+        {icon}
+      </span>
+    ) : (
       <span className="cta-btn__icon" aria-hidden="true" />
+    )
+  ) : null;
+
+  const inner = (
+    <div className="cta-btn__inner" style={{ flexDirection: iconPosition === "right" ? "row-reverse" : "row" }}>
+      {renderedIcon}
       <span className="cta-btn__text">{children}</span>
     </div>
   );
@@ -49,6 +63,7 @@ export default function CTAButton({
   return (
     <motion.button
       onClick={onClick}
+      type={type}
       className={`cta-btn ${className}`}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
