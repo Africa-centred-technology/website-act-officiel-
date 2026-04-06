@@ -2,9 +2,10 @@
 
 /**
  * FormationsShell — Page catalogue de formations IA
+ * Source de données : Shopify Storefront API exclusivement
  */
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -16,59 +17,75 @@ import {
   BookOpen,
   Sparkles,
   ChevronRight,
-  X,
-  Grid3x3,
-  List as ListIcon,
-  Award,
-  Target,
-  ArrowUpDown,
   Tag,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Grid3x3,
+  List as ListIcon,
+  RefreshCw,
 } from "lucide-react";
-import { FORMATIONS } from "@/lib/data/formations";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 /* ── Background layers ── */
 const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
-const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+const Grain      = dynamic(() => import("@/components/home2/Grain"),        { ssr: false });
+const Cursor     = dynamic(() => import("@/components/home2/Cursor"),       { ssr: false });
 
-const COLOR = "#D35400"; // Orange principal d'ACT
-const ACCENT = "#E67E22"; // Accent plus clair
-const EASE = [0.6, 0.08, 0.02, 0.99] as const;
+const COLOR = "#D35400";
 
-/**
- * Helper pour la couleur du niveau
- */
+/** Helper : couleur selon le niveau */
 function getNiveauColor(niveau: string = ""): string {
   if (niveau.includes("Initiation") || niveau.includes("Débutant")) return "#E67E22";
-  if (niveau.includes("Intermédiaire")) return "#D35400";
-  if (niveau.includes("Avancé")) return "#A04000";
+  if (niveau.includes("Intermédiaire"))                              return "#D35400";
+  if (niveau.includes("Avancé"))                                     return "#A04000";
   return "#D35400";
 }
 
-/**
- * Helper pour formater le prix
- */
-function formatPrice(amount: string, currency: string) {
-  const value = parseFloat(amount);
-  if (isNaN(value) || value === 0) return "Nous consulter";
-  return new Intl.NumberFormat('fr-FR', {
-    style: 'currency',
-    currency: currency,
-    maximumFractionDigits: 0
-  }).format(value);
+// ── Type ─────────────────────────────────────────────────────────────────────
+interface FormationCardData {
+  id: string;
+  slug: string;
+  title: string;
+  secteur: string;
+  categorie: string;
+  niveau: string;
+  duree: string;
+  format: string;
+  parcours?: string;
+  prix: string;
+  accroche: string;
+  imageUrl?: string;
 }
 
 export default function FormationsShell() {
-  const formationsData = FORMATIONS;
+  const [formationsData, setFormationsData] = useState<FormationCardData[]>([]);
+  const [isLoading, setIsLoading]           = useState(true);
+  const [fetchError, setFetchError]         = useState(false);
+
+  const loadFromShopify = async () => {
+    setIsLoading(true);
+    setFetchError(false);
+    try {
+      const res = await fetch("/api/shopify/formations");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      setFormationsData(json.formations ?? []);
+    } catch (err) {
+      console.error("[FormationsShell] Shopify fetch failed:", err);
+      setFetchError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadFromShopify();
+  }, []);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategorie, setSelectedCategorie] = useState("Toutes");
   const [selectedSecteur, setSelectedSecteur] = useState("Tous");
   const [selectedNiveau, setSelectedNiveau] = useState("Tous");
-  const [sortBy, setSortBy] = useState("recent");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
 
@@ -108,11 +125,8 @@ export default function FormationsShell() {
       return matchSearch && matchCategorie && matchSecteur && matchNiveau;
     });
 
-    // Tri simple par titre
-    if (sortBy === "title") filtered.sort((a, b) => a.title.localeCompare(b.title));
-
     return filtered;
-  }, [formationsData, searchQuery, selectedCategorie, selectedSecteur, selectedNiveau, sortBy]);
+  }, [formationsData, searchQuery, selectedCategorie, selectedSecteur, selectedNiveau]);
 
   return (
     <div style={{
@@ -167,10 +181,32 @@ export default function FormationsShell() {
         {/* FILTERS BAR */}
         <section style={{ padding: "1.5rem clamp(1.5rem, 5vw, 6rem)", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-            <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}>
-              <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
-            </p>
-            
+            {/* Compteur + source badge */}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", margin: 0 }}>
+                <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
+              </p>
+
+              {/* Badge statut Shopify */}
+              <div style={{
+                display: "flex", alignItems: "center", gap: "0.4rem",
+                padding: "0.3rem 0.8rem",
+                borderRadius: "2rem",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                background: isLoading ? "rgba(255,255,255,0.05)" : fetchError ? "rgba(239,68,68,0.1)" : "rgba(34,197,94,0.12)",
+                border: `1px solid ${isLoading ? "rgba(255,255,255,0.1)" : fetchError ? "rgba(239,68,68,0.3)" : "rgba(34,197,94,0.3)"}`,
+                color: isLoading ? "rgba(255,255,255,0.4)" : fetchError ? "#f87171" : "#4ade80",
+              }}>
+                {isLoading  && <Loader2 size={10} className="animate-spin" />}
+                {!isLoading && !fetchError && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", display: "inline-block" }} />}
+                {!isLoading &&  fetchError && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#f87171", display: "inline-block" }} />}
+                {isLoading ? "Chargement Shopify…" : fetchError ? "Erreur Shopify" : "Shopify"}
+              </div>
+            </div>
+
             <div style={{ display: "flex", gap: "1rem" }}>
               <button 
                 onClick={() => setShowFilters(!showFilters)}
@@ -224,22 +260,73 @@ export default function FormationsShell() {
         {/* RESULTS */}
         <section style={{ padding: "4rem clamp(1.5rem, 5vw, 6rem)" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(380px, 1fr))" : "1fr",
-              gap: "2.5rem"
-            }}>
-              {filteredFormations.map((f) => (
-                <FormationCard key={f.id} formation={f} viewMode={viewMode} />
-              ))}
-            </div>
 
-            {filteredFormations.length === 0 && (
-              <div style={{ textAlign: "center", padding: "4rem" }}>
-                <BookOpen size={48} color={COLOR} style={{ opacity: 0.3, marginBottom: "1.5rem" }}/>
-                <h3>Aucun résultat pour cette recherche</h3>
-                <button onClick={() => { setSearchQuery(""); setSelectedCategorie("Toutes"); setSelectedSecteur("Tous"); setSelectedNiveau("Tous"); }} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>Réinitialiser les filtres</button>
+            {/* ── Erreur Shopify ── */}
+            {fetchError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem",
+                  background: "rgba(239,68,68,0.08)",
+                  border: "1px solid rgba(239,68,68,0.25)",
+                  borderRadius: "0.75rem",
+                  padding: "1.25rem 1.75rem",
+                  marginBottom: "2rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <AlertCircle size={20} color="#f87171" />
+                  <p style={{ margin: 0, color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
+                    Impossible de charger les formations depuis Shopify.
+                  </p>
+                </div>
+                <button
+                  onClick={loadFromShopify}
+                  style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1.2rem", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "0.4rem", color: "#fff", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600 }}
+                >
+                  <RefreshCw size={14} /> Réessayer
+                </button>
+              </motion.div>
+            )}
+
+            {/* ── Squelette de chargement ── */}
+            {isLoading && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: "2.5rem" }}>
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "1rem", overflow: "hidden" }}>
+                    <div style={{ height: 240, background: "rgba(255,255,255,0.04)", animation: "pulse 1.5s ease-in-out infinite" }} />
+                    <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <div style={{ height: 12, width: "40%", background: "rgba(255,255,255,0.06)", borderRadius: 6 }} />
+                      <div style={{ height: 20, width: "80%", background: "rgba(255,255,255,0.08)", borderRadius: 6 }} />
+                      <div style={{ height: 14, width: "100%", background: "rgba(255,255,255,0.05)", borderRadius: 6 }} />
+                      <div style={{ height: 14, width: "70%", background: "rgba(255,255,255,0.05)", borderRadius: 6 }} />
+                    </div>
+                  </div>
+                ))}
               </div>
+            )}
+
+            {/* ── Grille des formations ── */}
+            {!isLoading && !fetchError && (
+              <>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(380px, 1fr))" : "1fr",
+                  gap: "2.5rem"
+                }}>
+                  {filteredFormations.map((f) => (
+                    <FormationCard key={f.id} formation={f} viewMode={viewMode} />
+                  ))}
+                </div>
+
+                {filteredFormations.length === 0 && (
+                  <div style={{ textAlign: "center", padding: "4rem" }}>
+                    <BookOpen size={48} color={COLOR} style={{ opacity: 0.3, marginBottom: "1.5rem" }}/>
+                    <h3>Aucun résultat pour cette recherche</h3>
+                    <button onClick={() => { setSearchQuery(""); setSelectedCategorie("Toutes"); setSelectedSecteur("Tous"); setSelectedNiveau("Tous"); }} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>Réinitialiser les filtres</button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </section>
@@ -257,7 +344,7 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
   const dureeValue = formation.duree;
   const formatValue = formation.format;
   const priceValue = formation.prix || "Nous consulter";
-  const imageUrl = `/images/formations/${formation.slug}.jpg`;
+  const imageUrl = formation.imageUrl;
   const handle = formation.slug;
 
   const color = getNiveauColor(niveauValue);

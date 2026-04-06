@@ -1,32 +1,20 @@
-import { FORMATIONS } from "@/lib/data/formations";
 import FormationDetailShell from "@/components/formations/FormationDetailShell";
-import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return FORMATIONS.map((f) => ({ slug: f.slug }));
-}
-
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const formation = FORMATIONS.find((f) => f.slug === slug);
-
-  if (!formation) return { title: "Formation introuvable" };
-
+  // Le titre sera affiché une fois la page chargée côté client
   return {
-    title: `${formation.title} — ACT Formations`,
-    description: formation.accroche,
+    title: `Formation — ACT`,
+    description: "Découvrez cette formation en Intelligence Artificielle proposée par ACT.",
   };
 }
 
 export default async function FormationPage({ params }: Props) {
   const { slug } = await params;
-  const formation = FORMATIONS.find((f) => f.slug === slug);
-
-  if (!formation) notFound();
-
-  return <FormationDetailShell formation={formation} />;
+  // La page passe juste le slug au composant client qui fetche Shopify
+  return <FormationDetailShell slug={slug} />;
 }

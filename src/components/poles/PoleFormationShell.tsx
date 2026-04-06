@@ -27,7 +27,6 @@ import {
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { blogPosts } from "@/lib/blog-data";
-import { FORMATIONS } from "@/lib/data/formations";
 import CTAButton from "@/components/ui/CTAButton";
 
 /* ── Background layers ── */
@@ -55,57 +54,7 @@ function useMediaQuery() {
 
 const COLOR = "#D35400";
 
-// Sélection de 6 formations représentatives pour l'affichage en vedette
-const programs = [
-  {
-    icon: Sparkles,
-    title: FORMATIONS[0].title,
-    slug: FORMATIONS[0].slug,
-    description: FORMATIONS[0].accroche,
-    features: FORMATIONS[0].objectifs.slice(0, 3),
-    image: "/images/poles/pole-formation.jpg"
-  },
-  {
-    icon: Target,
-    title: FORMATIONS[1].title,
-    slug: FORMATIONS[1].slug,
-    description: FORMATIONS[1].accroche,
-    features: FORMATIONS[1].objectifs.slice(0, 3),
-    image: "/images/poles/pole-formation.jpg"
-  },
-  {
-    icon: Zap,
-    title: FORMATIONS[3].title, // Automatisation
-    slug: FORMATIONS[3].slug,
-    description: FORMATIONS[3].accroche,
-    features: FORMATIONS[3].objectifs.slice(0, 3),
-    image: "/images/poles/pole-formation.jpg"
-  },
-  {
-    icon: BookOpen,
-    title: FORMATIONS[4].title, // IA pour enseignants
-    slug: FORMATIONS[4].slug,
-    description: FORMATIONS[4].accroche,
-    features: FORMATIONS[4].objectifs.slice(0, 3),
-    image: "/images/poles/pole-formation.jpg"
-  },
-  {
-    icon: MousePointer2,
-    title: FORMATIONS[7].title, // IA Marketing
-    slug: FORMATIONS[7].slug,
-    description: FORMATIONS[7].accroche,
-    features: FORMATIONS[7].objectifs.slice(0, 3),
-    image: "/images/poles/pole-formation.jpg"
-  },
-  {
-    icon: Shield,
-    title: FORMATIONS[6].title, // IA Santé
-    slug: FORMATIONS[6].slug,
-    description: FORMATIONS[6].accroche,
-    features: FORMATIONS[6].objectifs.slice(0, 3),
-    image: "/images/poles/pole-formation.jpg"
-  },
-];
+/* Default properties mapped dynamically */
 
 const pedagogy = [
   {
@@ -133,6 +82,32 @@ const pedagogy = [
 
 export default function PoleFormationShell() {
   const screenSize = useMediaQuery();
+  
+  const [programs, setPrograms] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/shopify/formations")
+      .then((r) => r.json())
+      .then((json) => {
+        if (json.formations) {
+          const fetched = json.formations.slice(0, 6).map((f: any, i: number) => {
+             const ICONS = [Sparkles, Target, Zap, BookOpen, MousePointer2, Shield];
+             return {
+               icon: ICONS[i % ICONS.length],
+               title: f.title,
+               slug: f.slug,
+               description: f.accroche,
+               features: ["Formation pratique", "Cas concrets", "Accompagnement"], // simplified features for featured cards
+               image: f.imageUrl || "/images/poles/pole-formation.jpg"
+             };
+          });
+          setPrograms(fetched);
+        }
+      })
+      .catch((e) => console.error(e))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   return (
     <div style={{
@@ -462,7 +437,16 @@ export default function PoleFormationShell() {
           gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
           gap: screenSize === 'mobile' ? '1.5rem' : '2.5rem',
         }}>
-          {programs.map((program, i) => {
+          {isLoading ? (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
+              <p style={{ color: "rgba(255,255,255,0.5)" }}>Chargement des programmes en vedette...</p>
+            </div>
+          ) : programs.length === 0 ? (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
+              <p style={{ color: "rgba(255,255,255,0.5)" }}>Aucun programme disponible.</p>
+            </div>
+          ) : (
+            programs.map((program, i) => {
             const Icon = program.icon;
             const [isHovered, setIsHovered] = useState(false);
             return (
@@ -558,7 +542,7 @@ export default function PoleFormationShell() {
                       {program.description}
                     </p>
                     <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
-                      {program.features.map((feature, fi) => (
+                      {program.features.map((feature: string, fi: number) => (
                         <li key={fi} style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -592,7 +576,7 @@ export default function PoleFormationShell() {
                 </motion.div>
               </Link>
             );
-          })}
+          }))}
         </div>
       </section>
 

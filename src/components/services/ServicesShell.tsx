@@ -8,7 +8,7 @@ import {
   useScroll, useMotionValue, useSpring, useTransform,
 } from "framer-motion";
 import CTASection from "@/components/layout/CTASection";
-import { FORMATIONS } from "@/lib/data/formations";
+
 import CatalogueSection from "@/components/formations/CatalogueSection";
 
 /* ══════════════════════════════════════════════════════
@@ -836,16 +836,27 @@ function HeroSection() {
    CATALOGUE PANEL — accordion par catégorie
    ══════════════════════════════════════════════════════ */
 function CataloguePanel({ svc }: { svc: Svc }) {
+  const [formations, setFormations] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/shopify/formations")
+      .then(res => res.json())
+      .then(json => setFormations(json.formations || []))
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, []);
+
   // Grouper les formations par secteur
   const grouped = useMemo(() => {
-    const map: Record<string, typeof FORMATIONS> = {};
-    FORMATIONS.forEach(f => {
+    const map: Record<string, any[]> = {};
+    formations.forEach(f => {
       const key = f.secteur || "Autres";
       if (!map[key]) map[key] = [];
       map[key].push(f);
     });
     return Object.entries(map);
-  }, []);
+  }, [formations]);
 
   const [openCat, setOpenCat] = useState<string | null>(grouped[0]?.[0] ?? null);
 
@@ -922,7 +933,7 @@ function CataloguePanel({ svc }: { svc: Svc }) {
             style={{ marginBottom: "1.2rem" }}
           >
             <p style={{ fontSize: "clamp(0.78rem, 0.9vw, 0.9rem)", color: "rgba(255,255,255,0.3)", letterSpacing: "0.22em", textTransform: "uppercase" }}>
-              {FORMATIONS.length} formations disponibles
+              {isLoading ? "Chargement..." : `${formations.length} formations disponibles`}
             </p>
           </motion.div>
 
@@ -981,7 +992,7 @@ function CataloguePanel({ svc }: { svc: Svc }) {
                     style={{ overflow: "hidden" }}
                   >
                     <div style={{ paddingBottom: "0.5rem" }}>
-                      {formations.map((f, fi) => (
+                      {formations.map((f: any, fi: number) => (
                         <Link
                           key={f.slug}
                           href={`/formations/${f.slug}`}

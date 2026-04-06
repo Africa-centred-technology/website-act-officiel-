@@ -2,18 +2,37 @@
 
 /**
  * CatalogueSection — Résumé interactif des formations par domaine
+ * Source : Shopify Storefront API
  */
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { FORMATIONS } from "@/lib/data/formations";
 
 const ORANGE = "#D35400";
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
+interface FormationItem {
+  id: string;
+  slug: string;
+  title: string;
+  secteur: string;
+  niveau: string;
+  duree: string;
+  categorie: string;
+}
+
 export default function CatalogueSection() {
-  const formationsData = FORMATIONS;
+  const [formationsData, setFormationsData] = useState<FormationItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/shopify/formations")
+      .then((r) => r.json())
+      .then((json) => setFormationsData(json.formations ?? []))
+      .catch(() => setFormationsData([]))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   // Regrouper par secteur
   const grouped = useMemo(() => {
@@ -99,8 +118,10 @@ export default function CatalogueSection() {
             lineHeight: 1.7, maxWidth: "600px", marginBottom: "2.5rem",
           }}
         >
-          {formationsData.length} programmes disponibles, organisés par domaine — du niveau initiation à expert.
-          Cliquez sur une formation pour accéder au programme complet.
+          {isLoading
+            ? "Chargement du catalogue Shopify…"
+            : `${formationsData.length} programmes disponibles, organisés par domaine — du niveau initiation à expert. Cliquez sur une formation pour accéder au programme complet.`
+          }
         </motion.p>
 
         {/* Divider */}
