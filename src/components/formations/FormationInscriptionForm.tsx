@@ -313,7 +313,7 @@ export default function FormationInscriptionForm({
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/formations/inscription", {
+      const response = await fetch("/api/shopify/inscription", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -326,7 +326,7 @@ export default function FormationInscriptionForm({
       });
 
       if (!response.ok) throw new Error("Erreur lors de l'envoi");
-
+      
       setStatus("success");
       if (onSuccess) onSuccess();
 
