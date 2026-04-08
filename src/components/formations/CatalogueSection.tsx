@@ -119,7 +119,7 @@ export default function CatalogueSection() {
           }}
         >
           {isLoading
-            ? "Chargement du catalogue Shopify…"
+            ? "Chargement du catalogue…"
             : `${formationsData.length} programmes disponibles, organisés par domaine — du niveau initiation à expert. Cliquez sur une formation pour accéder au programme complet.`
           }
         </motion.p>

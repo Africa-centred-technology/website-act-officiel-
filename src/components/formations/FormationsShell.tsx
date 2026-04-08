@@ -187,24 +187,7 @@ export default function FormationsShell() {
                 <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
               </p>
 
-              {/* Badge statut Shopify */}
-              <div style={{
-                display: "flex", alignItems: "center", gap: "0.4rem",
-                padding: "0.3rem 0.8rem",
-                borderRadius: "2rem",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                background: isLoading ? "rgba(255,255,255,0.05)" : fetchError ? "rgba(239,68,68,0.1)" : "rgba(34,197,94,0.12)",
-                border: `1px solid ${isLoading ? "rgba(255,255,255,0.1)" : fetchError ? "rgba(239,68,68,0.3)" : "rgba(34,197,94,0.3)"}`,
-                color: isLoading ? "rgba(255,255,255,0.4)" : fetchError ? "#f87171" : "#4ade80",
-              }}>
-                {isLoading  && <Loader2 size={10} className="animate-spin" />}
-                {!isLoading && !fetchError && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", display: "inline-block" }} />}
-                {!isLoading &&  fetchError && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#f87171", display: "inline-block" }} />}
-                {isLoading ? "Chargement Shopify…" : fetchError ? "Erreur Shopify" : "Shopify"}
-              </div>
+              
             </div>
 
             <div style={{ display: "flex", gap: "1rem" }}>
@@ -277,7 +260,7 @@ export default function FormationsShell() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                   <AlertCircle size={20} color="#f87171" />
                   <p style={{ margin: 0, color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
-                    Impossible de charger les formations depuis Shopify.
+                    Impossible de charger les formations.
                   </p>
                 </div>
                 <button

@@ -123,7 +123,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
               <AlertCircle size={22} color="#f87171" />
               <p style={{ margin: 0, color: "rgba(255,255,255,0.8)", fontSize: "1rem" }}>
-                Impossible de charger cette formation depuis Shopify.
+                Impossible de charger cette formation.
               </p>
             </div>
             <button
@@ -155,10 +155,13 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         {!isLoading && !fetchError && formation && (
           <>
             {/* Hero : Image + Caractéristiques */}
-            <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "4rem", marginBottom: "5rem", alignItems: "start" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem 4rem", marginBottom: "5rem", alignItems: "start" }}>
 
               {/* Left — Image */}
-              <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ flex: "1.2 1 600px", minWidth: 0 }}
+              >
                 <div style={{ position: "relative", width: "100%", height: "500px", borderRadius: "1rem", overflow: "hidden", border: `1px solid ${accent}33` }}>
                   <img
                     src={formation.imageUrl ?? `/images/poles/pole-formation.jpg`}
@@ -175,7 +178,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               </motion.div>
 
               {/* Right — Infos */}
-              <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
+                style={{ flex: "1 1 400px", minWidth: 0 }}
+              >
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem", flexWrap: "wrap" }}>
                   <span style={{ width: 10, height: 10, borderRadius: "50%", background: accent, boxShadow: `0 0 12px ${accent}` }} />
                   <span style={{ fontSize: "0.9rem", color: accent, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>
@@ -228,7 +234,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 )}
 
                 {/* CTA */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.5 }}>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.5 }}
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+                >
                   <CTAButton onClick={() => setIsModalOpen(true)}>
                     S&apos;inscrire à cette formation
                   </CTAButton>
@@ -247,10 +256,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             />
 
             {/* Content + Sidebar */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: "4rem", marginBottom: "5rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "4rem", marginBottom: "5rem" }}>
 
               {/* Left — Contenu */}
-              <div>
+              <div style={{ flex: "1 1 600px", minWidth: 0 }}>
                 {/* Public cible */}
                 {formation.publicCible && (
                   <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem" }}>
@@ -362,12 +371,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   </motion.div>
                 )}
 
-                <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.5 }}>
-                  <CTAButton onClick={() => setIsModalOpen(true)}>
-                    Demander cette formation
-                  </CTAButton>
-                </motion.div>
-
+                
                 {/* Parcours */}
                 {formation.parcours && (
                   <motion.div
@@ -380,6 +384,34 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 )}
               </div>
             </div>
+
+            {/* Final CTA Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              style={{
+                marginTop: "6rem",
+                padding: "5rem 2rem",
+                background: `linear-gradient(to bottom, transparent, ${accent}11, transparent)`,
+                borderTop: `1px solid ${accent}11`,
+                borderBottom: `1px solid ${accent}11`,
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
+              <h2 style={{ fontSize: "var(--font-40)", fontWeight: 900, marginBottom: "2rem", color: "#fff", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
+                Prêt à intégrer le <span style={{ color: accent }}>futur</span> ?
+              </h2>
+              <CTAButton onClick={() => setIsModalOpen(true)}>
+                S&apos;inscrire à cette formation
+              </CTAButton>
+              <p style={{ marginTop: "1.5rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.05em" }}>
+                Accompagnement personnalisé et réponse sous 48h
+              </p>
+            </motion.div>
 
             {/* Back link */}
             <motion.div
