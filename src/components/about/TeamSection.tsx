@@ -35,8 +35,8 @@ function SectionHeader({
   midY: ReturnType<typeof useSpring>;
 }) {
   const EASE3D = [0.6, 0.08, 0.02, 0.99] as const;
-  const eyebrow = "Les fondateurs ACT";
-  const title = "L'ÉQUIPE";
+  const eyebrow = "Le conseil d'administration de ACT";
+  const title = "LE CONSEIL D'ADMINISTRATION";
 
   return (
     <motion.div
@@ -55,8 +55,8 @@ function SectionHeader({
           <span className="diamond diamond--sm" />
           <span
             style={{
-              color: "rgba(255,255,255,0.30)",
-              fontSize: "0.95rem",
+              color: "rgba(255,255,255,0.85)",
+              fontSize: "0.99rem",
               letterSpacing: "0.28em",
               textTransform: "uppercase",
               fontFamily: "var(--font-display)",

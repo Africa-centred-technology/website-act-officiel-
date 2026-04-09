@@ -158,7 +158,7 @@ function AmbiantLines({ positions = ["14%", "84%"] }: { positions?: string[] }) 
  * [GHOST_NUM] | [EYEBROW / TITLE chars animated]
  */
 function SectionHeader({
-  eyebrow, title, titleColor = "#ffffff", midX, midY,
+  eyebrow, title, titleColor = "#ffffffff", midX, midY,
 }: {
   eyebrow:    string;
   title:      string;
@@ -174,7 +174,7 @@ function SectionHeader({
           initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.04 }}>
           <span className="diamond diamond--sm" />
-          <span style={{ color: "rgba(255,255,255,0.30)", fontSize: "0.95rem", letterSpacing: "0.28em", textTransform: "uppercase" }}>
+          <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.99rem", letterSpacing: "0.28em", textTransform: "uppercase" }}>
             {eyebrow}
           </span>
         </motion.div>

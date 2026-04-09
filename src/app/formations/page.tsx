@@ -1,4 +1,4 @@
-import FormationsShell from '@/components/formations/FormationsShell';
+import FormationLandpage from '@/components/formations/FormationLandpage';
 
 export const metadata = {
   title: 'Nos Formations | ACT',
@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function FormationsPage() {
-  return <FormationsShell />;
+  return <FormationLandpage />;
 }

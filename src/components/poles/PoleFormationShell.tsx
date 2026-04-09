@@ -80,6 +80,141 @@ const pedagogy = [
 
 ];
 
+function ProgramCard({ program, index, screenSize, COLOR }: { program: any, index: number, screenSize: string, COLOR: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const Icon = program.icon;
+
+  return (
+    <Link href={`/formations/${program.slug}`} style={{ textDecoration: 'none' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.15 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{
+          height: '100%',
+          background: 'rgba(255,255,255,0.02)',
+          border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '1rem',
+          overflow: 'hidden',
+          transition: 'all 0.4s ease',
+          transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+          boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {/* Image Header */}
+        <div style={{
+          position: 'relative',
+          height: screenSize === 'mobile' ? '180px' : '220px',
+          overflow: 'hidden',
+          background: 'rgba(0,0,0,0.3)',
+        }}>
+          <img
+            src={program.image}
+            alt={program.title}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transition: 'transform 0.6s ease, filter 0.4s ease',
+              transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+              filter: isHovered ? 'grayscale(0%) brightness(0.8)' : 'grayscale(40%) brightness(0.6)',
+            }}
+          />
+          {/* Gradient overlay */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.4) 50%, rgba(7,14,28,0.95) 100%)`,
+          }} />
+          {/* Icon badge */}
+          <div style={{
+            position: 'absolute',
+            bottom: '1rem',
+            left: '1.5rem',
+            width: '3.5rem',
+            height: '3.5rem',
+            borderRadius: '0.75rem',
+            background: `${COLOR}`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: `0 8px 24px ${COLOR}66`,
+          }}>
+            <Icon size={24} color="#fff" />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div style={{
+          padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          <h3 style={{
+            fontSize: screenSize === 'mobile' ? '1.3rem' : '1.6rem',
+            fontWeight: 900,
+            marginBottom: '1rem',
+            fontFamily: 'var(--font-display)',
+            color: '#fff',
+            textTransform: 'uppercase',
+            lineHeight: 1.2,
+          }}>
+            {program.title}
+          </h3>
+          <p style={{
+            fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
+            lineHeight: 1.6,
+            color: 'rgba(255,255,255,0.65)',
+            marginBottom: '1.5rem',
+            fontFamily: 'var(--font-body)',
+            flex: 1,
+          }}>
+            {program.description}
+          </p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
+            {program.features.map((feature: string, fi: number) => (
+              <li key={fi} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                marginBottom: '0.5rem',
+                fontSize: '0.9rem',
+                color: 'rgba(255,255,255,0.55)',
+                fontFamily: 'var(--font-body)'
+              }}>
+                <CheckCircle2 size={16} color={COLOR} />
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA link */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.6rem',
+            color: isHovered ? '#fff' : COLOR,
+            fontSize: '0.9rem',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            transition: 'all 0.3s ease',
+          }}>
+            En savoir plus <ArrowRight size={18} />
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
 export default function PoleFormationShell() {
   const screenSize = useMediaQuery();
   
@@ -257,148 +392,6 @@ export default function PoleFormationShell() {
         </div>
       </section>
 
-      {/* Why Training Matters Section */}
-      <section style={{
-        padding: screenSize === 'mobile' ? '4rem 1.5rem' : '6rem 4rem',
-        background: 'rgba(255,255,255,0.02)',
-      }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: '4rem' }}
-          >
-            <h2 style={{
-              fontSize: screenSize === 'mobile' ? '1.8rem' : '2.5rem',
-              fontWeight: 900,
-              color: '#fff',
-              fontFamily: 'var(--font-display)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              lineHeight: 1.2,
-              marginBottom: '1rem',
-            }}>
-              Pourquoi se former est <span style={{ color: COLOR }}>essentiel</span> aujourd'hui ?
-            </h2>
-            <p style={{
-              fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
-              color: 'rgba(255,255,255,0.65)',
-              maxWidth: '800px',
-              margin: '0 auto',
-              fontFamily: 'var(--font-body)',
-              lineHeight: 1.6,
-            }}>
-              Dans un monde en constante évolution, la formation continue n'est plus un luxe, c'est une nécessité stratégique
-            </p>
-          </motion.div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-            gap: screenSize === 'mobile' ? '2rem' : '2.5rem',
-          }}>
-            {[
-              {
-                icon: TrendingUp,
-                stat: "87%",
-                label: "Des emplois de demain",
-                description: "nécessiteront des compétences qui n'existent pas encore aujourd'hui"
-              },
-              {
-                icon: Zap,
-                stat: "5 ans",
-                label: "Durée de vie d'une compétence",
-                description: "contre 30 ans il y a 20 ans. La formation continue est vitale"
-              },
-              {
-                icon: Target,
-                stat: "+40%",
-                label: "De productivité",
-                description: "pour les équipes formées aux nouveaux outils et technologies"
-              },
-              {
-                icon: Users,
-                stat: "94%",
-                label: "Des salariés",
-                description: "resteraient plus longtemps dans une entreprise qui investit dans leur formation"
-              },
-            ].map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  style={{
-                    padding: screenSize === 'mobile' ? '2rem 1.5rem' : '2.5rem',
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: '1rem',
-                    textAlign: 'center',
-                    transition: 'all 0.3s ease',
-                  }}
-                  whileHover={{
-                    borderColor: `${COLOR}66`,
-                    y: -8,
-                    boxShadow: `0 12px 40px ${COLOR}22`,
-                  }}
-                >
-                  <div style={{
-                    width: '4rem',
-                    height: '4rem',
-                    borderRadius: '50%',
-                    background: `${COLOR}22`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 1.5rem',
-                  }}>
-                    <Icon size={28} color={COLOR} />
-                  </div>
-
-                  <div style={{
-                    fontSize: screenSize === 'mobile' ? '3rem' : '4rem',
-                    fontWeight: 900,
-                    color: COLOR,
-                    fontFamily: 'var(--font-display)',
-                    lineHeight: 1,
-                    marginBottom: '1rem',
-                  }}>
-                    {item.stat}
-                  </div>
-
-                  <div style={{
-                    fontSize: screenSize === 'mobile' ? '1.1rem' : '1.25rem',
-                    fontWeight: 700,
-                    color: '#fff',
-                    fontFamily: 'var(--font-display)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    marginBottom: '1rem',
-                  }}>
-                    {item.label}
-                  </div>
-
-                  <p style={{
-                    fontSize: screenSize === 'mobile' ? '1rem' : '1.05rem',
-                    color: 'rgba(255,255,255,0.55)',
-                    fontFamily: 'var(--font-body)',
-                    lineHeight: 1.6,
-                  }}>
-                    {item.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-
-        
-        </div>
-      </section>
-
       {/* ── Programs Section ── */}
 
       {/* Programs Grid */}
@@ -446,137 +439,10 @@ export default function PoleFormationShell() {
               <p style={{ color: "rgba(255,255,255,0.5)" }}>Aucun programme disponible.</p>
             </div>
           ) : (
-            programs.map((program, i) => {
-            const Icon = program.icon;
-            const [isHovered, setIsHovered] = useState(false);
-            return (
-              <Link href={`/formations/${program.slug}`} key={i} style={{ textDecoration: 'none' }}>
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 }}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                  style={{
-                    height: '100%',
-                    background: 'rgba(255,255,255,0.02)',
-                    border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: '1rem',
-                    overflow: 'hidden',
-                    transition: 'all 0.4s ease',
-                    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-                    boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : 'none',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {/* Image Header */}
-                  <div style={{
-                    position: 'relative',
-                    height: screenSize === 'mobile' ? '180px' : '220px',
-                    overflow: 'hidden',
-                    background: 'rgba(0,0,0,0.3)',
-                  }}>
-                    <img
-                      src={program.image}
-                      alt={program.title}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.6s ease, filter 0.4s ease',
-                        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-                        filter: isHovered ? 'grayscale(0%) brightness(0.8)' : 'grayscale(40%) brightness(0.6)',
-                      }}
-                    />
-                    {/* Gradient overlay */}
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.4) 50%, rgba(7,14,28,0.95) 100%)`,
-                    }} />
-                    {/* Icon badge */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '1rem',
-                      left: '1.5rem',
-                      width: '3.5rem',
-                      height: '3.5rem',
-                      borderRadius: '0.75rem',
-                      background: `${COLOR}`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: `0 8px 24px ${COLOR}66`,
-                    }}>
-                      <Icon size={24} color="#fff" />
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div style={{
-                    padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}>
-                    <h3 style={{
-                      fontSize: screenSize === 'mobile' ? '1.3rem' : '1.6rem',
-                      fontWeight: 900,
-                      marginBottom: '1rem',
-                      fontFamily: 'var(--font-display)',
-                      color: '#fff',
-                      textTransform: 'uppercase',
-                      lineHeight: 1.2,
-                    }}>
-                      {program.title}
-                    </h3>
-                    <p style={{
-                      fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
-                      lineHeight: 1.6,
-                      color: 'rgba(255,255,255,0.65)',
-                      marginBottom: '1.5rem',
-                      fontFamily: 'var(--font-body)',
-                      flex: 1,
-                    }}>
-                      {program.description}
-                    </p>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
-                      {program.features.map((feature: string, fi: number) => (
-                        <li key={fi} style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          marginBottom: '0.5rem',
-                          fontSize: '0.9rem',
-                          color: 'rgba(255,255,255,0.55)',
-                          fontFamily: 'var(--font-body)'
-                        }}>
-                          <CheckCircle2 size={16} color={COLOR} />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* CTA link */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.6rem',
-                      color: isHovered ? '#fff' : COLOR,
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.1em',
-                      transition: 'all 0.3s ease',
-                    }}>
-                      En savoir plus <ArrowRight size={18} />
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
-            );
-          }))}
+            programs.map((program, i) => (
+              <ProgramCard key={i} program={program} index={i} screenSize={screenSize} COLOR={COLOR} />
+            ))
+          )}
         </div>
       </section>
 

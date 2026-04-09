@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Youtube, Facebook,LinkedinIcon, Mail, Phone, MapPin} from "lucide-react";
 
 const ORANGE = "#D35400";
 const BG = "#070E1C";
@@ -12,6 +12,7 @@ const FOOTER_SOCIALS = [
   { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
   { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
   { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
+  { Icon: LinkedinIcon, href: "https://www.linkedin.com/company/103580441/", label: "LinkedIn" },
 ];
 
 interface FooterStripProps {
