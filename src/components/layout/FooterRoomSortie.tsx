@@ -38,7 +38,7 @@ export default function FooterRoomSortie() {
               onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}>
               <Mail size={18} strokeWidth={1.6} />sohaib.baroud@a-ct.ma
             </a>
-            <a href="tel:+212694528498"
+            <a href="tel:+212662777507"
               style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
               onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}>

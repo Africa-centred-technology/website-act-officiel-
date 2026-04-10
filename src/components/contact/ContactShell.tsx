@@ -303,7 +303,7 @@ export default function ContactShell() {
             style={{ display: "flex", flexDirection: "column", gap: "0.6rem", flexShrink: 0 }}
           >
             {[
-              { Icon: Phone, val: "+212 694-528498", href: "tel:+212694528498" },
+              { Icon: Phone, val: "+212 662-777507", href: "tel:+212662777507" },
               { Icon: Mail,  val: "sohaib.baroud@a-ct.ma", href: "mailto:sohaib.baroud@a-ct.ma" },
             ].map((c) => (
               <a
@@ -668,11 +668,11 @@ export default function ContactShell() {
                 Parlez directement à un conseiller d'ACT. Disponible du Lundi au Samedi.
               </p>
               <CTAButton
-                href="tel:+212694528498"
+                href="tel:+212662777507"
                 icon={<Phone size={16} />}
                 className="w-full"
               >
-                +212 694-528498
+                +212 662-777507
               </CTAButton>
             </div>
 
