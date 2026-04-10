@@ -365,7 +365,7 @@ export default function Header() {
 
           {/* Theme Toggle - Desktop & Mobile */}
           <div style={{ marginLeft: isMobile ? "auto" : "0" }}>
-            <ThemeToggle disabled={true} />
+            <ThemeToggle disabled={false} />
           </div>
 
           {/* Mobile hamburger button */}
