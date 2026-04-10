@@ -137,11 +137,16 @@ export async function POST(req: Request) {
 
     const note = noteLines.join("\\n");
 
-    // 3. Préparer les items de la commande
+    // 3. Déterminer la quantité basée sur le nombre de participants (pour B2B)
+    const quantity = body.typeClient === "B2B" && body.nombreParticipants 
+      ? parseInt(body.nombreParticipants, 10) || 1 
+      : 1;
+
+    // 4. Préparer les items de la commande
     // Si on a le variant, on l'utilise. Sinon on crée un item custom.
     const lineItems = variantId 
-      ? [ { variantId: variantId, quantity: 1 } ]
-      : [ { title: `Inscription: ${body.formationSouhaitee || formationSlug || "Formation"}`, originalUnitPrice: 0, quantity: 1 }];
+      ? [ { variantId: variantId, quantity: quantity } ]
+      : [ { title: `Inscription: ${body.formationSouhaitee || formationSlug || "Formation"}`, originalUnitPrice: 0, quantity: quantity }];
 
     const mutation = `
       mutation draftOrderCreate($input: DraftOrderInput!) {
@@ -168,12 +173,14 @@ export async function POST(req: Request) {
         billingAddress: {
           firstName: body.prenom,
           lastName: body.nom,
-          phone: body.telephone || ""
+          phone: body.telephone || "",
+          company: body.typeClient === "B2B" ? body.entreprise : ""
         },
         shippingAddress: {
           firstName: body.prenom,
           lastName: body.nom,
-          phone: body.telephone || ""
+          phone: body.telephone || "",
+          company: body.typeClient === "B2B" ? body.entreprise : ""
         },
         lineItems: lineItems
       }

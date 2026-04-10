@@ -280,17 +280,22 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                         <h3 style={{ fontSize: "1.8rem", color: accent, marginBottom: "2rem", fontFamily: "var(--font-display)" }}>Programme détaillé</h3>
                         {formation.programme && formation.programme.length > 0 ? (
-                          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                             {formation.programme.map((mod, i) => (
-                              <div key={i} style={{ paddingLeft: "1.5rem", borderLeft: `3px solid ${accent}33` }}>
-                                <p style={{ fontWeight: 700, color: "#fff", marginBottom: "0.75rem", fontSize: "1.4rem" }}>{mod.module}</p>
-                                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                                  {mod.details.map((d, j) => (
-                                    <li key={j} style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.15rem", display: "flex", gap: "0.85rem" }}>
-                                      <span style={{ color: accent }}>•</span> {d}
-                                    </li>
-                                  ))}
-                                </ul>
+                              <div key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+                                <div style={{ flexShrink: 0, width: "2.2rem", height: "2.2rem", borderRadius: "50%", background: `${accent}22`, border: `1px solid ${accent}55`, display: "flex", alignItems: "center", justifyContent: "center", marginTop: "0.15rem" }}>
+                                  <span style={{ fontSize: "0.75rem", fontWeight: 700, color: accent, fontFamily: "var(--font-body)" }}>{String(i + 1).padStart(2, "0")}</span>
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <p style={{ fontWeight: 700, color: "#fff", marginBottom: "0.65rem", fontSize: "1.2rem" }}>{mod.module}</p>
+                                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                                    {mod.details.map((d, j) => (
+                                      <li key={j} style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.05rem", display: "flex", gap: "0.75rem" }}>
+                                        <span style={{ color: accent, flexShrink: 0 }}>›</span> {d}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -364,6 +369,68 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   ))}
                 </div>
 
+                {/* Niveau — barre de progression visuelle */}
+                {formation.niveau && (() => {
+                  const steps = ["Initiation", "Intermédiaire", "Avancé"];
+                  const niveauNorm = (formation.niveau ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                  const stepIdx = niveauNorm.includes("avan") || niveauNorm.includes("expert") ? 2
+                    : niveauNorm.includes("inter") || niveauNorm.includes("confirm") ? 1 : 0;
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.72, duration: 0.5 }}
+                      style={{ marginBottom: "2rem", padding: "1.25rem 1.5rem", background: "rgba(255,255,255,0.03)", border: `1px solid ${accent}33`, borderRadius: "0.75rem" }}
+                    >
+                      <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 0.85rem 0", fontFamily: "var(--font-body)" }}>
+                        Niveau requis
+                      </p>
+                      <div style={{ display: "flex", gap: "0.35rem", marginBottom: "0.45rem" }}>
+                        {steps.map((_, i) => (
+                          <div key={i} style={{ flex: 1, height: 5, borderRadius: 3, background: i <= stepIdx ? accent : "rgba(255,255,255,0.1)", transition: "background 0.3s" }} />
+                        ))}
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        {steps.map((step, i) => (
+                          <span key={step} style={{ fontSize: "0.7rem", fontWeight: i === stepIdx ? 700 : 400, color: i === stepIdx ? accent : "rgba(255,255,255,0.28)", fontFamily: "var(--font-body)" }}>
+                            {step}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })()}
+
+                {/* Compétences développées */}
+                {formation.objectifs && formation.objectifs.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 0.5 }}
+                    style={{ marginBottom: "2.5rem" }}
+                  >
+                    <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 0.85rem 0", fontFamily: "var(--font-body)" }}>
+                      Compétences développées
+                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.55rem" }}>
+                      {formation.objectifs.slice(0, 5).map((obj, i) => (
+                        <span key={i} style={{
+                          display: "inline-flex", alignItems: "flex-start", gap: "0.4rem",
+                          padding: "0.4rem 0.85rem",
+                          background: `${accent}14`,
+                          border: `1px solid ${accent}3A`,
+                          borderRadius: "2rem",
+                          fontSize: "0.76rem",
+                          color: "rgba(255,255,255,0.8)",
+                          fontFamily: "var(--font-body)",
+                          lineHeight: 1.45,
+                        }}>
+                          <CheckCircle2 size={11} color={accent} style={{ flexShrink: 0, marginTop: "0.2rem" }} />
+                          {obj.length > 50 ? obj.slice(0, 50).trimEnd() + "…" : obj}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* Prix */}
                 {formation.prix && (
                   <motion.div
@@ -432,6 +499,19 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
               {/* Right — Sidebar */}
               <div style={{ position: "sticky", top: "7rem" }}>
+                {/* Prérequis */}
+                {formation.prerequis && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.15, duration: 0.55 }}
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0.75rem", padding: "1.75rem 2rem", marginBottom: "1.5rem" }}
+                  >
+                    <h3 style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.45)", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700, marginBottom: "1rem", fontFamily: "var(--font-body)" }}>
+                      Prérequis
+                    </h3>
+                    <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.95rem", margin: 0, lineHeight: 1.65, fontFamily: "var(--font-body)" }}>{formation.prerequis}</p>
+                  </motion.div>
+                )}
+
                 {/* Livrables */}
                 {formation.livrables?.length > 0 && (
                   <motion.div
