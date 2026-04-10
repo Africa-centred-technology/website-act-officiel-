@@ -1,6 +1,6 @@
 "use client";
 
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, JSX } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface ThemeAwareSectionProps {
