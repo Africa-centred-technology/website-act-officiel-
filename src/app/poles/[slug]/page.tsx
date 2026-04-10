@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PoleDeveloppementShell from "@/components/poles/PoleDeveloppementShell";
 import PoleConseilShell from "@/components/poles/PoleConseilShell";
-import PoleFormationShell from "@/components/poles/PoleFormationShell";
+import FormationLandpage from "@/components/formations/FormationLandpage";
 
 const poles = {
   "developpement-technologique": {
@@ -16,7 +16,7 @@ const poles = {
     description: "Accompagnement stratégique pour votre transformation digitale : audit IT, stratégie digitale et pilotage de projets.",
   },
   "formation": {
-    component: PoleFormationShell,
+    component: FormationLandpage,
     title: "Pôle Formation & Développement | ACT",
     description: "Formations certifiantes, bootcamps intensifs et mentorat pour développer les compétences tech de demain en Afrique.",
   },

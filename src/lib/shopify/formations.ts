@@ -51,13 +51,13 @@ const PRODUCTS_QUERY = `
             }
           }
           metafields(identifiers: [
-            { namespace: "formation", key: "niveau" }
-            { namespace: "formation", key: "secteur" }
-            { namespace: "formation", key: "categorie" }
-            { namespace: "formation", key: "duree" }
-            { namespace: "formation", key: "format" }
-            { namespace: "formation", key: "accroche" }
-            { namespace: "formation", key: "parcours" }
+            { namespace: "custom", key: "niveau" }
+            { namespace: "custom", key: "secteur" }
+            { namespace: "custom", key: "categorie" }
+            { namespace: "custom", key: "duree" }
+            { namespace: "custom", key: "format" }
+            { namespace: "custom", key: "accroche" }
+            { namespace: "custom", key: "parcours" }
           ]) {
             key
             value
@@ -93,10 +93,30 @@ function extractTag(tags: string[], key: string): string {
   return tag ? tag.slice(prefix.length).trim() : "";
 }
 
-/** Extrait la valeur d'un metafield par clé */
+/** Extrait la valeur d'un metafield par clé et nettoie le format */
 function extractMeta(metafields: { key: string; value: string }[], key: string): string {
   const mf = metafields?.find((m) => m?.key === key);
-  return mf?.value ?? "";
+  if (!mf?.value) return "";
+  
+  let value = mf.value.trim();
+  
+  // Si la valeur commence par [ ou {, essaie de la parser comme JSON
+  if ((value.startsWith("[") || value.startsWith("{")) && value.endsWith("]") || value.endsWith("}")) {
+    try {
+      const parsed = JSON.parse(value);
+      // Si c'est un tableau, prend le premier élément
+      if (Array.isArray(parsed)) {
+        value = parsed[0]?.toString() || "";
+      } else {
+        // Si c'est un objet, retourne la chaîne brute (déjà stringifiée)
+        return value;
+      }
+    } catch {
+      // Si le parsing échoue, garde la valeur originale
+    }
+  }
+  
+  return value.trim();
 }
 
 /** Formate le prix depuis Shopify */
@@ -117,7 +137,7 @@ function mapProduct(node: any): ShopifyFormationCard {
   // Priorité : metafield > tag > valeur par défaut
   const niveau    = extractMeta(metafields, "niveau")    || extractTag(tags, "niveau")    || "";
   const secteur   = extractMeta(metafields, "secteur")   || extractTag(tags, "secteur")   || "";
-  const categorie = extractMeta(metafields, "categorie") || extractTag(tags, "categorie") || "Intelligence artificielle";
+  const categorie = extractMeta(metafields, "categorie") || extractTag(tags, "categorie") || "";
   const duree     = extractMeta(metafields, "duree")     || extractTag(tags, "duree")     || "";
   const format    = extractMeta(metafields, "format")    || extractTag(tags, "format")    || "";
   const accroche  = extractMeta(metafields, "accroche")  || node.description              || "";
@@ -204,31 +224,36 @@ const PRODUCT_BY_HANDLE_QUERY = `
           currencyCode
         }
       }
-      images(first: 3) {
+      images(first: 10) {
         edges {
           node {
             url
             altText
+            width
+            height
           }
         }
       }
       metafields(identifiers: [
-        { namespace: "formation", key: "niveau" }
-        { namespace: "formation", key: "secteur" }
-        { namespace: "formation", key: "categorie" }
-        { namespace: "formation", key: "duree" }
-        { namespace: "formation", key: "format" }
-        { namespace: "formation", key: "accroche" }
-        { namespace: "formation", key: "parcours" }
-        { namespace: "formation", key: "public_cible" }
-        { namespace: "formation", key: "prerequis" }
-        { namespace: "formation", key: "objectifs" }
-        { namespace: "formation", key: "programme" }
-        { namespace: "formation", key: "livrables" }
-        { namespace: "formation", key: "methode" }
+        { namespace: "custom", key: "niveau" }
+        { namespace: "custom", key: "secteur" }
+        { namespace: "custom", key: "categorie" }
+        { namespace: "custom", key: "duree" }
+        { namespace: "custom", key: "format" }
+        { namespace: "custom", key: "accroche" }
+        { namespace: "custom", key: "parcours" }
+        { namespace: "custom", key: "public_cible" }
+        { namespace: "custom", key: "prerequis" }
+        { namespace: "custom", key: "Objectifs_pedagogiques" }
+        { namespace: "custom", key: "programme" }
+        { namespace: "custom", key: "livrables" }
+        { namespace: "custom", key: "methode" }
       ]) {
+        id
         key
         value
+        namespace
+        type
       }
     }
   }
@@ -238,10 +263,10 @@ export interface ShopifyFormationDetail extends ShopifyFormationCard {
   publicCible: string;
   prerequis: string;
   objectifs: string[];
-  programme: { module: string; details: string[] }[];
+  programme: { module: string; details: string[]; duree?: string }[];
   livrables: string[];
   methode: string;
-  imageUrl?: string;
+  images?: string[];
   descriptionHtml?: string;
 }
 
@@ -249,13 +274,51 @@ export interface ShopifyFormationDetail extends ShopifyFormationCard {
 function parseJsonMeta<T>(value: string, fallback: T): T {
   if (!value) return fallback;
   try {
-    return JSON.parse(value) as T;
-  } catch {
+    const parsed = JSON.parse(value) as T;
+    return parsed;
+  } catch (error) {
+    console.warn(`Failed to parse metafield JSON: ${error instanceof Error ? error.message : String(error)}`);
+    console.debug(`Raw value: ${value}`);
+    
     // Si c'est du texte brut (pas du JSON), transforme en tableau si applicable
     if (Array.isArray(fallback)) {
       return value.split("\n").filter(Boolean) as unknown as T;
     }
     return value as unknown as T;
+  }
+}
+
+/** Traite spécifiquement le programme avec validation de structure */
+function parseProgramme(value: string): { module: string; details: string[]; duree?: string }[] {
+  if (!value) return [];
+  
+  try {
+    const parsed = JSON.parse(value);
+    
+    // Gère deux formats : objet avec clé "programme" ou tableau direct
+    const programmes = Array.isArray(parsed) ? parsed : parsed.programme;
+    
+    if (!Array.isArray(programmes)) {
+      console.warn("Programme n'est pas un tableau:", parsed);
+      return [];
+    }
+    
+    // Normalise chaque module
+    return programmes
+      .map((item: any) => ({
+        module: item.module || item.titre || item.title || "",
+        details: Array.isArray(item.details) 
+          ? item.details.filter((d: any) => d)
+          : Array.isArray(item.contenu)
+          ? item.contenu.filter((d: any) => d)
+          : (typeof item.details === "string" ? item.details.split("\n").filter(Boolean) : []),
+        duree: item.duree || item.duration || undefined,
+      }))
+      .filter((m: any) => m.module); // Filtre les modules vides
+  } catch (error) {
+    console.warn(`Impossible de parser le programme: ${error instanceof Error ? error.message : String(error)}`);
+    console.debug(`Valeur reçue: ${value}`);
+    return [];
   }
 }
 
@@ -275,9 +338,9 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
   const livrables = parseJsonMeta<string[]>(
     extractMeta(metafields, "livrables"), []
   );
-  const programme = parseJsonMeta<{ module: string; details: string[] }[]>(
-    extractMeta(metafields, "programme"), []
-  );
+  const programme = parseProgramme(extractMeta(metafields, "programme"));
+
+  const images = node.images?.edges?.map((edge: any) => edge.node.url) || [];
 
   return {
     ...base,
@@ -287,6 +350,7 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
     programme,
     livrables,
     methode,
+    images,
     descriptionHtml: node.descriptionHtml,
   };
 }
@@ -300,6 +364,7 @@ export async function fetchShopifyFormationByHandle(handle: string): Promise<Sho
     },
     body: JSON.stringify({
       query: PRODUCT_BY_HANDLE_QUERY,
+
       variables: { handle },
     }),
     next: { revalidate: 300 },

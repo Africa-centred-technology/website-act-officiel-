@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 
 export default function Cursor() {
+  const [mounted, setMounted]   = useState(false);
   const [visible, setVisible]   = useState(false);
   const [hovered, setHovered]   = useState(false);
   const [clicked, setClicked]   = useState(false);
@@ -21,6 +23,7 @@ export default function Cursor() {
   const py = useSpring(my, { stiffness: 110, damping: 24 });
 
   useEffect(() => {
+    setMounted(true);
     const onMove = (e: MouseEvent) => {
       mx.set(e.clientX);
       my.set(e.clientY);
@@ -28,7 +31,7 @@ export default function Cursor() {
     };
     const onOver = (e: MouseEvent) => {
       const t   = e.target as HTMLElement;
-      const hit = t.closest("a, button, [data-hover]") as HTMLElement | null;
+      const hit = t.closest("a, button, [data-hover], input, select, textarea, .cta-btn") as HTMLElement | null;
       setHovered(!!hit);
     };
     const onDown = () => setClicked(true);
@@ -38,27 +41,28 @@ export default function Cursor() {
     window.addEventListener("mouseover", onOver,  { passive: true });
     window.addEventListener("mousedown", onDown);
     window.addEventListener("mouseup",   onUp);
+    
+    document.body.classList.add("cursor-none");
+
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onOver);
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup",   onUp);
+      document.body.classList.remove("cursor-none");
     };
   }, [mx, my, visible]);
 
-  useEffect(() => {
-    document.body.classList.add("cursor-none");
-    return () => document.body.classList.remove("cursor-none");
-  }, []);
+  if (!mounted) return null;
 
-  return (
+  return createPortal(
     <>
       {/* ── Dot — mix-blend-mode difference, toujours visible ── */}
       <motion.div
         aria-hidden
         style={{
           position:      "fixed",
-          zIndex:        99999,
+          zIndex:        999999, // Un million pour être sûr
           pointerEvents: "none",
           x:             dx,
           y:             dy,
@@ -82,7 +86,7 @@ export default function Cursor() {
         aria-hidden
         style={{
           position:      "fixed",
-          zIndex:        99998,
+          zIndex:        999998,
           pointerEvents: "none",
           x:             px,
           y:             py,
@@ -99,6 +103,7 @@ export default function Cursor() {
         animate={{ opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.4 }}
       />
-    </>
+    </>,
+    document.body
   );
 }

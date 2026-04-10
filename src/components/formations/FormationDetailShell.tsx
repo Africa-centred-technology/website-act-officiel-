@@ -7,7 +7,16 @@ import dynamic from "next/dynamic";
 import {
   Clock, Users, BarChart3, BookOpen,
   CheckCircle2, ArrowRight, Loader2, AlertCircle, RefreshCw,
+  ChevronLeft, ChevronRight
 } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
 import FormationInscriptionModal from "@/components/formations/FormationInscriptionModal";
@@ -38,6 +47,7 @@ interface FormationDetail {
   livrables: string[];
   methode: string;
   imageUrl?: string;
+  images?: string[];
   descriptionHtml?: string;
 }
 
@@ -58,6 +68,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   const [isLoading, setIsLoading]   = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [activeTab, setActiveTab] = useState<"public" | "programme" | "objectifs">("public");
 
   const loadFormation = async () => {
     setIsLoading(true);
@@ -157,23 +169,155 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             {/* Hero : Image + Caractéristiques */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem 4rem", marginBottom: "5rem", alignItems: "start" }}>
 
-              {/* Left — Image */}
+              {/* Left — Image Carousel */}
               <motion.div 
                 initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
                 style={{ flex: "1.2 1 600px", minWidth: 0 }}
               >
                 <div style={{ position: "relative", width: "100%", height: "500px", borderRadius: "1rem", overflow: "hidden", border: `1px solid ${accent}33` }}>
-                  <img
-                    src={formation.imageUrl ?? `/images/poles/pole-formation.jpg`}
-                    alt={formation.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.3) 50%, rgba(7,14,28,0.9) 100%)" }} />
+                  
+                  {formation.images && formation.images.length > 1 ? (
+                    <div className="formation-swiper-container" style={{ height: "100%" }}>
+                      <Swiper
+                        modules={[Navigation, Pagination, Autoplay]}
+                        spaceBetween={0}
+                        slidesPerView={1}
+                        navigation={{
+                          prevEl: ".swiper-button-prev-custom",
+                          nextEl: ".swiper-button-next-custom",
+                        }}
+                        pagination={{ clickable: true }}
+                        autoplay={{ delay: 5000, disableOnInteraction: false }}
+                        loop={true}
+                        style={{ height: "100%" }}
+                      >
+                        {formation.images.map((img, idx) => (
+                          <SwiperSlide key={idx}>
+                            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                              <img
+                                src={img}
+                                alt={`${formation.title} - ${idx + 1}`}
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                              />
+                            </div>
+                          </SwiperSlide>
+                        ))}
+
+                        {/* Custom Navigation */}
+                        <div className="swiper-button-prev-custom" style={{ 
+                          position: "absolute", top: "50%", left: "1rem", transform: "translateY(-50%)", 
+                          zIndex: 10, width: "40px", height: "40px", borderRadius: "50%", 
+                          background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.2)",
+                          display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+                          color: "#fff", transition: "all 0.3s"
+                        }}>
+                          <ChevronLeft size={24} />
+                        </div>
+                        <div className="swiper-button-next-custom" style={{ 
+                          position: "absolute", top: "50%", right: "1rem", transform: "translateY(-50%)", 
+                          zIndex: 10, width: "40px", height: "40px", borderRadius: "50%", 
+                          background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.2)",
+                          display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+                          color: "#fff", transition: "all 0.3s"
+                        }}>
+                          <ChevronRight size={24} />
+                        </div>
+                      </Swiper>
+                    </div>
+                  ) : (
+                    <img
+                      src={formation.images?.[0] || formation.imageUrl || `/images/poles/pole-formation.jpg`}
+                      alt={formation.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  )}
+
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.3) 50%, rgba(7,14,28,0.9) 100%)", pointerEvents: "none", zIndex: 5 }} />
+                  
                   {formation.secteur && (
-                    <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem", padding: "0.6rem 1.2rem", background: accent, borderRadius: "0.5rem", fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                    <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem", padding: "0.6rem 1.2rem", background: accent, borderRadius: "0.5rem", fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", zIndex: 6 }}>
                       {formation.secteur}
                     </div>
                   )}
+                </div>
+
+                {/* Onglets sous l'image */}
+                <div style={{ marginTop: "2rem" }}>
+                  <div style={{ display: "flex", gap: "2rem", marginBottom: "2rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "0.5rem", overflowX: "auto" }}>
+                    {[
+                      { id: "public", label: "Public Cible", icon: Users },
+                      { id: "programme", label: "Programme", icon: BookOpen },
+                      { id: "objectifs", label: "Objectifs", icon: CheckCircle2 }
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id as any)}
+                        style={{
+                          background: "none", border: "none", color: activeTab === tab.id ? accent : "rgba(255,255,255,0.5)",
+                          padding: "1rem 0.5rem", fontSize: "1.1rem", fontWeight: 700, textTransform: "uppercase",
+                          letterSpacing: "0.1em", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.75rem",
+                          position: "relative", whiteSpace: "nowrap", transition: "all 0.3s ease"
+                        }}
+                      >
+                        <tab.icon size={22} />
+                        {tab.label}
+                        {activeTab === tab.id && (
+                          <motion.div layoutId="activeTabUnderline" style={{ position: "absolute", bottom: -9, left: 0, right: 0, height: 3, background: accent }} />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${accent}11`, borderRadius: "1rem", padding: "2.5rem", minHeight: "350px" }}>
+                    {activeTab === "public" && (
+                      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                        <h3 style={{ fontSize: "1.8rem", color: accent, marginBottom: "1.5rem", fontFamily: "var(--font-display)" }}>Public Cible</h3>
+                        <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.8, fontSize: "1.25rem", margin: 0 }}>{formation.publicCible || "Non spécifié"}</p>
+                      </motion.div>
+                    )}
+
+                    {activeTab === "programme" && (
+                      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                        <h3 style={{ fontSize: "1.8rem", color: accent, marginBottom: "2rem", fontFamily: "var(--font-display)" }}>Programme détaillé</h3>
+                        {formation.programme && formation.programme.length > 0 ? (
+                          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                            {formation.programme.map((mod, i) => (
+                              <div key={i} style={{ paddingLeft: "1.5rem", borderLeft: `3px solid ${accent}33` }}>
+                                <p style={{ fontWeight: 700, color: "#fff", marginBottom: "0.75rem", fontSize: "1.4rem" }}>{mod.module}</p>
+                                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                                  {mod.details.map((d, j) => (
+                                    <li key={j} style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.15rem", display: "flex", gap: "0.85rem" }}>
+                                      <span style={{ color: accent }}>•</span> {d}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.25rem" }}>Détails bientôt disponibles</p>
+                        )}
+                      </motion.div>
+                    )}
+
+                    {activeTab === "objectifs" && (
+                      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                        <h3 style={{ fontSize: "1.8rem", color: accent, marginBottom: "2rem", fontFamily: "var(--font-display)" }}>Objectifs pédagogiques</h3>
+                        {formation.objectifs && formation.objectifs.length > 0 ? (
+                          <div style={{ display: "grid", gap: "1.5rem" }}>
+                            {formation.objectifs.map((obj, i) => (
+                              <div key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+                                <CheckCircle2 size={24} color={accent} style={{ flexShrink: 0, marginTop: "0.2rem" }} />
+                                <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "1.2rem", lineHeight: 1.6 }}>{obj}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.25rem" }}>Objectifs bientôt disponibles</p>
+                        )}
+                      </motion.div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
 
@@ -260,70 +404,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
               {/* Left — Contenu */}
               <div style={{ flex: "1 1 600px", minWidth: 0 }}>
-                {/* Public cible */}
-                {formation.publicCible && (
-                  <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem" }}>
-                    <h2 style={{ fontSize: "var(--font-35)", fontWeight: 900, marginBottom: "1.5rem", color: "#fff", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
-                      <span style={{ color: accent }}>Public</span> cible
-                    </h2>
-                    <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "var(--font-18)", fontFamily: "var(--font-body)" }}>{formation.publicCible}</p>
-                  </motion.section>
-                )}
-
-                {/* Prérequis */}
-                {formation.prerequis && (
-                  <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem" }}>
-                    <h2 style={{ fontSize: "var(--font-35)", fontWeight: 900, marginBottom: "1.5rem", color: "#fff", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
-                      <span style={{ color: accent }}>Prérequis</span>
-                    </h2>
-                    <p style={{ color: "rgba(255,255,255,0.75)", lineHeight: 1.8, fontSize: "var(--font-18)", fontFamily: "var(--font-body)" }}>{formation.prerequis}</p>
-                  </motion.section>
-                )}
-
-                {/* Objectifs */}
-                {formation.objectifs?.length > 0 && (
-                  <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem" }}>
-                    <h2 style={{ fontSize: "var(--font-35)", fontWeight: 900, marginBottom: "1.5rem", color: "#fff", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
-                      Objectifs <span style={{ color: accent }}>pédagogiques</span>
-                    </h2>
-                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      {formation.objectifs.map((obj, i) => (
-                        <motion.li key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                          style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
-                          <CheckCircle2 size={24} color={accent} style={{ flexShrink: 0, marginTop: "0.2em" }} />
-                          <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "var(--font-18)", lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{obj}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.section>
-                )}
-
-                {/* Programme */}
-                {formation.programme?.length > 0 && (
-                  <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem" }}>
-                    <h2 style={{ fontSize: "var(--font-35)", fontWeight: 900, marginBottom: "2rem", color: "#fff", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
-                      Programme <span style={{ color: accent }}>&amp; modules</span>
-                    </h2>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                      {formation.programme.map((mod, mi) => (
-                        <motion.div key={mi} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: mi * 0.1 }}
-                          style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${accent}33`, borderRadius: "0.75rem", padding: "2rem" }}>
-                          <h3 style={{ fontWeight: 800, color: accent, fontSize: "var(--font-20)", marginBottom: "1rem", fontFamily: "var(--font-display)" }}>{mod.module}</h3>
-                          {mod.details?.length > 0 && (
-                            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                              {mod.details.map((d, di) => (
-                                <li key={di} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                                  <span style={{ color: accent, fontSize: "1.2rem", marginTop: "0.2em", flexShrink: 0 }}>•</span>
-                                  <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "var(--font-18)", lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{d}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.section>
-                )}
+           
 
                 {/* Description HTML si pas de programme */}
                 {formation.programme?.length === 0 && formation.descriptionHtml && (
@@ -432,6 +513,27 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </div>
 
       <FooterStrip />
+
+      <style>{`
+        .swiper-pagination-bullet {
+          background: rgba(255,255,255,0.5) !important;
+          opacity: 1 !important;
+        }
+        .swiper-pagination-bullet-active {
+          background: ${ORANGE} !important;
+          width: 20px !important;
+          border-radius: 4px !important;
+        }
+        .swiper-button-prev-custom:hover, .swiper-button-next-custom:hover {
+          background: ${ORANGE} !important;
+          border-color: ${ORANGE} !important;
+          transform: translateY(-50%) scale(1.1) !important;
+        }
+        .swiper-button-disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      `}</style>
 
       <FormationInscriptionModal
         isOpen={isModalOpen}

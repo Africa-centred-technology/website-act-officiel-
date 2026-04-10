@@ -49,4 +49,7 @@ coverage/
 .cache/
 .aider*
 
+#Skills du projet 
+skills/
+
 Gemini.md

@@ -84,7 +84,7 @@ export default function FormationInscriptionModal({
               style={{
                 position: "relative",
                 width: "100%",
-                maxWidth: "950px",
+                maxWidth: "1200px",
                 margin: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
@@ -94,10 +94,10 @@ export default function FormationInscriptionModal({
                 onClick={onClose}
                 style={{
                   position: "absolute",
-                  top: "-1rem",
-                  right: "-1rem",
-                  width: "3rem",
-                  height: "3rem",
+                  top: "-1.5rem",
+                  right: "-1.5rem",
+                  width: "3.5rem",
+                  height: "3.5rem",
                   borderRadius: "50%",
                   background: ORANGE,
                   border: "none",
@@ -119,7 +119,7 @@ export default function FormationInscriptionModal({
                   e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
                 }}
               >
-                <X size={24} />
+                <X size={28} />
               </button>
 
               {/* Form Content */}

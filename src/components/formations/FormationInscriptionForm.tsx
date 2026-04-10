@@ -267,33 +267,13 @@ export default function FormationInscriptionForm({
   };
 
   const validateStep = (step: number): boolean => {
-    switch (step) {
-      case 1:
-        return !!formData.typeClient;
-      case 2:
-        return !!(formData.prenom && formData.nom && formData.email && formData.telephone && formData.ville);
-      case 3:
-        if (formData.typeClient === "B2C") {
-          return !!(formData.age && formData.statutProfessionnel && formData.niveauEtudes &&
-                   formData.experienceIA && formData.objectifPrincipal);
-        } else {
-          return !!(formData.entreprise && formData.secteurActivite && formData.tailleEntreprise &&
-                   formData.fonctionDemandeur && formData.typeEntreprise && formData.nombreParticipants &&
-                   formData.besoinPrincipal);
-        }
-      case 4:
-        return formData.consentementRGPD;
-      default:
-        return true;
-    }
+    // Tous les champs sont désormais optionnels
+    return true;
   };
 
   const nextStep = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, totalSteps));
-    } else {
-      setErrorMessage("Veuillez remplir tous les champs obligatoires");
-    }
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+    setErrorMessage("");
   };
 
   const prevStep = () => {
@@ -303,11 +283,6 @@ export default function FormationInscriptionForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateStep(4)) {
-      setErrorMessage("Veuillez accepter les conditions obligatoires");
-      return;
-    }
 
     setStatus("loading");
     setErrorMessage("");
@@ -340,25 +315,26 @@ export default function FormationInscriptionForm({
 
   return (
     <div style={{
-      background: "rgba(255,255,255,0.02)",
+      background: "rgba(3, 30, 83, 0.34)",
       border: `1px solid ${ORANGE}33`,
       borderRadius: "1rem",
-      padding: "clamp(2rem, 4vw, 3rem)",
+      padding: "clamp(2rem, 5vw, 4rem)",
       position: "relative",
       overflow: "hidden",
-      maxWidth: "900px",
-      margin: "0 auto"
+      maxWidth: "100%", /* S'adapte au modal parent */
+      margin: "0 auto",
+      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
     }}>
       {/* Progress Bar */}
-      <div style={{ marginBottom: "3rem" }}>
+      <div style={{ marginBottom: "4rem" }}>
         <div style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "1rem"
+          marginBottom: "1.5rem"
         }}>
           <h2 style={{
-            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            fontSize: "clamp(2rem, 4vw, 2.5rem)",
             fontWeight: 900,
             color: "#fff",
             fontFamily: "var(--font-display)"
@@ -367,7 +343,7 @@ export default function FormationInscriptionForm({
           </h2>
           <span style={{
             color: ORANGE,
-            fontSize: "0.9rem",
+            fontSize: "1.1rem",
             fontWeight: 700
           }}>
             Étape {currentStep}/{totalSteps}
@@ -376,9 +352,9 @@ export default function FormationInscriptionForm({
 
         <div style={{
           width: "100%",
-          height: "4px",
+          height: "6px",
           background: "rgba(255,255,255,0.1)",
-          borderRadius: "2px",
+          borderRadius: "3px",
           overflow: "hidden"
         }}>
           <motion.div
@@ -388,7 +364,7 @@ export default function FormationInscriptionForm({
             style={{
               height: "100%",
               background: `linear-gradient(90deg, ${ORANGE}, #E67E22)`,
-              borderRadius: "2px"
+              borderRadius: "3px"
             }}
           />
         </div>
@@ -422,24 +398,24 @@ export default function FormationInscriptionForm({
           animate={{ opacity: 1, scale: 1 }}
           style={{
             textAlign: "center",
-            padding: "3rem 2rem"
+            padding: "4rem 2rem"
           }}
         >
-          <CheckCircle2 size={64} color="#22c55e" style={{ margin: "0 auto 1.5rem" }} />
+          <CheckCircle2 size={80} color="#22c55e" style={{ margin: "0 auto 2rem" }} />
           <h3 style={{
-            fontSize: "1.8rem",
+            fontSize: "2.5rem",
             fontWeight: 900,
             color: "#22c55e",
-            marginBottom: "1rem"
+            marginBottom: "1.5rem"
           }}>
             Inscription envoyée avec succès !
           </h3>
-          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "0.5rem" }}>
+          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "1rem", fontSize: "1.2rem" }}>
             {isB2B
               ? "Un conseiller dédié vous contactera sous 24h ouvrées."
               : "Nous vous contacterons sous 48h ouvrées pour confirmer votre inscription."}
           </p>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem" }}>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem" }}>
             Un email de confirmation vous a été envoyé à : <strong style={{ color: ORANGE }}>{formData.email}</strong>
           </p>
         </motion.div>
@@ -453,7 +429,7 @@ export default function FormationInscriptionForm({
             {currentStep === 1 && (
               <StepWrapper key="step1">
                 <StepTitle>Vous êtes :</StepTitle>
-                <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
+                <div style={{ display: "flex", gap: "1.5rem", marginTop: "2.5rem" }}>
                   {[
                     { value: "B2C", label: "Particulier", icon: User },
                     { value: "B2B", label: "Entreprise", icon: Building2 }
@@ -462,9 +438,9 @@ export default function FormationInscriptionForm({
                       key={value}
                       style={{
                         flex: 1,
-                        padding: "2rem 1.5rem",
+                        padding: "3rem 2rem",
                         border: `2px solid ${formData.typeClient === value ? ORANGE : "rgba(255,255,255,0.1)"}`,
-                        borderRadius: "0.75rem",
+                        borderRadius: "1rem",
                         background: formData.typeClient === value ? `${ORANGE}15` : "rgba(255,255,255,0.02)",
                         cursor: "pointer",
                         transition: "all 0.2s",
@@ -479,12 +455,12 @@ export default function FormationInscriptionForm({
                         onChange={handleChange}
                         style={{ display: "none" }}
                       />
-                      <Icon size={48} color={formData.typeClient === value ? ORANGE : "rgba(255,255,255,0.3)"} style={{ margin: "0 auto 1rem" }} />
+                      <Icon size={64} color={formData.typeClient === value ? ORANGE : "rgba(255,255,255,0.3)"} style={{ margin: "0 auto 1.5rem" }} />
                       <span style={{
                         display: "block",
                         color: "#fff",
                         fontWeight: 700,
-                        fontSize: "1.2rem"
+                        fontSize: "1.5rem"
                       }}>
                         {label}
                       </span>
@@ -501,8 +477,8 @@ export default function FormationInscriptionForm({
                 <div style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
-                  gap: "1.5rem",
-                  marginTop: "2rem"
+                  gap: "2rem",
+                  marginTop: "2.5rem"
                 }}>
                   <FormField
                     icon={User}
@@ -511,7 +487,6 @@ export default function FormationInscriptionForm({
                     type="text"
                     value={formData.prenom}
                     onChange={handleChange}
-                    required
                   />
                   <FormField
                     icon={User}
@@ -520,7 +495,6 @@ export default function FormationInscriptionForm({
                     type="text"
                     value={formData.nom}
                     onChange={handleChange}
-                    required
                   />
                   <FormField
                     icon={Mail}
@@ -529,7 +503,6 @@ export default function FormationInscriptionForm({
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                   />
                   <FormField
                     icon={Phone}
@@ -539,7 +512,6 @@ export default function FormationInscriptionForm({
                     value={formData.telephone}
                     onChange={handleChange}
                     placeholder="+212 6XX XXX XXX"
-                    required
                   />
                   <FormSelect
                     icon={MapPin}
@@ -548,7 +520,6 @@ export default function FormationInscriptionForm({
                     value={formData.ville}
                     onChange={handleChange}
                     options={VILLES}
-                    required
                   />
                 </div>
               </StepWrapper>
@@ -561,8 +532,8 @@ export default function FormationInscriptionForm({
                 <div style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
-                  gap: "1.5rem",
-                  marginTop: "2rem"
+                  gap: "2rem",
+                  marginTop: "2.5rem"
                 }}>
                   <FormField
                     icon={Hash}
@@ -572,7 +543,6 @@ export default function FormationInscriptionForm({
                     value={formData.age || ""}
                     onChange={handleChange}
                     placeholder="Ex: 28"
-                    required
                   />
                   <FormSelect
                     icon={Briefcase}
@@ -581,7 +551,6 @@ export default function FormationInscriptionForm({
                     value={formData.statutProfessionnel || ""}
                     onChange={handleChange}
                     options={FONCTIONS_B2C}
-                    required
                   />
                   <FormSelect
                     icon={GraduationCap}
@@ -590,7 +559,6 @@ export default function FormationInscriptionForm({
                     value={formData.niveauEtudes || ""}
                     onChange={handleChange}
                     options={NIVEAUX_ETUDES}
-                    required
                   />
                   <FormSelect
                     icon={Target}
@@ -599,7 +567,6 @@ export default function FormationInscriptionForm({
                     value={formData.experienceIA || ""}
                     onChange={handleChange}
                     options={EXPERIENCE_IA}
-                    required
                   />
                   <div style={{ gridColumn: "1 / -1" }}>
                     <FormSelect
@@ -609,7 +576,6 @@ export default function FormationInscriptionForm({
                       value={formData.objectifPrincipal || ""}
                       onChange={handleChange}
                       options={OBJECTIFS_B2C}
-                      required
                     />
                   </div>
                   <div style={{ gridColumn: "1 / -1" }}>
@@ -633,8 +599,8 @@ export default function FormationInscriptionForm({
                 <div style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
-                  gap: "1.5rem",
-                  marginTop: "2rem"
+                  gap: "2rem",
+                  marginTop: "2.5rem"
                 }}>
                   <FormField
                     icon={Building2}
@@ -643,7 +609,6 @@ export default function FormationInscriptionForm({
                     type="text"
                     value={formData.entreprise || ""}
                     onChange={handleChange}
-                    required
                   />
                   <FormSelect
                     icon={Building2}
@@ -652,7 +617,6 @@ export default function FormationInscriptionForm({
                     value={formData.secteurActivite || ""}
                     onChange={handleChange}
                     options={SECTEURS}
-                    required
                   />
                   <FormSelect
                     icon={Users}
@@ -661,7 +625,6 @@ export default function FormationInscriptionForm({
                     value={formData.tailleEntreprise || ""}
                     onChange={handleChange}
                     options={TAILLES_ENTREPRISE}
-                    required
                   />
                   <FormSelect
                     icon={Briefcase}
@@ -670,7 +633,6 @@ export default function FormationInscriptionForm({
                     value={formData.fonctionDemandeur || ""}
                     onChange={handleChange}
                     options={FONCTIONS}
-                    required
                   />
                   <FormSelect
                     icon={Building2}
@@ -679,7 +641,6 @@ export default function FormationInscriptionForm({
                     value={formData.typeEntreprise || ""}
                     onChange={handleChange}
                     options={TYPES_ENTREPRISE}
-                    required
                   />
                   <FormField
                     icon={Users}
@@ -689,7 +650,6 @@ export default function FormationInscriptionForm({
                     value={formData.nombreParticipants || ""}
                     onChange={handleChange}
                     placeholder="Ex: 10"
-                    required
                   />
                   <div style={{ gridColumn: "1 / -1" }}>
                     <FormSelect
@@ -699,7 +659,6 @@ export default function FormationInscriptionForm({
                       value={formData.besoinPrincipal || ""}
                       onChange={handleChange}
                       options={BESOINS_B2B}
-                      required
                     />
                   </div>
                 </div>
@@ -710,30 +669,30 @@ export default function FormationInscriptionForm({
             {currentStep === 4 && (
               <StepWrapper key="step4">
                 <StepTitle>Finalisation de votre inscription</StepTitle>
-                <div style={{ marginTop: "2rem" }}>
+                <div style={{ marginTop: "2.5rem" }}>
                   {/* Formation sélectionnée */}
                   {formationTitle && (
-                    <div style={{ marginBottom: "2rem" }}>
+                    <div style={{ marginBottom: "2.5rem" }}>
                       <label style={{
                         display: "block",
-                        marginBottom: "0.5rem",
-                        fontSize: "0.85rem",
+                        marginBottom: "0.75rem",
+                        fontSize: "1rem",
                         color: ORANGE,
                         fontWeight: 700,
                         textTransform: "uppercase",
                         letterSpacing: "0.05em"
                       }}>
-                        <GraduationCap size={16} style={{ display: "inline", marginRight: "0.5rem" }} />
+                        <GraduationCap size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
                         Formation sélectionnée
                       </label>
                       <div style={{
                         width: "100%",
-                        padding: "0.875rem",
+                        padding: "1.25rem",
                         background: `${ORANGE}11`,
                         border: `2px solid ${ORANGE}`,
-                        borderRadius: "0.5rem",
+                        borderRadius: "0.75rem",
                         color: "#fff",
-                        fontSize: "1rem",
+                        fontSize: "1.25rem",
                         fontWeight: 600,
                       }}>
                         {formationTitle}
@@ -742,33 +701,33 @@ export default function FormationInscriptionForm({
                   )}
 
                   {/* Message / Compléments d'information */}
-                  <div style={{ marginBottom: "2rem" }}>
+                  <div style={{ marginBottom: "2.5rem" }}>
                     <label style={{
                       display: "block",
-                      marginBottom: "0.5rem",
-                      fontSize: "0.85rem",
+                      marginBottom: "0.75rem",
+                      fontSize: "1rem",
                       color: ORANGE,
                       fontWeight: 700,
                       textTransform: "uppercase",
                       letterSpacing: "0.05em"
                     }}>
-                      <MessageSquare size={16} style={{ display: "inline", marginRight: "0.5rem" }} />
+                      <MessageSquare size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
                       Compléments d'information (optionnel)
                     </label>
                     <textarea
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      rows={5}
+                      rows={6}
                       placeholder="Décrivez vos attentes, objectifs particuliers, disponibilités, contraintes..."
                       style={{
                         width: "100%",
-                        padding: "1rem",
+                        padding: "1.25rem",
                         background: "rgba(255,255,255,0.05)",
                         border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: "0.5rem",
+                        borderRadius: "0.75rem",
                         color: "#fff",
-                        fontSize: "1rem",
+                        fontSize: "1.15rem",
                         fontFamily: "var(--font-body)",
                         resize: "vertical",
                         outline: "none"
@@ -781,7 +740,6 @@ export default function FormationInscriptionForm({
                     name="consentementRGPD"
                     checked={formData.consentementRGPD}
                     onChange={handleChange}
-                    required
                   >
                     J'accepte que mes données personnelles soient collectées et traitées
                     par ACT dans le cadre de ma demande d'inscription.
@@ -791,7 +749,7 @@ export default function FormationInscriptionForm({
                     name="consentementMarketing"
                     checked={formData.consentementMarketing}
                     onChange={handleChange}
-                    containerStyle={{ marginTop: "1rem" }}
+                    containerStyle={{ marginTop: "1.5rem" }}
                   >
                     J'accepte de recevoir des communications marketing d'ACT
                     (newsletters, offres de formations, événements)
@@ -801,17 +759,17 @@ export default function FormationInscriptionForm({
                     name="consentementPartage"
                     checked={formData.consentementPartage}
                     onChange={handleChange}
-                    containerStyle={{ marginTop: "1rem" }}
+                    containerStyle={{ marginTop: "1.5rem" }}
                   >
                     J'accepte que mes données soient partagées avec des partenaires
                     d'ACT (organismes de certification, partenaires technologiques)
                   </CheckboxField>
 
                   <p style={{
-                    fontSize: "0.8rem",
+                    fontSize: "0.95rem",
                     color: "rgba(255,255,255,0.4)",
-                    marginTop: "1.5rem",
-                    lineHeight: 1.5
+                    marginTop: "2rem",
+                    lineHeight: 1.6
                   }}>
                     Conformément au RGPD, vous disposez d'un droit d'accès, de rectification,
                     de suppression et de portabilité de vos données. Pour exercer ces droits,
@@ -825,8 +783,8 @@ export default function FormationInscriptionForm({
           {/* Navigation Buttons */}
           <div style={{
             display: "flex",
-            gap: "1.5rem",
-            marginTop: "3.5rem",
+            gap: "2rem",
+            marginTop: "4.5rem",
             justifyContent: "space-between",
             alignItems: "center"
           }}>
@@ -834,7 +792,7 @@ export default function FormationInscriptionForm({
               <CTAButton 
                 onClick={prevStep}
                 type="button"
-                icon={<ArrowLeft size={18} />}
+                icon={<ArrowLeft size={22} />}
               >
                 Précédent
               </CTAButton>
@@ -845,7 +803,7 @@ export default function FormationInscriptionForm({
                 <CTAButton 
                   onClick={nextStep}
                   type="button"
-                  icon={<ArrowRight size={18} />}
+                  icon={<ArrowRight size={22} />}
                   iconPosition="right"
                 >
                   Suivant
@@ -854,7 +812,7 @@ export default function FormationInscriptionForm({
                 <CTAButton 
                   type="submit"
                   className={status === "loading" ? "opacity-50 pointer-events-none" : ""}
-                  icon={status === "loading" ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                  icon={status === "loading" ? <Loader2 size={22} className="animate-spin" /> : <Send size={22} />}
                   iconPosition="right"
                 >
                   {status === "loading" ? "Envoi..." : "Envoyer"}
@@ -885,10 +843,10 @@ function StepWrapper({ children }: { children: React.ReactNode }) {
 function StepTitle({ children }: { children: React.ReactNode }) {
   return (
     <h3 style={{
-      fontSize: "1.5rem",
+      fontSize: "2rem",
       fontWeight: 800,
       color: "#fff",
-      marginBottom: "0.5rem",
+      marginBottom: "0.75rem",
       fontFamily: "var(--font-display)"
     }}>
       {children}
@@ -903,7 +861,6 @@ function FormField({
   type,
   value,
   onChange,
-  required = false,
   placeholder = ""
 }: {
   icon: any;
@@ -912,38 +869,36 @@ function FormField({
   type: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
   placeholder?: string;
 }) {
   return (
     <div>
       <label style={{
         display: "block",
-        marginBottom: "0.5rem",
-        fontSize: "0.85rem",
+        marginBottom: "0.75rem",
+        fontSize: "1rem",
         color: ORANGE,
         fontWeight: 700,
         textTransform: "uppercase",
         letterSpacing: "0.05em"
       }}>
-        <Icon size={16} style={{ display: "inline", marginRight: "0.5rem" }} />
-        {label} {required && "*"}
+        <Icon size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
+        {label}
       </label>
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
-        required={required}
         placeholder={placeholder}
         style={{
           width: "100%",
-          padding: "0.875rem",
+          padding: "1.125rem",
           background: "rgba(255,255,255,0.05)",
           border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "0.5rem",
+          borderRadius: "0.75rem",
           color: "#fff",
-          fontSize: "1rem",
+          fontSize: "1.15rem",
           outline: "none"
         }}
       />
@@ -958,7 +913,6 @@ function FormSelect({
   value,
   onChange,
   options,
-  required = false
 }: {
   icon: any;
   label: string;
@@ -966,35 +920,33 @@ function FormSelect({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: string[];
-  required?: boolean;
 }) {
   return (
     <div>
       <label style={{
         display: "block",
-        marginBottom: "0.5rem",
-        fontSize: "0.85rem",
+        marginBottom: "0.75rem",
+        fontSize: "1rem",
         color: ORANGE,
         fontWeight: 700,
         textTransform: "uppercase",
         letterSpacing: "0.05em"
       }}>
-        <Icon size={16} style={{ display: "inline", marginRight: "0.5rem" }} />
-        {label} {required && "*"}
+        <Icon size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
+        {label}
       </label>
       <select
         name={name}
         value={value}
         onChange={onChange}
-        required={required}
         style={{
           width: "100%",
-          padding: "0.875rem",
+          padding: "1.125rem",
           background: "rgba(255,255,255,0.05)",
           border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "0.5rem",
+          borderRadius: "0.75rem",
           color: value ? "#fff" : "rgba(255,255,255,0.4)",
-          fontSize: "1rem",
+          fontSize: "1.15rem",
           outline: "none",
           cursor: "pointer"
         }}
@@ -1027,33 +979,33 @@ function MultiCheckbox({
     <div style={containerStyle}>
       <label style={{
         display: "block",
-        marginBottom: "0.75rem",
-        fontSize: "0.85rem",
+        marginBottom: "1rem",
+        fontSize: "1rem",
         color: ORANGE,
         fontWeight: 700,
         textTransform: "uppercase",
         letterSpacing: "0.05em"
       }}>
-        {label} *
+        {label}
       </label>
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-        gap: "0.75rem"
+        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        gap: "1rem"
       }}>
         {options.map((option) => (
           <label
             key={option}
             style={{
-              padding: "0.75rem 1rem",
+              padding: "1rem 1.25rem",
               background: selected.includes(option) ? `${ORANGE}22` : "rgba(255,255,255,0.03)",
               border: `1px solid ${selected.includes(option) ? ORANGE : "rgba(255,255,255,0.1)"}`,
-              borderRadius: "0.5rem",
+              borderRadius: "0.75rem",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "0.5rem",
-              fontSize: "0.9rem",
+              gap: "0.75rem",
+              fontSize: "1.1rem",
               color: "#fff"
             }}
           >
@@ -1061,7 +1013,7 @@ function MultiCheckbox({
               type="checkbox"
               checked={selected.includes(option)}
               onChange={() => onChange(option)}
-              style={{ accentColor: ORANGE }}
+              style={{ accentColor: ORANGE, width: "20px", height: "20px" }}
             />
             {option}
           </label>
@@ -1077,7 +1029,6 @@ function RadioGroup({
   options,
   value,
   onChange,
-  required = false,
   containerStyle = {}
 }: {
   label: string;
@@ -1085,36 +1036,35 @@ function RadioGroup({
   options: string[];
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
   containerStyle?: React.CSSProperties;
 }) {
   return (
     <div style={containerStyle}>
       <label style={{
         display: "block",
-        marginBottom: "0.75rem",
-        fontSize: "0.85rem",
+        marginBottom: "1rem",
+        fontSize: "1rem",
         color: ORANGE,
         fontWeight: 700,
         textTransform: "uppercase",
         letterSpacing: "0.05em"
       }}>
-        {label} {required && "*"}
+        {label}
       </label>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {options.map((option) => (
           <label
             key={option}
             style={{
-              padding: "0.75rem 1rem",
+              padding: "1rem 1.25rem",
               background: value === option ? `${ORANGE}22` : "rgba(255,255,255,0.03)",
               border: `1px solid ${value === option ? ORANGE : "rgba(255,255,255,0.1)"}`,
-              borderRadius: "0.5rem",
+              borderRadius: "0.75rem",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "0.5rem",
-              fontSize: "0.9rem",
+              gap: "0.75rem",
+              fontSize: "1.1rem",
               color: "#fff"
             }}
           >
@@ -1124,8 +1074,7 @@ function RadioGroup({
               value={option}
               checked={value === option}
               onChange={onChange}
-              required={required}
-              style={{ accentColor: ORANGE }}
+              style={{ accentColor: ORANGE, width: "20px", height: "20px" }}
             />
             {option}
           </label>
@@ -1139,14 +1088,12 @@ function CheckboxField({
   name,
   checked,
   onChange,
-  required = false,
   containerStyle = {},
   children
 }: {
   name: string;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
   containerStyle?: React.CSSProperties;
   children: React.ReactNode;
 }) {
@@ -1155,7 +1102,7 @@ function CheckboxField({
       style={{
         display: "flex",
         alignItems: "flex-start",
-        gap: "0.75rem",
+        gap: "1rem",
         cursor: "pointer",
         ...containerStyle
       }}
@@ -1165,21 +1112,20 @@ function CheckboxField({
         name={name}
         checked={checked}
         onChange={onChange}
-        required={required}
         style={{
           accentColor: ORANGE,
-          marginTop: "0.25rem",
-          width: "18px",
-          height: "18px",
+          marginTop: "0.35rem",
+          width: "22px",
+          height: "22px",
           cursor: "pointer"
         }}
       />
       <span style={{
         color: "rgba(255,255,255,0.7)",
-        fontSize: "0.9rem",
-        lineHeight: 1.5
+        fontSize: "1.1rem",
+        lineHeight: 1.6
       }}>
-        {children} {required && <span style={{ color: ORANGE }}>*</span>}
+        {children}
       </span>
     </label>
   );

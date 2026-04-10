@@ -3,9 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Instagram, Youtube, Facebook,LinkedinIcon, Mail, Phone, MapPin} from "lucide-react";
+import { Instagram, Youtube, Facebook, LinkedinIcon, Mail, Phone, MapPin, Code2, Briefcase, GraduationCap } from "lucide-react";
 
 const ORANGE = "#D35400";
+
 const BG = "#070E1C";
 
 const FOOTER_SOCIALS = [
@@ -99,20 +100,25 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
           </div>
         </div>
 
-        {/* Col 4 — Carrières */}
+        {/* Col 4 — Nos Pôles */}
         <div>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.2rem", opacity: 0.9 }}>
-            Carrières
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
+            Nos Pôles
           </p>
-          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", lineHeight: 1.6, marginBottom: "0.9rem", maxWidth: "300px", opacity: 0.85 }}>
-            Rejoignez l&apos;équipe qui construit l&apos;Afrique technologique de demain.
-          </p>
-          <Link href="/careers"
-            style={{ fontFamily: "var(--font-display)", color: ORANGE, textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)", letterSpacing: "0.08em", textTransform: "uppercase", transition: "color 0.2s", fontWeight: 600 }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#F39C12")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = ORANGE)}>
-            Postuler maintenant →
-          </Link>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {[
+              { href: "/poles/developpement-technologique", label: "Développement Technologique", Icon: Code2 },
+              { href: "/poles/conseil-strategie-it", label: "Conseil & Stratégie IT", Icon: Briefcase },
+              { href: "/poles/formation", label: "Formation & Développement", Icon: GraduationCap },
+            ].map((link) => (
+              <Link key={link.label} href={link.href}
+                style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "0.6rem", color: "#ffffff", textDecoration: "none", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", transition: "color 0.2s", opacity: 0.85 }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = ORANGE)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}>
+                <link.Icon size={18} strokeWidth={1.6} />{link.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 
