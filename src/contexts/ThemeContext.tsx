@@ -22,15 +22,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     // Initialiser le thème
     const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
+    if (savedTheme === 'dark' || savedTheme === 'light') {
       setThemeState(savedTheme);
       document.documentElement.setAttribute('data-theme', savedTheme);
     } else {
-      // Détecter la préférence système
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = prefersDark ? 'dark' : 'light';
-      setThemeState(initialTheme);
-      document.documentElement.setAttribute('data-theme', initialTheme);
+      // Forcer le thème sombre par défaut au lieu de détecter le navigateur
+      setThemeState('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
   }, []);
 
