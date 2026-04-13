@@ -12,6 +12,8 @@ export type BlogPost = {
   readTime: string;
   image: string;
   featured?: boolean;
+  /** Contenu HTML brut (articles venant de Shopify). Quand présent, sections est ignoré. */
+  contentHtml?: string;
   sections: {
     title?: string;
     content: string;

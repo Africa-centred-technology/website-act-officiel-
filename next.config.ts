@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "videos.pexels.com" },
       { protocol: "https", hostname: "media.licdn.com" },
       { protocol: "https", hostname: "cdn.pixabay.com" },
+      { protocol: "https", hostname: "cdn.shopify.com" },
     ],
   },
 };

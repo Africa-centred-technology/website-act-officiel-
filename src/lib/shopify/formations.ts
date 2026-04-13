@@ -93,30 +93,17 @@ function extractTag(tags: string[], key: string): string {
   return tag ? tag.slice(prefix.length).trim() : "";
 }
 
-/** Extrait la valeur d'un metafield par clé et nettoie le format */
+/** Extrait la valeur scalaire d'un metafield (pour niveau, secteur, duree, etc.) */
 function extractMeta(metafields: { key: string; value: string }[], key: string): string {
-  const mf = metafields?.find((m) => m?.key === key);
+  const mf = metafields?.find((m) => m?.key?.toLowerCase() === key.toLowerCase());
   if (!mf?.value) return "";
-  
-  let value = mf.value.trim();
-  
-  // Si la valeur commence par [ ou {, essaie de la parser comme JSON
-  if ((value.startsWith("[") || value.startsWith("{")) && value.endsWith("]") || value.endsWith("}")) {
-    try {
-      const parsed = JSON.parse(value);
-      // Si c'est un tableau, prend le premier élément
-      if (Array.isArray(parsed)) {
-        value = parsed[0]?.toString() || "";
-      } else {
-        // Si c'est un objet, retourne la chaîne brute (déjà stringifiée)
-        return value;
-      }
-    } catch {
-      // Si le parsing échoue, garde la valeur originale
-    }
-  }
-  
-  return value.trim();
+  return mf.value.trim();
+}
+
+/** Extrait la valeur brute d'un metafield JSON sans la toucher (pour objectifs, programme, livrables) */
+function extractRawMeta(metafields: { key: string; value: string }[], key: string): string {
+  const mf = metafields?.find((m) => m?.key?.toLowerCase() === key.toLowerCase());
+  return mf?.value?.trim() ?? "";
 }
 
 /** Formate le prix depuis Shopify */
@@ -288,6 +275,52 @@ function parseJsonMeta<T>(value: string, fallback: T): T {
   }
 }
 
+/** Traite les objectifs pédagogiques avec le nouveau format JSON */
+function parseObjectifs(value: string): string[] {
+  if (!value) return [];
+  
+  try {
+    const parsed = JSON.parse(value);
+    
+    // Gère deux formats : objet avec clé "objectifs" ou tableau direct
+    const objectifs = Array.isArray(parsed) ? parsed : parsed.objectifs;
+    
+    if (!Array.isArray(objectifs)) {
+      console.warn("Objectifs n'est pas un tableau:", parsed);
+      return [];
+    }
+    
+    // Filtre les objectifs vides et valides
+    return objectifs.filter((obj: any) => typeof obj === "string" && obj.trim());
+  } catch (error) {
+    console.warn(`Impossible de parser les objectifs: ${error instanceof Error ? error.message : String(error)}`);
+    console.debug(`Valeur reçue: ${value}`);
+    return [];
+  }
+}
+
+/** Traite les livrables avec le même robustesse que parseObjectifs */
+function parseLivrables(value: string): string[] {
+  if (!value) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+
+    // Gère deux formats : tableau direct ou objet avec clé "livrables"
+    const livrables = Array.isArray(parsed) ? parsed : parsed.livrables;
+
+    if (!Array.isArray(livrables)) {
+      console.warn("Livrables n'est pas un tableau:", parsed);
+      return [];
+    }
+
+    return livrables.filter((item: any) => typeof item === "string" && item.trim());
+  } catch {
+    // Fallback : texte brut séparé par des sauts de ligne
+    return value.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+}
+
 /** Traite spécifiquement le programme avec validation de structure */
 function parseProgramme(value: string): { module: string; details: string[]; duree?: string }[] {
   if (!value) return [];
@@ -332,13 +365,9 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
   const prerequis   = extractMeta(metafields, "prerequis")    || "";
   const methode     = extractMeta(metafields, "methode")      || "";
 
-  const objectifs = parseJsonMeta<string[]>(
-    extractMeta(metafields, "objectifs"), []
-  );
-  const livrables = parseJsonMeta<string[]>(
-    extractMeta(metafields, "livrables"), []
-  );
-  const programme = parseProgramme(extractMeta(metafields, "programme"));
+  const objectifs = parseObjectifs(extractRawMeta(metafields, "objectifs_pedagogiques"));
+  const livrables = parseLivrables(extractRawMeta(metafields, "livrables"));
+  const programme = parseProgramme(extractRawMeta(metafields, "programme"));
 
   const images = node.images?.edges?.map((edge: any) => edge.node.url) || [];
 

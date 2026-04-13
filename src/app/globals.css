@@ -1312,3 +1312,80 @@ a:hover {
   color: var(--text-primary);
   border-color: var(--border-color) !important;
 }
+
+/* ── Contenu HTML Shopify Blog ─────────────────────────────────────────────── */
+.shopify-blog-content h1,
+.shopify-blog-content h2,
+.shopify-blog-content h3,
+.shopify-blog-content h4 {
+  color: #fff;
+  font-family: var(--font-body, sans-serif);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+}
+.shopify-blog-content h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+.shopify-blog-content h3 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+.shopify-blog-content h4 { font-size: 1.7rem; }
+.shopify-blog-content p  { margin-bottom: 1.8rem; }
+.shopify-blog-content ul,
+.shopify-blog-content ol {
+  margin: 2rem 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.shopify-blog-content li {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+.shopify-blog-content li::before {
+  content: '';
+  flex-shrink: 0;
+  margin-top: 0.65rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: #D35400;
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.shopify-blog-content a {
+  color: #D35400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.shopify-blog-content strong { color: rgba(255,255,255,0.9); font-weight: 700; }
+.shopify-blog-content em    { font-style: italic; }
+.shopify-blog-content blockquote {
+  margin: 3rem 0;
+  padding: 2rem 3rem;
+  border-left: 3px solid #D35400;
+  background: rgba(211,84,0,0.05);
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+}
+.shopify-blog-content pre {
+  padding: 2rem 2.5rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+  background: #060D0A;
+  border: 1px solid rgba(255,255,255,0.08);
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+}
+.shopify-blog-content code {
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  background: rgba(255,255,255,0.05);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+.shopify-blog-content pre code { background: transparent; padding: 0; }
+.shopify-blog-content img  { max-width: 100%; border-radius: 12px; margin: 2rem 0; }
+.shopify-blog-content hr   { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 3rem 0; }

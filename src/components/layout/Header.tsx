@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 
@@ -22,7 +21,6 @@ const SAVOIR_FAIRE_MENU = [
   { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
   { href: "/services", label: "Nos Services", key: "services", description: "" },
   { href: "/formations", label: "Catalogue de Formations", key: "formations", description: "" },
-  { href: "/about#partenaires", label: "Nos Partenaires", key: "partenaires", description: "" },
 ];
 
 const NOUS_DECOUVRIR_MENU = [
@@ -361,11 +359,6 @@ export default function Header() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Theme Toggle - Desktop & Mobile */}
-          <div style={{ marginLeft: isMobile ? "auto" : "0" }}>
-            <ThemeToggle disabled={false} />
           </div>
 
           {/* Mobile hamburger button */}

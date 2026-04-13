@@ -246,10 +246,23 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
               ))}
             </div>
 
-            {/* Sections */}
-            {post.sections.map((section, i) => (
-              <ContentSection key={i} section={section} index={i} categoryColor={post.categoryColor} screenSize={screenSize} />
-            ))}
+            {/* Sections — HTML Shopify ou sections statiques */}
+            {post.contentHtml ? (
+              <div
+                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+                style={{
+                  color: "rgba(255,255,255,0.65)",
+                  fontSize: screenSize === 'mobile' ? "1.5rem" : "2rem",
+                  lineHeight: 1.85,
+                  fontFamily: "var(--font-body)",
+                }}
+                className="shopify-blog-content"
+              />
+            ) : (
+              post.sections.map((section, i) => (
+                <ContentSection key={i} section={section} index={i} categoryColor={post.categoryColor} screenSize={screenSize} />
+              ))
+            )}
 
             {/* Back + Share row */}
             <div

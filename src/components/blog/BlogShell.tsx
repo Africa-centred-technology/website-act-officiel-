@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";
-import { blogPosts, categories } from "@/lib/blog-data";
+import { blogPosts, categories, type BlogPost } from "@/lib/blog-data";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 
@@ -41,6 +41,19 @@ const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false }
 export default function BlogShell() {
   const screenSize = useMediaQuery();
   const containerRef = useRef(null);
+  const [allPosts, setAllPosts] = useState<BlogPost[]>(blogPosts);
+
+  useEffect(() => {
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!Array.isArray(posts) || posts.length === 0) return;
+        const staticSlugs = new Set(blogPosts.map((p) => p.slug));
+        const shopifyNew  = posts.filter((p: BlogPost) => !staticSlugs.has(p.slug));
+        setAllPosts([...shopifyNew, ...blogPosts]);
+      })
+      .catch(() => {});
+  }, []);
   return (
     <div ref={containerRef} style={{ background: "var(--bg-primary)", minHeight: "100vh", position: "relative" }}>
       {/* ── Background layers globaux ── */}
@@ -159,7 +172,7 @@ export default function BlogShell() {
           {/* Responsive grid with enhanced staggered reveal */}
           <div className="categories-grid">
             {categories.filter(c => c.value !== "all").map((cat, i) => {
-              const articleCount = blogPosts.filter(p => p.category === cat.label).length;
+              const articleCount = allPosts.filter(p => p.category === cat.label).length;
 
               return (
                 <motion.div

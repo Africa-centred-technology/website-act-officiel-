@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatGPT, Gemini, Claude & compagnie : enfin une explication qui ne brûle pas vos neurones</title>
+  <meta name="description" content="Comment fonctionnent vraiment ChatGPT, Gemini et Claude ? Tokenisation, transformers, génération probabiliste — expliqués simplement, sans jargon. Article de référence ACT." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #D35400;
+      --dark: #070E1C;
+      --dark-2: #0d1627;
+      --border: rgba(255,255,255,0.07);
+      --text: rgba(255,255,255,0.88);
+      --text-muted: rgba(255,255,255,0.6);
+      --font-display: 'Lora', serif;
+      --font-body: 'Poppins', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,14,28,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-tag {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-weight: 500;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 80px 6% 70px;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(211,84,0,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border: 1px solid rgba(211,84,0,0.3);
+      background: rgba(211,84,0,0.08);
+      padding: 8px 18px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+    }
+    .hero-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hero-meta {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
+
+    /* ── COVER IMAGE ── */
+    .cover-img {
+      width: 100%;
+      max-width: 900px;
+      margin: 48px auto 0;
+      display: block;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .cover-img img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+    }
+
+    /* ── LAYOUT ── */
+    .article-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 64px 6% 100px;
+    }
+
+    /* ── INTRO PARAGRAPHS ── */
+    .intro {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.9;
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    .intro p { margin-bottom: 1.2em; }
+    .intro p:last-child { margin-bottom: 0; }
+
+    /* ── ARTICLE BODY ── */
+    .article-body h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: #fff;
+      margin: 64px 0 20px;
+      line-height: 1.3;
+    }
+    .article-body h3 {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--orange);
+      margin: 40px 0 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .article-body p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.9;
+      margin-bottom: 1.4em;
+    }
+    .article-body strong {
+      color: #fff;
+      font-weight: 700;
+    }
+    .article-body em {
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+    }
+    .article-body a {
+      color: var(--orange);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── SEPARATOR ── */
+    .sep {
+      height: 1px;
+      background: var(--border);
+      margin: 56px 0;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      margin: 48px 0;
+      padding: 32px 40px;
+      background: rgba(211,84,0,0.06);
+      border-left: 3px solid var(--orange);
+      border-radius: 0 12px 12px 0;
+    }
+    .callout p {
+      font-size: 1.15rem !important;
+      font-style: italic;
+      color: rgba(255,255,255,0.9) !important;
+      margin: 0 !important;
+      line-height: 1.75 !important;
+    }
+
+    /* ── FIGURE / IMAGE ── */
+    figure {
+      margin: 48px 0;
+    }
+    figure img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    figcaption {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* ── SECTION NUMBERS ── */
+    .section-number {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+    .section-number::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    /* ── CTA BLOCK ── */
+    .cta-block {
+      margin-top: 72px;
+      padding: 56px 48px;
+      background: linear-gradient(135deg, #130e00 0%, #1e1500 100%);
+      border: 1px solid rgba(211,84,0,0.4);
+      border-radius: 20px;
+      text-align: center;
+    }
+    .cta-block h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .cta-block p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .cta-block a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: #000;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 36px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta-block a:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    footer a {
+      color: var(--orange);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero { padding: 56px 5% 48px; }
+      .article-wrapper { padding: 48px 5% 72px; }
+      .callout { padding: 24px 28px; }
+      .cta-block { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">A<span>C</span>T</a>
+    <span class="nav-tag">Blog · Intelligence Artificielle</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-label">Intelligence Artificielle</div>
+    <h1>ChatGPT, Gemini, Claude&nbsp;&amp;&nbsp;compagnie&nbsp;: enfin une explication qui ne brûle pas vos neurones</h1>
+    <div class="hero-meta">
+      <span>Par ACT</span>
+      <span class="dot"></span>
+      <span>Lecture : 10 min</span>
+      <span class="dot"></span>
+      <span>Avril 2026</span>
+    </div>
+  </header>
+
+  <!-- COVER IMAGE -->
+  <div class="cover-img">
+    <img src="image/Gemini_Generated_Image_w0xmavw0xmavw0xm.png" alt="Illustration d'un transformer — de la phrase aux probabilités" />
+  </div>
+
+  <!-- ARTICLE -->
+  <main class="article-wrapper">
+
+    <!-- INTRO -->
+    <div class="intro">
+      <p>78 millions de dollars. C'est ce qu'a coûté l'entraînement de GPT-4 en calcul informatique, selon les estimations du Stanford AI Index 2025. Pour apprendre à faire une seule chose : prédire le mot suivant.</p>
+      <p>Pas de base de données géante consultée en temps réel. Pas de règles écrites à la main par des linguistes. Pas d'encyclopédie cachée quelque part dans les serveurs. Juste une machine qui a lu une quantité obscène de texte, et qui a appris — à force de corrections répétées — quels mots ont tendance à se suivre.</p>
+      <p>Et pourtant. Le résultat rédige vos emails, explique vos bilans comptables, et débogue du code à trois heures du matin.</p>
+      <p>Ce paradoxe mérite d'être compris. Pas pour faire de la veille technologique, mais parce que quand vous savez ce qui se passe vraiment sous le capot, vous utilisez ces outils différemment. Mieux. Et vous arrêtez de vous faire surprendre par leurs ratés.</p>
+      <p>Cet article décortique les trois mécanismes fondamentaux : la tokenisation, le transformer, et la génération probabiliste. Aucune équation. Aucune ligne de code.</p>
+    </div>
+
+    <!-- BODY -->
+    <div class="article-body">
+
+      <!-- SECTION 1 -->
+      <div class="section-number">Contexte</div>
+      <h2>Avant les LLMs : l'IA qui lisait avec une main devant les yeux</h2>
+      <p>Les systèmes de traitement du langage ont longtemps fonctionné d'une façon qu'on peut résumer ainsi : lire un texte en cachant tout ce qui vient après le mot courant.</p>
+      <p>On appelait ça les réseaux de neurones récurrents — RNN pour les intimes. Ils avançaient mot par mot, de gauche à droite, en portant une sorte de "mémoire" du chemin parcouru. Le problème : cette mémoire s'effaçait. Plus le texte était long, plus les premiers mots disparaissaient du radar. Une phrase courte, ça passait. Un paragraphe entier, c'était une autre histoire.</p>
+      <p>Prenez cette phrase : <em>"La cliente que le directeur avait rencontrée lors du salon de Casablanca, et qui lui avait semblé très prometteuse pour le partenariat, a finalement décliné."</em></p>
+      <p>"A décliné" parle de "la cliente". Séparés par vingt mots. Vous faites le lien sans y penser. Un RNN de 2016 avait de bonnes chances de l'avoir perdu en route.</p>
+      <p>En juin 2017, une équipe de chercheurs chez Google a publié un papier avec un titre qui ressemble presque à un slogan : <em>"Attention Is All You Need"</em> (Vaswani et al., arxiv.org/abs/1706.03762). Ce qu'ils proposaient allait tout changer.</p>
+
+      <div class="sep"></div>
+
+      <!-- SECTION 2 -->
+      <div class="section-number">Mécanisme 1</div>
+      <h2>La tokenisation : le modèle ne lit pas vos mots. Il lit des numéros.</h2>
+      <p>Avant même de "comprendre" quoi que ce soit, le modèle doit transformer votre texte en quelque chose qu'un ordinateur peut manipuler : des nombres entiers. C'est la tokenisation. Et c'est l'étape que tout le monde oublie de mentionner.</p>
+      <p>Un token, ce n'est pas un mot. Ce n'est pas non plus un caractère. C'est un fragment de texte — un bout de mot, un mot entier, parfois plusieurs mots — choisi parce qu'il apparaît fréquemment dans les données d'entraînement. Le mot "intelligence", selon le modèle, sera probablement découpé en deux tokens : "intel" et "ligence". Chacun reçoit un numéro. Et c'est ce numéro que le modèle voit. <em>(Cette décomposition est illustrative — le découpage exact varie d'un tokenizer à l'autre.)</em></p>
+      <p>L'algorithme qui construit ces vocabulaires de tokens s'appelle BPE, pour <em>Byte Pair Encoding</em>. Le principe : on part de chaque caractère individuel, on repère les paires qui reviennent le plus souvent dans le corpus, on les fusionne en un seul token, on recommence. On s'arrête quand on atteint la taille de vocabulaire souhaitée. GPT-2 s'est arrêté à environ 50 000 tokens. GPT-4 en a environ 100 000. Les modèles récents dépassent les 200 000. Et selon Tao et al. (NeurIPS 2024, arxiv.org/abs/2409.11402), chaque doublement de vocabulaire améliore la qualité — mais avec des rendements décroissants.</p>
+      <p>Maintenant, voici ce que ça change concrètement.</p>
+      <p>Quand vous demandez à un modèle de compter les lettres dans un mot, il se retrouve souvent dans une situation absurde : le mot est représenté par un seul numéro, sans que ses lettres individuelles soient visibles. Lui demander de compter les "r" dans "strawberry", c'est comme demander à quelqu'un de décrire le contenu d'un colis d'après son code-barres. L'information n'est pas là sous cette forme.</p>
+      <p>Ce n'est pas un bug. C'est une conséquence directe de la façon dont le texte est représenté.</p>
+
+      <figure>
+        <img src="image/WhatsApp Image 2026-04-11 at 19.50.00.jpeg" alt="De la phrase aux probabilités : le transformer en action" />
+        <figcaption>Les tokens de la phrase d'entrée traversent l'encodeur et le décodeur du transformer, qui calcule les probabilités du mot suivant — ici "il" avec 45% de chances d'apparaître après "…et soudain".</figcaption>
+      </figure>
+
+      <div class="sep"></div>
+
+      <!-- SECTION 3 -->
+      <div class="section-number">Mécanisme 2</div>
+      <h2>Le mécanisme d'attention : tout lire en même temps</h2>
+      <p>Voilà l'idée centrale du transformer, l'architecture introduite dans ce papier de 2017 : au lieu de lire le texte séquentiellement, le modèle regarde <strong>tout en même temps</strong> et calcule, pour chaque token, à quel point il est lié à chacun des autres.</p>
+      <p>Une image pour s'y retrouver. Posez un texte de dix phrases sur une table. Vous appelez dix personnes. Chacune lit le texte entier, mais avec une question différente en tête. L'une cherche le sujet. L'autre cherche le verbe principal. Une troisième cherche les mots qui qualifient ce sujet. Chacune surligne ce qui répond à sa question. Vous superposez tous les surlignages. Ce que vous obtenez, c'est une lecture composite du texte, capturant plusieurs types de relations à la fois.</p>
+      <p>C'est ce que fait le mécanisme d'attention — plusieurs "têtes" de lecture tournant en parallèle, chacune spécialisée dans un type de relation entre les tokens. Le papier original de Vaswani et al. en utilisait 8 simultanément. Les grands modèles d'aujourd'hui en alignent des centaines.</p>
+      <p>Et le point qu'on mentionne rarement : ce traitement parallèle ne change pas que la vitesse de lecture. Il a permis d'entraîner ces modèles sur des milliers de puces graphiques simultanément. Sans ça, GPT-4 n'aurait tout simplement pas pu être entraîné dans une durée raisonnable — peu importe la puissance de calcul disponible. C'est cette bascule architecturale, plus que tout autre facteur, qui a rendu possible l'explosion des LLMs après 2020.</p>
+
+      <div class="sep"></div>
+
+      <!-- SECTION 4 -->
+      <div class="section-number">Mécanisme 3</div>
+      <h2>L'entraînement : 78 millions de dollars pour compléter des phrases</h2>
+      <p>Une fois qu'on sait découper le texte en tokens et établir des relations entre eux, comment le modèle apprend-il à produire quelque chose d'utile ?</p>
+      <p>La tâche est d'une simplicité qui surprend : <strong>deviner le token suivant</strong>.</p>
+      <p>Pendant l'entraînement, on présente au modèle des milliards de séquences de texte — pages web, livres, articles scientifiques, code source. Pour chaque séquence, on cache le dernier token et on lui demande de le prédire. Il propose quelque chose. On compare à la réalité. On ajuste ses paramètres internes pour qu'il se trompe un peu moins la prochaine fois. Et on recommence. Des centaines de milliards de fois.</p>
+      <p>Selon le rapport technique officiel d'OpenAI (arxiv.org/abs/2303.08774), GPT-4 est pré-entraîné exactement comme ça : prédire le token suivant, sur des données publiques et sous licence. Le Stanford AI Index 2025 (hai.stanford.edu) estime le coût de calcul à environ 78 millions de dollars pour ce seul entraînement.</p>
+      <p>Ce qui ressort de ce processus, ce ne sont pas des "connaissances" au sens humain. Ce sont des <strong>paramètres</strong> — des milliards de valeurs numériques qui encodent des régularités statistiques. Le modèle ne sait pas que Paris est la capitale de la France comme vous le savez. Il a appris que les tokens "Paris" et "capitale" et "France" apparaissent ensemble suffisamment souvent pour que leur association soit probable. C'est une différence fondamentale. On y reviendra.</p>
+
+      <div class="sep"></div>
+
+      <!-- SECTION 5 -->
+      <div class="section-number">Mécanisme 4</div>
+      <h2>La génération probabiliste : chaque mot est un pari</h2>
+      <p>On arrive au cœur du truc. Et c'est là que beaucoup de gens ont une surprise.</p>
+      <p>Quand vous posez une question à un LLM, il ne cherche pas <em>la bonne réponse</em> dans une sorte de mémoire. Il génère sa réponse <strong>token par token</strong>, à chaque fois en calculant une distribution de probabilités sur l'ensemble de son vocabulaire.</p>
+      <p>Prenez la question : <em>"Quelle est la capitale de la France ?"</em> Le modèle calcule : parmi les 100 000 tokens possibles, lequel a le plus de chances d'arriver en premier ? "Paris" obtient peut-être 41%. "La" obtient 12%. "C'est" obtient 8%. Et ainsi de suite pour les 99 997 autres. Le modèle tire un token selon ces probabilités — en général le plus probable, mais pas toujours.</p>
+      <p>Pas toujours, parce qu'une machine qui choisit systématiquement le token le plus probable produit un texte mécanique et répétitif. Un paramètre appelé <strong>température</strong> joue sur ça : basse, le modèle reste prudent et prévisible — c'est ce qu'on veut pour du code ou des faits. Haute, il prend plus de risques — utile pour la fiction, le brainstorming, les formulations créatives. C'est un dé pipé dont vous réglez l'irrégularité.</p>
+      <p>Ensuite, le token choisi devient l'entrée de la prochaine étape. Le modèle recalcule. Choisit un nouveau token. Recalcule encore. Une réponse de 200 tokens, c'est 200 tirages successifs, chacun conditionné par tous les précédents. C'est ce qu'on appelle la <strong>génération autoregressive</strong> : le modèle se nourrit de ses propres sorties, étape par étape.</p>
+
+      <div class="callout">
+        <p>"Un LLM ne consulte pas une base de données. À chaque token, il calcule la distribution de probabilité de toutes les suites possibles, et en choisit une. C'est pour ça qu'il peut écrire un poème sur commande — et halluciner une référence qui n'existe pas."</p>
+      </div>
+
+      <div class="sep"></div>
+
+      <!-- SECTION 6 -->
+      <div class="section-number">Implications</div>
+      <h2>Ce que ça explique — et qu'on ne vous dit pas assez</h2>
+
+      <h3>Les hallucinations ne sont pas des bugs</h3>
+      <p>Un LLM produit une analyse solide sur un sujet complexe, puis, dans la même conversation, invente une citation parfaitement tournée d'un auteur qui n'a jamais écrit ça.</p>
+      <p>Même cause. Même mécanisme.</p>
+      <p>Quand le modèle génère "Comme le disait Camus,", il calcule les tokens qui ont le plus de chances de suivre cette phrase dans son expérience statistique du langage humain. Parfois c'est juste. Parfois c'est faux mais plausible. Le modèle lui-même ne peut pas faire la différence — il n'a pas de vérité de référence, seulement des probabilités.</p>
+      <p>L'hallucination n'est pas une défaillance à corriger dans la prochaine version. C'est une propriété structurelle de l'approche. Ce que ça veut dire en pratique : tout chiffre, toute citation, toute affirmation factuelle produite par un LLM mérite une vérification. Pas par méfiance irrationnelle — par lucidité sur ce que l'outil est réellement.</p>
+
+      <h3>Toutes les langues ne sont pas égales</h3>
+      <p>Un modèle entraîné à 80% sur de l'anglais aura des probabilités moins bien calibrées pour l'arabe, le wolof ou le dari. La tokenisation sera moins efficace — il faut plus de fragments pour encoder le même contenu, ce qui veut dire plus de tokens, plus de calcul, et une précision moindre. Ce n'est pas que le modèle est "moins intelligent" dans ces langues. C'est qu'il a moins de données pour les apprendre. La différence est importante pour quiconque déploie ces outils dans un contexte multilingue.</p>
+
+      <h3>La fenêtre de contexte, c'est la mémoire de court terme du modèle</h3>
+      <p>La <strong>fenêtre de contexte</strong> désigne la quantité maximale de texte que le modèle peut traiter en un seul échange. Au-delà, il "oublie" — pas progressivement comme un RNN, mais brutalement, comme si on avait arraché les premières pages. Selon la documentation officielle d'OpenAI, GPT-4 Turbo peut tenir jusqu'à 128 000 tokens dans une même conversation — plusieurs centaines de pages. C'est cette limite qui explique pourquoi certains modèles perdent le fil au bout d'un long échange.</p>
+
+      <div class="sep"></div>
+
+      <!-- SECTION 7 -->
+      <div class="section-number">Conclusion</div>
+      <h2>Ce que vous en faites demain matin</h2>
+      <p>Ces trois mécanismes ne sont pas des détails réservés aux équipes techniques. Ils ont des conséquences pratiques immédiates.</p>
+      <p>Si vous savez que la génération est probabiliste et token par token, vous comprenez pourquoi un prompt précis et bien structuré surpasse systématiquement une question vague — vous réduisez l'espace des suites possibles vers celles qui vous intéressent. Si vous savez que les hallucinations sont structurelles, vous arrêtez d'espérer qu'une prochaine mise à jour les éliminera et vous construisez vos processus en conséquence. Si vous savez que la fenêtre de contexte a une limite dure, vous architecturez différemment vos workflows longs.</p>
+      <p>Les LLMs ne sont pas des oracles. Ce sont des systèmes de complétion de texte extraordinairement puissants, avec des forces et des angles morts prévisibles et documentés. Ceux qui comprennent les deux s'en servent mieux. Et surtout, ils s'en font moins surprendre.</p>
+      <p>La suite de ce blog ira plus loin : RAG, fine-tuning, évaluation de modèles, gouvernance.</p>
+
+      <!-- CTA -->
+      <div class="cta-block">
+        <h2>Passer à la pratique dès maintenant</h2>
+        <p>La formation <strong>"LLMs &amp; IA Générative"</strong> d'ACT University vous donne les bases concrètes pour construire, évaluer et déployer ces systèmes dans votre contexte métier.</p>
+        <a href="/formations">Découvrir la formation →</a>
+      </div>
+
+    </div>
+  </main>
+
+
+
+</body>
+</html>

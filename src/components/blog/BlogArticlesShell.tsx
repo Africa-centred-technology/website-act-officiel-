@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Search, ChevronLeft, ChevronRight, Star, Clock } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { blogPosts, categories } from "@/lib/blog-data";
+import { blogPosts, categories, type BlogPost } from "@/lib/blog-data";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 // Hook pour détecter la taille d'écran
@@ -46,7 +46,24 @@ export default function BlogArticlesShell() {
   const headerInView = useInView(headerRef, { once: true });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  const filtered = blogPosts.filter((p) => {
+  // Fusion articles statiques + Shopify
+  const [allPosts, setAllPosts] = useState<BlogPost[]>(blogPosts);
+
+  useEffect(() => {
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!Array.isArray(posts) || posts.length === 0) return;
+        // Les articles Shopify remplacent les statiques du même slug, les nouveaux s'ajoutent en tête
+        const staticSlugs = new Set(blogPosts.map((p) => p.slug));
+        const shopifyNew  = posts.filter((p: BlogPost) => !staticSlugs.has(p.slug));
+        const merged = [...shopifyNew, ...blogPosts];
+        setAllPosts(merged);
+      })
+      .catch(() => { /* garde les données statiques en cas d'erreur */ });
+  }, []);
+
+  const filtered = allPosts.filter((p) => {
     const cat = p.category
       .toLowerCase()
       .replace(/\s*&\s*/g, "-")
@@ -79,8 +96,8 @@ export default function BlogArticlesShell() {
     categories.find((c) => c.value === activeCategory)?.label || "Tous les articles";
 
   const getCategoryCount = (val: string) => {
-    if (val === "all") return blogPosts.length;
-    return blogPosts.filter((p) => {
+    if (val === "all") return allPosts.length;
+    return allPosts.filter((p) => {
       const cat = p.category
         .toLowerCase()
         .replace(/\s*&\s*/g, "-")
