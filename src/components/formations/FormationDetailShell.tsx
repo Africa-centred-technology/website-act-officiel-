@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import {
@@ -138,6 +139,7 @@ function SkeletonBlock({ w = "100%", h = 16 }: { w?: string; h?: number }) {
 
 /* ── Main ──────────────────────────────────────────────────────── */
 export default function FormationDetailShell({ slug }: { slug: string }) {
+  const router = useRouter();
   const [formation, setFormation]     = useState<FormationDetail | null>(null);
   const [isLoading, setIsLoading]     = useState(true);
   const [fetchError, setFetchError]   = useState(false);
@@ -211,6 +213,15 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               </div>
             ) : formation ? (
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+                <div style={{ marginBottom: "2rem" }}>
+                  <CTAButton 
+                    onClick={() => router.back()}
+                    icon={<ChevronLeft size={20} />}
+                    iconPosition="left"
+                  >
+                    Retour
+                  </CTAButton>
+                </div>
                 <SectionLabel>{formation.secteur} · {formation.duree} · ATTESTATION ACT</SectionLabel>
                 <h1 style={{ fontSize: "clamp(3.8rem, 7.5vw, 5.4rem)", lineHeight: 1.1, fontWeight: 800, marginBottom: "2.5rem", fontFamily: "var(--font-display)" }}>
                   {formation.title.split('IA').map((part, i, arr) => (
@@ -251,7 +262,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             ) : null}
 
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} style={{ position: "relative" }}>
-              <div style={{ height: "350px", borderRadius: "14px", overflow: "hidden", border: `1px solid ${BORDER}` }}>
+              <div style={{ height: "500px", borderRadius: "14px", overflow: "hidden", border: `1px solid ${BORDER}` }}>
                 {formation?.images && formation.images.length > 0 ? (
                   <img src={formation.images[0]} alt={formation.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.8)" }} />
                 ) : (
@@ -267,25 +278,52 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           <>
             <div style={{ height: "1px", background: BORDER, width: "100%" }} />
 
+
+
+                  {/* ── SECTION "POUR QUI" ── */}
+            <section style={{ padding: "10px 5%", textAlign: "center" }}>
+              <SectionLabel centered>POUR QUI</SectionLabel>
+              <h2 style={{ fontSize: "clamp(2.6rem, 5vw, 4rem)", fontWeight: 800, marginBottom: "1.5rem", fontFamily: "var(--font-display)" }}>Cette formation est conçue pour vous</h2>
+              <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "850px", margin: "0 auto 2.5rem", fontSize: "clamp(1.2rem, 1.8vw, 1.4rem)", fontFamily: "var(--font-body)", lineHeight: 1.8 }}>
+                {formation.prerequis || "Aucun prérequis technique particulier. Une curiosité pour l'IA suffit."}
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px", maxWidth: "1100px", margin: "0 auto" }}>
+                {formation.publicCible ? (
+                  formation.publicCible.split(',').map((pill, i) => (
+                    <span key={i} style={{ padding: "14px 28px", background: CARD_BG, border: "1px solid rgba(255,255,255,0.15)", borderRadius: "99px", fontSize: "1.2rem", fontWeight: 500, color: OFF_WHITE, fontFamily: "var(--font-body)" }}>{pill.trim()}</span>
+                  ))
+                ) : (
+                  <span style={{ padding: "14px 28px", background: CARD_BG, border: "1px solid rgba(255,255,255,0.15)", borderRadius: "99px", fontSize: "1.2rem", fontWeight: 500, color: OFF_WHITE, fontFamily: "var(--font-body)" }}>Tous les professionnels</span>
+                )}
+              </div>
+            </section>
+
+
             {/* ── SECTION "OBJECTIFS" ── */}
             <section style={{ padding: "80px 6%", textAlign: "center" }}>
               <div style={{ marginBottom: "35px" }}>
                 <SectionLabel centered>OBJECTIFS</SectionLabel>
-                <h2 style={{ fontSize: "clamp(2.6rem, 5vw, 4rem)", fontWeight: 800, marginBottom: "1.2rem", fontFamily: "var(--font-display)" }}>Ce que vous allez maîtriser</h2>
-                <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "850px", margin: "0 auto", fontSize: "clamp(1.2rem, 1.8vw, 1.4rem)", lineHeight: 1.7, fontFamily: "var(--font-body)" }}>Une approche concrète pour transformer votre manière de travailler avec l'intelligence artificielle.</p>
+                <h2 style={{ fontSize: "clamp(2.8rem, 5.2vw, 4.2rem)", fontWeight: 800, marginBottom: "1.2rem", fontFamily: "var(--font-display)" }}>Ce que vous allez maîtriser</h2>
+                <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "850px", margin: "0 auto", fontSize: "clamp(1.3rem, 2vw, 1.5rem)", lineHeight: 1.7, fontFamily: "var(--font-body)" }}>Une approche concrète pour transformer votre manière de travailler avec l'intelligence artificielle.</p>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "28px", maxWidth: "1200px", margin: "0 auto" }}>
                 {formation.objectifs.length > 0 ? (
-                  formation.objectifs.slice(0, 4).map((obj, i) => (
+                  formation.objectifs.slice(0, 4).map((obj, i) => {
+                    const icons = [<BookOpen size={24} />, <BarChart3 size={24} />, <Users size={24} />, <Clock size={24} />];
+                    return (
                     <motion.div key={i} whileHover={{ borderColor: ORANGE }}
                                 style={{ background: CARD_BG, borderRadius: "16px", border: `1px solid ${BORDER}`, transition: "all 0.3s ease", textAlign: "left", padding: "32px" }}>
                       <div style={{ marginBottom: "18px", width: "48px", height: "48px", borderRadius: "12px", background: `${ORANGE}22`, border: `1px solid ${ORANGE}44`, display: "flex", alignItems: "center", justifyContent: "center", color: ORANGE, fontWeight: 800, fontSize: "1.4rem" }}>
+                        {icons[i]}
+                      </div>
+                      <div style={{ marginBottom: "12px", width: "48px", height: "28px", borderRadius: "6px", background: `${ORANGE}11`, border: `1px solid ${ORANGE}44`, display: "flex", alignItems: "center", justifyContent: "center", color: ORANGE, fontWeight: 800, fontSize: "1.1rem" }}>
                         0{i+1}
                       </div>
-                      <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "1.25rem", lineHeight: 1.7, fontWeight: 500, fontFamily: "var(--font-body)" }}>{obj}</p>
+                      <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "1.4rem", lineHeight: 1.7, fontWeight: 500, fontFamily: "var(--font-body)" }}>{obj}</p>
                     </motion.div>
-                  ))
+                    );
+                  })
                 ) : (
                   [1,2,3,4].map(i => (
                     <div key={i} style={{ background: CARD_BG, borderRadius: "16px", border: `1px solid ${BORDER}`, padding: "32px", height: "180px" }}>
@@ -387,23 +425,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               </div>
             </section>
 
-            {/* ── SECTION "POUR QUI" ── */}
-            <section style={{ padding: "80px 6%", textAlign: "center" }}>
-              <SectionLabel centered>POUR QUI</SectionLabel>
-              <h2 style={{ fontSize: "clamp(2.6rem, 5vw, 4rem)", fontWeight: 800, marginBottom: "1.5rem", fontFamily: "var(--font-display)" }}>Cette formation est conçue pour vous</h2>
-              <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "850px", margin: "0 auto 2.5rem", fontSize: "clamp(1.2rem, 1.8vw, 1.4rem)", fontFamily: "var(--font-body)", lineHeight: 1.8 }}>
-                {formation.prerequis || "Aucun prérequis technique particulier. Une curiosité pour l'IA suffit."}
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px", maxWidth: "1100px", margin: "0 auto" }}>
-                {formation.publicCible ? (
-                  formation.publicCible.split(',').map((pill, i) => (
-                    <span key={i} style={{ padding: "14px 28px", background: CARD_BG, border: "1px solid rgba(255,255,255,0.15)", borderRadius: "99px", fontSize: "1.2rem", fontWeight: 500, color: OFF_WHITE, fontFamily: "var(--font-body)" }}>{pill.trim()}</span>
-                  ))
-                ) : (
-                  <span style={{ padding: "14px 28px", background: CARD_BG, border: "1px solid rgba(255,255,255,0.15)", borderRadius: "99px", fontSize: "1.2rem", fontWeight: 500, color: OFF_WHITE, fontFamily: "var(--font-body)" }}>Tous les professionnels</span>
-                )}
-              </div>
-            </section>
+      
           </>
         )}
       </div>
