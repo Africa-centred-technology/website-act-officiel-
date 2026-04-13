@@ -60,7 +60,7 @@ export default function RoomBlog() {
                             fontFamily: "var(--font-body)",
                             fontSize: screenSize === 'mobile' ? 'clamp(0.85rem, 3vw, 1rem)' : screenSize === 'tablet' ? 'clamp(0.95rem, 2vw, 1.15rem)' : '1.25rem',
                         }}>
-                            Actualités, Insights & Tendances Tech
+                            Le moyen de vous tenir informé de nos dernières actualités, conseils et tendances en matière de Technologie.
                         </p>
                     </motion.div>
                 </div>
@@ -156,7 +156,7 @@ export default function RoomBlog() {
                                 <span className="cta-btn__background" aria-hidden />
                                 <span className="cta-btn__inner">
                                     <span className="cta-btn__icon" aria-hidden />
-                                    <span className="cta-btn__text">Plus d'articles</span>
+                                    <span className="cta-btn__text">Visitez notre Blog </span>
                                 </span>
                             </Link>
                         </div>

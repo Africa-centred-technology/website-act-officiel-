@@ -228,27 +228,6 @@ export default function RoomManifeste() {
             </p>
           </motion.div>
 
-          {/* Attribution — foreground accent */}
-          <motion.div
-            className="flex items-center gap-5"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
-            style={{
-              x: fgX,
-              marginTop: screenSize === 'mobile' ? '2rem' : screenSize === 'tablet' ? '2.5rem' : '3rem',
-              flexWrap: 'wrap',
-            }}
-          >
-            <div style={{ width: screenSize === 'mobile' ? 32 : 48, height: 2, background: "#D35400" }} />
-            <span className="text-white/70 uppercase font-medium" style={{
-              fontSize: screenSize === 'mobile' ? "0.85rem" : screenSize === 'tablet' ? "1rem" : "1.25rem",
-              letterSpacing: "0.25em",
-              fontFamily: "var(--font-display)"
-            }}>
-              SOHIAB BAROUD — Fondateur &amp; CEO, ACT
-            </span>
-          </motion.div>
         </div>
 
         {/* Right Side: Manifeste Image */}
@@ -278,6 +257,34 @@ export default function RoomManifeste() {
                 borderRadius: screenSize === 'mobile' ? '1rem' : screenSize === 'tablet' ? '1.5rem' : '1.5rem',
               }}
             />
+
+            <motion.div
+              className="absolute left-0 right-0 bottom-0 flex items-center gap-4"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
+              style={{
+                x: fgX,
+                padding: screenSize === 'mobile' ? '1.25rem' : screenSize === 'tablet' ? '1.5rem' : '1.8rem',
+                flexWrap: 'wrap',
+                borderBottomLeftRadius: screenSize === 'mobile' ? '1rem' : '1.5rem',
+                borderBottomRightRadius: screenSize === 'mobile' ? '1rem' : '1.5rem',
+                background: "linear-gradient(to top, rgba(5,5,5,0.82) 0%, rgba(5,5,5,0.48) 55%, transparent 100%)",
+              }}
+            >
+              <div style={{ width: screenSize === 'mobile' ? 28 : 40, height: 2, background: "#D35400", flexShrink: 0 }} />
+              <span
+                className="text-white/85 uppercase font-medium"
+                style={{
+                  fontSize: screenSize === 'mobile' ? "0.75rem" : screenSize === 'tablet' ? "0.9rem" : "1rem",
+                  letterSpacing: "0.18em",
+                  fontFamily: "var(--font-display)",
+                  lineHeight: 1.4,
+                }}
+              >
+                SOHIAB BAROUD — Fondateur &amp; CEO, ACT
+              </span>
+            </motion.div>
           </div>
         </motion.div>
       </div>

@@ -93,11 +93,22 @@ function extractTag(tags: string[], key: string): string {
   return tag ? tag.slice(prefix.length).trim() : "";
 }
 
-/** Extrait la valeur scalaire d'un metafield (pour niveau, secteur, duree, etc.) */
+/** Extrait la valeur scalaire d'un metafield (pour niveau, secteur, duree, etc.).
+ *  Gère automatiquement les valeurs stockées comme tableau JSON (ex: ["Intermédiaire "]) */
 function extractMeta(metafields: { key: string; value: string }[], key: string): string {
   const mf = metafields?.find((m) => m?.key?.toLowerCase() === key.toLowerCase());
   if (!mf?.value) return "";
-  return mf.value.trim();
+  const raw = mf.value.trim();
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      return parsed.map((s: unknown) => String(s).trim()).filter(Boolean).join(", ");
+    }
+    if (typeof parsed === "string") return parsed.trim();
+  } catch {
+    // valeur scalaire non-JSON, on retourne telle quelle
+  }
+  return raw;
 }
 
 /** Extrait la valeur brute d'un metafield JSON sans la toucher (pour objectifs, programme, livrables) */
@@ -229,7 +240,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
         { namespace: "custom", key: "format" }
         { namespace: "custom", key: "accroche" }
         { namespace: "custom", key: "parcours" }
-        { namespace: "custom", key: "public_cible" }
+        { namespace: "custom", key: "public_cible_act" }
         { namespace: "custom", key: "prerequis" }
         { namespace: "custom", key: "Objectifs_pedagogiques" }
         { namespace: "custom", key: "programme" }
@@ -299,6 +310,21 @@ function parseObjectifs(value: string): string[] {
   }
 }
 
+/** Parse le metafield public_cible_act : {"metiers": [...]} ou tableau direct ou texte brut */
+function parsePublicCible(value: string): string {
+  if (!value) return "";
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : (parsed.metiers ?? parsed.public_cible ?? []);
+    if (Array.isArray(list) && list.length > 0) {
+      return list.map((s: any) => String(s).trim()).filter(Boolean).join(",");
+    }
+    return String(parsed).trim();
+  } catch {
+    return value.trim();
+  }
+}
+
 /** Traite les livrables avec le même robustesse que parseObjectifs */
 function parseLivrables(value: string): string[] {
   if (!value) return [];
@@ -361,7 +387,7 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
   const tags: string[] = node.tags ?? [];
   const metafields: { key: string; value: string }[] = node.metafields ?? [];
 
-  const publicCible = extractMeta(metafields, "public_cible") || "";
+  const publicCible = parsePublicCible(extractRawMeta(metafields, "public_cible_act"));
   const prerequis   = extractMeta(metafields, "prerequis")    || "";
   const methode     = extractMeta(metafields, "methode")      || "";
 

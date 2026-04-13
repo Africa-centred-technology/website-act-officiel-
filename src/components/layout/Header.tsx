@@ -152,9 +152,10 @@ function MobileAccordion({
   );
 }
 
-export default function Header() {
+export default function Header({ hidden = false }: { hidden?: boolean }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [scrolledPast120, setScrolledPast120] = useState(false);
   const [progress, setProgress] = useState(0);
   const [savoirFaireOpen, setSavoirFaireOpen] = useState(false);
   const [nousDecouvrirOpen, setNousDecouvrirOpen] = useState(false);
@@ -177,6 +178,7 @@ export default function Header() {
       const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       setScrolled(y > 40);
+      setScrolledPast120(y > 120);
       setProgress(max > 0 ? y / max : 0);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -191,6 +193,9 @@ export default function Header() {
 
   const isSavoirFaireActive = SAVOIR_FAIRE_MENU.some(item => isActive(item.key));
   const isNousDecouvrirActive = NOUS_DECOUVRIR_MENU.some(item => isActive(item.key));
+
+  const isFormationDetail = /^\/formations\/[^/]+/.test(pathname ?? "");
+  if (hidden || (isFormationDetail && scrolledPast120)) return null;
 
   return (
     <>
@@ -207,7 +212,7 @@ export default function Header() {
       </div>
 
       {/* ── Navbar ── */}
-      <nav className={`navbar${scrolled ? " navbar--scrolled" : ""}`} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999, display: "block" }}>
+      <nav className={`navbar${scrolled ? " navbar--scrolled" : ""}`} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999 }}>
         <div className="navbar-flex" style={{
           display: "flex",
           alignItems: "center",

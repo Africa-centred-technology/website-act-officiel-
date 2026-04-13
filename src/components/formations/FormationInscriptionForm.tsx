@@ -1,1132 +1,846 @@
 "use client";
 
-/**
- * FormationInscriptionForm — Formulaire d'inscription multi-étapes
- * Adapté B2B (Entreprises) et B2C (Particuliers)
- */
-
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  User,
-  Mail,
-  Phone,
-  Building2,
-  Briefcase,
-  Users,
-  MapPin,
-  MessageSquare,
-  CheckCircle2,
-  AlertCircle,
-  ArrowLeft,
-  ArrowRight,
-  Send,
-  Loader2,
-  Hash,
-  GraduationCap,
-  Target,
-  Calendar,
-  Clock
-} from "lucide-react";
+import { CheckCircle2, Send, Loader2, Search, ChevronDown, X } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
+// @ts-ignore
+import { CountryRegionData } from "react-country-region-selector";
 
 const ORANGE = "#D35400";
-const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 
-// Options pour les selects
-const SECTEURS = [
-  "Industrie",
-  "Finance",
-  "Santé",
-  "Immobilier",
-  "Commerce",
-  "Éducation",
-  "Autre"
+/* ── CountryRegionData = [[name, code, regions], ...] ── */
+const RAW_COUNTRIES: [string, string][] = (
+  (CountryRegionData as any).default ?? CountryRegionData
+).map(([name, code]: [string, string]) => [name, code]);
+
+/* ── Helpers ─────────────────────────────────────────── */
+
+/** Emoji drapeau depuis le code ISO 2 lettres (ex: "MA" → 🇲🇦) */
+function countryFlag(code: string): string {
+  return code
+    .toUpperCase()
+    .split("")
+    .map((c) => String.fromCodePoint(0x1f1e6 + c.charCodeAt(0) - 65))
+    .join("");
+}
+
+/** Nom du pays en français via Intl.DisplayNames (fallback sur le nom anglais) */
+let frDisplayNames: Intl.DisplayNames | null = null;
+function countryNameFr(code: string, fallback: string): string {
+  try {
+    if (!frDisplayNames)
+      frDisplayNames = new Intl.DisplayNames(["fr"], { type: "region" });
+    return frDisplayNames.of(code) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+/* Construit la liste enrichie une seule fois (lazy au premier rendu) */
+interface CountryEntry { code: string; nameFr: string; nameEn: string; flag: string }
+let ENRICHED_CACHE: CountryEntry[] | null = null;
+function getCountries(): CountryEntry[] {
+  if (ENRICHED_CACHE) return ENRICHED_CACHE;
+  ENRICHED_CACHE = RAW_COUNTRIES.map(([nameEn, code]) => ({
+    code,
+    nameEn,
+    nameFr: countryNameFr(code, nameEn),
+    flag: countryFlag(code),
+  }));
+  // Trie par nom français
+  ENRICHED_CACHE.sort((a, b) => a.nameFr.localeCompare(b.nameFr, "fr"));
+  return ENRICHED_CACHE;
+}
+
+/* Pour résoudre le nom lisible à envoyer à l'API */
+const ALL_COUNTRIES = RAW_COUNTRIES;
+
+/* ── Searchable country dropdown ─────────────────────── */
+function CountrySearchSelect({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [query, setQuery]     = useState("");
+  const [open, setOpen]       = useState(false);
+  const containerRef          = useRef<HTMLDivElement>(null);
+  const countries             = getCountries();
+
+  /* Entrée sélectionnée */
+  const selected = countries.find((c) => c.code === value) ?? null;
+
+  /* Filtrage sur nom FR + nom EN + code */
+  const filtered = query.trim()
+    ? countries.filter((c) =>
+        c.nameFr.toLowerCase().includes(query.toLowerCase()) ||
+        c.nameEn.toLowerCase().includes(query.toLowerCase()) ||
+        c.code.toLowerCase().includes(query.toLowerCase())
+      )
+    : countries;
+
+  /* Ferme au clic extérieur */
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery("");
+      }
+    }
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const select = (code: string) => {
+    onChange(code);
+    setOpen(false);
+    setQuery("");
+  };
+
+  return (
+    <div ref={containerRef} style={{ position: "relative" }}>
+      {/* Trigger */}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        style={{
+          width: "100%",
+          padding: "1.1rem 1.3rem",
+          background: "rgba(255,255,255,0.05)",
+          border: `1px solid ${open ? ORANGE : "rgba(255,255,255,0.1)"}`,
+          borderRadius: open ? "8px 8px 0 0" : "8px",
+          color: selected ? "#fff" : "rgba(255,255,255,0.35)",
+          fontSize: "1.7rem",
+          fontFamily: "Futura, system-ui, sans-serif",
+          textAlign: "left",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          transition: "border-color 0.2s",
+          outline: "none",
+        }}
+      >
+        {selected ? (
+          <span style={{ display: "flex", alignItems: "center", gap: "0.65rem", overflow: "hidden" }}>
+            <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>{selected.flag}</span>
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selected.nameFr}</span>
+            <span style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", flexShrink: 0 }}>{selected.code}</span>
+          </span>
+        ) : (
+          <span>— Choisir un pays —</span>
+        )}
+        <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0, marginLeft: "0.75rem" }}>
+          {selected && (
+            <X
+              size={16}
+              onClick={(e) => { e.stopPropagation(); onChange(""); }}
+              style={{ opacity: 0.5, cursor: "pointer" }}
+            />
+          )}
+          <ChevronDown
+            size={18}
+            style={{
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.2s",
+              opacity: 0.5,
+            }}
+          />
+        </span>
+      </button>
+
+      {/* Dropdown */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              right: 0,
+              background: "#0d1829",
+              border: `1px solid ${ORANGE}`,
+              borderTop: "none",
+              borderRadius: "0 0 8px 8px",
+              zIndex: 50,
+              overflow: "hidden",
+              boxShadow: "0 12px 32px rgba(0,0,0,0.5)",
+            }}
+          >
+            {/* Search input */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "0.8rem 1rem",
+                borderBottom: "1px solid rgba(255,255,255,0.07)",
+              }}
+            >
+              <Search size={16} color={ORANGE} strokeWidth={2} style={{ flexShrink: 0 }} />
+              <input
+                autoFocus
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Rechercher un pays…"
+                style={{
+                  flex: 1,
+                  background: "none",
+                  border: "none",
+                  outline: "none",
+                  color: "#fff",
+                  fontSize: "1.4rem",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                }}
+              />
+              {query && (
+                <X
+                  size={14}
+                  color="rgba(255,255,255,0.4)"
+                  style={{ cursor: "pointer", flexShrink: 0 }}
+                  onClick={() => setQuery("")}
+                />
+              )}
+            </div>
+
+            {/* List */}
+            <div style={{ maxHeight: "260px", overflowY: "auto" }}>
+              {filtered.length === 0 ? (
+                <p style={{ padding: "1rem", color: "rgba(255,255,255,0.35)", fontSize: "1.3rem", textAlign: "center", fontFamily: "Futura, system-ui, sans-serif" }}>
+                  Aucun pays trouvé
+                </p>
+              ) : (
+                filtered.map((country) => (
+                  <button
+                    key={country.code}
+                    type="button"
+                    onClick={() => select(country.code)}
+                    style={{
+                      width: "100%",
+                      padding: "0.7rem 1rem",
+                      background: value === country.code ? `${ORANGE}22` : "none",
+                      border: "none",
+                      borderLeft: value === country.code ? `3px solid ${ORANGE}` : "3px solid transparent",
+                      color: value === country.code ? "#fff" : "rgba(255,255,255,0.75)",
+                      fontSize: "1.4rem",
+                      fontFamily: "Futura, system-ui, sans-serif",
+                      textAlign: "left",
+                      cursor: "pointer",
+                      transition: "background 0.15s",
+                      outline: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.75rem",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (value !== country.code) (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (value !== country.code) (e.currentTarget as HTMLButtonElement).style.background = value === country.code ? `${ORANGE}22` : "none";
+                    }}
+                  >
+                    <span style={{ fontSize: "1.5rem", lineHeight: 1, flexShrink: 0 }}>{country.flag}</span>
+                    <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{country.nameFr}</span>
+                    <span style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", flexShrink: 0 }}>{country.code}</span>
+                  </button>
+                ))
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+const CANAUX = [
+  "Instagram", "LinkedIn", "YouTube", "Facebook", "Bouche-à-oreille", "Google", "Autre",
 ];
 
-const TAILLES_ENTREPRISE = [
-  "Startup (< 50 collaborateurs)",
-  "PME (50-250 collaborateurs)",
-  "ETI (250-500 collaborateurs)",
-  "Grande entreprise (500+ collaborateurs)"
-];
-
-const FONCTIONS = [
+const FONCTIONS_PRO = [
   "Directeur Général (DG)",
-  "Directeur des Systèmes d'Information (DSI/CTO)",
-  "Directeur des Ressources Humaines (DRH)",
-  "Directeur Innovation/Digital",
+  "DSI / CTO",
+  "DRH",
+  "Directeur Innovation / Digital",
   "Responsable Formation",
-  "Manager/Chef de département",
-  "Développeur/Ingénieur",
-  "Étudiant",
-  "Autre"
+  "Manager / Chef de département",
+  "Développeur / Ingénieur",
+  "Autre",
 ];
 
-const FONCTIONS_B2C = [
-  "Étudiant (Licence/Master)",
+const FONCTIONS_ETU = [
+  "Étudiant (Licence / Master)",
   "Étudiant Ingénieur",
   "Jeune diplômé (< 2 ans)",
   "Salarié en entreprise",
-  "Développeur/Ingénieur",
-  "Freelance/Consultant",
+  "Freelance / Consultant",
   "En reconversion professionnelle",
-  "Demandeur d'emploi"
+  "Demandeur d'emploi",
 ];
 
-const VILLES = [
-  "Casablanca",
-  "Rabat",
-  "Tanger",
-  "Marrakech",
-  "Fès",
-  "Agadir",
-  "Kenitra",
-  "Oujda",
-  "Autre ville (Maroc)",
-  "Afrique francophone"
-];
+/* ── Input helpers ─────────────────────────────────────── */
+const fieldStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "1.1rem 1.3rem",
+  background: "rgba(255,255,255,0.05)",
+  border: "1px solid rgba(255,255,255,0.1)",
+  borderRadius: "8px",
+  color: "#fff",
+  fontSize: "1.7rem",
+  fontFamily: "Futura, system-ui, sans-serif",
+  outline: "none",
+  transition: "border-color 0.2s",
+  boxSizing: "border-box" as const,
+};
 
-const TYPES_ENTREPRISE = [
-  "PME marocaine",
-  "ETI marocaine",
-  "Filiale groupe international",
-  "Grande entreprise",
-  "Startup"
-];
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: "1.3rem",
+  fontWeight: 700,
+  letterSpacing: "0.2em",
+  textTransform: "uppercase" as const,
+  color: "rgba(255,255,255,0.45)",
+  marginBottom: "0.7rem",
+  fontFamily: "Futura, system-ui, sans-serif",
+};
 
-const BESOINS_B2B = [
-  "Transformation digitale de l'entreprise",
-  "Intégration de l'IA dans les processus",
-  "Formation des équipes techniques",
-  "Formation du management/décideurs",
-  "Développement d'une solution sur mesure",
-  "Accompagnement stratégique IA",
-  "Audit et conseil"
-];
-
-const OBJECTIFS_B2C = [
-  "Montée en compétences IA/Data",
-  "Obtenir une certification",
-  "Construire un portfolio de projets",
-  "Améliorer mon employabilité",
-  "Changer de carrière",
-  "Lancer un projet personnel/startup",
-  "Autre"
-];
-
-const NIVEAUX_ETUDES = [
-  "Bac",
-  "Bac+2 (DUT/BTS)",
-  "Licence (Bac+3)",
-  "Master (Bac+5)",
-  "Ingénieur",
-  "Doctorat",
-  "Autre"
-];
-
-const EXPERIENCE_IA = [
-  "Débutant (aucune expérience)",
-  "Intermédiaire (quelques projets)",
-  "Avancé (expérience significative)",
-  "Expert (professionnel IA/Data)"
-];
-
-const FORMATS = [
-  "Présentiel",
-  "Distanciel",
-  "Hybride",
-  "E-learning"
-];
-
-const DISPONIBILITES = [
-  "Immédiate (< 2 semaines)",
-  "Dans 1 mois",
-  "Dans 2-3 mois",
-  "À planifier ensemble"
-];
-
-const PERIODES = [
-  "En semaine (lundi-vendredi)",
-  "Week-end (samedi-dimanche)",
-  "Soir (après 18h)",
-  "Journée complète"
-];
-
-const CANAUX_DECOUVERTE = [
-  "Instagram",
-  "LinkedIn",
-  "YouTube",
-  "Facebook",
-  "Bouche-à-oreille",
-  "Google",
-  "Autre"
-];
-
-interface FormData {
-  // Type de client
-  typeClient: "B2C" | "B2B";
-
-  // Informations personnelles
-  prenom: string;
-  nom: string;
-  email: string;
-  telephone: string;
-  ville: string;
-
-  // B2C spécifique
-  age?: string;
-  statutProfessionnel?: string;
-  niveauEtudes?: string;
-  experienceIA?: string;
-  objectifPrincipal?: string;
-  commentConnu?: string;
-
-  // B2B spécifique
-  entreprise?: string;
-  secteurActivite?: string;
-  tailleEntreprise?: string;
-  fonctionDemandeur?: string;
-  typeEntreprise?: string;
-  nombreParticipants?: string;
-  besoinPrincipal?: string;
-  budgetFormation?: string;
-
-  // Formation
-  formationSouhaitee: string;
-  formatsPreferes: string[];
-  disponibilite: string;
-  periodePreferee: string[];
-
-  // Complémentaires
-  message: string;
-  dejaFormationACT: string;
-  souhaitRecontact: string;
-
-  // Consentements
-  consentementRGPD: boolean;
-  consentementMarketing: boolean;
-  consentementPartage: boolean;
+function Field({
+  label,
+  required,
+  children,
+  style,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div style={style}>
+      <label style={labelStyle}>
+        {label}
+        {required && <span style={{ color: ORANGE, marginLeft: "0.25rem" }}>*</span>}
+      </label>
+      {children}
+    </div>
+  );
 }
 
+function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
+  return (
+    <input
+      {...props}
+      style={fieldStyle}
+      onFocus={(e) => {
+        (e.currentTarget as HTMLInputElement).style.borderColor = ORANGE;
+        props.onFocus?.(e);
+      }}
+      onBlur={(e) => {
+        (e.currentTarget as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.1)";
+        props.onBlur?.(e);
+      }}
+    />
+  );
+}
+
+function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options: string[] }) {
+  const { options, ...rest } = props;
+  return (
+    <select
+      {...rest}
+      style={{ ...fieldStyle, cursor: "pointer" }}
+      onFocus={(e) => {
+        (e.currentTarget as HTMLSelectElement).style.borderColor = ORANGE;
+      }}
+      onBlur={(e) => {
+        (e.currentTarget as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.1)";
+      }}
+    >
+      <option value="" style={{ background: "#070E1C" }}>— Choisir —</option>
+      {options.map((o) => (
+        <option key={o} value={o} style={{ background: "#070E1C" }}>
+          {o}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+/* ── Props ──────────────────────────────────────────────── */
 interface FormationInscriptionFormProps {
   formationTitle?: string;
   formationSlug?: string;
   onSuccess?: () => void;
 }
 
+/* ── Main ───────────────────────────────────────────────── */
 export default function FormationInscriptionForm({
   formationTitle,
   formationSlug,
-  onSuccess
+  onSuccess,
 }: FormationInscriptionFormProps) {
-  const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 4;
+  const [tab, setTab] = useState<"pro" | "etudiant">("pro");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const [formData, setFormData] = useState<FormData>({
-    typeClient: "B2C",
+  const [form, setForm] = useState({
+    // Commun
+    civilite: "M.",
     prenom: "",
     nom: "",
     email: "",
-    telephone: "",
-    ville: "",
-    formationSouhaitee: formationTitle || "",
-    formatsPreferes: [],
-    disponibilite: "",
-    periodePreferee: [],
+    telephone1: "",
+    telephone2: "",
+    whatsapp: "",
+    pays: "",
+    fonction: "",
+    commentConnu: "",
+    dateSouhaitee: "",
+    nombreParticipants: "",
     message: "",
-    dejaFormationACT: "",
-    souhaitRecontact: "",
     consentementRGPD: false,
-    consentementMarketing: false,
-    consentementPartage: false
+
+    // Pro
+    organisme: "",
+
+    // Étudiant
+    niveauEtudes: "",
   });
 
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-
-    if (type === "checkbox") {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleMultiSelect = (name: string, value: string) => {
-    setFormData(prev => {
-      const currentValues = prev[name as keyof FormData] as string[];
-      const newValues = currentValues.includes(value)
-        ? currentValues.filter(v => v !== value)
-        : [...currentValues, value];
-      return { ...prev, [name]: newValues };
-    });
-  };
-
-  const validateStep = (step: number): boolean => {
-    // Tous les champs sont désormais optionnels
-    return true;
-  };
-
-  const nextStep = () => {
-    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
-    setErrorMessage("");
-  };
-
-  const prevStep = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 1));
-    setErrorMessage("");
-  };
+  const set = (key: string, value: string | boolean) =>
+    setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setStatus("loading");
-    setErrorMessage("");
-
     try {
-      const response = await fetch("/api/shopify/inscription", {
+      const res = await fetch("/api/shopify/inscription", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
+          typeClient: tab === "pro" ? "B2B" : "B2C",
+          prenom: form.prenom,
+          nom: form.nom,
+          email: form.email,
+          telephone: form.telephone1,
+          telephone2: form.telephone2,
+          whatsapp: form.whatsapp,
+          ville: ALL_COUNTRIES.find(([, code]) => code === form.pays)?.[0] ?? form.pays,
+          fonctionDemandeur: form.fonction,
+          entreprise: form.organisme,
+          niveauEtudes: form.niveauEtudes,
+          commentConnu: form.commentConnu,
+          dateSouhaitee: form.dateSouhaitee,
+          nombreParticipants: form.nombreParticipants,
+          message: form.message,
+          formationSouhaitee: formationTitle,
           formationSlug,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         }),
       });
-
-      if (!response.ok) throw new Error("Erreur lors de l'envoi");
-      
+      if (!res.ok) throw new Error();
       setStatus("success");
-      if (onSuccess) onSuccess();
-
-    } catch (error) {
+      onSuccess?.();
+    } catch {
       setStatus("error");
-      setErrorMessage("Une erreur est survenue. Veuillez réessayer.");
     }
   };
 
-  const isB2B = formData.typeClient === "B2B";
-
-  return (
-    <div style={{
-      background: "rgba(3, 30, 83, 0.34)",
-      border: `1px solid ${ORANGE}33`,
-      borderRadius: "1rem",
-      padding: "clamp(2rem, 5vw, 4rem)",
-      position: "relative",
-      overflow: "hidden",
-      maxWidth: "100%", /* S'adapte au modal parent */
-      margin: "0 auto",
-      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
-    }}>
-      {/* Progress Bar */}
-      <div style={{ marginBottom: "4rem" }}>
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem"
-        }}>
-          <h2 style={{
-            fontSize: "clamp(2rem, 4vw, 2.5rem)",
-            fontWeight: 900,
-            color: "#fff",
-            fontFamily: "var(--font-display)"
-          }}>
-            Inscription Formation
-          </h2>
-          <span style={{
-            color: ORANGE,
-            fontSize: "1.1rem",
-            fontWeight: 700
-          }}>
-            Étape {currentStep}/{totalSteps}
-          </span>
-        </div>
-
-        <div style={{
-          width: "100%",
-          height: "6px",
-          background: "rgba(255,255,255,0.1)",
-          borderRadius: "3px",
-          overflow: "hidden"
-        }}>
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
-            transition={{ duration: 0.3 }}
-            style={{
-              height: "100%",
-              background: `linear-gradient(90deg, ${ORANGE}, #E67E22)`,
-              borderRadius: "3px"
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Error Message */}
-      {errorMessage && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            background: "rgba(239, 68, 68, 0.1)",
-            border: "1px solid rgba(239, 68, 68, 0.3)",
-            borderRadius: "0.5rem",
-            padding: "1rem",
-            marginBottom: "2rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem"
-          }}
-        >
-          <AlertCircle size={24} color="#ef4444" />
-          <p style={{ color: "#ef4444", margin: 0 }}>{errorMessage}</p>
-        </motion.div>
-      )}
-
-      {/* Success Message */}
-      {status === "success" && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          style={{
-            textAlign: "center",
-            padding: "4rem 2rem"
-          }}
-        >
-          <CheckCircle2 size={80} color="#22c55e" style={{ margin: "0 auto 2rem" }} />
-          <h3 style={{
-            fontSize: "2.5rem",
-            fontWeight: 900,
-            color: "#22c55e",
-            marginBottom: "1.5rem"
-          }}>
-            Inscription envoyée avec succès !
-          </h3>
-          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "1rem", fontSize: "1.2rem" }}>
-            {isB2B
-              ? "Un conseiller dédié vous contactera sous 24h ouvrées."
-              : "Nous vous contacterons sous 48h ouvrées pour confirmer votre inscription."}
-          </p>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.1rem" }}>
-            Un email de confirmation vous a été envoyé à : <strong style={{ color: ORANGE }}>{formData.email}</strong>
-          </p>
-        </motion.div>
-      )}
-
-      {/* Form Steps */}
-      {status !== "success" && (
-        <form onSubmit={handleSubmit}>
-          <AnimatePresence mode="wait">
-            {/* Step 1: Type de client */}
-            {currentStep === 1 && (
-              <StepWrapper key="step1">
-                <StepTitle>Vous êtes :</StepTitle>
-                <div style={{ display: "flex", gap: "1.5rem", marginTop: "2.5rem" }}>
-                  {[
-                    { value: "B2C", label: "Particulier", icon: User },
-                    { value: "B2B", label: "Entreprise", icon: Building2 }
-                  ].map(({ value, label, icon: Icon }) => (
-                    <label
-                      key={value}
-                      style={{
-                        flex: 1,
-                        padding: "3rem 2rem",
-                        border: `2px solid ${formData.typeClient === value ? ORANGE : "rgba(255,255,255,0.1)"}`,
-                        borderRadius: "1rem",
-                        background: formData.typeClient === value ? `${ORANGE}15` : "rgba(255,255,255,0.02)",
-                        cursor: "pointer",
-                        transition: "all 0.2s",
-                        textAlign: "center"
-                      }}
-                    >
-                      <input
-                        type="radio"
-                        name="typeClient"
-                        value={value}
-                        checked={formData.typeClient === value}
-                        onChange={handleChange}
-                        style={{ display: "none" }}
-                      />
-                      <Icon size={64} color={formData.typeClient === value ? ORANGE : "rgba(255,255,255,0.3)"} style={{ margin: "0 auto 1.5rem" }} />
-                      <span style={{
-                        display: "block",
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "1.5rem"
-                      }}>
-                        {label}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </StepWrapper>
-            )}
-
-            {/* Step 2: Informations personnelles */}
-            {currentStep === 2 && (
-              <StepWrapper key="step2">
-                <StepTitle>Vos coordonnées</StepTitle>
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "2rem",
-                  marginTop: "2.5rem"
-                }}>
-                  <FormField
-                    icon={User}
-                    label="Prénom"
-                    name="prenom"
-                    type="text"
-                    value={formData.prenom}
-                    onChange={handleChange}
-                  />
-                  <FormField
-                    icon={User}
-                    label="Nom"
-                    name="nom"
-                    type="text"
-                    value={formData.nom}
-                    onChange={handleChange}
-                  />
-                  <FormField
-                    icon={Mail}
-                    label="Email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                  <FormField
-                    icon={Phone}
-                    label="Téléphone"
-                    name="telephone"
-                    type="tel"
-                    value={formData.telephone}
-                    onChange={handleChange}
-                    placeholder="+212 6XX XXX XXX"
-                  />
-                  <FormSelect
-                    icon={MapPin}
-                    label="Ville"
-                    name="ville"
-                    value={formData.ville}
-                    onChange={handleChange}
-                    options={VILLES}
-                  />
-                </div>
-              </StepWrapper>
-            )}
-
-            {/* Step 3: Profil B2C */}
-            {currentStep === 3 && !isB2B && (
-              <StepWrapper key="step3-b2c">
-                <StepTitle>Votre profil</StepTitle>
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "2rem",
-                  marginTop: "2.5rem"
-                }}>
-                  <FormField
-                    icon={Hash}
-                    label="Âge"
-                    name="age"
-                    type="number"
-                    value={formData.age || ""}
-                    onChange={handleChange}
-                    placeholder="Ex: 28"
-                  />
-                  <FormSelect
-                    icon={Briefcase}
-                    label="Statut professionnel"
-                    name="statutProfessionnel"
-                    value={formData.statutProfessionnel || ""}
-                    onChange={handleChange}
-                    options={FONCTIONS_B2C}
-                  />
-                  <FormSelect
-                    icon={GraduationCap}
-                    label="Niveau d'études"
-                    name="niveauEtudes"
-                    value={formData.niveauEtudes || ""}
-                    onChange={handleChange}
-                    options={NIVEAUX_ETUDES}
-                  />
-                  <FormSelect
-                    icon={Target}
-                    label="Expérience IA/Data"
-                    name="experienceIA"
-                    value={formData.experienceIA || ""}
-                    onChange={handleChange}
-                    options={EXPERIENCE_IA}
-                  />
-                  <div style={{ gridColumn: "1 / -1" }}>
-                    <FormSelect
-                      icon={Target}
-                      label="Objectif principal"
-                      name="objectifPrincipal"
-                      value={formData.objectifPrincipal || ""}
-                      onChange={handleChange}
-                      options={OBJECTIFS_B2C}
-                    />
-                  </div>
-                  <div style={{ gridColumn: "1 / -1" }}>
-                    <FormSelect
-                      icon={MessageSquare}
-                      label="Comment nous avez-vous connu ?"
-                      name="commentConnu"
-                      value={formData.commentConnu || ""}
-                      onChange={handleChange}
-                      options={CANAUX_DECOUVERTE}
-                    />
-                  </div>
-                </div>
-              </StepWrapper>
-            )}
-
-            {/* Step 3: Profil B2B */}
-            {currentStep === 3 && isB2B && (
-              <StepWrapper key="step3-b2b">
-                <StepTitle>Votre entreprise</StepTitle>
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "2rem",
-                  marginTop: "2.5rem"
-                }}>
-                  <FormField
-                    icon={Building2}
-                    label="Nom de l'entreprise"
-                    name="entreprise"
-                    type="text"
-                    value={formData.entreprise || ""}
-                    onChange={handleChange}
-                  />
-                  <FormSelect
-                    icon={Building2}
-                    label="Secteur d'activité"
-                    name="secteurActivite"
-                    value={formData.secteurActivite || ""}
-                    onChange={handleChange}
-                    options={SECTEURS}
-                  />
-                  <FormSelect
-                    icon={Users}
-                    label="Taille de l'entreprise"
-                    name="tailleEntreprise"
-                    value={formData.tailleEntreprise || ""}
-                    onChange={handleChange}
-                    options={TAILLES_ENTREPRISE}
-                  />
-                  <FormSelect
-                    icon={Briefcase}
-                    label="Votre fonction"
-                    name="fonctionDemandeur"
-                    value={formData.fonctionDemandeur || ""}
-                    onChange={handleChange}
-                    options={FONCTIONS}
-                  />
-                  <FormSelect
-                    icon={Building2}
-                    label="Type d'entreprise"
-                    name="typeEntreprise"
-                    value={formData.typeEntreprise || ""}
-                    onChange={handleChange}
-                    options={TYPES_ENTREPRISE}
-                  />
-                  <FormField
-                    icon={Users}
-                    label="Nombre de participants"
-                    name="nombreParticipants"
-                    type="number"
-                    value={formData.nombreParticipants || ""}
-                    onChange={handleChange}
-                    placeholder="Ex: 10"
-                  />
-                  <div style={{ gridColumn: "1 / -1" }}>
-                    <FormSelect
-                      icon={Target}
-                      label="Besoin principal"
-                      name="besoinPrincipal"
-                      value={formData.besoinPrincipal || ""}
-                      onChange={handleChange}
-                      options={BESOINS_B2B}
-                    />
-                  </div>
-                </div>
-              </StepWrapper>
-            )}
-
-            {/* Step 4: Message + Consentements */}
-            {currentStep === 4 && (
-              <StepWrapper key="step4">
-                <StepTitle>Finalisation de votre inscription</StepTitle>
-                <div style={{ marginTop: "2.5rem" }}>
-                  {/* Formation sélectionnée */}
-                  {formationTitle && (
-                    <div style={{ marginBottom: "2.5rem" }}>
-                      <label style={{
-                        display: "block",
-                        marginBottom: "0.75rem",
-                        fontSize: "1rem",
-                        color: ORANGE,
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.05em"
-                      }}>
-                        <GraduationCap size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
-                        Formation sélectionnée
-                      </label>
-                      <div style={{
-                        width: "100%",
-                        padding: "1.25rem",
-                        background: `${ORANGE}11`,
-                        border: `2px solid ${ORANGE}`,
-                        borderRadius: "0.75rem",
-                        color: "#fff",
-                        fontSize: "1.25rem",
-                        fontWeight: 600,
-                      }}>
-                        {formationTitle}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Message / Compléments d'information */}
-                  <div style={{ marginBottom: "2.5rem" }}>
-                    <label style={{
-                      display: "block",
-                      marginBottom: "0.75rem",
-                      fontSize: "1rem",
-                      color: ORANGE,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em"
-                    }}>
-                      <MessageSquare size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
-                      Compléments d'information (optionnel)
-                    </label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={6}
-                      placeholder="Décrivez vos attentes, objectifs particuliers, disponibilités, contraintes..."
-                      style={{
-                        width: "100%",
-                        padding: "1.25rem",
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: "0.75rem",
-                        color: "#fff",
-                        fontSize: "1.15rem",
-                        fontFamily: "var(--font-body)",
-                        resize: "vertical",
-                        outline: "none"
-                      }}
-                    />
-                  </div>
-
-                  {/* Consentements */}
-                  <CheckboxField
-                    name="consentementRGPD"
-                    checked={formData.consentementRGPD}
-                    onChange={handleChange}
-                  >
-                    J'accepte que mes données personnelles soient collectées et traitées
-                    par ACT dans le cadre de ma demande d'inscription.
-                  </CheckboxField>
-
-                  <CheckboxField
-                    name="consentementMarketing"
-                    checked={formData.consentementMarketing}
-                    onChange={handleChange}
-                    containerStyle={{ marginTop: "1.5rem" }}
-                  >
-                    J'accepte de recevoir des communications marketing d'ACT
-                    (newsletters, offres de formations, événements)
-                  </CheckboxField>
-
-                  <CheckboxField
-                    name="consentementPartage"
-                    checked={formData.consentementPartage}
-                    onChange={handleChange}
-                    containerStyle={{ marginTop: "1.5rem" }}
-                  >
-                    J'accepte que mes données soient partagées avec des partenaires
-                    d'ACT (organismes de certification, partenaires technologiques)
-                  </CheckboxField>
-
-                  <p style={{
-                    fontSize: "0.95rem",
-                    color: "rgba(255,255,255,0.4)",
-                    marginTop: "2rem",
-                    lineHeight: 1.6
-                  }}>
-                    Conformément au RGPD, vous disposez d'un droit d'accès, de rectification,
-                    de suppression et de portabilité de vos données. Pour exercer ces droits,
-                    contactez-nous à : contact@act-formation.ma
-                  </p>
-                </div>
-              </StepWrapper>
-            )}
-          </AnimatePresence>
-
-          {/* Navigation Buttons */}
-          <div style={{
-            display: "flex",
-            gap: "2rem",
-            marginTop: "4.5rem",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}>
-            {currentStep > 1 && (
-              <CTAButton 
-                onClick={prevStep}
-                type="button"
-                icon={<ArrowLeft size={22} />}
-              >
-                Précédent
-              </CTAButton>
-            )}
-
-            <div style={{ marginLeft: "auto" }}>
-              {currentStep < totalSteps ? (
-                <CTAButton 
-                  onClick={nextStep}
-                  type="button"
-                  icon={<ArrowRight size={22} />}
-                  iconPosition="right"
-                >
-                  Suivant
-                </CTAButton>
-              ) : (
-                <CTAButton 
-                  type="submit"
-                  className={status === "loading" ? "opacity-50 pointer-events-none" : ""}
-                  icon={status === "loading" ? <Loader2 size={22} className="animate-spin" /> : <Send size={22} />}
-                  iconPosition="right"
-                >
-                  {status === "loading" ? "Envoi..." : "Envoyer"}
-                </CTAButton>
-              )}
-            </div>
-          </div>
-        </form>
-      )}
-    </div>
-  );
-}
-
-// Composants réutilisables
-function StepWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.3 }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function StepTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h3 style={{
-      fontSize: "2rem",
-      fontWeight: 800,
-      color: "#fff",
-      marginBottom: "0.75rem",
-      fontFamily: "var(--font-display)"
-    }}>
-      {children}
-    </h3>
-  );
-}
-
-function FormField({
-  icon: Icon,
-  label,
-  name,
-  type,
-  value,
-  onChange,
-  placeholder = ""
-}: {
-  icon: any;
-  label: string;
-  name: string;
-  type: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-}) {
-  return (
-    <div>
-      <label style={{
-        display: "block",
-        marginBottom: "0.75rem",
-        fontSize: "1rem",
-        color: ORANGE,
-        fontWeight: 700,
-        textTransform: "uppercase",
-        letterSpacing: "0.05em"
-      }}>
-        <Icon size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
-        {label}
-      </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
+  /* ── Success screen ─────────────────────────────────── */
+  if (status === "success") {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
         style={{
-          width: "100%",
-          padding: "1.125rem",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "0.75rem",
-          color: "#fff",
-          fontSize: "1.15rem",
-          outline: "none"
-        }}
-      />
-    </div>
-  );
-}
-
-function FormSelect({
-  icon: Icon,
-  label,
-  name,
-  value,
-  onChange,
-  options,
-}: {
-  icon: any;
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
-}) {
-  return (
-    <div>
-      <label style={{
-        display: "block",
-        marginBottom: "0.75rem",
-        fontSize: "1rem",
-        color: ORANGE,
-        fontWeight: 700,
-        textTransform: "uppercase",
-        letterSpacing: "0.05em"
-      }}>
-        <Icon size={20} style={{ display: "inline", marginRight: "0.75rem" }} />
-        {label}
-      </label>
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        style={{
-          width: "100%",
-          padding: "1.125rem",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "0.75rem",
-          color: value ? "#fff" : "rgba(255,255,255,0.4)",
-          fontSize: "1.15rem",
-          outline: "none",
-          cursor: "pointer"
+          textAlign: "center",
+          padding: "5rem 2rem",
+          background: "rgba(255,255,255,0.025)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: "1rem",
         }}
       >
-        <option value="" style={{ background: "#070E1C" }}>Sélectionner...</option>
-        {options.map((opt) => (
-          <option key={opt} value={opt} style={{ background: "#070E1C" }}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
+        <CheckCircle2 size={72} color="#22c55e" style={{ margin: "0 auto 1.5rem" }} />
+        <h3
+          style={{
+            fontSize: "clamp(2.5rem, 3.5vw, 3.5rem)",
+            fontWeight: 900,
+            color: "#22c55e",
+            marginBottom: "1rem",
+            fontFamily: "Futura, system-ui, sans-serif",
+          }}
+        >
+          Inscription envoyée !
+        </h3>
+        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.65rem", lineHeight: 1.7 }}>
+          Notre équipe vous contactera sous 24h ouvrées pour confirmer votre inscription.
+          <br />
+          Un email de confirmation vous a été envoyé à{" "}
+          <strong style={{ color: ORANGE }}>{form.email}</strong>.
+        </p>
+      </motion.div>
+    );
+  }
 
-function MultiCheckbox({
-  label,
-  options,
-  selected,
-  onChange,
-  containerStyle = {}
-}: {
-  label: string;
-  options: string[];
-  selected: string[];
-  onChange: (value: string) => void;
-  containerStyle?: React.CSSProperties;
-}) {
+  /* ── Form ───────────────────────────────────────────── */
   return (
-    <div style={containerStyle}>
-      <label style={{
-        display: "block",
-        marginBottom: "1rem",
-        fontSize: "1rem",
-        color: ORANGE,
-        fontWeight: 700,
-        textTransform: "uppercase",
-        letterSpacing: "0.05em"
-      }}>
-        {label}
-      </label>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-        gap: "1rem"
-      }}>
-        {options.map((option) => (
-          <label
-            key={option}
-            style={{
-              padding: "1rem 1.25rem",
-              background: selected.includes(option) ? `${ORANGE}22` : "rgba(255,255,255,0.03)",
-              border: `1px solid ${selected.includes(option) ? ORANGE : "rgba(255,255,255,0.1)"}`,
-              borderRadius: "0.75rem",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              fontSize: "1.1rem",
-              color: "#fff"
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={selected.includes(option)}
-              onChange={() => onChange(option)}
-              style={{ accentColor: ORANGE, width: "20px", height: "20px" }}
-            />
-            {option}
-          </label>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function RadioGroup({
-  label,
-  name,
-  options,
-  value,
-  onChange,
-  containerStyle = {}
-}: {
-  label: string;
-  name: string;
-  options: string[];
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  containerStyle?: React.CSSProperties;
-}) {
-  return (
-    <div style={containerStyle}>
-      <label style={{
-        display: "block",
-        marginBottom: "1rem",
-        fontSize: "1rem",
-        color: ORANGE,
-        fontWeight: 700,
-        textTransform: "uppercase",
-        letterSpacing: "0.05em"
-      }}>
-        {label}
-      </label>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        {options.map((option) => (
-          <label
-            key={option}
-            style={{
-              padding: "1rem 1.25rem",
-              background: value === option ? `${ORANGE}22` : "rgba(255,255,255,0.03)",
-              border: `1px solid ${value === option ? ORANGE : "rgba(255,255,255,0.1)"}`,
-              borderRadius: "0.75rem",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              fontSize: "1.1rem",
-              color: "#fff"
-            }}
-          >
-            <input
-              type="radio"
-              name={name}
-              value={option}
-              checked={value === option}
-              onChange={onChange}
-              style={{ accentColor: ORANGE, width: "20px", height: "20px" }}
-            />
-            {option}
-          </label>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CheckboxField({
-  name,
-  checked,
-  onChange,
-  containerStyle = {},
-  children
-}: {
-  name: string;
-  checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  containerStyle?: React.CSSProperties;
-  children: React.ReactNode;
-}) {
-  return (
-    <label
-      style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "1rem",
-        cursor: "pointer",
-        ...containerStyle
-      }}
-    >
-      <input
-        type="checkbox"
-        name={name}
-        checked={checked}
-        onChange={onChange}
+    <form onSubmit={handleSubmit} noValidate>
+      <div
         style={{
-          accentColor: ORANGE,
-          marginTop: "0.35rem",
-          width: "22px",
-          height: "22px",
-          cursor: "pointer"
+          background: "rgba(255,255,255,0.025)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: "1rem",
+          overflow: "hidden",
+          position: "relative",
         }}
-      />
-      <span style={{
-        color: "rgba(255,255,255,0.7)",
-        fontSize: "1.1rem",
-        lineHeight: 1.6
-      }}>
-        {children}
-      </span>
-    </label>
+      >
+        {/* Top orange rule */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 2,
+            background: `linear-gradient(to right, ${ORANGE}, #F39C12)`,
+          }}
+        />
+
+        {/* ── Tabs ──────────────────────────────────────── */}
+        <div
+          style={{
+            display: "flex",
+            borderBottom: "1px solid rgba(255,255,255,0.07)",
+            marginTop: 2,
+          }}
+        >
+          {(["pro", "etudiant"] as const).map((t) => {
+            const active = tab === t;
+            return (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTab(t)}
+                style={{
+                  flex: 1,
+                  padding: "1.1rem 1.5rem",
+                  background: "none",
+                  border: "none",
+                  borderBottom: `2px solid ${active ? ORANGE : "transparent"}`,
+                  color: active ? ORANGE : "rgba(255,255,255,0.4)",
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontSize: "1.5rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                  transition: "color 0.2s, border-color 0.2s",
+                  marginBottom: -1,
+                }}
+              >
+                {t === "pro" ? "Professionnel" : "Étudiant"}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ── Fields ────────────────────────────────────── */}
+        <div style={{ padding: "clamp(1.8rem, 3vw, 2.8rem)" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1.4rem",
+            }}
+            className="inscription-fields"
+          >
+            {/* Email — full row */}
+            <Field label="Adresse mail" required style={{ gridColumn: "1 / -1" }}>
+              <Input
+                type="email"
+                required
+                value={form.email}
+                onChange={(e) => set("email", e.target.value)}
+                placeholder="votre@email.com"
+              />
+            </Field>
+
+            {/* Formation — full row */}
+            <Field label="Thème de la formation" required style={{ gridColumn: "1 / -1" }}>
+              <Input
+                type="text"
+                required
+                value={formationTitle ?? ""}
+                readOnly={!!formationTitle}
+                onChange={() => {}}
+                style={{
+                  ...fieldStyle,
+                  opacity: formationTitle ? 0.65 : 1,
+                  cursor: formationTitle ? "default" : "text",
+                }}
+              />
+            </Field>
+
+            {/* Pro: Organisme / Etu: Niveau études */}
+            <AnimatePresence mode="wait">
+              {tab === "pro" ? (
+                <motion.div
+                  key="organisme"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ gridColumn: "1 / -1" }}
+                >
+                  <Field label="Organisme employeur" required>
+                    <Input
+                      type="text"
+                      required
+                      value={form.organisme}
+                      onChange={(e) => set("organisme", e.target.value)}
+                      placeholder="Nom de votre entreprise / organisme"
+                    />
+                  </Field>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="niveau"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ gridColumn: "1 / -1" }}
+                >
+                  <Field label="Niveau d'études">
+                    <Select
+                      value={form.niveauEtudes}
+                      onChange={(e) => set("niveauEtudes", e.target.value)}
+                      options={["Bac", "Bac+2 (DUT/BTS)", "Licence (Bac+3)", "Master (Bac+5)", "Ingénieur", "Doctorat"]}
+                    />
+                  </Field>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Civilité */}
+            <Field label="Civilité" style={{ gridColumn: "1 / -1" }}>
+              <div style={{ display: "flex", gap: "2rem", paddingTop: "0.3rem" }}>
+                {["M.", "Mme."].map((c) => (
+                  <label
+                    key={c}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      cursor: "pointer",
+                      color: form.civilite === c ? "#fff" : "rgba(255,255,255,0.45)",
+                      fontSize: "1.65rem",
+                      fontFamily: "Futura, system-ui, sans-serif",
+                      transition: "color 0.2s",
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name="civilite"
+                      value={c}
+                      checked={form.civilite === c}
+                      onChange={() => set("civilite", c)}
+                      style={{ accentColor: ORANGE, width: 16, height: 16 }}
+                    />
+                    {c}
+                  </label>
+                ))}
+              </div>
+            </Field>
+
+            {/* Nom + Prénom */}
+            <Field label="Nom" required>
+              <Input
+                type="text"
+                required
+                value={form.nom}
+                onChange={(e) => set("nom", e.target.value)}
+                placeholder="Votre nom"
+              />
+            </Field>
+            <Field label="Prénom" required>
+              <Input
+                type="text"
+                required
+                value={form.prenom}
+                onChange={(e) => set("prenom", e.target.value)}
+                placeholder="Votre prénom"
+              />
+            </Field>
+
+            {/* Fonction */}
+            <Field label="Fonction du participant" required>
+              <Select
+                value={form.fonction}
+                onChange={(e) => set("fonction", e.target.value)}
+                options={tab === "pro" ? FONCTIONS_PRO : FONCTIONS_ETU}
+              />
+            </Field>
+
+            {/* Pays */}
+            <Field label="Pays" required>
+              <CountrySearchSelect
+                value={form.pays}
+                onChange={(code) => set("pays", code)}
+              />
+            </Field>
+
+            {/* Téléphone 1 + 2 */}
+            <Field label="Téléphone 1" required>
+              <Input
+                type="tel"
+                required
+                value={form.telephone1}
+                onChange={(e) => set("telephone1", e.target.value)}
+                placeholder="+212 6XX XXX XXX"
+              />
+            </Field>
+            <Field label="Téléphone 2">
+              <Input
+                type="tel"
+                value={form.telephone2}
+                onChange={(e) => set("telephone2", e.target.value)}
+                placeholder="+212 6XX XXX XXX"
+              />
+            </Field>
+
+            {/* WhatsApp — full row */}
+            <Field label="Numéro WhatsApp" style={{ gridColumn: "1 / -1" }}>
+              <Input
+                type="tel"
+                value={form.whatsapp}
+                onChange={(e) => set("whatsapp", e.target.value)}
+                placeholder="Numéro WhatsApp"
+              />
+            </Field>
+
+            {/* Comment connu */}
+            <Field label="Comment nous avez-vous connu ?" required>
+              <Select
+                value={form.commentConnu}
+                onChange={(e) => set("commentConnu", e.target.value)}
+                options={CANAUX}
+              />
+            </Field>
+
+  
+            {/* Nb participants */}
+            <Field
+              label="N° de participants"
+              style={tab === "pro" ? {} : { display: "none" }}
+            >
+              <Input
+                type="number"
+                min={1}
+                value={form.nombreParticipants}
+                onChange={(e) => set("nombreParticipants", e.target.value)}
+                placeholder="Ex : 5"
+              />
+            </Field>
+
+            {/* Message — full row */}
+            <Field label="Laissez-nous un message" style={{ gridColumn: "1 / -1" }}>
+              <textarea
+                value={form.message}
+                onChange={(e) => set("message", e.target.value)}
+                rows={4}
+                placeholder="Décrivez vos attentes, objectifs ou contraintes particulières…"
+                style={{
+                  ...fieldStyle,
+                  resize: "vertical",
+                  lineHeight: 1.6,
+                }}
+                onFocus={(e) =>
+                  ((e.currentTarget as HTMLTextAreaElement).style.borderColor = ORANGE)
+                }
+                onBlur={(e) =>
+                  ((e.currentTarget as HTMLTextAreaElement).style.borderColor =
+                    "rgba(255,255,255,0.1)")
+                }
+              />
+            </Field>
+
+            {/* RGPD */}
+            <label
+              style={{
+                gridColumn: "1 / -1",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "0.75rem",
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                required
+                checked={form.consentementRGPD}
+                onChange={(e) => set("consentementRGPD", e.target.checked)}
+                style={{ accentColor: ORANGE, width: 18, height: 18, marginTop: "0.2rem", flexShrink: 0 }}
+              />
+              <span
+                style={{
+                  fontSize: "1.6rem",
+                  color: "rgba(255,255,255,0.5)",
+                  lineHeight: 1.65,
+                  fontFamily: "Futura, system-ui, sans-serif",
+                  textTransform: "none",
+                  letterSpacing: "0",
+                }}
+              >
+                J'accepte que mes données personnelles soient collectées et traitées par ACT
+                dans le cadre de ma demande d'inscription.{" "}
+                <span style={{ color: ORANGE }}>*</span>
+              </span>
+            </label>
+
+            {/* Error */}
+            {status === "error" && (
+              <p
+                style={{
+                  gridColumn: "1 / -1",
+                  color: "#ef4444",
+                  fontSize: "1.6rem",
+                  margin: 0,
+                  fontFamily: "Futura, system-ui, sans-serif",
+                }}
+              >
+                Une erreur est survenue. Veuillez réessayer.
+              </p>
+            )}
+
+            {/* Submit */}
+            <div style={{ gridColumn: "1 / -1" }}>
+              <CTAButton
+                type="submit"
+                disabled={status === "loading"}
+                icon={status === "loading" ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+              >
+                {status === "loading" ? "Envoi en cours…" : "S'inscrire"}
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @media (max-width: 640px) {
+          .inscription-fields {
+            grid-template-columns: 1fr !important;
+          }
+          .inscription-fields > * {
+            grid-column: 1 / -1 !important;
+          }
+        }
+      `}</style>
+    </form>
   );
 }

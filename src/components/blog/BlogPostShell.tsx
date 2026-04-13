@@ -39,6 +39,8 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
   const screenSize = useMediaQuery();
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
+  const [articleUrl, setArticleUrl] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const recentPosts = blogPosts
     .filter((p) => p.slug !== post.slug)
@@ -57,6 +59,62 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
     .sort((a, b) => b.score - a.score)
     .map((p) => p.post)
     .slice(0, 3);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setArticleUrl(`${window.location.origin}/blog/${post.slug}`);
+  }, [post.slug]);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timeout = window.setTimeout(() => setCopied(false), 2200);
+    return () => window.clearTimeout(timeout);
+  }, [copied]);
+
+  const shareText = `${post.title} — ${post.excerpt}`;
+  const shareDetails = [post.category, post.readTime, post.target]
+    .filter(Boolean)
+    .join(" • ");
+  const encodedUrl = encodeURIComponent(articleUrl);
+  const encodedTitle = encodeURIComponent(post.title);
+  const encodedText = encodeURIComponent(`${shareText}\n\n${shareDetails}`);
+
+  const openShareWindow = (url: string) => {
+    if (typeof window === "undefined") return;
+    window.open(url, "_blank", "noopener,noreferrer,width=720,height=720");
+  };
+
+  const handleNativeShare = async () => {
+    if (typeof navigator === "undefined") return;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: post.title,
+          text: `${post.excerpt}\n\n${shareDetails}`,
+          url: articleUrl,
+        });
+        return;
+      } catch {
+        return;
+      }
+    }
+
+    await handleCopyLink();
+  };
+
+  const handleCopyLink = async () => {
+    if (typeof navigator === "undefined" || !articleUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(articleUrl);
+      setCopied(true);
+    } catch {
+      if (typeof window !== "undefined") {
+        window.prompt("Copiez ce lien :", articleUrl);
+      }
+    }
+  };
 
   return (
     <div style={{ background: "var(--bg-primary)", minHeight: "100vh" }}>
@@ -334,11 +392,76 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 >
                   <Share2 size={screenSize === 'mobile' ? 12 : 14} /> Partager l&apos;article
                 </p>
-                <div style={{ display: "flex", gap: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
-                  <ShareIcon icon={<Linkedin size={screenSize === 'mobile' ? 16 : 18} />} label="LinkedIn" />
-                  <ShareIcon icon={<Twitter size={screenSize === 'mobile' ? 16 : 18} />} label="Twitter" />
-                  <ShareIcon icon={<Facebook size={screenSize === 'mobile' ? 16 : 18} />} label="Facebook" />
-                  <ShareIcon icon={<Link2 size={screenSize === 'mobile' ? 16 : 18} />} label="Copier" />
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: screenSize === 'mobile' ? "0.8rem" : "1rem",
+                    marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
+                  }}
+                >
+                  {[post.category, post.readTime, post.format].map((item) => (
+                    <span
+                      key={item}
+                      style={{
+                        padding: "0.55rem 0.9rem",
+                        borderRadius: "999px",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        color: "rgba(255,255,255,0.55)",
+                        fontFamily: "var(--font-body)",
+                        fontSize: screenSize === 'mobile' ? "1.1rem" : "1.2rem",
+                        lineHeight: 1,
+                      }}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <p
+                  style={{
+                    color: "rgba(255,255,255,0.52)",
+                    fontSize: screenSize === 'mobile' ? "1.25rem" : "1.4rem",
+                    lineHeight: 1.7,
+                    fontFamily: "var(--font-body)",
+                    marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
+                  }}
+                >
+                  {post.excerpt}
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
+                  <ShareIcon
+                    icon={<Share2 size={screenSize === 'mobile' ? 16 : 18} />}
+                    label="Partager"
+                    onClick={handleNativeShare}
+                  />
+                  <ShareIcon
+                    icon={<Linkedin size={screenSize === 'mobile' ? 16 : 18} />}
+                    label="LinkedIn"
+                    onClick={() =>
+                      openShareWindow(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`)
+                    }
+                  />
+                  <ShareIcon
+                    icon={<Twitter size={screenSize === 'mobile' ? 16 : 18} />}
+                    label="Twitter"
+                    onClick={() =>
+                      openShareWindow(`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`)
+                    }
+                  />
+                  <ShareIcon
+                    icon={<Facebook size={screenSize === 'mobile' ? 16 : 18} />}
+                    label="Facebook"
+                    onClick={() =>
+                      openShareWindow(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`)
+                    }
+                  />
+                  <ShareIcon
+                    icon={<Link2 size={screenSize === 'mobile' ? 16 : 18} />}
+                    label={copied ? "Lien copié" : "Copier"}
+                    onClick={handleCopyLink}
+                    active={copied}
+                  />
                 </div>
               </div>
 
@@ -552,17 +675,29 @@ function MetaItem({ label, value, screenSize }: { label: string; value: string; 
 }
 
 /* ─── Share Icon ─── */
-function ShareIcon({ icon, label }: { icon: React.ReactNode; label: string }) {
+function ShareIcon({
+  icon,
+  label,
+  onClick,
+  active = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick?: () => void;
+  active?: boolean;
+}) {
   return (
     <button
       aria-label={label}
+      title={label}
+      onClick={onClick}
       style={{
         width: "4rem",
         height: "4rem",
         borderRadius: "1rem",
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        color: "rgba(255,255,255,0.4)",
+        background: active ? "rgba(211,84,0,0.18)" : "rgba(255,255,255,0.04)",
+        border: active ? "1px solid rgba(211,84,0,0.4)" : "1px solid rgba(255,255,255,0.08)",
+        color: active ? "#fff" : "rgba(255,255,255,0.4)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -575,9 +710,9 @@ function ShareIcon({ icon, label }: { icon: React.ReactNode; label: string }) {
         e.currentTarget.style.color = "#fff";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-        e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+        e.currentTarget.style.background = active ? "rgba(211,84,0,0.18)" : "rgba(255,255,255,0.04)";
+        e.currentTarget.style.borderColor = active ? "rgba(211,84,0,0.4)" : "rgba(255,255,255,0.08)";
+        e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.4)";
       }}
     >
       {icon}

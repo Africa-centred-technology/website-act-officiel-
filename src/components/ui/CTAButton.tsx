@@ -14,11 +14,12 @@ interface CTAButtonProps {
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
   noIcon?: boolean;
+  disabled?: boolean;
 }
 
 /** Clone-signature glassmorphism button with diamond icon + gradient border */
 export default function CTAButton({
-  href, onClick, children, className = "", external = false, type = "button", icon, iconPosition = "left", noIcon = false
+  href, onClick, children, className = "", external = false, type = "button", icon, iconPosition = "left", noIcon = false, disabled = false
 }: CTAButtonProps) {
   const renderedIcon = !noIcon ? (
     icon ? (
@@ -64,9 +65,14 @@ export default function CTAButton({
     <motion.button
       onClick={onClick}
       type={type}
+      disabled={disabled}
       className={`cta-btn ${className}`}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.97 }}
+      whileHover={disabled ? undefined : { scale: 1.02 }}
+      whileTap={disabled ? undefined : { scale: 0.97 }}
+      style={{
+        cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.65 : 1,
+      }}
     >
       {decorators}
       {inner}

@@ -57,11 +57,11 @@ const LAYOUT = [
 
 function NumBlock({ n, hovered, size, img, href }: { n: string; hovered: boolean; size: string; img: string; href: string }) {
   return (
-    <Link href={href} aria-label="Voir le pôle" style={{ display: "block", position: "relative", flexShrink: 0, width: "clamp(7rem,11vw,13rem)", textDecoration: "none" }}>
+    <Link href={href} aria-label="Voir le pôle" style={{ display: "block", position: "relative", flexShrink: 0, width: "clamp(16rem,28vw,30rem)", textDecoration: "none" }}>
       {/* Thumbnail */}
       <div style={{
         width: "100%",
-        aspectRatio: "3/4",
+        aspectRatio: "16/10",
         overflow: "hidden",
         borderRadius: "3px",
         border: hovered ? "1px solid rgba(211,84,0,0.45)" : "1px solid rgba(255,255,255,0.07)",
@@ -209,8 +209,8 @@ function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; in
           <Link href={svc.href} style={{
             display: 'block',
             width: 'calc(100% - 1rem)',
-            marginLeft: '1rem',
-            height: screenSize === 'mobile' ? '200px' : '240px',
+            marginLeft: '0.5rem',
+            height: screenSize === 'mobile' ? '220px' : '260px',
             borderRadius: '0.5rem',
             overflow: 'hidden',
             border: '1px solid rgba(255,255,255,0.1)',
@@ -467,3 +467,4 @@ export default function RoomAtelier() {
     </div>
   );
 }
+

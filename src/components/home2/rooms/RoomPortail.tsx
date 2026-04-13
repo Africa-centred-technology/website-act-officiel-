@@ -374,50 +374,6 @@ export default function RoomPortail() {
                     {/* Spacer entre projets et section clients */}
                     <div className="h-20" />
 
-                    {/* Section: Ils nous font confiance - Défilement infini */}
-                    <div className="w-full pt-12 pb-8 border-t border-white/10">
-                        <h3 className="text-white/80 text-center uppercase tracking-widest mb-12 px-12" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.3em" }}>
-                            Ils nous ont fait confiance
-                        </h3>
-                        <div className="relative overflow-hidden before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-24 before:bg-gradient-to-r before:from-black before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-24 after:bg-gradient-to-l after:from-black after:to-transparent">
-                            <motion.div
-                                className="flex w-max"
-                                animate={{
-                                    x: ["0%", "-50%"],
-                                }}
-                                transition={{
-                                    x: {
-                                        repeat: Infinity,
-                                        repeatType: "loop",
-                                        duration: 45,
-                                        ease: "linear",
-                                    },
-                                }}
-                            >
-                                {/* On répète la liste 2 fois pour le conteneur principal, avec les logos multipliés à l'intérieur pour remplir l'écran */}
-                                {[...Array(2)].map((_, setIdx) => (
-                                    <div key={`logo-set-${setIdx}`} className="flex flex-shrink-0 min-w-max gap-12 pr-12">
-                                        {[...clients, ...clients, ...clients, ...clients, ...clients, ...clients].map((client, idx) => (
-                                            <div
-                                                key={`logo-${setIdx}-${idx}`}
-                                                className="flex-shrink-0 flex items-center justify-center"
-                                                style={{ width: '100px', height: '60px' }}
-                                            >
-                                                <div className="bg-white rounded-lg flex items-center justify-center shadow-lg" style={{ width: '100px', height: '60px', padding: '0.5rem' }}>
-                                                    <img
-                                                        src={client.logo}
-                                                        alt={client.name}
-                                                        className="object-contain"
-                                                        style={{ maxWidth: '100%', maxHeight: '100%' }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </motion.div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

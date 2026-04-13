@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, LinkedinIcon, Mail, Phone, MapPin, Code2, Briefcase, GraduationCap } from "lucide-react";
@@ -21,6 +21,30 @@ interface FooterStripProps {
 }
 
 export default function FooterStrip({ style }: FooterStripProps = {}) {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubscribe() {
+    if (!email) return;
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/shopify/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <motion.div
       aria-label="Footer"
@@ -32,7 +56,10 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
     >
       <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)", marginBottom: "2.8rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr minmax(280px, 320px)", gap: "clamp(4rem, 6vw, 6rem)", marginBottom: "2.8rem" }}>
+        
+        {/* Colonnes principales à gauche */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)" }}>
 
         {/* Col 1 — Contact */}
         <div>
@@ -118,6 +145,87 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
                 <link.Icon size={18} strokeWidth={1.6} />{link.label}
               </Link>
             ))}
+          </div>
+        </div>
+        </div>
+
+        {/* Col 5 — Newsletter à droite */}
+        <div>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
+            Newsletter
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {status === "success" ? (
+              <p style={{ fontFamily: "var(--font-body)", color: "#4ade80", fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)" }}>
+                Merci ! Vous êtes bien inscrit(e) à notre newsletter.
+              </p>
+            ) : (
+              <>
+                <input
+                  type="email"
+                  placeholder="Votre email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); if (status === "error") setStatus("idle"); }}
+                  onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
+                  disabled={status === "loading"}
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    padding: "0.9rem 1.2rem",
+                    fontSize: "clamp(1rem, 1.1vw, 1.1rem)",
+                    background: "rgba(255,255,255,0.08)",
+                    border: `1px solid ${status === "error" ? "#ef4444" : `${ORANGE}44`}`,
+                    borderRadius: "8px",
+                    color: "#ffffff",
+                    transition: "all 0.2s",
+                    opacity: status === "loading" ? 0.6 : 1,
+                  }}
+                  onFocus={(e) => {
+                    (e.currentTarget as HTMLInputElement).style.background = "rgba(255,255,255,0.12)";
+                    (e.currentTarget as HTMLInputElement).style.borderColor = ORANGE;
+                  }}
+                  onBlur={(e) => {
+                    (e.currentTarget as HTMLInputElement).style.background = "rgba(255,255,255,0.08)";
+                    (e.currentTarget as HTMLInputElement).style.borderColor = status === "error" ? "#ef4444" : `${ORANGE}44`;
+                  }}
+                />
+                {status === "error" && (
+                  <p style={{ fontFamily: "var(--font-body)", color: "#ef4444", fontSize: "clamp(0.85rem, 1vw, 1rem)", margin: 0 }}>
+                    Une erreur est survenue. Veuillez réessayer.
+                  </p>
+                )}
+                <button
+                  onClick={handleSubscribe}
+                  disabled={status === "loading" || !email}
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    padding: "0.9rem 1.5rem",
+                    fontSize: "clamp(1rem, 1.1vw, 1.1rem)",
+                    background: ORANGE,
+                    border: "none",
+                    borderRadius: "8px",
+                    color: "#000",
+                    fontWeight: 700,
+                    cursor: status === "loading" || !email ? "not-allowed" : "pointer",
+                    transition: "all 0.3s",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    opacity: status === "loading" || !email ? 0.6 : 1,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (status !== "loading" && email) {
+                      (e.currentTarget as HTMLButtonElement).style.opacity = "0.9";
+                      (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.opacity = status === "loading" || !email ? "0.6" : "1";
+                    (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                  }}
+                >
+                  {status === "loading" ? "Inscription..." : "S'inscrire"}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
