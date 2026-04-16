@@ -129,12 +129,14 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
     // Remplir les champs requis
     await page.getByPlaceholder("Votre nom complet").fill("Test Smoke User");
     await page.getByPlaceholder("votre@entreprise.com").fill("smoke@test.com");
+    // "Type de projet" est required — sans sélection la validation HTML5 bloque le submit
+    await page.locator("select").selectOption("web");
     await page
       .getByPlaceholder("Décrivez votre projet, vos objectifs et vos contraintes...")
       .fill("Ceci est un message de test automatisé Playwright.");
 
-    // Soumettre
-    await page.getByText("Envoyer ma demande").click();
+    // Soumettre (scopé au formulaire pour éviter d'ambiguïté avec d'autres boutons de la page)
+    await page.locator("form").getByRole("button", { name: /envoyer/i }).click();
 
     // Vérifier l'état de succès
     await expect(
@@ -187,8 +189,8 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
     // ── Consentement RGPD ────────────────────────────────────────────────────
     await page.locator('input[type="checkbox"]').check();
 
-    // ── Soumettre ────────────────────────────────────────────────────────────
-    await page.getByText("S'inscrire").click();
+    // ── Soumettre (scopé au form pour éviter le bouton newsletter du footer) ──
+    await page.locator("form").getByRole("button", { name: /s'inscrire/i }).click();
 
     // ── Vérifier le message de succès ────────────────────────────────────────
     await expect(
