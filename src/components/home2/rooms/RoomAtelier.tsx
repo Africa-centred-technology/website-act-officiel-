@@ -1,399 +1,323 @@
 "use client";
 
-/**
- * Room 02 — L'ATELIER
- * Service cards enter from depth: each card rises from rotateX perspective
- * as if emerging from beneath a surface.  The further left the card,
- * the deeper its depth origin — creating a wave of emergence.
- * 3-layer parallax gives the workshop its spatial volume.
- */
-
 import React, { useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { POLES } from "@/lib/data/poles";
 
+const ORANGE  = "#D35400";
+const ORANGE2 = "#ff8c38";
 
-// Hook pour détecter la taille d'écran
-function useMediaQuery() {
-  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setScreenSize('mobile');
-      } else if (width >= 768 && width < 1024) {
-        setScreenSize('tablet');
-      } else {
-        setScreenSize('desktop');
-      }
-    };
-
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
-
-  return screenSize;
-}
-
-const services = POLES.map(p => ({
-  n: p.n,
-  title: p.titleWithBreaks,
-  tag: p.tag,
-  desc: p.desc,
-  href: p.href,
-  img: p.img,
-}));
-
-
-/* Stagger offset + internal column proportions — asymétrie délibérée par carte */
-const LAYOUT = [
-  { delay: 0.06, marginLeft: "0%", titleW: "38%", descW: "36%", numSize: "clamp(4rem,7vw,8rem)", flip: false },
-  { delay: 0.18, marginLeft: "0%", titleW: "38%", descW: "36%", numSize: "clamp(4rem,7vw,8rem)", flip: true },
-  { delay: 0.30, marginLeft: "0%", titleW: "38%", descW: "36%", numSize: "clamp(4rem,7vw,8rem)", flip: false },
+/* ── Extra metadata par pôle (même ordre que POLES) ── */
+const POLE_META = [
+  {
+    tags: ["Web & Mobile", "Cloud", "IA / Data"],
+    stats: [{ val: "120+", label: "Projets" }, { val: "15+", label: "Technologies" }, { val: "99.9%", label: "Uptime" }],
+    Icon: () => (
+      <svg viewBox="0 0 24 24" width="15" height="15" stroke={ORANGE} fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
+  },
+  {
+    tags: ["Stratégie IT", "Audit", "Transformation"],
+    stats: [{ val: "80+", label: "Clients" }, { val: "200+", label: "Missions" }, { val: "3x", label: "ROI moyen" }],
+    Icon: () => (
+      <svg viewBox="0 0 24 24" width="15" height="15" stroke={ORANGE} fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+      </svg>
+    ),
+  },
+  {
+    tags: ["E-learning", "Bootcamps", "Certifications"],
+    stats: [{ val: "500+", label: "Formés" }, { val: "40+", label: "Programmes" }, { val: "98%", label: "Satisfaction" }],
+    Icon: () => (
+      <svg viewBox="0 0 24 24" width="15" height="15" stroke={ORANGE} fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+    ),
+  },
 ];
 
-function NumBlock({ n, hovered, size, img, href }: { n: string; hovered: boolean; size: string; img: string; href: string }) {
+/* ── Responsive hook ── */
+function useScreenSize() {
+  const [size, setSize] = useState<"mobile" | "tablet" | "desktop">("desktop");
+  useEffect(() => {
+    const check = () => {
+      const w = window.innerWidth;
+      setSize(w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop");
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return size;
+}
+
+/* ── Panel accordéon ── */
+function Panel({
+  pole,
+  meta,
+  index,
+  isActive,
+  onClick,
+  isMobile,
+}: {
+  pole: (typeof POLES)[0];
+  meta: (typeof POLE_META)[0];
+  isActive: boolean;
+  onClick: () => void;
+  isMobile: boolean;
+}) {
+  const [scanKey, setScanKey] = useState(0);
+
+  const handleClick = () => {
+    if (!isActive) setScanKey((k) => k + 1);
+    onClick();
+  };
+
   return (
-    <Link href={href} aria-label="Voir le pôle" style={{ display: "block", position: "relative", flexShrink: 0, width: "clamp(16rem,28vw,30rem)", textDecoration: "none" }}>
-      {/* Thumbnail */}
-      <div style={{
-        width: "100%",
-        aspectRatio: "16/10",
+    <div
+      onClick={handleClick}
+      style={{
+        position: "relative",
+        flex: isMobile ? undefined : isActive ? 4.5 : 1,
+        height: isMobile ? (isActive ? "440px" : "100px") : undefined,
+        borderRadius: "18px",
         overflow: "hidden",
-        borderRadius: "3px",
-        border: hovered ? "1px solid rgba(211,84,0,0.45)" : "1px solid rgba(255,255,255,0.07)",
-        transition: "border-color 0.35s",
-      }}>
+        cursor: "pointer",
+        transition: isMobile
+          ? "height 0.7s cubic-bezier(.16,1,.3,1)"
+          : "flex 0.7s cubic-bezier(.16,1,.3,1), box-shadow 0.5s",
+        minWidth: 0,
+        boxShadow: isActive
+          ? "0 20px 60px rgba(0,0,0,.5), 0 0 80px rgba(255,106,0,.06)"
+          : "none",
+      }}
+    >
+      {/* Image de fond */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <img
-          src={img}
+          src={pole.img}
           alt=""
           style={{
-            width: "100%", height: "100%",
-            objectFit: "cover",
-            filter: hovered ? "grayscale(0%) brightness(0.85)" : "grayscale(100%) brightness(0.45)",
-            transition: "filter 0.5s",
-            display: "block",
+            width: "100%", height: "100%", objectFit: "cover",
+            transition: "transform 0.8s cubic-bezier(.16,1,.3,1), filter 0.6s",
+            filter: isActive ? "brightness(.42) saturate(.8)" : "brightness(.3) saturate(.65)",
+            transform: isActive ? "scale(1.06)" : "scale(1)",
           }}
         />
-        {/* Orange overlay on hover */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "rgba(211,84,0,0.12)",
-          opacity: hovered ? 1 : 0,
-          transition: "opacity 0.4s",
-          pointerEvents: "none",
-        }} />
       </div>
 
-      {/* Ghost number bleeding over bottom-right corner */}
-      <span style={{
-        position: "absolute",
-        bottom: "-0.3em",
-        right: "-0.25em",
-        fontWeight: 900,
-        lineHeight: 1,
-        userSelect: "none",
-        fontSize: size,
-        color: hovered ? "rgba(211,84,0,0.55)" : "rgba(255,255,255,0.10)",
-        transition: "color 0.35s",
-        letterSpacing: "-0.04em",
-        pointerEvents: "none",
-      }}>
-        {n}
-      </span>
-    </Link>
-  );
-}
+      {/* Overlay sombre */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+        background: isActive
+          ? "linear-gradient(0deg,rgba(6,6,8,.9) 0%,rgba(6,6,8,.35) 40%,rgba(6,6,8,.08) 70%,rgba(6,6,8,.2) 100%), linear-gradient(90deg,rgba(6,6,8,.2),transparent 25%)"
+          : "linear-gradient(0deg,rgba(6,6,8,.95) 0%,rgba(6,6,8,.5) 35%,rgba(6,6,8,.15) 60%,rgba(6,6,8,.3) 100%), linear-gradient(90deg,rgba(6,6,8,.4),transparent 40%,transparent 60%,rgba(6,6,8,.4))",
+        transition: "all 0.6s cubic-bezier(.16,1,.3,1)",
+      }} />
 
-function TitleBlock({ svc, width }: { svc: (typeof services)[0]; width: string }) {
-  return (
-    <Link href={svc.href} style={{ width, flexShrink: 0, display: "block", textDecoration: "none" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-        <span className="diamond diamond--sm" />
-        <span style={{ color: "#D35400", fontSize: "0.95rem", letterSpacing: "0.20em", textTransform: "uppercase", fontWeight: 700, fontFamily: "var(--font-display)" }}>
-          {svc.tag}
-        </span>
+      {/* Teinte orange bas */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
+        zIndex: 2, pointerEvents: "none",
+        background: `linear-gradient(0deg, rgba(255,106,0,.05), transparent)`,
+        opacity: isActive ? 1 : 0, transition: "opacity 0.5s 0.1s",
+      }} />
+
+      {/* Bordure verre */}
+      <div style={{
+        position: "absolute", inset: 0, borderRadius: "18px",
+        zIndex: 4, pointerEvents: "none",
+        border: `1px solid ${isActive ? "rgba(255,106,0,.12)" : "rgba(255,255,255,.05)"}`,
+        transition: "border-color 0.4s",
+      }} />
+
+      {/* Ligne lumineuse en haut */}
+      <div style={{
+        position: "absolute", top: 0, left: 0, height: "2px", zIndex: 5,
+        background: `linear-gradient(90deg, ${ORANGE}, ${ORANGE2}, transparent)`,
+        boxShadow: `0 0 10px rgba(255,106,0,.45)`,
+        borderRadius: "2px",
+        width: isActive ? "100%" : "0%",
+        transition: "width 0.7s cubic-bezier(.16,1,.3,1)",
+      }} />
+
+      {/* Scan (one-shot à chaque activation) */}
+      {isActive && (
+        <div
+          key={scanKey}
+          style={{
+            position: "absolute", left: 0, right: 0, height: "1px",
+            zIndex: 8, pointerEvents: "none",
+            background: `linear-gradient(90deg, transparent, ${ORANGE}, ${ORANGE2}, transparent)`,
+            boxShadow: `0 0 12px rgba(255,106,0,.45)`,
+            animation: "panelScan 0.8s 0.05s cubic-bezier(.16,1,.3,1) forwards",
+          }}
+        />
+      )}
+
+      {/* Label (vue réduite) */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 6,
+        padding: "0 28px 28px",
+        display: "flex", flexDirection: "column", gap: "10px",
+        opacity: isActive ? 0 : 1,
+        transform: isActive ? "translateY(10px)" : "translateY(0)",
+        transition: "opacity 0.35s, transform 0.35s cubic-bezier(.16,1,.3,1)",
+        pointerEvents: isActive ? "none" : "auto",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{
+            width: "34px", height: "34px", borderRadius: "9px",
+            background: "rgba(255,106,0,.06)", border: "1px solid rgba(255,106,0,.1)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <meta.Icon />
+          </div>
+          <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "3px", color: "rgba(255,106,0,.35)" }}>
+            {pole.n}
+          </span>
+        </div>
+        <div style={{ fontSize: "clamp(18px, 2.8vw, 28px)", fontWeight: 700, letterSpacing: "0.5px", color: "rgba(255,255,255,.85)" }}>
+          {pole.title}
+        </div>
+        <Link
+          href={pole.href}
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase",
+            color: "rgba(255,106,0,.45)", textDecoration: "none",
+          }}
+        >
+          Découvrir
+          <span style={{ display: "block", width: "16px", height: "1px", background: ORANGE, opacity: 0.3 }} />
+        </Link>
       </div>
-      <h3 style={{ fontWeight: 900, textTransform: "uppercase", color: "#fff", lineHeight: 1.05, whiteSpace: "pre-line", fontSize: "clamp(1.5rem, 2.5vw, 3rem)", fontFamily: "var(--font-display)", cursor: "pointer" }}>
-        {svc.title}
-      </h3>
-    </Link>
-  );
-}
 
-function DescBlock({ svc, hovered, width }: { svc: (typeof services)[0]; hovered: boolean; width: string }) {
-  return (
-    <div style={{ width, flexShrink: 0 }}>
-      <p style={{
-        fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)",
-        lineHeight: 1.65,
-        color: hovered ? "#ffffff" : "rgba(255,255,255,0.45)",
-        marginBottom: "0.7rem",
-        fontFamily: "var(--font-body)",
-        transition: "color 0.4s ease, font-size 0.4s ease"
-      }}>
-        {svc.desc}
-      </p>
-      <Link href={svc.href} style={{
-        display: "inline-flex", alignItems: "center", gap: "0.6rem",
-        color: hovered ? "#D35400" : "rgba(255,255,255,0.28)",
-        fontSize: "0.90rem", letterSpacing: "0.18em", textTransform: "uppercase",
-        textDecoration: "none", transition: "color 0.25s", fontWeight: 600,
-      }}>
-        <span style={{ width: "2rem", height: "1px", background: "currentColor", display: "block", flexShrink: 0 }} />
-        Découvrir
-      </Link>
+      {/* Contenu étendu */}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.5, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: "absolute", bottom: 0, left: 0, right: 0,
+              zIndex: 6, padding: "32px 36px",
+            }}
+          >
+            <div style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", color: "rgba(255,106,0,.45)", marginBottom: "4px" }}>
+              Pôle {pole.n}
+            </div>
+            <div style={{ fontSize: "clamp(22px, 2.8vw, 36px)", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "6px", color: "#fff" }}>
+              {pole.title}
+            </div>
+            {/* Barre orange animée */}
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "50px" }}
+              transition={{ duration: 0.6, delay: 0.33 }}
+              style={{
+                height: "2px", borderRadius: "1px", marginBottom: "14px",
+                background: `linear-gradient(90deg, ${ORANGE}, ${ORANGE2})`,
+                boxShadow: `0 0 8px rgba(255,106,0,.45)`,
+              }}
+            />
+            <p style={{
+              fontSize: "13px", fontWeight: 300, lineHeight: 1.8,
+              color: "rgba(255,255,255,.55)", maxWidth: "400px", marginBottom: "16px",
+              fontFamily: "var(--font-body)",
+            }}>
+              {pole.description}
+            </p>
+            {/* Tags */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "7px", marginBottom: "14px" }}>
+              {meta.tags.map((tag, ti) => (
+                <motion.span
+                  key={tag}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.46 + ti * 0.06 }}
+                  style={{
+                    fontSize: "10px", fontWeight: 400, letterSpacing: "0.8px",
+                    padding: "5px 14px", borderRadius: "100px",
+                    background: "rgba(255,255,255,.04)", backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,106,0,.1)", color: ORANGE,
+                  }}
+                >
+                  {tag}
+                </motion.span>
+              ))}
+            </div>
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.58 }}
+              style={{
+                display: "flex", gap: "20px",
+                paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,.06)",
+              }}
+            >
+              {meta.stats.map((s) => (
+                <div key={s.label}>
+                  <div style={{
+                    fontSize: "18px", fontWeight: 700,
+                    background: `linear-gradient(135deg, ${ORANGE}, ${ORANGE2})`,
+                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                  }}>
+                    {s.val}
+                  </div>
+                  <div style={{ fontSize: "8px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,.3)" }}>
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-function ServiceCard({ svc, index, screenSize }: { svc: (typeof services)[0]; index: number; screenSize: 'mobile' | 'tablet' | 'desktop' }) {
-  const [hovered, setHovered] = useState(false);
-  const layout = LAYOUT[index];
-
-  // Version simplifiée pour mobile et tablette
-  if (screenSize !== 'desktop') {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: index * 0.15 }}
-        style={{
-          padding: screenSize === 'mobile' ? '1.5rem 0' : '2rem 0',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: screenSize === 'mobile' ? '1rem' : '1.5rem',
-          padding: '0', // Full width container
-        }}>
-          {/* Numéro + Tag — Padding left for alignment */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingLeft: '3rem',
-            paddingRight: '2rem'
-          }}>
-            <span style={{
-              fontSize: screenSize === 'mobile' ? '3rem' : '3.5rem',
-              fontWeight: 900,
-              color: 'rgba(211,84,0,0.3)',
-              lineHeight: 1,
-              fontFamily: 'var(--font-display)',
-              paddingLeft: '0.2rem',
-            }}>
-              {svc.n}
-            </span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span className="diamond diamond--sm" />
-              <span style={{
-                color: '#D35400',
-                fontSize: screenSize === 'mobile' ? '0.7rem' : '0.8rem',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                fontWeight: 700,
-                fontFamily: 'var(--font-display)',
-              }}>
-                {svc.tag}
-              </span>
-            </div>
-          </div>
-
-          {/* Image — Shorter left margin, fills more on the right */}
-          <Link href={svc.href} style={{
-            display: 'block',
-            width: 'calc(100% - 1rem)',
-            marginLeft: '0.5rem',
-            height: screenSize === 'mobile' ? '220px' : '260px',
-            borderRadius: '0.5rem',
-            overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.1)',
-            textDecoration: 'none',
-          }}>
-            <img
-              src={svc.img}
-              alt={svc.title}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: 'grayscale(60%) brightness(0.7)',
-              }}
-            />
-          </Link>
-
-          {/* Titre — Aligned with the stack margin */}
-          <Link href={svc.href} style={{ textDecoration: 'none' }}>
-            <h3 style={{
-              fontWeight: 900,
-              textTransform: 'uppercase',
-              color: '#fff',
-              lineHeight: 1.1,
-              fontSize: screenSize === 'mobile' ? 'clamp(1.2rem, 5vw, 1.8rem)' : 'clamp(1.5rem, 3.5vw, 2.2rem)',
-              fontFamily: 'var(--font-display)',
-              paddingLeft: '3rem',
-              paddingRight: '1.5rem',
-              cursor: 'pointer',
-            }}>
-              {svc.title.replace(/\n/g, ' ')}
-            </h3>
-          </Link>
-
-          {/* Description — Aligned with the stack margin */}
-          <p style={{
-            fontSize: screenSize === 'mobile' ? 'clamp(0.9rem, 3.5vw, 1.1rem)' : 'clamp(1rem, 2.5vw, 1.3rem)',
-            lineHeight: 1.6,
-            color: 'rgba(255,255,255,0.65)',
-            fontFamily: 'var(--font-body)',
-            paddingLeft: '3rem',
-            paddingRight: '1.5rem', // Reduced to avoid too much empty space
-          }}>
-            {svc.desc}
-          </p>
-
-          {/* Lien — Aligned with the stack margin */}
-          <Link href={svc.href} style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            color: '#D35400',
-            fontSize: screenSize === 'mobile' ? '0.75rem' : '0.85rem',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            fontWeight: 600,
-            marginTop: '0.5rem',
-            paddingLeft: '3rem',
-          }}>
-            <span style={{ width: '1.5rem', height: '1px', background: 'currentColor', display: 'block' }} />
-            Découvrir
-          </Link>
-        </div>
-      </motion.div>
-    );
-  }
-
-  // Version desktop (originale)
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -40 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.80, delay: layout.delay, ease: [0.6, 0.08, 0.02, 0.99] }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ marginLeft: layout.marginLeft, position: "relative" }}
-    >
-      {/* Ligne de séparation pleine largeur */}
-      <div style={{
-        position: "absolute", top: 0, left: `-${layout.marginLeft}`, right: 0,
-        height: "2px",
-        background: hovered
-          ? "linear-gradient(to right, rgba(211,84,0,0.8), rgba(211,84,0,0.2))"
-          : "rgba(255,255,255,0.2)",
-        transition: "background 0.4s",
-      }} />
-
-      {/* Accent bar gauche au hover */}
-      <motion.div
-        animate={{ scaleY: hovered ? 1 : 0 }}
-        transition={{ duration: 0.3, ease: [0.6, 0.08, 0.02, 0.99] }}
-        style={{
-          position: "absolute", left: "-1.5rem", top: 0, bottom: 0,
-          width: "2px", background: "#D35400",
-          originY: 0, transformOrigin: "top",
-        }}
-      />
-
-      {/* Contenu asymétrique */}
-      <div className="mobile-flex-col" style={{
-        display: "flex", alignItems: "center",
-        gap: "2rem",
-        padding: "2.5rem 0 2.5rem 0",
-        cursor: "default",
-      }}>
-
-        {/* Numéro — gauche si normal, droite si flip */}
-        {!layout.flip && (
-          <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} href={svc.href} />
-        )}
-
-        {/* Bloc titre */}
-        {layout.flip && (
-          <DescBlock svc={svc} hovered={hovered} width={layout.descW} />
-        )}
-
-        {!layout.flip && (
-          <TitleBlock svc={svc} width={layout.titleW} />
-        )}
-
-        {/* Ligne de connexion extensible */}
-        <motion.div
-          animate={{ scaleX: hovered ? 1 : 0.4, opacity: hovered ? 1 : 0.25 }}
-          transition={{ duration: 0.4, ease: [0.6, 0.08, 0.02, 0.99] }}
-          style={{
-            flex: 1, height: "1px",
-            background: layout.flip
-              ? "linear-gradient(to left, #D35400, rgba(211,84,0,0.1))"
-              : "linear-gradient(to right, #D35400, rgba(211,84,0,0.1))",
-            originX: layout.flip ? 1 : 0,
-          }}
-        />
-
-        {!layout.flip && (
-          <DescBlock svc={svc} hovered={hovered} width={layout.descW} />
-        )}
-
-        {/* flip: image d'abord, titre immédiatement à sa droite (Excentré vers la droite) */}
-        {layout.flip && (
-          <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginLeft: "clamp(2rem, 10vw, 15rem)" }}>
-            <NumBlock n={svc.n} hovered={hovered} size={layout.numSize} img={svc.img} href={svc.href} />
-            <TitleBlock svc={svc} width={layout.titleW} />
-          </div>
-        )}
-
-      </div>
-    </motion.div>
-  );
-}
-
+/* ── Main ── */
 export default function RoomAtelier() {
-  const screenSize = useMediaQuery();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
+  const screenSize = useScreenSize();
+  const isMobile   = screenSize !== "desktop";
+
+  const [activePanel, setActivePanel] = useState<number | null>(null);
+
+  const mx   = useMotionValue(0);
+  const my   = useMotionValue(0);
   const midX = useSpring(mx, { stiffness: 62, damping: 22 });
   const midY = useSpring(my, { stiffness: 62, damping: 22 });
 
   const onMouseMove = (e: React.MouseEvent) => {
-    mx.set((e.clientX / window.innerWidth - 0.5) * 2);
+    mx.set((e.clientX / window.innerWidth  - 0.5) * 2);
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
+
+  const handlePanel = (i: number) =>
+    setActivePanel((prev) => (prev === i ? null : i));
 
   return (
     <div
       onMouseMove={onMouseMove}
       className="relative flex flex-col overflow-hidden room-pad"
-      style={{
-        width: "100%",
-        height: "100%",
-        // Mobile padding is now handled by individual cards for better precision
-      }}
+      style={{ width: "100%", height: "100%" }}
     >
-
-
-
-      {/* ── Section header — split gauche/droite ── */}
+      {/* ── Header — gardé identique à l'original ── */}
       <motion.div
         className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4"
         style={{ x: midX, y: midY, fontFamily: "var(--font-display)" }}
       >
-        {/* Left: eyebrow + label */}
-        <div style={{ flexShrink: 0, paddingBottom: screenSize === 'mobile' ? '0.5rem' : '1rem' }}>
+        <div style={{ flexShrink: 0, paddingBottom: isMobile ? "0.5rem" : "1rem" }}>
           <motion.div
             className="flex items-center gap-3 mb-2"
             initial={{ opacity: 0, x: -16 }}
@@ -403,68 +327,74 @@ export default function RoomAtelier() {
             <span className="diamond diamond--sm" />
             <span style={{
               color: "rgba(255,255,255,0.35)",
-              fontSize: screenSize === 'mobile' ? '0.65rem' : screenSize === 'tablet' ? '0.75rem' : '0.85rem',
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              fontWeight: 500
+              fontSize: screenSize === "mobile" ? "0.65rem" : screenSize === "tablet" ? "0.75rem" : "0.85rem",
+              letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 500,
             }}>
               Audit & Ingénierie
             </span>
           </motion.div>
         </div>
 
-        {/* Right: "Ce que nous proposons" chars */}
         <div style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: screenSize === 'desktop' ? 'flex-end' : 'flex-start',
-          alignItems: "baseline",
-          flex: 1,
-          textAlign: screenSize === 'desktop' ? 'right' : 'left',
-          gap: "0.1em"
+          display: "flex", flexWrap: "wrap",
+          justifyContent: screenSize === "desktop" ? "flex-end" : "flex-start",
+          alignItems: "baseline", flex: 1,
+          textAlign: screenSize === "desktop" ? "right" : "left", gap: "0.1em",
         }}>
-          {"Ce que nous proposons".split("").map((ch, ci) => {
-            const isOrange = ci >= 12;
-            return (
-              <motion.span
-                key={ci}
-                className="font-black uppercase"
-                style={{
-                  display: "inline-block",
-                  fontSize: screenSize === 'mobile'
-                    ? "clamp(1.5rem, 6vw, 2.5rem)"
-                    : screenSize === 'tablet'
-                      ? "clamp(2rem, 5vw, 3.5rem)"
-                      : "clamp(2rem, 4.5vw, 5.5rem)",
-                  lineHeight: 0.9,
-                  color: isOrange ? "#D35400" : "#ffffff",
-                  letterSpacing: "-0.04em",
-                }}
-                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.45, delay: 0.15 + ci * 0.015, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {ch === " " ? "\u00A0" : ch}
-              </motion.span>
-            );
-          })}
+          {"Ce que nous proposons".split("").map((ch, ci) => (
+            <motion.span
+              key={ci}
+              className="font-black uppercase"
+              style={{
+                display: "inline-block",
+                fontSize: screenSize === "mobile" ? "clamp(1.5rem,6vw,2.5rem)" : screenSize === "tablet" ? "clamp(2rem,5vw,3.5rem)" : "clamp(2rem,4.5vw,5.5rem)",
+                lineHeight: 0.9,
+                color: ci >= 12 ? ORANGE : "#ffffff",
+                letterSpacing: "-0.04em",
+              }}
+              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.45, delay: 0.15 + ci * 0.015, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {ch === " " ? "\u00A0" : ch}
+            </motion.span>
+          ))}
         </div>
       </motion.div>
 
       {/* Règle orange */}
       <motion.div
-        style={{ height: 1, background: "rgba(211,84,0,0.45)", originX: 0.5, marginBottom: "1.8rem" }}
+        style={{ height: 1, background: "rgba(211,84,0,0.45)", originX: 0.5, marginBottom: "1.2rem" }}
         initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
         transition={{ delay: 0.78, duration: 1.0, ease: [0.6, 0.08, 0.02, 0.99] }}
       />
 
-      {/* ── 3 bandes verticales ── */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-        {services.map((svc, i) => (
-          <ServiceCard key={svc.n} svc={svc} index={i} screenSize={screenSize} />
+      {/* ── Panels accordéon ── */}
+      <div style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: "8px",
+        minHeight: 0,
+      }}>
+        {POLES.map((pole, i) => (
+          <Panel
+            key={pole.id}
+            pole={pole}
+            meta={POLE_META[i]}
+            isActive={activePanel === i}
+            onClick={() => handlePanel(i)}
+            isMobile={isMobile}
+          />
         ))}
       </div>
+
+      <style jsx global>{`
+        @keyframes panelScan {
+          0%   { opacity: 1; top: 0; }
+          100% { opacity: 0; top: 100%; }
+        }
+      `}</style>
     </div>
   );
 }
-
