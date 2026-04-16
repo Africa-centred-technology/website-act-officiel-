@@ -1,31 +1,28 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# Ce workflow est conservé pour référence mais désactivé.
+# Le CI principal est dans nextjs.yml (unit-tests → build → e2e).
+#
+# Pour le réactiver : décommenter le bloc "on:" ci-dessous.
 
-name: Node.js CI
+name: Node.js CI (disabled)
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch: # manuel uniquement
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          SHOPIFY_STORE_DOMAIN: test.myshopify.com
+          SHOPIFY_STOREFRONT_ACCESS_TOKEN: test_token
+          SHOPIFY_ADMIN_ACCESS_TOKEN: shpat_test
+          RESEND_API_KEY: re_test
