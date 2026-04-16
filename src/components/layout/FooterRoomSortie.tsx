@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, Mail, Phone, MapPin, Code2, Briefcase, GraduationCap } from "lucide-react";
+import CTAButton from "@/components/ui/CTAButton";
 
 const SOCIALS = [
   { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
@@ -141,8 +142,9 @@ export default function FooterRoomSortie() {
         </div>
         </div>
 
-        {/* Col 5 — Newsletter à droite */}
-        <div>
+        {/* Col 5 — Newsletter + CTA à droite */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+          <div>
           <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "0.6rem", opacity: 0.9 }}>
             Newsletter
           </p>
@@ -219,6 +221,16 @@ export default function FooterRoomSortie() {
               </>
             )}
           </div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.7 }}
+          >
+            <CTAButton href="/contact">Démarrez un projet</CTAButton>
+          </motion.div>
+
         </div>
       </div>
 

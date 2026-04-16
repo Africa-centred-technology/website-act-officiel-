@@ -243,7 +243,7 @@ export default function RoomSortie() {
 
           {/* Right — Bloc aligné à droite pour le reste du contenu */}
           <div
-            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6"
+            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6 -mt-16 md:-mt-24"
           >
             {/* Titre principal avec effet depth */}
             <motion.h1
@@ -279,17 +279,7 @@ export default function RoomSortie() {
               ACT accompagne entreprises et organisations dans la création de solutions innovantes et intelligentes.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              style={{ 
-                marginTop: "2.5rem",
-              }}
-              className="self-center md:self-end" // Centre sur mobile, Droite sur Desktop
-            >
-              <CTAButton href="/contact">Démarrez un projet</CTAButton>
-            </motion.div>
+      
           </div>
         </div>
       </motion.div>
