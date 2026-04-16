@@ -59,7 +59,6 @@ function useScreenSize() {
 function Panel({
   pole,
   meta,
-  index,
   isActive,
   onClick,
   isMobile,
