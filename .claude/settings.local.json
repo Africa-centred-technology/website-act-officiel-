@@ -20,7 +20,9 @@
       "Bash(sed -i 's/fontSize: \"1rem\"/fontSize: \"1.5rem\"/g;:*)",
       "Bash(sed -i 's/fontSize: \"1\\\\.05rem\"/fontSize: \"1.5rem\"/g;:*)",
       "Bash(npm install:*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(npx playwright *)",
+      "Bash(npm test *)"
     ]
   }
 }
