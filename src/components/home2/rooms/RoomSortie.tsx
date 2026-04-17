@@ -243,14 +243,14 @@ export default function RoomSortie() {
 
           {/* Right — Bloc aligné à droite pour le reste du contenu */}
           <div
-            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6 -mt-16 md:-mt-24"
+            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6 -mt-16 md:-mt-40"
           >
             {/* Titre principal avec effet depth */}
             <motion.h1
               className="text-white font-black uppercase mb-8"
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(3rem, 8vw, 6.5rem)",
+                fontSize: "clamp(4rem, 5vw, 5rem)",
                 lineHeight: 1.1,
                 letterSpacing: "-0.02em",
                 maxWidth: "60rem",

@@ -55,7 +55,7 @@ const PRODUCTS_QUERY = `
             { namespace: "custom", key: "secteur" }
             { namespace: "custom", key: "categorie" }
             { namespace: "custom", key: "duree" }
-            { namespace: "custom", key: "format" }
+            { namespace: "custom", key: "format_suported" }
             { namespace: "custom", key: "accroche" }
             { namespace: "custom", key: "parcours" }
           ]) {
@@ -241,7 +241,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
         { namespace: "custom", key: "accroche" }
         { namespace: "custom", key: "parcours" }
         { namespace: "custom", key: "public_cible_act" }
-        { namespace: "custom", key: "prerequis" }
+        { namespace: "custom", key: "prerequis_" }
         { namespace: "custom", key: "Objectifs_pedagogiques" }
         { namespace: "custom", key: "programme" }
         { namespace: "custom", key: "livrables" }

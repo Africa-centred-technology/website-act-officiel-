@@ -60,7 +60,7 @@ export default function RoomBlog() {
                             fontFamily: "var(--font-body)",
                             fontSize: screenSize === 'mobile' ? 'clamp(0.85rem, 3vw, 1rem)' : screenSize === 'tablet' ? 'clamp(0.95rem, 2vw, 1.15rem)' : '1.25rem',
                         }}>
-                            Le moyen de vous tenir informé de nos dernières actualités, conseils et tendances en matière de Technologie.
+                            Insights tech, tendances IA, conseils stratégiques — directement dans votre boîte.
                         </p>
                     </motion.div>
                 </div>

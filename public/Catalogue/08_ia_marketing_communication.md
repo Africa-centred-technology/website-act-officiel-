@@ -41,7 +41,6 @@ Exercer une fonction en lien avec le marketing, la communication ou la vente. Au
 
 ## Programme
 
-### Jour 1 — Créer du contenu avec l'IA
 
 #### Module 1 — L'IA dans l'écosystème marketing (1h)
 - Panorama des outils IA pour le marketing : texte, image, vidéo, audio
@@ -71,7 +70,6 @@ Exercer une fonction en lien avec le marketing, la communication ou la vente. Au
 
 ---
 
-### Jour 2 — Analyser, personnaliser et automatiser
 
 #### Module 5 — Analyse marketing avec l'IA (2h)
 - Analyser des données clients et de performance avec l'IA

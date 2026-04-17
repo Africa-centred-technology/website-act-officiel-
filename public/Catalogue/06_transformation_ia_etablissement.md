@@ -10,7 +10,7 @@
 
 ## Accroche
 
-La transformation IA d'un établissement ne se décrète pas — elle se pilote. Entre l'enthousiasme des uns, la résistance des autres et l'évolution constante des outils, le vrai enjeu est de construire une vision claire et une démarche qui tienne dans le temps.
+La transformation IA d'un établissement ne se décrète pas elle se pilote. Entre l'enthousiasme des uns, la résistance des autres et l'évolution constante des outils, le vrai enjeu est de construire une vision claire et une démarche qui tienne dans le temps.
 
 ---
 

@@ -603,7 +603,7 @@ export default function FormationLandpage() {
     );
 
     const featured = filtered[0] ?? null;
-    const rest     = filtered.slice(1);
+    const rest     = filtered.slice(1, 4);
 
     return (
         <div style={{ background: "#070E1C", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>

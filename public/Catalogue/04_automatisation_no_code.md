@@ -41,7 +41,6 @@ Professionnels souhaitant automatiser des tâches récurrentes et construire des
 
 ## Programme
 
-### Jour 1 — Concevoir et construire ses premiers workflows
 
 #### Module 1 — La logique de l'automatisation (1h)
 - Qu'est-ce qu'un workflow automatisé ?
@@ -69,9 +68,7 @@ Professionnels souhaitant automatiser des tâches récurrentes et construire des
 - Synchroniser des informations entre plusieurs outils
 - Atelier : chaque participant choisit un cas de son propre métier
 
----
 
-### Jour 2 — Intégrer l'IA dans ses automatisations
 
 #### Module 5 — Connecter l'IA à ses workflows (2h)
 - Intégrer ChatGPT / Claude dans un scénario Make
