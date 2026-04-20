@@ -649,23 +649,7 @@ export default function BlogHero() {
                 +12
               </div>
             </div>
-            <p
-              style={{
-                fontSize: "12px",
-                color: V.muted,
-                lineHeight: 1.5,
-                fontFamily: FONT_BODY,
-                margin: 0,
-              }}
-            >
-              Rédigé par{" "}
-              <strong style={{ color: V.cream, fontWeight: 600 }}>+15 experts africains</strong>
-              <br />
-              en technologie et innovation.
-            </p>
           </motion.div>
-
-
         </div>
       </section>
     </>

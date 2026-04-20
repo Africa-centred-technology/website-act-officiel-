@@ -614,7 +614,7 @@ export default function FormationLandpage() {
     );
 
     const featured = useMemo(() => filtered[0] ?? null, [filtered]);
-    const rest     = useMemo(() => filtered.slice(1, 4), [filtered]);
+    const rest     = useMemo(() => filtered.slice(1), [filtered]);
 
     return (
         <div style={{ background: "#070E1C", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>
@@ -814,7 +814,7 @@ export default function FormationLandpage() {
 
                         {formationsData.length > 0 && (
                             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ textAlign: "center", marginTop: "3rem" }}>
-                                <RippleButton href="/formations" arrowDeg={45}>Voir toutes les formations</RippleButton>
+                                <RippleButton href="/formations/all" arrowDeg={45}>Voir le catalogue complet</RippleButton>
                             </motion.div>
                         )}
                     </div>

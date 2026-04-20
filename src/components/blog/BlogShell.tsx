@@ -397,7 +397,7 @@ export default function BlogShell() {
       {/* ── NEWSLETTER CTA ── */}
       <section
         style={{
-          padding: "8rem 0",
+          padding: screenSize === 'mobile' ? "5rem 0" : "8rem 0",
           borderTop: "1px solid rgba(255,255,255,0.06)",
         }}
       >
@@ -411,13 +411,13 @@ export default function BlogShell() {
           </div>
           <h2
             style={{
-              fontSize: "var(--font-50)",
+              fontSize: screenSize === 'mobile' ? "clamp(2.8rem, 8vw, 4rem)" : screenSize === 'tablet' ? "clamp(3.5rem, 6vw, 5rem)" : "var(--font-50)",
               fontFamily: "var(--font-display)",
               fontWeight: 900,
               textTransform: "uppercase",
               color: "#fff",
               marginBottom: "2rem",
-              lineHeight: 1,
+              lineHeight: 1.05,
             }}
           >
             La veille tech africaine,
@@ -427,7 +427,7 @@ export default function BlogShell() {
           <p
             style={{
               color: "rgba(255,255,255,0.45)",
-              fontSize: "var(--font-18)",
+              fontSize: screenSize === 'mobile' ? "var(--font-16)" : "var(--font-18)",
               maxWidth: "48rem",
               margin: "0 auto 4rem",
               lineHeight: 1.7,
