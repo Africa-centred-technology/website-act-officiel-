@@ -41,8 +41,6 @@ Expérience en développement logiciel dans au moins un langage (Python, JavaScr
 
 ## Programme
 
-### Jour 1 — Intégrer l'IA dans son workflow de développement
-
 #### Module 1 — Panorama des outils IA pour les développeurs (1h)
 - GitHub Copilot, Cursor, Claude, ChatGPT, Gemini : comparatif et cas d'usage
 - Les modèles de langage et le code : comment ils génèrent, pourquoi ils se trompent
@@ -69,9 +67,6 @@ Expérience en développement logiciel dans au moins un langage (Python, JavaScr
 - Revue et amélioration de la couverture de tests existants
 - Atelier : écriture d'une suite de tests complète avec l'IA
 
----
-
-### Jour 2 — Cas d'usage avancés et posture critique
 
 #### Module 5 — Refactoring et compréhension de code legacy (2h)
 - Utiliser l'IA pour comprendre rapidement un code inconnu

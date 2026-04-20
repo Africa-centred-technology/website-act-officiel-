@@ -201,7 +201,7 @@ function Grain() {
 /* ─────────────────────────────────────────────────────────────────
    HERO VIDEO
 ───────────────────────────────────────────────────────────────── */
-function MarketingVideo({ screenSize: _screenSize }: { screenSize: string }) {
+function MarketingVideo() {
     return (
         <motion.section
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}
@@ -307,11 +307,11 @@ function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENC
                 <span style={{ fontSize: "2rem", lineHeight: 1 }}>{block.emoji}</span>
             </div>
 
-            <h3 style={{ fontSize: screenSize === "mobile" ? "1.35rem" : "1.6rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", marginBottom: "0.85rem", lineHeight: 1.2 }}>
+            <h3 style={{ fontSize: screenSize === "mobile" ? "1.5rem" : "1.8rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", marginBottom: "0.85rem", lineHeight: 1.2 }}>
                 {block.title}
             </h3>
 
-            <p style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontFamily: "var(--font-body)", marginBottom: block.barValue !== null ? "1.5rem" : "1.2rem" }}>
+            <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontFamily: "var(--font-body)", marginBottom: block.barValue !== null ? "1.5rem" : "1.2rem" }}>
                 {block.desc}
             </p>
 
@@ -319,8 +319,8 @@ function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENC
             {block.barValue !== null && block.barLabel !== null && (
                 <div style={{ marginBottom: "1.2rem" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                        <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em" }}>{block.barLabel}</span>
-                        <span style={{ fontSize: "0.95rem", fontWeight: 800, color: COLOR }}>{block.barValue}%</span>
+                        <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em" }}>{block.barLabel}</span>
+                        <span style={{ fontSize: "1.05rem", fontWeight: 800, color: COLOR }}>{block.barValue}%</span>
                     </div>
                     <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 9999, overflow: "hidden" }}>
                         <motion.div
@@ -338,11 +338,11 @@ function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENC
                 padding: "0.35rem 0.9rem", borderRadius: "2rem",
                 background: hovered ? `${COLOR}18` : "rgba(255,255,255,0.04)",
                 border: `1px solid ${hovered ? COLOR + "44" : "rgba(255,255,255,0.08)"}`,
-                fontSize: "0.85rem", fontWeight: 700,
+                fontSize: "1rem", fontWeight: 700,
                 color: hovered ? COLOR : "rgba(255,255,255,0.5)",
                 transition: "all 0.3s ease", fontFamily: "var(--font-body)",
             }}>
-                <CheckCircle2 size={13} color={hovered ? COLOR : "rgba(255,255,255,0.3)"} />
+                <CheckCircle2 size={14} color={hovered ? COLOR : "rgba(255,255,255,0.3)"} />
                 {block.highlight}
             </div>
         </motion.div>
@@ -386,7 +386,7 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
                     )}
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(7,14,28,0.95) 100%)" }} />
                     {program.niveau && (
-                        <div style={{ position: "absolute", bottom: "1rem", left: "1.5rem", padding: "0.3rem 0.85rem", borderRadius: "2rem", background: COLOR, fontSize: "0.78rem", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                        <div style={{ position: "absolute", bottom: "1rem", left: "1.5rem", padding: "0.3rem 0.85rem", borderRadius: "2rem", background: COLOR, fontSize: "0.88rem", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                             {program.niveau}
                         </div>
                     )}
@@ -395,24 +395,24 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
                 {/* Body */}
                 <div style={{ padding: screenSize === "mobile" ? "1.5rem" : "2rem", flex: 1, display: "flex", flexDirection: "column" }}>
                     {program.secteur && (
-                        <span style={{ fontSize: "0.76rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR, marginBottom: "0.6rem", display: "block" }}>{program.secteur}</span>
+                        <span style={{ fontSize: "0.88rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR, marginBottom: "0.6rem", display: "block" }}>{program.secteur}</span>
                     )}
-                    <h3 style={{ fontSize: screenSize === "mobile" ? "1.35rem" : "1.6rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: "0.9rem", textTransform: "uppercase" }}>
+                    <h3 style={{ fontSize: screenSize === "mobile" ? "1.5rem" : "1.75rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: "0.9rem", textTransform: "uppercase" }}>
                         {program.title}
                     </h3>
-                    <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-body)", flex: 1, marginBottom: "1.4rem" }}>
+                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-body)", flex: 1, marginBottom: "1.4rem" }}>
                         {program.accroche}
                     </p>
 
                     {/* Meta */}
                     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-                        {program.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}><Clock    size={13} color={COLOR} />{program.duree}</span>}
-                        {program.format && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.5)" }}><BookOpen size={13} color={COLOR} />{program.format}</span>}
-                        {program.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.9rem", fontWeight: 700, color: COLOR }}><Tag      size={13} color={COLOR} />{program.prix}</span>}
+                        {program.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", color: "rgba(255,255,255,0.5)" }}><Clock    size={14} color={COLOR} />{program.duree}</span>}
+                        {program.format && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", color: "rgba(255,255,255,0.5)" }}><BookOpen size={14} color={COLOR} />{program.format}</span>}
+                        {program.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", fontWeight: 700, color: COLOR }}><Tag      size={14} color={COLOR} />{program.prix}</span>}
                     </div>
 
                     {/* CTA — arrow slides right */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: hovered ? "#fff" : COLOR, fontWeight: 700, fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.3s" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: hovered ? "#fff" : COLOR, fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.3s" }}>
                         En savoir plus
                         <span style={{ display: "inline-flex", transition: "transform 0.3s ease", transform: hovered ? "translateX(6px)" : "translateX(0)" }}>
                             <ArrowRight size={17} />
@@ -444,8 +444,8 @@ function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
             }}
         >
             <div style={{ fontSize: "1.8rem", marginBottom: "1rem" }}>{g.emoji}</div>
-            <h3 style={{ fontSize: "1.15rem", fontWeight: 800, color: i === 0 ? COLOR : "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{g.label}</h3>
-            <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.58)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{g.detail}</p>
+            <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: i === 0 ? COLOR : "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{g.label}</h3>
+            <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.58)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{g.detail}</p>
         </motion.div>
     );
 }
@@ -457,6 +457,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
     const [form, setForm] = useState({ nom: "", email: "", telephone: "", formation: "", message: "" });
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
 
     const iStyle: React.CSSProperties = {
         width: "100%", padding: "1rem 1.3rem",
@@ -465,7 +466,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
         outline: "none", transition: "border-color 0.2s", boxSizing: "border-box",
     };
     const labelStyle: React.CSSProperties = {
-        display: "block", fontSize: "0.75rem", fontWeight: 700,
+        display: "block", fontSize: "0.85rem", fontWeight: 700,
         letterSpacing: "0.22em", textTransform: "uppercase",
         color: "rgba(255,255,255,0.45)", marginBottom: "0.55rem",
     };
@@ -473,8 +474,9 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSending(true);
+        setSubmitError(false);
         try {
-            await fetch("/api/shopify/inscription", {
+            const res = await fetch("/api/shopify/inscription", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -487,9 +489,13 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
                     ville: "", formatsPreferes: [], disponibilite: "",
                 }),
             });
-            setSent(true);
+            if (res.ok) {
+                setSent(true);
+            } else {
+                setSubmitError(true);
+            }
         } catch {
-            alert("Une erreur est survenue. Veuillez réessayer.");
+            setSubmitError(true);
         } finally {
             setSending(false);
         }
@@ -554,11 +560,16 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
                     onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
             </div>
 
+            {submitError && (
+                <p style={{ color: "#ef4444", fontSize: "1rem", fontFamily: "var(--font-body)", marginBottom: "1rem", textAlign: "center" }}>
+                    Une erreur est survenue. Veuillez réessayer.
+                </p>
+            )}
             <RippleButton type="submit" arrowDeg={90} size="lg" disabled={sending} style={{ width: "100%", justifyContent: "center" }}>
                 {sending ? "Envoi en cours…" : "Réserver ma place"}
             </RippleButton>
 
-            <p style={{ textAlign: "center", fontSize: "0.85rem", color: "rgba(255,255,255,0.3)", marginTop: "1.2rem", fontFamily: "var(--font-body)" }}>
+            <p style={{ textAlign: "center", fontSize: "1rem", color: "rgba(255,255,255,0.3)", marginTop: "1.2rem", fontFamily: "var(--font-body)" }}>
                 ✓ Réponse sous 24h · ✓ Sans engagement · ✓ Satisfait ou remboursé 7 jours
             </p>
         </motion.form>
@@ -602,8 +613,8 @@ export default function FormationLandpage() {
         [formationsData, activeFilter]
     );
 
-    const featured = filtered[0] ?? null;
-    const rest     = filtered.slice(1, 4);
+    const featured = useMemo(() => filtered[0] ?? null, [filtered]);
+    const rest     = useMemo(() => filtered.slice(1, 4), [filtered]);
 
     return (
         <div style={{ background: "#070E1C", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>
@@ -629,7 +640,7 @@ export default function FormationLandpage() {
             <div style={{ position: "relative", zIndex: 1 }}>
 
                 {/* ── HERO ─────────────────────────────────────────── */}
-                <MarketingVideo screenSize={screenSize} />
+                <MarketingVideo />
 
                 {/* ── STATS BAR ────────────────────────────────────── */}
                 <section style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.025)", padding: screenSize === "mobile" ? "2.5rem 1.5rem" : "2.5rem 6rem" }}>
@@ -638,8 +649,8 @@ export default function FormationLandpage() {
                             <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                                 style={{ padding: screenSize === "mobile" ? "2rem 1.2rem" : "2.5rem", background: "#070e1c", textAlign: "center" }}>
                                 <div style={{ fontSize: screenSize === "mobile" ? "2.8rem" : "3.5rem", fontWeight: 900, color: COLOR, fontFamily: "var(--font-display)", lineHeight: 1 }}>{s.value}</div>
-                                <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginTop: "0.5rem", fontFamily: "var(--font-display)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</div>
-                                <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.38)", marginTop: "0.25rem", fontFamily: "var(--font-body)" }}>{s.sub}</div>
+                                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "0.5rem", fontFamily: "var(--font-display)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</div>
+                                <div style={{ fontSize: "1rem", color: "rgba(255,255,255,0.38)", marginTop: "0.25rem", fontFamily: "var(--font-body)" }}>{s.sub}</div>
                             </motion.div>
                         ))}
                     </div>
@@ -651,13 +662,13 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem", textAlign: "center" }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 40, height: 2, background: `linear-gradient(to right, transparent, ${COLOR})` }} />
-                                <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Storytelling</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Storytelling</span>
                                 <div style={{ width: 40, height: 2, background: `linear-gradient(to left, transparent, ${COLOR})` }} />
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem, 8vw, 3.2rem)" : "clamp(3rem, 5vw, 4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, margin: 0 }}>
                                 L&apos;expérience <span style={{ color: COLOR }}>ACT</span>
                             </h2>
-                            <p style={{ marginTop: "1.2rem", fontSize: "1.1rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", maxWidth: 560, margin: "1.2rem auto 0", lineHeight: 1.75 }}>
+                            <p style={{ marginTop: "1.2rem", fontSize: "1.25rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", maxWidth: 560, margin: "1.2rem auto 0", lineHeight: 1.75 }}>
                                 On ne vous dit pas qu'on est bons — on vous montre comment ça se passe vraiment.
                             </p>
                         </motion.div>
@@ -676,7 +687,7 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3.5rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Notre méthode</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Notre méthode</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, color: "#fff", margin: 0 }}>
                                 Pourquoi choisir <span style={{ color: COLOR }}>ACT Formation</span>
@@ -695,8 +706,8 @@ export default function FormationLandpage() {
                                         <div style={{ width: 48, height: 48, borderRadius: "0.5rem", background: `${COLOR}18`, border: `1px solid ${COLOR}33`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.2rem" }}>
                                             <Icon size={24} color={COLOR} />
                                         </div>
-                                        <h3 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#fff", marginBottom: "0.7rem", fontFamily: "var(--font-display)" }}>{p.title}</h3>
-                                        <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{p.desc}</p>
+                                        <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#fff", marginBottom: "0.7rem", fontFamily: "var(--font-display)" }}>{p.title}</h3>
+                                        <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{p.desc}</p>
                                     </motion.div>
                                 );
                             })}
@@ -710,7 +721,7 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Catalogue</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Catalogue</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, marginBottom: "2rem" }}>
                                 Nos <span style={{ color: COLOR }}>Formations</span>
@@ -750,7 +761,7 @@ export default function FormationLandpage() {
                                             onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = `0 28px 72px ${COLOR}22`; el.style.transform = "translateY(-4px)"; }}
                                             onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "none"; el.style.transform = "translateY(0)"; }}
                                         >
-                                            <div style={{ position: "absolute", top: "1.2rem", left: "1.2rem", zIndex: 2, padding: "0.3rem 1rem", background: COLOR, borderRadius: "2rem", fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fff" }}>
+                                            <div style={{ position: "absolute", top: "1.2rem", left: "1.2rem", zIndex: 2, padding: "0.3rem 1rem", background: COLOR, borderRadius: "2rem", fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fff" }}>
                                                 ★ Populaire
                                             </div>
                                             {featured.imageUrl && (
@@ -760,15 +771,15 @@ export default function FormationLandpage() {
                                                 </div>
                                             )}
                                             <div style={{ padding: screenSize === "mobile" ? "2rem 1.5rem" : "3rem", display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
-                                                <span style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR }}>{featured.secteur}</span>
+                                                <span style={{ fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR }}>{featured.secteur}</span>
                                                 <h3 style={{ fontSize: screenSize === "mobile" ? "1.6rem" : "2.2rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.15, margin: 0 }}>{featured.title}</h3>
-                                                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "1.05rem", lineHeight: 1.75, margin: 0, fontFamily: "var(--font-body)" }}>{featured.accroche}</p>
+                                                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "1.15rem", lineHeight: 1.75, margin: 0, fontFamily: "var(--font-body)" }}>{featured.accroche}</p>
                                                 <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                                                    {featured.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.92rem", color: "rgba(255,255,255,0.55)" }}><Clock    size={14} color={COLOR} />{featured.duree}</span>}
-                                                    {featured.format && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.92rem", color: "rgba(255,255,255,0.55)" }}><BookOpen size={14} color={COLOR} />{featured.format}</span>}
-                                                    {featured.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.92rem", fontWeight: 700, color: COLOR }}><Tag      size={14} color={COLOR} />{featured.prix}</span>}
+                                                    {featured.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)" }}><Clock    size={15} color={COLOR} />{featured.duree}</span>}
+                                                    {featured.format && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)" }}><BookOpen size={15} color={COLOR} />{featured.format}</span>}
+                                                    {featured.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", fontWeight: 700, color: COLOR }}><Tag      size={15} color={COLOR} />{featured.prix}</span>}
                                                 </div>
-                                                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: COLOR, fontSize: "0.92rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                                                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: COLOR, fontSize: "1.05rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
                                                     Voir la formation <ArrowRight size={16} />
                                                 </div>
                                             </div>
@@ -803,7 +814,7 @@ export default function FormationLandpage() {
 
                         {formationsData.length > 0 && (
                             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ textAlign: "center", marginTop: "3rem" }}>
-                                <RippleButton href="/formations/all" arrowDeg={45}>Voir toutes les formations</RippleButton>
+                                <RippleButton href="/formations" arrowDeg={45}>Voir toutes les formations</RippleButton>
                             </motion.div>
                         )}
                     </div>
@@ -815,7 +826,7 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Nos engagements</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Nos engagements</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, margin: 0 }}>
                                 Des garanties <span style={{ color: COLOR }}>concrètes</span>
@@ -837,7 +848,7 @@ export default function FormationLandpage() {
                                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(7,14,28,0.7) 0%, transparent 55%)" }} />
                                     <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
                                         <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>Sohaib Baroud</p>
-                                        <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Fondateur & CEO · ACT</p>
+                                        <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.95rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Fondateur & CEO · ACT</p>
                                     </div>
                                 </div>
                                 <div aria-hidden style={{ position: "absolute", top: "-1.5rem", left: "-1.5rem", width: 80, height: 80, border: `2px solid ${COLOR}22`, borderRadius: "0.5rem", zIndex: -1 }} />
@@ -846,22 +857,22 @@ export default function FormationLandpage() {
                             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.5rem" }}>
                                     <div style={{ width: 36, height: 2, background: COLOR }} />
-                                    <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Mot du fondateur</span>
+                                    <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Mot du fondateur</span>
                                 </div>
                                 <blockquote style={{ margin: "0 0 2rem", padding: 0, border: "none" }}>
                                     <p style={{ fontSize: screenSize === "mobile" ? "1.4rem" : "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.5, marginBottom: "1.5rem" }}>
                                         &ldquo;J&apos;ai créé ACT Formation parce que j&apos;en avais assez des formations théoriques qui n&apos;aident personne à avancer concrètement.&rdquo;
                                     </p>
-                                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85, marginBottom: "1.2rem" }}>
+                                    <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85, marginBottom: "1.2rem" }}>
                                         Après des années à accompagner des entreprises africaines dans leur transformation digitale, j&apos;ai vu le même blocage : les compétences manquent, pas la motivation.
                                     </p>
-                                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85 }}>
+                                    <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85 }}>
                                         Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable, je vous rembourse.
                                     </p>
                                 </blockquote>
                                 <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
                                     {["15+ ans terrain", "Formé en Europe & Afrique", "200+ entreprises accompagnées"].map((tag, i) => (
-                                        <span key={i} style={{ padding: "0.4rem 1rem", background: `${COLOR}12`, border: `1px solid ${COLOR}2A`, borderRadius: "2rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-body)" }}>{tag}</span>
+                                        <span key={i} style={{ padding: "0.4rem 1rem", background: `${COLOR}12`, border: `1px solid ${COLOR}2A`, borderRadius: "2rem", fontSize: "1rem", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-body)" }}>{tag}</span>
                                     ))}
                                 </div>
                             </motion.div>
@@ -869,25 +880,7 @@ export default function FormationLandpage() {
                     </div>
                 </section>
 
-                {/* ── INSCRIPTION ──────────────────────────────────── */}
-                <section id="inscription" style={{ padding: screenSize === "mobile" ? "5rem 1.5rem" : "7rem 6rem", background: "rgba(255,255,255,0.015)", borderTop: "1px solid rgba(255,255,255,0.05)", position: "relative", zIndex: 1 }}>
-                    <div style={{ maxWidth: 720, margin: "0 auto" }}>
-                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem", textAlign: "center" }}>
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
-                                <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Inscription</span>
-                                <div style={{ width: 36, height: 2, background: COLOR }} />
-                            </div>
-                            <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,4vw,3.8rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, marginBottom: "1rem" }}>
-                                Réservez votre <span style={{ color: COLOR }}>place</span>
-                            </h2>
-                            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "1.1rem", fontFamily: "var(--font-body)", lineHeight: 1.75 }}>
-                                Indiquez votre intérêt — un conseiller vous contacte sous 24h pour confirmer disponibilités et modalités.
-                            </p>
-                        </motion.div>
-                        <InscriptionForm screenSize={screenSize} formations={formationsData} />
-                    </div>
-                </section>
+     
 
                 {/* ── FINAL CTA ────────────────────────────────────── */}
                 <section style={{ padding: screenSize === "mobile" ? "6rem 1.5rem" : "9rem 6rem", position: "relative", zIndex: 1, overflow: "hidden", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
@@ -897,7 +890,7 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "2rem" }}>
                                 <div style={{ width: 60, height: 2, background: `linear-gradient(to right, transparent, ${COLOR})` }} />
-                                <span style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Passez à l&apos;action</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Passez à l&apos;action</span>
                                 <div style={{ width: 60, height: 2, background: `linear-gradient(to left, transparent, ${COLOR})` }} />
                             </div>
 
@@ -907,7 +900,7 @@ export default function FormationLandpage() {
                                 maintenant.
                             </h2>
 
-                            <p style={{ fontSize: "1.15rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", lineHeight: 1.8, maxWidth: 520, margin: "0 auto 3rem" }}>
+                            <p style={{ fontSize: "1.3rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", lineHeight: 1.8, maxWidth: 520, margin: "0 auto 3rem" }}>
                                 Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture.
                             </p>
 

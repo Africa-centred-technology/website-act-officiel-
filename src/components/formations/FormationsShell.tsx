@@ -6,12 +6,11 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
   Search,
-  Filter,
   Clock,
   Users,
   BookOpen,
@@ -83,50 +82,28 @@ export default function FormationsShell() {
   }, []);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategorie, setSelectedCategorie] = useState("Toutes");
-  const [selectedSecteur, setSelectedSecteur] = useState("Tous");
-  const [selectedNiveau, setSelectedNiveau] = useState("Tous");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 9;
 
-  // Extraire les options de filtrage dynamiquement
-  const categories = useMemo(() => [
-    "Toutes",
-    ...Array.from(new Set(formationsData.map(f => f.categorie).filter(Boolean)))
-  ], [formationsData]);
-
-  const secteurs = useMemo(() => [
-    "Tous",
-    ...Array.from(new Set(formationsData.map(f => f.secteur).filter(Boolean)))
-  ], [formationsData]);
-
-  const niveaux = useMemo(() => [
-    "Tous",
-    ...Array.from(new Set(formationsData.map(f => f.niveau).filter(Boolean)))
-  ], [formationsData]);
-
-  // Filtrage et tri
   const filteredFormations = useMemo(() => {
-    let filtered = formationsData.filter(f => {
-      const title = f.title?.toLowerCase() || "";
-      const accroche = f.accroche?.toLowerCase() || "";
-      const secteur = f.secteur?.toLowerCase() || "";
-      const search = searchQuery.toLowerCase();
+    if (!searchQuery) return formationsData;
+    const search = searchQuery.toLowerCase();
+    return formationsData.filter(f =>
+      (f.title?.toLowerCase() || "").includes(search) ||
+      (f.accroche?.toLowerCase() || "").includes(search) ||
+      (f.secteur?.toLowerCase() || "").includes(search)
+    );
+  }, [formationsData, searchQuery]);
 
-      const matchSearch = searchQuery === "" ||
-        title.includes(search) ||
-        accroche.includes(search) ||
-        secteur.includes(search);
+  // Reset page quand les filtres changent
+  useEffect(() => { setCurrentPage(1); }, [filteredFormations]);
 
-      const matchCategorie = selectedCategorie === "Toutes" || f.categorie === selectedCategorie;
-      const matchSecteur = selectedSecteur === "Tous" || f.secteur === selectedSecteur;
-      const matchNiveau = selectedNiveau === "Tous" || f.niveau === selectedNiveau;
-
-      return matchSearch && matchCategorie && matchSecteur && matchNiveau;
-    });
-
-    return filtered;
-  }, [formationsData, searchQuery, selectedCategorie, selectedSecteur, selectedNiveau]);
+  const totalPages = Math.ceil(filteredFormations.length / ITEMS_PER_PAGE);
+  const paginatedFormations = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredFormations.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredFormations, currentPage, ITEMS_PER_PAGE]);
 
   return (
     <div style={{
@@ -178,67 +155,18 @@ export default function FormationsShell() {
           </div>
         </section>
 
-        {/* FILTERS BAR */}
+        {/* BARRE COMPTEUR + VUE */}
         <section style={{ padding: "1.5rem clamp(1.5rem, 5vw, 6rem)", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-            {/* Compteur + source badge */}
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-              <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", margin: 0 }}>
-                <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
-              </p>
-
-              
-            </div>
-
-            <div style={{ display: "flex", gap: "1rem" }}>
-              <button 
-                onClick={() => setShowFilters(!showFilters)}
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: showFilters ? COLOR : "rgba(255,255,255,0.05)", border: "none", borderRadius: "0.5rem", color: "#fff", cursor: "pointer", transition: "0.2s" }}
-              >
-                <Filter size={18} />
-                Filtres
-              </button>
-              
-              <div style={{ display: "flex", background: "rgba(255,255,255,0.05)", padding: "0.25rem", borderRadius: "0.5rem" }}>
-                <button onClick={() => setViewMode("grid")} style={{ padding: "0.5rem", background: viewMode === "grid" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><Grid3x3 size={20}/></button>
-                <button onClick={() => setViewMode("list")} style={{ padding: "0.5rem", background: viewMode === "list" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><ListIcon size={20}/></button>
-              </div>
+            <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", margin: 0 }}>
+              <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
+            </p>
+            <div style={{ display: "flex", background: "rgba(255,255,255,0.05)", padding: "0.25rem", borderRadius: "0.5rem" }}>
+              <button onClick={() => setViewMode("grid")} style={{ padding: "0.5rem", background: viewMode === "grid" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><Grid3x3 size={20}/></button>
+              <button onClick={() => setViewMode("list")} style={{ padding: "0.5rem", background: viewMode === "list" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><ListIcon size={20}/></button>
             </div>
           </div>
         </section>
-
-        {/* FILTERS PANEL */}
-        <AnimatePresence>
-          {showFilters && (
-            <motion.section 
-              initial={{ height: 0, opacity: 0 }} 
-              animate={{ height: "auto", opacity: 1 }} 
-              exit={{ height: 0, opacity: 0 }}
-              style={{ overflow: "hidden", background: "rgba(255,255,255,0.01)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-            >
-              <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "2rem clamp(1.5rem, 5vw, 6rem)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem" }}>
-                <div>
-                  <label style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.8rem", textTransform: "uppercase", color: COLOR, fontWeight: 700 }}>Catégorie</label>
-                  <select value={selectedCategorie} onChange={(e) => setSelectedCategorie(e.target.value)} style={{ width: "100%", padding: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "0.4rem" }}>
-                    {categories.map(c => <option key={c} value={c} style={{ background: "#070E1C" }}>{c}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.8rem", textTransform: "uppercase", color: COLOR, fontWeight: 700 }}>Secteur</label>
-                  <select value={selectedSecteur} onChange={(e) => setSelectedSecteur(e.target.value)} style={{ width: "100%", padding: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "0.4rem" }}>
-                    {secteurs.map(s => <option key={s} value={s} style={{ background: "#070E1C" }}>{s}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.8rem", textTransform: "uppercase", color: COLOR, fontWeight: 700 }}>Niveau</label>
-                  <select value={selectedNiveau} onChange={(e) => setSelectedNiveau(e.target.value)} style={{ width: "100%", padding: "0.75rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", borderRadius: "0.4rem" }}>
-                    {niveaux.map(n => <option key={n} value={n} style={{ background: "#070E1C" }}>{n}</option>)}
-                  </select>
-                </div>
-              </div>
-            </motion.section>
-          )}
-        </AnimatePresence>
 
         {/* RESULTS */}
         <section style={{ padding: "4rem clamp(1.5rem, 5vw, 6rem)" }}>
@@ -297,7 +225,7 @@ export default function FormationsShell() {
                   gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(380px, 1fr))" : "1fr",
                   gap: "2.5rem"
                 }}>
-                  {filteredFormations.map((f) => (
+                  {paginatedFormations.map((f) => (
                     <FormationCard key={f.id} formation={f} viewMode={viewMode} />
                   ))}
                 </div>
@@ -306,8 +234,78 @@ export default function FormationsShell() {
                   <div style={{ textAlign: "center", padding: "4rem" }}>
                     <BookOpen size={48} color={COLOR} style={{ opacity: 0.3, marginBottom: "1.5rem" }}/>
                     <h3>Aucun résultat pour cette recherche</h3>
-                    <button onClick={() => { setSearchQuery(""); setSelectedCategorie("Toutes"); setSelectedSecteur("Tous"); setSelectedNiveau("Tous"); }} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>Réinitialiser les filtres</button>
+                    <button onClick={() => setSearchQuery("")} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>Réinitialiser la recherche</button>
                   </div>
+                )}
+
+                {/* ── Pagination ── */}
+                {totalPages > 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", marginTop: "3.5rem", flexWrap: "wrap" }}
+                  >
+                    {/* Précédent */}
+                    <button
+                      onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                      disabled={currentPage === 1}
+                      style={{
+                        padding: "0.85rem 1.8rem", borderRadius: "0.6rem", fontSize: "1rem", fontWeight: 700,
+                        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
+                        color: currentPage === 1 ? "rgba(255,255,255,0.25)" : "#fff",
+                        cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                        transition: "all 0.2s",
+                      }}
+                    >
+                      ← Précédent
+                    </button>
+
+                    {/* Numéros de pages */}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      const isActive = page === currentPage;
+                      const isNearby = Math.abs(page - currentPage) <= 1 || page === 1 || page === totalPages;
+                      if (!isNearby && Math.abs(page - currentPage) === 2) {
+                        return <span key={`ellipsis-${page}`} style={{ color: "rgba(255,255,255,0.3)", padding: "0 0.4rem", fontSize: "1rem" }}>…</span>;
+                      }
+                      if (!isNearby) return null;
+                      return (
+                        <button
+                          key={page}
+                          onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                          style={{
+                            width: "3rem", height: "3rem", borderRadius: "0.6rem", fontSize: "1rem", fontWeight: 700,
+                            background: isActive ? COLOR : "rgba(255,255,255,0.04)",
+                            border: isActive ? `1px solid ${COLOR}` : "1px solid rgba(255,255,255,0.1)",
+                            color: isActive ? "#fff" : "rgba(255,255,255,0.65)",
+                            cursor: "pointer", transition: "all 0.2s",
+                            boxShadow: isActive ? `0 4px 20px ${COLOR}44` : "none",
+                          }}
+                        >
+                          {page}
+                        </button>
+                      );
+                    })}
+
+                    {/* Suivant */}
+                    <button
+                      onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                      disabled={currentPage === totalPages}
+                      style={{
+                        padding: "0.85rem 1.8rem", borderRadius: "0.6rem", fontSize: "1rem", fontWeight: 700,
+                        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
+                        color: currentPage === totalPages ? "rgba(255,255,255,0.25)" : "#fff",
+                        cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                        transition: "all 0.2s",
+                      }}
+                    >
+                      Suivant →
+                    </button>
+
+                    {/* Indicateur */}
+                    <span style={{ marginLeft: "0.5rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body)" }}>
+                      Page {currentPage} / {totalPages}
+                    </span>
+                  </motion.div>
                 )}
               </>
             )}

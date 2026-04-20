@@ -41,7 +41,7 @@ Expérience dans la gestion de projets IT ou digitaux. Des notions de base en da
 
 ## Programme
 
-### Jour 1 — Cadrer et concevoir son projet IA
+
 
 #### Module 1 — Identifier le bon problème (2h)
 - Pourquoi la plupart des projets IA échouent dès la phase de cadrage
@@ -66,7 +66,6 @@ Expérience dans la gestion de projets IT ou digitaux. Des notions de base en da
 
 ---
 
-### Jour 2 — Construire et piloter
 
 #### Module 4 — Méthode projet adaptée à l'IA (2h)
 - Pourquoi les méthodes projet classiques ne suffisent pas pour l'IA
@@ -89,9 +88,7 @@ Expérience dans la gestion de projets IT ou digitaux. Des notions de base en da
 - Intégration d'une solution IA dans un système d'information existant
 - Atelier : évaluation comparative de deux solutions IA sur un cas type
 
----
 
-### Jour 3 — Déployer, mesurer et pérenniser
 
 #### Module 7 — Déploiement et conduite du changement (2h)
 - Stratégies de déploiement : pilote, déploiement progressif, big bang

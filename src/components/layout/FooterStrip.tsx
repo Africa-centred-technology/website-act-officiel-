@@ -56,10 +56,10 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
     >
       <div style={{ height: 1, background: "rgba(211,84,0,0.4)", marginBottom: "3rem" }} />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr minmax(280px, 320px)", gap: "clamp(4rem, 6vw, 6rem)", marginBottom: "2.8rem" }}>
-        
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,320px)] gap-8 lg:gap-16 mb-8">
+
         {/* Colonnes principales à gauche */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "clamp(2rem, 4vw, 4rem)" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 
         {/* Col 1 — Contact */}
         <div>
@@ -150,7 +150,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
         </div>
 
         {/* Col 5 — Newsletter à droite */}
-        <div>
+        <div className="order-last lg:order-0">
           <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.4vw, 1.4rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#ffffff", marginBottom: "1.6rem", opacity: 0.9 }}>
             Newsletter
           </p>

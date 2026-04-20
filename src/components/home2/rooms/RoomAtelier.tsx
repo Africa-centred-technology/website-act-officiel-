@@ -76,18 +76,25 @@ function Panel({
     onClick();
   };
 
+  /* Tailles adaptées */
+  const collapsedH   = isMobile ? "120px" : undefined;
+  const expandedH    = isMobile ? "auto"  : undefined;
+  const innerPad     = isMobile ? "0 20px 20px" : "0 28px 28px";
+  const expandedPad  = isMobile ? "24px 22px"   : "32px 36px";
+
   return (
     <div
       onClick={handleClick}
       style={{
         position: "relative",
         flex: isMobile ? undefined : isActive ? 4.5 : 1,
-        height: isMobile ? (isActive ? "440px" : "100px") : undefined,
+        height: isMobile ? (isActive ? expandedH : collapsedH) : undefined,
+        minHeight: isMobile && isActive ? "340px" : undefined,
         borderRadius: "18px",
         overflow: "hidden",
         cursor: "pointer",
         transition: isMobile
-          ? "height 0.7s cubic-bezier(.16,1,.3,1)"
+          ? "min-height 0.7s cubic-bezier(.16,1,.3,1)"
           : "flex 0.7s cubic-bezier(.16,1,.3,1), box-shadow 0.5s",
         minWidth: 0,
         boxShadow: isActive
@@ -161,26 +168,36 @@ function Panel({
       {/* Label (vue réduite) */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 6,
-        padding: "0 28px 28px",
-        display: "flex", flexDirection: "column", gap: "10px",
+        padding: innerPad,
+        display: "flex", flexDirection: "column", gap: isMobile ? "8px" : "10px",
         opacity: isActive ? 0 : 1,
         transform: isActive ? "translateY(10px)" : "translateY(0)",
         transition: "opacity 0.35s, transform 0.35s cubic-bezier(.16,1,.3,1)",
         pointerEvents: isActive ? "none" : "auto",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
-            width: "34px", height: "34px", borderRadius: "9px",
+            width: isMobile ? "30px" : "34px",
+            height: isMobile ? "30px" : "34px",
+            borderRadius: "9px",
             background: "rgba(255,106,0,.06)", border: "1px solid rgba(255,106,0,.1)",
             display: "flex", alignItems: "center", justifyContent: "center",
+            flexShrink: 0,
           }}>
             <meta.Icon />
           </div>
-          <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "3px", color: "rgba(255,106,0,.35)" }}>
+          <span style={{
+            fontSize: isMobile ? "11px" : "10px",
+            fontWeight: 400, letterSpacing: "3px", color: "rgba(255,106,0,.45)",
+          }}>
             {pole.n}
           </span>
         </div>
-        <div style={{ fontSize: "clamp(18px, 2.8vw, 28px)", fontWeight: 700, letterSpacing: "0.5px", color: "rgba(255,255,255,.85)" }}>
+        <div style={{
+          fontSize: isMobile ? "clamp(15px, 4.5vw, 20px)" : "clamp(18px, 2.8vw, 28px)",
+          fontWeight: 700, letterSpacing: "0.5px", color: "rgba(255,255,255,.9)",
+          lineHeight: 1.2,
+        }}>
           {pole.title}
         </div>
         <Link
@@ -188,12 +205,13 @@ function Panel({
           onClick={(e) => e.stopPropagation()}
           style={{
             display: "inline-flex", alignItems: "center", gap: "8px",
-            fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase",
-            color: "rgba(255,106,0,.45)", textDecoration: "none",
+            fontSize: isMobile ? "12px" : "10px",
+            fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase",
+            color: "rgba(255,106,0,.6)", textDecoration: "none",
           }}
         >
           Découvrir
-          <span style={{ display: "block", width: "16px", height: "1px", background: ORANGE, opacity: 0.3 }} />
+          <span style={{ display: "block", width: "16px", height: "1px", background: ORANGE, opacity: 0.4 }} />
         </Link>
       </div>
 
@@ -206,36 +224,62 @@ function Panel({
             exit={{ opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              position: "absolute", bottom: 0, left: 0, right: 0,
-              zIndex: 6, padding: "32px 36px",
+              position: isMobile ? "relative" : "absolute",
+              bottom: isMobile ? undefined : 0,
+              left: 0, right: 0,
+              zIndex: 6,
+              padding: expandedPad,
             }}
           >
-            <div style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", color: "rgba(255,106,0,.45)", marginBottom: "4px" }}>
+            {/* Pôle label */}
+            <div style={{
+              fontSize: isMobile ? "12px" : "10px",
+              fontWeight: 400, letterSpacing: "4px",
+              color: "rgba(255,106,0,.55)", marginBottom: "6px",
+            }}>
               Pôle {pole.n}
             </div>
-            <div style={{ fontSize: "clamp(22px, 2.8vw, 36px)", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "6px", color: "#fff" }}>
+
+            {/* Titre */}
+            <div style={{
+              fontSize: isMobile ? "clamp(20px, 5.5vw, 28px)" : "clamp(22px, 2.8vw, 36px)",
+              fontWeight: 700, letterSpacing: "0.5px",
+              marginBottom: "8px", color: "#fff", lineHeight: 1.15,
+            }}>
               {pole.title}
             </div>
+
             {/* Barre orange animée */}
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "50px" }}
               transition={{ duration: 0.6, delay: 0.33 }}
               style={{
-                height: "2px", borderRadius: "1px", marginBottom: "14px",
+                height: "2px", borderRadius: "1px",
+                marginBottom: isMobile ? "12px" : "14px",
                 background: `linear-gradient(90deg, ${ORANGE}, ${ORANGE2})`,
                 boxShadow: `0 0 8px rgba(255,106,0,.45)`,
               }}
             />
+
+            {/* Description */}
             <p style={{
-              fontSize: "13px", fontWeight: 300, lineHeight: 1.8,
-              color: "rgba(255,255,255,.55)", maxWidth: "400px", marginBottom: "16px",
+              fontSize: isMobile ? "14px" : "13px",
+              fontWeight: 300, lineHeight: 1.75,
+              color: "rgba(255,255,255,.6)",
+              maxWidth: isMobile ? "100%" : "400px",
+              marginBottom: isMobile ? "14px" : "16px",
               fontFamily: "var(--font-body)",
             }}>
               {pole.description}
             </p>
+
             {/* Tags */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "7px", marginBottom: "14px" }}>
+            <div style={{
+              display: "flex", flexWrap: "wrap",
+              gap: isMobile ? "8px" : "7px",
+              marginBottom: isMobile ? "16px" : "14px",
+            }}>
               {meta.tags.map((tag, ti) => (
                 <motion.span
                   key={tag}
@@ -243,36 +287,47 @@ function Panel({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.46 + ti * 0.06 }}
                   style={{
-                    fontSize: "10px", fontWeight: 400, letterSpacing: "0.8px",
-                    padding: "5px 14px", borderRadius: "100px",
+                    fontSize: isMobile ? "12px" : "10px",
+                    fontWeight: 500, letterSpacing: "0.8px",
+                    padding: isMobile ? "6px 16px" : "5px 14px",
+                    borderRadius: "100px",
                     background: "rgba(255,255,255,.04)", backdropFilter: "blur(10px)",
-                    border: "1px solid rgba(255,106,0,.1)", color: ORANGE,
+                    border: "1px solid rgba(255,106,0,.15)", color: ORANGE,
                   }}
                 >
                   {tag}
                 </motion.span>
               ))}
             </div>
+
             {/* Stats */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.58 }}
               style={{
-                display: "flex", gap: "20px",
-                paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,.06)",
+                display: "flex",
+                gap: isMobile ? "24px" : "20px",
+                paddingTop: isMobile ? "14px" : "12px",
+                borderTop: "1px solid rgba(255,255,255,.06)",
               }}
             >
               {meta.stats.map((s) => (
                 <div key={s.label}>
                   <div style={{
-                    fontSize: "18px", fontWeight: 700,
+                    fontSize: isMobile ? "20px" : "18px",
+                    fontWeight: 700,
                     background: `linear-gradient(135deg, ${ORANGE}, ${ORANGE2})`,
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                   }}>
                     {s.val}
                   </div>
-                  <div style={{ fontSize: "8px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,.3)" }}>
+                  <div style={{
+                    fontSize: isMobile ? "11px" : "8px",
+                    fontWeight: 400, letterSpacing: "1.5px",
+                    textTransform: "uppercase", color: "rgba(255,255,255,.4)",
+                    marginTop: "2px",
+                  }}>
                     {s.label}
                   </div>
                 </div>
@@ -308,10 +363,14 @@ export default function RoomAtelier() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="relative flex flex-col overflow-hidden room-pad"
-      style={{ width: "100%", height: "100%" }}
+      className={`relative flex flex-col room-pad ${isMobile ? "" : "overflow-hidden"}`}
+      style={{
+        width: "100%",
+        height: isMobile ? "auto" : "100%",
+        minHeight: isMobile ? "100svh" : undefined,
+      }}
     >
-      {/* ── Header — gardé identique à l'original ── */}
+      {/* ── Header ── */}
       <motion.div
         className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4"
         style={{ x: midX, y: midY, fontFamily: "var(--font-display)" }}
@@ -326,7 +385,7 @@ export default function RoomAtelier() {
             <span className="diamond diamond--sm" />
             <span style={{
               color: "rgba(255,255,255,0.35)",
-              fontSize: screenSize === "mobile" ? "0.65rem" : screenSize === "tablet" ? "0.75rem" : "0.85rem",
+              fontSize: screenSize === "mobile" ? "0.72rem" : screenSize === "tablet" ? "0.75rem" : "0.85rem",
               letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 500,
             }}>
               Audit & Ingénierie
@@ -346,7 +405,11 @@ export default function RoomAtelier() {
               className="font-black uppercase"
               style={{
                 display: "inline-block",
-                fontSize: screenSize === "mobile" ? "clamp(1.5rem,6vw,2.5rem)" : screenSize === "tablet" ? "clamp(2rem,5vw,3.5rem)" : "clamp(2rem,4.5vw,5.5rem)",
+                fontSize: screenSize === "mobile"
+                  ? "clamp(1.6rem, 7vw, 2.8rem)"
+                  : screenSize === "tablet"
+                  ? "clamp(2rem, 5vw, 3.5rem)"
+                  : "clamp(2rem, 4.5vw, 5.5rem)",
                 lineHeight: 0.9,
                 color: ci >= 12 ? ORANGE : "#ffffff",
                 letterSpacing: "-0.04em",
@@ -370,11 +433,12 @@ export default function RoomAtelier() {
 
       {/* ── Panels accordéon ── */}
       <div style={{
-        flex: 1,
+        flex: isMobile ? "none" : 1,
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         gap: "8px",
         minHeight: 0,
+        paddingBottom: isMobile ? "2rem" : 0,
       }}>
         {POLES.map((pole, i) => (
           <Panel
