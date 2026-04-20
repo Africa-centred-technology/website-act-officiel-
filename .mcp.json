@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "shopify": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/shopify-mcp"],
+      "env": {
+        "SHOPIFY_STORE_DOMAIN": "act-formation.myshopify.com",
+        "SHOPIFY_STOREFRONT_ACCESS_TOKEN": "${SHOPIFY_STOREFRONT_ACCESS_TOKEN}",
+        "SHOPIFY_ADMIN_ACCESS_TOKEN": "${SHOPIFY_ADMIN_ACCESS_TOKEN}"
+      }
+    }
+  }
+}
