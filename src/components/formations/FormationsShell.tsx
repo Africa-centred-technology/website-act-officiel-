@@ -107,7 +107,7 @@ export default function FormationsShell() {
 
   return (
     <div style={{
-      background: '#070E1C',
+      background: '#0A1410',
       minHeight: '100vh',
       overflowX: 'hidden',
       position: 'relative',

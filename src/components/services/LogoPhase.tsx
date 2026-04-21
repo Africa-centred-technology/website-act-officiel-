@@ -127,7 +127,7 @@ function useParticleCanvas(
       }
 
       const trailOpacity = phaseRef.current === "stream" ? 0.30 : 0.55;
-      ctx.fillStyle = `rgba(7,14,28,${trailOpacity})`;
+      ctx.fillStyle = `rgba(10,20,16,${trailOpacity})`;
       ctx.fillRect(0, 0, W, H);
 
       for (const p of particles) {

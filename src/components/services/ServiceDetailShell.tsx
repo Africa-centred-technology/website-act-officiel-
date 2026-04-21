@@ -886,7 +886,7 @@ function StickyHeader({ svc }: { svc: Service }) {
       transition={{ duration: 0.4, ease: [...EASE] }}
       style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        background: "rgba(7,14,28,0.92)", backdropFilter: "blur(20px)",
+        background: "rgba(10,20,16,0.92)", backdropFilter: "blur(20px)",
         borderBottom: `1px solid ${svc.accent}30`,
         padding: "0.9rem clamp(1.5rem, 4vw, 3rem)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -921,9 +921,9 @@ export default function ServiceDetailShell({ svc }: { svc: Service }) {
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070E1C", color: "#fff", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: "#0A1410", color: "#fff", position: "relative" }}>
       {/* Background layers */}
-      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#070E1C" }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#0A1410" }}>
         <WaveTerrain />
         <Grain />
         <Cursor />

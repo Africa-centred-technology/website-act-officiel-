@@ -7,7 +7,7 @@ import { Instagram, Youtube, Facebook, LinkedinIcon, Mail, Phone, MapPin, Code2,
 
 const ORANGE = "#D35400";
 
-const BG = "#070E1C";
+const BG = "#0A1410";
 
 const FOOTER_SOCIALS = [
   { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },

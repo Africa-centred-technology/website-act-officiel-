@@ -707,7 +707,7 @@ function SectionCTA() {
    ══════════════════════════════════════════════════════════════════════ */
 export default function AboutShell() {
   return (
-    <div style={{ background: "#070E1C", minHeight: "100vh", overflowX: "hidden", position: "relative" }}>
+    <div style={{ background: "#0A1410", minHeight: "100vh", overflowX: "hidden", position: "relative" }}>
       {/* ── Background layers globaux ── */}
       <WaveTerrain />
       <Cursor />

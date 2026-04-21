@@ -13,7 +13,6 @@ const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 
 /* ── Tokens ─────────────────────────────────────────────── */
 const ORANGE = "#D35400";
-const BG_DARK = "#070E1C";
 
 /* ── Data ───────────────────────────────────────────────── */
 const SAVOIR_FAIRE_MENU = [
@@ -425,7 +424,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             style={{
               position: "fixed",
               inset: 0,
-              background: "rgba(11, 22, 43, 0.98)",
+              background: "rgba(10,20,16, 0.98)",
               zIndex: 100000, // Must be above navbar (99999)
               display: "flex",
               flexDirection: "column",

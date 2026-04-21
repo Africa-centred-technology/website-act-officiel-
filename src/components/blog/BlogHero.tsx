@@ -44,9 +44,9 @@ function useMediaQuery() {
         setScreenSize('desktop');
       }
     };
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
   return screenSize;
 }

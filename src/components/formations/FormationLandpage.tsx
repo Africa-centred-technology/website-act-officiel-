@@ -214,7 +214,7 @@ function MarketingVideo() {
             </video>
 
             {/* Overlay */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(7,14,28,0.62) 0%, rgba(7,14,28,0.12) 35%, rgba(7,14,28,0.48) 72%, rgba(7,14,28,1) 100%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,16,0.62) 0%, rgba(10,20,16,0.12) 35%, rgba(10,20,16,0.48) 72%, rgba(10,20,16,1) 100%)", pointerEvents: "none" }} />
 
             {/* Content */}
             <div style={{
@@ -384,7 +384,7 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
                             style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease, filter 0.4s ease", transform: hovered ? "scale(1.08)" : "scale(1)", filter: hovered ? "brightness(0.75)" : "brightness(0.55) grayscale(30%)" }}
                         />
                     )}
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(7,14,28,0.95) 100%)" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(10,20,16,0.95) 100%)" }} />
                     {program.niveau && (
                         <div style={{ position: "absolute", bottom: "1rem", left: "1.5rem", padding: "0.3rem 0.85rem", borderRadius: "2rem", background: COLOR, fontSize: "0.88rem", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                             {program.niveau}
@@ -545,9 +545,9 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
                     <select required value={form.formation} onChange={e => setForm({ ...form, formation: e.target.value })}
                         style={{ ...iStyle, cursor: "pointer" }}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}>
-                        <option value="" style={{ background: "#070e1c" }}>Choisissez une formation</option>
-                        {formations.map(f => <option key={f.slug} value={f.title} style={{ background: "#070e1c" }}>{f.title}</option>)}
-                        <option value="Je ne sais pas encore" style={{ background: "#070e1c" }}>Je ne sais pas encore</option>
+                        <option value="" style={{ background: "#0A1410" }}>Choisissez une formation</option>
+                        {formations.map(f => <option key={f.slug} value={f.title} style={{ background: "#0A1410" }}>{f.title}</option>)}
+                        <option value="Je ne sais pas encore" style={{ background: "#0A1410" }}>Je ne sais pas encore</option>
                     </select>
                 </div>
             </div>
@@ -617,7 +617,7 @@ export default function FormationLandpage() {
     const rest     = useMemo(() => filtered.slice(1), [filtered]);
 
     return (
-        <div style={{ background: "#070E1C", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>
+        <div style={{ background: "#0A1410", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>
             {/* Ripple keyframe */}
             <style>{`
                 @keyframes actRipple {
@@ -647,7 +647,7 @@ export default function FormationLandpage() {
                     <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: screenSize === "mobile" ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "0.75rem", overflow: "hidden" }}>
                         {STATS.map((s, i) => (
                             <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                                style={{ padding: screenSize === "mobile" ? "2rem 1.2rem" : "2.5rem", background: "#070e1c", textAlign: "center" }}>
+                                style={{ padding: screenSize === "mobile" ? "2rem 1.2rem" : "2.5rem", background: "#0A1410", textAlign: "center" }}>
                                 <div style={{ fontSize: screenSize === "mobile" ? "2.8rem" : "3.5rem", fontWeight: 900, color: COLOR, fontFamily: "var(--font-display)", lineHeight: 1 }}>{s.value}</div>
                                 <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "0.5rem", fontFamily: "var(--font-display)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</div>
                                 <div style={{ fontSize: "1rem", color: "rgba(255,255,255,0.38)", marginTop: "0.25rem", fontFamily: "var(--font-body)" }}>{s.sub}</div>
@@ -767,7 +767,7 @@ export default function FormationLandpage() {
                                             {featured.imageUrl && (
                                                 <div style={{ position: "relative", overflow: "hidden", minHeight: screenSize === "mobile" ? 240 : "auto" }}>
                                                     <img src={featured.imageUrl} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.65)" }} />
-                                                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 50%, rgba(7,14,28,0.97) 100%)" }} />
+                                                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 50%, rgba(10,20,16,0.97) 100%)" }} />
                                                 </div>
                                             )}
                                             <div style={{ padding: screenSize === "mobile" ? "2rem 1.5rem" : "3rem", display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
@@ -845,7 +845,7 @@ export default function FormationLandpage() {
                             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: "relative" }}>
                                 <div style={{ borderRadius: "1rem", overflow: "hidden", border: `1px solid ${COLOR}33`, position: "relative", aspectRatio: "4/5", maxWidth: 420 }}>
                                     <img src="/Sohaib_baroud_Manifeste.png" alt="Sohaib Baroud — Fondateur ACT" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
-                                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(7,14,28,0.7) 0%, transparent 55%)" }} />
+                                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,20,16,0.7) 0%, transparent 55%)" }} />
                                     <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
                                         <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>Sohaib Baroud</p>
                                         <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.95rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Fondateur & CEO · ACT</p>

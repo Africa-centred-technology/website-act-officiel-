@@ -337,7 +337,7 @@ export default function ServicesIntroShell() {
   return (
     <div style={{
       width: "100vw", height: "100vh", overflow: "hidden",
-      position: "relative", background: "#070E1C",
+      position: "relative", background: "#0A1410",
       paddingTop: "max(72px, clamp(5rem, 8vw, 8rem))",   /* clear the fixed navbar; max() garantit ≥72px avec root 8px */
     }}>
       {/* ── Background layers (même fond que Secteurs) ── */}

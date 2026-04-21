@@ -192,7 +192,7 @@ export default function ContactShell() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070e1c", color: "#fff", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "#0A1410", color: "#fff", overflowX: "hidden" }}>
       <Grain />
 
       {/* ── HERO ───────────────────────────────────────── */}
@@ -538,14 +538,14 @@ export default function ContactShell() {
                   onFocus={(e) => ((e.target as HTMLSelectElement).style.borderColor = "#D35400")}
                   onBlur={(e) => ((e.target as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.09)")}
                 >
-                  <option value="" style={{ background: "#070e1c" }}>Sélectionnez un type</option>
-                  <option value="web" style={{ background: "#070e1c" }}>Application Web</option>
-                  <option value="mobile" style={{ background: "#070e1c" }}>Application Mobile</option>
-                  <option value="ia" style={{ background: "#070e1c" }}>IA & Data</option>
-                  <option value="sig" style={{ background: "#070e1c" }}>SIG & Cartographie</option>
-                  <option value="media" style={{ background: "#070e1c" }}>Plateforme Média</option>
-                  <option value="conseil" style={{ background: "#070e1c" }}>Conseil Stratégique</option>
-                  <option value="autre" style={{ background: "#070e1c" }}>Autre</option>
+                  <option value="" style={{ background: "#0A1410" }}>Sélectionnez un type</option>
+                  <option value="web" style={{ background: "#0A1410" }}>Application Web</option>
+                  <option value="mobile" style={{ background: "#0A1410" }}>Application Mobile</option>
+                  <option value="ia" style={{ background: "#0A1410" }}>IA & Data</option>
+                  <option value="sig" style={{ background: "#0A1410" }}>SIG & Cartographie</option>
+                  <option value="media" style={{ background: "#0A1410" }}>Plateforme Média</option>
+                  <option value="conseil" style={{ background: "#0A1410" }}>Conseil Stratégique</option>
+                  <option value="autre" style={{ background: "#0A1410" }}>Autre</option>
                 </select>
               </div>
              

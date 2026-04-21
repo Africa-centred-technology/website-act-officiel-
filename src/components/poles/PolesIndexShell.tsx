@@ -177,7 +177,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.8) 60%, rgba(7,14,28,0.95) 100%)`,
+              background: `linear-gradient(to bottom, transparent 0%, rgba(10,20,16,0.8) 60%, rgba(10,20,16,0.95) 100%)`,
             }} />
             {/* Number */}
             <span style={{
@@ -354,7 +354,7 @@ export default function PolesIndexShell() {
 
   return (
     <div style={{
-      background: '#070E1C',
+      background: '#0A1410',
       minHeight: '100vh',
       overflowX: 'hidden',
       position: 'relative',

@@ -75,7 +75,7 @@ interface FormationData {
    DESIGN TOKENS
 ───────────────────────────────────────────────────────────────── */
 const ORANGE   = "#D35400";
-const DARK     = "#070E1C";
+const DARK     = "#0A1410";
 const CARD_BG  = "rgba(255,255,255,0.03)";
 const BORDER   = "rgba(255,255,255,0.06)";
 const TEXT_GRAY = "rgba(255,255,255,0.6)";
@@ -309,7 +309,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
                   )}
                 </div>
                 {/* Badge ← format · secteur */}
-                <div style={{ position: "absolute", bottom: "20px", left: "20px", background: "rgba(7,14,28,0.88)", backdropFilter: "blur(10px)", border: `1px solid ${ORANGE}`, padding: "16px 20px", borderRadius: "12px" }}>
+                <div style={{ position: "absolute", bottom: "20px", left: "20px", background: "rgba(10,20,16,0.88)", backdropFilter: "blur(10px)", border: `1px solid ${ORANGE}`, padding: "16px 20px", borderRadius: "12px" }}>
                   <div style={{ color: ORANGE, fontWeight: 700, fontSize: "0.9rem", marginBottom: "4px" }}>{data.format || "Formation intensive"}</div>
                   <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.75rem" }}>{data.secteur} · Petits groupes · Attestation ACT</div>
                 </div>

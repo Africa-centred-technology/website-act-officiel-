@@ -18,7 +18,7 @@ const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false }
 /* ── Tokens ─────────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 const ORANGE = "#D35400";
-const BG = "#070E1C";
+const BG = "#0A1410";
 
 /* ── Directions ─────────────────────────────────────────── */
 type Dir = 1 | -1;
@@ -323,7 +323,7 @@ function AlbumSection() {
                     draggable={false}
                   />
                   {/* Gradient overlay */}
-                  <div style={{ position: "absolute", inset: 0, background: isActive ? "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 100%)" : "linear-gradient(to bottom, rgba(7,14,28,0.25) 0%, rgba(7,14,28,0.65) 100%)", pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", inset: 0, background: isActive ? "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 100%)" : "linear-gradient(to bottom, rgba(10,20,16,0.25) 0%, rgba(10,20,16,0.65) 100%)", pointerEvents: "none" }} />
 
                   {isActive && (
                     <>

@@ -14,25 +14,34 @@
 @import "tailwindcss";
 
 @theme {
-  /* ACT Brand Colors */
-  --color-act-dark:       #0A1410;
-  --color-act-green:      #1B3022;
-  --color-act-green-mid:  #2C4A35;
-  --color-act-orange:     #D35400;
-  --color-act-gold:       #F39C12;
-  --color-act-cream:      #FCF9F2;
+  /* ACT Brand Colors — aligned with Landing Formation IA charter */
+  --color-act-dark:        #0A1410;
+  --color-act-dark-deep:   #070E1C;
+  --color-act-green:       #1B3022;
+  --color-act-green-mid:   #2C4A35;
+  --color-act-orange:      #D35400;
+  --color-act-orange-hot:  #FF6B00;
+  --color-act-gold:        #F39C12;
+  --color-act-cream:       #FCF9F2;
+  --color-act-muted:       #A0A0A0;
 
-  /* Theme-aware colors (will be overridden by data-theme) */
-  --bg-primary: #070E1C;
-  --bg-secondary: #0A1410;
-  --bg-tertiary: #1B3022;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-glass: rgba(255, 255, 255, 0.05);
+  /* Accent variants (data-accent overrides) */
+  --color-accent-gold:     #F39C12;
+  --color-accent-gold-hot: #FFB52E;
+  --color-accent-red:      #C0392B;
+  --color-accent-red-hot:  #E74C3C;
 
-  --text-primary: #FFFFFF;
+  /* Theme-aware colors — main bg is now act-dark (#0A1410), "deep" is darker */
+  --bg-primary:   #0A1410;
+  --bg-secondary: #070E1C;
+  --bg-tertiary:  #1B3022;
+  --bg-card:      rgba(255, 255, 255, 0.03);
+  --bg-glass:     rgba(255, 255, 255, 0.05);
+
+  --text-primary:   #FFFFFF;
   --text-secondary: #E0E0E0;
-  --text-muted: #A0A0A0;
-  --text-inverse: #0A1410;
+  --text-muted:     #A0A0A0;
+  --text-inverse:   #0A1410;
 
   --border-color: rgba(255, 255, 255, 0.1);
   --border-light: rgba(255, 255, 255, 0.05);
@@ -40,6 +49,19 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  /* Landing charter — transparency scales */
+  --white-08: rgba(255, 255, 255, 0.08);
+  --white-14: rgba(255, 255, 255, 0.14);
+  --white-45: rgba(255, 255, 255, 0.45);
+  --white-60: rgba(255, 255, 255, 0.60);
+  --white-75: rgba(255, 255, 255, 0.75);
+
+  /* Landing charter — typography tokens */
+  --tracking-eyebrow: 0.24em;
+  --tracking-mono:    0.22em;
+  --tracking-btn:     0.18em;
+  --tracking-small:   0.14em;
 
   /* Clone-style font scale (rem-based, driven by root clamp) */
   --font-180: clamp(80px,  calc(16rem + 6px), 18rem);
@@ -53,8 +75,19 @@
 
   --font-display: "Lora", serif;
   --font-body:    "Poppins", sans-serif;
+  --font-label:   "Poppins", system-ui, sans-serif;
 
   --ease-uptown: cubic-bezier(0.6, 0.08, 0.02, 0.99);
+}
+
+/* Accent variants (applied via [data-accent="gold" | "red"]) */
+[data-accent="gold"] {
+  --color-act-orange:     #F39C12;
+  --color-act-orange-hot: #FFB52E;
+}
+[data-accent="red"] {
+  --color-act-orange:     #C0392B;
+  --color-act-orange-hot: #E74C3C;
 }
 
 /* ── Responsive root font (clone approach: anchored on 1920px) ── */
@@ -78,8 +111,8 @@ html {
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #0A1410;
-  color: #fff;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
@@ -912,10 +945,10 @@ h1, h2, h3, h4, h5, h6 {
    THEME SYSTEM - Dark & Light Mode
    ══════════════════════════════════════════════════════ */
 
-/* Dark Theme (default) */
+/* Dark Theme (default) — aligned with Landing charter: body=act-dark, deep=act-dark-deep */
 [data-theme="dark"] {
-  --bg-primary: #070E1C;
-  --bg-secondary: #0A1410;
+  --bg-primary: #0A1410;
+  --bg-secondary: #070E1C;
   --bg-tertiary: #1B3022;
   --bg-card: rgba(255, 255, 255, 0.03);
   --bg-glass: rgba(255, 255, 255, 0.05);
@@ -932,12 +965,12 @@ h1, h2, h3, h4, h5, h6 {
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
 
-  /* Navbar scrolled background */
-  --navbar-bg-scrolled: rgba(5, 9, 18, 0.88);
-  
+  /* Navbar scrolled background — anchored on act-dark */
+  --navbar-bg-scrolled: rgba(10, 20, 16, 0.88);
+
   /* Menu overlay */
   --menu-bg: #0A1410;
-  
+
   /* Grain overlay */
   --grain-opacity: 0.032;
 }

@@ -12,7 +12,7 @@ import CTASection from "@/components/layout/CTASection";
 /* ── Tokens ─────────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;
 const ORANGE = "#D35400";
-const BG = "#070E1C";
+const BG = "#0A1410";
 
 /* ── Icônes secteurs ─────────────────────────────────────── */
 const SECTEUR_ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; color?: string }>> = {
@@ -68,7 +68,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to bottom, rgba(7,14,28,0.55) 0%, rgba(7,14,28,0.45) 40%, rgba(7,14,28,0.88) 75%, rgba(7,14,28,1) 100%)",
+              "linear-gradient(to bottom, rgba(10,20,16,0.55) 0%, rgba(10,20,16,0.45) 40%, rgba(10,20,16,0.88) 75%, rgba(10,20,16,1) 100%)",
           }}
         />
 

@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<!-- saved from url=(0316)https://c930d029-3a79-40ea-902f-b40789456f7a.claudeusercontent.com/v1/design/projects/c930d029-3a79-40ea-902f-b40789456f7a/serve/Charte%20Graphique%20ACT-print.html?t=7613b40965006442e171212cc2deb376d79ede4582d5cf64bd9d47f36e19318e.dcbad5cc-c6e4-4c8c-9302-168ca53914b6.7f0be764-0296-45b7-bd99-2b29c8688caa.1776694446 -->
+<html lang="fr" style="--font-display: &#39;Instrument Serif&#39;, &#39;Times New Roman&#39;, serif;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style data-omelette-injected="">html,body{background:transparent}</style><script data-omelette-injected="">(()=>{var W=["https://claude.ai","https://preview.claude.ai","https://eap-omelette.claude.ai"];var Y=30000;document.addEventListener("DOMContentLoaded",()=>{const D="transform-react-jsx-source";document.querySelectorAll('script[type="text/babel"],script[type="text/jsx"]').forEach((C,F)=>{const Q=C.getAttribute("data-plugins")||"";if(Q.indexOf(D)<0){C.setAttribute("data-plugins",Q?`${Q},${D}`:D)}if(!C.hasAttribute("data-filename")){C.setAttribute("data-filename",C.getAttribute("src")||`inline-${F}`)}})});var K=window.parent;if(K&&K!==window){const D=(k,f)=>{try{K.postMessage({__omelette_log:true,type:k,data:f},"*")}catch{}};["log","warn","error"].forEach((k)=>{const f=console[k];console[k]=(...w)=>{const z=w.map((h)=>{try{return typeof h==="object"?JSON.stringify(h):String(h)}catch{try{return String(h)}catch{return"[unstringifiable]"}}}).join(" ");D(k,z);f.apply(console,w)}});window.addEventListener("error",(k)=>{const f=k.target;if(f&&f!==window&&f.tagName){const w=f.src||f.href||"";D("resource_error",`${f.tagName} failed to load: ${w}`)}else{D("error",`${k.message||"Unknown error"} at ${k.filename||"?"}:${k.lineno||0}:${k.colno||0}`)}},true);window.addEventListener("unhandledrejection",(k)=>{const f=k.reason;const w=f instanceof Error?`${f.message} ${f.stack}`:String(f);D("error",`Unhandled rejection: ${w}`)});const C=()=>{try{K.postMessage({type:"omelette:height",height:document.documentElement.scrollHeight},"*")}catch{}};if(document.readyState==="complete")C();else window.addEventListener("load",C);if(window.ResizeObserver)new ResizeObserver(C).observe(document.documentElement);const F={};let Q=0;window.claude={complete(k){return new Promise((f,w)=>{if(!W.length){w(new Error("claude.complete: no parent origin"));return}const z=`c${++Q}`;const h=()=>setTimeout(()=>{delete F[z];w(new Error(`claude.complete: no data for ${Y/1000}s`))},Y);const J=h();F[z]={resolve:f,reject:w,text:"",t:J,arm:h};try{for(const V of W){K.postMessage({__om_api:true,id:z,body:k},V)}}catch(V){clearTimeout(J);delete F[z];w(V)}})}};const X=(k)=>{try{return JSON.stringify(k)}catch{return JSON.stringify(String(k))}};window.addEventListener("message",(k)=>{if(W.indexOf(k.origin)<0)return;if(k.source!==K)return;const f=k.data;if(!f)return;if(f.__om_api_r){const h=F[f.id];if(!h)return;if(f.error!=null){clearTimeout(h.t);delete F[f.id];h.reject(new Error(f.error));return}if(f.chunk!=null){clearTimeout(h.t);h.t=h.arm();h.text+=f.chunk;return}if(f.done){clearTimeout(h.t);delete F[f.id];h.resolve(f.text!=null?f.text:h.text);return}return}if(!f.__om_eval)return;const w=f;const z=(h)=>{k.source.postMessage({...h,__om_eval_r:1,id:w.id},k.origin)};try{const h=(0,eval)(w.code);if(h&&typeof h.then==="function"){h.then((J)=>z({ok:1,v:X(J)}),(J)=>z({ok:0,e:String(J)}))}else{z({ok:1,v:X(h)})}}catch(h){z({ok:0,e:String(h)})}})}})();
+</script>
+
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Charte Graphique — ACT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./Charte Graphique — ACT_files/css2" rel="stylesheet">
+<script src="./Charte Graphique — ACT_files/deck-stage.js.téléchargement"></script>
+<style>
+  :root {
+    /* ACT Brand Colors — extracted from logo */
+    --act-forest: #1E5631;       /* Vert forêt — primaire */
+    --act-forest-deep: #0F3A1F;  /* Deep variant */
+    --act-forest-soft: #2D7A47;
+    --act-terracotta: #C1272D;   /* Rouge brique */
+    --act-terracotta-deep: #8B1A1F;
+    --act-ochre: #F39200;        /* Orange ocre */
+    --act-ochre-soft: #F7B84B;
+    --act-sand: #F5EFE4;         /* Crème/sable */
+    --act-sand-deep: #E8DFC9;
+    --act-ink: #0A0A0A;          /* Noir profond */
+    --act-paper: #FAF7F1;        /* Off-white chaud */
+    --act-muted: #6B6157;
+
+    --font-display: 'Instrument Serif', 'Times New Roman', serif;
+    --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; }
+  body { font-family: var(--font-sans); color: var(--act-ink); -webkit-font-smoothing: antialiased; }
+
+  /* ===== Slide shell ===== */
+  .slide {
+    width: 1920px; height: 1080px;
+    background: var(--act-paper);
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    color: var(--act-ink);
+  }
+  .slide.dark { background: var(--act-ink); color: var(--act-paper); }
+  .slide.forest { background: var(--act-forest); color: var(--act-paper); }
+  .slide.sand { background: var(--act-sand); }
+  .slide.terracotta { background: var(--act-terracotta); color: var(--act-paper); }
+
+  /* ===== Chrome: header / footer ===== */
+  .chrome-top, .chrome-bottom {
+    position: absolute;
+    left: 80px; right: 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: currentColor;
+    opacity: 0.55;
+  }
+  .chrome-top { top: 48px; }
+  .chrome-bottom { bottom: 48px; }
+  .chrome-bottom .page-num { font-variant-numeric: tabular-nums; }
+
+  /* ===== Typography ===== */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--act-terracotta);
+    margin-bottom: 32px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px; height: 1px; background: currentColor; display: inline-block;
+  }
+  .dark .eyebrow, .forest .eyebrow, .terracotta .eyebrow { color: var(--act-ochre); }
+
+  h1.display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 200px;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+  h1.display em { color: var(--act-terracotta); font-style: italic; }
+  .dark h1.display em, .forest h1.display em { color: var(--act-ochre); }
+
+  h2.title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  h2.title em { color: var(--act-terracotta); font-style: italic; }
+  .dark h2.title em, .forest h2.title em { color: var(--act-ochre); }
+
+  h3.section {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+
+  .body-lg { font-size: 28px; line-height: 1.45; font-weight: 400; max-width: 900px; }
+  .body { font-size: 22px; line-height: 1.5; font-weight: 400; max-width: 720px; }
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--act-muted);
+  }
+  .dark .mono-label, .forest .mono-label, .terracotta .mono-label { color: rgba(255,255,255,0.6); }
+
+  /* ===== Logo wordmark ===== */
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    display: inline-flex; align-items: baseline; gap: 0;
+  }
+  .wordmark .a { color: var(--act-forest); }
+  .wordmark .c { color: var(--act-ochre); }
+  .wordmark .t { color: var(--act-terracotta); }
+  .dark .wordmark .a { color: var(--act-forest-soft); }
+
+  /* ===== Cover ===== */
+  .cover {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    height: 100%;
+  }
+  .cover-left {
+    padding: 120px 80px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .cover-right {
+    background: var(--act-forest);
+    color: var(--act-paper);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-right::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 40%, rgba(243,146,0,0.25), transparent 50%);
+  }
+
+  /* ===== Grid / dividers ===== */
+  .divider-line {
+    position: absolute;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  /* ===== Color swatches ===== */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+    width: 100%;
+  }
+  .swatch {
+    aspect-ratio: 1 / 1.3;
+    border-radius: 8px;
+    padding: 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .swatch .s-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .swatch .s-name { font-family: var(--font-display); font-size: 36px; line-height: 1; margin-top: auto; }
+  .swatch .s-values { font-family: var(--font-mono); font-size: 11px; line-height: 1.6; margin-top: 14px; opacity: 0.75; }
+
+  /* ===== Logo showcase ===== */
+  .logo-lockup-card {
+    background: var(--act-sand);
+    border-radius: 12px;
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px;
+  }
+  .logo-lockup-card.dark { background: var(--act-ink); }
+  .logo-lockup-card.forest { background: var(--act-forest); }
+  .logo-lockup-card.terracotta { background: var(--act-terracotta); }
+  .logo-lockup-card.paper { background: var(--act-paper); border: 1px solid rgba(0,0,0,0.08); }
+
+  /* ===== SVG logo (recreated from provided PNG) ===== */
+  .act-logo-svg { width: 100%; height: 100%; }
+  .act-logo-svg.mono-white * { fill: var(--act-paper) !important; }
+  .act-logo-svg.mono-black * { fill: var(--act-ink) !important; }
+
+  /* ===== Typography scale visual ===== */
+  .type-stack { display: flex; flex-direction: column; gap: 40px; }
+  .type-row {
+    display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: baseline;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(10,10,10,0.08);
+  }
+  .dark .type-row, .forest .type-row { border-bottom-color: rgba(255,255,255,0.1); }
+  .type-meta { display: flex; flex-direction: column; gap: 4px; }
+  .type-sample { font-weight: 400; color: currentColor; }
+
+  /* ===== Usage cards ===== */
+  .do-dont {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .usage-card {
+    padding: 40px;
+    border-radius: 12px;
+    background: var(--act-sand);
+    min-height: 360px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .usage-card.bad { background: #F0D9D9; }
+  .usage-card .tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--act-forest);
+    color: var(--act-paper);
+    align-self: flex-start;
+  }
+  .usage-card.bad .tag { background: var(--act-terracotta); }
+
+  /* ===== Marketing mocks ===== */
+  .mock-browser {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .mock-tab {
+    background: #EDEAE3;
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .mock-dot { width: 12px; height: 12px; border-radius: 50%; background: #D0CCC2; }
+
+  .mock-social {
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.18);
+    position: relative;
+  }
+
+  /* ===== Africa shape pattern decorative ===== */
+  .decor-shape {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.06;
+  }
+
+  /* ===== Helpers ===== */
+  .flex { display: flex; }
+  .col { flex-direction: column; }
+  .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; }
+  .gap-48 { gap: 48px; }
+  .pad-frame { padding: 140px 120px; }
+  .pad-frame-tight { padding: 110px 100px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+  /* ===== Tweaks panel ===== */
+  #tweaks-panel {
+    position: fixed; bottom: 90px; right: 24px;
+    background: rgba(10,10,10,0.96);
+    color: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    z-index: 2147483600;
+    width: 280px;
+    display: none;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+  }
+  #tweaks-panel.open { display: block; }
+  #tweaks-panel h4 {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    opacity: 0.6; margin-bottom: 14px; font-weight: 500;
+  }
+  #tweaks-panel .tweak-row { margin-bottom: 18px; }
+  #tweaks-panel .tweak-row label { display: block; margin-bottom: 6px; opacity: 0.75; font-size: 12px; }
+  #tweaks-panel select, #tweaks-panel input {
+    width: 100%; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff; padding: 8px 10px; border-radius: 6px;
+    font-family: inherit; font-size: 13px;
+  }
+
+</style>
+<style id="deck-stage-print-page">@page { size: 1920px 1080px; margin: 0; } @media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; overflow: visible !important; height: auto !important; } * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style><style id="tweak-overrides">
+      h1.display em, h2.title em, .type-sample em {
+        color: var(--act-terracotta) !important;
+      }
+    </style></head>
+<body>
+
+<script type="application/json" id="edit-mode-defaults">
+</script>
+<script>
+  // Tweaks defaults
+  window.ACT_TWEAKS = /*EDITMODE-BEGIN*/{
+    "accentMode": "terracotta",
+    "displayFont": "Instrument Serif",
+    "coverVariant": "A"
+  }/*EDITMODE-END*/;
+</script>
+
+<deck-stage width="1920" height="1080"><template shadowrootmode="open"><style>
+    :host {
+      position: fixed;
+      inset: 0;
+      display: block;
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .canvas {
+      position: relative;
+      transform-origin: center center;
+      flex-shrink: 0;
+      background: #fff;
+      will-change: transform;
+    }
+
+    /* Slides live in light DOM (via <slot>) so authored CSS still applies.
+       We absolutely position each slotted child to stack them. */
+    ::slotted(*) {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    ::slotted([data-deck-active]) {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* Tap zones for mobile — back/forward thirds like Stories.
+       Transparent, no visible UI, don't block the overlay. */
+    .tapzones {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      z-index: 2147482000;
+      pointer-events: none;
+    }
+    .tapzone {
+      flex: 1;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Only activate tap zones on coarse pointers (touch devices). */
+    @media (hover: hover) and (pointer: fine) {
+      .tapzones { display: none; }
+    }
+
+    .overlay {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 6px) scale(0.92);
+      filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      background: #000;
+      color: #fff;
+      border-radius: 999px;
+      font-size: 12px;
+      font-feature-settings: "tnum" 1;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease, transform 260ms cubic-bezier(.2,.8,.2,1), filter 260ms ease;
+      transform-origin: center bottom;
+      z-index: 2147483000;
+      user-select: none;
+    }
+    .overlay[data-visible] {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0) scale(1);
+      filter: blur(0);
+    }
+
+    .btn {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      color: inherit;
+      font: inherit;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.72);
+      transition: background 140ms ease, color 140ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .btn:active { background: rgba(255,255,255,0.18); }
+    .btn:focus { outline: none; }
+    .btn:focus-visible { outline: none; }
+    .btn::-moz-focus-inner { border: 0; }
+    .btn svg { width: 14px; height: 14px; display: block; }
+    .btn.reset {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0 10px 0 12px;
+      gap: 6px;
+      color: rgba(255,255,255,0.72);
+    }
+    .btn.reset .kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 10px;
+      line-height: 1;
+      color: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+    }
+
+    .count {
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+      font-weight: 500;
+      padding: 0 8px;
+      min-width: 42px;
+      text-align: center;
+      font-size: 12px;
+    }
+    .count .sep { color: rgba(255,255,255,0.45); margin: 0 3px; font-weight: 400; }
+    .count .total { color: rgba(255,255,255,0.55); }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255,255,255,0.18);
+      margin: 0 2px;
+    }
+
+    /* ── Print: one page per slide, no chrome ────────────────────────────
+       The screen layout stacks every slide at inset:0 inside a scaled
+       canvas; for print we want them in document flow at the authored
+       design size so the browser paginates one slide per sheet. The
+       @page size is set from the width/height attributes via the inline
+       <style id="deck-stage-print-page"> that connectedCallback injects
+       into <head> (the @page at-rule has no effect inside shadow DOM). */
+    @media print {
+      :host {
+        position: static;
+        inset: auto;
+        background: none;
+        overflow: visible;
+        color: inherit;
+      }
+      .stage { position: static; display: block; }
+      .canvas {
+        transform: none !important;
+        width: auto !important;
+        height: auto !important;
+        background: none;
+        will-change: auto;
+      }
+      ::slotted(*) {
+        position: relative !important;
+        inset: auto !important;
+        width: var(--deck-design-w) !important;
+        height: var(--deck-design-h) !important;
+        box-sizing: border-box !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto;
+        break-after: page;
+        page-break-after: always;
+        break-inside: avoid;
+        overflow: hidden;
+      }
+      ::slotted(*:last-child) {
+        break-after: auto;
+        page-break-after: auto;
+      }
+      .overlay, .tapzones { display: none !important; }
+    }
+  </style><div class="stage"><div class="canvas" style="width: 1920px; height: 1080px; --deck-design-w: 1920px; --deck-design-h: 1080px; transform: scale(0.683333);"><slot></slot></div></div><div class="tapzones export-hidden" aria-hidden="true"><div class="tapzone tapzone--back"></div><div class="tapzone tapzone--mid" style="pointer-events: none;"></div><div class="tapzone tapzone--fwd"></div></div><div class="overlay export-hidden" role="toolbar" aria-label="Deck controls" data-visible="">
+        <button class="btn prev" type="button" aria-label="Previous slide" title="Previous (←)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"></path></svg>
+        </button>
+        <span class="count" aria-live="polite"><span class="current">1</span><span class="sep">/</span><span class="total">16</span></span>
+        <button class="btn next" type="button" aria-label="Next slide" title="Next (→)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"></path></svg>
+        </button>
+        <span class="divider"></span>
+        <button class="btn reset" type="button" aria-label="Reset to first slide" title="Reset (R)">Reset<span class="kbd">R</span></button>
+      </div></template>
+
+  <!-- ============================================================ -->
+  <!-- 01 — COVER -->
+  <!-- ============================================================ -->
+  <section class="slide sand" data-label="Cover" data-screen-label="01 Cover" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="0" data-deck-active="">
+    <div class="cover">
+      <div class="cover-left">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div style="width:48px; height:48px;">
+            <svg viewBox="0 0 100 100" style="width:100%; height:100%;"><circle cx="50" cy="50" r="6" fill="#C1272D"></circle><circle cx="50" cy="50" r="18" fill="none" stroke="#C1272D" stroke-width="3"></circle><circle cx="50" cy="50" r="32" fill="none" stroke="#C1272D" stroke-width="3" opacity="0.6"></circle></svg>
+          </div>
+          <div class="mono-label" style="color:var(--act-ink);">ACT / Africa Centred Technology</div>
+        </div>
+
+        <div>
+          <div class="eyebrow">Brand Guidelines · v1.0 · 2026</div>
+          <h1 class="display" style="font-size: 180px;">Charte<br><em>graphique</em></h1>
+          <p class="body-lg" style="margin-top:48px; color: var(--act-muted); max-width: 640px;">
+            Le système visuel qui porte la voix d'ACT — conseil, ingénierie et formation en IT &amp; Intelligence Artificielle, pensés pour et depuis le continent.
+          </p>
+        </div>
+
+        <div style="display:flex; justify-content: space-between; align-items: flex-end;">
+          <div class="mono-label">Marketing · Digital · Social</div>
+          <div class="mono-label">01 / 16</div>
+        </div>
+      </div>
+      <div class="cover-right">
+        <!-- Large stylized Africa shape -->
+        <svg viewBox="0 0 600 700" style="width: 78%; height: auto; position: relative; z-index: 2;">
+          <g>
+            <!-- North lobe (green) -->
+            <path d="M120,140 Q180,80 280,90 Q380,100 420,160 L400,240 Q340,250 280,230 Q220,220 170,240 Q130,220 120,140 Z" fill="#2D7A47"></path>
+            <!-- Mid band (ochre) -->
+            <path d="M170,240 Q220,220 280,230 Q340,250 400,240 L410,320 Q340,350 260,330 Q200,320 160,340 Q145,290 170,240 Z" fill="#F39200"></path>
+            <!-- Lower body (terracotta) -->
+            <path d="M160,340 Q200,320 260,330 Q340,350 410,320 L430,420 Q400,500 360,560 Q320,620 280,620 Q240,610 220,560 Q190,500 170,440 Q150,390 160,340 Z" fill="#C1272D"></path>
+            <!-- Madagascar dot -->
+            <ellipse cx="470" cy="500" rx="14" ry="32" fill="#C1272D" transform="rotate(20 470 500)"></ellipse>
+          </g>
+          <!-- Signal waves -->
+          <g stroke="#C1272D" stroke-width="6" fill="none" stroke-linecap="round">
+            <path d="M380,180 Q420,160 440,180"></path>
+            <path d="M370,150 Q430,120 470,150" opacity="0.7"></path>
+            <path d="M360,120 Q440,80 500,120" opacity="0.4"></path>
+          </g>
+        </svg>
+        <div style="position: absolute; bottom: 60px; left: 60px; right: 60px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; display: flex; justify-content: space-between;">
+          <span>N 0°</span><span>Afrique · Africa · إفريقيا</span><span>E 25°</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 02 — TABLE OF CONTENTS -->
+  <!-- ============================================================ -->
+  <section class="slide sand" data-label="Sommaire" data-screen-label="02 Sommaire" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="1">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>Sommaire</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">02 / 16</span>
+    </div>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+      <div class="eyebrow">Ce que contient ce document</div>
+      <h2 class="title" style="margin-bottom: 80px;">Sommaire.</h2>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; row-gap: 32px;">
+        <div class="toc-row" style="display: flex; gap: 32px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.15); padding-top: 24px;">
+          <div class="mono-label" style="min-width: 60px;">01</div>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 40px; line-height: 1;">La marque</div>
+            <div class="mono-label" style="margin-top: 8px;">Positionnement · Valeurs · Voix</div>
+          </div>
+        </div>
+        <div class="toc-row" style="display: flex; gap: 32px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.15); padding-top: 24px;">
+          <div class="mono-label" style="min-width: 60px;">02</div>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 40px; line-height: 1;">Logo</div>
+            <div class="mono-label" style="margin-top: 8px;">Construction · Déclinaisons · Usages</div>
+          </div>
+        </div>
+        <div class="toc-row" style="display: flex; gap: 32px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.15); padding-top: 24px;">
+          <div class="mono-label" style="min-width: 60px;">03</div>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 40px; line-height: 1;">Couleurs</div>
+            <div class="mono-label" style="margin-top: 8px;">Palette · Codes · Combinaisons</div>
+          </div>
+        </div>
+        <div class="toc-row" style="display: flex; gap: 32px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.15); padding-top: 24px;">
+          <div class="mono-label" style="min-width: 60px;">04</div>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 40px; line-height: 1;">Typographie</div>
+            <div class="mono-label" style="margin-top: 8px;">Familles · Hiérarchie · Échelles</div>
+          </div>
+        </div>
+        <div class="toc-row" style="display: flex; gap: 32px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.15); padding-top: 24px;">
+          <div class="mono-label" style="min-width: 60px;">05</div>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 40px; line-height: 1;">Applications</div>
+            <div class="mono-label" style="margin-top: 8px;">Web · Social · Publicités</div>
+          </div>
+        </div>
+        <div class="toc-row" style="display: flex; gap: 32px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.15); padding-top: 24px;">
+          <div class="mono-label" style="min-width: 60px;">06</div>
+          <div>
+            <div style="font-family: var(--font-display); font-size: 40px; line-height: 1;">Do &amp; Don't</div>
+            <div class="mono-label" style="margin-top: 8px;">Bons usages · À éviter</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 03 — SECTION DIVIDER: BRAND -->
+  <!-- ============================================================ -->
+  <section class="slide forest" data-label="01 La marque" data-screen-label="03 01 La marque" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="2">
+    <div class="chrome-top">
+      <span style="color: rgba(255,255,255,0.6);">ACT · Brand Guidelines</span>
+      <span style="color: rgba(255,255,255,0.6);">Chapitre 01</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">03 / 16</span>
+    </div>
+
+    <!-- Large number bg -->
+    <div style="position: absolute; top: 60px; right: 80px; font-family: var(--font-display); font-size: 600px; line-height: 0.8; color: rgba(255,255,255,0.06); font-style: italic;">01</div>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:flex-end; position: relative; z-index: 2;">
+      <div class="eyebrow">Chapitre 01</div>
+      <h2 class="title" style="max-width: 1500px;">La marque<br>qui <em>connecte</em> l'Afrique<br>à la technologie.</h2>
+      <p class="body-lg" style="margin-top: 48px; opacity: 0.8;">
+        ACT est un partenaire de transformation. Conseil, ingénierie, formation — trois leviers pour déployer l'IT et l'IA au service du continent.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 04 — POSITIONING STATEMENT -->
+  <!-- ============================================================ -->
+  <section class="slide" data-label="Positionnement" data-screen-label="04 Positionnement" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="3">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>01 · Positionnement</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">04 / 16</span>
+    </div>
+
+    <div class="pad-frame" style="height:100%; display:grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: center;">
+      <div>
+        <div class="eyebrow">Positionnement</div>
+        <h2 class="title">Africa<br>Centred<br><em>Technology</em>.</h2>
+        <p class="body-lg" style="margin-top: 48px; color: var(--act-muted);">
+          Nous ne faisons pas de la tech <em>pour</em> l'Afrique. Nous la construisons <em>depuis</em> l'Afrique, avec ses talents, ses contextes et ses ambitions — pour les entreprises et les individus.
+        </p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div style="background: var(--act-sand); padding: 40px; border-radius: 12px; border-left: 4px solid var(--act-forest);">
+          <div class="mono-label" style="color: var(--act-forest);">01 · Conseil</div>
+          <div style="font-family: var(--font-display); font-size: 44px; line-height: 1.05; margin-top: 12px;">Stratégie data &amp; IA</div>
+          <p class="body" style="margin-top: 12px; color: var(--act-muted); font-size: 18px;">Cadrage, roadmap, gouvernance pour décideurs B2B.</p>
+        </div>
+        <div style="background: var(--act-sand); padding: 40px; border-radius: 12px; border-left: 4px solid var(--act-ochre);">
+          <div class="mono-label" style="color: var(--act-ochre);">02 · Ingénierie</div>
+          <div style="font-family: var(--font-display); font-size: 44px; line-height: 1.05; margin-top: 12px;">Build &amp; déploiement</div>
+          <p class="body" style="margin-top: 12px; color: var(--act-muted); font-size: 18px;">Plateformes, modèles, intégrations sur mesure.</p>
+        </div>
+        <div style="background: var(--act-sand); padding: 40px; border-radius: 12px; border-left: 4px solid var(--act-terracotta);">
+          <div class="mono-label" style="color: var(--act-terracotta);">03 · Formation</div>
+          <div style="font-family: var(--font-display); font-size: 44px; line-height: 1.05; margin-top: 12px;">Montée en compétences</div>
+          <p class="body" style="margin-top: 12px; color: var(--act-muted); font-size: 18px;">Programmes pour équipes (B2B) et apprenants (B2C).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 05 — SECTION DIVIDER: LOGO -->
+  <!-- ============================================================ -->
+  <section class="slide terracotta" data-label="02 Logo" data-screen-label="05 02 Logo" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="4">
+    <div class="chrome-top">
+      <span style="color: rgba(255,255,255,0.6);">ACT · Brand Guidelines</span>
+      <span style="color: rgba(255,255,255,0.6);">Chapitre 02</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">05 / 16</span>
+    </div>
+
+    <div style="position: absolute; top: 60px; right: 80px; font-family: var(--font-display); font-size: 600px; line-height: 0.8; color: rgba(255,255,255,0.1); font-style: italic;">02</div>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:flex-end;">
+      <div class="eyebrow">Chapitre 02</div>
+      <h2 class="title">Le logo.</h2>
+      <p class="body-lg" style="margin-top: 48px; opacity: 0.85;">
+        Une carte d'Afrique tricolore, traversée par un signal. Le continent comme point d'origine, la technologie comme onde propagée.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 06 — LOGO PRIMARY -->
+  <!-- ============================================================ -->
+  <section class="slide" data-label="Logo principal" data-screen-label="06 Logo principal" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="5">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>02 · Logo principal</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">06 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;">
+      <div>
+        <div class="eyebrow">Logo principal</div>
+        <h3 class="section" style="margin-bottom: 32px;">Version<br>horizontale.</h3>
+        <p class="body" style="color: var(--act-muted); margin-bottom: 40px;">
+          Le lockup horizontal est la version par défaut. Il associe la marque visuelle (Afrique + signal) au wordmark « ACT / Africa Centred Technology ».
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 40px;">
+          <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid rgba(0,0,0,0.1);">
+            <span class="mono-label">Taille min. print</span>
+            <span class="mono-label" style="color: var(--act-ink);">40 mm</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid rgba(0,0,0,0.1);">
+            <span class="mono-label">Taille min. écran</span>
+            <span class="mono-label" style="color: var(--act-ink);">120 px</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1);">
+            <span class="mono-label">Zone de protection</span>
+            <span class="mono-label" style="color: var(--act-ink);">= hauteur du « A »</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-lockup-card paper" style="aspect-ratio: 16/10;">
+        <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="Logo ACT" style="max-width: 90%; max-height: 90%; object-fit: contain;">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 07 — LOGO VARIANTS -->
+  <!-- ============================================================ -->
+  <section class="slide sand" data-label="Déclinaisons logo" data-screen-label="07 Déclinaisons logo" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="6">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>02 · Déclinaisons</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">07 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+      <div class="eyebrow">Déclinaisons</div>
+      <h3 class="section" style="margin-bottom: 56px;">Un logo, six déclinaisons.</h3>
+
+      <div class="grid-4">
+        <div>
+          <div class="logo-lockup-card paper">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 85%; max-height: 85%; object-fit: contain;">
+          </div>
+          <div class="mono-label" style="margin-top: 16px;">01 · Couleur / fond clair</div>
+        </div>
+        <div>
+          <div class="logo-lockup-card" style="background: var(--act-ink);">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 85%; max-height: 85%; object-fit: contain; filter: brightness(1.1);">
+          </div>
+          <div class="mono-label" style="margin-top: 16px;">02 · Couleur / fond sombre</div>
+        </div>
+        <div>
+          <div class="logo-lockup-card" style="background: var(--act-forest);">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 85%; max-height: 85%; object-fit: contain; filter: brightness(0) invert(1);">
+          </div>
+          <div class="mono-label" style="margin-top: 16px;">03 · Mono blanc / vert</div>
+        </div>
+        <div>
+          <div class="logo-lockup-card paper">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 85%; max-height: 85%; object-fit: contain; filter: brightness(0) saturate(100%);">
+          </div>
+          <div class="mono-label" style="margin-top: 16px;">04 · Mono noir</div>
+        </div>
+        <div>
+          <div class="logo-lockup-card" style="background: var(--act-terracotta); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 85%; max-height: 85%; object-fit: contain; filter: brightness(0) invert(1);">
+          </div>
+          <div class="mono-label" style="margin-top: 16px;">05 · Mono blanc / rouge</div>
+        </div>
+        <div>
+          <div class="logo-lockup-card paper" style="aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;">
+            <!-- Icon only -->
+            <svg viewBox="0 0 600 700" style="width: 70%; height: auto;">
+              <path d="M120,140 Q180,80 280,90 Q380,100 420,160 L400,240 Q340,250 280,230 Q220,220 170,240 Q130,220 120,140 Z" fill="#1E5631"></path>
+              <path d="M170,240 Q220,220 280,230 Q340,250 400,240 L410,320 Q340,350 260,330 Q200,320 160,340 Q145,290 170,240 Z" fill="#F39200"></path>
+              <path d="M160,340 Q200,320 260,330 Q340,350 410,320 L430,420 Q400,500 360,560 Q320,620 280,620 Q240,610 220,560 Q190,500 170,440 Q150,390 160,340 Z" fill="#C1272D"></path>
+              <ellipse cx="470" cy="500" rx="14" ry="32" fill="#C1272D" transform="rotate(20 470 500)"></ellipse>
+              <g stroke="#C1272D" stroke-width="12" fill="none" stroke-linecap="round">
+                <path d="M380,180 Q420,160 440,180"></path>
+                <path d="M370,150 Q430,120 470,150" opacity="0.7"></path>
+              </g>
+            </svg>
+          </div>
+          <div class="mono-label" style="margin-top: 16px;">06 · Symbole seul</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 08 — LOGO DON'TS -->
+  <!-- ============================================================ -->
+  <section class="slide" data-label="Logo — interdits" data-screen-label="08 Logo — interdits" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="7">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>02 · Interdits</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">08 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+      <div class="eyebrow" style="color: var(--act-terracotta);">À ne jamais faire</div>
+      <h3 class="section" style="margin-bottom: 48px;">Protégez l'intégrité<br>du logo.</h3>
+
+      <div class="grid-4" style="gap: 20px;">
+        <div>
+          <div style="aspect-ratio: 1/1; background: var(--act-sand); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 70%; max-height: 70%; object-fit: contain; transform: scaleX(1.6);">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Ne pas déformer</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: var(--act-sand); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 70%; max-height: 70%; object-fit: contain; filter: hue-rotate(220deg);">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Ne pas recolorer</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: linear-gradient(45deg, #F39200, #C1272D, #1E5631, #F39200); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 70%; max-height: 70%; object-fit: contain;">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Pas de fond chargé</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: var(--act-sand); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 40%; max-height: 40%; object-fit: contain;">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Respecter la taille min.</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: var(--act-sand); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 70%; max-height: 70%; object-fit: contain; transform: rotate(-22deg);">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Ne pas pivoter</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: var(--act-sand); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 70%; max-height: 70%; object-fit: contain; filter: blur(3px) drop-shadow(0 8px 16px rgba(0,0,0,0.3));">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Pas d'effets</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: #C1272D; border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 70%; max-height: 70%; object-fit: contain;">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:#fff; color:var(--act-terracotta); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Pas de conflit de couleur</div>
+        </div>
+        <div>
+          <div style="aspect-ratio: 1/1; background: var(--act-sand); border-radius: 10px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding: 40px;">
+            <img src="./Charte Graphique — ACT_files/logo-act-full.png" alt="" style="max-width: 90%; max-height: 90%; object-fit: contain; position: absolute; left: 4px; bottom: 4px;">
+            <div style="position:absolute; top:12px; left:12px; width:24px; height:24px; background:var(--act-terracotta); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">✕</div>
+          </div>
+          <div class="mono-label" style="margin-top: 12px;">Respecter la zone de protection</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 09 — SECTION DIVIDER: COLORS -->
+  <!-- ============================================================ -->
+  <section class="slide dark" data-label="03 Couleurs" data-screen-label="09 03 Couleurs" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="8">
+    <div class="chrome-top">
+      <span style="color: rgba(255,255,255,0.6);">ACT · Brand Guidelines</span>
+      <span style="color: rgba(255,255,255,0.6);">Chapitre 03</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">09 / 16</span>
+    </div>
+
+    <div style="position: absolute; top: 60px; right: 80px; font-family: var(--font-display); font-size: 600px; line-height: 0.8; color: rgba(255,255,255,0.08); font-style: italic;">03</div>
+
+    <!-- Floating color discs -->
+    <div style="position: absolute; top: 160px; left: 120px; width: 280px; height: 280px; border-radius: 50%; background: var(--act-forest); filter: blur(2px);"></div>
+    <div style="position: absolute; top: 380px; left: 360px; width: 220px; height: 220px; border-radius: 50%; background: var(--act-ochre); mix-blend-mode: screen;"></div>
+    <div style="position: absolute; top: 280px; left: 220px; width: 180px; height: 180px; border-radius: 50%; background: var(--act-terracotta); mix-blend-mode: screen;"></div>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:flex-end; position: relative; z-index: 2;">
+      <div class="eyebrow">Chapitre 03</div>
+      <h2 class="title">Couleurs.</h2>
+      <p class="body-lg" style="margin-top: 48px; opacity: 0.75; max-width: 900px;">
+        Trois couleurs signatures — vert, ocre, rouge — empruntées aux géographies du continent. Deux neutres — sable et encre — pour laisser respirer.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 10 — COLOR PALETTE -->
+  <!-- ============================================================ -->
+  <section class="slide sand" data-label="Palette principale" data-screen-label="10 Palette principale" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="9">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>03 · Palette principale</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">10 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px;">
+        <div>
+          <div class="eyebrow">Palette principale</div>
+          <h3 class="section">Signature chromatique.</h3>
+        </div>
+        <p class="body" style="max-width: 420px; color: var(--act-muted);">
+          Chaque teinte a une fonction. Le vert ancre, l'ocre chauffe, le rouge agit.
+        </p>
+      </div>
+
+      <div class="palette-grid">
+        <div class="swatch" style="background: var(--act-forest); color: var(--act-paper);">
+          <div>
+            <div class="s-label">Primaire · 01</div>
+          </div>
+          <div>
+            <div class="s-name">Forêt</div>
+            <div class="s-values">
+              HEX &nbsp;#1E5631<br>
+              RGB &nbsp;30 · 86 · 49<br>
+              CMJN 80 · 40 · 100 · 40<br>
+              PANTONE 357 C
+            </div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background: var(--act-ochre); color: var(--act-ink);">
+          <div>
+            <div class="s-label">Primaire · 02</div>
+          </div>
+          <div>
+            <div class="s-name">Ocre</div>
+            <div class="s-values">
+              HEX &nbsp;#F39200<br>
+              RGB &nbsp;243 · 146 · 0<br>
+              CMJN 0 · 50 · 100 · 0<br>
+              PANTONE 151 C
+            </div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background: var(--act-terracotta); color: var(--act-paper);">
+          <div>
+            <div class="s-label">Primaire · 03</div>
+          </div>
+          <div>
+            <div class="s-name">Terre&nbsp;cuite</div>
+            <div class="s-values">
+              HEX &nbsp;#C1272D<br>
+              RGB &nbsp;193 · 39 · 45<br>
+              CMJN 15 · 100 · 100 · 10<br>
+              PANTONE 186 C
+            </div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background: var(--act-ink); color: var(--act-paper);">
+          <div>
+            <div class="s-label">Neutre · 01</div>
+          </div>
+          <div>
+            <div class="s-name">Encre</div>
+            <div class="s-values">
+              HEX &nbsp;#0A0A0A<br>
+              RGB &nbsp;10 · 10 · 10<br>
+              CMJN 0 · 0 · 0 · 100<br>
+              PANTONE Black 6 C
+            </div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background: var(--act-sand-deep); color: var(--act-ink);">
+          <div>
+            <div class="s-label">Neutre · 02</div>
+          </div>
+          <div>
+            <div class="s-name">Sable</div>
+            <div class="s-values">
+              HEX &nbsp;#E8DFC9<br>
+              RGB &nbsp;232 · 223 · 201<br>
+              CMJN 8 · 10 · 22 · 0<br>
+              PANTONE 7527 C
+            </div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background: var(--act-paper); color: var(--act-ink); border: 1px solid rgba(0,0,0,0.08);">
+          <div>
+            <div class="s-label">Neutre · 03</div>
+          </div>
+          <div>
+            <div class="s-name">Papier</div>
+            <div class="s-values">
+              HEX &nbsp;#FAF7F1<br>
+              RGB &nbsp;250 · 247 · 241<br>
+              CMJN 1 · 2 · 5 · 0<br>
+              PANTONE 9140 C
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 11 — COLOR USAGE / PROPORTIONS -->
+  <!-- ============================================================ -->
+  <section class="slide" data-label="Proportions de couleur" data-screen-label="11 Proportions de couleur" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="10">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>03 · Proportions</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">11 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center;">
+      <div>
+        <div class="eyebrow">Proportions d'usage</div>
+        <h3 class="section">La règle<br>des 60 / 30 / 10.</h3>
+        <p class="body" style="color: var(--act-muted); margin-top: 32px;">
+          Les neutres dominent (60%) pour la lisibilité. Le vert structure (30%). Les couleurs chaudes accentuent (10%) — jamais plus, jamais partout.
+        </p>
+
+        <div style="margin-top: 48px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; gap: 14px; align-items: center;"><div style="width: 16px; height: 16px; background: var(--act-paper); border: 1px solid rgba(0,0,0,0.15); border-radius: 3px;"></div><span class="mono-label" style="color: var(--act-ink);">60% Neutres · Papier &amp; Sable</span></div>
+          <div style="display: flex; gap: 14px; align-items: center;"><div style="width: 16px; height: 16px; background: var(--act-forest); border-radius: 3px;"></div><span class="mono-label" style="color: var(--act-ink);">30% Primaire · Forêt</span></div>
+          <div style="display: flex; gap: 14px; align-items: center;"><div style="width: 16px; height: 16px; background: var(--act-ochre); border-radius: 3px;"></div><span class="mono-label" style="color: var(--act-ink);">7% Accent · Ocre</span></div>
+          <div style="display: flex; gap: 14px; align-items: center;"><div style="width: 16px; height: 16px; background: var(--act-terracotta); border-radius: 3px;"></div><span class="mono-label" style="color: var(--act-ink);">3% Accent · Terre cuite</span></div>
+        </div>
+      </div>
+
+      <!-- Proportion bar visualization -->
+      <div>
+        <div style="display: flex; height: 420px; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+          <div style="flex: 60; background: var(--act-paper); display: flex; align-items: flex-end; padding: 32px; border: 1px solid rgba(0,0,0,0.06);">
+            <div>
+              <div class="mono-label" style="color: var(--act-ink);">60%</div>
+              <div style="font-family: var(--font-display); font-size: 40px; line-height: 1; margin-top: 4px;">Neutres</div>
+            </div>
+          </div>
+          <div style="flex: 30; background: var(--act-forest); color: var(--act-paper); display: flex; align-items: flex-end; padding: 32px;">
+            <div>
+              <div class="mono-label" style="color: rgba(255,255,255,0.7);">30%</div>
+              <div style="font-family: var(--font-display); font-size: 40px; line-height: 1; margin-top: 4px;">Forêt</div>
+            </div>
+          </div>
+          <div style="flex: 7; background: var(--act-ochre); display: flex; align-items: flex-end; padding: 16px 12px;">
+            <div>
+              <div class="mono-label" style="color: rgba(0,0,0,0.6); font-size: 10px;">7%</div>
+            </div>
+          </div>
+          <div style="flex: 3; background: var(--act-terracotta); display: flex; align-items: flex-end; padding: 16px 8px;">
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+          <div style="padding: 24px; background: var(--act-sand); border-radius: 10px;">
+            <div class="mono-label">Web / Social</div>
+            <div style="font-family: var(--font-display); font-size: 22px; margin-top: 8px; line-height: 1.2;">Papier + Forêt dominants</div>
+          </div>
+          <div style="padding: 24px; background: var(--act-sand); border-radius: 10px;">
+            <div class="mono-label">Ads / Promo</div>
+            <div style="font-family: var(--font-display); font-size: 22px; margin-top: 8px; line-height: 1.2;">Ocre ou Rouge en aplat</div>
+          </div>
+          <div style="padding: 24px; background: var(--act-sand); border-radius: 10px;">
+            <div class="mono-label">Formel / Print</div>
+            <div style="font-family: var(--font-display); font-size: 22px; margin-top: 8px; line-height: 1.2;">Encre + Sable sobre</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 12 — SECTION DIVIDER: TYPOGRAPHY -->
+  <!-- ============================================================ -->
+  <section class="slide" data-label="04 Typographie" style="background: var(--act-ochre);" data-screen-label="12 04 Typographie" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="11">
+    <div class="chrome-top">
+      <span style="color: rgba(0,0,0,0.5);">ACT · Brand Guidelines</span>
+      <span style="color: rgba(0,0,0,0.5);">Chapitre 04</span>
+    </div>
+    <div class="chrome-bottom">
+      <span style="color: rgba(0,0,0,0.5);">v1.0 · 2026</span>
+      <span class="page-num" style="color: rgba(0,0,0,0.5);">12 / 16</span>
+    </div>
+
+    <div style="position: absolute; top: 60px; right: 80px; font-family: var(--font-display); font-size: 600px; line-height: 0.8; color: rgba(0,0,0,0.1); font-style: italic;">04</div>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:flex-end; position: relative; z-index: 2;">
+      <div class="eyebrow" style="color: var(--act-ink);">Chapitre 04</div>
+      <h2 class="title" style="color: var(--act-ink);">Typographie.</h2>
+      <p class="body-lg" style="margin-top: 48px; color: rgba(0,0,0,0.7); max-width: 900px;">
+        Un duo expressif. Le <em style="font-style: italic;">serif éditorial</em> affirme. La grotesque lit. Le monospace technicise.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 13 — TYPOGRAPHY DETAIL -->
+  <!-- ============================================================ -->
+  <section class="slide sand" data-label="Familles typo" data-screen-label="13 Familles typo" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="12">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>04 · Familles</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">13 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+      <div class="eyebrow">Familles typographiques</div>
+
+      <div class="type-stack" style="margin-top: 24px;">
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="mono-label" style="color: var(--act-terracotta);">01 · Display</div>
+            <div class="mono-label" style="color: var(--act-ink); font-size: 18px; letter-spacing: 0.02em; text-transform: none; margin-top: 4px;">Instrument Serif</div>
+            <div class="mono-label" style="margin-top: 2px;">Regular · Italic</div>
+          </div>
+          <div class="type-sample" style="font-family: var(--font-display); font-size: 120px; line-height: 0.9; letter-spacing: -0.03em;">
+            Ingénierie <em style="font-style: italic; color: var(--act-terracotta);">africaine</em>.
+          </div>
+        </div>
+
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="mono-label" style="color: var(--act-forest);">02 · Texte</div>
+            <div class="mono-label" style="color: var(--act-ink); font-size: 18px; letter-spacing: 0.02em; text-transform: none; margin-top: 4px;">Geist</div>
+            <div class="mono-label" style="margin-top: 2px;">Light · Regular · Medium · Bold</div>
+          </div>
+          <div class="type-sample" style="font-family: var(--font-sans); font-size: 44px; line-height: 1.15; font-weight: 400;">
+            Nous formons les talents, conseillons les dirigeants, construisons les plateformes d'IA du continent.
+          </div>
+        </div>
+
+        <div class="type-row" style="border-bottom: none;">
+          <div class="type-meta">
+            <div class="mono-label" style="color: var(--act-ochre);">03 · Mono</div>
+            <div class="mono-label" style="color: var(--act-ink); font-size: 18px; letter-spacing: 0.02em; text-transform: none; margin-top: 4px;">JetBrains Mono</div>
+            <div class="mono-label" style="margin-top: 2px;">Regular · Medium</div>
+          </div>
+          <div class="type-sample" style="font-family: var(--font-mono); font-size: 32px; line-height: 1.4; letter-spacing: 0.02em;">
+            ACT/2026 → data · ml · cloud · training<br>
+            <span style="color: var(--act-muted); font-size: 20px;">// eyebrows · labels · code · captions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 14 — SECTION DIVIDER: APPLICATIONS -->
+  <!-- ============================================================ -->
+  <section class="slide forest" data-label="05 Applications" data-screen-label="14 05 Applications" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="13">
+    <div class="chrome-top">
+      <span style="color: rgba(255,255,255,0.6);">ACT · Brand Guidelines</span>
+      <span style="color: rgba(255,255,255,0.6);">Chapitre 05</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">14 / 16</span>
+    </div>
+
+    <div style="position: absolute; top: 60px; right: 80px; font-family: var(--font-display); font-size: 600px; line-height: 0.8; color: rgba(255,255,255,0.07); font-style: italic;">05</div>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:flex-end; position: relative; z-index: 2;">
+      <div class="eyebrow">Chapitre 05</div>
+      <h2 class="title">Le système<br>en <em>mouvement</em>.</h2>
+      <p class="body-lg" style="margin-top: 48px; opacity: 0.8; max-width: 900px;">
+        Appliqué au web, au social et aux publicités digitales — la charte donne un visage reconnaissable à chaque prise de parole.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 15 — APPLICATIONS MOCKS -->
+  <!-- ============================================================ -->
+  <section class="slide sand" data-label="Applications" data-screen-label="15 Applications" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="14">
+    <div class="chrome-top">
+      <span>ACT · Brand Guidelines</span>
+      <span>05 · Applications marketing</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">15 / 16</span>
+    </div>
+
+    <div class="pad-frame-tight" style="height:100%; display:flex; flex-direction: column; justify-content: center;">
+      <div class="eyebrow" style="margin-bottom: 36px;">Web · Social · Publicités</div>
+
+      <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; align-items: stretch;">
+
+        <!-- WEB mock -->
+        <div>
+          <div class="mono-label" style="margin-bottom: 16px;">01 · Landing page</div>
+          <div class="mock-browser" style="height: 620px;">
+            <div class="mock-tab">
+              <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+              <div style="margin-left: 14px; padding: 6px 14px; background: #fff; border-radius: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--act-muted);">act.africa</div>
+            </div>
+            <div style="padding: 32px 40px; background: var(--act-paper); height: calc(100% - 48px); display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.08);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <svg viewBox="0 0 600 700" style="width: 28px; height: 32px;">
+                    <path d="M120,140 Q180,80 280,90 Q380,100 420,160 L400,240 Q340,250 280,230 Q220,220 170,240 Q130,220 120,140 Z" fill="#1E5631"></path>
+                    <path d="M170,240 Q220,220 280,230 Q340,250 400,240 L410,320 Q340,350 260,330 Q200,320 160,340 Q145,290 170,240 Z" fill="#F39200"></path>
+                    <path d="M160,340 Q200,320 260,330 Q340,350 410,320 L430,420 Q400,500 360,560 Q320,620 280,620 Q240,610 220,560 Q190,500 170,440 Q150,390 160,340 Z" fill="#C1272D"></path>
+                  </svg>
+                  <span style="font-family: var(--font-display); font-size: 20px; color: var(--act-forest);">ACT</span>
+                </div>
+                <div style="display: flex; gap: 24px; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--act-muted);">
+                  <span>Conseil</span><span>Ingénierie</span><span>Formation</span><span>Contact</span>
+                </div>
+              </div>
+              <div style="margin-top: 48px;">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--act-terracotta); letter-spacing: 0.12em; text-transform: uppercase;">— L'IA qui comprend l'Afrique</div>
+                <div style="font-family: var(--font-display); font-size: 72px; line-height: 0.95; letter-spacing: -0.03em; margin-top: 20px; max-width: 90%;">Construisons la <em style="color: var(--act-terracotta); font-style: italic;">tech</em> de demain, ensemble.</div>
+                <div style="margin-top: 28px; display: flex; gap: 12px;">
+                  <div style="padding: 12px 24px; background: var(--act-forest); color: var(--act-paper); border-radius: 999px; font-size: 14px;">Nos services →</div>
+                  <div style="padding: 12px 24px; background: transparent; color: var(--act-ink); border: 1px solid rgba(0,0,0,0.2); border-radius: 999px; font-size: 14px;">Étude de cas</div>
+                </div>
+              </div>
+              <div style="margin-top: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <div style="padding: 18px; background: var(--act-forest); color: var(--act-paper); border-radius: 8px;">
+                  <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7;">01</div>
+                  <div style="font-family: var(--font-display); font-size: 22px; margin-top: 6px; line-height: 1;">Conseil</div>
+                </div>
+                <div style="padding: 18px; background: var(--act-ochre); color: var(--act-ink); border-radius: 8px;">
+                  <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7;">02</div>
+                  <div style="font-family: var(--font-display); font-size: 22px; margin-top: 6px; line-height: 1;">Ingénierie</div>
+                </div>
+                <div style="padding: 18px; background: var(--act-terracotta); color: var(--act-paper); border-radius: 8px;">
+                  <div style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7;">03</div>
+                  <div style="font-family: var(--font-display); font-size: 22px; margin-top: 6px; line-height: 1;">Formation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LinkedIn post -->
+        <div>
+          <div class="mono-label" style="margin-bottom: 16px;">02 · Post LinkedIn</div>
+          <div class="mock-social" style="background: var(--act-forest); color: var(--act-paper); padding: 40px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--act-ochre);">— Nouvelle formation</div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 56px; line-height: 0.95; letter-spacing: -0.03em;">LLM pour <em style="color: var(--act-ochre); font-style: italic;">dirigeants</em> africains.</div>
+              <div style="margin-top: 20px; font-size: 14px; opacity: 0.8; line-height: 1.4;">4 semaines · 100% en ligne · Dakar · Abidjan · Casablanca</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <svg viewBox="0 0 600 700" style="width: 28px; height: 32px;">
+                <path d="M120,140 Q180,80 280,90 Q380,100 420,160 L400,240 Q340,250 280,230 Q220,220 170,240 Q130,220 120,140 Z" fill="#fff"></path>
+                <path d="M170,240 Q220,220 280,230 Q340,250 400,240 L410,320 Q340,350 260,330 Q200,320 160,340 Q145,290 170,240 Z" fill="#F39200"></path>
+                <path d="M160,340 Q200,320 260,330 Q340,350 410,320 L430,420 Q400,500 360,560 Q320,620 280,620 Q240,610 220,560 Q190,500 170,440 Q150,390 160,340 Z" fill="#F7B84B"></path>
+              </svg>
+              <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6;">act.africa/llm</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display ad -->
+        <div>
+          <div class="mono-label" style="margin-bottom: 16px;">03 · Bannière pub</div>
+          <div class="mock-social" style="background: var(--act-sand); color: var(--act-ink); padding: 36px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--act-terracotta);">Conseil IA</div>
+              </div>
+              <svg viewBox="0 0 600 700" style="width: 24px; height: 28px;">
+                <path d="M120,140 Q180,80 280,90 Q380,100 420,160 L400,240 Q340,250 280,230 Q220,220 170,240 Q130,220 120,140 Z" fill="#1E5631"></path>
+                <path d="M170,240 Q220,220 280,230 Q340,250 400,240 L410,320 Q340,350 260,330 Q200,320 160,340 Q145,290 170,240 Z" fill="#F39200"></path>
+                <path d="M160,340 Q200,320 260,330 Q340,350 410,320 L430,420 Q400,500 360,560 Q320,620 280,620 Q240,610 220,560 Q190,500 170,440 Q150,390 160,340 Z" fill="#C1272D"></path>
+              </svg>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 52px; line-height: 0.95; letter-spacing: -0.03em;">Votre roadmap <em style="color: var(--act-terracotta); font-style: italic;">IA</em>, en 30 jours.</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="padding: 10px 18px; background: var(--act-ink); color: var(--act-paper); border-radius: 999px; font-size: 13px;">Démarrer →</div>
+              <div style="font-family: var(--font-mono); font-size: 10px; color: var(--act-muted);">ACT / 2026</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 16 — CLOSING -->
+  <!-- ============================================================ -->
+  <section class="slide dark" data-label="Fin" data-screen-label="16 Fin" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="15">
+    <div class="chrome-top">
+      <span style="color: rgba(255,255,255,0.5);">ACT · Brand Guidelines</span>
+      <span style="color: rgba(255,255,255,0.5);">Fin</span>
+    </div>
+    <div class="chrome-bottom">
+      <span>v1.0 · 2026</span>
+      <span class="page-num">16 / 16</span>
+    </div>
+
+    <!-- Decorative africa silhouette -->
+    <svg viewBox="0 0 600 700" style="position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 700px; opacity: 0.5;">
+      <path d="M120,140 Q180,80 280,90 Q380,100 420,160 L400,240 Q340,250 280,230 Q220,220 170,240 Q130,220 120,140 Z" fill="#1E5631"></path>
+      <path d="M170,240 Q220,220 280,230 Q340,250 400,240 L410,320 Q340,350 260,330 Q200,320 160,340 Q145,290 170,240 Z" fill="#F39200"></path>
+      <path d="M160,340 Q200,320 260,330 Q340,350 410,320 L430,420 Q400,500 360,560 Q320,620 280,620 Q240,610 220,560 Q190,500 170,440 Q150,390 160,340 Z" fill="#C1272D"></path>
+      <g stroke="#C1272D" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8">
+        <path d="M380,180 Q420,160 440,180"></path>
+        <path d="M370,150 Q430,120 470,150" opacity="0.7"></path>
+        <path d="M360,120 Q440,80 500,120" opacity="0.4"></path>
+      </g>
+    </svg>
+
+    <div class="pad-frame" style="height:100%; display:flex; flex-direction:column; justify-content:center; position: relative; z-index: 2; max-width: 60%;">
+      <div class="eyebrow">Merci.</div>
+      <h2 class="title">Faisons<br><em>ensemble</em>.</h2>
+      <p class="body-lg" style="margin-top: 48px; opacity: 0.75;">
+        Cette charte est un socle vivant. Pour toute question sur son application, contactez l'équipe marketing.
+      </p>
+
+      <div style="margin-top: 80px; display: flex; gap: 64px;">
+        <div>
+          <div class="mono-label" style="color: rgba(255,255,255,0.5);">Version</div>
+          <div style="font-family: var(--font-display); font-size: 36px; margin-top: 4px;">v1.0 · Avril 2026</div>
+        </div>
+        <div>
+          <div class="mono-label" style="color: rgba(255,255,255,0.5);">Contact</div>
+          <div style="font-family: var(--font-display); font-size: 36px; margin-top: 4px;">brand@act.africa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- ========== TWEAKS ========== -->
+<div id="tweaks-panel">
+  <h4>Tweaks</h4>
+  <div class="tweak-row">
+    <label>Couleur d'accent (italiques)</label>
+    <select id="tk-accent">
+      <option value="terracotta">Terre cuite (rouge)</option>
+      <option value="ochre">Ocre (orange)</option>
+      <option value="forest">Forêt (vert)</option>
+    </select>
+  </div>
+  <div class="tweak-row">
+    <label>Police display</label>
+    <select id="tk-display">
+      <option value="Instrument Serif">Instrument Serif (éditorial)</option>
+      <option value="Playfair Display">Playfair Display</option>
+      <option value="DM Serif Display">DM Serif Display</option>
+      <option value="Geist">Geist (sans)</option>
+    </select>
+  </div>
+</div>
+
+<script>
+  // ========== Tweaks wiring ==========
+  const panel = document.getElementById('tweaks-panel');
+  const tkAccent = document.getElementById('tk-accent');
+  const tkDisplay = document.getElementById('tk-display');
+
+  function applyTweaks(t) {
+    const map = {
+      terracotta: 'var(--act-terracotta)',
+      ochre: 'var(--act-ochre)',
+      forest: 'var(--act-forest)',
+    };
+    document.documentElement.style.setProperty('--font-display', `'${t.displayFont}', 'Times New Roman', serif`);
+    // Override italic color via a dynamic style
+    let s = document.getElementById('tweak-overrides');
+    if (!s) { s = document.createElement('style'); s.id = 'tweak-overrides'; document.head.appendChild(s); }
+    s.textContent = `
+      h1.display em, h2.title em, .type-sample em {
+        color: ${map[t.accentMode]} !important;
+      }
+    `;
+    tkAccent.value = t.accentMode;
+    tkDisplay.value = t.displayFont;
+
+    // Load google font if needed
+    if (t.displayFont !== 'Instrument Serif' && !document.getElementById('gf-' + t.displayFont)) {
+      const link = document.createElement('link');
+      link.id = 'gf-' + t.displayFont;
+      link.rel = 'stylesheet';
+      link.href = `https://fonts.googleapis.com/css2?family=${t.displayFont.replace(/ /g,'+')}:ital,wght@0,400;1,400&display=swap`;
+      document.head.appendChild(link);
+    }
+  }
+
+  function persist(edits) {
+    window.parent.postMessage({type: '__edit_mode_set_keys', edits}, '*');
+  }
+
+  tkAccent.addEventListener('change', (e) => {
+    window.ACT_TWEAKS.accentMode = e.target.value;
+    applyTweaks(window.ACT_TWEAKS);
+    persist({accentMode: e.target.value});
+  });
+  tkDisplay.addEventListener('change', (e) => {
+    window.ACT_TWEAKS.displayFont = e.target.value;
+    applyTweaks(window.ACT_TWEAKS);
+    persist({displayFont: e.target.value});
+  });
+
+  window.addEventListener('message', (e) => {
+    const d = e.data || {};
+    if (d.type === '__activate_edit_mode') panel.classList.add('open');
+    else if (d.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+  window.parent.postMessage({type: '__edit_mode_available'}, '*');
+
+  applyTweaks(window.ACT_TWEAKS);
+</script>
+
+<script>
+  // Auto-print once fonts and layout are ready
+  (async () => {
+    try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch(e){}
+    await new Promise(r => setTimeout(r, 600));
+    window.print();
+  })();
+</script>
+
+
+
+</body></html>
