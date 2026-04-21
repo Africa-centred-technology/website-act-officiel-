@@ -180,7 +180,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
       <div style={{
         position: "relative",
         zIndex: 1,
-        paddingTop: "clamp(7rem, 11vw, 10rem)",
+        paddingTop: "max(72px, clamp(7rem, 11vw, 10rem))",
         paddingBottom: "clamp(3rem, 4vw, 4.5rem)",
         paddingLeft: "clamp(1.5rem, 6vw, 8rem)",
         paddingRight: "clamp(1.5rem, 6vw, 8rem)",
@@ -338,7 +338,7 @@ export default function ServicesIntroShell() {
     <div style={{
       width: "100vw", height: "100vh", overflow: "hidden",
       position: "relative", background: "#070E1C",
-      paddingTop: "5rem",   /* clear the fixed navbar */
+      paddingTop: "max(72px, clamp(5rem, 8vw, 8rem))",   /* clear the fixed navbar; max() garantit ≥72px avec root 8px */
     }}>
       {/* ── Background layers (même fond que Secteurs) ── */}
       <WaveTerrain />

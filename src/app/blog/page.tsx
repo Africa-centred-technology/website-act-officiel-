@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import BlogShell from "@/components/blog/BlogShell";
 
 export const metadata = {
@@ -14,6 +15,30 @@ export const metadata = {
   ],
 };
 
+function BlogLoading() {
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "var(--bg-primary, #070E1C)",
+        color: "#fff",
+      }}
+      aria-label="Chargement du blog…"
+    >
+      <span style={{ opacity: 0.4, fontFamily: "Poppins, sans-serif", fontSize: "0.9rem" }}>
+        Chargement…
+      </span>
+    </div>
+  );
+}
+
 export default function BlogPage() {
-  return <BlogShell />;
+  return (
+    <Suspense fallback={<BlogLoading />}>
+      <BlogShell />
+    </Suspense>
+  );
 }

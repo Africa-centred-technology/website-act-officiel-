@@ -36,7 +36,7 @@ function useMediaQuery() {
     const checkScreenSize = () => {
       const width = window.innerWidth;
       if (width < 768) setScreenSize('mobile');
-      else if (width >= 768 && width < 1024) setScreenSize('tablet');
+      else if (width < 1280) setScreenSize('tablet');
       else setScreenSize('desktop');
     };
     checkScreenSize();
@@ -274,7 +274,7 @@ export default function PoleDeveloppementShell() {
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
-            color: 'rgba(255,255,255,0.65)',
+            color: 'rgba(255,255,255,0.80)',
             maxWidth: '700px',
             fontFamily: 'var(--font-body)'
           }}>
@@ -301,8 +301,8 @@ export default function PoleDeveloppementShell() {
                   onMouseLeave={() => setIsHovered(false)}
                   style={{
                     height: '100%',
-                    background: 'rgba(255,255,255,0.02)',
-                    border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.12)',
                     borderRadius: '1rem',
                     overflow: 'hidden',
                     transition: 'all 0.4s ease',
@@ -375,7 +375,7 @@ export default function PoleDeveloppementShell() {
                     <p style={{
                       fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
                       lineHeight: 1.6,
-                      color: 'rgba(255,255,255,0.65)',
+                      color: 'rgba(255,255,255,0.80)',
                       marginBottom: '1.5rem',
                       fontFamily: 'var(--font-body)',
                       flex: 1,
@@ -390,7 +390,7 @@ export default function PoleDeveloppementShell() {
                           gap: '0.5rem',
                           marginBottom: '0.5rem',
                           fontSize: '0.9rem',
-                          color: 'rgba(255,255,255,0.55)',
+                          color: 'rgba(255,255,255,0.75)',
                           fontFamily: 'var(--font-body)'
                         }}>
                           <CheckCircle2 size={16} color={COLOR} />
@@ -457,8 +457,8 @@ export default function PoleDeveloppementShell() {
                 gap: screenSize === 'mobile' ? '1rem' : '2rem',
                 alignItems: 'flex-start',
                 padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)',
                 borderRadius: '0.75rem',
               }}
             >
@@ -484,7 +484,7 @@ export default function PoleDeveloppementShell() {
                 </h3>
                 <p style={{
                   fontSize: '1rem',
-                  color: 'rgba(255,255,255,0.65)',
+                  color: 'rgba(255,255,255,0.80)',
                   fontFamily: 'var(--font-body)'
                 }}>
                   {item.desc}
@@ -554,8 +554,8 @@ export default function PoleDeveloppementShell() {
                 transition={{ delay: i * 0.1 }}
                 style={{
                   padding: screenSize === 'mobile' ? '2rem' : '2.5rem',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.12)',
                   borderRadius: '1rem',
                   transition: 'all 0.3s ease',
                 }}
@@ -565,7 +565,7 @@ export default function PoleDeveloppementShell() {
                   e.currentTarget.style.boxShadow = `0 12px 40px ${COLOR}22`;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
@@ -594,7 +594,7 @@ export default function PoleDeveloppementShell() {
                 <p style={{
                   fontSize: '1rem',
                   lineHeight: 1.6,
-                  color: 'rgba(255,255,255,0.65)',
+                  color: 'rgba(255,255,255,0.80)',
                   fontFamily: 'var(--font-body)',
                 }}>
                   {item.desc}
@@ -629,7 +629,7 @@ export default function PoleDeveloppementShell() {
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
-            color: 'rgba(255,255,255,0.65)',
+            color: 'rgba(255,255,255,0.80)',
             maxWidth: '700px',
             fontFamily: 'var(--font-body)',
             textAlign: 'center',
@@ -656,8 +656,8 @@ export default function PoleDeveloppementShell() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   style={{
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.12)',
                     borderRadius: '1.5rem',
                     overflow: 'hidden',
                     transition: 'all 0.3s ease',
@@ -668,7 +668,7 @@ export default function PoleDeveloppementShell() {
                     e.currentTarget.style.boxShadow = `0 12px 40px ${COLOR}22`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = 'none';
                   }}
@@ -729,7 +729,7 @@ export default function PoleDeveloppementShell() {
                           gap: '1rem',
                           marginBottom: '1.5rem',
                           fontSize: '0.9rem',
-                          color: 'rgba(255,255,255,0.5)',
+                          color: 'rgba(255,255,255,0.72)',
                         }}>
                           <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <span style={{ width: 6, height: 6, borderRadius: '50%', background: COLOR }} />

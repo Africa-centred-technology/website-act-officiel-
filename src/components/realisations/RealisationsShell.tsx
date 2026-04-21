@@ -267,7 +267,7 @@ export default function RealisationsShell() {
         position: "relative",
         zIndex: 1,
         overflow: "hidden",
-        paddingTop: "clamp(7rem, 11vw, 12rem)",
+        paddingTop: "max(80px, clamp(7rem, 11vw, 12rem))",
         paddingBottom: "clamp(4rem, 6vw, 7rem)",
         paddingLeft: "clamp(1.5rem, 6vw, 8rem)",
         paddingRight: "clamp(1.5rem, 6vw, 8rem)",
