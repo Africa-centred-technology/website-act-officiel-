@@ -46,7 +46,7 @@ function useScreenSize() {
   useEffect(() => {
     const check = () => {
       const w = window.innerWidth;
-      setSize(w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop");
+      setSize(w < 768 ? "mobile" : w < 1280 ? "tablet" : "desktop");
     };
     check();
     window.addEventListener("resize", check);

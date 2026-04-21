@@ -13,7 +13,7 @@ function useMediaQuery() {
       const width = window.innerWidth;
       if (width < 768) {
         setScreenSize('mobile');
-      } else if (width >= 768 && width < 1024) {
+      } else if (width < 1280) {
         setScreenSize('tablet');
       } else {
         setScreenSize('desktop');

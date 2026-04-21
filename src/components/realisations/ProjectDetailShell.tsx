@@ -93,7 +93,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
   const next = PROJECTS[idx + 1] ?? null;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070e1c", color: "#fff", overflowX: "hidden", paddingTop: "5rem" }}>
+    <div style={{ minHeight: "100vh", background: "#070e1c", color: "#fff", overflowX: "hidden", paddingTop: "clamp(5rem, 8vw, 8rem)" }}>
       <Grain />
 
       {/* ── BACK LINK ────────────────────────────────── */}

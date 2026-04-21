@@ -34,9 +34,15 @@ export const FONT_BODY    = "var(--font-body)";
 function useMediaQuery() {
   const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">("desktop");
   useEffect(() => {
-    const check = () => {
-      const w = window.innerWidth;
-      setScreenSize(w < 768 ? "mobile" : w < 1024 ? "tablet" : "desktop");
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width >= 768 && width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
     };
     check();
     window.addEventListener("resize", check);

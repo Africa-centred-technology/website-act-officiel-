@@ -299,7 +299,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
             initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
             transition={{ delay: 1.05, duration: 0.7, ease: [...EASE] }} />
           <p style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.6rem)",
-            color: "rgba(255,255,255,0.55)", fontStyle: "italic", letterSpacing: "0.02em" }}>
+            color: "rgba(255,255,255,0.75)", fontStyle: "italic", letterSpacing: "0.02em" }}>
             {svc.tagline}
           </p>
         </motion.div>
@@ -630,7 +630,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
                 <motion.div key={i} variants={fadeUp}
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: [...EASE] } }}
                   style={{
-                    background: "rgba(255,255,255,0.04)",
+                    background: "rgba(255,255,255,0.06)",
                     border: `1px solid ${ORANGE}22`,
                     borderTop: `2px solid ${ORANGE}`,
                     borderRadius: "0.8rem",
@@ -713,8 +713,8 @@ function RelatedServices({ svc }: { svc: Service }) {
                     style={{
                       position: "relative", overflow: "hidden",
                       padding: "1.8rem",
-                      background: "rgba(255,255,255,0.025)",
-                      border: "1px solid rgba(255,255,255,0.07)",
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(255,255,255,0.12)",
                       borderRadius: "0.8rem", cursor: "pointer",
                     }}>
                     {/* Mini image de fond */}
@@ -738,7 +738,7 @@ function RelatedServices({ svc }: { svc: Service }) {
                         lineHeight: 1.2, marginBottom: "0.6rem",
                       }}>{r.title}</p>
                       <p style={{ fontSize: "clamp(11px, 0.75rem, 0.8rem)",
-                        color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>{r.tagline}</p>
+                        color: "rgba(255,255,255,0.60)", fontStyle: "italic" }}>{r.tagline}</p>
                     </div>
                   </motion.div>
                 </Link>
@@ -778,7 +778,7 @@ function StickyHeader({ svc }: { svc: Service }) {
       <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
         <Link href="/services" style={{
           display: "flex", alignItems: "center", gap: "0.4rem",
-          textDecoration: "none", color: "rgba(255,255,255,0.4)",
+          textDecoration: "none", color: "rgba(255,255,255,0.72)",
           fontSize: "clamp(10px, 0.72rem, 0.76rem)", letterSpacing: "0.14em",
         }}>← Services</Link>
         <span style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)" }} />

@@ -182,7 +182,7 @@ export default function ServicesGrid() {
     <div style={{
       minHeight: "100vh",
       background: "#070E1C",
-      paddingTop: "clamp(6rem, 10vw, 9rem)",
+      paddingTop: "max(72px, clamp(6rem, 10vw, 9rem))",
       paddingBottom: "6rem",
     }}>
       <div style={{
