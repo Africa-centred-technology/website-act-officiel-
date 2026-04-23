@@ -11,7 +11,9 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:report": "playwright show-report"
+    "test:e2e:report": "playwright show-report",
+    "shopify:setup-metafields": "node scripts/shopify-setup-metafield-definitions.mjs",
+    "shopify:prefill": "node scripts/shopify-prefill-formation.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

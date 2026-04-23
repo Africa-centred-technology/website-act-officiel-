@@ -4,7 +4,7 @@
    ══════════════════════════════════════════════════════ */
 
 @font-face {
-  font-family: Futura;
+  font-family: Poppins;
   src: url('/fonts/futura-medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5, h6 {
 .cta-btn__text {
   color: #fff;
   font-size: var(--font-18);
-  font-family: Futura, sans-serif;
+  font-family: Poppins, sans-serif;
   font-weight: 500;
   line-height: normal;
   flex-shrink: 0;
@@ -268,9 +268,9 @@ h1, h2, h3, h4, h5, h6 {
     backdrop-filter 0.5s ease;
 }
 .navbar--scrolled {
-  background: rgba(5, 9, 18, 0.88);
-  backdrop-filter: blur(22px) saturate(1.4);
-  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  background: rgba(10, 20, 16, 0.88);
+  backdrop-filter: blur(22px) saturate(1.1);
+  -webkit-backdrop-filter: blur(22px) saturate(1.1);
   border-bottom-color: rgba(211, 84, 0, 0.12);
 }
 
@@ -305,7 +305,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-navigation__link {
   position: relative;
   font-size: clamp(1.3rem, 1.6vw, 1.75rem);
-  font-family: Futura, sans-serif;
+  font-family: Poppins, sans-serif;
   color: rgba(255,255,255,0.52);
   text-decoration: none;
   text-transform: uppercase;
@@ -368,7 +368,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-hamburger--open .navbar-hamburger__line-bottom { width: 1.8rem; }
 
 .navbar-hamburger__label {
-  font-family: Futura, system-ui, sans-serif;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -509,7 +509,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .menu-navigation__link {
   font-size: var(--font-50);
-  font-family: Futura, sans-serif;
+  font-family: Poppins, sans-serif;
   color: rgba(255,255,255,0.25);
   text-decoration: none;
   text-transform: uppercase;
@@ -529,7 +529,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 1rem;
   font-size: 1.2rem;
-  font-family: Futura, sans-serif;
+  font-family: Poppins, sans-serif;
   color: rgba(255,255,255,0.5);
   text-transform: uppercase;
   letter-spacing: 0.15em;

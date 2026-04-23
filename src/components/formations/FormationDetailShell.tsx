@@ -5,6 +5,21 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, RefreshCw } from "lucide-react";
 import FooterStrip from "../layout/FooterStrip";
+import {
+  DEFAULT_MARQUEE_ITEMS,
+  DEFAULT_TRUST_STATS,
+  DEFAULT_PAIN_POINTS,
+  DEFAULT_VALUE_ROI,
+  DEFAULT_TOOLS_COVERED,
+  DEFAULT_AUDIENCE_CARDS,
+  DEFAULT_TESTIMONIALS,
+  getDefaultPricingPlans,
+  getDefaultFaqItems,
+  DEFAULT_MID_CTA,
+  DEFAULT_FINAL_CTA,
+  DEFAULT_PLACES_SESSION,
+  DEFAULT_PRIX_BARRE,
+} from "@/lib/data/formation-defaults";
 
 /* ── Palette (dark theme — Landing Formation IA) ─ */
 const ACT_DARK      = "#0A1410";
@@ -85,38 +100,7 @@ const Grain = () => (
   }} />
 );
 
-/* ── Countdown (5 jours glissants) ───────────────────────── */
-function Countdown() {
-  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 });
-  useEffect(() => {
-    const end = Date.now() + 5 * 24 * 3600 * 1000 - 1000;
-    const tick = () => {
-      const diff = Math.max(0, end - Date.now());
-      setTime({
-        d: Math.floor(diff / (24 * 3600 * 1000)),
-        h: Math.floor((diff % (24 * 3600 * 1000)) / (3600 * 1000)),
-        m: Math.floor((diff % (3600 * 1000)) / 60000),
-        s: Math.floor((diff % 60000) / 1000),
-      });
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return (
-    <span style={{
-      display: "inline-flex", gap: 6, alignItems: "baseline",
-      fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 18,
-      letterSpacing: "-0.01em", textTransform: "none",
-    }}>
-      <span style={bubbleStyle}>{pad(time.d)}</span>j
-      <span style={bubbleStyle}>{pad(time.h)}</span>h
-      <span style={bubbleStyle}>{pad(time.m)}</span>m
-      <span style={bubbleStyle}>{pad(time.s)}</span>s
-    </span>
-  );
-}
+
 const bubbleStyle: React.CSSProperties = {
   background: "rgba(0,0,0,0.18)",
   padding: "2px 8px",
@@ -282,78 +266,21 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     );
   }
 
-  /* ── Derived content ─ */
-  const marqueeItems = [
-    "Formation certifiée Qualiopi",
-    "+400 professionnels formés",
-    "Note 4,9/5 sur 213 avis",
-    "Finançable CPF & OPCO",
-    "Partenaire OpenAI & Anthropic",
-    "97% recommandent",
-    "32 entreprises clientes",
-  ];
-
-  const toolsRow1 = [
-    { n: "ChatGPT" }, { n: "Claude" }, { n: "Gemini", c: "gold" as const },
-    { n: "Perplexity" }, { n: "Copilot 365" }, { n: "Notion AI", c: "gold" as const },
-    { n: "Gamma" }, { n: "Midjourney" }, { n: "Freepik IA" }, { n: "Luma", c: "gold" as const },
-  ];
-  const toolsRow2 = [
-    { n: "Zapier" }, { n: "Make", c: "gold" as const }, { n: "n8n" },
-    { n: "ElevenLabs" }, { n: "Heygen" }, { n: "Suno", c: "gold" as const },
-    { n: "Canva IA" }, { n: "GPTs sur-mesure" }, { n: "RAG interne", c: "gold" as const }, { n: "Agents Claude" },
-  ];
-
-  const painCards = [
-    { n: "01", title: "Submergé par les outils ?", text: "ChatGPT, Claude, Gemini, Copilot... impossible de savoir par où commencer.", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80" },
-    { n: "02", title: "Prompts qui ne marchent pas ?", text: "Vous testez, mais les réponses restent génériques. Plus de temps perdu que gagné.", img: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=1200&q=80" },
-    { n: "03", title: "Équipe qui décroche ?", text: "Certains adoptent, d'autres résistent. Pas de méthode commune, risque RGPD.", img: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80" },
-  ];
-
-  const audienceCards = [
-    { icon: "01", title: "Dirigeants\n& CODIR",         img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80" },
-    { icon: "02", title: "Managers\n& chefs de projet", img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" },
-    { icon: "03", title: "Marketing\n& communication",  img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
-    { icon: "04", title: "Consultants\n& freelances",   img: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=800&q=80" },
-  ];
-
-  const testimonials = [
-    { q: "J'ai divisé par trois le temps passé sur mes comptes-rendus hebdo. Rentabilisé en 10 jours.", name: "Samira Bennani", role: "Directrice Marketing · Casablanca", avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80" },
-    { q: "Zéro blabla, du concret dès la première heure. Je repars avec mes propres prompts qui tournent.", name: "Youssef Kabbaj",  role: "Consultant stratégie · Rabat",     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" },
-    { q: "Formé 18 personnes en intra. +22% de productivité mesurés sur le pôle six mois plus tard.",     name: "Fatima Ouali",    role: "DRH · Groupe industriel · Tanger",  avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80" },
-  ];
-
-  const pricing = [
-    {
-      name: "Formule 01", title: "Essentiel",
-      desc: "En distanciel live · petit groupe · idéal pour découvrir.",
-      amount: "3 200", old: "Prix public 4 200 MAD",
-      features: ["2 jours · 14h de live", "Jusqu'à 12 participants", "Tous les templates & prompts", "Agent GPT personnalisé", "Certification ACT", "Accès replay 6 mois"],
-      featured: false,
-    },
-    {
-      name: "Formule 02", title: "Pro · Présentiel",
-      desc: "À Casablanca · 2 jours en présentiel · coaching individuel inclus.",
-      amount: formation.prix || "4 900", old: "Prix public 6 500 MAD · -25%",
-      features: ["Tout ce qui est dans Essentiel", "Formation en présentiel · Casablanca", "1h de coaching 1-to-1 post-formation", "Audit de vos tâches (avant J1)", "Suivi privé Slack · 30 jours", "Session Q&R live à J+30", "Déjeuners inclus"],
-      featured: true,
-    },
-    {
-      name: "Formule 03", title: "Intra · Équipe",
-      desc: "Dans vos locaux · sur-mesure · à partir de 6 personnes.",
-      amount: "Sur devis", old: "Réponse sous 24h",
-      features: ["Programme sur-mesure", "Vos cas métier réels en atelier", "Audit IA des process", "Formation de formateurs en option", "Rapport de recommandations", "Suivi 90 jours inclus"],
-      featured: false,
-    },
-  ];
-
-  const faqs = [
-    { q: "Je suis débutant total. Est-ce que je vais suivre ?", a: `Oui — ${formation.prerequis || "aucun prérequis n'est demandé"}. 60% de nos stagiaires découvrent ChatGPT le jour 1. Dès le jour 2, ils construisent leur propre agent GPT.` },
-    { q: "Combien de temps avant de voir un retour sur investissement ?", a: "En moyenne, nos stagiaires récupèrent 10h par semaine dès la première semaine. Le prix de la formule Pro est rentabilisé en moins de deux semaines." },
-    { q: "Est-ce que c'est finançable par mon OPCO / CPF ?", a: "Oui. ACT est organisme Qualiopi. Nous préparons le dossier avec vous et vos OPCO / le CPF. Délai moyen : 7 à 15 jours." },
-    { q: "Et si je ne peux pas venir à Casablanca ?", a: "La formule Essentiel se déroule 100% en distanciel, en live avec le formateur et un petit groupe (max 12)." },
-    { q: "Et le RGPD / les données sensibles ?", a: "Un module complet est dédié à l'usage éthique et conforme : RGPD, IA Act, paramètres confidentialité des outils, alternatives on-premise." },
-  ];
+  /* ── Derived content ─ valeurs par défaut partagées (hybride) ─ */
+  const marqueeItems  = DEFAULT_MARQUEE_ITEMS;
+  const trustStats    = DEFAULT_TRUST_STATS;
+  const painCards     = DEFAULT_PAIN_POINTS;
+  const valueRoi      = DEFAULT_VALUE_ROI;
+  const toolsRow1     = DEFAULT_TOOLS_COVERED.row1;
+  const toolsRow2     = DEFAULT_TOOLS_COVERED.row2;
+  const audienceCards = DEFAULT_AUDIENCE_CARDS;
+  const testimonials  = DEFAULT_TESTIMONIALS;
+  const pricing       = getDefaultPricingPlans(formation.prix);
+  const faqs          = getDefaultFaqItems(formation.prerequis);
+  const midCta        = DEFAULT_MID_CTA;
+  const finalCta      = DEFAULT_FINAL_CTA;
+  const placesSession = DEFAULT_PLACES_SESSION;
+  const prixBarre     = DEFAULT_PRIX_BARRE;
 
   const scrollTo = (id: string) => () => {
     const el = document.getElementById(id);
@@ -366,17 +293,6 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     <div style={{ background: ACT_DARK, color: TXT, fontFamily: FONT_BODY, overflowX: "hidden" }}>
       <Grain />
 
-      {/* ════════════ URGENCY TOP BAR ════════════ */}
-      <div style={topbarStyle}>
-        <span style={pulseDotStyle} />
-        <span>Prochaine session · Casablanca</span>
-        <Countdown />
-        <a href="#pricing" style={{
-          background: ACT_DARK, color: ACT_CREAM, padding: "7px 16px",
-          borderRadius: 2, fontWeight: 600, letterSpacing: "0.14em",
-          textDecoration: "none", transition: "background 0.2s",
-        }}>Réserver ma place →</a>
-      </div>
 
       {/* ════════════ HERO ════════════ */}
       <header style={{ position: "relative", padding: "100px 0 120px", overflow: "hidden", borderBottom: `1px solid ${LINE}` }}>
@@ -412,18 +328,13 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               </div>
 
               <div style={heroTrustStyle}>
-                {[
-                  { v: "+400", l: "Pros formés" },
-                  { v: "4,9/5", l: "Satisfaction" },
-                  { v: "97%", l: "Recommandent" },
-                  { v: "Qualiopi", l: "Certifiée" },
-                ].map((t) => (
-                  <div key={t.l} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                {trustStats.map((t) => (
+                  <div key={t.label} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                     <span style={{
                       fontFamily: FONT_DISPLAY, fontSize: 32, fontStyle: "italic",
                       color: ACT_ORANGE, letterSpacing: "-0.02em", lineHeight: 1,
-                    }}>{t.v}</span>
-                    <span style={trustLabelStyle}>{t.l}</span>
+                    }}>{t.value}</span>
+                    <span style={trustLabelStyle}>{t.label}</span>
                   </div>
                 ))}
               </div>
@@ -473,7 +384,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                       <span style={{ fontFamily: FONT_LABEL, fontSize: 14, color: TXT_MID }}>MAD HT</span>
                     </div>
                     <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
-                      6 500 MAD HT
+                      {prixBarre}
                     </div>
                   </div>
                   <div style={{
@@ -484,14 +395,15 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 </div>
 
                 <div style={seatsRowStyle}>
-                  <span>7/12 places</span>
+                  <span>{placesSession.inscrits}/{placesSession.total} places</span>
                   <div style={seatBarStyle}>
                     <div style={{
-                      position: "absolute", top: 0, left: 0, height: "100%", width: "82%",
+                      position: "absolute", top: 0, left: 0, height: "100%",
+                      width: `${(placesSession.inscrits / placesSession.total) * 100}%`,
                       background: `linear-gradient(90deg, ${ACT_ORANGE}, ${ACT_ORANGE_HOT})`,
                     }} />
                   </div>
-                  <span style={{ color: ACT_ORANGE }}>Il reste 5 !</span>
+                  <span style={{ color: ACT_ORANGE }}>Il reste {placesSession.restantes} !</span>
                 </div>
 
                 <Btn variant="primary" onClick={goInscription} style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
@@ -535,7 +447,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 style={painCardStyle}
               >
                 <div style={{
-                  aspectRatio: "16/10", backgroundImage: `url(${p.img})`,
+                  aspectRatio: "16/10", backgroundImage: `url(${p.image_url})`,
                   backgroundSize: "cover", backgroundPosition: "center",
                   margin: "-32px -32px 24px", filter: "grayscale(0.3) contrast(1.05)",
                   position: "relative",
@@ -545,7 +457,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                     background: "linear-gradient(180deg, rgba(10,20,16,0.1) 0%, rgba(10,20,16,0.85) 100%)",
                   }} />
                 </div>
-                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 54, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.n}</div>
+                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 54, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
                 <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 26, lineHeight: 1.15, marginTop: 14, color: TXT, fontWeight: 500 }}>{p.title}</h3>
                 <p style={{ fontSize: 15, lineHeight: 1.6, color: "rgba(255,255,255,0.68)", marginTop: 14, fontWeight: 300 }}>{p.text}</p>
               </motion.div>
@@ -584,17 +496,15 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 </h4>
               </div>
               <div>
-                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 160, lineHeight: 0.9, color: ACT_ORANGE, letterSpacing: "-0.04em" }}>10h</div>
-                <div style={{ ...monoStyle, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>récupérées / semaine</div>
+                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 160, lineHeight: 0.9, color: ACT_ORANGE, letterSpacing: "-0.04em" }}>{valueRoi.big_stat}</div>
+                <div style={{ ...monoStyle, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>{valueRoi.big_stat_label}</div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 36, paddingTop: 24, borderTop: `1px solid rgba(255,255,255,0.15)` }}>
-                  <div>
-                    <div style={{ fontFamily: FONT_DISPLAY, fontSize: 32, color: ACT_GOLD, fontStyle: "italic" }}>×4</div>
-                    <div style={{ ...monoStyle, marginTop: 4 }}>vitesse de rédaction</div>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: FONT_DISPLAY, fontSize: 32, color: ACT_GOLD, fontStyle: "italic" }}>-60%</div>
-                    <div style={{ ...monoStyle, marginTop: 4 }}>temps d'analyse</div>
-                  </div>
+                  {valueRoi.secondary.map((s, i) => (
+                    <div key={i}>
+                      <div style={{ fontFamily: FONT_DISPLAY, fontSize: 32, color: ACT_GOLD, fontStyle: "italic" }}>{s.value}</div>
+                      <div style={{ ...monoStyle, marginTop: 4 }}>{s.label}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -622,9 +532,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 <div key={i} style={toolPillStyle}>
                   <span style={{
                     width: 8, height: 8, borderRadius: "50%",
-                    background: t.c === "gold" ? ACT_GOLD : ACT_ORANGE,
+                    background: t.color === "gold" ? ACT_GOLD : ACT_ORANGE,
                   }} />
-                  {t.n}
+                  {t.name}
                 </div>
               ))}
             </div>
@@ -691,23 +601,21 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         <div style={containerStyle}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
             <div>
-              <Eyebrow>Offre de lancement</Eyebrow>
+              <Eyebrow>{midCta.eyebrow}</Eyebrow>
               <h2 style={{ ...h2Style, fontSize: "clamp(36px, 4.5vw, 64px)", marginTop: 20 }}>
-                Session en cours · <em style={emStyle}>5 places</em> restantes.
+                {midCta.title_prefix} <em style={emStyle}>{midCta.title_highlight}</em> {midCta.title_suffix}
               </h2>
-              <p style={{ ...secPStyle, fontSize: 17 }}>
-                Si vous hésitez, la meilleure chose à faire : bloquer un appel découverte gratuit de 15 minutes.
-              </p>
+              <p style={{ ...secPStyle, fontSize: 17 }}>{midCta.text}</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <Btn variant="primary" href="#pricing" minWidth={280}>
-                <span>Voir les tarifs</span><span>→</span>
+              <Btn variant="primary" href={midCta.cta_primary.url} minWidth={280}>
+                <span>{midCta.cta_primary.label}</span><span>→</span>
               </Btn>
-              <Btn variant="ghost" href="/contact" minWidth={280}>
-                <span><Diamond /> Appel découverte · 15 min</span><span>→</span>
+              <Btn variant="ghost" href={midCta.cta_ghost.url} minWidth={280}>
+                <span><Diamond /> {midCta.cta_ghost.label}</span><span>→</span>
               </Btn>
               <Btn variant="dark" onClick={goInscription} minWidth={280}>
-                <span>Je m'inscris</span><span>→</span>
+                <span>{midCta.cta_dark.label}</span><span>→</span>
               </Btn>
             </div>
           </div>
@@ -778,11 +686,11 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 <blockquote style={{
                   fontFamily: FONT_DISPLAY, fontSize: 18, lineHeight: 1.45,
                   letterSpacing: "-0.01em", flex: 1, color: TXT,
-                }}>&ldquo;{t.q}&rdquo;</blockquote>
+                }}>&ldquo;{t.quote}&rdquo;</blockquote>
                 <div style={{ marginTop: 28, paddingTop: 20, borderTop: `1px solid rgba(255,255,255,0.08)`, display: "flex", alignItems: "center", gap: 14 }}>
                   <div style={{
                     width: 48, height: 48, borderRadius: "50%",
-                    backgroundImage: `url(${t.avatar})`, backgroundSize: "cover", backgroundPosition: "center",
+                    backgroundImage: `url(${t.avatar_url})`, backgroundSize: "cover", backgroundPosition: "center",
                     border: `2px solid rgba(211,84,0,0.3)`,
                   }} />
                   <div>
@@ -814,14 +722,14 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={{ ...priceCardStyle, ...(p.featured ? priceFeaturedStyle : {}) }}
               >
-                {p.featured && (
-                  <div style={priceBadgeStyle}>★ Le plus choisi</div>
+                {p.featured && p.badge && (
+                  <div style={priceBadgeStyle}>{p.badge}</div>
                 )}
                 <div style={{ fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600 }}>{p.name}</div>
                 <div style={{ fontFamily: FONT_DISPLAY, fontSize: 30, lineHeight: 1.05, marginTop: 10, color: TXT, fontWeight: 500 }}>
                   <em style={emStyle}>{p.title}</em>
                 </div>
-                <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)", fontWeight: 300, marginTop: 12 }}>{p.desc}</div>
+                <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)", fontWeight: 300, marginTop: 12 }}>{p.description}</div>
 
                 <div style={{ marginTop: 28, paddingTop: 28, borderTop: `1px dashed rgba(255,255,255,0.1)` }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
@@ -830,12 +738,14 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                       lineHeight: 0.95, letterSpacing: "-0.03em",
                       color: p.featured ? ACT_ORANGE : WHITE,
                     }}>{p.amount}</span>
-                    {p.amount !== "Sur devis" && <span style={{ fontFamily: FONT_LABEL, fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>MAD HT</span>}
+                    {p.amount !== "Sur devis" && p.currency && <span style={{ fontFamily: FONT_LABEL, fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{p.currency}</span>}
                   </div>
-                  <div style={{
-                    textDecoration: p.old.startsWith("Réponse") ? "none" : "line-through",
-                    fontSize: 14, color: p.old.startsWith("Réponse") ? ACT_GOLD : "rgba(255,255,255,0.35)", marginTop: 6,
-                  }}>{p.old}</div>
+                  {p.old_price && (
+                    <div style={{
+                      textDecoration: p.old_price.startsWith("Réponse") ? "none" : "line-through",
+                      fontSize: 14, color: p.old_price.startsWith("Réponse") ? ACT_GOLD : "rgba(255,255,255,0.35)", marginTop: 6,
+                    }}>{p.old_price}</div>
+                  )}
                 </div>
 
                 <ul style={{ marginTop: 28, listStyle: "none", display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
@@ -848,10 +758,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <Btn
                   variant={p.featured ? "primary" : "ghost"}
-                  onClick={p.amount === "Sur devis" ? () => router.push("/contact") : goInscription}
+                  onClick={p.cta_type === "contact" ? () => router.push("/contact") : goInscription}
                   style={{ marginTop: 32, width: "100%", justifyContent: "center" }}
                 >
-                  {p.amount === "Sur devis" ? "Demander un devis" : p.featured ? "Réserver · -25%" : "Réserver ma place"} →
+                  {p.cta_label} →
                 </Btn>
               </motion.div>
             ))}
@@ -877,7 +787,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             {faqs.map((f, i) => (
-              <FaqItem key={i} q={f.q} a={f.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />
+              <FaqItem key={i} q={f.question} a={f.answer} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />
             ))}
           </div>
 
@@ -893,27 +803,25 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section style={finalStyle}>
         <div style={{ ...containerStyle, position: "relative", zIndex: 5 }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Eyebrow centered>5 places restantes</Eyebrow>
+            <Eyebrow centered>{finalCta.eyebrow}</Eyebrow>
           </div>
           <h2 style={{
             fontFamily: FONT_DISPLAY, fontSize: "clamp(48px, 7vw, 110px)",
             lineHeight: 0.95, maxWidth: 1000, margin: "20px auto 32px",
             color: TXT, fontWeight: 500, letterSpacing: "-0.025em", textWrap: "balance",
           }}>
-            Votre équipe sera formée<br />à l'IA. <em style={emStyle}>Avec vous</em>, ou sans vous.
+            {finalCta.title_line1}<br />{finalCta.title_line2}<em style={emStyle}>{finalCta.title_highlight}</em>{finalCta.title_suffix}
           </h2>
           <p style={{
             fontSize: 18, lineHeight: 1.55, color: "rgba(255,255,255,0.72)",
             maxWidth: 620, margin: "0 auto 48px", fontWeight: 300,
-          }}>
-            Chaque semaine sans formation = 10h de productivité perdues à chaque membre de votre équipe.
-          </p>
+          }}>{finalCta.text}</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Btn variant="primary" onClick={goInscription} style={{ padding: "22px 40px", fontSize: 13 }}>
-              Je réserve ma place maintenant →
+              {finalCta.primary_label} →
             </Btn>
             <Btn variant="ghost" href="/contact" style={{ padding: "22px 40px", fontSize: 13 }}>
-              <Diamond /> Planifier un appel 15 min
+              <Diamond /> {finalCta.ghost_label}
             </Btn>
           </div>
           <div style={{
@@ -922,7 +830,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             textTransform: "uppercase", color: "rgba(255,255,255,0.55)", fontWeight: 500,
           }}>
             <Diamond color={ACT_GOLD} />
-            Garantie satisfait ou remboursé · Qualiopi · CPF / OPCO
+            {finalCta.guarantee}
           </div>
         </div>
       </section>

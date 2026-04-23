@@ -8,6 +8,7 @@ import { motion, useInView } from "framer-motion";
 import { blogPosts, categories, type BlogPost } from "@/lib/blog-data";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTAButton from "@/components/ui/CTAButton";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -42,6 +43,35 @@ export default function BlogShell() {
   const screenSize = useMediaQuery();
   const containerRef = useRef(null);
   const [allPosts, setAllPosts] = useState<BlogPost[]>(blogPosts);
+  const [email, setEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [newsletterMessage, setNewsletterMessage] = useState("");
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNewsletterStatus("error");
+      setNewsletterMessage("Adresse email invalide.");
+      return;
+    }
+    setNewsletterStatus("loading");
+    setNewsletterMessage("");
+    try {
+      const res = await fetch("/api/shopify/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Erreur");
+      setNewsletterStatus("success");
+      setNewsletterMessage("Merci ! Vous êtes abonné à la veille ACT.");
+      setEmail("");
+    } catch (err) {
+      setNewsletterStatus("error");
+      setNewsletterMessage(err instanceof Error ? err.message : "Erreur serveur.");
+    }
+  };
 
   useEffect(() => {
     fetch("/api/shopify/blog")
@@ -436,15 +466,79 @@ export default function BlogShell() {
             Recevez nos analyses sur l&apos;IA, le cloud, la cybersécurité et
             l&apos;innovation digitale en Afrique directement dans votre boîte mail.
           </p>
-          <Link href="/contact" className="cta-btn">
-            <div className="cta-btn__border" />
-            <div className="cta-btn__blur" />
-            <div className="cta-btn__background" />
-            <div className="cta-btn__inner">
-              <span className="cta-btn__icon" />
-              <span className="cta-btn__text">S&apos;abonner à la veille</span>
-            </div>
-          </Link>
+          <form
+            onSubmit={handleNewsletterSubmit}
+            style={{
+              display: "flex",
+              flexDirection: screenSize === "mobile" ? "column" : "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "1.5rem",
+              maxWidth: "58rem",
+              margin: "0 auto",
+              padding: screenSize === "mobile" ? "0 1.5rem" : "0",
+            }}
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="votre.email@entreprise.com"
+              disabled={newsletterStatus === "loading"}
+              required
+              style={{
+                flex: 1,
+                width: screenSize === "mobile" ? "100%" : "auto",
+                minWidth: 0,
+                height: "4.8rem",
+                padding: "0 2rem",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                borderRadius: "0.5rem",
+                color: "#fff",
+                fontFamily: FONT_BODY,
+                fontSize: "1.5rem",
+                letterSpacing: "0.01em",
+                outline: "none",
+                transition: "border-color 0.3s, background 0.3s",
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = "rgba(211,84,0,0.55)";
+                e.currentTarget.style.background = "rgba(211,84,0,0.05)";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+              }}
+            />
+            <CTAButton type="submit" disabled={newsletterStatus === "loading"}>
+              {newsletterStatus === "loading" ? "Envoi..." : "S'abonner"}
+            </CTAButton>
+          </form>
+          <p
+            style={{
+              marginTop: "1.5rem",
+              color: "rgba(255,255,255,0.3)",
+              fontSize: "1.1rem",
+              fontFamily: FONT_BODY,
+              letterSpacing: "0.02em",
+            }}
+          >
+            Désinscription en un clic. Pas de spam — une newsletter par semaine.
+          </p>
+          {newsletterMessage && (
+            <p
+              style={{
+                marginTop: "1.5rem",
+                color: newsletterStatus === "success" ? "#16a34a" : "#E74C3C",
+                fontSize: "1.3rem",
+                fontFamily: FONT_BODY,
+                letterSpacing: "0.02em",
+              }}
+            >
+              {newsletterMessage}
+            </p>
+          )}
         </div>
       </section>
 
