@@ -93,7 +93,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
   const next = PROJECTS[idx + 1] ?? null;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#070e1c", color: "#fff", overflowX: "hidden", paddingTop: "clamp(5rem, 8vw, 8rem)" }}>
+    <div style={{ minHeight: "100vh", background: "#0A1410", color: "#fff", overflowX: "hidden", paddingTop: "clamp(5rem, 8vw, 8rem)" }}>
       <Grain />
 
       {/* ── BACK LINK ────────────────────────────────── */}
@@ -111,7 +111,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             display: "inline-flex",
             alignItems: "center",
             gap: "0.6rem",
-            background: "rgba(7,14,28,0.75)",
+            background: "rgba(10,20,16,0.75)",
             backdropFilter: "blur(14px)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "2rem",
@@ -180,7 +180,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to bottom, rgba(7,14,28,0.3) 0%, rgba(7,14,28,0.55) 40%, rgba(7,14,28,0.95) 80%, #070e1c 100%)",
+              "linear-gradient(to bottom, rgba(10,20,16,0.3) 0%, rgba(10,20,16,0.55) 40%, rgba(10,20,16,0.95) 80%, #0A1410 100%)",
           }}
         />
 
@@ -444,7 +444,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(135deg, rgba(7,14,28,0.15) 0%, rgba(7,14,28,0.05) 100%)",
+                  "linear-gradient(135deg, rgba(10,20,16,0.15) 0%, rgba(10,20,16,0.05) 100%)",
               }}
             />
           </div>

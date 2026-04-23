@@ -80,8 +80,8 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
           className="absolute inset-0 transition-opacity duration-500"
           style={{
             background: isFounder
-              ? "linear-gradient(to top, rgba(7,14,28,0.98) 0%, rgba(7,14,28,0.88) 40%, rgba(211,84,0,0.15) 70%, transparent 100%)"
-              : "linear-gradient(to top, rgba(7,14,28,0.98) 0%, rgba(7,14,28,0.85) 40%, rgba(7,14,28,0.4) 70%, transparent 100%)",
+              ? "linear-gradient(to top, rgba(10,20,16,0.98) 0%, rgba(10,20,16,0.88) 40%, rgba(211,84,0,0.15) 70%, transparent 100%)"
+              : "linear-gradient(to top, rgba(10,20,16,0.98) 0%, rgba(10,20,16,0.85) 40%, rgba(10,20,16,0.4) 70%, transparent 100%)",
             opacity: isHovered ? 0.95 : 1,
           }}
         />

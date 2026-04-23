@@ -363,9 +363,9 @@ function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options
         (e.currentTarget as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.1)";
       }}
     >
-      <option value="" style={{ background: "#070E1C" }}>— Choisir —</option>
+      <option value="" style={{ background: "#0A1410" }}>— Choisir —</option>
       {options.map((o) => (
-        <option key={o} value={o} style={{ background: "#070E1C" }}>
+        <option key={o} value={o} style={{ background: "#0A1410" }}>
           {o}
         </option>
       ))}

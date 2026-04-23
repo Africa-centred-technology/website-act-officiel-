@@ -20,7 +20,7 @@ import FooterStrip from "@/components/layout/FooterStrip";
 import FormationInscriptionForm from "@/components/formations/FormationInscriptionForm";
 
 const ORANGE = "#D35400";
-const DARK = "#070E1C";
+const DARK = "#0A1410";
 
 /* ── Grain ──────────────────────────────────────────────── */
 function Grain() {

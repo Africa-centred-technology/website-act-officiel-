@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { categories } from "@/lib/blog-data";
 
@@ -28,103 +28,7 @@ function useMediaQuery() {
   return screenSize;
 }
 
-/* ─── Design tokens (consistent with BlogHero) ─── */
-const V = {
-  bg:        "#06120e",
-  orange:    "#e85c1a",
-  orangeLt:  "rgba(232,92,26,0.15)",
-  orangeGlow:"rgba(232,92,26,0.35)",
-  cream:     "#f0ead8",
-};
 
-/* ═══════════════════════════════════════════════ */
-/* ═══ Custom Cursor Component ═══ */
-/* ═══════════════════════════════════════════════ */
-function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const [hovering, setHovering] = useState(false);
-
-  const onMove = useCallback((e: MouseEvent) => {
-    if (cursorRef.current) {
-      cursorRef.current.style.left = e.clientX + "px";
-      cursorRef.current.style.top = e.clientY + "px";
-    }
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("mousemove", onMove);
-
-    const interactives = document.querySelectorAll("button, a, .cat-item");
-    const enter = () => setHovering(true);
-    const leave = () => setHovering(false);
-
-    interactives.forEach((el) => {
-      el.addEventListener("mouseenter", enter);
-      el.addEventListener("mouseleave", leave);
-    });
-
-    return () => {
-      document.removeEventListener("mousemove", onMove);
-      interactives.forEach((el) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-      });
-    };
-  }, [onMove]);
-
-  return (
-    <div
-      ref={cursorRef}
-      style={{
-        position: "fixed",
-        width: hovering ? "40px" : "10px",
-        height: hovering ? "40px" : "10px",
-        borderRadius: "50%",
-        background: hovering ? V.orangeLt : V.orange,
-        border: hovering ? `1px solid ${V.orange}` : "none",
-        pointerEvents: "none",
-        zIndex: 9999,
-        top: 0,
-        left: 0,
-        transform: "translate(-50%, -50%)",
-        transition: "transform 0.1s, width 0.25s, height 0.25s, background 0.25s",
-        mixBlendMode: "screen" as const,
-      }}
-    />
-  );
-}
-
-/* ═══════════════════════════════════════════════ */
-/* ═══ Scroll Progress Bar ═══ */
-/* ═══════════════════════════════════════════════ */
-function ProgressBar() {
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      setWidth(pct);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        height: "2px",
-        background: V.orange,
-        boxShadow: `0 0 12px ${V.orangeGlow}`,
-        zIndex: 999,
-        width: `${width}%`,
-        transition: "width 0.1s linear",
-      }}
-    />
-  );
-}
 
 type BlogCategoriesBlockProps = {
   activeCategory?: string;
@@ -142,13 +46,6 @@ export default function BlogCategoriesBlock({
   const rubriques = categories.filter((c) => c.value !== "all");
 
   return (
-    <>
-      <CustomCursor />
-      <ProgressBar />
-      <style>{`
-        body, * { cursor: none !important; }
-      `}</style>
-
       <div
         className={className}
         style={{
@@ -271,6 +168,5 @@ export default function BlogCategoriesBlock({
         })}
       </div>
       </div>
-    </>
   );
 }

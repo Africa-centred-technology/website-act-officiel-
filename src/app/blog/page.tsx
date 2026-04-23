@@ -23,7 +23,7 @@ function BlogLoading() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "var(--bg-primary, #070E1C)",
+        background: "var(--bg-primary, #0A1410)",
         color: "#fff",
       }}
       aria-label="Chargement du blog…"

@@ -18,7 +18,7 @@ const EASE   = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST  = [0.04, 0.72, 0.08, 1.0] as const;
 const ORANGE = "#D35400";
 const GOLD   = "#F39C12";
-const BG     = "#070E1C";
+const BG     = "#0A1410";
 
 /* ── WordChars — identique à RoomEntree / SecteursShell ── */
 type CharFx = "rollIn" | "burstOut" | "riseUp";
@@ -141,8 +141,8 @@ function ProjectCard({
           <div style={{
             position: "absolute", inset: 0,
             background: hovered
-              ? "linear-gradient(to bottom, rgba(7,14,28,0.1), rgba(7,14,28,0.55))"
-              : "linear-gradient(to bottom, rgba(7,14,28,0.05), rgba(7,14,28,0.4))",
+              ? "linear-gradient(to bottom, rgba(10,20,16,0.1), rgba(10,20,16,0.55))"
+              : "linear-gradient(to bottom, rgba(10,20,16,0.05), rgba(10,20,16,0.4))",
             transition: "background 0.4s",
           }} />
 
@@ -365,7 +365,7 @@ export default function RealisationsShell() {
       {/* ══ FILTER BAR ═════════════════════════════════════════════════ */}
       <div style={{
         position: "sticky", top: 0, zIndex: 50,
-        background: "rgba(7,14,28,0.95)", backdropFilter: "blur(20px)",
+        background: "rgba(10,20,16,0.95)", backdropFilter: "blur(20px)",
         borderBottom: "1px solid rgba(211,84,0,0.2)",
         padding: "2rem clamp(1.5rem, 6vw, 8rem)",
       }}>
@@ -415,7 +415,7 @@ export default function RealisationsShell() {
       {/* ══ GRID ════════════════════════════════════════════════════════ */}
       <section style={{
         position: "relative", zIndex: 2,
-        background: "rgba(7,14,28,0.80)",
+        background: "rgba(10,20,16,0.80)",
         backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)",
         padding: "clamp(4rem, 7vw, 7rem) clamp(1.5rem, 6vw, 8rem)",
       }}>

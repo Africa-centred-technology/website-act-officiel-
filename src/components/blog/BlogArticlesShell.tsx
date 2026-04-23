@@ -701,6 +701,7 @@ function ArticleCard({
 function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const screenSize = useMediaQuery();
 
   return (
     <motion.div
@@ -721,9 +722,9 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
             borderRadius: "1.2rem",
             overflow: "hidden",
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 40rem), 1fr))",
+            gridTemplateColumns: screenSize === 'mobile' ? "1fr" : "repeat(auto-fit, minmax(min(100%, 40rem), 1fr))",
             transition: "border-color 0.3s ease, background 0.3s ease, transform 0.3s ease",
-            minHeight: "35rem",
+            minHeight: screenSize === 'mobile' ? "auto" : "35rem",
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLDivElement;
@@ -737,19 +738,21 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
           }}
         >
           {/* Left: Image Container */}
-          <div style={{ position: "relative", width: "100%", minHeight: "35rem" }}>
+          <div style={{ position: "relative", width: "100%", minHeight: screenSize === 'mobile' ? "24rem" : "35rem" }}>
             <Image
               src={post.image}
               alt={post.title}
               fill
               style={{ objectFit: "cover", opacity: 0.8 }}
             />
-            {/* The gradient overlay to smooth transition to right side */}
+            {/* Gradient overlay — bottom on mobile (stacked), right on desktop (side-by-side) */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background: `linear-gradient(to right, transparent 30%, var(--bg-secondary))`,
+                background: screenSize === 'mobile'
+                  ? `linear-gradient(to bottom, transparent 40%, var(--bg-secondary))`
+                  : `linear-gradient(to right, transparent 30%, var(--bg-secondary))`,
               }}
             />
             {/* Top Left Badge */}
@@ -780,7 +783,7 @@ function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
           {/* Right: Content Container */}
           <div
             style={{
-              padding: "4rem 4rem 4rem 2rem",
+              padding: screenSize === 'mobile' ? "2rem 2rem 3rem" : "4rem 4rem 4rem 2rem",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",

@@ -831,7 +831,7 @@ function ContentSection({
         <div
           style={{
             marginTop: "2rem",
-            background: "#060D0A",
+            background: "var(--bg-secondary)",
             border: "1px solid rgba(255,255,255,0.08)",
             overflow: "auto",
           }}

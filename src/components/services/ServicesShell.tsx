@@ -1090,7 +1090,7 @@ function ServicesJourney({ onCurrentChange }: { onCurrentChange?: (n: string) =>
   /* Mobile fallback: render all services as scrollable sections */
   if (isMobile) {
     return (
-      <div style={{ background: "#070E1C", padding: "5rem 1rem" }}>
+      <div style={{ background: "#0A1410", padding: "5rem 1rem" }}>
         {SERVICES.map((service, idx) => (
           <div key={idx} style={{ marginBottom: "4rem", padding: "1.5rem", background: "rgba(255,255,255,0.03)", borderRadius: "1rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
@@ -1162,9 +1162,9 @@ export default function ServicesShell() {
   const isCatalogue = currentN === "09";
 
   return (
-    <div style={{ background: "#070E1C", minHeight: "100vh", position: "relative" }}>
+    <div style={{ background: "#0A1410", minHeight: "100vh", position: "relative" }}>
       {/* Background layers */}
-      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#070E1C" }}>
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#0A1410" }}>
         <WaveTerrain />
         <Grain />
         <Cursor />

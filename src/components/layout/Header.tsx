@@ -13,14 +13,21 @@ const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
 
 /* ── Tokens ─────────────────────────────────────────────── */
 const ORANGE = "#D35400";
-const BG_DARK = "#070E1C";
 
 /* ── Data ───────────────────────────────────────────────── */
 const SAVOIR_FAIRE_MENU = [
   { href: "/poles", label: "Nos Pôles d'Excellence", key: "poles", description: "" },
   { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
   { href: "/services", label: "Nos Services", key: "services", description: "" },
-  { href: "/formations", label: "Catalogue de Formations", key: "formations", description: "" },
+  {
+    href: "/formations",
+    label: "Catalogue de Formations",
+    key: "formations",
+    description: "",
+    subItems: [
+      { href: "/formations/all", label: "Catalogue complet", key: "formations-all" },
+    ],
+  },
 ];
 
 const NOUS_DECOUVRIR_MENU = [
@@ -42,6 +49,9 @@ const NAV_LINKS = [
 /* ══════════════════════════════════════════════════════════
    MOBILE ACCORDION — Section with expandable sub-links
    ══════════════════════════════════════════════════════════ */
+type MobileNavItem = { href: string; label: string; key: string; subItems?: { href: string; label: string; key: string }[] };
+
+
 function MobileAccordion({
   label,
   items,
@@ -49,7 +59,7 @@ function MobileAccordion({
   onClose,
 }: {
   label: string;
-  items: { href: string; label: string; key: string }[];
+  items: MobileNavItem[];
   delay: number;
   onClose: () => void;
 }) {
@@ -115,13 +125,14 @@ function MobileAccordion({
               }}>
                 {label}
               </p>
-              {/* Sub-items */}
+              {/* Items — flat links or nested accordions */}
               {items.map((item, i) => (
                 <motion.div
                   key={item.key}
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06 }}
+                  style={{ borderBottom: i < items.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}
                 >
                   <Link
                     href={item.href}
@@ -134,7 +145,6 @@ function MobileAccordion({
                       textDecoration: "none",
                       fontFamily: "var(--font-body)",
                       fontWeight: 500,
-                      borderBottom: i < items.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
                       transition: "color 0.2s, padding-left 0.2s",
                     }}
                     onMouseEnter={e => { e.currentTarget.style.color = "#D35400"; e.currentTarget.style.paddingLeft = "0.5rem"; }}
@@ -142,6 +152,32 @@ function MobileAccordion({
                   >
                     {item.label}
                   </Link>
+                  {item.subItems?.map((sub) => (
+                    <Link
+                      key={sub.key}
+                      href={sub.href}
+                      onClick={onClose}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        padding: "0.5rem 0 0.5rem 1rem",
+                        fontSize: "1rem",
+                        color: "rgba(255,255,255,0.55)",
+                        textDecoration: "none",
+                        fontFamily: "var(--font-body)",
+                        fontWeight: 400,
+                        borderLeft: "1px solid rgba(211,84,0,0.3)",
+                        marginLeft: "0.5rem",
+                        transition: "color 0.2s",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.color = "#D35400"; }}
+                      onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; }}
+                    >
+                      <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#D35400", flexShrink: 0 }} />
+                      {sub.label}
+                    </Link>
+                  ))}
                 </motion.div>
               ))}
             </div>
@@ -388,7 +424,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             style={{
               position: "fixed",
               inset: 0,
-              background: "rgba(11, 22, 43, 0.98)",
+              background: "rgba(10,20,16, 0.98)",
               zIndex: 100000, // Must be above navbar (99999)
               display: "flex",
               flexDirection: "column",

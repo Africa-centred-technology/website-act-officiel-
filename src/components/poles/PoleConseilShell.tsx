@@ -84,7 +84,7 @@ export default function PoleConseilShell() {
 
   return (
     <div style={{
-      background: '#070E1C',
+      background: '#0A1410',
       minHeight: '100vh',
       overflowX: 'hidden',
       position: 'relative',
@@ -453,7 +453,7 @@ export default function PoleConseilShell() {
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      background: `linear-gradient(to bottom, transparent 0%, rgba(7,14,28,0.4) 50%, rgba(7,14,28,0.95) 100%)`,
+                      background: `linear-gradient(to bottom, transparent 0%, rgba(10,20,16,0.4) 50%, rgba(10,20,16,0.95) 100%)`,
                     }} />
                     {/* Icon badge */}
                     <div style={{
