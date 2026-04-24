@@ -1,66 +1,68 @@
 "use client";
 
 /**
- * ValueSection — diagonal staircase that flattens as the user scrolls.
+ * ValueSection — scroll-hijack pinned animation.
  *
- * On first view, the 4 cards are arranged diagonally (each one sits lower
- * than the previous). As the user scrolls through the section, cards 2/3/4
- * rise to align horizontally with card 1.
+ * Behaviour (like Moon Mansion / premium Webflow sites):
+ *  • When the section snaps to the viewport top, the PAGE scroll is LOCKED.
+ *  • Every wheel / touch / arrow event advances an INTERNAL progress [0 → 1].
+ *  • As progress grows, the 4 cards lift from a staircase to a single row.
+ *  • When progress reaches 1 (or 0), body scroll is unlocked — the page
+ *    continues / goes back naturally.
  *
- * Mechanics:
- *  • useScroll() tracks the section's scroll progress (0 → 1)
- *  • useTransform() maps progress to a descending Y-offset for each card,
- *    with card 0 always at 0
- *  • Mask-reveal on the text blocks stays as a subtle entry flourish
+ * Card content: Moon-Mansion-style mask reveal on number + text.
  *
- * Responsive: 1 col mobile → 2×2 tablet → 4 cols desktop
+ * Responsive:
+ *  • mobile (<640px) → no hijack, plain stacked grid, animation via inView
+ *  • tablet (≥640px) → 2×2, hijack active
+ *  • desktop (≥1024px) → 4 cols, hijack active
  */
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import {
   motion,
   useInView,
-  useScroll,
+  useMotionValue,
+  useSpring,
   useTransform,
+  type MotionValue,
   type Variants,
 } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** Base vertical offset between consecutive cards (desktop pixels). */
-const DIAGONAL_STEP = 80;
+/** Vertical offset (px) between consecutive cards at the start of the scroll. */
+const DIAGONAL_STEP = 240;
+
+/** How sensitive the hijack is. Lower = more wheel needed to complete.        */
+const WHEEL_SENSITIVITY = 1500;
+const TOUCH_SENSITIVITY = 400;
 
 type Stat = {
   number: string;
   text: string;
-  /** Background color (pastel) */
   bg: string;
 };
 
 const STATS: Stat[] = [
-  {
-    number: "185",
-    text: "Brands we've helped build their digital presence.",
-    bg: "#DCEBFB",
-  },
-  {
-    number: "63",
-    text: "Long-term partnerships with companies worldwide.",
-    bg: "#E8E2F5",
-  },
-  {
-    number: "2.5M+",
-    text: "Users reached through platforms we designed.",
-    bg: "#DEEFE0",
-  },
-  {
-    number: "96%",
-    text: "Clients who continue working with us on future projects.",
-    bg: "#F7EFCF",
-  },
+  { number: "185",   text: "Brands we've helped build their digital presence.",          bg: "#DCEBFB" },
+  { number: "63",    text: "Long-term partnerships with companies worldwide.",           bg: "#E8E2F5" },
+  { number: "2.5M+", text: "Users reached through platforms we designed.",               bg: "#DEEFE0" },
+  { number: "96%",   text: "Clients who continue working with us on future projects.",   bg: "#F7EFCF" },
 ];
 
-/* ── Mask reveal variants (text entry) ──────────────────────────────── */
+/* ── Mask reveal variants ───────────────────────────────────────────── */
+
+const contentVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
 
 const maskInnerVariants: Variants = {
   hidden: { y: "110%" },
@@ -70,11 +72,9 @@ const maskInnerVariants: Variants = {
 function MaskReveal({
   children,
   style,
-  delay = 0,
 }: {
   children: React.ReactNode;
   style?: React.CSSProperties;
-  delay?: number;
 }) {
   return (
     <div
@@ -85,45 +85,247 @@ function MaskReveal({
         ...style,
       }}
     >
-      <motion.div
-        variants={maskInnerVariants}
-        transition={{ duration: 0.95, ease: EASE, delay }}
-        style={{ display: "block" }}
-      >
+      <motion.div variants={maskInnerVariants} style={{ display: "block" }}>
         {children}
       </motion.div>
     </div>
   );
 }
 
-/* ── Main component ─────────────────────────────────────────────────── */
+/* ── Single card ────────────────────────────────────────────────────── */
+
+function StatCard({
+  stat,
+  index,
+  progress,
+}: {
+  stat: Stat;
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const y = useTransform(progress, [0, 1], [index * DIAGONAL_STEP, 0]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(cardRef, { once: true, amount: 0.3 });
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className="value-card"
+      style={{
+        y,
+        background: stat.bg,
+        borderRadius: 24,
+        padding: 32,
+        aspectRatio: "1 / 1",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        color: "#1A1A1A",
+        fontFamily:
+          "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        willChange: "transform",
+      }}
+    >
+      <motion.div
+        variants={contentVariants}
+        initial="hidden"
+        animate={inView ? "show" : "hidden"}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
+        <MaskReveal
+          style={{
+            fontSize: "clamp(48px, 5vw, 72px)",
+            fontWeight: 700,
+            lineHeight: 1.05,
+            letterSpacing: "-0.03em",
+          }}
+        >
+          {stat.number}
+        </MaskReveal>
+
+        <MaskReveal
+          style={{
+            fontSize: 16,
+            fontWeight: 400,
+            lineHeight: 1.45,
+            maxWidth: "90%",
+          }}
+        >
+          {stat.text}
+        </MaskReveal>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ── Main — scroll-hijack logic ─────────────────────────────────────── */
 
 export default function ValueSection() {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Scroll progress within the section:
-  //   0  → section's TOP hits viewport BOTTOM (section enters)
-  //   1  → section's BOTTOM hits viewport TOP  (section leaves)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
+  /** Raw progress, driven by wheel/touch/keyboard delta */
+  const rawProgress = useMotionValue(0);
+  /** Smoothed progress — what the cards actually interpolate on */
+  const smoothProgress = useSpring(rawProgress, {
+    stiffness: 90,
+    damping: 20,
+    mass: 0.6,
   });
 
-  // Cards flatten between progress 0.15 (in view) and 0.55 (middle of scroll).
-  // Card 0 never moves; cards 1/2/3 start at +n·STEP and rise to 0.
-  const y1 = useTransform(scrollYProgress, [0.15, 0.55], [DIAGONAL_STEP * 1, 0]);
-  const y2 = useTransform(scrollYProgress, [0.15, 0.55], [DIAGONAL_STEP * 2, 0]);
-  const y3 = useTransform(scrollYProgress, [0.15, 0.55], [DIAGONAL_STEP * 3, 0]);
-  const yOffsets = [null, y1, y2, y3] as const;
+  /** Hijack active = section is pinned and intercepting input */
+  const [hijacked, setHijacked] = useState(false);
+  /** true if viewport width ≥ 640px (hijack disabled on mobile) */
+  const [hijackAllowed, setHijackAllowed] = useState(false);
 
-  // Mask-reveal trigger (for the text inside each card)
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+  /* Disable hijack on small screens (where cards are stacked) */
+  useEffect(() => {
+    const check = () => setHijackAllowed(window.innerWidth >= 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  /* Activate the hijack as soon as the section's top enters the top half
+     of the viewport. Uses a plain scroll listener — far more reliable than
+     IntersectionObserver with a narrow threshold band, which fast-scrolling
+     trackpads/wheels can skip over between frames.                         */
+  useEffect(() => {
+    if (!hijackAllowed) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      if (hijacked) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const prog = rawProgress.get();
+
+      // Scrolling DOWN into section (top is near viewport top, not past it yet)
+      if (rect.top <= 80 && rect.top >= -vh * 0.5 && prog < 1) {
+        setHijacked(true);
+        return;
+      }
+      // Scrolling UP back into section (bottom approaching viewport bottom)
+      if (
+        rect.bottom >= vh - 80 &&
+        rect.bottom <= vh + vh * 0.5 &&
+        prog > 0
+      ) {
+        setHijacked(true);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // run once at mount
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [hijackAllowed, hijacked, rawProgress]);
+
+  /* Release the hijack + resync the document scroll so the user lands
+     cleanly at the next / previous section boundary.                     */
+  const releaseHijack = useCallback((direction: "down" | "up") => {
+    setHijacked(false);
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+
+    if (direction === "down") {
+      // land with section bottom just above viewport top
+      const y = window.scrollY + rect.bottom;
+      window.scrollTo({ top: y, behavior: "auto" });
+    } else {
+      // land with section top just below viewport top
+      const y = window.scrollY + rect.top - window.innerHeight;
+      window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
+    }
+  }, []);
+
+  /* While hijacked: lock body scroll + intercept wheel/touch/keyboard. */
+  useEffect(() => {
+    if (!hijacked) return;
+
+    // Lock body scroll
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    // Snap section top to viewport top (in case user was mid-scroll)
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      window.scrollTo({
+        top: window.scrollY + rect.top,
+        behavior: "auto",
+      });
+    }
+
+    const advance = (delta: number) => {
+      const cur = rawProgress.get();
+      const next = cur + delta;
+      if (next >= 1) {
+        rawProgress.set(1);
+        releaseHijack("down");
+      } else if (next <= 0) {
+        rawProgress.set(0);
+        releaseHijack("up");
+      } else {
+        rawProgress.set(next);
+      }
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      advance(e.deltaY / WHEEL_SENSITIVITY);
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      const cy = e.touches[0].clientY;
+      const delta = (touchStartY - cy) / TOUCH_SENSITIVITY;
+      touchStartY = cy;
+      advance(delta);
+    };
+
+    const onKey = (e: KeyboardEvent) => {
+      const keysDown = ["ArrowDown", "PageDown", " "];
+      const keysUp = ["ArrowUp", "PageUp"];
+      if (keysDown.includes(e.key)) { e.preventDefault(); advance(0.08); }
+      else if (keysUp.includes(e.key)) { e.preventDefault(); advance(-0.08); }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("keydown", onKey, { passive: false });
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [hijacked, rawProgress, releaseHijack]);
 
   return (
     <div
       ref={ref}
       style={{
         width: "100%",
+        height: "100vh",
+        position: "relative",
         padding: "clamp(48px, 8vw, 96px) clamp(20px, 4vw, 64px)",
         display: "flex",
         alignItems: "center",
@@ -140,64 +342,20 @@ export default function ValueSection() {
         }}
       >
         {STATS.map((stat, i) => (
-          <motion.div
-            key={i}
-            initial="hidden"
-            animate={inView ? "show" : "hidden"}
-            style={{
-              // Each non-first card gets its own scroll-driven Y offset.
-              // Card 0 stays flat — it's the anchor line.
-              y: yOffsets[i] ?? undefined,
-              background: stat.bg,
-              borderRadius: 24,
-              padding: 32,
-              aspectRatio: "1 / 1",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              color: "#1A1A1A",
-              fontFamily:
-                "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              willChange: "transform",
-            }}
-          >
-            {/* Big number — mask reveal */}
-            <MaskReveal
-              delay={i * 0.08}
-              style={{
-                fontSize: "clamp(48px, 5vw, 72px)",
-                fontWeight: 700,
-                lineHeight: 1.05,
-                letterSpacing: "-0.03em",
-              }}
-            >
-              {stat.number}
-            </MaskReveal>
-
-            {/* Descriptive line — mask reveal one beat later */}
-            <MaskReveal
-              delay={i * 0.08 + 0.12}
-              style={{
-                fontSize: 16,
-                fontWeight: 400,
-                lineHeight: 1.45,
-                maxWidth: "90%",
-              }}
-            >
-              {stat.text}
-            </MaskReveal>
-          </motion.div>
+          <StatCard key={i} stat={stat} index={i} progress={smoothProgress} />
         ))}
       </div>
 
-      {/* Responsive grid:
-          • mobile (<640px)   → 1 column   (diagonal offset is visually tiny — fine)
-          • tablet (≥640px)   → 2×2 grid
-          • desktop (≥1024px) → 4 columns in a row (full staircase effect)      */}
+      {/* Responsive grid. On mobile, cards stack and the staircase transform
+          is overridden to 0 (hijack is disabled there anyway).               */}
       <style jsx>{`
         .value-grid {
           grid-template-columns: 1fr;
+        }
+        @media (max-width: 639px) {
+          :global(.value-card) {
+            transform: none !important;
+          }
         }
         @media (min-width: 640px) {
           .value-grid {
