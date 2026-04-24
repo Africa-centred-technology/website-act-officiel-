@@ -88,7 +88,7 @@ function Word({ word, index, total }: { word: string; index: number; total: numb
   );
 }
 
-export default function RoomManifeste() {
+export default function ManifesteSection() {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const screenSize = useMediaQuery();

@@ -341,7 +341,7 @@ function Panel({
 }
 
 /* ── Main ── */
-export default function RoomAtelier() {
+export default function PolesSection() {
   const screenSize = useScreenSize();
   const isMobile   = screenSize !== "desktop";
 

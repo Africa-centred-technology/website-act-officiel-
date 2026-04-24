@@ -1,21 +1,21 @@
 "use client";
 
 /**
- * Home2Shell — Single-page architecture.
- * All rooms are declared in the ROOMS table and rendered in one pass.
- * To add / remove / reorder a room: edit the ROOMS array only.
+ * Home Shell — Single-page architecture.
+ * All page sections are declared in the SECTIONS table and rendered in one pass.
+ * To add / remove / reorder a section: edit the SECTIONS array only.
  */
 
 import React from "react";
 import dynamic from "next/dynamic";
 
-import RoomEntree from "@/components/home/rooms/RoomEntree";
-import RoomAtelier from "@/components/home/rooms/RoomAtelier";
-import RoomManifeste from "@/components/home/rooms/RoomManifeste";
-import RoomSortie from "@/components/home/rooms/RoomSortie";
-import RoomQuiSommesNous from "@/components/home/rooms/RoomQuiSommesNous";
-import RoomPortail from "@/components/home/rooms/RoomPortail";
-import RoomBlog from "@/components/home/rooms/RoomBlog";
+import HeroSection from "@/components/home/sections/HeroSection";
+import AboutSection from "@/components/home/sections/AboutSection";
+import PolesSection from "@/components/home/sections/PolesSection";
+import ManifesteSection from "@/components/home/sections/ManifesteSection";
+import ProjectsSection from "@/components/home/sections/ProjectsSection";
+import BlogSection from "@/components/home/sections/BlogSection";
+import HorizonSection from "@/components/home/sections/HorizonSection";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 /* Canvas / window-dependent — client only */
@@ -24,39 +24,39 @@ const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: fa
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 
 /* ─────────────────────────────────────────────────────────────────
-   ROOM REGISTRY — single source of truth
+   SECTION REGISTRY — single source of truth
 ───────────────────────────────────────────────────────────────── */
-export interface Room {
+export interface Section {
   id: string;
   label: string;
   number: string;
   Component: React.ComponentType;
-  /** Set to true to hide the bottom border (use on the last room) */
+  /** Hide the bottom border (use on the last section) */
   flush?: boolean;
-  /** Set to true to let the room manage its own footer */
+  /** The section renders its own footer — skip the global one */
   ownsFooter?: boolean;
 }
 
-export const ROOMS: Room[] = [
-  { id: "continent",       label: "LE CONTINENT",    number: "01", Component: RoomEntree },
-  { id: "qui-sommes-nous", label: "QUI SOMMES-NOUS", number: "02", Component: RoomQuiSommesNous },
-  { id: "cite",            label: "LA CITÉ",         number: "03", Component: RoomAtelier },
-  { id: "maison",          label: "LA MAISON",       number: "04", Component: RoomManifeste },
-  { id: "portail",         label: "LE PORTAIL",      number: "05", Component: RoomPortail },
-  { id: "blog",            label: "LE BLOG",         number: "06", Component: RoomBlog },
-  { id: "horizon",         label: "L'HORIZON",       number: "07", Component: RoomSortie, flush: true, ownsFooter: true },
+export const SECTIONS: Section[] = [
+  { id: "hero",       label: "LE CONTINENT",    number: "01", Component: HeroSection },
+  { id: "about",      label: "QUI SOMMES-NOUS", number: "02", Component: AboutSection },
+  { id: "poles",      label: "LA CITÉ",         number: "03", Component: PolesSection },
+  { id: "manifeste",  label: "LA MAISON",       number: "04", Component: ManifesteSection },
+  { id: "projects",   label: "LE PORTAIL",      number: "05", Component: ProjectsSection },
+  { id: "blog",       label: "LE BLOG",         number: "06", Component: BlogSection },
+  { id: "horizon",    label: "L'HORIZON",       number: "07", Component: HorizonSection, flush: true, ownsFooter: true },
 ];
 
 /* ─────────────────────────────────────────────────────────────────
    SHARED SECTION SHELL
 ───────────────────────────────────────────────────────────────── */
-function RoomSection({ room }: { room: Room }) {
-  const { id, Component, flush } = room;
+function PageSection({ section }: { section: Section }) {
+  const { id, Component, flush } = section;
   return (
     <section
       id={id}
-      data-room={id}
-      className="room-section"
+      data-section={id}
+      className="page-section"
       style={{
         borderBottom: flush ? "none" : "1px solid rgba(255, 255, 255, 0.05)",
       }}
@@ -69,8 +69,8 @@ function RoomSection({ room }: { room: Room }) {
 /* ─────────────────────────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────────────────────────── */
-export default function Home2Shell() {
-  const lastRoomOwnsFooter = ROOMS[ROOMS.length - 1]?.ownsFooter;
+export default function HomeShell() {
+  const lastOwnsFooter = SECTIONS[SECTIONS.length - 1]?.ownsFooter;
 
   return (
     <div
@@ -96,7 +96,7 @@ export default function Home2Shell() {
       <Cursor />
 
       <style>{`
-        .room-section {
+        .page-section {
           position: relative;
           width: 100%;
           min-height: 100vh;
@@ -104,15 +104,15 @@ export default function Home2Shell() {
           flex-direction: column;
           overflow-x: hidden;
         }
-        .room-section > * {
+        .page-section > * {
           flex: 1 1 auto;
           width: 100%;
           min-height: 100vh;
         }
         @media (max-width: 900px) {
-          .room-section { min-height: auto; }
-          .room-section > * { min-height: auto; }
-          .room-section [style*="gridTemplateColumns"] {
+          .page-section { min-height: auto; }
+          .page-section > * { min-height: auto; }
+          .page-section [style*="gridTemplateColumns"] {
             grid-template-columns: 1fr !important;
             gap: 3rem !important;
           }
@@ -137,14 +137,13 @@ export default function Home2Shell() {
         }
       `}</style>
 
-      {/* ── Rooms stacked — data-driven from ROOMS table ── */}
+      {/* ── Sections stacked — data-driven from SECTIONS table ── */}
       <div style={{ position: "relative", zIndex: 1 }}>
-        {ROOMS.map((room) => (
-          <RoomSection key={room.id} room={room} />
+        {SECTIONS.map((section) => (
+          <PageSection key={section.id} section={section} />
         ))}
 
-        {/* Global footer — rendered only if the last room doesn't carry one */}
-        {!lastRoomOwnsFooter && <FooterStrip />}
+        {!lastOwnsFooter && <FooterStrip />}
       </div>
     </div>
   );

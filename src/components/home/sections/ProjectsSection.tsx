@@ -32,7 +32,7 @@ function useMediaQuery() {
 
 type Dir = 1 | -1;
 
-export default function RoomPortail() {
+export default function ProjectsSection() {
     const screenSize = useMediaQuery();
     const total = Math.min(4, PROJECTS.length);
     const [active, setActive] = useState(0);

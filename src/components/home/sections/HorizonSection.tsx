@@ -75,7 +75,7 @@ function PortalRing() {
   );
 }
 
-export default function RoomSortie() {
+export default function HorizonSection() {
   /* ── 3-layer parallax ── */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);

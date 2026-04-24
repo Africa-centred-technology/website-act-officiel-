@@ -1,4 +1,4 @@
-import Home2Shell from "@/components/home/Shell";
+import HomeShell from "@/components/home/Shell";
 
 export const metadata = {
   title: "ACT — Africa Centred Technology | Engineering the Future",
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <Home2Shell />;
+  return <HomeShell />;
 }

@@ -29,7 +29,7 @@ function useMediaQuery() {
     return screenSize;
 }
 
-export default function RoomBlog() {
+export default function BlogSection() {
     const screenSize = useMediaQuery();
     return (
         <div className="h-full w-full overflow-hidden relative flex flex-col">

@@ -60,7 +60,7 @@ const STATS = [
     { n: "∞", label: "Ambition" },
 ];
 
-export default function RoomQuiSommesNous() {
+export default function AboutSection() {
     const mx = useMotionValue(0);
     const my = useMotionValue(0);
     const midX = useSpring(mx, { stiffness: 55, damping: 22 });

@@ -735,25 +735,6 @@ h1, h2, h3, h4, h5, h6 {
   .about-sec-pad { padding: 5rem 1.5rem 6rem !important; }
 }
 
-/* SpatialNav responsive */
-.spatial-nav-wrap {
-  padding: 0 clamp(1.2rem, 3.5vw, 4rem) clamp(1.8rem, 2.8vw, 3.2rem);
-}
-@media (max-width: 640px) {
-  .spatial-nav-wrap {
-    padding: 0 1.2rem 1.8rem !important;
-  }
-  .spatial-nav-label-main {
-    font-size: 0.95rem !important;
-    max-width: 50vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .spatial-nav-label-sub { display: none !important; }
-  .spatial-nav-eyebrow   { display: none !important; }
-}
-
 /* Menu overlay link labels — clamp already handles most, but ensure ultra-small */
 @media (max-width: 380px) {
   .nav-link-num { display: none !important; }

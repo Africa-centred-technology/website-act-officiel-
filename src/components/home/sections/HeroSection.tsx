@@ -160,7 +160,7 @@ function WordChars({
 }
 
 /* ── Room ────────────────────────────────────────────────────────────── */
-export default function RoomEntree() {
+export default function HeroSection() {
   /* 3-layer parallax */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
