@@ -2,8 +2,12 @@
 
 /**
  * Home Shell — Single-page architecture.
- * All page sections are declared in the SECTIONS table and rendered in one pass.
- * To add / remove / reorder a section: edit the SECTIONS array only.
+ * Navigation / layout pattern aligned with FormationDetailShell.tsx:
+ *   • First section rendered as <header> (hero)
+ *   • Subsequent sections as <section style={secStyle}>
+ *   • Natural flow (no forced 100vh), consistent vertical rhythm
+ *   • Thin border-bottom separators between sections
+ *   • <FooterStrip /> at the end
  */
 
 import React from "react";
@@ -11,6 +15,7 @@ import dynamic from "next/dynamic";
 
 import HeroSection from "@/components/home/sections/HeroSection";
 import AboutSection from "@/components/home/sections/AboutSection";
+import ValueSection from "@/components/home/sections/ValueSection";
 import PolesSection from "@/components/home/sections/PolesSection";
 import ManifesteSection from "@/components/home/sections/ManifesteSection";
 import ProjectsSection from "@/components/home/sections/ProjectsSection";
@@ -22,6 +27,35 @@ import FooterStrip from "@/components/layout/FooterStrip";
 const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
+
+/* ─────────────────────────────────────────────────────────────────
+   DESIGN TOKENS — mirror FormationDetailShell
+───────────────────────────────────────────────────────────────── */
+const LINE      = "rgba(255,255,255,0.10)";
+const LINE_SOFT = "rgba(255,255,255,0.06)";
+
+const heroHeaderStyle: React.CSSProperties = {
+  position: "relative",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  borderBottom: `1px solid ${LINE}`,
+};
+
+const secStyle: React.CSSProperties = {
+  position: "relative",
+  minHeight: "100vh",
+  padding: "48px 0",
+  borderBottom: `1px solid ${LINE_SOFT}`,
+  display: "flex",
+  flexDirection: "column",
+};
+
+const secFlushStyle: React.CSSProperties = {
+  ...secStyle,
+  borderBottom: "none",
+};
 
 /* ─────────────────────────────────────────────────────────────────
    SECTION REGISTRY — single source of truth
@@ -38,33 +72,14 @@ export interface Section {
 }
 
 export const SECTIONS: Section[] = [
-  { id: "hero",       label: "LE CONTINENT",    number: "01", Component: HeroSection },
-  { id: "about",      label: "QUI SOMMES-NOUS", number: "02", Component: AboutSection },
-  { id: "poles",      label: "LA CITÉ",         number: "03", Component: PolesSection },
-  { id: "manifeste",  label: "LA MAISON",       number: "04", Component: ManifesteSection },
-  { id: "projects",   label: "LE PORTAIL",      number: "05", Component: ProjectsSection },
-  { id: "blog",       label: "LE BLOG",         number: "06", Component: BlogSection },
-  { id: "horizon",    label: "L'HORIZON",       number: "07", Component: HorizonSection, flush: true, ownsFooter: true },
+  { id: "about",     label: "QUI SOMMES-NOUS", number: "02", Component: AboutSection },
+  { id: "values",    label: "NOS CHIFFRES",    number: "03", Component: ValueSection },
+  { id: "poles",     label: "LA CITÉ",         number: "04", Component: PolesSection },
+  { id: "manifeste", label: "LA MAISON",       number: "05", Component: ManifesteSection },
+  { id: "projects",  label: "LE PORTAIL",      number: "06", Component: ProjectsSection },
+  { id: "blog",      label: "LE BLOG",         number: "07", Component: BlogSection },
+  { id: "horizon",   label: "L'HORIZON",       number: "08", Component: HorizonSection, flush: true, ownsFooter: true },
 ];
-
-/* ─────────────────────────────────────────────────────────────────
-   SHARED SECTION SHELL
-───────────────────────────────────────────────────────────────── */
-function PageSection({ section }: { section: Section }) {
-  const { id, Component, flush } = section;
-  return (
-    <section
-      id={id}
-      data-section={id}
-      className="page-section"
-      style={{
-        borderBottom: flush ? "none" : "1px solid rgba(255, 255, 255, 0.05)",
-      }}
-    >
-      <Component />
-    </section>
-  );
-}
 
 /* ─────────────────────────────────────────────────────────────────
    MAIN COMPONENT
@@ -76,7 +91,9 @@ export default function HomeShell() {
     <div
       style={{
         background: "var(--bg-primary)",
-        minHeight: "100vh",
+        color: "#fff",
+        fontFamily: "var(--font-body)",
+        overflowX: "hidden",
         position: "relative",
       }}
     >
@@ -96,23 +113,16 @@ export default function HomeShell() {
       <Cursor />
 
       <style>{`
-        .page-section {
-          position: relative;
-          width: 100%;
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          overflow-x: hidden;
-        }
-        .page-section > * {
+        /* Let each section's inner component fill the flex column so
+           children that use height:100% (e.g. PolesSection panels) render. */
+        [data-section] > * {
           flex: 1 1 auto;
           width: 100%;
-          min-height: 100vh;
         }
+
         @media (max-width: 900px) {
-          .page-section { min-height: auto; }
-          .page-section > * { min-height: auto; }
-          .page-section [style*="gridTemplateColumns"] {
+          [data-section] > * { min-height: 0; }
+          [data-section] [style*="gridTemplateColumns"] {
             grid-template-columns: 1fr !important;
             gap: 3rem !important;
           }
@@ -137,11 +147,26 @@ export default function HomeShell() {
         }
       `}</style>
 
-      {/* ── Sections stacked — data-driven from SECTIONS table ── */}
       <div style={{ position: "relative", zIndex: 1 }}>
-        {SECTIONS.map((section) => (
-          <PageSection key={section.id} section={section} />
-        ))}
+        {/* ── HERO — rendered as <header>, mirrors FormationDetailShell's hero ── */}
+        <header id="hero" data-section="hero" style={heroHeaderStyle}>
+          <HeroSection />
+        </header>
+
+        {/* ── Subsequent sections — uniform flow, natural height ── */}
+        {SECTIONS.map((section) => {
+          const { id, Component, flush } = section;
+          return (
+            <section
+              key={id}
+              id={id}
+              data-section={id}
+              style={flush ? secFlushStyle : secStyle}
+            >
+              <Component />
+            </section>
+          );
+        })}
 
         {!lastOwnsFooter && <FooterStrip />}
       </div>

@@ -437,7 +437,7 @@ export default function PolesSection() {
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         gap: "8px",
-        minHeight: 0,
+        minHeight: isMobile ? 0 : "78vh",
         paddingBottom: isMobile ? "2rem" : 0,
       }}>
         {POLES.map((pole, i) => (

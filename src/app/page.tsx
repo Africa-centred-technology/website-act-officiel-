@@ -1,4 +1,4 @@
-import HomeShell from "@/components/home/Shell";
+import HomeShell from "@/components/home/Home";
 
 export const metadata = {
   title: "ACT — Africa Centred Technology | Engineering the Future",
