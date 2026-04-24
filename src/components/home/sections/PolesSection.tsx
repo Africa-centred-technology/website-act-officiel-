@@ -382,14 +382,8 @@ export default function PolesSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.04 }}
           >
-            <span className="diamond diamond--sm" />
-            <span style={{
-              color: "rgba(255,255,255,0.35)",
-              fontSize: screenSize === "mobile" ? "0.72rem" : screenSize === "tablet" ? "0.75rem" : "0.85rem",
-              letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 500,
-            }}>
-              Audit & Ingénierie
-            </span>
+          
+ 
           </motion.div>
         </div>
 

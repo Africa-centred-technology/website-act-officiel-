@@ -19,7 +19,7 @@ import ValueSection from "@/components/home/sections/ValueSection";
 import PolesSection from "@/components/home/sections/PolesSection";
 import ManifesteSection from "@/components/home/sections/ManifesteSection";
 import ProjectsSection from "@/components/home/sections/ProjectsSection";
-import BlogSection from "@/components/home/sections/BlogSection";
+import BlogShowcaseSection from "@/components/home/sections/BlogShowcaseSection";
 import HorizonSection from "@/components/home/sections/HorizonSection";
 import FooterStrip from "@/components/layout/FooterStrip";
 
@@ -45,8 +45,12 @@ const heroHeaderStyle: React.CSSProperties = {
 
 const secStyle: React.CSSProperties = {
   position: "relative",
-  minHeight: "100vh",
-  padding: "48px 0",
+  /* 60vh baseline — enough for sections that use height:100% internally
+     to render without collapsing, but no huge empty gap around centred
+     content. Sections with heavier content (Poles panels, Hero) still
+     grow beyond this via their own internal heights.                     */
+  minHeight: "60vh",
+  padding: 0,
   borderBottom: `1px solid ${LINE_SOFT}`,
   display: "flex",
   flexDirection: "column",
@@ -76,9 +80,9 @@ export const SECTIONS: Section[] = [
   { id: "values",    label: "NOS CHIFFRES",    number: "03", Component: ValueSection },
   { id: "poles",     label: "LA CITÉ",         number: "04", Component: PolesSection },
   { id: "manifeste", label: "LA MAISON",       number: "05", Component: ManifesteSection },
-  { id: "projects",  label: "LE PORTAIL",      number: "06", Component: ProjectsSection },
-  { id: "blog",      label: "LE BLOG",         number: "07", Component: BlogSection },
-  { id: "horizon",   label: "L'HORIZON",       number: "08", Component: HorizonSection, flush: true, ownsFooter: true },
+  { id: "projects",  label: "LE PORTAIL",      number: "07", Component: ProjectsSection },
+  { id: "blog",      label: "LE BLOG",         number: "08", Component: BlogShowcaseSection },
+  { id: "horizon",   label: "L'HORIZON",       number: "09", Component: HorizonSection, flush: true },
 ];
 
 /* ─────────────────────────────────────────────────────────────────
@@ -93,7 +97,10 @@ export default function HomeShell() {
         background: "var(--bg-primary)",
         color: "#fff",
         fontFamily: "var(--font-body)",
-        overflowX: "hidden",
+        /* `clip` prevents horizontal overflow WITHOUT creating a scroll
+           context — preserves `position: sticky` on nested descendants
+           (used by BlogShowcaseSection's stacking cards).                 */
+        overflowX: "clip",
         position: "relative",
       }}
     >
@@ -118,6 +125,15 @@ export default function HomeShell() {
         [data-section] > * {
           flex: 1 1 auto;
           width: 100%;
+        }
+
+        /* Horizon section (last) — content-sized, no forced 100vh / 60vh.
+           Avoids the big empty area between the CTA content and the footer. */
+        [data-section="horizon"] {
+          min-height: 0 !important;
+        }
+        [data-section="horizon"] > * {
+          flex: 0 0 auto !important;
         }
 
         @media (max-width: 900px) {

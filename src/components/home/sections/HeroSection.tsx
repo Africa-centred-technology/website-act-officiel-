@@ -375,14 +375,16 @@ export default function HeroSection() {
 
       </motion.div>
 
-      {/* ── Stats marquee — infinite scroll strip at the bottom of the hero ── */}
+      {/* ── Stats marquee — infinite scroll strip raised above the hero's
+            bottom edge so it sits visually higher, with breathing room
+            between it and the next section.                                 */}
       <div
         aria-hidden
         style={{
           position: "absolute",
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: "5rem",
           overflow: "hidden",
           borderTop: "1px solid rgba(255,255,255,0.08)",
           borderBottom: "1px solid rgba(255,255,255,0.06)",

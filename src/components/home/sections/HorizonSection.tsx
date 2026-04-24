@@ -11,7 +11,6 @@
 import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
-import FooterStrip from "@/components/layout/FooterStrip";
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
@@ -109,7 +108,7 @@ export default function HorizonSection() {
   return (
     <div
       onMouseMove={onMouseMove}
-      className="room-container relative flex flex-col items-center justify-center text-center room-pad w-full min-h-screen md:h-full"
+      className="room-container relative flex flex-col w-full"
     >
 
 
@@ -194,12 +193,20 @@ export default function HorizonSection() {
         />
       ))}
 
-      {/* ── Content — mid layer ── */}
-      <motion.div className="relative z-10 w-full" style={{ x: midX, y: midY }}>
+      {/* ── Content wrapper — sized by its own content, no flex-fill so the
+            section doesn't stretch beyond what it actually needs.            */}
+      <motion.div
+        className="relative z-10 w-full flex flex-col items-center text-center"
+        style={{
+          x: midX,
+          y: midY,
+          padding: "clamp(0.75rem, 1.5vw, 1.25rem) clamp(1.5rem, 4vw, 5.5rem) 0",
+        }}
+      >
 
         {/* Eyebrow centré */}
         <motion.div
-          className="flex items-center justify-center gap-3 mb-10 w-full"
+          className="flex items-center justify-center gap-3 mb-2 w-full"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.10 }}
@@ -212,7 +219,7 @@ export default function HorizonSection() {
         </motion.div>
 
         {/* ── Split gauche/droite : Logo ← | → Contenu ── */}
-        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 justify-between w-full md:translate-y-[-8vh]">
+        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 justify-between w-full">
 
           {/* Left — Logo Continent */}
           <motion.div
@@ -228,7 +235,7 @@ export default function HorizonSection() {
                 src="/logo/logo_continent.png"
                 alt="ACT - Africa Centred Technology"
                 style={{
-                  width: "clamp(30rem, 65vw, 75rem)",
+                  width: "clamp(22rem, 42vw, 50rem)",
                   height: "auto",
                   filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
                   opacity: 0.99,
@@ -242,11 +249,11 @@ export default function HorizonSection() {
 
           {/* Right — Bloc aligné à droite pour le reste du contenu */}
           <div
-            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6 -mt-16 md:-mt-40"
+            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6"
           >
             {/* Titre principal avec effet depth */}
             <motion.h1
-              className="text-white font-black uppercase mb-8"
+              className="text-white font-black uppercase mb-4"
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(4rem, 5vw, 5rem)",
@@ -267,7 +274,7 @@ export default function HorizonSection() {
 
             {/* Subtext */}
             <motion.p
-              className="text-white/65 mb-12"
+              className="text-white/65"
               style={{ fontSize: "clamp(1.5rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem", fontFamily: "var(--font-body)" }}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
@@ -284,8 +291,6 @@ export default function HorizonSection() {
       </motion.div>
 
 
-      {/* ── Footer strip — navigation, contact, socials ── */}
-      <FooterStrip />
     </div>
   );
 }

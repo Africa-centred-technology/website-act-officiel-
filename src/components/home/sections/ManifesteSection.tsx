@@ -138,27 +138,7 @@ export default function ManifesteSection() {
           marginBottom: screenSize === 'mobile' ? '4rem' : screenSize === 'tablet' ? '2.5rem' : '3rem',
         }}
       >
-        {/* Left: eyebrow + "04" */}
-        <div style={{ flexShrink: 0 }}>
-          <motion.div
-            className="flex items-center gap-3"
-            style={{
-              marginBottom: screenSize === 'desktop' ? '0.75rem' : '0.5rem'
-            }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            <span className="diamond diamond--sm" />
-            <span className="text-white/55 uppercase tracking-[0.3em]" style={{
-              fontSize: screenSize === 'mobile' ? "0.75rem" : screenSize === 'tablet' ? "0.85rem" : "1.15rem",
-              fontFamily: "var(--font-display)"
-            }}>
-              Notre Manifeste
-            </span>
-          </motion.div>
-        </div>
-
+    
         {/* Séparateur vertical (Desktop seulement) */}
         {screenSize === 'desktop' && (
           <motion.div

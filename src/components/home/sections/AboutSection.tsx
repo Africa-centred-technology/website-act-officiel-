@@ -30,29 +30,6 @@ function useMediaQuery() {
   return screenSize;
 }
 
-const VALEURS = [
-    {
-        icon: "◈",
-        titre: "Collaboration",
-        desc: "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences.",
-    },
-    {
-        icon: "◉",
-        titre: "Transmission",
-        desc: "Nous formons, accompagnons et développons les talents technologiques africains.",
-    },
-    {
-        icon: "◆",
-        titre: "Excellence",
-        desc: "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet.",
-    },
-    {
-        icon: "◇",
-        titre: "Innovation utile",
-        desc: "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets.",
-    },
-];
-
 const STATS = [
     { n: "2026", label: "Fondée" },
     { n: "8", label: "Collaborateurs" },
@@ -203,90 +180,14 @@ export default function AboutSection() {
                        
                     </div>
 
-                    {/* ── COLONNE DROITE — Valeurs ── */}
+                    {/* ── COLONNE DROITE — Vision ── */}
                     <div>
-                        {/* Eyebrow valeurs */}
-                        <motion.div
-                            className="flex items-center gap-3 mb-6"
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.55, delay: 0.20, ease: [...EASE] }}
-                        >
-                            <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
-                            <span style={{
-                                fontFamily: "var(--font-display)",
-                                fontSize: screenSize === 'mobile' ? "0.8rem" : screenSize === 'tablet' ? "0.9rem" : "1.05rem",
-                                letterSpacing: "0.30em",
-                                textTransform: "uppercase",
-                                color: "rgba(255,255,255,0.4)",
-                            }}>
-                                Nos valeurs fondamentales
-                            </span>
-                        </motion.div>
-
-                        {/* Grille valeurs */}
-                        <div style={{
-                            display: screenSize === 'tablet' ? "grid" : "flex",
-                            gridTemplateColumns: screenSize === 'tablet' ? "repeat(2, 1fr)" : undefined,
-                            flexDirection: screenSize !== 'tablet' ? "column" : undefined,
-                            gap: screenSize === 'tablet' ? "1rem" : "0"
-                        }}>
-                            {VALEURS.map((v, i) => (
-                                <motion.div
-                                    key={v.titre}
-                                    initial={{ opacity: 0, x: 30 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.65, delay: 0.25 + i * 0.10, ease: [...EASE] }}
-                                    style={{
-                                        display: "flex",
-                                        gap: screenSize === 'mobile' ? "1rem" : "1.2rem",
-                                        alignItems: "flex-start",
-                                        padding: screenSize === 'tablet' ? "1.5rem" : screenSize === 'mobile' ? "1rem 0" : "1.1rem 0",
-                                        borderBottom: screenSize !== 'tablet' ? "1px solid rgba(255,255,255,0.08)" : "none",
-                                        border: screenSize === 'tablet' ? "1px solid rgba(255,255,255,0.08)" : "none",
-                                        borderRadius: screenSize === 'tablet' ? "0.5rem" : "0",
-                                        backgroundColor: screenSize === 'tablet' ? "rgba(255,255,255,0.02)" : "transparent",
-                                    }}
-                                >
-                                    {/* Icône */}
-                                    <span style={{
-                                        fontFamily: "var(--font-display)",
-                                        fontSize: screenSize === 'mobile' ? "0.95rem" : screenSize === 'tablet' ? "1.1rem" : "1.3rem",
-                                        color: "#D35400",
-                                        flexShrink: 0,
-                                        marginTop: "0.1rem",
-                                        lineHeight: 1,
-                                    }}>{v.icon}</span>
-
-                                    {/* Contenu */}
-                                    <div>
-                                        <div style={{
-                                            fontFamily: "var(--font-display)",
-                                            fontSize: screenSize === 'mobile' ? "clamp(0.95rem, 3.5vw, 1.2rem)" : screenSize === 'tablet' ? "clamp(1.1rem, 2.5vw, 1.4rem)" : "clamp(1.4rem, 1.8vw, 1.8rem)",
-                                            fontWeight: 700,
-                                            textTransform: "uppercase",
-                                            letterSpacing: "0.12em",
-                                            color: "#fff",
-                                            marginBottom: "0.45rem",
-                                        }}>{v.titre}</div>
-                                        <div style={{
-                                            fontFamily: "var(--font-body)",
-                                            fontSize: screenSize === 'mobile' ? "clamp(0.85rem, 3vw, 1rem)" : screenSize === 'tablet' ? "clamp(0.95rem, 2vw, 1.15rem)" : "clamp(1.2rem, 1.5vw, 1.5rem)",
-                                            lineHeight: 1.6,
-                                            color: "#ffffff",
-                                        }}>{v.desc}</div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        {/* Vision tag */}
+                        {/* Vision tag — moved up since the Valeurs block now lives in ValueSection */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 0.7, delay: 0.75 }}
+                            transition={{ duration: 0.7, delay: 0.4, ease: [...EASE] }}
                             style={{
-                                marginTop: "1.5rem",
                                 display: "flex",
                                 alignItems: "flex-start",
                                 gap: "1rem",

@@ -1,373 +1,299 @@
 "use client";
 
 /**
- * ValueSection — scroll-hijack pinned animation.
+ * ValueSection — Staircase reveal (Moon-Mansion pattern).
  *
- * Behaviour (like Moon Mansion / premium Webflow sites):
- *  • When the section snaps to the viewport top, the PAGE scroll is LOCKED.
- *  • Every wheel / touch / arrow event advances an INTERNAL progress [0 → 1].
- *  • As progress grows, the 4 cards lift from a staircase to a single row.
- *  • When progress reaches 1 (or 0), body scroll is unlocked — the page
- *    continues / goes back naturally.
+ * The 4 cards start offset in a staircase (y: i * 140px).
+ * As the user scrolls NATURALLY (no scroll hijack, no page lock), the
+ * cards animate up to align on the same baseline — driven by GSAP
+ * ScrollTrigger with `scrub`, so the animation is tied 1:1 to scroll
+ * progress. Once the cards settle, the descriptions fade in.
  *
- * Card content: Moon-Mansion-style mask reveal on number + text.
- *
- * Responsive:
- *  • mobile (<640px) → no hijack, plain stacked grid, animation via inView
- *  • tablet (≥640px) → 2×2, hijack active
- *  • desktop (≥1024px) → 4 cols, hijack active
+ * Key points from the reference :
+ *   • `gsap.set` establishes the initial staircase (NOT CSS transform —
+ *     avoids the conflict that broke an earlier version)
+ *   • `gsap.to` animates y → 0, scrub-linked to viewport progress
+ *   • Large `padding-bottom` on the section reserves visual space so the
+ *     initial staircase doesn't bleed into the next section
+ *   • Mobile : staircase disabled, cards stack in 1/2 columns
  */
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
-import {
-  motion,
-  useInView,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  type MotionValue,
-  type Variants,
-} from "framer-motion";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
-/** Vertical offset (px) between consecutive cards at the start of the scroll. */
-const DIAGONAL_STEP = 240;
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-/** How sensitive the hijack is. Lower = more wheel needed to complete.        */
-const WHEEL_SENSITIVITY = 1500;
-const TOUCH_SENSITIVITY = 400;
+/** Vertical offset between consecutive cards at the staircase start */
+const STEP = 140; // px
 
-type Stat = {
-  number: string;
-  text: string;
+type Valeur = {
+  num: string;
+  titre: string;
+  desc: string;
   bg: string;
 };
 
-const STATS: Stat[] = [
-  { number: "185",   text: "Brands we've helped build their digital presence.",          bg: "#DCEBFB" },
-  { number: "63",    text: "Long-term partnerships with companies worldwide.",           bg: "#E8E2F5" },
-  { number: "2.5M+", text: "Users reached through platforms we designed.",               bg: "#DEEFE0" },
-  { number: "96%",   text: "Clients who continue working with us on future projects.",   bg: "#F7EFCF" },
+const VALEURS: Valeur[] = [
+  {
+    num: "01",
+    titre: "Collaboration",
+    desc: "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences.",
+    bg: "#DCEBFB", // soft sky blue
+  },
+  {
+    num: "02",
+    titre: "Transmission",
+    desc: "Nous formons, accompagnons et développons les talents technologiques africains.",
+    bg: "#E8E2F5", // soft lavender
+  },
+  {
+    num: "03",
+    titre: "Excellence",
+    desc: "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet.",
+    bg: "#DEEFE0", // soft mint green
+  },
+  {
+    num: "04",
+    titre: "Innovation utile",
+    desc: "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets.",
+    bg: "#F7EFCF", // soft pale yellow
+  },
 ];
 
-/* ── Mask reveal variants ───────────────────────────────────────────── */
-
-const contentVariants: Variants = {
-  hidden: {},
-  show: {
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.12,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-const maskInnerVariants: Variants = {
-  hidden: { y: "110%" },
-  show: { y: "0%", transition: { duration: 0.95, ease: EASE } },
-};
-
-function MaskReveal({
-  children,
-  style,
-}: {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <div
-      style={{
-        overflow: "hidden",
-        display: "block",
-        paddingBottom: "0.08em",
-        ...style,
-      }}
-    >
-      <motion.div variants={maskInnerVariants} style={{ display: "block" }}>
-        {children}
-      </motion.div>
-    </div>
-  );
-}
-
-/* ── Single card ────────────────────────────────────────────────────── */
-
-function StatCard({
-  stat,
-  index,
-  progress,
-}: {
-  stat: Stat;
-  index: number;
-  progress: MotionValue<number>;
-}) {
-  const y = useTransform(progress, [0, 1], [index * DIAGONAL_STEP, 0]);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(cardRef, { once: true, amount: 0.3 });
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className="value-card"
-      style={{
-        y,
-        background: stat.bg,
-        borderRadius: 24,
-        padding: 32,
-        aspectRatio: "1 / 1",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        color: "#1A1A1A",
-        fontFamily:
-          "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-        willChange: "transform",
-      }}
-    >
-      <motion.div
-        variants={contentVariants}
-        initial="hidden"
-        animate={inView ? "show" : "hidden"}
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-        }}
-      >
-        <MaskReveal
-          style={{
-            fontSize: "clamp(48px, 5vw, 72px)",
-            fontWeight: 700,
-            lineHeight: 1.05,
-            letterSpacing: "-0.03em",
-          }}
-        >
-          {stat.number}
-        </MaskReveal>
-
-        <MaskReveal
-          style={{
-            fontSize: 16,
-            fontWeight: 400,
-            lineHeight: 1.45,
-            maxWidth: "90%",
-          }}
-        >
-          {stat.text}
-        </MaskReveal>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ── Main — scroll-hijack logic ─────────────────────────────────────── */
-
 export default function ValueSection() {
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  /** Raw progress, driven by wheel/touch/keyboard delta */
-  const rawProgress = useMotionValue(0);
-  /** Smoothed progress — what the cards actually interpolate on */
-  const smoothProgress = useSpring(rawProgress, {
-    stiffness: 90,
-    damping: 20,
-    mass: 0.6,
-  });
-
-  /** Hijack active = section is pinned and intercepting input */
-  const [hijacked, setHijacked] = useState(false);
-  /** true if viewport width ≥ 640px (hijack disabled on mobile) */
-  const [hijackAllowed, setHijackAllowed] = useState(false);
-
-  /* Disable hijack on small screens (where cards are stacked) */
   useEffect(() => {
-    const check = () => setHijackAllowed(window.innerWidth >= 640);
+    const check = () => setIsMobile(window.innerWidth < 900);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  /* Activate the hijack as soon as the section's top enters the top half
-     of the viewport. Uses a plain scroll listener — far more reliable than
-     IntersectionObserver with a narrow threshold band, which fast-scrolling
-     trackpads/wheels can skip over between frames.                         */
-  useEffect(() => {
-    if (!hijackAllowed) return;
-    const el = ref.current;
-    if (!el) return;
+  useIsomorphicLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-    const onScroll = () => {
-      if (hijacked) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const prog = rawProgress.get();
-
-      // Scrolling DOWN into section (top is near viewport top, not past it yet)
-      if (rect.top <= 80 && rect.top >= -vh * 0.5 && prog < 1) {
-        setHijacked(true);
-        return;
-      }
-      // Scrolling UP back into section (bottom approaching viewport bottom)
-      if (
-        rect.bottom >= vh - 80 &&
-        rect.bottom <= vh + vh * 0.5 &&
-        prog > 0
-      ) {
-        setHijacked(true);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll(); // run once at mount
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [hijackAllowed, hijacked, rawProgress]);
-
-  /* Release the hijack + resync the document scroll so the user lands
-     cleanly at the next / previous section boundary.                     */
-  const releaseHijack = useCallback((direction: "down" | "up") => {
-    setHijacked(false);
-    document.documentElement.style.overflow = "";
-    document.body.style.overflow = "";
-
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-
-    if (direction === "down") {
-      // land with section bottom just above viewport top
-      const y = window.scrollY + rect.bottom;
-      window.scrollTo({ top: y, behavior: "auto" });
-    } else {
-      // land with section top just below viewport top
-      const y = window.scrollY + rect.top - window.innerHeight;
-      window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
-    }
-  }, []);
-
-  /* While hijacked: lock body scroll + intercept wheel/touch/keyboard. */
-  useEffect(() => {
-    if (!hijacked) return;
-
-    // Lock body scroll
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-
-    // Snap section top to viewport top (in case user was mid-scroll)
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      window.scrollTo({
-        top: window.scrollY + rect.top,
-        behavior: "auto",
+    const ctx = gsap.context(() => {
+      /* ── Header reveal ── */
+      gsap.from(".value-header > *", {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".value-header", start: "top 80%" },
       });
-    }
 
-    const advance = (delta: number) => {
-      const cur = rawProgress.get();
-      const next = cur + delta;
-      if (next >= 1) {
-        rawProgress.set(1);
-        releaseHijack("down");
-      } else if (next <= 0) {
-        rawProgress.set(0);
-        releaseHijack("up");
-      } else {
-        rawProgress.set(next);
-      }
-    };
+      if (isMobile) return;
 
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      advance(e.deltaY / WHEEL_SENSITIVITY);
-    };
+      const cards = gsap.utils.toArray<HTMLElement>(".value-card");
 
-    let touchStartY = 0;
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-      const cy = e.touches[0].clientY;
-      const delta = (touchStartY - cy) / TOUCH_SENSITIVITY;
-      touchStartY = cy;
-      advance(delta);
-    };
+      /* ── Staircase : set initial y offset via GSAP ── */
+      cards.forEach((card, i) => {
+        gsap.set(card, { y: i * STEP });
+      });
 
-    const onKey = (e: KeyboardEvent) => {
-      const keysDown = ["ArrowDown", "PageDown", " "];
-      const keysUp = ["ArrowUp", "PageUp"];
-      if (keysDown.includes(e.key)) { e.preventDefault(); advance(0.08); }
-      else if (keysUp.includes(e.key)) { e.preventDefault(); advance(-0.08); }
-    };
+      /* ── Animate UP to aligned row, scrub-linked to scroll ── */
+      gsap.to(cards, {
+        y: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".value-grid",
+          start: "top 85%",
+          end: "top 15%",
+          scrub: 1.2,
+          invalidateOnRefresh: true,
+        },
+      });
 
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: false });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("keydown", onKey, { passive: false });
+      /* ── Fade descriptions in after cards settle ── */
+      gsap.from(".value-desc", {
+        opacity: 0,
+        y: 14,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".value-grid",
+          start: "top 15%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    }, containerRef);
+
+    const onResize = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", onResize);
 
     return () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+      ctx.revert();
     };
-  }, [hijacked, rawProgress, releaseHijack]);
+  }, [isMobile]);
 
   return (
-    <div
-      ref={ref}
+    <section
+      ref={containerRef}
       style={{
         width: "100%",
-        height: "100vh",
-        position: "relative",
-        padding: "clamp(48px, 8vw, 96px) clamp(20px, 4vw, 64px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        maxWidth: 1400,
+        margin: "0 auto",
+        /* Large bottom padding on desktop reserves vertical space for
+           the initial staircase so it doesn't bleed into the next
+           section before the scroll-triggered alignment kicks in.      */
+        padding: isMobile
+          ? "4rem 1.5rem"
+          : "6rem clamp(1.5rem, 3vw, 3rem) 26rem",
       }}
     >
+      {/* ── Header ── */}
+      <div
+        className="value-header"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          gap: "1.5rem",
+          flexWrap: "wrap",
+          paddingBottom: isMobile ? "2rem" : "3rem",
+          borderBottom: "1px solid rgba(255,255,255,0.1)",
+          marginBottom: isMobile ? "3rem" : "7rem",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(2rem, 4vw, 3.5rem)",
+            fontWeight: 300,
+            lineHeight: 0.98,
+            letterSpacing: "-0.03em",
+            color: "#fff",
+            margin: 0,
+            maxWidth: "18ch",
+          }}
+        >
+          Ce qui nous{" "}
+          <span style={{ fontStyle: "italic", color: "rgba(255,255,255,0.55)" }}>
+            guide.
+          </span>
+        </h2>
+
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "0.75rem",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.5)",
+            textAlign: "right",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.3rem",
+          }}
+        >
+          <span>(Valeurs)</span>
+          <span style={{ color: "#fff" }}>04 Piliers fondamentaux</span>
+        </div>
+      </div>
+
+      {/* ── Cards grid ── */}
       <div
         className="value-grid"
         style={{
-          width: "100%",
-          maxWidth: 1280,
           display: "grid",
-          gap: "clamp(16px, 2vw, 24px)",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "clamp(16px, 1.5vw, 24px)",
         }}
       >
-        {STATS.map((stat, i) => (
-          <StatCard key={i} stat={stat} index={i} progress={smoothProgress} />
+        {VALEURS.map((v, i) => (
+          <article
+            key={v.num}
+            className="value-card"
+            style={{
+              aspectRatio: "1 / 1.15",
+              background: v.bg,
+              borderRadius: 28,
+              padding: "clamp(1.5rem, 2vw, 2.25rem)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              position: "relative",
+              color: "#141412",
+              willChange: "transform",
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                top: "1.5rem",
+                right: "1.75rem",
+                fontFamily: "var(--font-display)",
+                fontStyle: "italic",
+                fontWeight: 300,
+                fontSize: "0.85rem",
+                opacity: 0.4,
+              }}
+            >
+              ({v.num})
+            </span>
+
+            <span
+              className="value-number"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 400,
+                fontSize: "clamp(28px, 3vw, 44px)",
+                lineHeight: 1.0,
+                letterSpacing: "-0.03em",
+                textTransform: "none",
+              }}
+            >
+              {v.titre}
+            </span>
+
+            <p
+              className="value-desc"
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "clamp(13px, 0.95vw, 15px)",
+                lineHeight: 1.5,
+                maxWidth: "24ch",
+                opacity: 0.85,
+                margin: 0,
+              }}
+            >
+              {v.desc}
+            </p>
+          </article>
         ))}
       </div>
 
-      {/* Responsive grid. On mobile, cards stack and the staircase transform
-          is overridden to 0 (hijack is disabled there anyway).               */}
+      {/* Responsive grid.
+          Mobile (<900px) : GSAP staircase is disabled, grid falls back
+          to 2 cols (or 1 below 600px) with the cards in their natural
+          positions.                                                      */}
       <style jsx>{`
-        .value-grid {
-          grid-template-columns: 1fr;
-        }
-        @media (max-width: 639px) {
-          :global(.value-card) {
-            transform: none !important;
+        @media (max-width: 900px) {
+          .value-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .value-card {
+            aspect-ratio: 1 / 1.1 !important;
           }
         }
-        @media (min-width: 640px) {
+        @media (max-width: 600px) {
           .value-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-        @media (min-width: 1024px) {
-          .value-grid {
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
-    </div>
+    </section>
   );
 }
