@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import type { Room } from "@/components/home2/Shell";
+import type { Room } from "@/components/home/Shell";
 
 interface Props {
   rooms: Room[];

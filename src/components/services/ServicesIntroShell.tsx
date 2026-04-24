@@ -22,9 +22,9 @@ const GOLD = "#D35400";
 const GREEN = "#D35400";
 
 /* ── Background layers (same as SecteursShell for uniformity) ── */
-const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
-const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 
 /* ── Tokens ───────────────────────────────────────────── */
 const EASE = [0.6, 0.08, 0.02, 0.99] as const;

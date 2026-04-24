@@ -10,9 +10,8 @@
 
 import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import CTAButton from "@/components/ui/CTAButton";
 import Link from "next/link";
-import FooterRoomSortie from "@/components/layout/FooterRoomSortie";
+import FooterStrip from "@/components/layout/FooterStrip";
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },
@@ -286,7 +285,7 @@ export default function RoomSortie() {
 
 
       {/* ── Footer strip — navigation, contact, socials ── */}
-      <FooterRoomSortie />
+      <FooterStrip />
     </div>
   );
 }

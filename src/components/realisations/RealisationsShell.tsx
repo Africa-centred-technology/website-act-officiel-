@@ -9,9 +9,9 @@ import { PROJECTS, CATEGORIES } from "@/lib/data/projects";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 
-/* ── Shared home2 background layers (same as Shell.tsx) ── */
-const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain       = dynamic(() => import("@/components/home2/Grain"),       { ssr: false });
+/* ── Shared home background layers (same as Shell.tsx) ── */
+const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
+const Grain       = dynamic(() => import("@/components/background/Grain"),       { ssr: false });
 
 /* ── Design tokens ─────────────────────────────────────── */
 const EASE   = [0.6, 0.08, 0.02, 0.99] as const;

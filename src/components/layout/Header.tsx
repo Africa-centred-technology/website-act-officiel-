@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
 
-const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 
 /* ── Tokens ─────────────────────────────────────────────── */
 const ORANGE = "#D35400";
