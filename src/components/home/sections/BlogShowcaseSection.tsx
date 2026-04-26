@@ -146,9 +146,7 @@ export default function BlogShowcaseSection() {
         }}
       >
         <span>(Blog)</span>
-        <span style={{ color: "#fff" }}>
-          ↘ {String(articles.length).padStart(2, "0")} Articles
-        </span>
+
       </div>
 
       {/* ── Sticky stack of cards ── */}
@@ -185,7 +183,7 @@ function Header() {
       <h2
         style={{
           fontFamily: "var(--font-display)",
-          fontSize: "clamp(1.6rem, 3vw, 2.75rem)",
+          fontSize: "clamp(2.4rem, 5vw, 5rem)",
           fontWeight: 700,
           lineHeight: 1.1,
           letterSpacing: "-0.02em",
@@ -261,11 +259,14 @@ function StackCard({
       style={{
         position: isMobile ? "relative" : "sticky",
         top: isMobile ? undefined : `${stickyTop}px`,
-        height: isMobile ? "auto" : "clamp(34rem, 72vh, 44rem)",
-        marginBottom: isMobile ? "2rem" : "2.5rem",
+        height: isMobile ? "auto" : "clamp(22rem, 52vh, 32rem)",
+        maxWidth: isMobile ? "100%" : "2500px",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: isMobile ? "2rem" : "2rem",
         background: "rgba(255,255,255,0.06)",
         border: "1px solid rgba(255,255,255,0.12)",
-        borderRadius: "1.5rem",
+        borderRadius: "1.25rem",
         overflow: "hidden",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
@@ -284,7 +285,7 @@ function StackCard({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "1.05fr 1fr",
+            gridTemplateColumns: isMobile ? "1fr" : "0.65fr 1fr",
             gap: isMobile ? 0 : "clamp(1.5rem, 3vw, 3rem)",
             height: "100%",
             padding: isMobile ? 0 : "clamp(1.25rem, 2vw, 2rem)",
@@ -347,22 +348,7 @@ function StackCard({
               position: "relative",
             }}
           >
-            {/* Index "(01 / 04)" — top right */}
-            <span
-              style={{
-                position: "absolute",
-                top: isMobile ? "1rem" : "0",
-                right: isMobile ? "1rem" : "0.25rem",
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-                fontWeight: 300,
-                fontSize: "0.95rem",
-                color: "rgba(255,255,255,0.55)",
-              }}
-            >
-              ({String(index + 1).padStart(2, "0")} /{" "}
-              {String(total).padStart(2, "0")})
-            </span>
+          
 
             <div>
               {/* Meta row */}
@@ -407,13 +393,13 @@ function StackCard({
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: isMobile
-                    ? "1.75rem"
-                    : "clamp(2rem, 3.8vw, 3.2rem)",
+                    ? "1.4rem"
+                    : "clamp(1.5rem, 2.6vw, 2.2rem)",
                   fontWeight: 700,
-                  lineHeight: 1.05,
+                  lineHeight: 1.1,
                   letterSpacing: "-0.02em",
                   color: "#fff",
-                  margin: "0 0 1.25rem",
+                  margin: "0 0 1rem",
                   textTransform: "uppercase",
                 }}
               >
@@ -424,11 +410,12 @@ function StackCard({
               <p
                 className="reveal"
                 style={{
-                  fontSize: isMobile ? "1rem" : "1.1rem",
-                  lineHeight: 1.65,
-                  color: "rgba(255,255,255,0.7)",
+                  fontSize: isMobile ? "1.05rem" : "clamp(1.1rem, 1.3vw, 1.35rem)",
+                  lineHeight: 1.6,
+                  color: "rgba(255,255,255,0.78)",
                   margin: 0,
-                  maxWidth: "52ch",
+                  maxWidth: "100%",
+                  width: "100%",
                 }}
               >
                 {post.excerpt}

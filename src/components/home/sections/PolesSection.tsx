@@ -396,17 +396,15 @@ export default function PolesSection() {
           {"Ce que nous proposons".split("").map((ch, ci) => (
             <motion.span
               key={ci}
-              className="font-black uppercase"
+              className="uppercase"
               style={{
                 display: "inline-block",
-                fontSize: screenSize === "mobile"
-                  ? "clamp(1.6rem, 7vw, 2.8rem)"
-                  : screenSize === "tablet"
-                  ? "clamp(2rem, 5vw, 3.5rem)"
-                  : "clamp(2rem, 4.5vw, 5.5rem)",
-                lineHeight: 0.9,
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                lineHeight: 1.1,
                 color: ci >= 12 ? ORANGE : "#ffffff",
-                letterSpacing: "-0.04em",
+                letterSpacing: "-0.02em",
               }}
               initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}

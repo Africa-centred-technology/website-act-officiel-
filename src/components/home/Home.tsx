@@ -20,8 +20,24 @@ import PolesSection from "@/components/home/sections/PolesSection";
 import ManifesteSection from "@/components/home/sections/ManifesteSection";
 import ProjectsSection from "@/components/home/sections/ProjectsSection";
 import BlogShowcaseSection from "@/components/home/sections/BlogShowcaseSection";
-import HorizonSection from "@/components/home/sections/HorizonSection";
+import CTASection from "@/components/layout/CTASection";
 import FooterStrip from "@/components/layout/FooterStrip";
+
+/* ─────────────────────────────────────────────────────────────────
+   Wrapper — CTA final de la home, prêt-à-l'emploi avec textes
+   orientés "démarrer un projet".
+───────────────────────────────────────────────────────────────── */
+function HomeCTASection() {
+  return (
+    <CTASection
+      eyebrow="Démarrons ensemble"
+      title="Vous avez un projet ?"
+      description="Que ce soit une idée à valider, une solution à bâtir ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité."
+      buttonText="Démarrer un projet"
+      buttonHref="/contact"
+    />
+  );
+}
 
 /* Canvas / window-dependent — client only */
 const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
@@ -82,7 +98,7 @@ export const SECTIONS: Section[] = [
   { id: "manifeste", label: "LA MAISON",       number: "05", Component: ManifesteSection },
   { id: "projects",  label: "LE PORTAIL",      number: "07", Component: ProjectsSection },
   { id: "blog",      label: "LE BLOG",         number: "08", Component: BlogShowcaseSection },
-  { id: "horizon",   label: "L'HORIZON",       number: "09", Component: HorizonSection, flush: true },
+  { id: "cta",       label: "DÉMARRONS",       number: "09", Component: HomeCTASection, flush: true },
 ];
 
 /* ─────────────────────────────────────────────────────────────────
@@ -127,12 +143,12 @@ export default function HomeShell() {
           width: 100%;
         }
 
-        /* Horizon section (last) — content-sized, no forced 100vh / 60vh.
+        /* CTA section (last) — content-sized, no forced 100vh / 60vh.
            Avoids the big empty area between the CTA content and the footer. */
-        [data-section="horizon"] {
+        [data-section="cta"] {
           min-height: 0 !important;
         }
-        [data-section="horizon"] > * {
+        [data-section="cta"] > * {
           flex: 0 0 auto !important;
         }
 

@@ -58,7 +58,7 @@ export default function ProjectsSection() {
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.8rem, 3.6vw, 3rem)",
+              fontSize: "clamp(2.4rem, 5vw, 5rem)",
               fontWeight: 700,
               lineHeight: 1.1,
               letterSpacing: "-0.02em",

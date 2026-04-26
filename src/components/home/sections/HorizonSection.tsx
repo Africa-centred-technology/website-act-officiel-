@@ -193,101 +193,172 @@ export default function HorizonSection() {
         />
       ))}
 
-      {/* ── Content wrapper — sized by its own content, no flex-fill so the
-            section doesn't stretch beyond what it actually needs.            */}
+      {/* ── Content wrapper — focus CTA "Démarrer un projet" ── */}
       <motion.div
         className="relative z-10 w-full flex flex-col items-center text-center"
         style={{
           x: midX,
           y: midY,
-          padding: "clamp(0.75rem, 1.5vw, 1.25rem) clamp(1.5rem, 4vw, 5.5rem) 0",
+          padding: "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 5.5rem)",
+          maxWidth: "1200px",
+          margin: "0 auto",
         }}
       >
 
-        {/* Eyebrow centré */}
+        {/* Eyebrow */}
         <motion.div
-          className="flex items-center justify-center gap-3 mb-2 w-full"
+          className="flex items-center justify-center gap-3 mb-8 w-full"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.10 }}
         >
           <span className="diamond diamond--sm" />
-          <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.88rem", letterSpacing: "0.38em", textTransform: "uppercase" }}>
-            L&apos;Horizon
+          <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem", letterSpacing: "0.38em", textTransform: "uppercase", fontFamily: "var(--font-body)" }}>
+            Démarrons ensemble
           </span>
           <span className="diamond diamond--sm" />
         </motion.div>
 
-        {/* ── Split gauche/droite : Logo ← | → Contenu ── */}
-        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 justify-between w-full">
+        {/* Titre principal — échelle h2 unifiée */}
+        <motion.h1
+          className="text-white uppercase"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
+            fontSize: "clamp(2.4rem, 5vw, 5rem)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            maxWidth: "22ch",
+            marginBottom: "1.5rem",
+            background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.75) 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+          initial={{ opacity: 0, scale: 0.92, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.9, ease }}
+        >
+          Vous avez un projet ?
+          <br />
+          <span style={{ color: "#D35400", WebkitTextFillColor: "#D35400" }}>Donnons-lui vie.</span>
+        </motion.h1>
 
-          {/* Left — Logo Continent */}
-          <motion.div
-            layoutId="logo-continent"
-            style={{ x: bgX, y: bgY, flexShrink: 0, zIndex: 10, paddingLeft: "clamp(2rem, 5vw, 6rem)" }}
-            initial={{ opacity: 0, scale: 0.7, x: -80, rotate: -3 }}
-            animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
-            exit={{ scale: 0.2, x: 400, y: 400, opacity: 0, rotate: 10 }}
-            transition={{ duration: 1.8, delay: 0.1, ease: [0.04, 0.72, 0.08, 1.0] }}
-          >
-            <Link href="/">
-              <img
-                src="/logo/logo_continent.png"
-                alt="ACT - Africa Centred Technology"
-                style={{
-                  width: "clamp(22rem, 42vw, 50rem)",
-                  height: "auto",
-                  filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
-                  opacity: 0.99,
-                  pointerEvents: "none",
-                  userSelect: "none",
-                  cursor: "pointer",
-                }}
-              />
+        {/* Sous-texte */}
+        <motion.p
+          className="text-white/70"
+          style={{
+            fontSize: "clamp(1.05rem, 1.4vw, 1.35rem)",
+            lineHeight: 1.65,
+            maxWidth: "56ch",
+            fontFamily: "var(--font-body)",
+            marginBottom: "3rem",
+          }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.7 }}
+        >
+          Que ce soit une idée à valider, une solution à bâtir, ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.
+        </motion.p>
+
+        {/* CTA principal + secondaire */}
+        <motion.div
+          className="flex flex-col sm:flex-row items-center gap-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          style={{ marginBottom: "3.5rem" }}
+        >
+          <Magnetic>
+            <Link href="/contact" className="cta-btn" style={{ textDecoration: "none" }}>
+              <span className="cta-btn__border" aria-hidden />
+              <span className="cta-btn__blur" aria-hidden />
+              <span className="cta-btn__background" aria-hidden />
+              <span className="cta-btn__inner">
+                <span className="cta-btn__icon" aria-hidden />
+                <span className="cta-btn__text">Démarrer un projet</span>
+              </span>
             </Link>
-          </motion.div>
+          </Magnetic>
 
-          {/* Right — Bloc aligné à droite pour le reste du contenu */}
-          <div
-            className="flex flex-col items-end md:items-end text-left md:text-right flex-1 md:pr-[clamp(2rem,5vw,6rem)] px-6"
+          <Link
+            href="/projects"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.78)",
+              textDecoration: "none",
+              padding: "0.6rem 0",
+              borderBottom: "1px solid rgba(255,255,255,0.25)",
+              transition: "color 0.3s, border-color 0.3s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#D35400";
+              e.currentTarget.style.borderColor = "#D35400";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "rgba(255,255,255,0.78)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+            }}
           >
-            {/* Titre principal avec effet depth */}
-            <motion.h1
-              className="text-white font-black uppercase mb-4"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(4rem, 5vw, 5rem)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.02em",
-                maxWidth: "60rem",
-                background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.7) 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-              initial={{ opacity: 0, scale: 0.85, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.9, ease }}
-            >
-              Le changement de demain commence <span style={{ color: "#D35400", WebkitTextFillColor: "#D35400" }}>Maintenant</span>
-            </motion.h1>
+            Voir nos réalisations →
+          </Link>
+        </motion.div>
 
-            {/* Subtext */}
-            <motion.p
-              className="text-white/65"
-              style={{ fontSize: "clamp(1.5rem, 2vw, 1.35rem)", lineHeight: 1.7, maxWidth: "50rem", fontFamily: "var(--font-body)" }}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.35, duration: 0.7 }}
-            >
-              Prêt à transformer vos défis en opportunités technologiques ?
-              <br />
-              ACT accompagne entreprises et organisations dans la création de solutions innovantes et intelligentes.
-            </motion.p>
-
-      
-          </div>
-        </div>
+        {/* Trois engagements rassurants */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65, duration: 0.7 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "clamp(1rem, 2vw, 2.5rem)",
+            width: "100%",
+            maxWidth: "780px",
+            paddingTop: "2.5rem",
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          {[
+            { val: "24h", label: "Réponse garantie" },
+            { val: "Gratuit", label: "Premier échange" },
+            { val: "100%", label: "Sur-mesure" },
+          ].map((item) => (
+            <div key={item.label} style={{ textAlign: "center" }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.5rem, 2.4vw, 2.2rem)",
+                  fontWeight: 700,
+                  color: "#D35400",
+                  lineHeight: 1,
+                  marginBottom: "0.5rem",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {item.val}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.5)",
+                }}
+              >
+                {item.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </motion.div>
 
 

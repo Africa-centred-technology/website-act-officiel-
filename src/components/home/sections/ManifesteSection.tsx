@@ -1,99 +1,48 @@
 "use client";
 
 /**
- * Room 04 — LE MANIFESTE
- * Word-by-word staggered reveal (time-based, not scroll-based)
- * since the room fills the full viewport with no scrolling.
+ * Room 04 — LE MANIFESTE (édition magazine)
+ * Layout éditorial : grand guillemet décoratif + pull-quote en exergue,
+ * portrait fondateur dans un cadre cinématographique avec signature
+ * et data-points (année / lieu / fondateur).
  */
 
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const ease3D = [0.6, 0.08, 0.02, 0.99] as const;
+const ORANGE = "#D35400";
 
-// Hook pour détecter la taille d'écran
 function useMediaQuery() {
-  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">("desktop");
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setScreenSize('mobile');
-      } else if (width < 1280) {
-        setScreenSize('tablet');
-      } else {
-        setScreenSize('desktop');
-      }
+    const check = () => {
+      const w = window.innerWidth;
+      setScreenSize(w < 768 ? "mobile" : w < 1280 ? "tablet" : "desktop");
     };
-
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   return screenSize;
 }
 
-const MANIFESTO =
-  "La technologie n'a de valeur que lorsqu'elle crée un impact réel. Nous ne nous contentons pas d'implémenter des technologies. Nous concevons des solutions qui créent de la valeur durable pour les organisations. En combinant intelligence artificielle, analyse de données et automatisation, nous aidons les entreprises à transformer leurs défis en opportunités et à construire les systèmes qui soutiendront leur croissance de demain.";
+const PULL_QUOTE =
+  "La technologie n'a de valeur que lorsqu'elle crée un impact réel.";
 
-const words = MANIFESTO.split(/\s+/).filter(Boolean);
-
-/* ── Curseur clignotant — apparaît après la fin de la saisie ─────── */
-function BlinkCursor({ delay }: { delay: number }) {
-  return (
-    <motion.span
-      aria-hidden
-      style={{
-        display: "inline-block",
-        width: "3px",
-        height: "0.82em",
-        background: "#D35400",
-        marginLeft: "0.15em",
-        verticalAlign: "middle",
-        borderRadius: 1,
-        flexShrink: 0,
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
-      transition={{
-        delay,
-        duration: 1.05,
-        repeat: Infinity,
-        ease: "linear",
-        times: [0, 0.04, 0.06, 0.5, 0.52, 1],
-      }}
-    />
-  );
-}
-
-/**
- * Each word materialises from an inclined plane:
- * orange → white color, scale 0.88 → 1, rotateX 10 → 0° (depth fold).
- * Creates the sensation of words rising from a reclined surface.
- */
-function Word({ word, index, total }: { word: string; index: number; total: number }) {
-  const delay = 0.28 + index * (1.55 / total);
-  return (
-    <motion.span
-      className="inline-block"
-      style={{ transformOrigin: "50% 100%", marginRight: "0.28em", marginBottom: "0.16em" }}
-      initial={{ opacity: 0.05, color: "#D35400bb", scale: 0.86, rotateX: 12, y: 8 }}
-      animate={{ opacity: 1, color: "#ffffff", scale: 1, rotateX: 0, y: 0 }}
-      transition={{ delay, duration: 0.62, ease: "easeOut" }}
-    >
-      {word}
-    </motion.span>
-  );
-}
+const BODY_PARAGRAPHS = [
+  "Nous ne nous contentons pas d'implémenter des technologies — nous concevons des solutions qui créent de la valeur durable pour les organisations.",
+  "En combinant intelligence artificielle, analyse de données et automatisation, nous transformons les défis de nos clients en opportunités et bâtissons les systèmes qui soutiendront leur croissance de demain.",
+];
 
 export default function ManifesteSection() {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const screenSize = useMediaQuery();
+  const isDesktop = screenSize === "desktop";
 
-  /* 3-layer parallax */
   const bgX = useSpring(mx, { stiffness: 28, damping: 18 });
   const bgY = useSpring(my, { stiffness: 28, damping: 18 });
   const midX = useSpring(mx, { stiffness: 62, damping: 22 });
@@ -112,159 +61,430 @@ export default function ManifesteSection() {
       style={{
         width: "100%",
         height: "100%",
-        paddingBottom: screenSize === 'mobile' ? "2rem" : screenSize === 'tablet' ? "3rem" : "4rem",
-        paddingTop: screenSize === 'mobile' ? "2rem" : screenSize === 'tablet' ? "3rem" : "4rem",
-        justifyContent: screenSize === 'desktop' ? 'center' : 'flex-start'
+        paddingTop: isDesktop ? "5rem" : "3rem",
+        paddingBottom: isDesktop ? "6rem" : "3rem",
+        justifyContent: "center",
       }}
     >
-
-
-      {/* ── Section Decoration (Background) ── */}
+      {/* ── Halo orange diffus (background) ── */}
       <motion.div
         aria-hidden
-        className="absolute top-1/4 -right-20 w-96 h-96 bg-[#D35400]/5 blur-[120px] rounded-full"
-        style={{ x: bgX, y: bgY }}
+        className="absolute -top-20 -right-32 w-[36rem] h-[36rem] rounded-full pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, ${ORANGE}1A 0%, transparent 65%)`,
+          filter: "blur(80px)",
+          x: bgX,
+          y: bgY,
+        }}
+      />
+      <motion.div
+        aria-hidden
+        className="absolute -bottom-32 -left-20 w-[30rem] h-[30rem] rounded-full pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, rgba(255,140,40,0.08) 0%, transparent 65%)`,
+          filter: "blur(90px)",
+          x: bgX,
+          y: bgY,
+        }}
       />
 
-      {/* ── Header adaptatif selon la taille d'écran ── */}
+      {/* ── Header éditorial (eyebrow + titre) ── */}
       <motion.div
-        className="flex items-center gap-6"
         style={{
           x: midX,
           y: midY,
-          flexDirection: screenSize === 'desktop' ? 'row' : 'column',
-          alignItems: screenSize === 'desktop' ? 'center' : 'flex-start',
-          gap: screenSize === 'desktop' ? '1.5rem' : '0.5rem',
-          marginBottom: screenSize === 'mobile' ? '4rem' : screenSize === 'tablet' ? '2.5rem' : '3rem',
+          maxWidth: "1400px",
+          width: "100%",
+          marginTop: 0,
+          marginRight: "auto",
+          marginBottom: isDesktop ? "3.5rem" : "2.5rem",
+          marginLeft: "auto",
+          paddingBottom: isDesktop ? "3.5rem" : "2.5rem",
         }}
       >
-    
-        {/* Séparateur vertical (Desktop seulement) */}
-        {screenSize === 'desktop' && (
-          <motion.div
-            style={{ width: 1, alignSelf: "stretch", background: "rgba(211,84,0,0.3)", flexShrink: 0, originY: 0.5 }}
-            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
-            transition={{ duration: 0.8, delay: 0.18 }}
-          />
-        )}
 
-        {/* Right: "LE MANIFESTE" — 3D depth rotateX par mot */}
-        <div style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: screenSize === 'desktop' ? "flex-end" : "flex-start"
-        }}>
-          {(["LE", "MANIFESTE"] as const).map((word, wi) => (
-            <motion.span
-              key={wi}
-              className="font-black uppercase block"
-              style={{
-                fontSize: wi === 0
-                  ? (screenSize === 'mobile' ? "clamp(1.2rem, 5vw, 2rem)" : screenSize === 'tablet' ? "clamp(1.5rem, 4vw, 3rem)" : "clamp(1.5rem, 3vw, 4rem)")
-                  : (screenSize === 'mobile' ? "clamp(2.5rem, 12vw, 4rem)" : screenSize === 'tablet' ? "clamp(3rem, 10vw, 6rem)" : "clamp(3rem, 7vw, 9rem)"),
-                lineHeight: 0.85,
-                letterSpacing: "-0.04em",
-                color: wi === 0 ? "rgba(255,255,255,0.4)" : "#ffffff",
-                transformOrigin: "50% 100%",
-                fontFamily: "var(--font-display)",
-                marginBottom: wi === 0 ? (screenSize === 'mobile' ? "0.7rem" : "0.3rem") : 0,
-              }}
-              initial={{ opacity: 0, scale: 0.82, rotateX: 14, filter: "blur(10px)" }}
-              animate={{ opacity: 1, scale: 1, rotateX: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: 0.2 + wi * 0.18, ease: ease3D }}
-            >
-              {word}
-            </motion.span>
-          ))}
+
+        {/* Titre principal */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+            gap: "2rem",
+            flexWrap: "wrap",
+          }}
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, ease: ease3D }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
+              fontSize: "clamp(2.4rem, 5vw, 5rem)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              textTransform: "uppercase",
+              color: "#fff",
+              margin: 0,
+            }}
+          >
+            Le <span style={{ fontStyle: "italic", fontWeight: 300, color: "rgba(255,255,255,0.65)" }}>manifeste</span>
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.75rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.4)",
+              textAlign: "right",
+              lineHeight: 1.6,
+            }}
+          >
+            <div style={{ color: "#fff" }}>Notre conviction</div>
+            <div>Casablanca · Maroc · 2026</div>
+          </motion.div>
         </div>
+
+        {/* Filet décoratif */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1, delay: 0.5, ease: ease3D }}
+          style={{
+            height: 1,
+            marginTop: "2rem",
+            background: `linear-gradient(90deg, ${ORANGE}, ${ORANGE}55, transparent)`,
+            transformOrigin: "left",
+          }}
+        />
       </motion.div>
 
-      {/* ── Main Content : Text + Image Side by Side ── */}
-      <div style={{
-        display: 'flex',
-        gap: screenSize === 'desktop' ? '4rem' : '3rem',
-        alignItems: screenSize === 'desktop' ? 'center' : 'flex-start',
-        flexDirection: screenSize === 'desktop' ? 'row' : 'column',
-        width: '100%',
-      }}>
-        {/* Left Side: Text Content */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          {/* Word-by-word reveal — mid layer */}
-          <motion.div style={{ maxWidth: "65rem", x: midX, perspective: "1100px" }}>
-            <p
-              className="font-bold uppercase"
+      {/* ── Body magazine : pull-quote + paragraphes / portrait ── */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isDesktop ? "1.4fr 1fr" : "1fr",
+          gap: isDesktop ? "5rem" : "3rem",
+          alignItems: "center",
+          maxWidth: "1400px",
+          width: "100%",
+          margin: "0 auto",
+        }}
+      >
+        {/* ── Colonne gauche : Quote + body ── */}
+        <motion.div style={{ x: midX, position: "relative" }}>
+          {/* Grand guillemet décoratif */}
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.5, rotate: -8 }}
+            animate={{ opacity: 0.18, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: ease3D }}
+            style={{
+              position: "absolute",
+              top: isDesktop ? "-3rem" : "-1.5rem",
+              left: isDesktop ? "-1rem" : "-0.5rem",
+              fontFamily: "var(--font-display)",
+              fontSize: isDesktop ? "16rem" : "9rem",
+              lineHeight: 0.8,
+              color: ORANGE,
+              fontWeight: 900,
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+          >
+            “
+          </motion.span>
+
+          {/* Pull quote — phrase signature */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.45, ease: ease3D }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              fontSize: isDesktop ? "clamp(1.8rem, 2.6vw, 3rem)" : "clamp(1.4rem, 5vw, 2rem)",
+              lineHeight: 1.25,
+              letterSpacing: "-0.01em",
+              color: "#fff",
+              margin: 0,
+              marginBottom: "2rem",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            {PULL_QUOTE.split(" ").map((w, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.55 + i * 0.04 }}
+                style={{ display: "inline-block", marginRight: "0.28em" }}
+              >
+                {w === "réel." ? (
+                  <span style={{ color: ORANGE }}>{w}</span>
+                ) : (
+                  w
+                )}
+              </motion.span>
+            ))}
+          </motion.p>
+
+          {/* Filet décoratif sous la quote */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.7, delay: 1.1 }}
+            style={{
+              width: "60px",
+              height: "2px",
+              background: ORANGE,
+              transformOrigin: "left",
+              marginBottom: "2rem",
+            }}
+          />
+
+          {/* Paragraphes du manifeste */}
+          {BODY_PARAGRAPHS.map((para, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.2 + i * 0.18, ease: ease3D }}
               style={{
-                fontSize: screenSize === 'mobile' ? "12px" : screenSize === 'tablet' ? "clamp(1.2rem, 3vw, 1.8rem)" : "clamp(1.2rem, 2vw, 2.4rem)",
-                lineHeight: 1.45,
-                letterSpacing: "0.01em",
-                fontFamily: "var(--font-display)"
+                fontFamily: "var(--font-body)",
+                fontSize: isDesktop ? "clamp(1.25rem, 1.5vw, 1.6rem)" : "clamp(1.05rem, 3.5vw, 1.3rem)",
+                lineHeight: 1.7,
+                color: "rgba(255,255,255,0.85)",
+                marginTop: 0,
+                marginRight: 0,
+                marginLeft: 0,
+                marginBottom: i === BODY_PARAGRAPHS.length - 1 ? 0 : "1.5rem",
+                maxWidth: "62ch",
               }}
             >
-              {words.map((w, i) => (
-                <Word key={i} word={w} index={i} total={words.length} />
-              ))}
-              <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
-            </p>
+              {para}
+            </motion.p>
+          ))}
+
+          {/* Signature manuscrite */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.7 }}
+            style={{
+              marginTop: "2.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontStyle: "italic",
+                fontSize: isDesktop ? "1.6rem" : "1.3rem",
+                color: ORANGE,
+                fontWeight: 400,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              S. Baroud
+            </span>
+            <span style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)", maxWidth: 120 }} />
+            <span
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "0.7rem",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.45)",
+              }}
+            >
+              Fondateur · CEO
+            </span>
           </motion.div>
+        </motion.div>
 
-        </div>
-
-        {/* Right Side: Manifeste Image */}
+        {/* ── Colonne droite : Portrait cinématographique ── */}
         <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.6, ease: ease3D }}
           style={{
-            width: screenSize === 'desktop' ? '450px' : '100%',
-            flexShrink: 0,
             position: "relative",
-            left: screenSize === 'desktop' ? "-40px" : "0",
+            width: "100%",
+            maxWidth: isDesktop ? "100%" : "420px",
+            margin: isDesktop ? 0 : "0 auto",
           }}
-          initial={{ opacity: 0, scale: 0.9, x: 40 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: ease3D }}
         >
-          <div className="relative group">
-            {/* Soft Glow */}
-            <div className="absolute -inset-10 bg-[#D35400]/10 blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
+          {/* Cadre orange en background (offset) */}
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0, x: 20, y: 20 }}
+            animate={{ opacity: 1, x: 16, y: 16 }}
+            transition={{ duration: 1, delay: 0.9, ease: ease3D }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              border: `2px solid ${ORANGE}`,
+              borderRadius: "1.25rem",
+              transform: "translate(16px, 16px)",
+              pointerEvents: "none",
+            }}
+          />
 
+          {/* Image conteneur */}
+          <div
+            className="group"
+            style={{
+              position: "relative",
+              borderRadius: "1.25rem",
+              overflow: "hidden",
+              boxShadow: "0 40px 100px -25px rgba(0,0,0,0.85), 0 0 60px rgba(211,84,0,0.08)",
+              aspectRatio: isDesktop ? "4 / 5" : "3 / 4",
+              background: "rgba(255,255,255,0.04)",
+            }}
+          >
             <img
               src="/images/Manifeste.png"
-              alt="Notre Manifeste"
-              className="relative w-full grayscale-[15%] hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-[1.02] object-cover"
+              alt="Sohaib Baroud, fondateur d'ACT"
               style={{
-                height: screenSize === 'desktop' ? '500px' : 'auto',
-                objectPosition: 'top',
-                boxShadow: "0 40px 100px -20px rgba(0,0,0,0.8)",
-                borderRadius: screenSize === 'mobile' ? '1rem' : screenSize === 'tablet' ? '1.5rem' : '1.5rem',
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "top center",
+                filter: "grayscale(20%) contrast(1.05)",
+                transform: "scale(1.02)",
+                transition: "filter 0.7s, transform 0.9s",
               }}
+              className="group-hover:grayscale-0 group-hover:scale-105"
             />
 
+            {/* Overlay gradient bas — contenu carte info */}
             <motion.div
-              className="absolute left-0 right-0 bottom-0 flex items-center gap-4"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + words.length * (1.6 / words.length) + 0.4, duration: 0.7 }}
               style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                padding: isDesktop ? "1.75rem" : "1.25rem",
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 50%, transparent 100%)",
                 x: fgX,
-                padding: screenSize === 'mobile' ? '1.25rem' : screenSize === 'tablet' ? '1.5rem' : '1.8rem',
-                flexWrap: 'wrap',
-                borderBottomLeftRadius: screenSize === 'mobile' ? '1rem' : '1.5rem',
-                borderBottomRightRadius: screenSize === 'mobile' ? '1rem' : '1.5rem',
-                background: "linear-gradient(to top, rgba(5,5,5,0.82) 0%, rgba(5,5,5,0.48) 55%, transparent 100%)",
               }}
             >
-              <div style={{ width: screenSize === 'mobile' ? 28 : 40, height: 2, background: "#D35400", flexShrink: 0 }} />
-              <span
-                className="text-white/85 uppercase font-medium"
+              <div
                 style={{
-                  fontSize: screenSize === 'mobile' ? "0.75rem" : screenSize === 'tablet' ? "0.9rem" : "1rem",
-                  letterSpacing: "0.18em",
-                  fontFamily: "var(--font-display)",
-                  lineHeight: 1.4,
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                  gap: "1rem",
                 }}
               >
-                SOHIAB BAROUD — Fondateur &amp; CEO, ACT
-              </span>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "0.7rem",
+                      letterSpacing: "0.24em",
+                      textTransform: "uppercase",
+                      color: ORANGE,
+                      fontWeight: 700,
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Le Fondateur
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: isDesktop ? "1.4rem" : "1.15rem",
+                      fontWeight: 700,
+                      color: "#fff",
+                      letterSpacing: "-0.01em",
+                      lineHeight: 1.1,
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    Sohaib Baroud
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "0.78rem",
+                      color: "rgba(255,255,255,0.6)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    CEO · Africa Centred Technology
+                  </div>
+                </div>
+
+                {/* Petit badge décoratif */}
+                <div
+                  aria-hidden
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: "50%",
+                    border: `1px solid ${ORANGE}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    background: "rgba(211,84,0,0.08)",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      color: ORANGE,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    SB
+                  </span>
+                </div>
+              </div>
             </motion.div>
+
+            {/* Coins décoratifs (style cadre photo) */}
+            {[
+              { top: 14, left: 14, borderTop: 2, borderLeft: 2 },
+              { top: 14, right: 14, borderTop: 2, borderRight: 2 },
+              { bottom: 14, left: 14, borderBottom: 2, borderLeft: 2 },
+              { bottom: 14, right: 14, borderBottom: 2, borderRight: 2 },
+            ].map((pos, i) => (
+              <motion.span
+                key={i}
+                aria-hidden
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.2 + i * 0.1 }}
+                style={{
+                  position: "absolute",
+                  width: 18,
+                  height: 18,
+                  borderColor: ORANGE,
+                  borderStyle: "solid",
+                  borderWidth: 0,
+                  ...(pos as React.CSSProperties),
+                }}
+              />
+            ))}
           </div>
         </motion.div>
       </div>

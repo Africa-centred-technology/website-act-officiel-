@@ -44,25 +44,25 @@ const VALEURS: Valeur[] = [
     num: "01",
     titre: "Collaboration",
     desc: "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences.",
-    bg: "#DCEBFB", // soft sky blue
+    bg: "#F5E6D3", // ACT cream — neutralité chaleureuse
   },
   {
     num: "02",
     titre: "Transmission",
     desc: "Nous formons, accompagnons et développons les talents technologiques africains.",
-    bg: "#E8E2F5", // soft lavender
+    bg: "#D8E8D4", // ACT green tinté — Pôle Formation
   },
   {
     num: "03",
     titre: "Excellence",
     desc: "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet.",
-    bg: "#DEEFE0", // soft mint green
+    bg: "#FBE3C2", // ACT gold tinté — Pôle Conseil
   },
   {
     num: "04",
     titre: "Innovation utile",
     desc: "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets.",
-    bg: "#F7EFCF", // soft pale yellow
+    bg: "#F4D4B8", // ACT orange tinté — Pôle Ingénierie Technologique
   },
 ];
 
@@ -114,19 +114,9 @@ export default function ValueSection() {
         },
       });
 
-      /* ── Fade descriptions in after cards settle ── */
-      gsap.from(".value-desc", {
-        opacity: 0,
-        y: 14,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".value-grid",
-          start: "top 15%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      /* Descriptions toujours visibles — pas d'animation conditionnelle
+         pour éviter qu'elles disparaissent quand on scrolle dans l'autre
+         sens ou qu'elles ne s'affichent jamais sur certaines vues. */
     }, containerRef);
 
     const onResize = () => ScrollTrigger.refresh();
@@ -145,12 +135,13 @@ export default function ValueSection() {
         width: "100%",
         maxWidth: 1400,
         margin: "0 auto",
-        /* Large bottom padding on desktop reserves vertical space for
-           the initial staircase so it doesn't bleed into the next
-           section before the scroll-triggered alignment kicks in.      */
+        /* Bottom padding reserves vertical space for the initial
+           staircase so it doesn't bleed into the next section before
+           the scroll-triggered alignment kicks in. Reduced now that
+           the cards are flatter (aspectRatio 1/0.7).                  */
         padding: isMobile
-          ? "4rem 1.5rem"
-          : "6rem clamp(1.5rem, 3vw, 3rem) 26rem",
+          ? "3rem 1.5rem"
+          : "5rem clamp(1.5rem, 3vw, 3rem) 9rem",
       }}
     >
       {/* ── Header ── */}
@@ -170,17 +161,17 @@ export default function ValueSection() {
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(2rem, 4vw, 3.5rem)",
-            fontWeight: 300,
-            lineHeight: 0.98,
-            letterSpacing: "-0.03em",
+            fontSize: "clamp(2.4rem, 5vw, 5rem)",
+            fontWeight: 700,
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
             color: "#fff",
             margin: 0,
             maxWidth: "18ch",
           }}
         >
           Ce qui nous{" "}
-          <span style={{ fontStyle: "italic", color: "rgba(255,255,255,0.55)" }}>
+          <span style={{ fontStyle: "italic", color: "#D35400" }}>
             guide.
           </span>
         </h2>
@@ -188,14 +179,14 @@ export default function ValueSection() {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: "0.75rem",
-            letterSpacing: "0.18em",
+            fontSize: "0.85rem",
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.5)",
             textAlign: "right",
             display: "flex",
             flexDirection: "column",
-            gap: "0.3rem",
+            gap: "0.45rem",
           }}
         >
           <span>(Valeurs)</span>
@@ -217,41 +208,29 @@ export default function ValueSection() {
             key={v.num}
             className="value-card"
             style={{
-              aspectRatio: "1 / 1.15",
-              background: v.bg,
-              borderRadius: 28,
-              padding: "clamp(1.5rem, 2vw, 2.25rem)",
+              aspectRatio: "1 / 0.7",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: 24,
+              padding: "clamp(1.25rem, 1.8vw, 2rem)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
               position: "relative",
-              color: "#141412",
+              color: "#fff",
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
               willChange: "transform",
             }}
           >
-            <span
-              style={{
-                position: "absolute",
-                top: "1.5rem",
-                right: "1.75rem",
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-                fontWeight: 300,
-                fontSize: "0.85rem",
-                opacity: 0.4,
-              }}
-            >
-              ({v.num})
-            </span>
-
             <span
               className="value-number"
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 400,
-                fontSize: "clamp(28px, 3vw, 44px)",
-                lineHeight: 1.0,
-                letterSpacing: "-0.03em",
+                fontSize: "clamp(20px, 2vw, 30px)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
                 textTransform: "none",
               }}
             >
@@ -262,11 +241,12 @@ export default function ValueSection() {
               className="value-desc"
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "clamp(13px, 0.95vw, 15px)",
-                lineHeight: 1.5,
-                maxWidth: "24ch",
-                opacity: 0.85,
+                fontSize: "clamp(13px, 0.85vw, 14.5px)",
+                lineHeight: 1.55,
+                maxWidth: "26ch",
+                opacity: 0.7,
                 margin: 0,
+                color: "rgba(255,255,255,0.85)",
               }}
             >
               {v.desc}
@@ -285,7 +265,7 @@ export default function ValueSection() {
             grid-template-columns: repeat(2, 1fr) !important;
           }
           .value-card {
-            aspect-ratio: 1 / 1.1 !important;
+            aspect-ratio: 1 / 0.75 !important;
           }
         }
         @media (max-width: 600px) {

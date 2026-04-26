@@ -65,11 +65,11 @@ export default function AboutSection() {
                     display: "grid",
                     gridTemplateColumns: screenSize === 'desktop' ? "1fr 1fr" : "1fr",
                     gap: screenSize === 'mobile' ? "3rem" : "clamp(2rem, 5vw, 6rem)",
-                    alignItems: "start",
+                    alignItems: "stretch",
                 }}>
 
                     {/* ── COLONNE GAUCHE — Identité ── */}
-                    <div>
+                    <div style={{ alignSelf: "start", marginTop: "clamp(-4rem, -6vw, -2rem)" }}>
                         {/* Eyebrow */}
                         <motion.div
                             className="flex items-center gap-3 mb-5"
@@ -89,16 +89,16 @@ export default function AboutSection() {
                             </span>
                         </motion.div>
 
-                        {/* Titre */}
+                        {/* Titre — échelle h2 unifiée */}
                         <motion.h2
                             initial={{ opacity: 0, y: 28 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, delay: 0.15, ease: [...EASE] }}
                             style={{
                                 fontFamily: "var(--font-display)",
-                                fontWeight: 900,
-                                fontSize: screenSize === 'mobile' ? "clamp(1.8rem, 8vw, 3rem)" : screenSize === 'tablet' ? "clamp(2.2rem, 6vw, 4rem)" : "clamp(3.5rem, 7vw, 9rem)",
-                                lineHeight: 1.0,
+                                fontWeight: 700,
+                                fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                                lineHeight: 1.1,
                                 letterSpacing: "-0.02em",
                                 textTransform: "uppercase",
                                 color: "#fff",
@@ -111,6 +111,18 @@ export default function AboutSection() {
                             TECHNOLOGY
                         </motion.h2>
 
+                        {/* CTA - Desktop uniquement */}
+
+                    </div>
+
+                    {/* ── COLONNE DROITE — Genèse + Vision ── */}
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        height: "100%",
+                        gap: "clamp(1.5rem, 3vw, 3rem)",
+                    }}>
                         {/* Genèse */}
                         <motion.p
                             initial={{ opacity: 0, y: 16 }}
@@ -118,71 +130,24 @@ export default function AboutSection() {
                             transition={{ duration: 0.7, delay: 0.30, ease: [...EASE] }}
                             style={{
                                 fontFamily: "var(--font-body)",
-                                fontSize: screenSize === 'mobile' ? "clamp(0.9rem, 3.5vw, 1.1rem)" : screenSize === 'tablet' ? "clamp(1rem, 2.5vw, 1.3rem)" : "clamp(1.35rem, 2vw, 1.75rem)",
-                                lineHeight: 1.6,
+                                fontSize: screenSize === 'mobile' ? "clamp(0.9rem, 3.5vw, 1.1rem)" : screenSize === 'tablet' ? "clamp(1rem, 2.5vw, 1.3rem)" : "clamp(1.15rem, 1.5vw, 1.5rem)",
+                                lineHeight: 1.85,
+                                letterSpacing: "0.01em",
                                 color: "#ffffff",
-                                maxWidth: "48rem",
-                                marginBottom: "clamp(1.2rem, 2.5vw, 2rem)",
-                                textAlign: "left",
+                                width: "100%",
+                                maxWidth: "100%",
+                                marginBottom: 0,
+                                textAlign: "justify",
+                                textJustify: "inter-word",
+                                hyphens: "auto",
                             }}
                         >
                             Nous sommes une startup guidée par une <strong style={{ color: "#fff" }}>raison d’être commune</strong> : libérer l'énergie humaine et technologique.
-                            Une approche profondément humaine y est cultivée{" "}
-                            ,renforcée par la puissance de l’Intelligence Artificielle.
+                            Une approche profondément humaine y est cultivée, renforcée par la puissance de l’Intelligence Artificielle.
                             L’ambition est de générer un impact concret et durable, afin de transformer les sociétés et de contribuer à la construction d’un écosystème numérique collaboratif.
                         </motion.p>
 
-                        {/* Stats bar */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.45, ease: [...EASE] }}
-                            style={{
-                                display: "grid",
-                                gridTemplateColumns: screenSize === 'desktop' ? "repeat(4, 1fr)" : "repeat(2, 1fr)",
-                                gap: screenSize === 'desktop' ? "0" : "1rem",
-                                borderTop: screenSize === 'desktop' ? "1px solid rgba(255,255,255,0.1)" : "none",
-                                marginBottom: "clamp(1.5rem, 3vw, 2.5rem)",
-                            }}
-                        >
-                            {STATS.map((s, i) => (
-                                <div key={i} style={{
-                                    paddingTop: screenSize === 'desktop' ? "1rem" : "1.5rem",
-                                    paddingBottom: screenSize === 'desktop' ? "1rem" : "1.5rem",
-                                    paddingRight: screenSize === 'desktop' ? "1rem" : "1.5rem",
-                                    paddingLeft: screenSize === 'desktop' ? (i > 0 ? "1rem" : "0") : "1.5rem",
-                                    borderRight: screenSize === 'desktop' && i < 3 ? "1px solid rgba(255,255,255,0.1)" : "none",
-                                    border: screenSize !== 'desktop' ? "1px solid rgba(255,255,255,0.1)" : "none",
-                                    borderRadius: screenSize !== 'desktop' ? "0.5rem" : "0",
-                                    backgroundColor: screenSize !== 'desktop' ? "rgba(255,255,255,0.02)" : "transparent",
-                                    textAlign: "left",
-                                }}>
-                                    <div style={{
-                                        fontFamily: "var(--font-display)",
-                                        fontSize: screenSize === 'mobile' ? "clamp(1.5rem, 5vw, 2.2rem)" : screenSize === 'tablet' ? "clamp(1.8rem, 4vw, 2.8rem)" : "clamp(2.2rem, 3.5vw, 3.5rem)",
-                                        fontWeight: 900,
-                                        color: "#D35400",
-                                        lineHeight: 1,
-                                        marginBottom: "0.3rem",
-                                    }}>{s.n}</div>
-                                    <div style={{
-                                        fontFamily: "var(--font-display)",
-                                        fontSize: screenSize === 'mobile' ? "0.7rem" : screenSize === 'tablet' ? "0.8rem" : "1rem",
-                                        letterSpacing: "0.2em",
-                                        textTransform: "uppercase",
-                                        color: "rgba(255,255,255,0.5)",
-                                    }}>{s.label}</div>
-                                </div>
-                            ))}
-                        </motion.div>
-
-                        {/* CTA - Desktop uniquement */}
-                       
-                    </div>
-
-                    {/* ── COLONNE DROITE — Vision ── */}
-                    <div>
-                        {/* Vision tag — moved up since the Valeurs block now lives in ValueSection */}
+                        {/* Vision tag — placée en bas de la colonne droite */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -191,6 +156,8 @@ export default function AboutSection() {
                                 display: "flex",
                                 alignItems: "flex-start",
                                 gap: "1rem",
+                                marginTop: "auto",
+                                paddingTop: "clamp(3rem, 10vw, 8rem)",
                             }}
                         >
                             <div style={{ width: 2, alignSelf: "stretch", background: "linear-gradient(to bottom, #D35400, transparent)", flexShrink: 0 }} />
