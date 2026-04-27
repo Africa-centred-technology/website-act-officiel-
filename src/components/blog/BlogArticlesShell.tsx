@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Search, ChevronLeft, ChevronRight, Star, Clock } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { blogPosts, categories, type BlogPost } from "@/lib/blog-data";
+import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 // Hook pour détecter la taille d'écran
@@ -36,7 +36,7 @@ function useMediaQuery() {
 export default function BlogArticlesShell() {
   const screenSize = useMediaQuery();
   const searchParams = useSearchParams();
-  const initialCat = searchParams.get("cat") || "all";
+  const initialCat = searchParams?.get("cat") || "all";
 
   const [activeCategory, setActiveCategory] = useState(initialCat);
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,21 +46,19 @@ export default function BlogArticlesShell() {
   const headerInView = useInView(headerRef, { once: true });
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  // Fusion articles statiques + Shopify
-  const [allPosts, setAllPosts] = useState<BlogPost[]>(blogPosts);
+  // Articles Shopify
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
+  const categories = useMemo(() => deriveCategoriesFromPosts(allPosts), [allPosts]);
 
   useEffect(() => {
+    let cancelled = false;
     fetch("/api/shopify/blog")
       .then((r) => r.json())
       .then(({ posts }) => {
-        if (!Array.isArray(posts) || posts.length === 0) return;
-        // Les articles Shopify remplacent les statiques du même slug, les nouveaux s'ajoutent en tête
-        const staticSlugs = new Set(blogPosts.map((p) => p.slug));
-        const shopifyNew  = posts.filter((p: BlogPost) => !staticSlugs.has(p.slug));
-        const merged = [...shopifyNew, ...blogPosts];
-        setAllPosts(merged);
+        if (!cancelled && Array.isArray(posts)) setAllPosts(posts);
       })
-      .catch(() => { /* garde les données statiques en cas d'erreur */ });
+      .catch(() => {});
+    return () => { cancelled = true; };
   }, []);
 
   const filtered = allPosts.filter((p) => {
@@ -559,7 +557,7 @@ function ArticleCard({
   post,
   index,
 }: {
-  post: (typeof blogPosts)[0];
+  post: BlogPost;
   index: number;
 }) {
   const ref = useRef(null);
@@ -698,7 +696,7 @@ function ArticleCard({
 }
 
 /* ─── Featured Article Card ─── */
-function FeaturedArticleCard({ post }: { post: (typeof blogPosts)[0] }) {
+function FeaturedArticleCard({ post }: { post: BlogPost }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const screenSize = useMediaQuery();

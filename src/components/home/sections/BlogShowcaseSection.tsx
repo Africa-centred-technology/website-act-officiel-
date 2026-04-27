@@ -19,7 +19,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { blogPosts } from "@/lib/blog-data";
+import { type BlogPost } from "@/lib/blog";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -56,8 +56,20 @@ export default function BlogShowcaseSection() {
   const screenSize = useScreenSize();
   const containerRef = useRef<HTMLElement>(null);
   const isMobile = screenSize === "mobile";
+  const [posts, setPosts] = useState<BlogPost[]>([]);
 
-  const articles = blogPosts.slice(0, 4);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!cancelled && Array.isArray(posts)) setPosts(posts);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const articles = posts.slice(0, 8);
 
   /* ── GSAP : reveal + parallax per card ───────────────────────── */
   useIsomorphicLayoutEffect(() => {
@@ -192,8 +204,8 @@ function Header() {
           maxWidth: "30ch",
         }}
       >
-        Derniers{" "}
-        <span style={{ color: COLOR, fontStyle: "italic" }}>articles</span>.
+        Nos Dernières{" "}
+        <span style={{ color: COLOR, fontStyle: "italic" }}>publications</span>
       </h2>
 
       <Link
@@ -233,7 +245,7 @@ function Header() {
    STACK CARD — sticky with progressive top offset
 ───────────────────────────────────────────────────────────── */
 
-type Post = (typeof blogPosts)[number];
+type Post = BlogPost;
 
 function StackCard({
   post,
@@ -246,7 +258,7 @@ function StackCard({
   total: number;
   isMobile: boolean;
 }) {
-  /* Fallback-safe reads — blogPosts may not have every field */
+  /* Fallback-safe reads — Shopify posts may not have every field */
   const format = (post as unknown as { format?: string }).format ?? post.category;
   const readTime = (post as unknown as { readTime?: string }).readTime;
   const date = (post as unknown as { date?: string }).date;

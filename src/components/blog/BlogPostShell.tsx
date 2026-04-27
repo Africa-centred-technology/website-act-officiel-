@@ -7,7 +7,16 @@ import { motion, useInView } from "framer-motion";
 import { Share2, Linkedin, Twitter, Link2, Facebook } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
-import { blogPosts, type BlogPost } from "@/lib/blog-data";
+import { type BlogPost } from "@/lib/blog";
+
+/** Type structurel pour une section d'article (legacy/static fallback). */
+type ArticleSection = {
+  title?: string;
+  content?: string;
+  list?: string[];
+  code?: { lang: string; content: string };
+  isConclusion?: boolean;
+};
 
 const ease = [0.6, 0.08, 0.02, 0.99] as const;
 
@@ -41,12 +50,24 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
   const heroInView = useInView(heroRef, { once: true });
   const [articleUrl, setArticleUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
 
-  const recentPosts = blogPosts
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!cancelled && Array.isArray(posts)) setAllPosts(posts);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const recentPosts = allPosts
     .filter((p) => p.slug !== post.slug)
     .slice(0, 3);
 
-  const relatedPosts = blogPosts
+  const relatedPosts = allPosts
     .filter((p) => p.slug !== post.slug)
     .map((p) => {
       let score = 0;
@@ -727,7 +748,7 @@ function ContentSection({
   categoryColor,
   screenSize,
 }: {
-  section: BlogPost["sections"][0];
+  section: ArticleSection;
   index: number;
   categoryColor: string;
   screenSize: 'mobile' | 'tablet' | 'desktop';

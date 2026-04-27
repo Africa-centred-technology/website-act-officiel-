@@ -208,14 +208,16 @@ export default function ValueSection() {
             key={v.num}
             className="value-card"
             style={{
-              aspectRatio: "1 / 0.7",
+              aspectRatio: isMobile ? undefined : "1 / 0.7",
+              minHeight: isMobile ? undefined : undefined,
               background: "rgba(255,255,255,0.04)",
               border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: 24,
-              padding: "clamp(1.25rem, 1.8vw, 2rem)",
+              borderRadius: 20,
+              padding: isMobile ? "1.5rem 1.5rem" : "clamp(1.25rem, 1.8vw, 2rem)",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
+              justifyContent: isMobile ? "flex-start" : "space-between",
+              gap: isMobile ? "0.75rem" : 0,
               position: "relative",
               color: "#fff",
               backdropFilter: "blur(6px)",
@@ -227,8 +229,8 @@ export default function ValueSection() {
               className="value-number"
               style={{
                 fontFamily: "var(--font-display)",
-                fontWeight: 400,
-                fontSize: "clamp(20px, 2vw, 30px)",
+                fontWeight: 500,
+                fontSize: isMobile ? "1.75rem" : "clamp(20px, 2vw, 30px)",
                 lineHeight: 1.1,
                 letterSpacing: "-0.02em",
                 textTransform: "none",
@@ -241,12 +243,12 @@ export default function ValueSection() {
               className="value-desc"
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "clamp(13px, 0.85vw, 14.5px)",
-                lineHeight: 1.55,
-                maxWidth: "26ch",
-                opacity: 0.7,
+                fontSize: isMobile ? "1.15rem" : "clamp(13px, 0.85vw, 14.5px)",
+                lineHeight: isMobile ? 1.55 : 1.55,
+                maxWidth: isMobile ? "100%" : "26ch",
+                opacity: isMobile ? 0.9 : 0.7,
                 margin: 0,
-                color: "rgba(255,255,255,0.85)",
+                color: "rgba(255,255,255,0.92)",
               }}
             >
               {v.desc}
@@ -263,9 +265,6 @@ export default function ValueSection() {
         @media (max-width: 900px) {
           .value-grid {
             grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .value-card {
-            aspect-ratio: 1 / 0.75 !important;
           }
         }
         @media (max-width: 600px) {

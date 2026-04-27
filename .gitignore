@@ -49,9 +49,12 @@ coverage/
 .cache/
 .aider*
 
-#Skills du projet 
+#Skills du projet
 skills/
 
 Gemini.md
 
 claude.md
+
+# ─── Sous-dossiers avec leur propre .git (repos imbriqués non-submodules) ──
+Etude-de-faisabilit-cole-excellence/

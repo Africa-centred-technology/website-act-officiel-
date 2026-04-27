@@ -1,13 +1,16 @@
 import { notFound } from "next/navigation";
-import { blogPosts, getPostBySlug } from "@/lib/blog-data";
-import { fetchShopifyBlogPostByHandle } from "@/lib/shopify/blog";
+import { fetchShopifyBlogPostByHandle, fetchShopifyBlogPosts } from "@/lib/shopify/blog";
 import BlogPostShell from "@/components/blog/BlogPostShell";
 import type { Metadata } from "next";
 
-/* ── Static params : articles statiques + Shopify fusionnés ── */
+/* ── Static params : générés depuis Shopify ── */
 export async function generateStaticParams() {
-  // On génère au moins les slugs statiques ; les slugs Shopify sont résolus dynamiquement
-  return blogPosts.map((post) => ({ slug: post.slug }));
+  try {
+    const posts = await fetchShopifyBlogPosts();
+    return posts.map((post) => ({ slug: post.slug }));
+  } catch {
+    return [];
+  }
 }
 
 /* ── SEO ── */
@@ -18,9 +21,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  // Shopify en priorité
-  const shopifyPost = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
-  const post = shopifyPost ?? getPostBySlug(slug);
+  const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
 
   if (!post) return { title: "Article introuvable — ACT" };
 
@@ -39,13 +40,8 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
 
-  // 1. Cherche dans Shopify
-  const shopifyPost = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
-  if (shopifyPost) return <BlogPostShell post={shopifyPost} />;
+  const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
+  if (!post) notFound();
 
-  // 2. Fallback sur les données statiques
-  const staticPost = getPostBySlug(slug);
-  if (!staticPost) notFound();
-
-  return <BlogPostShell post={staticPost} />;
+  return <BlogPostShell post={post} />;
 }

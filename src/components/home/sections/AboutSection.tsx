@@ -96,8 +96,8 @@ export default function AboutSection() {
                             transition={{ duration: 0.75, delay: 0.15, ease: [...EASE] }}
                             style={{
                                 fontFamily: "var(--font-display)",
-                                fontWeight: 700,
-                                fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                                fontWeight: 900,
+                                fontSize: screenSize === 'mobile'?"clamp(1.8rem, 8vw, 3rem)":screenSize === 'tablet' ? "clamp(2.2rem, 6vw, 4rem)" : "clamp(3.5rem, 7vw, 9rem)",
                                 lineHeight: 1.1,
                                 letterSpacing: "-0.02em",
                                 textTransform: "uppercase",

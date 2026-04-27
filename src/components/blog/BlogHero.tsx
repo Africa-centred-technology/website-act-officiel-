@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { blogPosts, categories } from "@/lib/blog-data";
+import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 
 const ease = [0.6, 0.08, 0.02, 0.99] as const;
 
@@ -58,15 +58,29 @@ export default function BlogHero() {
   const inView = useInView(ref, { once: true });
   const [activeTopic, setActiveTopic] = useState(0);
   const [topCategories, setTopCategories] = useState<{ label: string; value: string; count: number }[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!cancelled && Array.isArray(posts)) setPosts(posts);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const categories = useMemo(() => deriveCategoriesFromPosts(posts), [posts]);
 
   useEffect(() => {
     const available = categories.filter((c) => c.value !== "all");
     const counted = available.map((c) => ({
       ...c,
-      count: blogPosts.filter((p) => p.category === c.label).length,
+      count: posts.filter((p) => p.category === c.label).length,
     }));
     setTopCategories(counted.sort((a, b) => b.count - a.count).slice(0, 5));
-  }, []);
+  }, [posts, categories]);
 
 const isMobile = screenSize === "mobile";
   const isTablet = screenSize === "tablet";

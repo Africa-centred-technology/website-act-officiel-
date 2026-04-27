@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { blogPosts } from "@/lib/blog-data";
+import { type BlogPost } from "@/lib/blog";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -31,6 +31,19 @@ function useMediaQuery() {
 
 export default function BlogSection() {
     const screenSize = useMediaQuery();
+    const [posts, setPosts] = useState<BlogPost[]>([]);
+
+    useEffect(() => {
+        let cancelled = false;
+        fetch("/api/shopify/blog")
+            .then((r) => r.json())
+            .then(({ posts }) => {
+                if (!cancelled && Array.isArray(posts)) setPosts(posts);
+            })
+            .catch(() => {});
+        return () => { cancelled = true; };
+    }, []);
+
     return (
         <div className="h-full w-full overflow-hidden relative flex flex-col">
             {/* Spacer léger entre navbar et contenu */}
@@ -91,7 +104,7 @@ export default function BlogSection() {
                             marginBottom: "2rem",
                             alignItems: "start",
                         }}>
-                            {blogPosts.slice(0, 3).map((post, idx) => (
+                            {posts.slice(0, 6).map((post, idx) => (
                                 <motion.div
                                     key={post.slug}
                                     initial={{ opacity: 0, y: 30 }}
