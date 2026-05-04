@@ -120,7 +120,8 @@ const isMobile = screenSize === "mobile";
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: isMobile ? "7rem 2rem 4rem" : isTablet ? "8rem 3.5rem 5rem" : "10rem 6rem 6rem",
+            padding: isMobile ? "5rem 2rem 0" : isTablet ? "8rem 3.5rem 5rem" : "10rem 6rem 6rem",
+            minHeight: isMobile ? "340px" : isTablet ? "420px" : "auto",
             gap: "3rem",
             overflow: "hidden",
           }}
@@ -154,6 +155,7 @@ const isMobile = screenSize === "mobile";
               alignItems: "flex-end",
               justifyContent: "center",
               zIndex: 1,
+              paddingBottom: isMobile ? "0" : isTablet ? "0" : "0",
             }}
           >
             <Image
@@ -162,7 +164,8 @@ const isMobile = screenSize === "mobile";
               width={600}
               height={780}
               style={{
-                width: isMobile ? "75%" : isTablet ? "60%" : "82%",
+                width: isMobile ? "85%" : isTablet ? "70%" : "82%",
+                maxWidth: isMobile ? "320px" : isTablet ? "480px" : "none",
                 height: "100%",
                 objectFit: "contain",
                 objectPosition: "bottom center",

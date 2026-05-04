@@ -244,7 +244,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           {/* Title */}
           <motion.h1
             style={{
-              fontSize: screenSize === 'mobile' ? "clamp(2.5rem, 8vw, 4rem)" : screenSize === 'tablet' ? "clamp(3.5rem, 6vw, 5rem)" : "var(--font-50)",
+              fontSize: screenSize === 'mobile' ? "clamp(2rem, 6vw, 3rem)" : screenSize === 'tablet' ? "clamp(2.6rem, 4.5vw, 3.6rem)" : "clamp(3rem, 4vw, 4rem)",
               fontFamily: "var(--font-body)",
               fontWeight: 900,
               textTransform: "uppercase",
@@ -316,7 +316,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                     borderRadius: "2rem",
                     color: "rgba(255,255,255,0.45)",
                     fontFamily: "var(--font-body)",
-                    fontSize: screenSize === 'mobile' ? "1.3rem" : "2rem",
+                    fontSize: screenSize === 'mobile' ? "0.9rem" : "1.1rem",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -401,14 +401,14 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <p
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontSize: screenSize === 'mobile' ? "1.4rem" : "2rem",
+                    fontSize: screenSize === 'mobile' ? "0.9rem" : "1.1rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.12em",
                     color: "rgba(255,255,255,0.35)",
-                    marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
+                    marginBottom: screenSize === 'mobile' ? "1.2rem" : "1.6rem",
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.8rem",
+                    gap: "0.7rem",
                   }}
                 >
                   <Share2 size={screenSize === 'mobile' ? 12 : 14} /> Partager l&apos;article
@@ -442,10 +442,10 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <p
                   style={{
                     color: "rgba(255,255,255,0.52)",
-                    fontSize: screenSize === 'mobile' ? "1.25rem" : "1.4rem",
-                    lineHeight: 1.7,
+                    fontSize: screenSize === 'mobile' ? "0.95rem" : "1rem",
+                    lineHeight: 1.65,
                     fontFamily: "var(--font-body)",
-                    marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
+                    marginBottom: screenSize === 'mobile' ? "1.3rem" : "1.6rem",
                   }}
                 >
                   {post.excerpt}
@@ -627,12 +627,12 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           <div className="container">
             <h2
               style={{
-                fontSize: screenSize === 'mobile' ? "clamp(2rem, 6vw, 2.5rem)" : "clamp(2.5rem, 4vw, 3.5rem)",
+                fontSize: screenSize === 'mobile' ? "clamp(1.6rem, 5vw, 2rem)" : "clamp(1.8rem, 3vw, 2.4rem)",
                 fontFamily: "var(--font-body)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 color: "var(--text-primary)",
-                marginBottom: screenSize === 'mobile' ? "3rem" : "4rem",
+                marginBottom: screenSize === 'mobile' ? "2.4rem" : "3rem",
                 textAlign: "center",
               }}
             >
@@ -673,11 +673,11 @@ function MetaItem({ label, value, screenSize }: { label: string; value: string; 
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem",
+          fontSize: screenSize === 'mobile' ? "0.75rem" : "0.85rem",
           textTransform: "uppercase",
           letterSpacing: "0.12em",
           color: "rgba(255,255,255,0.3)",
-          marginBottom: "0.3rem",
+          marginBottom: "0.25rem",
         }}
       >
         {label}
@@ -685,7 +685,7 @@ function MetaItem({ label, value, screenSize }: { label: string; value: string; 
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: screenSize === 'mobile' ? "1.4rem" : "1.8rem",
+          fontSize: screenSize === 'mobile' ? "1.05rem" : "1.25rem",
           color: "rgba(255,255,255,0.7)",
         }}
       >
@@ -956,7 +956,7 @@ function RelatedArticleCard({
             style={{
               position: "relative",
               width: "100%",
-              height: screenSize === 'mobile' ? "18rem" : "22rem",
+              height: screenSize === 'mobile' ? "14rem" : "16rem",
               flexShrink: 0,
               overflow: "hidden",
             }}
@@ -980,7 +980,7 @@ function RelatedArticleCard({
           {/* Content */}
           <div
             style={{
-              padding: screenSize === 'mobile' ? "2rem 2rem 2.5rem" : "2.5rem 3rem 3rem",
+              padding: screenSize === 'mobile' ? "1.4rem 1.4rem 1.8rem" : "1.6rem 1.8rem 2rem",
               display: "flex",
               flexDirection: "column",
               flex: 1,
@@ -988,16 +988,16 @@ function RelatedArticleCard({
           >
             <div>
               {/* Category */}
-              <div style={{ marginBottom: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
+              <div style={{ marginBottom: screenSize === 'mobile' ? "0.8rem" : "1rem" }}>
                 <span
                   style={{
-                    padding: screenSize === 'mobile' ? "0.3rem 0.8rem" : "0.4rem 1rem",
+                    padding: screenSize === 'mobile' ? "0.25rem 0.65rem" : "0.3rem 0.8rem",
                     background: `${post.categoryColor}18`,
                     border: `1px solid ${post.categoryColor}44`,
                     borderRadius: "2rem",
                     color: post.categoryColor,
                     fontFamily: "var(--font-body)",
-                    fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem",
+                    fontSize: screenSize === 'mobile' ? "0.7rem" : "0.78rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
                   }}
@@ -1008,12 +1008,12 @@ function RelatedArticleCard({
 
               <h3
                 style={{
-                  fontSize: screenSize === 'mobile' ? "1.5rem" : "1.8rem",
+                  fontSize: screenSize === 'mobile' ? "1.05rem" : "1.15rem",
                   fontFamily: "var(--font-body)",
                   fontWeight: 800,
                   color: "var(--text-primary)",
-                  lineHeight: 1.2,
-                  marginBottom: screenSize === 'mobile' ? "1rem" : "1.2rem",
+                  lineHeight: 1.3,
+                  marginBottom: screenSize === 'mobile' ? "0.7rem" : "0.85rem",
                   display: "-webkit-box",
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: "vertical",
@@ -1026,8 +1026,8 @@ function RelatedArticleCard({
               <p
                 style={{
                   color: "var(--text-muted)",
-                  fontSize: screenSize === 'mobile' ? "1.4rem" : "1.8rem",
-                  lineHeight: 1.6,
+                  fontSize: screenSize === 'mobile' ? "0.9rem" : "0.95rem",
+                  lineHeight: 1.55,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: "vertical",
@@ -1048,11 +1048,11 @@ function RelatedArticleCard({
                 borderTop: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <div style={{ display: "flex", gap: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
+              <div style={{ display: "flex", gap: screenSize === 'mobile' ? "0.8rem" : "1rem" }}>
                 <span
                   style={{
                     color: "rgba(255,255,255,0.3)",
-                    fontSize: screenSize === 'mobile' ? "1.3rem" : "2rem",
+                    fontSize: screenSize === 'mobile' ? "0.85rem" : "0.95rem",
                     fontFamily: "var(--font-body)",
                     textTransform: "uppercase",
                   }}
@@ -1062,7 +1062,7 @@ function RelatedArticleCard({
                 <span
                   style={{
                     color: "rgba(255,255,255,0.3)",
-                    fontSize: screenSize === 'mobile' ? "1.3rem" : "2rem",
+                    fontSize: screenSize === 'mobile' ? "0.85rem" : "0.95rem",
                     fontFamily: "var(--font-body)",
                     textTransform: "uppercase",
                   }}
@@ -1074,7 +1074,7 @@ function RelatedArticleCard({
                 style={{
                   color: "#D35400",
                   fontFamily: "var(--font-body)",
-                  fontSize: screenSize === 'mobile' ? "1rem" : "1.1rem",
+                  fontSize: screenSize === 'mobile' ? "0.85rem" : "0.9rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
                 }}

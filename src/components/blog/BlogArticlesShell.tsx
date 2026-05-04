@@ -154,11 +154,11 @@ export default function BlogArticlesShell() {
 
             <h1
               style={{
-                fontSize: screenSize === 'mobile' ? "clamp(3rem, 10vw, 5rem)" : screenSize === 'tablet' ? "clamp(4rem, 8vw, 7rem)" : "clamp(5rem, 10vw, 9rem)",
+                fontSize: screenSize === 'mobile' ? "clamp(2.2rem, 7vw, 3.4rem)" : screenSize === 'tablet' ? "clamp(2.8rem, 5vw, 4.4rem)" : "clamp(3.4rem, 6vw, 5.6rem)",
                 fontFamily: "var(--font-display)",
-                lineHeight: 0.9,
+                lineHeight: 0.95,
                 color: "var(--text-primary)",
-                marginBottom: "1.5rem",
+                marginBottom: "1.2rem",
                 textTransform: "uppercase",
               }}
             >
@@ -175,11 +175,11 @@ export default function BlogArticlesShell() {
 
             <p
               style={{
-                fontSize: screenSize === 'mobile' ? '1.4rem' : screenSize === 'tablet' ? '1.7rem' : '2rem',
+                fontSize: screenSize === 'mobile' ? '1.1rem' : screenSize === 'tablet' ? '1.25rem' : '1.4rem',
                 color: "var(--text-muted)",
-                lineHeight: 1.6,
-                maxWidth: "50rem",
-                marginBottom: screenSize === 'mobile' ? '3rem' : '4rem',
+                lineHeight: 1.55,
+                maxWidth: "44rem",
+                marginBottom: screenSize === 'mobile' ? '2.5rem' : '3rem',
               }}
             >
               {activeCategory === "all"
@@ -204,14 +204,14 @@ export default function BlogArticlesShell() {
               style={{
                 position: "relative",
                 width: "100%",
-                maxWidth: "40rem",
+                maxWidth: "100%",
               }}
             >
               <Search
                 size={18}
                 style={{
                   position: "absolute",
-                  left: "1.2rem",
+                  left: "1.4rem",
                   top: "50%",
                   transform: "translateY(-50%)",
                   color: "var(--text-muted)",
@@ -225,13 +225,13 @@ export default function BlogArticlesShell() {
                 onChange={(e) => handleSearchChange(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "1rem 1.2rem 1rem 3.8rem",
+                  padding: "1.1rem 1.4rem 1.1rem 4rem",
                   background: "var(--bg-card)",
                   border: "1px solid var(--border-color)",
                   borderRadius: "0.6rem",
                   color: "var(--text-primary)",
                   fontFamily: "var(--font-body)",
-                  fontSize: "1.7rem",
+                  fontSize: "1.2rem",
                   outline: "none",
                   transition: "border-color 0.3s ease, background 0.3s ease",
                 }}
@@ -385,8 +385,8 @@ export default function BlogArticlesShell() {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: '3.5rem',
-                  paddingBottom: '1.8rem',
+                  gap: '2rem',
+                  paddingBottom: '1.4rem',
                   borderBottom: "1px solid var(--border-color)",
                 }}
               >
@@ -406,7 +406,7 @@ export default function BlogArticlesShell() {
                         border: "none",
                         color: isActive ? "#e85c1a" : "var(--text-muted)",
                         fontFamily: "var(--font-body)",
-                        fontSize: screenSize === 'tablet' ? '1.7rem' : '2rem',
+                        fontSize: screenSize === 'tablet' ? '1.1rem' : '1.25rem',
                         fontWeight: isActive ? 600 : 400,
                         cursor: "pointer",
                         transition: "all 0.3s ease",
@@ -422,11 +422,11 @@ export default function BlogArticlesShell() {
                       {cat.label}
                       <span
                         style={{
-                          padding: "0.25rem 0.8rem",
+                          padding: "0.2rem 0.7rem",
                           background: isActive ? "rgba(232,92,26,0.15)" : "var(--bg-glass)",
                           color: isActive ? "#e85c1a" : "var(--text-muted)",
                           borderRadius: "1.5rem",
-                          fontSize: "1.6rem",
+                          fontSize: "1rem",
                           fontWeight: 600,
                         }}
                       >
@@ -601,10 +601,10 @@ function ArticleCard({
             style={{
               position: "relative",
               width: "100%",
-              height: "24rem",
+              height: "18rem",
               flexShrink: 0,
               overflow: "hidden",
-              borderRadius: "1rem",
+              borderRadius: "0.8rem",
             }}
           >
             <Image
@@ -624,28 +624,28 @@ function ArticleCard({
             <div
               style={{
                 position: "absolute",
-                bottom: "1.2rem",
-                right: "1.2rem",
+                bottom: "0.9rem",
+                right: "0.9rem",
                 background: "rgba(0,0,0,0.6)",
-                padding: "0.4rem 0.8rem",
-                borderRadius: "0.4rem",
+                padding: "0.3rem 0.65rem",
+                borderRadius: "0.35rem",
                 color: "var(--text-inverse)",
-                fontSize: "1.5rem",
+                fontSize: "0.85rem",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "0.4rem",
                 fontFamily: "var(--font-body)",
                 border: "1px solid var(--border-light)",
               }}
             >
-              <Clock size={18} /> {post.readTime}
+              <Clock size={13} /> {post.readTime}
             </div>
           </div>
 
           {/* Content */}
           <div
             style={{
-              padding: "1.5rem 0 3rem 0",
+              padding: "1.2rem 0 2rem 0",
               display: "flex",
               flexDirection: "column",
               flex: 1,
@@ -653,15 +653,15 @@ function ArticleCard({
           >
             <div>
               {/* Category */}
-              <div style={{ marginBottom: "1.2rem" }}>
+              <div style={{ marginBottom: "0.9rem" }}>
                 <span
                   style={{
-                    padding: "0.3rem 0.8rem",
+                    padding: "0.25rem 0.65rem",
                     border: `1px solid ${post.categoryColor}55`,
-                    borderRadius: "0.4rem",
+                    borderRadius: "0.35rem",
                     color: post.categoryColor,
                     fontFamily: "var(--font-body)",
-                    fontSize: "1.4rem",
+                    fontSize: "0.85rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
                     fontWeight: 600,
@@ -673,12 +673,12 @@ function ArticleCard({
 
               <h3
                 style={{
-                  fontSize: "2.2rem",
+                  fontSize: "1.35rem",
                   fontFamily: "var(--font-body)",
                   fontWeight: 800,
                   color: "var(--text-primary)",
-                  lineHeight: 1.2,
-                  marginBottom: "1rem",
+                  lineHeight: 1.3,
+                  marginBottom: "0.8rem",
                   display: "-webkit-box",
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: "vertical",
@@ -717,12 +717,12 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
           style={{
             background: "var(--bg-secondary)",
             border: "1px solid var(--border-light)",
-            borderRadius: "1.2rem",
+            borderRadius: "1rem",
             overflow: "hidden",
             display: "grid",
-            gridTemplateColumns: screenSize === 'mobile' ? "1fr" : "repeat(auto-fit, minmax(min(100%, 40rem), 1fr))",
+            gridTemplateColumns: screenSize === 'mobile' ? "1fr" : "repeat(auto-fit, minmax(min(100%, 30rem), 1fr))",
             transition: "border-color 0.3s ease, background 0.3s ease, transform 0.3s ease",
-            minHeight: screenSize === 'mobile' ? "auto" : "35rem",
+            minHeight: screenSize === 'mobile' ? "auto" : "24rem",
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLDivElement;
@@ -736,7 +736,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
           }}
         >
           {/* Left: Image Container */}
-          <div style={{ position: "relative", width: "100%", minHeight: screenSize === 'mobile' ? "24rem" : "35rem" }}>
+          <div style={{ position: "relative", width: "100%", minHeight: screenSize === 'mobile' ? "18rem" : "24rem" }}>
             <Image
               src={post.image}
               alt={post.title}
@@ -757,47 +757,47 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
             <div
               style={{
                 position: "absolute",
-                top: "2.5rem",
-                left: "2.5rem",
+                top: "1.5rem",
+                left: "1.5rem",
                 background: "#e85c1a",
                 color: "#fff",
-                padding: "0.6rem 1.4rem",
+                padding: "0.4rem 1rem",
                 borderRadius: "0.4rem",
-                fontSize: "1.3rem",
+                fontSize: "0.85rem",
                 fontWeight: 700,
                 display: "flex",
                 alignItems: "center",
-                gap: "0.6rem",
+                gap: "0.5rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
                 fontFamily: "var(--font-body)",
                 boxShadow: "0 4px 12px rgba(232,92,26,0.3)",
               }}
             >
-              <Star size={16} fill="#fff" /> À LA UNE
+              <Star size={12} fill="#fff" /> À LA UNE
             </div>
           </div>
 
           {/* Right: Content Container */}
           <div
             style={{
-              padding: screenSize === 'mobile' ? "2rem 2rem 3rem" : "4rem 4rem 4rem 2rem",
+              padding: screenSize === 'mobile' ? "1.4rem 1.4rem 2rem" : "2.4rem 2.4rem 2.4rem 1.6rem",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               background: "transparent",
             }}
           >
-            <div style={{ marginBottom: "2.5rem" }}>
+            <div style={{ marginBottom: "1.4rem" }}>
               <span
                 style={{
-                  padding: "0.4rem 1.2rem",
+                  padding: "0.3rem 0.9rem",
                   background: `${post.categoryColor}15`,
                   border: `1px solid ${post.categoryColor}55`,
                   borderRadius: "0.4rem",
                   color: post.categoryColor,
                   fontFamily: "var(--font-body)",
-                  fontSize: "1.5rem",
+                  fontSize: "0.85rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                   fontWeight: 600,
@@ -810,10 +810,10 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
             <h2
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(3.2rem, 5vw, 5rem)",
+                fontSize: "clamp(1.6rem, 2.4vw, 2.4rem)",
                 color: "var(--text-primary)",
-                lineHeight: 1.1,
-                marginBottom: "2rem",
+                lineHeight: 1.2,
+                marginBottom: "1.2rem",
               }}
             >
               {post.title}
@@ -822,11 +822,11 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
             <p
               style={{
                 color: "var(--text-muted)",
-                fontSize: "1.8rem",
-                lineHeight: 1.6,
-                marginBottom: "4rem",
+                fontSize: "1rem",
+                lineHeight: 1.55,
+                marginBottom: "1.8rem",
                 display: "-webkit-box",
-                WebkitLineClamp: 4,
+                WebkitLineClamp: 3,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
                 fontFamily: "var(--font-body)",
@@ -839,7 +839,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
               style={{
                 marginTop: "auto",
                 borderTop: "1px solid var(--border-color)",
-                paddingTop: "2.5rem",
+                paddingTop: "1.4rem",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -851,9 +851,9 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.8rem",
+                  gap: "0.6rem",
                   color: "var(--text-muted)",
-                  fontSize: "1.6rem",
+                  fontSize: "0.9rem",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -865,7 +865,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
                 style={{
                   color: "#e85c1a",
                   fontFamily: "var(--font-body)",
-                  fontSize: "1.7rem",
+                  fontSize: "0.95rem",
                   fontWeight: 600,
                 }}
               >

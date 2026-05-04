@@ -1,0 +1,474 @@
+Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private
+"🎯 KICKOFF — Sprint éditorial 15 jours","05/01/2026","5:00 PM","05/01/2026","6:00 PM","False","Lancement officiel du sprint 15 jours.
+
+Participants : Sohaib (SEO/valid) · Aldrin (production) · Jess (publication)
+
+Agenda :
+- Validation du planning des 15 articles priorisés
+- Validation des templates Canva ACT
+- Configuration Metricool et UTM
+- Tour de table des questions/blocages
+
+Préparation :
+- Aldrin : templates Canva prêts
+- Sohaib : priorisation finale du calendrier
+- Jess : Metricool configuré sur les 3 comptes
+
+Drive : /ACT-Editorial/2026-05/00-kickoff/","Visio Google Meet ou bureau ACT","False"
+"🟧 PROD — #1 L'Afrique tech 2026","05/01/2026","2:00 PM","05/01/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article source : https://act.africa/blog/afrique-tech-2026-experimentation-maturite
+
+Livrables :
+□ Copy LinkedIn carrousel 10 slides + post 1500 caractères
+□ Copy Instagram carrousel 7 slides + caption
+□ Copy Facebook carrousel 5 slides + post 200 caractères
+□ Carrousels Canva (3 versions) exportés
+□ Hashtags + UTM trackés
+
+Soumission validation : @sohaib.baroud@a-ct.ma
+Drive : /ACT-Editorial/2026-05/04-afrique-tech-2026/
+
+Date publication cible : Lun 04/05","Drive ACT-Editorial","False"
+"🟨 VALID — #1 L'Afrique tech 2026","05/02/2026","9:00 AM","05/02/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : L'Afrique tech 2026 (manifeste de lancement)
+
+Checklist :
+□ SEO : titre 50-60 car · meta 150-160 car
+□ Édito : ton ACT (vouvoiement, contextualisation Maroc)
+□ Cohérence positionnement Africa Centred Technology
+□ Charte couleurs ACT
+□ Hashtags pertinents
+□ UTM trackable
+□ CTA actionnable
+
+Drive : /ACT-Editorial/2026-05/04-afrique-tech-2026/
+
+✅ Si validé : commenter VALIDÉ + tag @jess
+❌ Si à corriger : commentaire détaillé + tag @aldrin (cycle 2h)","Drive ACT-Editorial","False"
+"🟩 PROG — #1 L'Afrique tech 2026","05/03/2026","5:00 PM","05/03/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article : L'Afrique tech 2026
+
+Plateformes :
+□ LinkedIn — 08h30 (carrousel + post)
+□ Instagram — 12h30 (carrousel + caption)
+□ Facebook — 19h00 (carrousel + post)
+□ Instagram Story — 21h00 (extrait)
+
+Checks :
+□ Validé par Sohaib
+□ Visuels charte
+□ UTM testés
+□ Hashtags collés
+
+Outil : Metricool
+Drive : /ACT-Editorial/2026-05/04-afrique-tech-2026/","Metricool","False"
+"🟥 PUBLI — #1 L'Afrique tech 2026 ⭐","05/04/2026","","05/04/2026","","True","🟥 PUBLICATION — Jess
+
+Article #1 : L'Afrique tech 2026 (FLAGSHIP)
+
+Créneaux automatiques :
+✓ 08h30 — LinkedIn carrousel
+✓ 12h30 — Instagram carrousel
+✓ 19h00 — Facebook carrousel
+✓ 21h00 — Instagram Story (manuel)
+
+Modération :
+□ 10h00 — commentaires LinkedIn
+□ 14h00 — commentaires Instagram
+□ 20h00 — commentaires Facebook
+□ 22h00 — reporting du jour
+
+Escalade : @sohaib (positionnement) · @aldrin (contenu)","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #2 IA — 80% sans impact","05/02/2026","2:00 PM","05/02/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/ia-generative-entreprise-80-pourcent-sans-impact
+
+Hook : 80% des organisations ne voient aucun impact mesurable de l'IA générative.
+
+Livrables :
+□ Copy LinkedIn 10 slides + post 1500 car
+□ Copy Instagram 7 slides + caption
+□ Copy Facebook 5 slides + post court
+□ Carrousels Canva
+□ Hashtags + UTM
+
+Drive : /ACT-Editorial/2026-05/05-ia-80-sans-impact/
+Cible publication : Mar 05/05","Drive ACT-Editorial","False"
+"🟨 VALID — #2 IA — 80% sans impact","05/03/2026","9:00 AM","05/03/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : IA — 80% sans impact (#2 priorité)
+
+Point d'attention : ton honnête mais pas anxiogène.
+Hook fort = engagement fort, mais doit ouvrir vers solution ACT.
+
+Checklist standard SEO + édito + visuels.
+
+Drive : /ACT-Editorial/2026-05/05-ia-80-sans-impact/","Drive ACT-Editorial","False"
+"🟩 PROG — #2 IA — 80% sans impact","05/04/2026","5:00 PM","05/04/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #2 : IA — 80% sans impact
+
+Programmation Metricool 3 plateformes + Story IG 21h.
+UTM : utm_source=linkedin&utm_campaign=ia-80-sans-impact","Metricool","False"
+"🟥 PUBLI — #2 IA — 80% sans impact","05/05/2026","","05/05/2026","","True","🟥 PUBLICATION — Jess
+
+Article #2 : IA — 80% sans impact
+
+Créneaux automatiques 08h30/12h30/19h.
+Modération matinée + soirée.
+Reporting fin de journée.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #3 Maroc hub data centers","05/03/2026","2:00 PM","05/03/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/maroc-hub-numerique-afrique-data-centers
+
+Angle : fierté Maroc + chiffres factuels = très partagé sur LinkedIn marocain.
+
+Drive : /ACT-Editorial/2026-05/06-maroc-hub-data-centers/
+Cible publication : Mer 06/05","Drive ACT-Editorial","False"
+"🟨 VALID — #3 Maroc hub data centers","05/04/2026","9:00 AM","05/04/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : Maroc hub numérique
+
+Vérifier : sources factuelles solides (data centers, capacité, partenaires).
+Pas d'approximation — DSI marocains vérifient.
+
+Drive : /ACT-Editorial/2026-05/06-maroc-hub-data-centers/","Drive ACT-Editorial","False"
+"🟩 PROG — #3 Maroc hub data centers","05/05/2026","5:00 PM","05/05/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #3 : Maroc hub data centers
+Programmation 3 plateformes + Story IG.","Metricool","False"
+"🟥 PUBLI — #3 Maroc hub data centers","05/06/2026","","05/06/2026","","True","🟥 PUBLICATION — Jess
+
+Article #3 : Maroc hub data centers
+3 créneaux automatiques + Story 21h.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #4 Cybersécurité 2026","05/04/2026","2:00 PM","05/04/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/cybersecurite-2026-instabilite-permanente
+
+Hook : Ère de l'instabilité permanente. Ton anxiogène utile mais doit ouvrir vers offre ACT cybersécurité.
+
+Drive : /ACT-Editorial/2026-05/07-cybersecurite-2026/
+Cible publication : Jeu 07/05","Drive ACT-Editorial","False"
+"🟨 VALID — #4 Cybersécurité 2026","05/05/2026","9:00 AM","05/05/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : Cybersécurité 2026
+
+Attention : ne pas verser dans le FUD. Ton expert + solution ACT.
+
+Drive : /ACT-Editorial/2026-05/07-cybersecurite-2026/","Drive ACT-Editorial","False"
+"🟩 PROG — #4 Cybersécurité 2026","05/06/2026","5:00 PM","05/06/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #4 : Cybersécurité 2026
+Programmation 3 plateformes.","Metricool","False"
+"🟥 PUBLI — #4 Cybersécurité 2026","05/07/2026","","05/07/2026","","True","🟥 PUBLICATION — Jess
+
+Article #4 : Cybersécurité 2026
+3 créneaux + Story IG.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #5 IA acheter ou construire","05/05/2026","2:00 PM","05/05/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/ia-entreprise-acheter-ou-construire-2026
+
+Audience : COMITÉ DE DIRECTION exact. Cadre décisionnel concret.
+
+Drive : /ACT-Editorial/2026-05/08-ia-acheter-construire/
+Cible publication : Ven 08/05","Drive ACT-Editorial","False"
+"🟨 VALID — #5 IA acheter ou construire","05/06/2026","9:00 AM","05/06/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : IA acheter ou construire
+
+Doit ouvrir clairement vers Pôle Conseil ACT.
+CTA fort vers mission scoping.
+
+Drive : /ACT-Editorial/2026-05/08-ia-acheter-construire/","Drive ACT-Editorial","False"
+"🟩 PROG — #5 IA acheter ou construire","05/07/2026","5:00 PM","05/07/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #5 : IA acheter ou construire
+Programmation 3 plateformes.","Metricool","False"
+"🟥 PUBLI — #5 IA acheter ou construire","05/08/2026","","05/08/2026","","True","🟥 PUBLICATION — Jess
+
+Article #5 : IA acheter ou construire
+3 créneaux + Story IG.","LinkedIn / Instagram / Facebook","False"
+"🎯 REVIEW HEBDO — Fin Semaine 1","05/08/2026","5:00 PM","05/08/2026","5:30 PM","False","🎯 REVIEW HEBDOMADAIRE Sprint S1
+
+Participants : Sohaib + Aldrin + Jess
+
+Agenda 30 min :
+- KPIs Metricool des 5 premières publications (J1-J5)
+- Top performances + bottom performances
+- Ajustements pour S2
+- Validation des angles articles J6-J11
+
+Préparation Jess : dashboard Metricool partagé en amont","Visio Google Meet","False"
+"🟧 PROD — #6 Agentic AI ⭐","05/06/2026","2:00 PM","05/06/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article ⭐ FEATURED : https://act.africa/blog/agentic-ai-prochaine-revolution
+
+Sujet le plus chaud 2026. ACT positionnée sur Pôle Ingénierie service Automatisation IA Agentique.
+
+Drive : /ACT-Editorial/2026-05/09-agentic-ai/
+Cible publication : Sam 09/05","Drive ACT-Editorial","False"
+"🟨 VALID — #6 Agentic AI","05/07/2026","9:00 AM","05/07/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article ⭐ : Agentic AI
+
+Article potentiellement viral. Vérifier que tous les liens vers le service ACT Automatisation IA Agentique sont actifs.
+
+Drive : /ACT-Editorial/2026-05/09-agentic-ai/","Drive ACT-Editorial","False"
+"🟩 PROG — #6 Agentic AI","05/08/2026","5:00 PM","05/08/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article ⭐ #6 : Agentic AI
+Programmation soigneuse — fort potentiel viral.
+UTM : utm_source=linkedin&utm_campaign=agentic-ai","Metricool","False"
+"🟥 PUBLI — #6 Agentic AI ⭐","05/09/2026","","05/09/2026","","True","🟥 PUBLICATION — Jess
+
+Article ⭐ FEATURED : Agentic AI
+
+Modération renforcée — fort engagement attendu.
+Reporting matin + après-midi + soir.
+Tag @sohaib + @aldrin si commentaires techniques.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #7 Veille #1 Mars 2026","05/07/2026","2:00 PM","05/07/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/veille-hebdo-1-mars-2026
+
+Format dimanche : 5 actus + lien source + analyse 1 phrase. Construit autorité curateur.
+
+Drive : /ACT-Editorial/2026-05/10-veille-1/
+Cible publication : Dim 10/05","Drive ACT-Editorial","False"
+"🟨 VALID — #7 Veille #1","05/08/2026","9:00 AM","05/08/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : Veille #1 Mars 2026
+
+Vérifier sources externes encore valides.
+Format réutilisable chaque dimanche.
+
+Drive : /ACT-Editorial/2026-05/10-veille-1/","Drive ACT-Editorial","False"
+"🟩 PROG — #7 Veille #1","05/09/2026","5:00 PM","05/09/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #7 : Veille #1
+Programmation décalée Dim 09h00 LinkedIn.","Metricool","False"
+"🟥 PUBLI — #7 Veille #1","05/10/2026","","05/10/2026","","True","🟥 PUBLICATION — Jess
+
+Article #7 : Veille #1 Mars 2026
+
+Créneaux dimanche :
+✓ 09h00 — LinkedIn (au lieu de 08h30)
+✓ 12h30 — Instagram
+✓ 19h00 — Facebook","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #8 Cloud souverain Maroc","05/08/2026","2:00 PM","05/08/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/cloud-souverain-afrique-maroc-hub
+
+Audience DSI grandes entreprises + secteur public marocain. Angle souveraineté = signature ACT.
+
+Drive : /ACT-Editorial/2026-05/11-cloud-souverain/
+Cible publication : Lun 11/05","Drive ACT-Editorial","False"
+"🟨 VALID — #8 Cloud souverain Maroc","05/09/2026","9:00 AM","05/09/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : Cloud souverain Maroc
+
+Vérifier : positionnement géopolitique sourcé. Pas d'opinion politique.
+
+Drive : /ACT-Editorial/2026-05/11-cloud-souverain/","Drive ACT-Editorial","False"
+"🟩 PROG — #8 Cloud souverain Maroc","05/10/2026","5:00 PM","05/10/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #8 : Cloud souverain Maroc
+Programmation 3 plateformes.","Metricool","False"
+"🟥 PUBLI — #8 Cloud souverain Maroc","05/11/2026","","05/11/2026","","True","🟥 PUBLICATION — Jess
+
+Article #8 : Cloud souverain Maroc
+3 créneaux + Story IG.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #9 10 compétences tech","05/09/2026","2:00 PM","05/09/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/10-competences-tech-afrique-2026
+
+Format listicle = très partagé. CTA direct vers ACT University.
+
+Drive : /ACT-Editorial/2026-05/12-10-competences/
+Cible publication : Mar 12/05","Drive ACT-Editorial","False"
+"🟨 VALID — #9 10 compétences tech","05/10/2026","9:00 AM","05/10/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : 10 compétences tech Afrique
+
+Vérifier : alignement avec catalogue formations ACT University.
+
+Drive : /ACT-Editorial/2026-05/12-10-competences/","Drive ACT-Editorial","False"
+"🟩 PROG — #9 10 compétences tech","05/11/2026","5:00 PM","05/11/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #9 : 10 compétences tech
+Format listicle — encourager les saves Instagram.","Metricool","False"
+"🟥 PUBLI — #9 10 compétences tech","05/12/2026","","05/12/2026","","True","🟥 PUBLICATION — Jess
+
+Article #9 : 10 compétences tech Afrique
+3 créneaux + Story IG (poll: votre top 3 ?).","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #10 SIEM Wazuh","05/10/2026","2:00 PM","05/10/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/tutoriel-siem-wazuh-30-minutes
+
+Audience étroite (RSSI/DSI cybersécurité) mais haute conversion. Format LinkedIn long-form privilégié.
+
+Drive : /ACT-Editorial/2026-05/13-siem-wazuh/
+Cible publication : Mer 13/05","Drive ACT-Editorial","False"
+"🟨 VALID — #10 SIEM Wazuh","05/11/2026","9:00 AM","05/11/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : SIEM Wazuh
+
+Vérifier : précision technique. CTA vers audit cybersécurité ACT.
+
+Drive : /ACT-Editorial/2026-05/13-siem-wazuh/","Drive ACT-Editorial","False"
+"🟩 PROG — #10 SIEM Wazuh","05/12/2026","5:00 PM","05/12/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #10 : SIEM Wazuh
+LinkedIn carrousel 12 slides (technique).
+Instagram simplifié 7 slides.","Metricool","False"
+"🟥 PUBLI — #10 SIEM Wazuh","05/13/2026","","05/13/2026","","True","🟥 PUBLICATION — Jess
+
+Article #10 : SIEM Wazuh
+3 créneaux + Story IG.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #11 Microservices ⭐","05/11/2026","2:00 PM","05/11/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article ⭐ FEATURED : https://act.africa/blog/architecture-microservices-afrique-guide-pratique
+
+Audience CTO/architectes. Article 12 min lecture. LinkedIn long privilégié.
+
+Drive : /ACT-Editorial/2026-05/14-microservices/
+Cible publication : Jeu 14/05","Drive ACT-Editorial","False"
+"🟨 VALID — #11 Microservices","05/12/2026","9:00 AM","05/12/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article ⭐ : Microservices
+
+Vérifier : schémas archi corrects. CTA vers audit archi ACT (Pôle Ingénierie).
+
+Drive : /ACT-Editorial/2026-05/14-microservices/","Drive ACT-Editorial","False"
+"🟩 PROG — #11 Microservices","05/13/2026","5:00 PM","05/13/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article ⭐ #11 : Microservices
+Programmation 3 plateformes.","Metricool","False"
+"🟥 PUBLI — #11 Microservices ⭐","05/14/2026","","05/14/2026","","True","🟥 PUBLICATION — Jess
+
+Article ⭐ FEATURED : Microservices
+3 créneaux + Story IG.
+Modération technique : tag @aldrin si questions archi.","LinkedIn / Instagram / Facebook","False"
+"🎥 LIVE — Formation Prompt & Context Engineering","05/15/2026","8:30 AM","05/15/2026","12:30 PM","False","🎥 LIVE — Jour J Formation
+
+Session : Prompt & Context Engineering — Casablanca
+Participants : 12 personnes inscrites
+
+Coverage social :
+□ 08h00 — Post LinkedIn de lancement (Sohaib face caméra)
+□ 09h-12h — Stories Instagram en direct toutes les heures (Jess + Aldrin)
+□ 11h — Reel pic émotionnel démo Project (Aldrin)
+□ 13h — Reel récap formation (Aldrin)
+□ 18h — Carrousel Instagram 8 slides photos (Jess)
+□ 19h — Post Facebook récap (Jess)
+□ 21h — Post réflexif LinkedIn (Sohaib)
+
+Behind the scenes prioritaire — pas de carrousel produit en amont.","Salle ACT Casablanca / Live","False"
+"🟧 PROD — #12 ChatGPT Gemini Claude expliqués","05/13/2026","2:00 PM","05/13/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/chatgpt-gemini-claude-compagnie-enfin-une-explication-qui-ne-brule-pas-vos-neurones
+
+Vulgarisation. Audience plus large qu'à l'habitude.
+
+Drive : /ACT-Editorial/2026-05/16-chatgpt-explique/
+Cible publication : Sam 16/05","Drive ACT-Editorial","False"
+"🟨 VALID — #12 ChatGPT expliqué","05/14/2026","9:00 AM","05/14/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : ChatGPT Gemini Claude expliqués
+
+Ton vulgarisation. Pas de jargon technique non expliqué.
+
+Drive : /ACT-Editorial/2026-05/16-chatgpt-explique/","Drive ACT-Editorial","False"
+"🟩 PROG — #12 ChatGPT expliqué","05/15/2026","5:00 PM","05/15/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #12 : ChatGPT expliqué
+Programmation 3 plateformes.
+Note : programmation pendant la formation live — anticiper le matin.","Metricool","False"
+"🟥 PUBLI — #12 ChatGPT expliqué","05/16/2026","","05/16/2026","","True","🟥 PUBLICATION — Jess
+
+Article #12 : ChatGPT Gemini Claude expliqués
+3 créneaux + Story IG.","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #13 Flutter vs React Native","05/14/2026","2:00 PM","05/14/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+Article : https://act.africa/blog/developpement-mobile-afrique-2026-flutter-vs-react-native
+
+Comparatif mobile. Angle 80% Africains accèdent par mobile.
+
+Drive : /ACT-Editorial/2026-05/17-flutter-rn/
+Cible publication : Dim 17/05","Drive ACT-Editorial","False"
+"🟨 VALID — #13 Flutter vs RN","05/15/2026","9:00 AM","05/15/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+Article : Flutter vs React Native
+
+Validation rapide — Sohaib en mode formation Live ce matin.
+
+Drive : /ACT-Editorial/2026-05/17-flutter-rn/","Drive ACT-Editorial","False"
+"🟩 PROG — #13 Flutter vs RN","05/16/2026","5:00 PM","05/16/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article #13 : Flutter vs RN
+Programmation dimanche.","Metricool","False"
+"🟥 PUBLI — #13 Flutter vs RN","05/17/2026","","05/17/2026","","True","🟥 PUBLICATION — Jess
+
+Article #13 : Flutter vs React Native
+
+Créneaux dimanche :
+✓ 09h00 — LinkedIn
+✓ 12h30 — Instagram
+✓ 19h00 — Facebook","LinkedIn / Instagram / Facebook","False"
+"🟧 PROD — #15 CTA Final Récap","05/15/2026","2:00 PM","05/15/2026","4:00 PM","False","🟧 PRODUCTION — Aldrin
+
+ARTICLE SPÉCIAL : Récap sprint 15 jours + annonce sessions juin
+
+Pas de blog source — contenu original.
+
+Storyboard :
+1. Récap des 15 jours
+2. Ce que vous avez appris
+3. Sondage rétro
+4. Annonce sessions juin (Prompt & Context · Cybersécurité · Architecture)
+5. Tarifs early bird
+6. CTA fort RÉSERVER
+
+Drive : /ACT-Editorial/2026-05/18-cta-final/
+Cible publication : Lun 18/05","Drive ACT-Editorial","False"
+"🟨 VALID — #15 CTA Final Récap","05/16/2026","9:00 AM","05/16/2026","9:30 AM","False","🟨 VALIDATION — Sohaib
+
+ARTICLE SPÉCIAL : CTA Final + récap sprint
+
+Validation prioritaire : tarifs corrects, dates sessions juin justes, lien réservation actif.
+
+Drive : /ACT-Editorial/2026-05/18-cta-final/","Drive ACT-Editorial","False"
+"🟩 PROG — #15 CTA Final Récap","05/17/2026","5:00 PM","05/17/2026","5:30 PM","False","🟩 PROGRAMMATION — Jess
+
+Article spécial : CTA Final
+Mettre à jour lien bio Instagram → page sessions juin.
+UTM critique : utm_campaign=cta-final-juin","Metricool","False"
+"🟥 PUBLI — #15 CTA Final ⭐","05/18/2026","","05/18/2026","","True","🟥 PUBLICATION — Jess
+
+Article #15 : CTA FINAL — Sprint terminé
+
+Créneaux :
+✓ 08h30 — LinkedIn carrousel récap + offre
+✓ 12h30 — Instagram (lien bio mis à jour)
+✓ 19h00 — Facebook (image promo)
+✓ 20h00 — Reel récap 15 jours (60s)
+✓ 21h00 — Stories countdown vers session 12 juin
+
+Modération maximale — c'est le jour de conversion.","LinkedIn / Instagram / Facebook","False"
+"🎯 REVIEW FINALE — Sprint 15 jours","05/22/2026","5:00 PM","05/22/2026","6:00 PM","False","🎯 REVIEW FINALE Sprint 15 jours
+
+Participants : Sohaib + Aldrin + Jess
+Durée : 60 min
+
+Agenda :
+- KPIs complets des 15 jours (Metricool dashboard)
+- Top 3 et bottom 3 publications
+- Inscriptions formations attribuées au sprint
+- Apprentissages pour le prochain sprint
+- Décision : sprint juin oui/non + format
+
+Préparation Jess : rapport KPI complet.
+Préparation Aldrin : retour qualitatif sur la production.
+Préparation Sohaib : analyse SEO post-publication (positions Google).","Visio Google Meet","False"
