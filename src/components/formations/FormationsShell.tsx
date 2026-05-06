@@ -377,12 +377,11 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
       </div>
 
       {/* Image */}
-      <div style={{ 
-        width: viewMode === "grid" ? "100%" : "300px", 
-        height: viewMode === "grid" ? "240px" : "100%", 
+      <div style={{
+        width: viewMode === "grid" ? "100%" : "300px",
+        height: viewMode === "grid" ? "240px" : "100%",
         minHeight: "240px",
-        background: `linear-gradient(45deg, #0f172a, #1e293b), url(${imageUrl}) center/cover`,
-        backgroundBlendMode: "overlay"
+        background: `url(${imageUrl}) center/cover`
       }} />
 
       {/* Content */}

@@ -58,6 +58,10 @@ const PRODUCTS_QUERY = `
             { namespace: "custom", key: "format_suported" }
             { namespace: "custom", key: "accroche" }
             { namespace: "custom", key: "parcours" }
+            { namespace: "custom", key: "prix_public" }
+            { namespace: "custom", key: "places_total" }
+            { namespace: "custom", key: "places_inscrits" }
+            { namespace: "custom", key: "promo_label" }
           ]) {
             key
             value
@@ -84,6 +88,10 @@ export interface ShopifyFormationCard {
   accroche: string;
   imageUrl?: string;
   shopifyId: string;
+  prixPublic?: string;
+  placesTotal?: number;
+  placesInscrits?: number;
+  promoLabel?: string;
 }
 
 /** Extrait une valeur d'un tag de la forme "key:value" */
@@ -142,6 +150,14 @@ function mapProduct(node: any): ShopifyFormationCard {
   const parcours  = extractMeta(metafields, "parcours")  || extractTag(tags, "parcours")  || undefined;
   const prix      = formatShopifyPrice(price?.amount ?? "0", price?.currencyCode ?? "MAD");
 
+  const prixPublic     = extractMeta(metafields, "prix_public") || undefined;
+  const promoLabel     = extractMeta(metafields, "promo_label") || undefined;
+  const placesTotalRaw = extractMeta(metafields, "places_total");
+  const placesInscRaw  = extractMeta(metafields, "places_inscrits");
+  const placesTotal    = placesTotalRaw ? parseInt(placesTotalRaw, 10) || undefined : undefined;
+  const placesInscrits = placesInscRaw  ? parseInt(placesInscRaw,  10)              : undefined;
+  const placesInscNum  = Number.isFinite(placesInscrits) ? placesInscrits : undefined;
+
   return {
     shopifyId:  node.id,
     id:         node.handle,
@@ -156,6 +172,10 @@ function mapProduct(node: any): ShopifyFormationCard {
     prix,
     accroche,
     imageUrl:   firstImage?.url,
+    prixPublic,
+    placesTotal,
+    placesInscrits: placesInscNum,
+    promoLabel,
   };
 }
 
@@ -246,6 +266,10 @@ const PRODUCT_BY_HANDLE_QUERY = `
         { namespace: "custom", key: "programme" }
         { namespace: "custom", key: "livrables" }
         { namespace: "custom", key: "methode" }
+        { namespace: "custom", key: "prix_public" }
+        { namespace: "custom", key: "places_total" }
+        { namespace: "custom", key: "places_inscrits" }
+        { namespace: "custom", key: "promo_label" }
       ]) {
         id
         key

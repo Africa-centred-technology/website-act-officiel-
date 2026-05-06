@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, RefreshCw } from "lucide-react";
 import FooterStrip from "../layout/FooterStrip";
+import FormationInscriptionModal from "./FormationInscriptionModal";
 import {
   DEFAULT_MARQUEE_ITEMS,
   DEFAULT_TRUST_STATS,
@@ -17,9 +18,67 @@ import {
   getDefaultFaqItems,
   DEFAULT_MID_CTA,
   DEFAULT_FINAL_CTA,
-  DEFAULT_PLACES_SESSION,
-  DEFAULT_PRIX_BARRE,
 } from "@/lib/data/formation-defaults";
+
+/* ── Tracking helpers (GTM dataLayer + Meta Pixel + GA4) ── */
+type TrackingWindow = Window & {
+  dataLayer?: Record<string, unknown>[];
+  fbq?: (...args: unknown[]) => void;
+  gtag?: (...args: unknown[]) => void;
+};
+
+function trackCtaClick(location: string, formationSlug: string, extras: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  const w = window as TrackingWindow;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({ event: "cta_click", cta_location: location, formation_slug: formationSlug, ...extras });
+  if (typeof w.fbq === "function") {
+    w.fbq("trackCustom", "CtaClick", { location, formation_slug: formationSlug, ...extras });
+  }
+}
+
+function trackInitiateCheckout(formationTitle: string, formationSlug: string, price?: string, currency = "MAD") {
+  if (typeof window === "undefined") return;
+  const w = window as TrackingWindow;
+  const numericValue = price ? parseFloat(price.replace(/[^\d.]/g, "")) : undefined;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({
+    event: "begin_checkout",
+    formation_slug: formationSlug,
+    formation_title: formationTitle,
+    value: numericValue,
+    currency,
+  });
+  if (typeof w.fbq === "function") {
+    w.fbq("track", "InitiateCheckout", {
+      content_name: formationTitle,
+      content_category: "formation",
+      content_ids: [formationSlug],
+      value: numericValue,
+      currency,
+    });
+  }
+  if (typeof w.gtag === "function") {
+    w.gtag("event", "begin_checkout", {
+      currency,
+      value: numericValue,
+      items: [{ item_id: formationSlug, item_name: formationTitle, item_category: "formation" }],
+    });
+  }
+}
+
+function trackLead(formationTitle: string, formationSlug: string, plan: string) {
+  if (typeof window === "undefined") return;
+  const w = window as TrackingWindow;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({ event: "generate_lead", formation_slug: formationSlug, formation_title: formationTitle, plan });
+  if (typeof w.fbq === "function") {
+    w.fbq("track", "Lead", { content_name: formationTitle, content_category: plan, content_ids: [formationSlug] });
+  }
+  if (typeof w.gtag === "function") {
+    w.gtag("event", "generate_lead", { plan, items: [{ item_id: formationSlug, item_name: formationTitle }] });
+  }
+}
 
 /* ── Palette (dark theme — Landing Formation IA) ─ */
 const ACT_DARK      = "#0A1410";
@@ -64,6 +123,10 @@ interface FormationDetail {
   imageUrl?: string;
   images?: string[];
   descriptionHtml?: string;
+  prixPublic?: string;
+  placesTotal?: number;
+  placesInscrits?: number;
+  promoLabel?: string;
 }
 
 /* ── Diamond (brand marker) ──────────────────────────────── */
@@ -218,6 +281,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [isInscriptionOpen, setIsInscriptionOpen] = useState(false);
 
   const loadFormation = async () => {
     setIsLoading(true);
@@ -236,6 +300,20 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   };
 
   useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug]);
+
+  /* ── Sticky CTA bar visibility ─ */
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      const totalHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      setShowStickyBar(y > 600 && y + winHeight < totalHeight - 900);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const audience = useMemo(() => {
     if (!formation?.publicCible) return [];
@@ -279,15 +357,31 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   const faqs          = getDefaultFaqItems(formation.prerequis);
   const midCta        = DEFAULT_MID_CTA;
   const finalCta      = DEFAULT_FINAL_CTA;
-  const placesSession = DEFAULT_PLACES_SESSION;
-  const prixBarre     = DEFAULT_PRIX_BARRE;
+
+  const hasSeats = typeof formation.placesTotal === "number"
+    && typeof formation.placesInscrits === "number"
+    && formation.placesTotal > 0
+    && formation.placesInscrits >= 0
+    && formation.placesInscrits <= formation.placesTotal;
+  const seatsRemaining = hasSeats ? (formation.placesTotal! - formation.placesInscrits!) : 0;
+  const seatsFilled    = hasSeats && seatsRemaining === 0;
 
   const scrollTo = (id: string) => () => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const goInscription = () => router.push(`/formations/${slug}/inscription`);
+  const goInscription = (location: string) => {
+    trackCtaClick(location, slug, { formation_title: formation.title });
+    trackInitiateCheckout(formation.title, slug, formation.prix);
+    setIsInscriptionOpen(true);
+  };
+
+  const goContact = (location: string, plan: string) => {
+    trackCtaClick(location, slug, { formation_title: formation.title, plan });
+    trackLead(formation.title, slug, plan);
+    router.push(`/contact?formation=${slug}&plan=${encodeURIComponent(plan.toLowerCase())}`);
+  };
 
   return (
     <div style={{ background: ACT_DARK, color: TXT, fontFamily: FONT_BODY, overflowX: "hidden" }}>
@@ -321,8 +415,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <p style={ledeStyle}>{formation.accroche}</p>
 
               <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-                <Btn variant="primary" onClick={goInscription}>Réserver ma place →</Btn>
-                <Btn variant="ghost" onClick={scrollTo("programme")}>
+                <Btn variant="primary" onClick={() => goInscription("hero_primary")}>Réserver ma place →</Btn>
+                <Btn variant="ghost" onClick={() => { trackCtaClick("hero_voir_programme", slug); scrollTo("programme")(); }}>
                   <Diamond /> Voir le programme
                 </Btn>
               </div>
@@ -347,7 +441,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   <span style={cardTagStyle}>
                     <Diamond color={ACT_CREAM} size={7} /> {formation.secteur || "Session · 2026"}
                   </span>
-                  <span style={{ ...monoStyle, color: ACT_GOLD }}>● Inscriptions ouvertes</span>
+                  <span style={{ ...monoStyle, color: seatsFilled ? "rgba(255,255,255,0.5)" : ACT_GOLD }}>
+                    {seatsFilled ? "● Complet" : "● Inscriptions ouvertes"}
+                  </span>
                 </div>
                 <h3 style={{
                   fontFamily: FONT_DISPLAY, fontSize: 28, lineHeight: 1.15,
@@ -375,38 +471,46 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <div style={cardPriceRowStyle}>
                   <div>
-                    <div style={{ ...monoStyle, marginBottom: 4 }}>Tarif early bird</div>
+                    <div style={{ ...monoStyle, marginBottom: 4 }}>{formation.promoLabel ? "Tarif promotionnel" : "Tarif"}</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
                       <span style={{
                         fontFamily: FONT_DISPLAY, fontSize: 52, color: ACT_ORANGE,
                         letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic",
-                      }}>{formation.prix || "4 900"}</span>
-                      <span style={{ fontFamily: FONT_LABEL, fontSize: 14, color: TXT_MID }}>MAD HT</span>
+                      }}>{formation.prix || "Sur devis"}</span>
+                      {formation.prix && <span style={{ fontFamily: FONT_LABEL, fontSize: 14, color: TXT_MID }}>MAD HT</span>}
                     </div>
-                    <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
-                      {prixBarre}
-                    </div>
+                    {formation.prixPublic && (
+                      <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
+                        {formation.prixPublic}
+                      </div>
+                    )}
                   </div>
-                  <div style={{
-                    background: ACT_GOLD, color: ACT_DARK, padding: "4px 10px",
-                    fontFamily: FONT_LABEL, fontSize: 10, fontWeight: 700,
-                    letterSpacing: "0.16em", textTransform: "uppercase",
-                  }}>-25% · 5 jours</div>
-                </div>
-
-                <div style={seatsRowStyle}>
-                  <span>{placesSession.inscrits}/{placesSession.total} places</span>
-                  <div style={seatBarStyle}>
+                  {formation.promoLabel && (
                     <div style={{
-                      position: "absolute", top: 0, left: 0, height: "100%",
-                      width: `${(placesSession.inscrits / placesSession.total) * 100}%`,
-                      background: `linear-gradient(90deg, ${ACT_ORANGE}, ${ACT_ORANGE_HOT})`,
-                    }} />
-                  </div>
-                  <span style={{ color: ACT_ORANGE }}>Il reste {placesSession.restantes} !</span>
+                      background: ACT_GOLD, color: ACT_DARK, padding: "4px 10px",
+                      fontFamily: FONT_LABEL, fontSize: 10, fontWeight: 700,
+                      letterSpacing: "0.16em", textTransform: "uppercase",
+                    }}>{formation.promoLabel}</div>
+                  )}
                 </div>
 
-                <Btn variant="primary" onClick={goInscription} style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
+                {hasSeats && (
+                  <div style={seatsRowStyle}>
+                    <span>{formation.placesInscrits}/{formation.placesTotal} places</span>
+                    <div style={seatBarStyle}>
+                      <div style={{
+                        position: "absolute", top: 0, left: 0, height: "100%",
+                        width: `${(formation.placesInscrits! / formation.placesTotal!) * 100}%`,
+                        background: `linear-gradient(90deg, ${ACT_ORANGE}, ${ACT_ORANGE_HOT})`,
+                      }} />
+                    </div>
+                    <span style={{ color: seatsFilled ? "rgba(255,255,255,0.5)" : ACT_ORANGE }}>
+                      {seatsFilled ? "Session complète" : `Il reste ${seatsRemaining} !`}
+                    </span>
+                  </div>
+                )}
+
+                <Btn variant="primary" onClick={() => goInscription("hero_card")} style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
                   Je réserve ma place →
                 </Btn>
               </div>
@@ -614,7 +718,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <Btn variant="ghost" href={midCta.cta_ghost.url} minWidth={280}>
                 <span><Diamond /> {midCta.cta_ghost.label}</span><span>→</span>
               </Btn>
-              <Btn variant="dark" onClick={goInscription} minWidth={280}>
+              <Btn variant="dark" onClick={() => goInscription("mid_cta")} minWidth={280}>
                 <span>{midCta.cta_dark.label}</span><span>→</span>
               </Btn>
             </div>
@@ -758,7 +862,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <Btn
                   variant={p.featured ? "primary" : "ghost"}
-                  onClick={p.cta_type === "contact" ? () => router.push("/contact") : goInscription}
+                  onClick={p.cta_type === "contact"
+                    ? () => goContact(`pricing_${p.title.toLowerCase()}`, p.title)
+                    : () => goInscription(`pricing_${p.title.toLowerCase()}`)}
                   style={{ marginTop: 32, width: "100%", justifyContent: "center" }}
                 >
                   {p.cta_label} →
@@ -817,7 +923,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             maxWidth: 620, margin: "0 auto 48px", fontWeight: 300,
           }}>{finalCta.text}</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Btn variant="primary" onClick={goInscription} style={{ padding: "22px 40px", fontSize: 13 }}>
+            <Btn variant="primary" onClick={() => goInscription("final_primary")} style={{ padding: "22px 40px", fontSize: 13 }}>
               {finalCta.primary_label} →
             </Btn>
             <Btn variant="ghost" href="/contact" style={{ padding: "22px 40px", fontSize: 13 }}>
@@ -834,6 +940,52 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
+      {/* ──────────── STICKY CTA BAR ──────────── */}
+      <AnimatePresence>
+        {showStickyBar && (
+          <motion.div
+            initial={{ y: 120, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 120, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            style={stickyBarStyle}
+          >
+            <div style={stickyBarInnerStyle}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0, flex: 1 }}>
+                <span style={{
+                  fontFamily: FONT_LABEL, fontSize: 10, letterSpacing: "0.18em",
+                  textTransform: "uppercase", color: TXT_MID, fontWeight: 600,
+                  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                }}>
+                  {formation.title}
+                </span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                  <span style={{
+                    fontFamily: FONT_DISPLAY, fontSize: 26, fontStyle: "italic",
+                    color: ACT_ORANGE, letterSpacing: "-0.02em", lineHeight: 1,
+                  }}>
+                    {formation.prix || "Sur devis"}
+                  </span>
+                  {formation.prix && (
+                    <span style={{ fontFamily: FONT_LABEL, fontSize: 11, color: TXT_MID }}>MAD HT</span>
+                  )}
+                </div>
+              </div>
+              <Btn variant="primary" onClick={() => goInscription("sticky_bar")} style={{ flexShrink: 0 }}>
+                Réserver →
+              </Btn>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <FormationInscriptionModal
+        isOpen={isInscriptionOpen}
+        onClose={() => setIsInscriptionOpen(false)}
+        formationTitle={formation.title}
+        formationSlug={slug}
+      />
 
       <FooterStrip />
 
@@ -1067,4 +1219,18 @@ const finalStyle: React.CSSProperties = {
   padding: "140px 0",
   background: `radial-gradient(ellipse at center, rgba(211,84,0,0.28), transparent 65%), ${ACT_DARK}`,
   textAlign: "center", position: "relative", overflow: "hidden",
+};
+
+const stickyBarStyle: React.CSSProperties = {
+  position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 90,
+  background: `linear-gradient(180deg, rgba(10,20,16,0.92), rgba(10,20,16,0.98))`,
+  backdropFilter: "blur(16px)",
+  WebkitBackdropFilter: "blur(16px)",
+  borderTop: `1px solid rgba(211,84,0,0.4)`,
+  boxShadow: "0 -10px 40px -10px rgba(0,0,0,0.5)",
+};
+
+const stickyBarInnerStyle: React.CSSProperties = {
+  maxWidth: 1280, margin: "0 auto", padding: "12px 24px",
+  display: "flex", alignItems: "center", gap: 16,
 };
