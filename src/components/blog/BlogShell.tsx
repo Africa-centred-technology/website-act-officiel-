@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";
-import { blogPosts, categories, type BlogPost } from "@/lib/blog-data";
+import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
@@ -35,14 +35,15 @@ function useMediaQuery() {
 }
 
 /* ── Background layers ─────────────────── */
-const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
-const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 
 export default function BlogShell() {
   const screenSize = useMediaQuery();
   const containerRef = useRef(null);
-  const [allPosts, setAllPosts] = useState<BlogPost[]>(blogPosts);
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
+  const categories = useMemo(() => deriveCategoriesFromPosts(allPosts), [allPosts]);
   const [email, setEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [newsletterMessage, setNewsletterMessage] = useState("");
@@ -74,15 +75,14 @@ export default function BlogShell() {
   };
 
   useEffect(() => {
+    let cancelled = false;
     fetch("/api/shopify/blog")
       .then((r) => r.json())
       .then(({ posts }) => {
-        if (!Array.isArray(posts) || posts.length === 0) return;
-        const staticSlugs = new Set(blogPosts.map((p) => p.slug));
-        const shopifyNew  = posts.filter((p: BlogPost) => !staticSlugs.has(p.slug));
-        setAllPosts([...shopifyNew, ...blogPosts]);
+        if (!cancelled && Array.isArray(posts)) setAllPosts(posts);
       })
       .catch(() => {});
+    return () => { cancelled = true; };
   }, []);
   return (
     <div ref={containerRef} style={{ background: "var(--bg-primary)", minHeight: "100vh", position: "relative" }}>
@@ -552,7 +552,7 @@ function FeaturedCard({
   post,
   index,
 }: {
-  post: (typeof blogPosts)[0];
+  post: BlogPost;
   index: number;
 }) {
   const ref = useRef(null);
@@ -753,7 +753,7 @@ function ArticleCard({
   post,
   index,
 }: {
-  post: (typeof blogPosts)[0];
+  post: BlogPost;
   index: number;
 }) {
   const ref = useRef(null);

@@ -14,9 +14,9 @@ import CatalogueSection from "@/components/formations/CatalogueSection";
 /* ══════════════════════════════════════════════════════
    Background layers
    ══════════════════════════════════════════════════════ */
-const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
-const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 
 /* ══════════════════════════════════════════════════════
    TOKENS

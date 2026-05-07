@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { categories } from "@/lib/blog-data";
+import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -42,8 +42,24 @@ export default function BlogCategoriesBlock({
   className = "",
 }: BlogCategoriesBlockProps) {
   const screenSize = useMediaQuery();
-  // On peut filtrer la catégorie "Tous" si on veut seulement lister les rubriques spécifiques
-  const rubriques = categories.filter((c) => c.value !== "all");
+
+  // Catégories dérivées des articles Shopify (live)
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!cancelled && Array.isArray(posts)) setPosts(posts);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const rubriques = useMemo(
+    () => deriveCategoriesFromPosts(posts).filter((c) => c.value !== "all"),
+    [posts]
+  );
 
   return (
       <div

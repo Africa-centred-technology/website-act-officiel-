@@ -24,13 +24,13 @@ import {
 } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
-import { blogPosts } from "@/lib/blog-data";
+import { type BlogPost } from "@/lib/blog";
 import CTAButton from "@/components/ui/CTAButton";
 
 /* ── Background layers ── */
-const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain = dynamic(() => import("@/components/home2/Grain"), { ssr: false });
-const Cursor = dynamic(() => import("@/components/home2/Cursor"), { ssr: false });
+const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
+const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
+const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 
 function useMediaQuery() {
   const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
@@ -81,6 +81,18 @@ const process = [
 
 export default function PoleConseilShell() {
   const screenSize = useMediaQuery();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/shopify/blog")
+      .then((r) => r.json())
+      .then(({ posts }) => {
+        if (!cancelled && Array.isArray(posts)) setPosts(posts);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <div style={{
@@ -760,7 +772,7 @@ export default function PoleConseilShell() {
           flexDirection: 'column',
           gap: screenSize === 'mobile' ? '2rem' : '4rem',
         }}>
-          {blogPosts
+          {posts
             .filter(post => ["Leadership & Strat", "Business & Ops", "Tech Trends"].includes(post.category))
             .slice(0, 3)
             .map((post, i) => {

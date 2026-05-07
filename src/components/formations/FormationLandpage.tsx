@@ -229,7 +229,7 @@ function MarketingVideo() {
                     style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.2rem" }}
                 >
                     <div style={{ width: 48, height: 3, background: COLOR }} />
-                    <span style={{ fontSize: "clamp(0.85rem, 1.3vw, 1.1rem)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.38em", color: COLOR }}>
+                    <span style={{ fontSize: "clamp(0.7rem, 0.9vw, 0.85rem)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.32em", color: COLOR }}>
                         Africa Centred Technology · Pôle Formation
                     </span>
                 </motion.div>
@@ -237,7 +237,7 @@ function MarketingVideo() {
                 <motion.h1
                     initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8, duration: 1, ease: [0.6, 0.08, 0.02, 0.99] }}
-                    style={{ fontSize: "clamp(4rem, 11vw, 10rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 0.88, letterSpacing: "-0.03em", margin: "0 0 2.5rem", maxWidth: 1200 }}
+                    style={{ fontSize: "clamp(2.5rem, 7vw, 6.5rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 0.95, letterSpacing: "-0.03em", margin: "0 0 2rem", maxWidth: 1100 }}
                 >
                     <span style={{ color: "#fff" }}>Maîtrisez les outils</span><br />
                     <span style={{ color: COLOR }}>qui font la différence</span><br />
@@ -246,7 +246,7 @@ function MarketingVideo() {
 
                 <motion.p
                     initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}
-                    style={{ fontSize: "clamp(1.25rem, 2vw, 1.65rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.7, maxWidth: 750, margin: "0 0 3.5rem", fontFamily: "var(--font-body)" }}
+                    style={{ fontSize: "clamp(1rem, 1.4vw, 1.2rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.65, maxWidth: 640, margin: "0 0 3rem", fontFamily: "var(--font-body)" }}
                 >
                     Formations intensives conçues par des praticiens africains sur des cas réels.
                     En 1 à 3 jours, vous repartez avec des compétences applicables le lendemain.

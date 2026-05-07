@@ -21,6 +21,14 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
 
+/* ── Stats bar items (displayed as an infinite-scroll marquee at the bottom) ── */
+const STATS = [
+  { n: "2026", label: "Fondée" },
+  { n: "8",    label: "Collaborateurs" },
+  { n: "5+",   label: "Domaines" },
+  { n: "∞",    label: "Ambition" },
+];
+
 /* ── Arc de texte en orbite (SVG textPath) ──────────────────────────── */
 function OrbitArc() {
   return (
@@ -160,7 +168,7 @@ function WordChars({
 }
 
 /* ── Room ────────────────────────────────────────────────────────────── */
-export default function RoomEntree() {
+export default function HeroSection() {
   /* 3-layer parallax */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -309,11 +317,11 @@ export default function RoomEntree() {
           </motion.div>
 
 
-          {/* Right — mots empilés, alignés à droite, perspective 3D */}
+           {/* Right — mots empilés, alignés à droite, perspective 3D */}
           <div className="mobile-txt-center" style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
             <WordChars text="AFRICA" delay={0.10} fx="rollIn" stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
-            <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.5rem, 5vw, 7rem)" />
-            <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
+            <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.8rem, 5vw, 7rem)" />
+            <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(3.5rem, 8vw, 10rem)" />
 
             <motion.p
               style={{
@@ -325,7 +333,7 @@ export default function RoomEntree() {
                 fontSize: "clamp(0.75rem, 1.5vw, 1.15rem)",
                 textShadow: "0px 4px 15px rgba(0,0,0,0.5)",
                 fontFamily: "var(--font-body)",
-                textAlign: "right",
+                textAlign: "left",
                 display: "inline-flex",
                 alignItems: "center"
               }}
@@ -366,6 +374,95 @@ export default function RoomEntree() {
         </div>
 
       </motion.div>
+
+      {/* ── Stats marquee — infinite scroll strip raised above the hero's
+            bottom edge so it sits visually higher, with breathing room
+            between it and the next section.                                 */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: "5rem",
+          overflow: "hidden",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          padding: "1.4rem 0",
+          background: "rgba(10,20,16,0.35)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          zIndex: 3,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "3.5rem",
+            width: "max-content",
+            animation: "heroStatsMarquee 32s linear infinite",
+            alignItems: "center",
+            paddingLeft: "3.5rem",
+          }}
+        >
+          {Array.from({ length: 8 }).flatMap((_, copyIdx) =>
+            STATS.map((s, i) => (
+              <div
+                key={`${copyIdx}-${i}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "baseline",
+                  gap: "0.9rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(1.6rem, 2.2vw, 2.4rem)",
+                    fontStyle: "italic",
+                    color: "#D35400",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                  }}
+                >
+                  {s.n}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.7rem",
+                    letterSpacing: "0.24em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.55)",
+                    fontWeight: 500,
+                  }}
+                >
+                  {s.label}
+                </span>
+                <span
+                  aria-hidden
+                  style={{
+                    width: "6px",
+                    height: "6px",
+                    background: "#D35400",
+                    transform: "rotate(-43.264deg)",
+                    marginLeft: "2.2rem",
+                    flexShrink: 0,
+                  }}
+                />
+              </div>
+            ))
+          )}
+        </div>
+
+        <style jsx>{`
+          @keyframes heroStatsMarquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+          }
+        `}</style>
+      </div>
     </div>
   );
 }

@@ -11,21 +11,18 @@
 
 /* ── 1. Marquee (social proof défilant) ──────────────────── */
 export const DEFAULT_MARQUEE_ITEMS: string[] = [
-  "Formation certifiée Qualiopi",
   "+400 professionnels formés",
   "Note 4,9/5 sur 213 avis",
-  "Finançable CPF & OPCO",
   "Partenaire OpenAI & Anthropic",
   "97% recommandent",
   "32 entreprises clientes",
 ];
 
-/* ── 2. Trust stats du hero (4 chiffres) ─────────────────── */
+/* ── 2. Trust stats du hero (3 chiffres) ─────────────────── */
 export const DEFAULT_TRUST_STATS = [
   { value: "+400",     label: "Pros formés" },
   { value: "4,9/5",    label: "Satisfaction" },
   { value: "97%",      label: "Recommandent" },
-  { value: "Qualiopi", label: "Certifiée" },
 ];
 
 /* ── 3. Pain points (3 cards) ────────────────────────────── */
@@ -141,57 +138,54 @@ export function getDefaultPricingPlans(productPrice?: string): PricingPlan[] {
   return [
     {
       name: "Formule 01",
-      title: "Essentiel",
-      description: "En distanciel live · petit groupe · idéal pour découvrir.",
-      amount: "3 200",
+      title: "Inter",
+      description: "Session inter-entreprises · ouverte aux inscriptions individuelles.",
+      amount: productPrice || "Sur devis",
       currency: "MAD HT",
-      old_price: "Prix public 4 200 MAD",
       features: [
-        "2 jours · 14h de live",
-        "Jusqu'à 12 participants",
+        "Session planifiée à dates fixes",
+        "Jusqu'à 12 participants multi-entreprises",
         "Tous les templates & prompts",
         "Agent GPT personnalisé",
-        "Certification ACT",
+        "Attestation de fin de formation",
         "Accès replay 6 mois",
       ],
       cta_label: "Réserver ma place",
-      cta_type: "inscription",
-      featured: false,
-    },
-    {
-      name: "Formule 02",
-      title: "Pro · Présentiel",
-      description: "À Casablanca · 2 jours en présentiel · coaching individuel inclus.",
-      amount: productPrice || "4 900",
-      currency: "MAD HT",
-      old_price: "Prix public 6 500 MAD · -25%",
-      features: [
-        "Tout ce qui est dans Essentiel",
-        "Formation en présentiel · Casablanca",
-        "1h de coaching 1-to-1 post-formation",
-        "Audit de vos tâches (avant J1)",
-        "Suivi privé Slack · 30 jours",
-        "Session Q&R live à J+30",
-        "Déjeuners inclus",
-      ],
-      cta_label: "Réserver · -25%",
       cta_type: "inscription",
       featured: true,
       badge: "★ Le plus choisi",
     },
     {
-      name: "Formule 03",
-      title: "Intra · Équipe",
-      description: "Dans vos locaux · sur-mesure · à partir de 6 personnes.",
+      name: "Formule 02",
+      title: "Intra",
+      description: "Dans vos locaux · pour vos équipes · à partir de 6 personnes.",
       amount: "Sur devis",
       old_price: "Réponse sous 24h",
       features: [
-        "Programme sur-mesure · votre secteur",
+        "Formation dans vos locaux",
         "Vos cas métier réels en atelier",
         "Audit IA des process avant démarrage",
-        "Formation de formateurs en option",
+        "Suivi privé Slack · 30 jours",
         "Rapport de recommandations post-formation",
         "Suivi 90 jours inclus",
+      ],
+      cta_label: "Demander un devis",
+      cta_type: "contact",
+      featured: false,
+    },
+    {
+      name: "Formule 03",
+      title: "Personnalisée",
+      description: "Programme 100% sur-mesure · co-construit avec un expert ACT.",
+      amount: "Sur devis",
+      old_price: "Réponse sous 24h",
+      features: [
+        "Programme 100% sur-mesure",
+        "Combinaison de plusieurs formations",
+        "Format flexible (durée, modalité, lieu)",
+        "Co-construction avec un expert ACT",
+        "Formation de formateurs en option",
+        "Accompagnement long terme",
       ],
       cta_label: "Demander un devis",
       cta_type: "contact",
@@ -215,10 +209,6 @@ export function getDefaultFaqItems(prerequis?: string): FaqItem[] {
     {
       question: "Combien de temps avant de voir un retour sur investissement ?",
       answer: "En moyenne, nos stagiaires récupèrent 10h par semaine dès la première semaine. Le prix de la formule Pro est rentabilisé en moins de deux semaines.",
-    },
-    {
-      question: "Est-ce que c'est finançable par mon OPCO / CPF ?",
-      answer: "Oui. ACT est organisme Qualiopi. Nous préparons le dossier avec vous et vos OPCO / le CPF. Délai moyen : 7 à 15 jours.",
     },
     {
       question: "Et si je ne peux pas venir à Casablanca ?",
@@ -255,9 +245,9 @@ export const DEFAULT_FINAL_CTA = {
   title_highlight: "Avec vous",
   title_suffix: ", ou sans vous.",
   text: "Chaque semaine sans formation = 10h de productivité perdues à chaque membre de votre équipe.",
-  primary_label: "Je réserve ma place maintenant",
+  primary_label: "Je m'inscris",
   ghost_label: "Planifier un appel 15 min",
-  guarantee: "Garantie satisfait ou remboursé · Qualiopi · CPF / OPCO",
+  guarantee: "Garantie satisfait ou remboursé",
 };
 
 /* ── 12. Places session (product card) ───────────────────── */

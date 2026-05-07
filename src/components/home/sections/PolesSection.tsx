@@ -341,7 +341,7 @@ function Panel({
 }
 
 /* ── Main ── */
-export default function RoomAtelier() {
+export default function PolesSection() {
   const screenSize = useScreenSize();
   const isMobile   = screenSize !== "desktop";
 
@@ -382,14 +382,8 @@ export default function RoomAtelier() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.04 }}
           >
-            <span className="diamond diamond--sm" />
-            <span style={{
-              color: "rgba(255,255,255,0.35)",
-              fontSize: screenSize === "mobile" ? "0.72rem" : screenSize === "tablet" ? "0.75rem" : "0.85rem",
-              letterSpacing: "0.3em", textTransform: "uppercase", fontWeight: 500,
-            }}>
-              Audit & Ingénierie
-            </span>
+          
+ 
           </motion.div>
         </div>
 
@@ -402,17 +396,15 @@ export default function RoomAtelier() {
           {"Ce que nous proposons".split("").map((ch, ci) => (
             <motion.span
               key={ci}
-              className="font-black uppercase"
+              className="uppercase"
               style={{
                 display: "inline-block",
-                fontSize: screenSize === "mobile"
-                  ? "clamp(1.6rem, 7vw, 2.8rem)"
-                  : screenSize === "tablet"
-                  ? "clamp(2rem, 5vw, 3.5rem)"
-                  : "clamp(2rem, 4.5vw, 5.5rem)",
-                lineHeight: 0.9,
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "clamp(2.4rem, 5vw, 5rem)",
+                lineHeight: 1.1,
                 color: ci >= 12 ? ORANGE : "#ffffff",
-                letterSpacing: "-0.04em",
+                letterSpacing: "-0.02em",
               }}
               initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -437,7 +429,7 @@ export default function RoomAtelier() {
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         gap: "8px",
-        minHeight: 0,
+        minHeight: isMobile ? 0 : "78vh",
         paddingBottom: isMobile ? "2rem" : 0,
       }}>
         {POLES.map((pole, i) => (

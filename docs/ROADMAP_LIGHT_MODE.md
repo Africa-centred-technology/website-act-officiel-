@@ -54,7 +54,7 @@
 **Fichiers à auditer** :
 ```
 src/app/globals.css
-src/components/home2/
+src/components/home/
 src/components/poles/
 src/components/formations/
 src/components/services/

@@ -58,6 +58,7 @@ const PRODUCTS_QUERY = `
             { namespace: "custom", key: "format_suported" }
             { namespace: "custom", key: "accroche" }
             { namespace: "custom", key: "parcours" }
+            { namespace: "custom", key: "pricing_plans" }
           ]) {
             key
             value
@@ -69,6 +70,20 @@ const PRODUCTS_QUERY = `
 `;
 
 // ── Type helpers ──────────────────────────────────────────────────────────────
+
+export interface PricingPlan {
+  title: string;
+  description: string;
+  amount: string;
+  currency?: string;
+  old_price?: string;
+  badge?: string;
+  featured?: boolean;
+  cta_label: string;
+  cta_type: "inscription" | "contact" | "external";
+  cta_url?: string;
+  features: string[];
+}
 
 export interface ShopifyFormationCard {
   id: string;
@@ -84,6 +99,7 @@ export interface ShopifyFormationCard {
   accroche: string;
   imageUrl?: string;
   shopifyId: string;
+  pricingPlans?: PricingPlan[];
 }
 
 /** Extrait une valeur d'un tag de la forme "key:value" */
@@ -117,6 +133,25 @@ function extractRawMeta(metafields: { key: string; value: string }[], key: strin
   return mf?.value?.trim() ?? "";
 }
 
+/** Extrait l'URL d'un metafield de type File / MediaImage en utilisant la `reference`.
+ *  Si le metafield est une simple URL string, on la retourne telle quelle. */
+type MetafieldWithReference = {
+  key: string;
+  value: string;
+  reference?: { url?: string; image?: { url?: string } } | null;
+};
+function extractFileMeta(metafields: MetafieldWithReference[], key: string): string {
+  const mf = metafields?.find((m) => m?.key?.toLowerCase() === key.toLowerCase());
+  if (!mf) return "";
+  // File metafield → resolved via reference
+  if (mf.reference?.url) return mf.reference.url;
+  if (mf.reference?.image?.url) return mf.reference.image.url;
+  // Fallback : value est déjà une URL (pour les metafields type single_line_text_field ou url)
+  const raw = mf.value?.trim() ?? "";
+  if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
+  return "";
+}
+
 /** Formate le prix depuis Shopify */
 function formatShopifyPrice(amount: string, currencyCode: string): string {
   const value = parseFloat(amount);
@@ -142,6 +177,8 @@ function mapProduct(node: any): ShopifyFormationCard {
   const parcours  = extractMeta(metafields, "parcours")  || extractTag(tags, "parcours")  || undefined;
   const prix      = formatShopifyPrice(price?.amount ?? "0", price?.currencyCode ?? "MAD");
 
+  const pricingPlans = parsePricingPlans(extractRawMeta(metafields, "pricing_plans"));
+
   return {
     shopifyId:  node.id,
     id:         node.handle,
@@ -156,7 +193,41 @@ function mapProduct(node: any): ShopifyFormationCard {
     prix,
     accroche,
     imageUrl:   firstImage?.url,
+    pricingPlans: pricingPlans.length > 0 ? pricingPlans : undefined,
   };
+}
+
+/** Parse le metafield pricing_plans : tableau de PricingPlan ou objet {pricing: [...]} */
+function parsePricingPlans(value: string): PricingPlan[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : (parsed.pricing || parsed.plans || parsed.formules);
+    if (!Array.isArray(list)) return [];
+    return list
+      .map((p: any): PricingPlan | null => {
+        const title = String(p?.title || p?.titre || "").trim();
+        if (!title) return null;
+        const ctaType = p?.cta_type === "contact" || p?.cta_type === "external" ? p.cta_type : "inscription";
+        return {
+          title,
+          description: String(p?.description || "").trim(),
+          amount:      String(p?.amount || p?.prix || "Sur devis").trim(),
+          currency:    p?.currency ? String(p.currency).trim() : undefined,
+          old_price:   p?.old_price ? String(p.old_price).trim() : undefined,
+          badge:       p?.badge ? String(p.badge).trim() : undefined,
+          featured:    p?.featured === true,
+          cta_label:   String(p?.cta_label || "Réserver").trim(),
+          cta_type:    ctaType,
+          cta_url:     p?.cta_url ? String(p.cta_url).trim() : undefined,
+          features:    Array.isArray(p?.features) ? p.features.map((f: any) => String(f).trim()).filter(Boolean) : [],
+        };
+      })
+      .filter((p): p is PricingPlan => p !== null);
+  } catch (error) {
+    console.warn(`Impossible de parser pricing_plans: ${error instanceof Error ? error.message : String(error)}`);
+    return [];
+  }
 }
 
 // ── Main fetcher ──────────────────────────────────────────────────────────────
@@ -246,16 +317,61 @@ const PRODUCT_BY_HANDLE_QUERY = `
         { namespace: "custom", key: "programme" }
         { namespace: "custom", key: "livrables" }
         { namespace: "custom", key: "methode" }
+        { namespace: "custom", key: "pricing_plans" }
+        { namespace: "custom", key: "experts_concepteurs" }
+        { namespace: "custom", key: "outils_couverts" }
+        { namespace: "custom", key: "brochure" }
+        { namespace: "custom", key: "hook_pain" }
+        { namespace: "custom", key: "hook_pain_question" }
+        { namespace: "custom", key: "promesse_titre" }
+        { namespace: "custom", key: "tagline_action" }
+        { namespace: "custom", key: "session_date" }
+        { namespace: "custom", key: "session_lieu" }
+        { namespace: "custom", key: "session_date_courte" }
+        { namespace: "custom", key: "usp_banner" }
+        { namespace: "custom", key: "cafe_label" }
+        { namespace: "custom", key: "pain_points" }
+        { namespace: "custom", key: "announcement_items" }
+        { namespace: "custom", key: "faq_items" }
       ]) {
         id
         key
         value
         namespace
         type
+        reference {
+          ... on GenericFile {
+            url
+            mimeType
+          }
+          ... on MediaImage {
+            image {
+              url
+            }
+          }
+        }
       }
     }
   }
 `;
+
+export interface Expert {
+  nom: string;
+  role: string;
+  bio?: string;
+  photo?: string;
+}
+
+export interface OutilCouvert {
+  name: string;
+  color?: "gold" | "orange";
+}
+
+export interface PainPoint {
+  title: string;
+  text: string;
+  image_url?: string;
+}
 
 export interface ShopifyFormationDetail extends ShopifyFormationCard {
   publicCible: string;
@@ -266,6 +382,21 @@ export interface ShopifyFormationDetail extends ShopifyFormationCard {
   methode: string;
   images?: string[];
   descriptionHtml?: string;
+  experts?: Expert[];
+  outilsCouverts?: OutilCouvert[];
+  brochureUrl?: string;
+  hookPain?: string;
+  hookPainQuestion?: string;
+  promesseTitre?: string;
+  taglineAction?: string;
+  sessionDate?: string;
+  sessionLieu?: string;
+  sessionDateCourte?: string;
+  uspBanner?: string;
+  cafeLabel?: string;
+  painPoints?: PainPoint[];
+  announcementItems?: string[];
+  faqItems?: { question: string; answer: string }[];
 }
 
 /** Parse une valeur JSON metafield de manière sécurisée */
@@ -347,6 +478,114 @@ function parseLivrables(value: string): string[] {
   }
 }
 
+/** Parse le metafield experts_concepteurs : tableau JSON ou objet { experts: [...] } */
+function parseExperts(value: string): Expert[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : parsed.experts;
+    if (!Array.isArray(list)) return [];
+    return list
+      .map((e: any) => ({
+        nom: String(e.nom || e.name || "").trim(),
+        role: String(e.role || e.titre || e.title || "").trim(),
+        bio: e.bio ? String(e.bio).trim() : undefined,
+        photo: e.photo ? String(e.photo).trim() : undefined,
+      }))
+      .filter((e) => e.nom);
+  } catch (error) {
+    console.warn(`Impossible de parser les experts: ${error instanceof Error ? error.message : String(error)}`);
+    return [];
+  }
+}
+
+/** Parse le metafield faq_items : tableau d'objets {question, answer} */
+function parseFaqItems(value: string): { question: string; answer: string }[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : (parsed.faq || parsed.faq_items || parsed.items);
+    if (!Array.isArray(list)) return [];
+    return list
+      .map((f: any) => ({
+        question: String(f?.question || f?.q || "").trim(),
+        answer:   String(f?.answer || f?.reponse || f?.a || "").trim(),
+      }))
+      .filter((f) => f.question && f.answer);
+  } catch (error) {
+    console.warn(`Impossible de parser faq_items: ${error instanceof Error ? error.message : String(error)}`);
+    return [];
+  }
+}
+
+/** Parse le metafield announcement_items : tableau de strings (ou objet {items: [...]}) */
+function parseAnnouncementItems(value: string): string[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : parsed.items;
+    if (!Array.isArray(list)) return [];
+    return list
+      .map((item: any) => String(item || "").trim())
+      .filter((s) => s.length > 0);
+  } catch {
+    return value.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+}
+
+/** Parse le metafield pain_points : tableau d'objets {title, text, image_url?} */
+function parsePainPoints(value: string): PainPoint[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : parsed.pain_points;
+    if (!Array.isArray(list)) return [];
+    return list
+      .map((p: any): PainPoint | null => {
+        const title = String(p?.title || p?.titre || "").trim();
+        const text  = String(p?.text || p?.texte || "").trim();
+        if (!title || !text) return null;
+        return {
+          title,
+          text,
+          image_url: p?.image_url || p?.image || undefined,
+        };
+      })
+      .filter((p): p is PainPoint => p !== null);
+  } catch (error) {
+    console.warn(`Impossible de parser les pain_points: ${error instanceof Error ? error.message : String(error)}`);
+    return [];
+  }
+}
+
+/** Parse le metafield outils_couverts : tableau de strings ou tableau d'objets {name, color?} */
+function parseOutilsCouverts(value: string): OutilCouvert[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    const list = Array.isArray(parsed) ? parsed : parsed.outils;
+    if (!Array.isArray(list)) return [];
+    return list
+      .map((item: any, i: number): OutilCouvert | null => {
+        if (typeof item === "string") {
+          const name = item.trim();
+          return name ? { name, color: i % 2 === 0 ? "orange" : "gold" } : null;
+        }
+        if (item && typeof item === "object" && item.name) {
+          return {
+            name: String(item.name).trim(),
+            color: item.color === "gold" ? "gold" : "orange",
+          };
+        }
+        return null;
+      })
+      .filter((x): x is OutilCouvert => x !== null);
+  } catch (error) {
+    console.warn(`Impossible de parser les outils: ${error instanceof Error ? error.message : String(error)}`);
+    return [];
+  }
+}
+
 /** Traite spécifiquement le programme avec validation de structure */
 function parseProgramme(value: string): { module: string; details: string[]; duree?: string }[] {
   if (!value) return [];
@@ -394,6 +633,22 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
   const objectifs = parseObjectifs(extractRawMeta(metafields, "objectifs_pedagogiques"));
   const livrables = parseLivrables(extractRawMeta(metafields, "livrables"));
   const programme = parseProgramme(extractRawMeta(metafields, "programme"));
+  const experts        = parseExperts(extractRawMeta(metafields, "experts_concepteurs"));
+  const outilsCouverts = parseOutilsCouverts(extractRawMeta(metafields, "outils_couverts"));
+  const brochureUrl    = extractFileMeta(metafields, "brochure") || undefined;
+
+  const hookPain          = extractMeta(metafields, "hook_pain")          || undefined;
+  const hookPainQuestion  = extractMeta(metafields, "hook_pain_question") || undefined;
+  const promesseTitre     = extractMeta(metafields, "promesse_titre")     || undefined;
+  const taglineAction     = extractMeta(metafields, "tagline_action")     || undefined;
+  const sessionDate       = extractMeta(metafields, "session_date")       || undefined;
+  const sessionLieu       = extractMeta(metafields, "session_lieu")       || undefined;
+  const sessionDateCourte = extractMeta(metafields, "session_date_courte") || undefined;
+  const uspBanner         = extractMeta(metafields, "usp_banner")          || undefined;
+  const cafeLabel         = extractMeta(metafields, "cafe_label")          || undefined;
+  const painPoints        = parsePainPoints(extractRawMeta(metafields, "pain_points"));
+  const announcementItems = parseAnnouncementItems(extractRawMeta(metafields, "announcement_items"));
+  const faqItems          = parseFaqItems(extractRawMeta(metafields, "faq_items"));
 
   const images = node.images?.edges?.map((edge: any) => edge.node.url) || [];
 
@@ -407,6 +662,21 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
     methode,
     images,
     descriptionHtml: node.descriptionHtml,
+    experts,
+    outilsCouverts,
+    brochureUrl,
+    hookPain,
+    hookPainQuestion,
+    promesseTitre,
+    taglineAction,
+    sessionDate,
+    sessionLieu,
+    sessionDateCourte,
+    uspBanner,
+    cafeLabel,
+    painPoints,
+    announcementItems: announcementItems.length > 0 ? announcementItems : undefined,
+    faqItems: faqItems.length > 0 ? faqItems : undefined,
   };
 }
 

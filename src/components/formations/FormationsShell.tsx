@@ -26,9 +26,9 @@ import {
 import FooterStrip from "@/components/layout/FooterStrip";
 
 /* ── Background layers ── */
-const WaveTerrain = dynamic(() => import("@/components/home2/WaveTerrain"), { ssr: false });
-const Grain      = dynamic(() => import("@/components/home2/Grain"),        { ssr: false });
-const Cursor     = dynamic(() => import("@/components/home2/Cursor"),       { ssr: false });
+const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
+const Grain      = dynamic(() => import("@/components/background/Grain"),        { ssr: false });
+const Cursor     = dynamic(() => import("@/components/background/Cursor"),       { ssr: false });
 
 const COLOR = "#D35400";
 
@@ -377,12 +377,11 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
       </div>
 
       {/* Image */}
-      <div style={{ 
-        width: viewMode === "grid" ? "100%" : "300px", 
-        height: viewMode === "grid" ? "240px" : "100%", 
+      <div style={{
+        width: viewMode === "grid" ? "100%" : "300px",
+        height: viewMode === "grid" ? "240px" : "100%",
         minHeight: "240px",
-        background: `linear-gradient(45deg, #0f172a, #1e293b), url(${imageUrl}) center/cover`,
-        backgroundBlendMode: "overlay"
+        background: `url(${imageUrl}) center/cover`
       }} />
 
       {/* Content */}

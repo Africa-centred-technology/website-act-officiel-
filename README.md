@@ -109,7 +109,7 @@ src/components/<route>/<Section>  → composants de section individuels
 
 ## Page d'accueil — Parcours immersif
 
-`src/components/home2/Shell.tsx` implémente un parcours plein écran en 7 salles navigables via :
+`src/components/home/Shell.tsx` implémente un parcours plein écran en 7 salles navigables via :
 - Molette de la souris
 - Flèches clavier
 - Swipe tactile

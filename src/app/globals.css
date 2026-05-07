@@ -64,14 +64,19 @@
   --tracking-small:   0.14em;
 
   /* Clone-style font scale (rem-based, driven by root clamp) */
-  --font-180: clamp(80px,  calc(16rem + 6px), 18rem);
-  --font-90:  clamp(44px,  calc(8.5rem + 6px), 9rem);
-  --font-50:  clamp(28px,  calc(4.5rem + 6px), 5rem);
-  --font-40:  clamp(22px,  calc(3.6rem + 6px), 4rem);
-  --font-35:  clamp(20px,  calc(3.2rem + 6px), 3.5rem);
-  --font-25:  clamp(15px,  calc(2.1rem + 8px), 2.5rem);
-  --font-20:  clamp(13px,  calc(1.8rem + 6px), 2rem);
-  --font-18:  clamp(12px,  calc(1.6rem + 6px), 1.8rem);
+  --font-180: clamp(96px,  calc(17rem + 8px), 20rem);
+  --font-90:  clamp(52px,  calc(9rem + 8px), 10rem);
+  --font-50:  clamp(34px,  calc(5rem + 8px), 5.5rem);
+  --font-40:  clamp(28px,  calc(4rem + 8px), 4.5rem);
+  --font-35:  clamp(24px,  calc(3.5rem + 8px), 4rem);
+  --font-25:  clamp(18px,  calc(2.4rem + 10px), 2.8rem);
+  --font-20:  clamp(16px,  calc(2rem + 8px), 2.25rem);
+  --font-18:  clamp(15px,  calc(1.8rem + 8px), 2rem);
+
+  /* Body & UI base sizes (utilisables partout) */
+  --font-body-sm:   clamp(13px, calc(1.4rem + 4px), 1.5rem);
+  --font-body-base: clamp(15px, calc(1.6rem + 6px), 1.75rem);
+  --font-body-lg:   clamp(17px, calc(1.9rem + 6px), 2rem);
 
   --font-display: "Lora", serif;
   --font-body:    "Poppins", sans-serif;
@@ -92,19 +97,29 @@
 
 /* ── Responsive root font (clone approach: anchored on 1920px) ── */
 html {
-  font-size: clamp(8px, calc(10 * (calc(100vw + 2.1rem) / 1920)), 19px);
+  font-size: clamp(11px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px);
 }
 @media screen and (min-width:1500px) and (max-width:1600px) and (orientation:landscape) {
-  html { font-size: clamp(7.5px, calc(10 * (calc(100vw + 2.1rem) / 1920)), 19px); }
+  html { font-size: clamp(10.5px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px); }
 }
 @media screen and (min-width:1300px) and (max-width:1499px) and (orientation:landscape) {
-  html { font-size: clamp(7px, calc(10 * (calc(100vw + 2.1rem) / 1920)), 19px); }
+  html { font-size: clamp(10px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px); }
 }
 @media screen and (max-width:481px) and (orientation:portrait) {
-  html { font-size: calc(10 * (100vw / 375)); }
+  html { font-size: calc(12 * (100vw / 375)); }
 }
 @media screen and (min-width:482px) and (max-width:991px) and (orientation:portrait) {
-  html { font-size: calc(10 * (100vw / 550)); }
+  html { font-size: calc(12 * (100vw / 550)); }
+}
+
+/* ── Base body / paragraph size — appliqué partout sauf override ── */
+body {
+  font-size: var(--font-body-base);
+  line-height: 1.6;
+}
+p {
+  font-size: var(--font-body-base);
+  line-height: 1.65;
 }
 
 /* ── Base reset ── */
@@ -612,7 +627,7 @@ h1, h2, h3, h4, h5, h6 {
 .swiper { overflow: visible !important; }
 
 /* ══════════════════════════════════════════════════════
-   RESPONSIVE GRIDS — home2 & about sections
+   RESPONSIVE GRIDS — home & about sections
    ══════════════════════════════════════════════════════ */
 
 /* Section padding utilitaire */
@@ -733,25 +748,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (max-width: 640px) {
   .about-sec-pad { padding: 5rem 1.5rem 6rem !important; }
-}
-
-/* SpatialNav responsive */
-.spatial-nav-wrap {
-  padding: 0 clamp(1.2rem, 3.5vw, 4rem) clamp(1.8rem, 2.8vw, 3.2rem);
-}
-@media (max-width: 640px) {
-  .spatial-nav-wrap {
-    padding: 0 1.2rem 1.8rem !important;
-  }
-  .spatial-nav-label-main {
-    font-size: 0.95rem !important;
-    max-width: 50vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .spatial-nav-label-sub { display: none !important; }
-  .spatial-nav-eyebrow   { display: none !important; }
 }
 
 /* Menu overlay link labels — clamp already handles most, but ensure ultra-small */

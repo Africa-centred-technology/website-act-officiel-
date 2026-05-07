@@ -5,21 +5,78 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, RefreshCw } from "lucide-react";
 import FooterStrip from "../layout/FooterStrip";
+import FormationInscriptionModal from "./FormationInscriptionModal";
+import BrochureRequestModal from "./BrochureRequestModal";
+import AnnouncementBar from "../layout/AnnouncementBar";
 import {
   DEFAULT_MARQUEE_ITEMS,
   DEFAULT_TRUST_STATS,
   DEFAULT_PAIN_POINTS,
-  DEFAULT_VALUE_ROI,
-  DEFAULT_TOOLS_COVERED,
   DEFAULT_AUDIENCE_CARDS,
-  DEFAULT_TESTIMONIALS,
   getDefaultPricingPlans,
   getDefaultFaqItems,
-  DEFAULT_MID_CTA,
   DEFAULT_FINAL_CTA,
-  DEFAULT_PLACES_SESSION,
-  DEFAULT_PRIX_BARRE,
 } from "@/lib/data/formation-defaults";
+
+/* ── Tracking helpers (GTM dataLayer + Meta Pixel + GA4) ── */
+type TrackingWindow = Window & {
+  dataLayer?: Record<string, unknown>[];
+  fbq?: (...args: unknown[]) => void;
+  gtag?: (...args: unknown[]) => void;
+};
+
+function trackCtaClick(location: string, formationSlug: string, extras: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  const w = window as TrackingWindow;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({ event: "cta_click", cta_location: location, formation_slug: formationSlug, ...extras });
+  if (typeof w.fbq === "function") {
+    w.fbq("trackCustom", "CtaClick", { location, formation_slug: formationSlug, ...extras });
+  }
+}
+
+function trackInitiateCheckout(formationTitle: string, formationSlug: string, price?: string, currency = "MAD") {
+  if (typeof window === "undefined") return;
+  const w = window as TrackingWindow;
+  const numericValue = price ? parseFloat(price.replace(/[^\d.]/g, "")) : undefined;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({
+    event: "begin_checkout",
+    formation_slug: formationSlug,
+    formation_title: formationTitle,
+    value: numericValue,
+    currency,
+  });
+  if (typeof w.fbq === "function") {
+    w.fbq("track", "InitiateCheckout", {
+      content_name: formationTitle,
+      content_category: "formation",
+      content_ids: [formationSlug],
+      value: numericValue,
+      currency,
+    });
+  }
+  if (typeof w.gtag === "function") {
+    w.gtag("event", "begin_checkout", {
+      currency,
+      value: numericValue,
+      items: [{ item_id: formationSlug, item_name: formationTitle, item_category: "formation" }],
+    });
+  }
+}
+
+function trackLead(formationTitle: string, formationSlug: string, plan: string) {
+  if (typeof window === "undefined") return;
+  const w = window as TrackingWindow;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({ event: "generate_lead", formation_slug: formationSlug, formation_title: formationTitle, plan });
+  if (typeof w.fbq === "function") {
+    w.fbq("track", "Lead", { content_name: formationTitle, content_category: plan, content_ids: [formationSlug] });
+  }
+  if (typeof w.gtag === "function") {
+    w.gtag("event", "generate_lead", { plan, items: [{ item_id: formationSlug, item_name: formationTitle }] });
+  }
+}
 
 /* ── Palette (dark theme — Landing Formation IA) ─ */
 const ACT_DARK      = "#0A1410";
@@ -64,6 +121,34 @@ interface FormationDetail {
   imageUrl?: string;
   images?: string[];
   descriptionHtml?: string;
+  pricingPlans?: {
+    title: string;
+    description: string;
+    amount: string;
+    currency?: string;
+    old_price?: string;
+    badge?: string;
+    featured?: boolean;
+    cta_label: string;
+    cta_type: "inscription" | "contact" | "external";
+    cta_url?: string;
+    features: string[];
+  }[];
+  experts?: { nom: string; role: string; bio?: string; photo?: string }[];
+  outilsCouverts?: { name: string; color?: "gold" | "orange" }[];
+  brochureUrl?: string;
+  hookPain?: string;
+  hookPainQuestion?: string;
+  promesseTitre?: string;
+  taglineAction?: string;
+  sessionDate?: string;
+  sessionLieu?: string;
+  sessionDateCourte?: string;
+  uspBanner?: string;
+  cafeLabel?: string;
+  painPoints?: { title: string; text: string; image_url?: string }[];
+  announcementItems?: string[];
+  faqItems?: { question: string; answer: string }[];
 }
 
 /* ── Diamond (brand marker) ──────────────────────────────── */
@@ -218,6 +303,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openModule, setOpenModule] = useState<number | null>(0);
+  const [openObjectif, setOpenObjectif] = useState<number | null>(0);
+  const [isInscriptionOpen, setIsInscriptionOpen] = useState(false);
+  const [isBrochureOpen, setIsBrochureOpen]       = useState(false);
 
   const loadFormation = async () => {
     setIsLoading(true);
@@ -236,6 +325,20 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   };
 
   useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug]);
+
+  /* ── Sticky CTA bar visibility ─ */
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      const totalHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      setShowStickyBar(y > 600 && y + winHeight < totalHeight - 900);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const audience = useMemo(() => {
     if (!formation?.publicCible) return [];
@@ -270,24 +373,39 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   const marqueeItems  = DEFAULT_MARQUEE_ITEMS;
   const trustStats    = DEFAULT_TRUST_STATS;
   const painCards     = DEFAULT_PAIN_POINTS;
-  const valueRoi      = DEFAULT_VALUE_ROI;
-  const toolsRow1     = DEFAULT_TOOLS_COVERED.row1;
-  const toolsRow2     = DEFAULT_TOOLS_COVERED.row2;
+  const outils        = formation.outilsCouverts ?? [];
+  const hasOutils     = outils.length > 0;
+  const toolsRow1     = outils.slice(0, Math.ceil(outils.length / 2));
+  const toolsRow2     = outils.slice(Math.ceil(outils.length / 2));
   const audienceCards = DEFAULT_AUDIENCE_CARDS;
-  const testimonials  = DEFAULT_TESTIMONIALS;
-  const pricing       = getDefaultPricingPlans(formation.prix);
-  const faqs          = getDefaultFaqItems(formation.prerequis);
-  const midCta        = DEFAULT_MID_CTA;
+  const pricing       = (formation.pricingPlans && formation.pricingPlans.length > 0)
+    ? formation.pricingPlans
+    : getDefaultPricingPlans(formation.prix);
+  const faqs          = (formation.faqItems && formation.faqItems.length > 0)
+    ? formation.faqItems
+    : getDefaultFaqItems(formation.prerequis);
   const finalCta      = DEFAULT_FINAL_CTA;
-  const placesSession = DEFAULT_PLACES_SESSION;
-  const prixBarre     = DEFAULT_PRIX_BARRE;
+
+  const featuredPlan = formation.pricingPlans?.find((p) => p.featured) ?? formation.pricingPlans?.[0];
+  const heroPrixBarre = featuredPlan?.old_price;
+  const heroPromoLabel = featuredPlan?.badge;
 
   const scrollTo = (id: string) => () => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const goInscription = () => router.push(`/formations/${slug}/inscription`);
+  const goInscription = (location: string) => {
+    trackCtaClick(location, slug, { formation_title: formation.title });
+    trackInitiateCheckout(formation.title, slug, formation.prix);
+    setIsInscriptionOpen(true);
+  };
+
+  const goContact = (location: string, plan: string) => {
+    trackCtaClick(location, slug, { formation_title: formation.title, plan });
+    trackLead(formation.title, slug, plan);
+    router.push(`/contact?formation=${slug}&plan=${encodeURIComponent(plan.toLowerCase())}`);
+  };
 
   return (
     <div style={{ background: ACT_DARK, color: TXT, fontFamily: FONT_BODY, overflowX: "hidden" }}>
@@ -297,15 +415,18 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       {/* ════════════ HERO ════════════ */}
       <header style={{ position: "relative", padding: "100px 0 120px", overflow: "hidden", borderBottom: `1px solid ${LINE}` }}>
         <div aria-hidden style={heroBgStyle} />
-        <div aria-hidden style={{
-          ...heroBgImgStyle,
-          backgroundImage: `url('${formation.images?.[0] || formation.imageUrl || "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=2000&q=80"}')`,
-        }} />
+        {(formation.images?.[0] || formation.imageUrl) && (
+          <div aria-hidden style={{
+            ...heroBgImgStyle,
+            backgroundImage: `url('${formation.images?.[0] || formation.imageUrl}')`,
+          }} />
+        )}
         <div style={containerStyle}>
           <div style={heroGridStyle}>
             {/* ── Left column ── */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <Eyebrow>Formation certifiante · {formation.duree || "2 jours intensifs"}</Eyebrow>
+             
+              <Eyebrow>Formation </Eyebrow>
               <h1 style={{
                 fontFamily: FONT_DISPLAY, fontSize: "clamp(46px, 6.4vw, 96px)",
                 lineHeight: 0.98, fontWeight: 500, letterSpacing: "-0.025em",
@@ -321,8 +442,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <p style={ledeStyle}>{formation.accroche}</p>
 
               <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-                <Btn variant="primary" onClick={goInscription}>Réserver ma place →</Btn>
-                <Btn variant="ghost" onClick={scrollTo("programme")}>
+                <Btn variant="primary" onClick={() => goInscription("hero_primary")}>Je m'inscris →</Btn>
+                <Btn variant="ghost" onClick={() => { trackCtaClick("hero_voir_programme", slug); scrollTo("programme")(); }}>
                   <Diamond /> Voir le programme
                 </Btn>
               </div>
@@ -345,9 +466,11 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <div style={heroCardStyle}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
                   <span style={cardTagStyle}>
-                    <Diamond color={ACT_CREAM} size={7} /> {formation.secteur || "Session · 2026"}
+                    <Diamond color={ACT_CREAM} size={7} /> {formation.sessionDateCourte || formation.secteur || "Session · 2026"}
                   </span>
-                  <span style={{ ...monoStyle, color: ACT_GOLD }}>● Inscriptions ouvertes</span>
+                  <span style={{ ...monoStyle, color: ACT_GOLD }}>
+                    ● Inscriptions ouvertes
+                  </span>
                 </div>
                 <h3 style={{
                   fontFamily: FONT_DISPLAY, fontSize: 28, lineHeight: 1.15,
@@ -367,47 +490,52 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                     <div style={metaLabelStyle}>Niveau</div>
                     <div style={metaValueStyle}>{formation.niveau || "Tous niveaux"}</div>
                   </div>
-                  <div>
-                    <div style={metaLabelStyle}>Certification</div>
-                    <div style={metaValueStyle}>ACT + Qualiopi</div>
-                  </div>
+                  {formation.sessionDate ? (
+                    <div>
+                      <div style={metaLabelStyle}>Prochaine session</div>
+                      <div style={metaValueStyle}>{formation.sessionDate}</div>
+                    </div>
+                  ) : formation.secteur && (
+                    <div>
+                      <div style={metaLabelStyle}>Secteur</div>
+                      <div style={metaValueStyle}>{formation.secteur}</div>
+                    </div>
+                  )}
+                  {formation.sessionLieu && (
+                    <div style={{ gridColumn: "1 / -1" }}>
+                      <div style={metaLabelStyle}>Lieu</div>
+                      <div style={metaValueStyle}>📍 {formation.sessionLieu}</div>
+                    </div>
+                  )}
                 </div>
 
                 <div style={cardPriceRowStyle}>
                   <div>
-                    <div style={{ ...monoStyle, marginBottom: 4 }}>Tarif early bird</div>
+                    <div style={{ ...monoStyle, marginBottom: 4 }}>{heroPromoLabel ? "Tarif promotionnel" : "Tarif"}</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
                       <span style={{
                         fontFamily: FONT_DISPLAY, fontSize: 52, color: ACT_ORANGE,
                         letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic",
-                      }}>{formation.prix || "4 900"}</span>
-                      <span style={{ fontFamily: FONT_LABEL, fontSize: 14, color: TXT_MID }}>MAD HT</span>
+                      }}>{formation.prix || "Sur devis"}</span>
+                      {formation.prix && <span style={{ fontFamily: FONT_LABEL, fontSize: 14, color: TXT_MID }}>MAD HT</span>}
                     </div>
-                    <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
-                      {prixBarre}
-                    </div>
+                    {heroPrixBarre && (
+                      <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
+                        {heroPrixBarre}
+                      </div>
+                    )}
                   </div>
-                  <div style={{
-                    background: ACT_GOLD, color: ACT_DARK, padding: "4px 10px",
-                    fontFamily: FONT_LABEL, fontSize: 10, fontWeight: 700,
-                    letterSpacing: "0.16em", textTransform: "uppercase",
-                  }}>-25% · 5 jours</div>
-                </div>
-
-                <div style={seatsRowStyle}>
-                  <span>{placesSession.inscrits}/{placesSession.total} places</span>
-                  <div style={seatBarStyle}>
+                  {heroPromoLabel && (
                     <div style={{
-                      position: "absolute", top: 0, left: 0, height: "100%",
-                      width: `${(placesSession.inscrits / placesSession.total) * 100}%`,
-                      background: `linear-gradient(90deg, ${ACT_ORANGE}, ${ACT_ORANGE_HOT})`,
-                    }} />
-                  </div>
-                  <span style={{ color: ACT_ORANGE }}>Il reste {placesSession.restantes} !</span>
+                      background: ACT_GOLD, color: ACT_DARK, padding: "4px 10px",
+                      fontFamily: FONT_LABEL, fontSize: 10, fontWeight: 700,
+                      letterSpacing: "0.16em", textTransform: "uppercase",
+                    }}>{heroPromoLabel}</div>
+                  )}
                 </div>
 
-                <Btn variant="primary" onClick={goInscription} style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
-                  Je réserve ma place →
+                <Btn variant="primary" onClick={() => goInscription("hero_card")} style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
+                  Je m'inscris →
                 </Btn>
               </div>
             </motion.div>
@@ -434,34 +562,67 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section style={secStyle}>
         <div style={containerStyle}>
           <div style={secHeadStyle}>
-            <Eyebrow>Le constat · 2026</Eyebrow>
-            <h2 style={h2Style}>L'IA va tout changer.<br />La question, c'est <em style={emStyle}>quand</em>. Et pour <em style={emStyle}>qui</em>.</h2>
-            <p style={secPStyle}>Vos concurrents l'utilisent déjà. Chaque semaine qui passe coûte en productivité, en temps perdu, en opportunités manquées.</p>
+            <Eyebrow>Le constat</Eyebrow>
+            <h2 style={h2Style}>
+              {formation.hookPain || (
+                <>Même outils, même brief :<br /><em style={emStyle}>résultats pas à la hauteur</em> de vos attentes.</>
+              )}
+            </h2>
+          </div>
+
+          {/* Bloc Question / Réponse — moment dramatique */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.6 }}
+            style={painQABlockStyle}
+          >
+            <div style={painQuestionStyle}>
+              {formation.hookPainQuestion || "Vous vous demandez pourquoi ?"}
+            </div>
+            <div style={painAnswerStyle}>
+              <span style={{ color: ACT_ORANGE, marginRight: 14, fontWeight: 700, fontStyle: "normal" }}>→</span>
+              {formation.promesseTitre || "La réponse n'est pas dans l'outil, mais dans la méthode."}
+            </div>
+          </motion.div>
+
+          <div style={painSubheadStyle}>
+            <Diamond color={ACT_GOLD} size={6} />  symptômes que vous reconnaissez peut-être
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
-            {painCards.map((p, i) => (
+            {(formation.painPoints && formation.painPoints.length > 0
+              ? formation.painPoints
+              : painCards.map((p) => ({ title: p.title, text: p.text, image_url: undefined }))
+            ).slice(0, 3).map((p, i) => {
+              const productImages = formation.images && formation.images.length > 0 ? formation.images : [];
+              const imgUrl = p.image_url || productImages[i % Math.max(productImages.length, 1)];
+              return (
               <motion.div key={i}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={painCardStyle}
               >
-                <div style={{
-                  aspectRatio: "16/10", backgroundImage: `url(${p.image_url})`,
-                  backgroundSize: "cover", backgroundPosition: "center",
-                  margin: "-32px -32px 24px", filter: "grayscale(0.3) contrast(1.05)",
-                  position: "relative",
-                }}>
+                {imgUrl && (
                   <div style={{
-                    position: "absolute", inset: 0,
-                    background: "linear-gradient(180deg, rgba(10,20,16,0.1) 0%, rgba(10,20,16,0.85) 100%)",
-                  }} />
+                    aspectRatio: "16/10", backgroundImage: `url(${imgUrl})`,
+                    backgroundSize: "cover", backgroundPosition: "center",
+                    margin: "-32px -32px 24px", filter: "grayscale(0.3) contrast(1.05)",
+                    position: "relative",
+                  }}>
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: "linear-gradient(180deg, rgba(10,20,16,0.1) 0%, rgba(10,20,16,0.85) 100%)",
+                    }} />
+                  </div>
+                )}
+                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 54, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>
+                  {String(i + 1).padStart(2, "0")}
                 </div>
-                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 54, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
                 <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 26, lineHeight: 1.15, marginTop: 14, color: TXT, fontWeight: 500 }}>{p.title}</h3>
                 <p style={{ fontSize: 15, lineHeight: 1.6, color: "rgba(255,255,255,0.68)", marginTop: 14, fontWeight: 300 }}>{p.text}</p>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -475,72 +636,126 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: 60, alignItems: "start" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {formation.objectifs.slice(0, 6).map((obj, i) => (
-                <div key={i} style={valueItemStyle}>
-                  <div style={valueNumStyle}>{String(i + 1).padStart(2, "0")}</div>
-                  <div>
-                    <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 24, lineHeight: 1.2, color: TXT, fontWeight: 500 }}>
-                      {obj.length > 80 ? obj.slice(0, 80) + "…" : obj}
-                    </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+              {formation.objectifs.slice(0, 6).map((obj, i) => {
+                const isOpen = openObjectif === i;
+                const truncated = obj.length > 80;
+                const preview = truncated ? obj.slice(0, 80) + "…" : obj;
+                const isClickable = truncated;
+                return (
+                  <div key={i} style={{ borderTop: `1px solid rgba(255,255,255,0.1)` }}>
+                    <button
+                      onClick={() => isClickable && setOpenObjectif(isOpen ? null : i)}
+                      style={{
+                        display: "grid", gridTemplateColumns: "40px 1fr 36px", gap: 24,
+                        width: "100%", padding: "28px 0", textAlign: "left",
+                        background: "none", border: "none",
+                        cursor: isClickable ? "pointer" : "default",
+                        color: TXT, alignItems: "start",
+                      }}
+                    >
+                      <div style={valueNumStyle}>{String(i + 1).padStart(2, "0")}</div>
+                      <h3 style={{
+                        fontFamily: FONT_DISPLAY, fontSize: 24, lineHeight: 1.25,
+                        color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500, margin: 0,
+                        transition: "color 0.25s",
+                      }}>
+                        {isOpen ? obj : preview}
+                      </h3>
+                      {isClickable && (
+                        <span style={{
+                          width: 28, height: 28, marginTop: 4,
+                          border: `1px solid ${isOpen ? ACT_ORANGE : "rgba(255,255,255,0.2)"}`,
+                          background: isOpen ? ACT_ORANGE : "transparent",
+                          color: isOpen ? ACT_CREAM : TXT,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          position: "relative", transition: "all 0.3s", justifySelf: "end",
+                        }}>
+                          <span style={{ position: "absolute", width: 11, height: 1, background: "currentColor" }} />
+                          {!isOpen && <span style={{ position: "absolute", width: 1, height: 11, background: "currentColor" }} />}
+                        </span>
+                      )}
+                    </button>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            <div style={valueVisualStyle}>
-              <div>
-                <div style={{ ...monoStyle, color: ACT_CREAM, opacity: 0.8 }}>Le ROI moyen de nos stagiaires</div>
-                <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 42, lineHeight: 1.05, letterSpacing: "-0.02em", marginTop: 16, color: TXT, fontWeight: 500 }}>
-                  Ce que<br />vous <em style={emStyle}>gagnez</em><br />dès la 1ʳᵉ semaine.
-                </h4>
-              </div>
-              <div>
-                <div style={{ fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 160, lineHeight: 0.9, color: ACT_ORANGE, letterSpacing: "-0.04em" }}>{valueRoi.big_stat}</div>
-                <div style={{ ...monoStyle, color: "rgba(255,255,255,0.7)", marginTop: 10 }}>{valueRoi.big_stat_label}</div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 36, paddingTop: 24, borderTop: `1px solid rgba(255,255,255,0.15)` }}>
-                  {valueRoi.secondary.map((s, i) => (
-                    <div key={i}>
-                      <div style={{ fontFamily: FONT_DISPLAY, fontSize: 32, color: ACT_GOLD, fontStyle: "italic" }}>{s.value}</div>
-                      <div style={{ ...monoStyle, marginTop: 4 }}>{s.label}</div>
+            {formation.experts && formation.experts.length > 0 && (
+              <div style={valueVisualStyle}>
+                <div>
+                  <div style={{ ...monoStyle, color: ACT_CREAM, opacity: 0.8 }}>L'équipe pédagogique</div>
+                  <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 42, lineHeight: 1.05, letterSpacing: "-0.02em", marginTop: 16, color: TXT, fontWeight: 500 }}>
+                    Conçue par<br /><em style={emStyle}>{formation.experts.length} experts</em><br />de leur domaine.
+                  </h4>
+                </div>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: formation.experts.length > 2 ? "1fr 1fr" : "1fr",
+                  gap: 20, marginTop: 24,
+                }}>
+                  {formation.experts.slice(0, 4).map((e, i) => (
+                    <div key={i} style={expertCardStyle}>
+                      <div style={{
+                        width: 56, height: 56, borderRadius: "50%",
+                        backgroundImage: e.photo ? `url(${e.photo})` : undefined,
+                        backgroundColor: e.photo ? undefined : "rgba(255,255,255,0.08)",
+                        backgroundSize: "cover", backgroundPosition: "center",
+                        border: `2px solid rgba(211,84,0,0.4)`,
+                        flexShrink: 0,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        color: ACT_ORANGE, fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 22,
+                      }}>
+                        {!e.photo && e.nom.charAt(0)}
+                      </div>
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontFamily: FONT_DISPLAY, fontSize: 16, color: TXT, fontWeight: 500, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+                          {e.nom}
+                        </div>
+                        <div style={{ ...monoStyle, fontSize: 10, color: ACT_GOLD, marginTop: 4, letterSpacing: "0.18em" }}>
+                          {e.role}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* ════════════ TOOLS ════════════ */}
-      <section style={secStyle}>
-        <div style={containerStyle}>
-          <div style={secHeadStyle}>
-            <Eyebrow>Les outils couverts</Eyebrow>
-            <h2 style={{ ...h2Style, maxWidth: 780 }}>15+ outils IA maîtrisés.<br />Aucune <em style={emStyle}>install</em> obligatoire.</h2>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-          {[toolsRow1, toolsRow2].map((row, idx) => (
-            <div key={idx} style={{
-              display: "flex", gap: 20, alignItems: "center",
-              animation: `toolsSlide 40s linear infinite ${idx === 1 ? "reverse" : ""}`,
-              width: "max-content",
-            }}>
-              {[...row, ...row].map((t, i) => (
-                <div key={i} style={toolPillStyle}>
-                  <span style={{
-                    width: 8, height: 8, borderRadius: "50%",
-                    background: t.color === "gold" ? ACT_GOLD : ACT_ORANGE,
-                  }} />
-                  {t.name}
-                </div>
-              ))}
+      {hasOutils && (
+        <section style={secStyle}>
+          <div style={containerStyle}>
+            <div style={secHeadStyle}>
+              <Eyebrow>Les outils couverts</Eyebrow>
+              <h2 style={{ ...h2Style, maxWidth: 780 }}>{outils.length}+ outils IA maîtrisés.<br />Aucune <em style={emStyle}>install</em> obligatoire.</h2>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+            {(toolsRow2.length > 0 ? [toolsRow1, toolsRow2] : [toolsRow1]).map((row, idx) => (
+              <div key={idx} style={{
+                display: "flex", gap: 20, alignItems: "center",
+                animation: `toolsSlide 40s linear infinite ${idx === 1 ? "reverse" : ""}`,
+                width: "max-content",
+              }}>
+                {[...row, ...row].map((t, i) => (
+                  <div key={i} style={toolPillStyle}>
+                    <span style={{
+                      width: 8, height: 8, borderRadius: "50%",
+                      background: t.color === "gold" ? ACT_GOLD : ACT_ORANGE,
+                    }} />
+                    {t.name}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ════════════ PROGRAMME ════════════ */}
       <section id="programme" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
@@ -557,151 +772,185 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               background: `linear-gradient(180deg, transparent, rgba(211,84,0,0.4) 15%, rgba(211,84,0,0.4) 85%, transparent)`,
             }} />
 
-            {formation.programme.map((mod, i) => (
-              <div key={i} style={{ position: "relative", padding: "20px 0 60px 100px" }}>
-                <div style={{
-                  position: "absolute", left: 34, top: 28, width: 14, height: 14,
-                  background: ACT_ORANGE, transform: "rotate(-43.264deg)",
-                  boxShadow: `0 0 0 8px rgba(211,84,0,0.12), 0 0 20px rgba(211,84,0,0.5)`,
-                }} />
-                <div style={{
-                  fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
-                  textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
-                }}>Module {String(i + 1).padStart(2, "0")}</div>
-                <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 36, lineHeight: 1.1, marginTop: 8, color: TXT, fontWeight: 500 }}>{mod.module}</h3>
-                {mod.details.length > 0 && (
-                  <ul style={{
-                    marginTop: 20, display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "10px 28px", maxWidth: 780, listStyle: "none",
-                  }}>
-                    {mod.details.map((d, j) => (
-                      <li key={j} style={{
-                        fontSize: 15, lineHeight: 1.5, color: "rgba(255,255,255,0.78)", fontWeight: 300,
-                        paddingLeft: 24, position: "relative",
-                      }}>
-                        <span style={{ position: "absolute", left: 0, top: 8, width: 10, height: 1, background: ACT_ORANGE }} />
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════ MID CTA ════════════ */}
-      <section style={{
-        padding: "80px 0", position: "relative", overflow: "hidden",
-        background: `radial-gradient(ellipse at 30% 50%, rgba(211,84,0,0.3), transparent 60%), radial-gradient(ellipse at 75% 50%, rgba(243,156,18,0.22), transparent 60%), ${ACT_DARK_DEEP}`,
-        borderTop: `1px solid rgba(211,84,0,0.3)`, borderBottom: `1px solid rgba(211,84,0,0.3)`,
-      }}>
-        <div style={containerStyle}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
-            <div>
-              <Eyebrow>{midCta.eyebrow}</Eyebrow>
-              <h2 style={{ ...h2Style, fontSize: "clamp(36px, 4.5vw, 64px)", marginTop: 20 }}>
-                {midCta.title_prefix} <em style={emStyle}>{midCta.title_highlight}</em> {midCta.title_suffix}
-              </h2>
-              <p style={{ ...secPStyle, fontSize: 17 }}>{midCta.text}</p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <Btn variant="primary" href={midCta.cta_primary.url} minWidth={280}>
-                <span>{midCta.cta_primary.label}</span><span>→</span>
-              </Btn>
-              <Btn variant="ghost" href={midCta.cta_ghost.url} minWidth={280}>
-                <span><Diamond /> {midCta.cta_ghost.label}</span><span>→</span>
-              </Btn>
-              <Btn variant="dark" onClick={goInscription} minWidth={280}>
-                <span>{midCta.cta_dark.label}</span><span>→</span>
-              </Btn>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════ AUDIENCE ════════════ */}
-      <section style={secStyle}>
-        <div style={containerStyle}>
-          <div style={secHeadStyle}>
-            <Eyebrow>Pour qui ?</Eyebrow>
-            <h2 style={h2Style}>Conçu pour les pros<br />qui veulent <em style={emStyle}>des résultats</em>.</h2>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 }}>
-            {(audience.length > 0 ? audience.slice(0, 8) : audienceCards.map(a => a.title)).map((item, i) => {
-              const card = audienceCards[i % audienceCards.length];
-              const label = typeof item === "string" ? item : card.title;
+            {formation.programme.map((mod, i) => {
+              const isOpen = openModule === i;
+              const hasDetails = mod.details.length > 0;
               return (
-                <motion.div key={i}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.05 }}
-                  style={audienceCardStyle}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = ACT_ORANGE; (e.currentTarget as HTMLElement).style.borderColor = ACT_ORANGE; (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)"; (e.currentTarget as HTMLElement).style.borderColor = LINE; (e.currentTarget as HTMLElement).style.transform = ""; }}
-                >
+                <div key={i} style={{ position: "relative", paddingLeft: 100, paddingBottom: 24 }}>
                   <div style={{
-                    position: "absolute", inset: 0, backgroundImage: `url(${card.img})`,
-                    backgroundSize: "cover", backgroundPosition: "center",
-                    opacity: 0.22, filter: "grayscale(0.5) contrast(1.05)", zIndex: 0,
+                    position: "absolute", left: 34, top: 28, width: 14, height: 14,
+                    background: ACT_ORANGE, transform: "rotate(-43.264deg)",
+                    boxShadow: `0 0 0 8px rgba(211,84,0,0.12), 0 0 20px rgba(211,84,0,0.5)`,
                   }} />
-                  <div style={{ position: "relative", zIndex: 1 }}>
-                    <div style={audienceIconStyle}>{String(i + 1).padStart(2, "0")}</div>
-                  </div>
-                  <div style={{ position: "relative", zIndex: 1 }}>
-                    <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 22, lineHeight: 1.1, marginBottom: 12, color: TXT, fontWeight: 500, whiteSpace: "pre-line" }}>
-                      {label}
-                    </h4>
-                  </div>
-                </motion.div>
+                  <button
+                    onClick={() => hasDetails && setOpenModule(isOpen ? null : i)}
+                    style={{
+                      width: "100%", textAlign: "left",
+                      background: "none", border: "none", padding: "20px 0",
+                      cursor: hasDetails ? "pointer" : "default", color: TXT,
+                      display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+                      gap: 24,
+                    }}
+                  >
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{
+                        fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
+                        textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
+                      }}>Module {String(i + 1).padStart(2, "0")}</div>
+                      <h3 style={{
+                        fontFamily: FONT_DISPLAY, fontSize: 36, lineHeight: 1.1,
+                        marginTop: 8, color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500,
+                        transition: "color 0.25s",
+                      }}>{mod.module}</h3>
+                    </div>
+                    {hasDetails && (
+                      <span style={{
+                        flexShrink: 0, marginTop: 24,
+                        width: 36, height: 36,
+                        border: `1px solid ${isOpen ? ACT_ORANGE : "rgba(255,255,255,0.2)"}`,
+                        background: isOpen ? ACT_ORANGE : "transparent",
+                        color: isOpen ? ACT_CREAM : TXT,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        position: "relative", transition: "all 0.3s",
+                      }}>
+                        <span style={{ position: "absolute", width: 14, height: 1, background: "currentColor" }} />
+                        {!isOpen && <span style={{ position: "absolute", width: 1, height: 14, background: "currentColor" }} />}
+                      </span>
+                    )}
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && hasDetails && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                        style={{ overflow: "hidden" }}
+                      >
+                        <ul style={{
+                          padding: "0 0 28px 0", margin: 0, display: "grid",
+                          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                          gap: "10px 28px", maxWidth: 780, listStyle: "none",
+                        }}>
+                          {mod.details.map((d, j) => (
+                            <li key={j} style={{
+                              fontSize: 15, lineHeight: 1.5, color: "rgba(255,255,255,0.78)", fontWeight: 300,
+                              paddingLeft: 24, position: "relative",
+                            }}>
+                              <span style={{ position: "absolute", left: 0, top: 8, width: 10, height: 1, background: ACT_ORANGE }} />
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ════════════ TESTIMONIALS ════════════ */}
-      <section style={{ ...secStyle, background: ACT_DARK_DEEP }}>
+      {/* ════════════ MID CTA · LEAD MAGNET BROCHURE ════════════ */}
+      <section style={{
+        padding: "100px 0", position: "relative", overflow: "hidden",
+        background: `radial-gradient(ellipse at 30% 50%, rgba(211,84,0,0.3), transparent 60%), radial-gradient(ellipse at 75% 50%, rgba(243,156,18,0.22), transparent 60%), ${ACT_DARK_DEEP}`,
+        borderTop: `1px solid rgba(211,84,0,0.3)`, borderBottom: `1px solid rgba(211,84,0,0.3)`,
+      }}>
         <div style={containerStyle}>
-          <div style={secHeadStyle}>
-            <Eyebrow>Ce que disent nos stagiaires</Eyebrow>
-            <h2 style={h2Style}>4,9/5 de moyenne sur<br /><em style={emStyle}>+400</em> professionnels formés.</h2>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
-            {testimonials.map((t, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
-                style={testCardStyle}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
+            <div>
+              <Eyebrow>Pas encore prêt à vous inscrire ?</Eyebrow>
+              <h2 style={{ ...h2Style, fontSize: "clamp(36px, 4.5vw, 64px)", marginTop: 20 }}>
+                Téléchargez la <em style={emStyle}>brochure</em> complète.
+              </h2>
+              <p style={{ ...secPStyle, fontSize: 17 }}>
+                Tout le programme, les livrables et les tarifs en 1 PDF · Reçu en 30 secondes par email.
+              </p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-start" }}>
+              <Btn
+                variant="primary"
+                onClick={() => {
+                  trackCtaClick("mid_cta_brochure", slug, { formation_title: formation.title });
+                  setIsBrochureOpen(true);
+                }}
+                minWidth={300}
               >
-                <div style={{
-                  position: "absolute", top: 20, right: 30,
-                  fontFamily: FONT_DISPLAY, fontStyle: "italic",
-                  fontSize: 120, lineHeight: 0.8, color: "rgba(211,84,0,0.2)",
-                }}>&ldquo;</div>
-                <div style={{ color: ACT_GOLD, fontSize: 14, letterSpacing: 4, marginBottom: 20 }}>★★★★★</div>
-                <blockquote style={{
-                  fontFamily: FONT_DISPLAY, fontSize: 18, lineHeight: 1.45,
-                  letterSpacing: "-0.01em", flex: 1, color: TXT,
-                }}>&ldquo;{t.quote}&rdquo;</blockquote>
-                <div style={{ marginTop: 28, paddingTop: 20, borderTop: `1px solid rgba(255,255,255,0.08)`, display: "flex", alignItems: "center", gap: 14 }}>
-                  <div style={{
-                    width: 48, height: 48, borderRadius: "50%",
-                    backgroundImage: `url(${t.avatar_url})`, backgroundSize: "cover", backgroundPosition: "center",
-                    border: `2px solid rgba(211,84,0,0.3)`,
-                  }} />
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: 15, color: TXT }}>{t.name}</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", fontWeight: 300, marginTop: 2 }}>{t.role}</div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                <span>📄 Recevoir la brochure (PDF)</span><span>→</span>
+              </Btn>
+              <div style={{
+                display: "flex", alignItems: "center", gap: 18, marginTop: 6,
+                fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.16em",
+                textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 500,
+              }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <Diamond color={ACT_GOLD} size={6} /> 100% gratuit
+                </span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <Diamond color={ACT_GOLD} size={6} /> Aucun spam
+                </span>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+
+      {/* ════════════ AUDIENCE — carrousels infinis ════════════ */}
+      <section style={secStyle}>
+        <div style={containerStyle}>
+          <div style={secHeadStyle}>
+            <Eyebrow>Pour qui ?</Eyebrow>
+            <h2 style={h2Style}>Conçu pour les pros<br />qui veulent <em style={emStyle}>des résultats</em>.</h2>
+          </div>
+        </div>
+
+        {(() => {
+          const items = audience.length > 0 ? audience : audienceCards.map(a => a.title);
+          const half = Math.ceil(items.length / 2);
+          const rowA = items.slice(0, half);
+          const rowB = items.slice(half).length > 0 ? items.slice(half) : rowA;
+          return (
+            <div style={{ display: "flex", flexDirection: "column", gap: 18, overflow: "hidden" }}>
+              {[rowA, rowB].map((row, idx) => (
+                <div key={idx} className="audience-row" style={{
+                  display: "flex", gap: 18, alignItems: "stretch",
+                  animation: `audienceSlide 50s linear infinite ${idx === 1 ? "reverse" : ""}`,
+                  width: "max-content",
+                }}>
+                  {[...row, ...row].map((item, i) => {
+                    const card = audienceCards[i % audienceCards.length];
+                    const label = typeof item === "string" ? item : card.title;
+                    const num = ((i % row.length) + 1 + (idx * row.length));
+                    const productImages = formation.images && formation.images.length > 0 ? formation.images : [];
+                    const cardImg = productImages.length > 0
+                      ? productImages[i % productImages.length]
+                      : card.img;
+                    return (
+                      <div key={i} style={audienceCardStyle}>
+                        <div style={{
+                          position: "absolute", inset: 0, backgroundImage: `url(${cardImg})`,
+                          backgroundSize: "cover", backgroundPosition: "center",
+                          opacity: 0.22, filter: "grayscale(0.5) contrast(1.05)", zIndex: 0,
+                        }} />
+                        <div style={{ position: "relative", zIndex: 1 }}>
+                          <div style={audienceIconStyle}>{String(num).padStart(2, "0")}</div>
+                        </div>
+                        <div style={{ position: "relative", zIndex: 1 }}>
+                          <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 20, lineHeight: 1.15, marginBottom: 8, color: TXT, fontWeight: 500, whiteSpace: "normal" }}>
+                            {label}
+                          </h4>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          );
+        })()}
       </section>
 
       {/* ════════════ PRICING ════════════ */}
@@ -725,7 +974,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 {p.featured && p.badge && (
                   <div style={priceBadgeStyle}>{p.badge}</div>
                 )}
-                <div style={{ fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600 }}>{p.name}</div>
+                <div style={{ fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600 }}>Formule {String(i + 1).padStart(2, "0")}</div>
                 <div style={{ fontFamily: FONT_DISPLAY, fontSize: 30, lineHeight: 1.05, marginTop: 10, color: TXT, fontWeight: 500 }}>
                   <em style={emStyle}>{p.title}</em>
                 </div>
@@ -758,7 +1007,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <Btn
                   variant={p.featured ? "primary" : "ghost"}
-                  onClick={p.cta_type === "contact" ? () => router.push("/contact") : goInscription}
+                  onClick={p.cta_type === "contact"
+                    ? () => goContact(`pricing_${p.title.toLowerCase()}`, p.title)
+                    : () => goInscription(`pricing_${p.title.toLowerCase()}`)}
                   style={{ marginTop: 32, width: "100%", justifyContent: "center" }}
                 >
                   {p.cta_label} →
@@ -768,7 +1019,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </div>
 
           <div style={{ marginTop: 60, display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
-            {["Éligible CPF · OPCO", "Paiement en 3× sans frais", "Satisfait ou remboursé"].map((t, i) => (
+            {["Paiement en 3× sans frais", "Satisfait ou remboursé"].map((t, i) => (
               <div key={i} style={monoStyle}>
                 <span style={{ color: ACT_GOLD }}>✓ </span>{t}
               </div>
@@ -782,7 +1033,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         <div style={containerStyle}>
           <div style={{ ...secHeadStyle, textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>Questions fréquentes</Eyebrow></div>
-            <h2 style={{ ...h2Style, textAlign: "center" }}>Toutes vos objections,<br /><em style={emStyle}>démontées</em> en 60 secondes.</h2>
+            <h2 style={{ ...h2Style, textAlign: "center" }}>
+Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2>
           </div>
 
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
@@ -803,25 +1055,33 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section style={finalStyle}>
         <div style={{ ...containerStyle, position: "relative", zIndex: 5 }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Eyebrow centered>{finalCta.eyebrow}</Eyebrow>
+            <Eyebrow centered>Prêt à passer à l'action ?</Eyebrow>
           </div>
           <h2 style={{
             fontFamily: FONT_DISPLAY, fontSize: "clamp(48px, 7vw, 110px)",
             lineHeight: 0.95, maxWidth: 1000, margin: "20px auto 32px",
             color: TXT, fontWeight: 500, letterSpacing: "-0.025em", textWrap: "balance",
           }}>
-            {finalCta.title_line1}<br />{finalCta.title_line2}<em style={emStyle}>{finalCta.title_highlight}</em>{finalCta.title_suffix}
+            {formation.taglineAction || (
+              <>Arrêtez de subir.<br /><em style={emStyle}>Commencez à maîtriser.</em></>
+            )}
           </h2>
           <p style={{
             fontSize: 18, lineHeight: 1.55, color: "rgba(255,255,255,0.72)",
             maxWidth: 620, margin: "0 auto 48px", fontWeight: 300,
-          }}>{finalCta.text}</p>
+          }}>
+            Réservez votre place dès maintenant — ou si vous préférez, échangez avec un de nos experts autour d'un café avant de vous décider.
+          </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Btn variant="primary" onClick={goInscription} style={{ padding: "22px 40px", fontSize: 13 }}>
+            <Btn variant="primary" onClick={() => goInscription("final_primary")} style={{ padding: "22px 40px", fontSize: 13 }}>
               {finalCta.primary_label} →
             </Btn>
-            <Btn variant="ghost" href="/contact" style={{ padding: "22px 40px", fontSize: 13 }}>
-              <Diamond /> {finalCta.ghost_label}
+            <Btn
+              variant="ghost"
+              href={`/contact?formation=${slug}&intent=cafe`}
+              style={{ padding: "22px 40px", fontSize: 13 }}
+            >
+              ☕ {formation.cafeLabel || "On en parle autour d'un café ?"}
             </Btn>
           </div>
           <div style={{
@@ -835,12 +1095,69 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         </div>
       </section>
 
+      {/* ──────────── STICKY CTA BAR + ANNONCES ──────────── */}
+      <AnimatePresence>
+        {showStickyBar && (
+          <motion.div
+            initial={{ y: 160, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 160, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            style={stickyBarStyle}
+          >
+            <AnnouncementBar items={formation.announcementItems} />
+            <div style={stickyBarInnerStyle}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0, flex: 1 }}>
+                <span style={{
+                  fontFamily: FONT_LABEL, fontSize: 10, letterSpacing: "0.18em",
+                  textTransform: "uppercase", color: TXT_MID, fontWeight: 600,
+                  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                }}>
+                  {formation.title}
+                </span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                  <span style={{
+                    fontFamily: FONT_DISPLAY, fontSize: 26, fontStyle: "italic",
+                    color: ACT_ORANGE, letterSpacing: "-0.02em", lineHeight: 1,
+                  }}>
+                    {formation.prix || "Sur devis"}
+                  </span>
+                  {formation.prix && (
+                    <span style={{ fontFamily: FONT_LABEL, fontSize: 11, color: TXT_MID }}>MAD HT</span>
+                  )}
+                </div>
+              </div>
+              <Btn variant="primary" onClick={() => goInscription("sticky_bar")} style={{ flexShrink: 0 }}>
+                Je m'inscris →
+              </Btn>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <FormationInscriptionModal
+        isOpen={isInscriptionOpen}
+        onClose={() => setIsInscriptionOpen(false)}
+        formationTitle={formation.title}
+        formationSlug={slug}
+      />
+
+      <BrochureRequestModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        formationTitle={formation.title}
+        formationSlug={slug}
+        brochureUrl={formation.brochureUrl}
+      />
+
       <FooterStrip />
 
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=swap');
         @keyframes marqueeScroll { to { transform: translateX(-50%); } }
         @keyframes toolsSlide    { to { transform: translateX(-50%); } }
+        @keyframes audienceSlide { to { transform: translateX(-50%); } }
+        .audience-row:hover { animation-play-state: paused; }
         @keyframes pulseDot {
           0%, 100% { opacity: 1; transform: scale(1); }
           50%      { opacity: 0.4; transform: scale(1.4); }
@@ -1024,10 +1341,9 @@ const toolPillStyle: React.CSSProperties = {
 };
 
 const audienceCardStyle: React.CSSProperties = {
-  aspectRatio: "1 / 1.1", padding: 24,
+  width: 280, height: 220, padding: 24, flexShrink: 0,
   border: `1px solid rgba(255,255,255,0.1)`, background: "rgba(255,255,255,0.02)",
   display: "flex", flexDirection: "column", justifyContent: "space-between",
-  transition: "all 0.3s", cursor: "pointer",
   position: "relative", overflow: "hidden",
 };
 
@@ -1067,4 +1383,82 @@ const finalStyle: React.CSSProperties = {
   padding: "140px 0",
   background: `radial-gradient(ellipse at center, rgba(211,84,0,0.28), transparent 65%), ${ACT_DARK}`,
   textAlign: "center", position: "relative", overflow: "hidden",
+};
+
+const stickyBarStyle: React.CSSProperties = {
+  position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 90,
+  background: `linear-gradient(180deg, rgba(10,20,16,0.92), rgba(10,20,16,0.98))`,
+  backdropFilter: "blur(16px)",
+  WebkitBackdropFilter: "blur(16px)",
+  borderTop: `1px solid rgba(211,84,0,0.4)`,
+  boxShadow: "0 -10px 40px -10px rgba(0,0,0,0.5)",
+};
+
+const stickyBarInnerStyle: React.CSSProperties = {
+  maxWidth: 1280, margin: "0 auto", padding: "12px 24px",
+  display: "flex", alignItems: "center", gap: 16,
+};
+
+const expertCardStyle: React.CSSProperties = {
+  display: "flex", alignItems: "center", gap: 14,
+  padding: "14px 16px",
+  background: "rgba(255,255,255,0.04)",
+  border: `1px solid rgba(255,255,255,0.08)`,
+  backdropFilter: "blur(4px)",
+};
+
+const uspBannerStyle: React.CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: 10,
+  marginBottom: 24,
+  padding: "10px 18px",
+  background: "linear-gradient(135deg, rgba(243,156,18,0.18), rgba(211,84,0,0.18))",
+  border: "1px solid rgba(243,156,18,0.4)",
+  fontFamily: "'Poppins', system-ui, sans-serif",
+  fontSize: 12, fontWeight: 600,
+  letterSpacing: "0.08em", textTransform: "uppercase",
+  color: "#F39C12",
+  borderRadius: 2,
+};
+
+const painQABlockStyle: React.CSSProperties = {
+  position: "relative",
+  marginBottom: 64,
+  paddingLeft: 32,
+  borderLeft: `3px solid ${ACT_ORANGE}`,
+  maxWidth: 920,
+};
+
+const painQuestionStyle: React.CSSProperties = {
+  fontFamily: FONT_DISPLAY,
+  fontSize: "clamp(28px, 3.4vw, 44px)",
+  fontStyle: "italic",
+  fontWeight: 500,
+  lineHeight: 1.15,
+  letterSpacing: "-0.02em",
+  color: ACT_ORANGE,
+  marginBottom: 18,
+};
+
+const painAnswerStyle: React.CSSProperties = {
+  fontFamily: FONT_DISPLAY,
+  fontSize: "clamp(22px, 2.4vw, 32px)",
+  fontWeight: 500,
+  lineHeight: 1.3,
+  letterSpacing: "-0.01em",
+  color: TXT,
+  display: "flex",
+  alignItems: "baseline",
+};
+
+const painSubheadStyle: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 12,
+  marginBottom: 24,
+  fontFamily: "'Poppins', system-ui, sans-serif",
+  fontSize: 11,
+  letterSpacing: "0.22em",
+  textTransform: "uppercase",
+  color: "rgba(255,255,255,0.55)",
+  fontWeight: 600,
 };
