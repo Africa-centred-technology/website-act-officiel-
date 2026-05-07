@@ -164,24 +164,15 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
       page.getByPlaceholder("votre@email.com")
     ).toBeVisible({ timeout: 20_000 });
 
-    // ── Champs texte requis ──────────────────────────────────────────────────
+    // ── Champs texte requis (mode étudiant uniquement, plus de Pro tab) ─────
     await page.getByPlaceholder("votre@email.com").fill("inscrit@test.com");
     await page.getByPlaceholder("Votre nom").fill("Dupont");
     await page.getByPlaceholder("Votre prénom").fill("Marie");
-    await page
-      .getByPlaceholder("Nom de votre entreprise / organisme")
-      .fill("ACT Formation");
-    // Téléphone 1 (peut y avoir plusieurs inputs avec ce placeholder)
+    // Téléphone (plus de Téléphone 2 / WhatsApp / Pays — un seul champ tel)
     await page.getByPlaceholder("+212 6XX XXX XXX").first().fill("+212600112233");
 
     // ── Fonction du participant (premier <select> du formulaire) ────────────
-    await page.locator("select").first().selectOption("Autre");
-
-    // ── Pays — custom picker (bouton + search) ───────────────────────────────
-    await page.getByText("— Choisir un pays —").click();
-    await page.getByPlaceholder("Rechercher un pays…").fill("Maroc");
-    // Attendre que le filtre s'applique, puis cliquer sur "Maroc"
-    await page.getByRole("button", { name: /maroc/i }).first().click();
+    await page.locator("select").first().selectOption({ index: 1 });
 
     // ── Comment nous avez-vous connu (second <select>) ───────────────────────
     await page.locator("select").nth(1).selectOption("Google");
