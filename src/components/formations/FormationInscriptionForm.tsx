@@ -386,7 +386,7 @@ export default function FormationInscriptionForm({
   formationSlug,
   onSuccess,
 }: FormationInscriptionFormProps) {
-  const [tab, setTab] = useState<"pro" | "etudiant">("pro");
+  const [tab] = useState<"pro" | "etudiant">("etudiant");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const [form, setForm] = useState({
@@ -396,9 +396,6 @@ export default function FormationInscriptionForm({
     nom: "",
     email: "",
     telephone1: "",
-    telephone2: "",
-    whatsapp: "",
-    pays: "",
     fonction: "",
     commentConnu: "",
     dateSouhaitee: "",
@@ -429,9 +426,6 @@ export default function FormationInscriptionForm({
           nom: form.nom,
           email: form.email,
           telephone: form.telephone1,
-          telephone2: form.telephone2,
-          whatsapp: form.whatsapp,
-          ville: ALL_COUNTRIES.find(([, code]) => code === form.pays)?.[0] ?? form.pays,
           fonctionDemandeur: form.fonction,
           entreprise: form.organisme,
           niveauEtudes: form.niveauEtudes,
@@ -512,43 +506,6 @@ export default function FormationInscriptionForm({
           }}
         />
 
-        {/* ── Tabs ──────────────────────────────────────── */}
-        <div
-          style={{
-            display: "flex",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
-            marginTop: 2,
-          }}
-        >
-          {(["pro", "etudiant"] as const).map((t) => {
-            const active = tab === t;
-            return (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setTab(t)}
-                style={{
-                  flex: 1,
-                  padding: "1.1rem 1.5rem",
-                  background: "none",
-                  border: "none",
-                  borderBottom: `2px solid ${active ? ORANGE : "transparent"}`,
-                  color: active ? ORANGE : "rgba(255,255,255,0.4)",
-                  fontFamily: "Futura, system-ui, sans-serif",
-                  fontSize: "1.5rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  transition: "color 0.2s, border-color 0.2s",
-                  marginBottom: -1,
-                }}
-              >
-                {t === "pro" ? "Professionnel" : "Étudiant"}
-              </button>
-            );
-          })}
-        </div>
 
         {/* ── Fields ────────────────────────────────────── */}
         <div style={{ padding: "clamp(1.8rem, 3vw, 2.8rem)" }}>
@@ -686,40 +643,14 @@ export default function FormationInscriptionForm({
               />
             </Field>
 
-            {/* Pays */}
-            <Field label="Pays" required>
-              <CountrySearchSelect
-                value={form.pays}
-                onChange={(code) => set("pays", code)}
-              />
-            </Field>
-
-            {/* Téléphone 1 + 2 */}
-            <Field label="Téléphone 1" required>
+            {/* Téléphone */}
+            <Field label="Téléphone" required style={{ gridColumn: "1 / -1" }}>
               <Input
                 type="tel"
                 required
                 value={form.telephone1}
                 onChange={(e) => set("telephone1", e.target.value)}
                 placeholder="+212 6XX XXX XXX"
-              />
-            </Field>
-            <Field label="Téléphone 2">
-              <Input
-                type="tel"
-                value={form.telephone2}
-                onChange={(e) => set("telephone2", e.target.value)}
-                placeholder="+212 6XX XXX XXX"
-              />
-            </Field>
-
-            {/* WhatsApp — full row */}
-            <Field label="Numéro WhatsApp" style={{ gridColumn: "1 / -1" }}>
-              <Input
-                type="tel"
-                value={form.whatsapp}
-                onChange={(e) => set("whatsapp", e.target.value)}
-                placeholder="Numéro WhatsApp"
               />
             </Field>
 

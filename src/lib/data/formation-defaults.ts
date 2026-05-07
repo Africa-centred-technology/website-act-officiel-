@@ -11,21 +11,18 @@
 
 /* ── 1. Marquee (social proof défilant) ──────────────────── */
 export const DEFAULT_MARQUEE_ITEMS: string[] = [
-  "Formation certifiée Qualiopi",
   "+400 professionnels formés",
   "Note 4,9/5 sur 213 avis",
-  "Finançable CPF & OPCO",
   "Partenaire OpenAI & Anthropic",
   "97% recommandent",
   "32 entreprises clientes",
 ];
 
-/* ── 2. Trust stats du hero (4 chiffres) ─────────────────── */
+/* ── 2. Trust stats du hero (3 chiffres) ─────────────────── */
 export const DEFAULT_TRUST_STATS = [
   { value: "+400",     label: "Pros formés" },
   { value: "4,9/5",    label: "Satisfaction" },
   { value: "97%",      label: "Recommandent" },
-  { value: "Qualiopi", label: "Certifiée" },
 ];
 
 /* ── 3. Pain points (3 cards) ────────────────────────────── */
@@ -150,7 +147,7 @@ export function getDefaultPricingPlans(productPrice?: string): PricingPlan[] {
         "Jusqu'à 12 participants multi-entreprises",
         "Tous les templates & prompts",
         "Agent GPT personnalisé",
-        "Certification ACT",
+        "Attestation de fin de formation",
         "Accès replay 6 mois",
       ],
       cta_label: "Réserver ma place",
@@ -214,10 +211,6 @@ export function getDefaultFaqItems(prerequis?: string): FaqItem[] {
       answer: "En moyenne, nos stagiaires récupèrent 10h par semaine dès la première semaine. Le prix de la formule Pro est rentabilisé en moins de deux semaines.",
     },
     {
-      question: "Est-ce que c'est finançable par mon OPCO / CPF ?",
-      answer: "Oui. ACT est organisme Qualiopi. Nous préparons le dossier avec vous et vos OPCO / le CPF. Délai moyen : 7 à 15 jours.",
-    },
-    {
       question: "Et si je ne peux pas venir à Casablanca ?",
       answer: "La formule Essentiel se déroule 100% en distanciel, en live avec le formateur et un petit groupe (max 12).",
     },
@@ -252,9 +245,9 @@ export const DEFAULT_FINAL_CTA = {
   title_highlight: "Avec vous",
   title_suffix: ", ou sans vous.",
   text: "Chaque semaine sans formation = 10h de productivité perdues à chaque membre de votre équipe.",
-  primary_label: "Je réserve ma place maintenant",
+  primary_label: "Je m'inscris",
   ghost_label: "Planifier un appel 15 min",
-  guarantee: "Garantie satisfait ou remboursé · Qualiopi · CPF / OPCO",
+  guarantee: "Garantie satisfait ou remboursé",
 };
 
 /* ── 12. Places session (product card) ───────────────────── */
