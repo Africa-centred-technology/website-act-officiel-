@@ -128,7 +128,7 @@ export async function POST(req: Request) {
         query: `
           mutation draftOrderCreate($input: DraftOrderInput!) {
             draftOrderCreate(input: $input) {
-              draftOrder { id name }
+              draftOrder { id name invoiceUrl }
               userErrors { field message }
             }
           }
@@ -153,9 +153,11 @@ export async function POST(req: Request) {
       );
     }
 
+    const draftOrder = json.data.draftOrderCreate.draftOrder;
     return NextResponse.json({
       success: true,
-      draftOrder: json.data.draftOrderCreate.draftOrder,
+      draftOrder,
+      checkoutUrl: draftOrder?.invoiceUrl ?? null,
     });
 
   } catch (error) {

@@ -439,8 +439,15 @@ export default function FormationInscriptionForm({
         }),
       });
       if (!res.ok) throw new Error();
+      const json = await res.json();
       setStatus("success");
       onSuccess?.();
+      // Redirect vers le checkout Shopify si disponible
+      const checkoutUrl: string | undefined = json?.checkoutUrl;
+      if (checkoutUrl) {
+        // Petite latence pour permettre l'affichage du screen succès, puis redirect
+        setTimeout(() => { window.location.href = checkoutUrl; }, 1200);
+      }
     } catch {
       setStatus("error");
     }
@@ -470,14 +477,19 @@ export default function FormationInscriptionForm({
             fontFamily: "Futura, system-ui, sans-serif",
           }}
         >
-          Inscription envoyée !
+          Inscription validée !
         </h3>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.65rem", lineHeight: 1.7 }}>
-          Notre équipe vous contactera sous 24h ouvrées pour confirmer votre inscription.
+          Vous allez être redirigé vers le paiement sécurisé Shopify…
           <br />
-          Un email de confirmation vous a été envoyé à{" "}
-          <strong style={{ color: ORANGE }}>{form.email}</strong>.
+          <span style={{ fontSize: "1.2rem", opacity: 0.7 }}>
+            Si la redirection ne se fait pas automatiquement, vérifiez les bloqueurs de popups.
+          </span>
         </p>
+        <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
+          <Loader2 size={32} color={ORANGE} style={{ animation: "spin 1s linear infinite" }} />
+        </div>
+        <style jsx global>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </motion.div>
     );
   }
