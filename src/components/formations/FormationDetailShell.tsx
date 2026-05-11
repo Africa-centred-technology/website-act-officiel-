@@ -115,7 +115,7 @@ interface FormationDetail {
   publicCible: string;
   prerequis: string;
   objectifs: string[];
-  programme: { module: string; details: string[] }[];
+  programme: { module: string; description: string }[];
   livrables: string[];
   methode: string;
   imageUrl?: string;
@@ -413,7 +413,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
 
       {/* ════════════ HERO ════════════ */}
-      <header style={{ position: "relative", padding: "100px 0 120px", overflow: "hidden", borderBottom: `1px solid ${LINE}` }}>
+      <header className="act-hero" style={{ position: "relative", padding: "100px 0 120px", overflow: "hidden", borderBottom: `1px solid ${LINE}` }}>
         <div aria-hidden style={heroBgStyle} />
         {(formation.images?.[0] || formation.imageUrl) && (
           <div aria-hidden style={{
@@ -421,8 +421,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             backgroundImage: `url('${formation.images?.[0] || formation.imageUrl}')`,
           }} />
         )}
-        <div style={containerStyle}>
-          <div style={heroGridStyle}>
+        <div className="act-container" style={containerStyle}>
+          <div className="act-hero-grid" style={heroGridStyle}>
             {/* ── Left column ── */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
              
@@ -463,7 +463,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
             {/* ── Right column: product card ── */}
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }}>
-              <div style={heroCardStyle}>
+              <div className="act-hero-card" style={heroCardStyle}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
                   <span style={cardTagStyle}>
                     <Diamond color={ACT_CREAM} size={7} /> {formation.sessionDateCourte || formation.secteur || "Session · 2026"}
@@ -477,7 +477,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   marginTop: 20, letterSpacing: "-0.02em", color: TXT, fontWeight: 500,
                 }}>{formation.title}</h3>
 
-                <div style={cardMetaStyle}>
+                <div className="act-card-meta" style={cardMetaStyle}>
                   <div>
                     <div style={metaLabelStyle}>Durée</div>
                     <div style={metaValueStyle}>{formation.duree || "2 jours · 14h"}</div>
@@ -513,7 +513,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   <div>
                     <div style={{ ...monoStyle, marginBottom: 4 }}>{heroPromoLabel ? "Tarif promotionnel" : "Tarif"}</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-                      <span style={{
+                      <span className="act-hero-price" style={{
                         fontFamily: FONT_DISPLAY, fontSize: 52, color: ACT_ORANGE,
                         letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic",
                       }}>{formation.prix || "Sur devis"}</span>
@@ -559,8 +559,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </div>
 
       {/* ════════════ PAIN ════════════ */}
-      <section style={secStyle}>
-        <div style={containerStyle}>
+      <section className="act-section" style={secStyle}>
+        <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
             <Eyebrow>Le constat</Eyebrow>
             <h2 style={h2Style}>
@@ -628,8 +628,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </section>
 
       {/* ════════════ VALUE ════════════ */}
-      <section style={{ ...secStyle, background: ACT_DARK_DEEP }}>
-        <div style={containerStyle}>
+      <section className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
+        <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
             <Eyebrow>Ce que vous repartirez avec</Eyebrow>
             <h2 style={h2Style}>Pas une formation.<br />Un <em style={emStyle}>déclic</em> opérationnel.</h2>
@@ -682,14 +682,14 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             </div>
 
             {formation.experts && formation.experts.length > 0 && (
-              <div style={valueVisualStyle}>
+              <div className="act-value-visual" style={valueVisualStyle}>
                 <div>
                   <div style={{ ...monoStyle, color: ACT_CREAM, opacity: 0.8 }}>L'équipe pédagogique</div>
                   <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 42, lineHeight: 1.05, letterSpacing: "-0.02em", marginTop: 16, color: TXT, fontWeight: 500 }}>
                     Conçue par<br /><em style={emStyle}>{formation.experts.length} experts</em><br />de leur domaine.
                   </h4>
                 </div>
-                <div style={{
+                <div className="act-experts-grid" style={{
                   display: "grid",
                   gridTemplateColumns: formation.experts.length > 2 ? "1fr 1fr" : "1fr",
                   gap: 20, marginTop: 24,
@@ -727,8 +727,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
       {/* ════════════ TOOLS ════════════ */}
       {hasOutils && (
-        <section style={secStyle}>
-          <div style={containerStyle}>
+        <section className="act-section" style={secStyle}>
+          <div className="act-container" style={containerStyle}>
             <div style={secHeadStyle}>
               <Eyebrow>Les outils couverts</Eyebrow>
               <h2 style={{ ...h2Style, maxWidth: 780 }}>{outils.length}+ outils IA maîtrisés.<br />Aucune <em style={emStyle}>install</em> obligatoire.</h2>
@@ -758,8 +758,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       )}
 
       {/* ════════════ PROGRAMME ════════════ */}
-      <section id="programme" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
-        <div style={containerStyle}>
+      <section id="programme" className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
+        <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
             <Eyebrow>Programme · {formation.duree || "14 heures"}</Eyebrow>
             <h2 style={h2Style}>Un parcours <em style={emStyle}>dense</em>,<br />100% opérationnel.</h2>
@@ -774,20 +774,20 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
             {formation.programme.map((mod, i) => {
               const isOpen = openModule === i;
-              const hasDetails = mod.details.length > 0;
+              const hasDescription = !!mod.description;
               return (
-                <div key={i} style={{ position: "relative", paddingLeft: 100, paddingBottom: 24 }}>
+                <div key={i} className="act-prog-mod" style={{ position: "relative", paddingLeft: 100, paddingBottom: 24 }}>
                   <div style={{
                     position: "absolute", left: 34, top: 28, width: 14, height: 14,
                     background: ACT_ORANGE, transform: "rotate(-43.264deg)",
                     boxShadow: `0 0 0 8px rgba(211,84,0,0.12), 0 0 20px rgba(211,84,0,0.5)`,
                   }} />
                   <button
-                    onClick={() => hasDetails && setOpenModule(isOpen ? null : i)}
+                    onClick={() => hasDescription && setOpenModule(isOpen ? null : i)}
                     style={{
                       width: "100%", textAlign: "left",
                       background: "none", border: "none", padding: "20px 0",
-                      cursor: hasDetails ? "pointer" : "default", color: TXT,
+                      cursor: hasDescription ? "pointer" : "default", color: TXT,
                       display: "flex", justifyContent: "space-between", alignItems: "flex-start",
                       gap: 24,
                     }}
@@ -797,13 +797,13 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                         fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
                         textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
                       }}>Module {String(i + 1).padStart(2, "0")}</div>
-                      <h3 style={{
+                      <h3 className="act-prog-h3" style={{
                         fontFamily: FONT_DISPLAY, fontSize: 36, lineHeight: 1.1,
                         marginTop: 8, color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500,
                         transition: "color 0.25s",
                       }}>{mod.module}</h3>
                     </div>
-                    {hasDetails && (
+                    {hasDescription && (
                       <span style={{
                         flexShrink: 0, marginTop: 24,
                         width: 36, height: 36,
@@ -820,7 +820,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   </button>
 
                   <AnimatePresence initial={false}>
-                    {isOpen && hasDetails && (
+                    {isOpen && hasDescription && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -828,21 +828,13 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                         style={{ overflow: "hidden" }}
                       >
-                        <ul style={{
-                          padding: "0 0 28px 0", margin: 0, display: "grid",
-                          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                          gap: "10px 28px", maxWidth: 780, listStyle: "none",
+                        <p style={{
+                          padding: "0 0 28px 0", margin: 0,
+                          maxWidth: 780, fontSize: 16, lineHeight: 1.7,
+                          color: "rgba(255,255,255,0.78)", fontWeight: 300,
                         }}>
-                          {mod.details.map((d, j) => (
-                            <li key={j} style={{
-                              fontSize: 15, lineHeight: 1.5, color: "rgba(255,255,255,0.78)", fontWeight: 300,
-                              paddingLeft: 24, position: "relative",
-                            }}>
-                              <span style={{ position: "absolute", left: 0, top: 8, width: 10, height: 1, background: ACT_ORANGE }} />
-                              {d}
-                            </li>
-                          ))}
-                        </ul>
+                          {mod.description}
+                        </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -859,7 +851,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         background: `radial-gradient(ellipse at 30% 50%, rgba(211,84,0,0.3), transparent 60%), radial-gradient(ellipse at 75% 50%, rgba(243,156,18,0.22), transparent 60%), ${ACT_DARK_DEEP}`,
         borderTop: `1px solid rgba(211,84,0,0.3)`, borderBottom: `1px solid rgba(211,84,0,0.3)`,
       }}>
-        <div style={containerStyle}>
+        <div className="act-container" style={containerStyle}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
             <div>
               <Eyebrow>Pas encore prêt à vous inscrire ?</Eyebrow>
@@ -899,8 +891,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </section>
 
       {/* ════════════ AUDIENCE — carrousels infinis ════════════ */}
-      <section style={secStyle}>
-        <div style={containerStyle}>
+      <section className="act-section" style={secStyle}>
+        <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
             <Eyebrow>Pour qui ?</Eyebrow>
             <h2 style={h2Style}>Conçu pour les pros<br />qui veulent <em style={emStyle}>des résultats</em>.</h2>
@@ -954,8 +946,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </section>
 
       {/* ════════════ PRICING ════════════ */}
-      <section id="pricing" style={secStyle}>
-        <div style={containerStyle}>
+      <section id="pricing" className="act-section" style={secStyle}>
+        <div className="act-container" style={containerStyle}>
           <div style={{ ...secHeadStyle, textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>Tarifs</Eyebrow></div>
             <h2 style={{ ...h2Style, textAlign: "center" }}>Trois façons de <em style={emStyle}>démarrer</em>.<br />Une seule, la bonne pour vous.</h2>
@@ -982,7 +974,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <div style={{ marginTop: 28, paddingTop: 28, borderTop: `1px dashed rgba(255,255,255,0.1)` }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                    <span style={{
+                    <span className="act-price-feature" style={{
                       fontFamily: FONT_DISPLAY, fontStyle: "italic", fontSize: 72,
                       lineHeight: 0.95, letterSpacing: "-0.03em",
                       color: p.featured ? ACT_ORANGE : WHITE,
@@ -1029,8 +1021,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </section>
 
       {/* ════════════ FAQ ════════════ */}
-      <section style={{ ...secStyle, background: ACT_DARK_DEEP }}>
-        <div style={containerStyle}>
+      <section className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
+        <div className="act-container" style={containerStyle}>
           <div style={{ ...secHeadStyle, textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>Questions fréquentes</Eyebrow></div>
             <h2 style={{ ...h2Style, textAlign: "center" }}>
@@ -1106,7 +1098,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             style={stickyBarStyle}
           >
             <AnnouncementBar items={formation.announcementItems} />
-            <div style={stickyBarInnerStyle}>
+            <div className="act-sticky-inner" style={stickyBarInnerStyle}>
               <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0, flex: 1 }}>
                 <span style={{
                   fontFamily: FONT_LABEL, fontSize: 10, letterSpacing: "0.18em",
@@ -1161,6 +1153,64 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
         @keyframes pulseDot {
           0%, 100% { opacity: 1; transform: scale(1); }
           50%      { opacity: 0.4; transform: scale(1.4); }
+        }
+
+        /* ── Responsive — tablet (≤1024px) ── */
+        @media (max-width: 1024px) {
+          .act-container  { padding: 0 24px !important; }
+          .act-hero       { padding: 80px 0 100px !important; }
+          .act-hero-grid  { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .act-section    { padding: 88px 0 !important; }
+          .act-value-visual {
+            position: relative !important; top: auto !important;
+            aspect-ratio: unset !important; padding: 36px !important;
+          }
+          .act-prog-mod   { padding-left: 72px !important; }
+          .act-prog-h3    { font-size: 28px !important; }
+          .act-price-feature { font-size: 56px !important; }
+        }
+
+        /* ── Responsive — mobile (≤768px) ── */
+        @media (max-width: 768px) {
+          .act-container  { padding: 0 20px !important; }
+          .act-hero       { padding: 64px 0 80px !important; }
+          .act-hero-grid  { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .act-hero-card  { padding: 22px !important; }
+          .act-hero-price { font-size: 38px !important; }
+          .act-card-meta  { grid-template-columns: 1fr 1fr !important; gap: 12px 16px !important; }
+          .act-section    { padding: 72px 0 !important; }
+          .act-value-visual { padding: 28px !important; }
+          .act-value-visual h4 { font-size: 32px !important; }
+          .act-experts-grid { grid-template-columns: 1fr !important; }
+          .act-prog-mod   { padding-left: 64px !important; }
+          .act-prog-h3    { font-size: 24px !important; }
+          .act-price-feature { font-size: 48px !important; }
+          .act-sticky-inner {
+            padding: 10px 16px !important;
+            gap: 12px !important;
+            flex-wrap: wrap !important;
+          }
+          .act-sticky-inner > div { min-width: 0; flex: 1 1 auto !important; }
+        }
+
+        /* ── Responsive — small mobile (≤480px) ── */
+        @media (max-width: 480px) {
+          .act-container  { padding: 0 16px !important; }
+          .act-hero       { padding: 48px 0 64px !important; }
+          .act-hero-card  { padding: 16px !important; }
+          .act-hero-price { font-size: 30px !important; }
+          .act-card-meta  { grid-template-columns: 1fr !important; }
+          .act-section    { padding: 56px 0 !important; }
+          .act-value-visual { padding: 20px !important; }
+          .act-value-visual h4 { font-size: 26px !important; }
+          .act-experts-grid { grid-template-columns: 1fr !important; }
+          .act-prog-mod   { padding-left: 60px !important; }
+          .act-prog-h3    { font-size: 20px !important; }
+          .act-price-feature { font-size: 40px !important; }
+          .act-sticky-inner {
+            padding: 8px 12px !important;
+            gap: 10px !important;
+          }
         }
       `}</style>
     </div>

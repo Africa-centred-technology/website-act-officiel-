@@ -377,7 +377,7 @@ export interface ShopifyFormationDetail extends ShopifyFormationCard {
   publicCible: string;
   prerequis: string;
   objectifs: string[];
-  programme: { module: string; details: string[]; duree?: string }[];
+  programme: { module: string; description: string }[];
   livrables: string[];
   methode: string;
   images?: string[];
@@ -586,36 +586,34 @@ function parseOutilsCouverts(value: string): OutilCouvert[] {
   }
 }
 
-/** Traite spécifiquement le programme avec validation de structure */
-function parseProgramme(value: string): { module: string; details: string[]; duree?: string }[] {
+/** Parse le metafield programme.
+ *  Nouveau format : [{ module, description }]
+ *  Ancien format  : [{ module, details: string[] }] — converti en description par jointure */
+function parseProgramme(value: string): { module: string; description: string }[] {
   if (!value) return [];
-  
   try {
     const parsed = JSON.parse(value);
-    
-    // Gère deux formats : objet avec clé "programme" ou tableau direct
     const programmes = Array.isArray(parsed) ? parsed : parsed.programme;
-    
-    if (!Array.isArray(programmes)) {
-      console.warn("Programme n'est pas un tableau:", parsed);
-      return [];
-    }
-    
-    // Normalise chaque module
+    if (!Array.isArray(programmes)) return [];
     return programmes
-      .map((item: any) => ({
-        module: item.module || item.titre || item.title || "",
-        details: Array.isArray(item.details) 
-          ? item.details.filter((d: any) => d)
+      .map((item: any) => {
+        const module = String(item.module || item.titre || item.title || "").trim();
+        if (!module) return null;
+        // Nouveau format : champ description directement
+        if (typeof item.description === "string" && item.description.trim()) {
+          return { module, description: item.description.trim() };
+        }
+        // Ancien format : details[]  → on joint en paragraphe
+        const details: string[] = Array.isArray(item.details)
+          ? item.details.map((d: any) => String(d).trim()).filter(Boolean)
           : Array.isArray(item.contenu)
-          ? item.contenu.filter((d: any) => d)
-          : (typeof item.details === "string" ? item.details.split("\n").filter(Boolean) : []),
-        duree: item.duree || item.duration || undefined,
-      }))
-      .filter((m: any) => m.module); // Filtre les modules vides
+          ? item.contenu.map((d: any) => String(d).trim()).filter(Boolean)
+          : [];
+        return { module, description: details.join(" · ") };
+      })
+      .filter((m): m is { module: string; description: string } => m !== null);
   } catch (error) {
     console.warn(`Impossible de parser le programme: ${error instanceof Error ? error.message : String(error)}`);
-    console.debug(`Valeur reçue: ${value}`);
     return [];
   }
 }
