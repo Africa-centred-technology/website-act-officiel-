@@ -480,7 +480,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 <div className="act-card-meta" style={cardMetaStyle}>
                   <div>
                     <div style={metaLabelStyle}>Durée</div>
-                    <div style={metaValueStyle}>{formation.duree || "2 jours · 14h"}</div>
+                    <div style={metaValueStyle}>{formation.duree || "2 jours · 14h"} Heures</div>
                   </div>
                   <div>
                     <div style={metaLabelStyle}>Format</div>
@@ -586,7 +586,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </motion.div>
 
           <div style={painSubheadStyle}>
-            <Diamond color={ACT_GOLD} size={6} />  symptômes que vous reconnaissez peut-être
+            <Diamond color={ACT_GOLD} size={6} />  Les problèmes récurrents que vous rencontrez :
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
