@@ -441,7 +441,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               </h1>
               <p style={ledeStyle}>{formation.accroche}</p>
 
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+              <div className="act-hero-btns" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
                 <Btn variant="primary" onClick={() => goInscription("hero_primary")}>Je m'inscris →</Btn>
                 <Btn variant="ghost" onClick={() => { trackCtaClick("hero_voir_programme", slug); scrollTo("programme")(); }}>
                   <Diamond /> Voir le programme
@@ -1176,6 +1176,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
           .act-hero       { padding: 64px 0 80px !important; }
           .act-hero-grid  { grid-template-columns: 1fr !important; gap: 40px !important; }
           .act-hero-card  { padding: 22px !important; }
+          .act-hero-btns  { justify-content: center !important; }
           .act-hero-price { font-size: 38px !important; }
           .act-card-meta  { grid-template-columns: 1fr 1fr !important; gap: 12px 16px !important; }
           .act-section    { padding: 72px 0 !important; }
@@ -1191,6 +1192,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             flex-wrap: wrap !important;
           }
           .act-sticky-inner > div { min-width: 0; flex: 1 1 auto !important; }
+          .act-sticky-inner > button { margin-left: auto !important; }
         }
 
         /* ── Responsive — small mobile (≤480px) ── */
