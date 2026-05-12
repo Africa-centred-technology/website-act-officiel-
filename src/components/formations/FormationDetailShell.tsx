@@ -109,7 +109,6 @@ interface FormationDetail {
   niveau: string;
   duree: string;
   format: string;
-  parcours?: string;
   prix?: string;
   accroche: string;
   publicCible: string;
@@ -140,12 +139,9 @@ interface FormationDetail {
   hookPain?: string;
   hookPainQuestion?: string;
   promesseTitre?: string;
-  taglineAction?: string;
   sessionDate?: string;
   sessionLieu?: string;
   sessionDateCourte?: string;
-  uspBanner?: string;
-  cafeLabel?: string;
   painPoints?: { title: string; text: string; image_url?: string }[];
   announcementItems?: string[];
   faqItems?: { question: string; answer: string }[];
@@ -1031,9 +1027,8 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             lineHeight: 0.95, maxWidth: 1000, margin: "20px auto 32px",
             color: TXT, fontWeight: 500, letterSpacing: "-0.025em", textWrap: "balance",
           }}>
-            {formation.taglineAction || (
-              <>Arrêtez de subir.<br /><em style={emStyle}>Commencez à maîtriser.</em></>
-            )}
+            <>Arrêtez de subir.<br /><em style={emStyle}>Commencez à maîtriser.</em></>
+
           </h2>
           <p style={{
             fontSize: 18, lineHeight: 1.55, color: "rgba(255,255,255,0.72)",
@@ -1050,7 +1045,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
               href={`/contact?formation=${slug}&intent=cafe`}
               style={{ padding: "22px 40px", fontSize: 13 }}
             >
-              ☕ {formation.cafeLabel || "On en parle autour d'un café ?"}
+              ☕ On en parle autour d'un café ?
             </Btn>
           </div>
         </div>
@@ -1422,18 +1417,6 @@ const expertCardStyle: React.CSSProperties = {
   backdropFilter: "blur(4px)",
 };
 
-const uspBannerStyle: React.CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 10,
-  marginBottom: 24,
-  padding: "10px 18px",
-  background: "linear-gradient(135deg, rgba(243,156,18,0.18), rgba(211,84,0,0.18))",
-  border: "1px solid rgba(243,156,18,0.4)",
-  fontFamily: "'Poppins', system-ui, sans-serif",
-  fontSize: 12, fontWeight: 600,
-  letterSpacing: "0.08em", textTransform: "uppercase",
-  color: "#F39C12",
-  borderRadius: 2,
-};
 
 const painQABlockStyle: React.CSSProperties = {
   position: "relative",

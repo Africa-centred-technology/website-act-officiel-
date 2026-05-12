@@ -57,7 +57,6 @@ const PRODUCTS_QUERY = `
             { namespace: "custom", key: "duree" }
             { namespace: "custom", key: "format_suported" }
             { namespace: "custom", key: "accroche" }
-            { namespace: "custom", key: "parcours" }
             { namespace: "custom", key: "pricing_plans" }
           ]) {
             key
@@ -94,7 +93,6 @@ export interface ShopifyFormationCard {
   niveau: string;
   duree: string;
   format: string;
-  parcours?: string;
   prix: string;
   accroche: string;
   imageUrl?: string;
@@ -174,7 +172,6 @@ function mapProduct(node: any): ShopifyFormationCard {
   const duree     = extractMeta(metafields, "duree")     || extractTag(tags, "duree")     || "";
   const format    = extractMeta(metafields, "format")    || extractTag(tags, "format")    || "";
   const accroche  = extractMeta(metafields, "accroche")  || node.description              || "";
-  const parcours  = extractMeta(metafields, "parcours")  || extractTag(tags, "parcours")  || undefined;
   const prix      = formatShopifyPrice(price?.amount ?? "0", price?.currencyCode ?? "MAD");
 
   const pricingPlans = parsePricingPlans(extractRawMeta(metafields, "pricing_plans"));
@@ -189,7 +186,6 @@ function mapProduct(node: any): ShopifyFormationCard {
     niveau,
     duree,
     format,
-    parcours:   parcours || undefined,
     prix,
     accroche,
     imageUrl:   firstImage?.url,
@@ -310,7 +306,6 @@ const PRODUCT_BY_HANDLE_QUERY = `
         { namespace: "custom", key: "duree" }
         { namespace: "custom", key: "format" }
         { namespace: "custom", key: "accroche" }
-        { namespace: "custom", key: "parcours" }
         { namespace: "custom", key: "public_cible_act" }
         { namespace: "custom", key: "prerequis_" }
         { namespace: "custom", key: "Objectifs_pedagogiques" }
@@ -324,12 +319,9 @@ const PRODUCT_BY_HANDLE_QUERY = `
         { namespace: "custom", key: "hook_pain" }
         { namespace: "custom", key: "hook_pain_question" }
         { namespace: "custom", key: "promesse_titre" }
-        { namespace: "custom", key: "tagline_action" }
         { namespace: "custom", key: "session_date" }
         { namespace: "custom", key: "session_lieu" }
         { namespace: "custom", key: "session_date_courte" }
-        { namespace: "custom", key: "usp_banner" }
-        { namespace: "custom", key: "cafe_label" }
         { namespace: "custom", key: "pain_points" }
         { namespace: "custom", key: "announcement_items" }
         { namespace: "custom", key: "faq_items" }
@@ -388,12 +380,9 @@ export interface ShopifyFormationDetail extends ShopifyFormationCard {
   hookPain?: string;
   hookPainQuestion?: string;
   promesseTitre?: string;
-  taglineAction?: string;
   sessionDate?: string;
   sessionLieu?: string;
   sessionDateCourte?: string;
-  uspBanner?: string;
-  cafeLabel?: string;
   painPoints?: PainPoint[];
   announcementItems?: string[];
   faqItems?: { question: string; answer: string }[];
@@ -638,12 +627,9 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
   const hookPain          = extractMeta(metafields, "hook_pain")          || undefined;
   const hookPainQuestion  = extractMeta(metafields, "hook_pain_question") || undefined;
   const promesseTitre     = extractMeta(metafields, "promesse_titre")     || undefined;
-  const taglineAction     = extractMeta(metafields, "tagline_action")     || undefined;
   const sessionDate       = extractMeta(metafields, "session_date")       || undefined;
   const sessionLieu       = extractMeta(metafields, "session_lieu")       || undefined;
   const sessionDateCourte = extractMeta(metafields, "session_date_courte") || undefined;
-  const uspBanner         = extractMeta(metafields, "usp_banner")          || undefined;
-  const cafeLabel         = extractMeta(metafields, "cafe_label")          || undefined;
   const painPoints        = parsePainPoints(extractRawMeta(metafields, "pain_points"));
   const announcementItems = parseAnnouncementItems(extractRawMeta(metafields, "announcement_items"));
   const faqItems          = parseFaqItems(extractRawMeta(metafields, "faq_items"));
@@ -666,12 +652,9 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
     hookPain,
     hookPainQuestion,
     promesseTitre,
-    taglineAction,
     sessionDate,
     sessionLieu,
     sessionDateCourte,
-    uspBanner,
-    cafeLabel,
     painPoints,
     announcementItems: announcementItems.length > 0 ? announcementItems : undefined,
     faqItems: faqItems.length > 0 ? faqItems : undefined,
