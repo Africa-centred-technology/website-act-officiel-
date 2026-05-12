@@ -154,7 +154,7 @@ function extractFileMeta(metafields: MetafieldWithReference[], key: string): str
 function formatShopifyPrice(amount: string, currencyCode: string): string {
   const value = parseFloat(amount);
   if (isNaN(value) || value === 0) return "Nous consulter";
-  if (currencyCode === "MAD") return `${Math.round(value)} dhs`;
+  if (currencyCode === "MAD") return `${Math.round(value)} MAD`;
   return `${Math.round(value)} ${currencyCode}`;
 }
 

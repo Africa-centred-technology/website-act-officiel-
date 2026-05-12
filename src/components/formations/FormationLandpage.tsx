@@ -18,7 +18,7 @@ const COLOR = "#D35400";
 const STATS = [
     { value: "12+",     label: "Formations",  sub: "disponibles"          },
     { value: "7h",      label: "Par journée", sub: "de pratique"          },
-    { value: "400 dhs", label: "À partir de", sub: "par formation"        },
+    { value: "400 MAD", label: "À partir de", sub: "par formation"        },
     { value: "100%",    label: "Pratique",    sub: "cas réels entreprise" },
 ];
 

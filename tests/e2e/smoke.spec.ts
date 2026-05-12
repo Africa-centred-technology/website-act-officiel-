@@ -27,7 +27,7 @@ const MOCK_CARD = {
   niveau: "Initiation",
   duree: "1 journée (7h)",
   format: "Présentiel",
-  prix: "400 dhs",
+  prix: "400 MAD",
   accroche: "Maîtrisez les outils IA en 1 journée",
   imageUrl: "https://cdn.shopify.com/s/files/placeholder.jpg",
   shopifyId: "gid://shopify/Product/1234567890",

@@ -318,10 +318,10 @@ export default function HeroSection() {
 
 
            {/* Right — mots empilés, alignés à droite, perspective 3D */}
-          <div className="mobile-txt-center" style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
-            <WordChars text="AFRICA" delay={0.10} fx="rollIn" stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
-            <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.8rem, 5vw, 7rem)" />
-            <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(3.5rem, 8vw, 10rem)" />
+          <div className="mobile-txt-center" style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1, minWidth: 0 }}>
+            <WordChars text="AFRICA" delay={0.10} fx="rollIn" stagger={0.040} size="clamp(3.5rem, 7.5vw, 11rem)" />
+            <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.4rem, 4.2vw, 6rem)" />
+            <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(2.8rem, 5.8vw, 8rem)" />
 
             <motion.p
               style={{

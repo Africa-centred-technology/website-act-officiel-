@@ -513,7 +513,6 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                         fontFamily: FONT_DISPLAY, fontSize: 52, color: ACT_ORANGE,
                         letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic",
                       }}>{formation.prix || "Sur devis"}</span>
-                      {formation.prix && <span style={{ fontFamily: FONT_LABEL, fontSize: 14, color: TXT_MID }}>MAD HT</span>}
                     </div>
                     {heroPrixBarre && (
                       <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
@@ -1064,7 +1063,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             <AnnouncementBar items={formation.announcementItems} />
             <div className="act-sticky-inner" style={stickyBarInnerStyle}>
               <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0, flex: 1 }}>
-                <span style={{
+                <span className="act-sticky-title" style={{
                   fontFamily: FONT_LABEL, fontSize: 10, letterSpacing: "0.18em",
                   textTransform: "uppercase", color: TXT_MID, fontWeight: 600,
                   whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
@@ -1079,7 +1078,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
                     {formation.prix || "Sur devis"}
                   </span>
                   {formation.prix && (
-                    <span style={{ fontFamily: FONT_LABEL, fontSize: 11, color: TXT_MID }}>MAD HT</span>
+                    <span style={{ fontFamily: FONT_LABEL, fontSize: 11, color: TXT_MID }}>MAD</span>
                   )}
                 </div>
               </div>
@@ -1153,10 +1152,11 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
           .act-sticky-inner {
             padding: 10px 16px !important;
             gap: 12px !important;
-            flex-wrap: wrap !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
           }
           .act-sticky-inner > div { min-width: 0; flex: 1 1 auto !important; }
-          .act-sticky-inner > button { margin-left: auto !important; }
+          .act-sticky-title { display: none !important; }
         }
 
         /* ── Responsive — small mobile (≤480px) ── */
@@ -1176,7 +1176,10 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
           .act-sticky-inner {
             padding: 8px 12px !important;
             gap: 10px !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
           }
+          .act-sticky-title { display: none !important; }
         }
       `}</style>
     </div>
