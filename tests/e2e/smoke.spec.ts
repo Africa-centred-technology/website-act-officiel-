@@ -36,23 +36,39 @@ const MOCK_CARD = {
 /** ShopifyFormationDetail shape returned by GET /api/shopify/formations/[slug] */
 const MOCK_DETAIL = {
   ...MOCK_CARD,
-  publicCible: "Professionnels, Managers",
+  publicCible: "Professionnels, Managers, Consultants",
   prerequis: "Aucun prérequis",
   objectifs: [
     "Comprendre les bases de l'IA",
     "Utiliser ChatGPT et les outils IA au quotidien",
   ],
+  // Nouveau format : description (string) au lieu de details (string[])
   programme: [
     {
       module: "Introduction à l'IA",
-      details: ["Définitions", "Panorama des outils"],
-      duree: "2h",
+      description: "Définitions clés et panorama des outils IA disponibles en 2025.",
+    },
+    {
+      module: "Prompts efficaces",
+      description: "Méthode CREA pour rédiger des prompts qui donnent des résultats.",
     },
   ],
-  livrables: ["Certificat numérique ACT"],
+  livrables: ["Attestation de participation", "Pack 20 prompts PDF"],
   methode: "Présentiel avec exercices pratiques sur poste",
   images: ["https://cdn.shopify.com/s/files/placeholder.jpg"],
   descriptionHtml: "<p>Formation IA pour les professionnels — 1 journée intensive.</p>",
+  pricingPlans: [
+    {
+      title: "Inter",
+      description: "Session inter-entreprises.",
+      amount: "990",
+      currency: "MAD HT",
+      featured: true,
+      cta_label: "Réserver ma place",
+      cta_type: "inscription",
+      features: ["3h d'atelier en présentiel", "Pack 20 prompts", "Attestation"],
+    },
+  ],
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -112,6 +128,22 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
 
     // La page ne doit pas afficher une erreur
     await expect(page.locator("body")).not.toContainText("Formation introuvable");
+    await expect(page.locator("body")).not.toContainText("Application error");
+
+    // Section programme — nouveau format description (plus de details[])
+    await expect(
+      page.getByText("Introduction à l'IA").first()
+    ).toBeVisible({ timeout: 10_000 });
+
+    // Section "Pour qui ?" — pills statiques
+    await expect(
+      page.getByText("Professionnels").first()
+    ).toBeVisible({ timeout: 10_000 });
+
+    // Section tarifs — pricingPlan mocké
+    await expect(
+      page.getByText("Réserver ma place").first()
+    ).toBeVisible({ timeout: 10_000 });
   });
 
   // ── 4. Formulaire contact ─────────────────────────────────────────────────
