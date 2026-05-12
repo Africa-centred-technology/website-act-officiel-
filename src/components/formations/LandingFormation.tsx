@@ -515,7 +515,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
                 <PrimaryBtn onClick={() => setIsModal(true)}>Réserver ma place</PrimaryBtn>
               </div>
               <p style={{ color: TEXT_GRAY, fontSize: "1rem", fontWeight: 500 }}>
-                ✓ Réponse sous 24h · ✓ Sans engagement · ✓ Satisfait ou remboursé 7 jours
+                ✓ Réponse sous 24h · ✓ Sans engagement
               </p>
             </div>
           </section>

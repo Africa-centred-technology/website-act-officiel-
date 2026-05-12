@@ -218,10 +218,6 @@ export function getDefaultFaqItems(prerequis?: string): FaqItem[] {
       question: "Et le RGPD / les données sensibles ?",
       answer: "Un module complet est dédié à l'usage éthique et conforme : RGPD, IA Act, paramètres confidentialité des outils, alternatives on-premise.",
     },
-    {
-      question: "Si je ne suis pas satisfait ?",
-      answer: "Garantie satisfait ou remboursé à la fin du jour 1. Si à la pause déjeuner, la formation ne correspond pas à vos attentes, nous vous remboursons intégralement.",
-    },
   ];
 }
 
@@ -247,7 +243,7 @@ export const DEFAULT_FINAL_CTA = {
   text: "Chaque semaine sans formation = 10h de productivité perdues à chaque membre de votre équipe.",
   primary_label: "Je m'inscris",
   ghost_label: "Planifier un appel 15 min",
-  guarantee: "Garantie satisfait ou remboursé",
+  guarantee: "",
 };
 
 /* ── 12. Places session (product card) ───────────────────── */

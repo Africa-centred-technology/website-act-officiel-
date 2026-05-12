@@ -71,7 +71,6 @@ const PILLARS = [
 ];
 
 const GUARANTEES = [
-    { emoji: "✅", label: "Satisfait ou remboursé", detail: "Vous disposez de 7 jours après le début pour demander un remboursement intégral, sans justification." },
     { emoji: "👥", label: "Petits groupes ≤ 12",    detail: "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
     { emoji: "🎓", label: "Formateur praticien",    detail: "Votre formateur travaille en entreprise aujourd'hui. Pas de formateurs-bibliothèque." },
     { emoji: "♾️", label: "Ressources à vie",       detail: "Slides, exercices et enregistrements restent accessibles sans limite de durée." },
@@ -570,7 +569,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
             </RippleButton>
 
             <p style={{ textAlign: "center", fontSize: "1rem", color: "rgba(255,255,255,0.3)", marginTop: "1.2rem", fontFamily: "var(--font-body)" }}>
-                ✓ Réponse sous 24h · ✓ Sans engagement · ✓ Satisfait ou remboursé 7 jours
+                ✓ Réponse sous 24h · ✓ Sans engagement
             </p>
         </motion.form>
     );

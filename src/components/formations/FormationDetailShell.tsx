@@ -742,7 +742,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 animation: `toolsSlide 40s linear infinite ${idx === 1 ? "reverse" : ""}`,
                 width: "max-content",
               }}>
-                {[...row, ...row].map((t, i) => (
+                {[...row, ...row, ...row, ...row, ...row, ...row,, ...row, ...row].map((t, i) => (
                   <div key={i} style={toolPillStyle}>
                     <span style={{
                       width: 8, height: 8, borderRadius: "50%",
@@ -859,7 +859,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 Téléchargez la <em style={emStyle}>brochure</em> complète.
               </h2>
               <p style={{ ...secPStyle, fontSize: 17 }}>
-                Tout le programme, les livrables et les tarifs en 1 PDF · Reçu en 30 secondes par email.
+                Tout le programme, les livrables et les tarifs en 1 PDF · Téléchargement immédiat après validation du formulaire.
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-start" }}>
@@ -871,7 +871,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 }}
                 minWidth={300}
               >
-                <span>📄 Recevoir la brochure (PDF)</span><span>→</span>
+                <span>📄 Télécharger la brochure (PDF)</span><span>→</span>
               </Btn>
               <div style={{
                 display: "flex", alignItems: "center", gap: 18, marginTop: 6,
@@ -882,13 +882,14 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   <Diamond color={ACT_GOLD} size={6} /> 100% gratuit
                 </span>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  <Diamond color={ACT_GOLD} size={6} /> Aucun spam
+                  <Diamond color={ACT_GOLD} size={6} /> Accès immédiat
                 </span>
               </div>
             </div>
           </div>
         </div>
       </section>
+      
 
       {/* ════════════ AUDIENCE — carrousels infinis ════════════ */}
       <section className="act-section" style={secStyle}>
@@ -912,7 +913,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   animation: `audienceSlide 50s linear infinite ${idx === 1 ? "reverse" : ""}`,
                   width: "max-content",
                 }}>
-                  {[...row, ...row].map((item, i) => {
+                  {[...row, ...row, ...row, ...row, ...row].map((item, i) => {
                     const card = audienceCards[i % audienceCards.length];
                     const label = typeof item === "string" ? item : card.title;
                     const num = ((i % row.length) + 1 + (idx * row.length));
@@ -1011,11 +1012,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </div>
 
           <div style={{ marginTop: 60, display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
-            {["Paiement en 3× sans frais", "Satisfait ou remboursé"].map((t, i) => (
-              <div key={i} style={monoStyle}>
-                <span style={{ color: ACT_GOLD }}>✓ </span>{t}
-              </div>
-            ))}
+            <div style={monoStyle}>
+              <span style={{ color: ACT_GOLD }}>✓ </span>Paiement en 3× sans frais
+            </div>
           </div>
         </div>
       </section>
@@ -1075,14 +1074,6 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             >
               ☕ {formation.cafeLabel || "On en parle autour d'un café ?"}
             </Btn>
-          </div>
-          <div style={{
-            marginTop: 48, display: "inline-flex", alignItems: "center", gap: 10,
-            fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
-            textTransform: "uppercase", color: "rgba(255,255,255,0.55)", fontWeight: 500,
-          }}>
-            <Diamond color={ACT_GOLD} />
-            {finalCta.guarantee}
           </div>
         </div>
       </section>
