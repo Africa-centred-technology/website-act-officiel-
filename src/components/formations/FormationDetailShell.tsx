@@ -480,7 +480,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 <div className="act-card-meta" style={cardMetaStyle}>
                   <div>
                     <div style={metaLabelStyle}>Durée</div>
-                    <div style={metaValueStyle}>{formation.duree || "2 jours · 14h"} Heures</div>
+                    <div style={metaValueStyle}>{formation.duree || ""} </div>
                   </div>
                   <div>
                     <div style={metaLabelStyle}>Format</div>
@@ -891,7 +891,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       </section>
       
 
-      {/* ════════════ AUDIENCE — carrousels infinis ════════════ */}
+      {/* ════════════ AUDIENCE — pill marquee ════════════ */}
       <section className="act-section" style={secStyle}>
         <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
@@ -900,50 +900,33 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </div>
         </div>
 
-        {(() => {
-          const items = audience.length > 0 ? audience : audienceCards.map(a => a.title);
-          const half = Math.ceil(items.length / 2);
-          const rowA = items.slice(0, half);
-          const rowB = items.slice(half).length > 0 ? items.slice(half) : rowA;
-          return (
-            <div style={{ display: "flex", flexDirection: "column", gap: 18, overflow: "hidden" }}>
-              {[rowA, rowB].map((row, idx) => (
-                <div key={idx} className="audience-row" style={{
-                  display: "flex", gap: 18, alignItems: "stretch",
-                  animation: `audienceSlide 50s linear infinite ${idx === 1 ? "reverse" : ""}`,
-                  width: "max-content",
-                }}>
-                  {[...row, ...row, ...row, ...row, ...row].map((item, i) => {
-                    const card = audienceCards[i % audienceCards.length];
-                    const label = typeof item === "string" ? item : card.title;
-                    const num = ((i % row.length) + 1 + (idx * row.length));
-                    const productImages = formation.images && formation.images.length > 0 ? formation.images : [];
-                    const cardImg = productImages.length > 0
-                      ? productImages[i % productImages.length]
-                      : card.img;
-                    return (
-                      <div key={i} style={audienceCardStyle}>
-                        <div style={{
-                          position: "absolute", inset: 0, backgroundImage: `url(${cardImg})`,
-                          backgroundSize: "cover", backgroundPosition: "center",
-                          opacity: 0.22, filter: "grayscale(0.5) contrast(1.05)", zIndex: 0,
-                        }} />
-                        <div style={{ position: "relative", zIndex: 1 }}>
-                          <div style={audienceIconStyle}>{String(num).padStart(2, "0")}</div>
-                        </div>
-                        <div style={{ position: "relative", zIndex: 1 }}>
-                          <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 20, lineHeight: 1.15, marginBottom: 8, color: TXT, fontWeight: 500, whiteSpace: "normal" }}>
-                            {label}
-                          </h4>
-                        </div>
+        <div className="act-container" style={containerStyle}>
+          {(() => {
+            const items = audience.length > 0 ? audience : audienceCards.map(a => a.title);
+            // Build triangle rows: row 1 → 1 pill, row 2 → 2 pills, row 3 → 3 pills…
+            const rows: string[][] = [];
+            let pool = [...items];
+            let rowSize = 1;
+            while (pool.length > 0) {
+              rows.push(pool.splice(0, rowSize));
+              rowSize++;
+            }
+            return (
+              <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
+                {rows.map((row, ri) => (
+                  <div key={ri} style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+                    {row.map((item, i) => (
+                      <div key={i} style={audiencePillStyle}>
+                        <Diamond color={ACT_ORANGE} size={8} />
+                        {item}
                       </div>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
-          );
-        })()}
+                    ))}
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+        </div>
       </section>
 
       {/* ════════════ PRICING ════════════ */}
@@ -1011,11 +994,6 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             ))}
           </div>
 
-          <div style={{ marginTop: 60, display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
-            <div style={monoStyle}>
-              <span style={{ color: ACT_GOLD }}>✓ </span>Paiement en 3× sans frais
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1383,17 +1361,11 @@ const toolPillStyle: React.CSSProperties = {
   whiteSpace: "nowrap", borderRadius: 999, color: TXT,
 };
 
-const audienceCardStyle: React.CSSProperties = {
-  width: 280, height: 220, padding: 24, flexShrink: 0,
-  border: `1px solid rgba(255,255,255,0.1)`, background: "rgba(255,255,255,0.02)",
-  display: "flex", flexDirection: "column", justifyContent: "space-between",
-  position: "relative", overflow: "hidden",
-};
-
-const audienceIconStyle: React.CSSProperties = {
-  width: 48, height: 48, display: "flex", alignItems: "center", justifyContent: "center",
-  border: `1px solid rgba(255,255,255,0.15)`, fontFamily: FONT_DISPLAY,
-  fontStyle: "italic", fontSize: 22, color: ACT_ORANGE,
+const audiencePillStyle: React.CSSProperties = {
+  padding: "14px 24px", border: `1px solid rgba(255,255,255,0.12)`, background: "rgba(255,255,255,0.03)",
+  display: "inline-flex", alignItems: "center", gap: 12,
+  fontFamily: FONT_DISPLAY, fontSize: 20, letterSpacing: "-0.01em",
+  whiteSpace: "nowrap", borderRadius: 999, color: TXT,
 };
 
 const testCardStyle: React.CSSProperties = {

@@ -140,32 +140,6 @@ export default function FormationsShell() {
                 Développez vos compétences avec nos programmes intensifs conçus pour le monde de l'IA.
               </p>
 
-              {/* CTA sub-header */}
-              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2rem" }}>
-                <Link href="/formations#inscription" className="cta-btn">
-                  <div className="cta-btn__border" />
-                  <div className="cta-btn__blur" />
-                  <div className="cta-btn__background" />
-                  <div className="cta-btn__inner">
-                    <span className="cta-btn__icon" />
-                    <span className="cta-btn__text">S&apos;inscrire maintenant</span>
-                  </div>
-                </Link>
-                <Link
-                  href="/formations"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "0.7rem",
-                    padding: "1rem 2rem", border: `1px solid ${COLOR}55`, borderRadius: "0.5rem",
-                    color: COLOR, textDecoration: "none", fontFamily: "var(--font-body)",
-                    fontSize: "var(--font-18)", fontWeight: 600, textTransform: "uppercase",
-                    letterSpacing: "0.05em", transition: "all 0.3s",
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = `${COLOR}15`; e.currentTarget.style.borderColor = COLOR; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = `${COLOR}55`; }}
-                >
-                  Voir la présentation
-                </Link>
-              </div>
             </motion.div>
 
             {/* SEARCH */}
