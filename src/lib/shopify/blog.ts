@@ -5,7 +5,6 @@
  * Tags Shopify attendus sur chaque article :
  *   category:Tech Trends
  *   readTime:10 min
- *   format:Article de fond
  *   target:DSI, entrepreneurs
  *   featured:true
  *   wordCount:~2500
@@ -66,7 +65,6 @@ export interface ShopifyBlogPost {
   title: string;
   category: string;
   categoryColor: string;
-  format: string;
   wordCount: string;
   keywords: string[];
   target: string;
@@ -82,7 +80,7 @@ export interface ShopifyBlogPost {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-const PREFIXED_KEYS = ["category", "readtime", "format", "target", "featured", "wordcount"];
+const PREFIXED_KEYS = ["category", "readtime", "target", "featured", "wordcount"];
 
 /** Extrait la valeur d'un tag préfixé "key:value" (insensible à la casse) */
 function extractTag(tags: string[], key: string): string {
@@ -148,7 +146,6 @@ function mapArticle(node: any, blogHandle: string): ShopifyBlogPost {
 
   // Priorité : metafield "categories" > tag "category:" > défaut
   const category    = parseCategoryMeta(extractMeta(metafields, "categories")) || extractTag(tags, "category") || "Non classé";
-  const format      = extractTag(tags, "format")     || "Article";
   const wordCount   = extractTag(tags, "wordCount")  || "";
   const target      = extractTag(tags, "target")     || "";
   const featuredRaw = extractTag(tags, "featured");
@@ -163,7 +160,6 @@ function mapArticle(node: any, blogHandle: string): ShopifyBlogPost {
     title:        node.title,
     category,
     categoryColor: "#D35400",
-    format,
     wordCount,
     keywords,
     target,

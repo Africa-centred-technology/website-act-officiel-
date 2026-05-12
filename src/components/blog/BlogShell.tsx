@@ -892,17 +892,6 @@ function ArticleCard({
               >
                 {post.readTime}
               </span>
-              <span
-                style={{
-                  color: "rgba(255,255,255,0.3)",
-                  fontSize: "1.1rem",
-                  fontFamily: "var(--font-display)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                {post.format}
-              </span>
             </div>
             <span
               style={{

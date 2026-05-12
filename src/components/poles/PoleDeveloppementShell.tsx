@@ -723,7 +723,6 @@ export default function PoleDeveloppementShell() {
                           letterSpacing: '0.05em',
                           zIndex: 2,
                         }}>
-                          {post.format}
                         </div>
                       </div>
 

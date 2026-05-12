@@ -259,7 +259,7 @@ function StackCard({
   isMobile: boolean;
 }) {
   /* Fallback-safe reads — Shopify posts may not have every field */
-  const format = (post as unknown as { format?: string }).format ?? post.category;
+  const format = post.category;
   const readTime = (post as unknown as { readTime?: string }).readTime;
   const date = (post as unknown as { date?: string }).date;
 

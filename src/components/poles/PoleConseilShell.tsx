@@ -840,7 +840,6 @@ export default function PoleConseilShell() {
                           letterSpacing: '0.05em',
                           zIndex: 2,
                         }}>
-                          {post.format}
                         </div>
                       </div>
 

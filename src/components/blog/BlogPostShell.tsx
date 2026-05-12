@@ -277,7 +277,6 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
           >
             <MetaItem label="Date" value={post.date} screenSize={screenSize} />
             <MetaItem label="Lecture" value={post.readTime} screenSize={screenSize} />
-            <MetaItem label="Format" value={post.format} screenSize={screenSize} />
             <MetaItem label="Cible" value={post.target} screenSize={screenSize} />
           </motion.div>
         </div>
@@ -421,7 +420,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                     marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem",
                   }}
                 >
-                  {[post.category, post.readTime, post.format].map((item) => (
+                  {[post.category, post.readTime].map((item) => (
                     <span
                       key={item}
                       style={{
