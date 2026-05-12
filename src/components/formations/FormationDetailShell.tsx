@@ -742,7 +742,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 animation: `toolsSlide 40s linear infinite ${idx === 1 ? "reverse" : ""}`,
                 width: "max-content",
               }}>
-                {[...row, ...row, ...row, ...row, ...row, ...row,, ...row, ...row].map((t, i) => (
+                {[...row, ...row, ...row, ...row, ...row, ...row, ...row, ...row].map((t, i) => (
                   <div key={i} style={toolPillStyle}>
                     <span style={{
                       width: 8, height: 8, borderRadius: "50%",
