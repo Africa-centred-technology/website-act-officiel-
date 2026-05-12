@@ -187,7 +187,7 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
 
     // ── Vérifier le message de succès ────────────────────────────────────────
     await expect(
-      page.getByText("Inscription envoyée !")
+      page.getByText("Inscription validée !")
     ).toBeVisible({ timeout: 10_000 });
   });
 });
