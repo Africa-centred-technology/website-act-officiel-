@@ -8,15 +8,8 @@ import type {
 
 const BASE_URL = "https://www.a-ct.ma";
 
-// A plain record type used for public return types so consumers (and tests)
-// can access properties with string-index notation without TS errors.
-// The internal construction still uses the strict schema-dts types to
-// guarantee correctness; we cast at the return boundary only.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LD = Record<string, any>;
-
-export function organizationJsonLd(locale: string): LD {
-  const result: WithContext<Organization> = {
+export function organizationJsonLd(locale: string): WithContext<Organization> {
+  return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Africa Centred Technology",
@@ -38,13 +31,12 @@ export function organizationJsonLd(locale: string): LD {
       availableLanguage: ["fr", "en", "ar"],
     },
   };
-  return result;
 }
 
 export function breadcrumbJsonLd(
   items: Array<{ name: string; url: string }>
-): LD {
-  const result: WithContext<BreadcrumbList> = {
+): WithContext<BreadcrumbList> {
+  return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, i) => ({
@@ -54,7 +46,6 @@ export function breadcrumbJsonLd(
       item: item.url,
     })),
   };
-  return result;
 }
 
 export function courseJsonLd(opts: {
@@ -65,8 +56,11 @@ export function courseJsonLd(opts: {
   price?: number;
   currency?: string;
   startDate?: string;
-}): LD {
-  const base: LD = {
+}): WithContext<Course> {
+  const base: WithContext<Course> & {
+    offers?: object;
+    hasCourseInstance?: object;
+  } = {
     "@context": "https://schema.org",
     "@type": "Course",
     name: opts.title,
@@ -98,9 +92,6 @@ export function courseJsonLd(opts: {
     };
   }
 
-  // Validate shape at compile time by assigning to strict type (discarded)
-  void (base as unknown as WithContext<Course>);
-
   return base;
 }
 
@@ -112,8 +103,8 @@ export function articleJsonLd(opts: {
   author: string;
   publishedAt: string;
   image?: string;
-}): LD {
-  const base: LD = {
+}): WithContext<Article> {
+  const base: WithContext<Article> & { image?: string } = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: opts.title,
@@ -132,9 +123,6 @@ export function articleJsonLd(opts: {
   if (opts.image) {
     base.image = opts.image;
   }
-
-  // Validate shape at compile time by assigning to strict type (discarded)
-  void (base as unknown as WithContext<Article>);
 
   return base;
 }
