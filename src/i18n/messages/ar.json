@@ -1,0 +1,15 @@
+{
+  "common": {
+    "lang": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "metadata": {
+    "default": {
+      "title": "Africa Centred Technology | Engineering the Future",
+      "description": "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+    }
+  }
+}
