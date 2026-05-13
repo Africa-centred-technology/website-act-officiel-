@@ -7,6 +7,8 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organizationJsonLd } from "@/i18n/seo-jsonld";
 
 const META_PIXEL_ID = "1550173629800746";
 const GA_MEASUREMENT_IDS = ["G-5T0CM1FR5Q", "G-R21NYV01M2"];
@@ -77,6 +79,7 @@ fbq('track', 'PageView');`}
         className="antialiased flex flex-col min-h-screen overflow-x-hidden"
         style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
       >
+        <JsonLd data={organizationJsonLd(locale)} />
         <noscript>
           <img
             height="1"
