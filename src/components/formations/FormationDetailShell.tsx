@@ -464,7 +464,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <div className="act-hero-card" style={heroCardStyle}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
                   <span style={cardTagStyle}>
-                    <Diamond color={ACT_CREAM} size={7} /> {formation.sessionDateCourte || formation.secteur || "Session · 2026"}
+                    <Diamond color={ACT_CREAM} size={7} /> {formation.sessionDateCourte || formation.secteur || t("fallbacks.session")}
                   </span>
                   <span style={{ ...monoStyle, color: ACT_GOLD }}>
                     ● {t("inscriptionsOuvertes")}
@@ -482,11 +482,11 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   </div>
                   <div>
                     <div style={metaLabelStyle}>{t("metaFormat")}</div>
-                    <div style={metaValueStyle}>{formation.format || "Présentiel + live"}</div>
+                    <div style={metaValueStyle}>{formation.format || t("fallbacks.format")}</div>
                   </div>
                   <div>
                     <div style={metaLabelStyle}>{t("metaNiveau")}</div>
-                    <div style={metaValueStyle}>{formation.niveau || "Tous niveaux"}</div>
+                    <div style={metaValueStyle}>{formation.niveau || t("fallbacks.niveau")}</div>
                   </div>
                   {formation.sessionDate ? (
                     <div>

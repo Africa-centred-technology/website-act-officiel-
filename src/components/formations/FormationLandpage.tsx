@@ -16,66 +16,6 @@ import FooterStrip from "@/components/layout/FooterStrip";
 ───────────────────────────────────────────────────────────────── */
 const COLOR = "#D35400";
 
-const STATS = [
-    { value: "12+",     label: "Formations",  sub: "disponibles"          },
-    { value: "7h",      label: "Par journée", sub: "de pratique"          },
-    { value: "400 MAD", label: "À partir de", sub: "par formation"        },
-    { value: "100%",    label: "Pratique",    sub: "cas réels entreprise" },
-];
-
-const EXPERIENCE_BLOCKS = [
-    {
-        icon: Monitor,
-        emoji: "👨‍💻",
-        title: "Apprenants en situation réelle",
-        desc: "Dès le premier jour, vous travaillez sur poste avec de vrais outils professionnels. Pas de simulation, pas de cas fictifs — vous produisez directement.",
-        highlight: "Environnement 100% pro",
-        barLabel: "Temps sur poste",
-        barValue: 100,
-    },
-    {
-        icon: BarChart2,
-        emoji: "📊",
-        title: "80% pratique / 20% théorie",
-        desc: "Notre ratio inversé garantit une montée en compétence rapide. Chaque concept est immédiatement appliqué via des exercices tirés de vrais projets africains.",
-        highlight: "Montée en compétence ×3",
-        barLabel: "Pratique",
-        barValue: 80,
-    },
-    {
-        icon: MessageCircle,
-        emoji: "🧑‍🏫",
-        title: "Interaction directe formateur",
-        desc: "Vos questions reçoivent une réponse immédiate. Le formateur corrige en temps réel, intervient sur votre écran et adapte le rythme à votre groupe.",
-        highlight: "Max 12 apprenants / session",
-        barLabel: null,
-        barValue: null,
-    },
-    {
-        icon: GraduationCap,
-        emoji: "🎓",
-        title: "Certificat numérique ACT",
-        desc: "En fin de formation, vous obtenez un certificat numérique valué par les directions RH et les recruteurs. Un actif concret à ajouter à votre profil.",
-        highlight: "Reconnu par les RH",
-        barLabel: null,
-        barValue: null,
-    },
-];
-
-const PILLARS = [
-    { icon: Zap,        title: "80 % Pratique",         desc: "Chaque concept est immédiatement appliqué. Zéro slide sans exercice." },
-    { icon: Target,     title: "Cas réels africains",    desc: "Nos exercices s'inspirent de vrais projets d'entreprises du continent." },
-    { icon: Users,      title: "Petits groupes",         desc: "Maximum 12 apprenants par session pour un suivi individualisé." },
-    { icon: TrendingUp, title: "Formateurs praticiens",  desc: "Chaque formateur exerce son métier activement — pas de théoriciens." },
-    { icon: Shield,     title: "Certification reconnue", desc: "Certificat ACT valué par les recruteurs et les directions RH." },
-    { icon: Sparkles,   title: "Suivi post-formation",   desc: "3 mois de support WhatsApp inclus après chaque programme." },
-];
-
-const GUARANTEES = [
-    { emoji: "👥", label: "Petits groupes ≤ 12",    detail: "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
-    { emoji: "🎓", label: "Formateur praticien",    detail: "Votre formateur travaille en entreprise aujourd'hui. Pas de formateurs-bibliothèque." },
-    { emoji: "♾️", label: "Ressources à vie",       detail: "Slides, exercices et enregistrements restent accessibles sans limite de durée." },
-];
 
 /* ─────────────────────────────────────────────────────────────────
    HOOK
@@ -274,7 +214,17 @@ function MarketingVideo() {
 /* ─────────────────────────────────────────────────────────────────
    EXPÉRIENCE ACT — 4 storytelling blocks
 ───────────────────────────────────────────────────────────────── */
-function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENCE_BLOCKS[number]; index: number; screenSize: string }) {
+interface ResolvedExperienceBlock {
+    icon: React.ElementType;
+    emoji: string;
+    title: string;
+    desc: string;
+    highlight: string;
+    barLabel: string | null;
+    barValue: number | null;
+}
+
+function ExperienceBlock({ block, index, screenSize }: { block: ResolvedExperienceBlock; index: number; screenSize: string }) {
     const [hovered, setHovered] = useState(false);
     const Icon = block.icon;
 
@@ -428,7 +378,8 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
 /* ─────────────────────────────────────────────────────────────────
    GUARANTEE CARD — extracted to avoid hooks-in-loop
 ───────────────────────────────────────────────────────────────── */
-function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
+interface ResolvedGuarantee { emoji: string; label: string; detail: string; }
+function GuaranteeCard({ g, i }: { g: ResolvedGuarantee; i: number }) {
     const [hov, setHov] = useState(false);
     return (
         <motion.div
@@ -585,6 +536,37 @@ export default function FormationLandpage() {
     const t = useTranslations("formations.inscription");
     const tc = useTranslations("formations.catalogue");
     const screenSize = useMediaQuery();
+
+    // Resolved arrays from translations
+    const STATS = [
+        { value: tc("stats.formations.value"), label: tc("stats.formations.label"), sub: tc("stats.formations.sub") },
+        { value: tc("stats.pratique.value"),   label: tc("stats.pratique.label"),   sub: tc("stats.pratique.sub")   },
+        { value: tc("stats.prix.value"),       label: tc("stats.prix.label"),       sub: tc("stats.prix.sub")       },
+        { value: tc("stats.ratio.value"),      label: tc("stats.ratio.label"),      sub: tc("stats.ratio.sub")      },
+    ];
+
+    const EXPERIENCE_BLOCKS: ResolvedExperienceBlock[] = [
+        { icon: Monitor,       emoji: "👨‍💻", title: tc("experience.block1.title"), desc: tc("experience.block1.desc"), highlight: tc("experience.block1.highlight"), barLabel: tc("experience.block1.barLabel"), barValue: 100 },
+        { icon: BarChart2,     emoji: "📊", title: tc("experience.block2.title"), desc: tc("experience.block2.desc"), highlight: tc("experience.block2.highlight"), barLabel: tc("experience.block2.barLabel"), barValue: 80  },
+        { icon: MessageCircle, emoji: "🧑‍🏫", title: tc("experience.block3.title"), desc: tc("experience.block3.desc"), highlight: tc("experience.block3.highlight"), barLabel: null, barValue: null },
+        { icon: GraduationCap, emoji: "🎓", title: tc("experience.block4.title"), desc: tc("experience.block4.desc"), highlight: tc("experience.block4.highlight"), barLabel: null, barValue: null },
+    ];
+
+    const PILLARS = [
+        { icon: Zap,        title: tc("pillars.p1.title"), desc: tc("pillars.p1.desc") },
+        { icon: Target,     title: tc("pillars.p2.title"), desc: tc("pillars.p2.desc") },
+        { icon: Users,      title: tc("pillars.p3.title"), desc: tc("pillars.p3.desc") },
+        { icon: TrendingUp, title: tc("pillars.p4.title"), desc: tc("pillars.p4.desc") },
+        { icon: Shield,     title: tc("pillars.p5.title"), desc: tc("pillars.p5.desc") },
+        { icon: Sparkles,   title: tc("pillars.p6.title"), desc: tc("pillars.p6.desc") },
+    ];
+
+    const GUARANTEES: ResolvedGuarantee[] = [
+        { emoji: "👥", label: tc("guarantees.g1.label"), detail: tc("guarantees.g1.detail") },
+        { emoji: "🎓", label: tc("guarantees.g2.label"), detail: tc("guarantees.g2.detail") },
+        { emoji: "♾️", label: tc("guarantees.g3.label"), detail: tc("guarantees.g3.detail") },
+    ];
+
     const [formationsData, setFormationsData] = useState<FormationCardData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [fetchError, setFetchError] = useState(false);
@@ -848,11 +830,11 @@ export default function FormationLandpage() {
                         <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "420px 1fr", gap: screenSize === "mobile" ? "3rem" : "5rem", alignItems: "center" }}>
                             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: "relative" }}>
                                 <div style={{ borderRadius: "1rem", overflow: "hidden", border: `1px solid ${COLOR}33`, position: "relative", aspectRatio: "4/5", maxWidth: 420 }}>
-                                    <img src="/Sohaib_baroud_Manifeste.png" alt="Sohaib Baroud — Fondateur ACT" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+                                    <img src="/Sohaib_baroud_Manifeste.png" alt={tc("founder.imageAlt")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
                                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,20,16,0.7) 0%, transparent 55%)" }} />
                                     <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
-                                        <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>Sohaib Baroud</p>
-                                        <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.95rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Fondateur & CEO · ACT</p>
+                                        <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>{tc("founder.name")}</p>
+                                        <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.95rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>{tc("founder.roleLabel")}</p>
                                     </div>
                                 </div>
                                 <div aria-hidden style={{ position: "absolute", top: "-1.5rem", left: "-1.5rem", width: 80, height: 80, border: `2px solid ${COLOR}22`, borderRadius: "0.5rem", zIndex: -1 }} />
@@ -865,17 +847,17 @@ export default function FormationLandpage() {
                                 </div>
                                 <blockquote style={{ margin: "0 0 2rem", padding: 0, border: "none" }}>
                                     <p style={{ fontSize: screenSize === "mobile" ? "1.4rem" : "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.5, marginBottom: "1.5rem" }}>
-                                        &ldquo;J&apos;ai créé ACT Formation parce que j&apos;en avais assez des formations théoriques qui n&apos;aident personne à avancer concrètement.&rdquo;
+                                        &ldquo;{tc("founder.quote1")}&rdquo;
                                     </p>
                                     <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85, marginBottom: "1.2rem" }}>
-                                        Après des années à accompagner des entreprises africaines dans leur transformation digitale, j&apos;ai vu le même blocage : les compétences manquent, pas la motivation.
+                                        {tc("founder.quote2")}
                                     </p>
                                     <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85 }}>
-                                        Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable, je vous rembourse.
+                                        {tc("founder.quote3")}
                                     </p>
                                 </blockquote>
                                 <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
-                                    {["15+ ans terrain", "Formé en Europe & Afrique", "200+ entreprises accompagnées"].map((tag, i) => (
+                                    {[tc("founder.tag1"), tc("founder.tag2"), tc("founder.tag3")].map((tag, i) => (
                                         <span key={i} style={{ padding: "0.4rem 1rem", background: `${COLOR}12`, border: `1px solid ${COLOR}2A`, borderRadius: "2rem", fontSize: "1rem", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-body)" }}>{tag}</span>
                                     ))}
                                 </div>

@@ -262,30 +262,6 @@ function CountrySearchSelect({
   );
 }
 
-const CANAUX = [
-  "Instagram", "LinkedIn", "YouTube", "Facebook", "Bouche-à-oreille", "Google", "Autre",
-];
-
-const FONCTIONS_PRO = [
-  "Directeur Général (DG)",
-  "DSI / CTO",
-  "DRH",
-  "Directeur Innovation / Digital",
-  "Responsable Formation",
-  "Manager / Chef de département",
-  "Développeur / Ingénieur",
-  "Autre",
-];
-
-const FONCTIONS_ETU = [
-  "Étudiant (Licence / Master)",
-  "Étudiant Ingénieur",
-  "Jeune diplômé (< 2 ans)",
-  "Salarié en entreprise",
-  "Freelance / Consultant",
-  "En reconversion professionnelle",
-  "Demandeur d'emploi",
-];
 
 /* ── Input helpers ─────────────────────────────────────── */
 const fieldStyle: React.CSSProperties = {
@@ -352,8 +328,8 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
-function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options: string[] }) {
-  const { options, ...rest } = props;
+function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options: string[]; placeholder?: string }) {
+  const { options, placeholder, ...rest } = props;
   return (
     <select
       {...rest}
@@ -365,7 +341,7 @@ function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options
         (e.currentTarget as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.1)";
       }}
     >
-      <option value="" style={{ background: "#0A1410" }}>— Choisir —</option>
+      <option value="" style={{ background: "#0A1410" }}>{placeholder ?? "— Choisir —"}</option>
       {options.map((o) => (
         <option key={o} value={o} style={{ background: "#0A1410" }}>
           {o}
@@ -389,6 +365,48 @@ export default function FormationInscriptionForm({
   onSuccess,
 }: FormationInscriptionFormProps) {
   const t = useTranslations("formations.inscription");
+  const tOpts = useTranslations("formations.inscription.options");
+
+  const CANAUX = [
+    tOpts("canaux.instagram"),
+    tOpts("canaux.linkedin"),
+    tOpts("canaux.youtube"),
+    tOpts("canaux.facebook"),
+    tOpts("canaux.boucheAOreille"),
+    tOpts("canaux.google"),
+    tOpts("canaux.autre"),
+  ];
+
+  const FONCTIONS_PRO = [
+    tOpts("fonctionsPro.dg"),
+    tOpts("fonctionsPro.dsi"),
+    tOpts("fonctionsPro.drh"),
+    tOpts("fonctionsPro.directionInnovation"),
+    tOpts("fonctionsPro.responsableFormation"),
+    tOpts("fonctionsPro.manager"),
+    tOpts("fonctionsPro.developpeur"),
+    tOpts("fonctionsPro.autre"),
+  ];
+
+  const FONCTIONS_ETU = [
+    tOpts("fonctionsEtu.etudiantLicence"),
+    tOpts("fonctionsEtu.etudiantIngenieur"),
+    tOpts("fonctionsEtu.jeuneDiplome"),
+    tOpts("fonctionsEtu.salarie"),
+    tOpts("fonctionsEtu.freelance"),
+    tOpts("fonctionsEtu.reconversion"),
+    tOpts("fonctionsEtu.demandeurEmploi"),
+  ];
+
+  const NIVEAUX_ETUDES = [
+    tOpts("niveauxEtudes.bac"),
+    tOpts("niveauxEtudes.bac2"),
+    tOpts("niveauxEtudes.licence"),
+    tOpts("niveauxEtudes.master"),
+    tOpts("niveauxEtudes.ingenieur"),
+    tOpts("niveauxEtudes.doctorat"),
+  ];
+
   const [tab] = useState<"pro" | "etudiant">("etudiant");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -591,7 +609,8 @@ export default function FormationInscriptionForm({
                     <Select
                       value={form.niveauEtudes}
                       onChange={(e) => set("niveauEtudes", e.target.value)}
-                      options={["Bac", "Bac+2 (DUT/BTS)", "Licence (Bac+3)", "Master (Bac+5)", "Ingénieur", "Doctorat"]}
+                      options={NIVEAUX_ETUDES}
+                      placeholder={t("selectDefault")}
                     />
                   </Field>
                 </motion.div>
@@ -655,6 +674,7 @@ export default function FormationInscriptionForm({
                 value={form.fonction}
                 onChange={(e) => set("fonction", e.target.value)}
                 options={tab === "pro" ? FONCTIONS_PRO : FONCTIONS_ETU}
+                placeholder={t("selectDefault")}
               />
             </Field>
 
@@ -675,6 +695,7 @@ export default function FormationInscriptionForm({
                 value={form.commentConnu}
                 onChange={(e) => set("commentConnu", e.target.value)}
                 options={CANAUX}
+                placeholder={t("selectDefault")}
               />
             </Field>
 

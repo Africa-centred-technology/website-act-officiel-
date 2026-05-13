@@ -98,14 +98,14 @@ export default function ContactShell() {
     },
     {
       label: t("info.address"),
-      lines: ["Mer Sultan, 6e Rue château", "Casablanca, Maroc 🇲🇦"],
+      lines: [t("info.addressLine1"), t("info.addressLine2")],
       href: "#",
       cta: t("info.addressCta"),
       Icon: MapPin,
     },
     {
       label: t("info.hours"),
-      lines: ["Lundi au Samedi"],
+      lines: [t("info.hoursLine1")],
       href: "#form",
       cta: t("info.hoursCta"),
       Icon: Clock,

@@ -127,6 +127,17 @@
     "maxLength": "Maximum {max} caractères"
   },
   "home": {
+    "manifeste": {
+      "pullQuote": "La technologie n'a de valeur que lorsqu'elle crée un impact réel.",
+      "bodyP1": "Nous ne nous contentons pas d'implémenter des technologies — nous concevons des solutions qui créent de la valeur durable pour les organisations.",
+      "bodyP2": "En combinant intelligence artificielle, analyse de données et automatisation, nous transformons les défis de nos clients en opportunités et bâtissons les systèmes qui soutiendront leur croissance de demain.",
+      "conviction": "Notre conviction",
+      "location": "Casablanca · Maroc · 2026",
+      "founderLabel": "Le Fondateur",
+      "founderRole": "Fondateur · CEO",
+      "founderCompany": "CEO · Africa Centred Technology",
+      "imageAlt": "Sohaib Baroud, fondateur d'ACT"
+    },
     "hero": {
       "tagline": "Innovating Today, Transforming Tomorrow",
       "stats": {
@@ -444,7 +455,61 @@
       "landpageCtaTitle1": "Votre prochaine",
       "landpageCtaTitle2": "compétence commence",
       "landpageCtaTitle3": "maintenant.",
-      "landpageCtaSubtitle": "Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture."
+      "landpageCtaSubtitle": "Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture.",
+      "stats": {
+        "formations": { "value": "12+", "label": "Formations", "sub": "disponibles" },
+        "pratique": { "value": "7h", "label": "Par journée", "sub": "de pratique" },
+        "prix": { "value": "400 MAD", "label": "À partir de", "sub": "par formation" },
+        "ratio": { "value": "100%", "label": "Pratique", "sub": "cas réels entreprise" }
+      },
+      "experience": {
+        "block1": {
+          "title": "Apprenants en situation réelle",
+          "desc": "Dès le premier jour, vous travaillez sur poste avec de vrais outils professionnels. Pas de simulation, pas de cas fictifs — vous produisez directement.",
+          "highlight": "Environnement 100% pro",
+          "barLabel": "Temps sur poste"
+        },
+        "block2": {
+          "title": "80% pratique / 20% théorie",
+          "desc": "Notre ratio inversé garantit une montée en compétence rapide. Chaque concept est immédiatement appliqué via des exercices tirés de vrais projets africains.",
+          "highlight": "Montée en compétence ×3",
+          "barLabel": "Pratique"
+        },
+        "block3": {
+          "title": "Interaction directe formateur",
+          "desc": "Vos questions reçoivent une réponse immédiate. Le formateur corrige en temps réel, intervient sur votre écran et adapte le rythme à votre groupe.",
+          "highlight": "Max 12 apprenants / session"
+        },
+        "block4": {
+          "title": "Certificat numérique ACT",
+          "desc": "En fin de formation, vous obtenez un certificat numérique valué par les directions RH et les recruteurs. Un actif concret à ajouter à votre profil.",
+          "highlight": "Reconnu par les RH"
+        }
+      },
+      "pillars": {
+        "p1": { "title": "80 % Pratique", "desc": "Chaque concept est immédiatement appliqué. Zéro slide sans exercice." },
+        "p2": { "title": "Cas réels africains", "desc": "Nos exercices s'inspirent de vrais projets d'entreprises du continent." },
+        "p3": { "title": "Petits groupes", "desc": "Maximum 12 apprenants par session pour un suivi individualisé." },
+        "p4": { "title": "Formateurs praticiens", "desc": "Chaque formateur exerce son métier activement — pas de théoriciens." },
+        "p5": { "title": "Certification reconnue", "desc": "Certificat ACT valué par les recruteurs et les directions RH." },
+        "p6": { "title": "Suivi post-formation", "desc": "3 mois de support WhatsApp inclus après chaque programme." }
+      },
+      "guarantees": {
+        "g1": { "label": "Petits groupes ≤ 12", "detail": "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
+        "g2": { "label": "Formateur praticien", "detail": "Votre formateur travaille en entreprise aujourd'hui. Pas de formateurs-bibliothèque." },
+        "g3": { "label": "Ressources à vie", "detail": "Slides, exercices et enregistrements restent accessibles sans limite de durée." }
+      },
+      "founder": {
+        "quote1": "J'ai créé ACT Formation parce que j'en avais assez des formations théoriques qui n'aident personne à avancer concrètement.",
+        "quote2": "Après des années à accompagner des entreprises africaines dans leur transformation digitale, j'ai vu le même blocage : les compétences manquent, pas la motivation.",
+        "quote3": "Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable, je vous rembourse.",
+        "tag1": "15+ ans terrain",
+        "tag2": "Formé en Europe & Afrique",
+        "tag3": "200+ entreprises accompagnées",
+        "name": "Sohaib Baroud",
+        "roleLabel": "Fondateur & CEO · ACT",
+        "imageAlt": "Sohaib Baroud — Fondateur ACT"
+      }
     },
     "detail": {
       "inscriptionCta": "Je m'inscris →",
@@ -499,7 +564,12 @@
       "finalCtaCafe": "☕ On en parle autour d'un café ?",
       "loadError": "Impossible de charger la formation",
       "retryBtn": "Réessayer",
-      "eyebrowFormation": "Formation"
+      "eyebrowFormation": "Formation",
+      "fallbacks": {
+        "session": "Session · 2026",
+        "format": "Présentiel + live",
+        "niveau": "Tous niveaux"
+      }
     },
     "inscription": {
       "backToFormation": "Retour à la formation",
@@ -568,7 +638,45 @@
       "landpageSuccessTitle": "Demande envoyée !",
       "landpageSuccessMessage": "Notre équipe vous contactera sous {hours}h ouvrées pour confirmer votre inscription et vous communiquer les modalités.",
       "landpageError": "Une erreur est survenue. Veuillez réessayer.",
-      "finalCtaBtn": "Je m'inscris maintenant"
+      "finalCtaBtn": "Je m'inscris maintenant",
+      "options": {
+        "canaux": {
+          "instagram": "Instagram",
+          "linkedin": "LinkedIn",
+          "youtube": "YouTube",
+          "facebook": "Facebook",
+          "boucheAOreille": "Bouche-à-oreille",
+          "google": "Google",
+          "autre": "Autre"
+        },
+        "fonctionsPro": {
+          "dg": "Directeur Général (DG)",
+          "dsi": "DSI / CTO",
+          "drh": "DRH",
+          "directionInnovation": "Directeur Innovation / Digital",
+          "responsableFormation": "Responsable Formation",
+          "manager": "Manager / Chef de département",
+          "developpeur": "Développeur / Ingénieur",
+          "autre": "Autre"
+        },
+        "fonctionsEtu": {
+          "etudiantLicence": "Étudiant (Licence / Master)",
+          "etudiantIngenieur": "Étudiant Ingénieur",
+          "jeuneDiplome": "Jeune diplômé (< 2 ans)",
+          "salarie": "Salarié en entreprise",
+          "freelance": "Freelance / Consultant",
+          "reconversion": "En reconversion professionnelle",
+          "demandeurEmploi": "Demandeur d'emploi"
+        },
+        "niveauxEtudes": {
+          "bac": "Bac",
+          "bac2": "Bac+2 (DUT/BTS)",
+          "licence": "Licence (Bac+3)",
+          "master": "Master (Bac+5)",
+          "ingenieur": "Ingénieur",
+          "doctorat": "Doctorat"
+        }
+      }
     },
     "brochure": {
       "eyebrow": "📄 Brochure formation",
@@ -934,8 +1042,11 @@
       "email": "Email",
       "emailCta": "Écrire →",
       "address": "Adresse",
+      "addressLine1": "Mer Sultan, 6e Rue château",
+      "addressLine2": "Casablanca, Maroc 🇲🇦",
       "addressCta": "Voir →",
       "hours": "Horaires",
+      "hoursLine1": "Lundi au Samedi",
       "hoursCta": "Planifier →"
     },
     "sidebar": {
