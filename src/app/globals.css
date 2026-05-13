@@ -1418,3 +1418,8 @@ a:hover {
 .shopify-blog-content pre code { background: transparent; padding: 0; }
 .shopify-blog-content img  { max-width: 100%; border-radius: 12px; margin: 2rem 0; }
 .shopify-blog-content hr   { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 3rem 0; }
+
+/* ── RTL utility — mirror an icon/SVG horizontally when html[dir=rtl] ── */
+[dir="rtl"] .mirror-in-rtl {
+  transform: scaleX(-1);
+}
