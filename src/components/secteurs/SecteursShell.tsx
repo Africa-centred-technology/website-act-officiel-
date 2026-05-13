@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { secteurs } from "@/lib/secteurs-data";
+import { useDataMessages } from "@/i18n/data-i18n";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 
@@ -29,6 +30,7 @@ type Dir = 1 | -1;
    ══════════════════════════════════════════════════════════ */
 function AlbumSection() {
   const t = useTranslations("secteurs.index");
+  const msg = useDataMessages();
   const total = secteurs.length;
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState<Dir>(1);
@@ -102,6 +104,7 @@ function AlbumSection() {
   };
 
   const s = secteurs[active];
+  const sI18n = msg.secteurs.items[s.slug];
   const num = String(active + 1).padStart(2, "0");
   const tot = String(total).padStart(2, "0");
 
@@ -160,7 +163,7 @@ function AlbumSection() {
 
             {/* Label - Sector Name First - ORANGE */}
             <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", fontWeight: 900, textTransform: "uppercase", color: ORANGE, marginBottom: "0.6rem", letterSpacing: "0.04em" }}>
-              {s.label}
+              {sI18n?.label}
             </p>
 
             {/* Tagline - Second */}
@@ -175,17 +178,17 @@ function AlbumSection() {
                 margin: "0 0 1.5rem",
               }}
             >
-              {s.tagline}
+              {sI18n?.tagline}
             </p>
 
             {/* Description - BIGGER */}
             <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)", lineHeight: 1.75, maxWidth: "650px", marginBottom: "2.5rem", textAlign: "justify" }}>
-              {s.description.length > 350 ? s.description.slice(0, 350) + "…" : s.description}
+              {sI18n?.description && sI18n.description.length > 350 ? sI18n.description.slice(0, 350) + "…" : sI18n?.description}
             </p>
 
             {/* Services - BIGGER */}
             <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2.5rem", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-              {s.services.slice(0, 3).map((svc) => (
+              {sI18n?.services.slice(0, 3).map((svc) => (
                 <li key={svc} style={{ fontFamily: "var(--font-body)", display: "flex", alignItems: "flex-start", gap: "0.85rem", color: "#ffffff", fontSize: "clamp(1.1rem, 1.35vw, 1.35rem)", lineHeight: 1.5 }}>
                   <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: s.color, flexShrink: 0, marginTop: "0.55rem" }} />
                   {svc}
@@ -194,13 +197,13 @@ function AlbumSection() {
             </ul>
 
             {/* Key figure - BIGGER */}
-            {s.chiffre && (
+            {s.chiffreValue && sI18n?.chiffre && (
               <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${s.color}44`, borderLeft: `5px solid ${s.color}`, borderRadius: "0.8rem", padding: "1.4rem 2rem", marginBottom: "2.5rem", display: "inline-block" }}>
                 <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(2rem, 3vw, 3rem)", fontWeight: 900, color: ORANGE, margin: "0 0 0.35rem", lineHeight: 1 }}>
-                  {s.chiffre.value}
+                  {s.chiffreValue}
                 </p>
                 <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1rem, 1.3vw, 1.3rem)", margin: 0, lineHeight: 1.4, opacity: 0.85 }}>
-                  {s.chiffre.label}
+                  {sI18n.chiffre.label}
                 </p>
               </div>
             )}
@@ -317,7 +320,7 @@ function AlbumSection() {
                 <div style={{ position: "relative", flex: 1, minHeight: 0, overflow: "hidden" }}>
                   <Image
                     src={cardSecteur.image}
-                    alt={cardSecteur.label}
+                    alt={msg.secteurs.items[cardSecteur.slug]?.label ?? cardSecteur.slug}
                     fill
                     style={{ objectFit: "cover", pointerEvents: "none" }}
                     sizes="45vw"
@@ -375,7 +378,7 @@ function AlbumSection() {
                 <div style={{ background: "#f5f0e8", padding: "0.85rem 1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", flexShrink: 0 }}>
                   <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#1B3022", fontWeight: 700, margin: 0, display: "flex", alignItems: "center", gap: "0.4rem" }}>
                     <span style={{ color: "rgba(27,48,34,0.45)", fontSize: "0.58rem" }}>({cardNum})</span>
-                    {cardSecteur.label.toUpperCase()}
+                    {(msg.secteurs.items[cardSecteur.slug]?.label ?? cardSecteur.slug).toUpperCase()}
                   </p>
                   {isActive && (
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>

@@ -44,7 +44,7 @@ export type SecteurI18n = {
   tagline: string;
   description: string;
   services: string[];
-  chiffre?: { value: string; label: string };
+  chiffre?: { label: string };
 };
 
 export type FormationsDefaultsI18n = {
