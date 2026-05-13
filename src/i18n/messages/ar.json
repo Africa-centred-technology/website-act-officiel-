@@ -975,6 +975,140 @@
       "ariaIncrease": "Augmenter la quantité",
       "ariaDelete": "Supprimer cet article",
       "removeBtn": "Retirer"
+    },
+    "defaults": {
+      "marquee": [
+        "+400 professionnels formés",
+        "Note 4,9/5 sur 213 avis",
+        "Partenaire OpenAI & Anthropic",
+        "97% recommandent",
+        "32 entreprises clientes"
+      ],
+      "trustStats": [
+        { "value": "+400", "label": "Pros formés" },
+        { "value": "4,9/5", "label": "Satisfaction" },
+        { "value": "97%", "label": "Recommandent" }
+      ],
+      "painPoints": [
+        { "num": "01", "title": "Submergé par les outils ?", "text": "ChatGPT, Claude, Gemini, Copilot... impossible de savoir par où commencer." },
+        { "num": "02", "title": "Prompts qui ne marchent pas ?", "text": "Vous testez, mais les réponses restent génériques. Plus de temps perdu que gagné." },
+        { "num": "03", "title": "Équipe qui décroche ?", "text": "Certains adoptent, d'autres résistent. Pas de méthode commune, risque RGPD." }
+      ],
+      "valueRoi": {
+        "bigStat": "10h",
+        "bigStatLabel": "récupérées / semaine",
+        "secondary": [
+          { "value": "×4", "label": "vitesse de rédaction" },
+          { "value": "-60%", "label": "temps d'analyse" }
+        ]
+      },
+      "audienceCards": [
+        { "icon": "01", "title": "Dirigeants\n& CODIR" },
+        { "icon": "02", "title": "Managers\n& chefs de projet" },
+        { "icon": "03", "title": "Marketing\n& communication" },
+        { "icon": "04", "title": "Consultants\n& freelances" }
+      ],
+      "testimonials": [
+        {
+          "quote": "J'ai divisé par trois le temps passé sur mes comptes-rendus hebdo. Rentabilisé en 10 jours.",
+          "name": "Samira Bennani",
+          "role": "Directrice Marketing · Casablanca"
+        },
+        {
+          "quote": "Zéro blabla, du concret dès la première heure. Je repars avec mes propres prompts qui tournent.",
+          "name": "Youssef Kabbaj",
+          "role": "Consultant stratégie · Rabat"
+        },
+        {
+          "quote": "Formé 18 personnes en intra. +22% de productivité mesurés sur le pôle six mois plus tard.",
+          "name": "Fatima Ouali",
+          "role": "DRH · Groupe industriel · Tanger"
+        }
+      ],
+      "pricingPlans": [
+        {
+          "name": "Formule 01",
+          "title": "Inter",
+          "description": "Session inter-entreprises · ouverte aux inscriptions individuelles.",
+          "features": [
+            "Session planifiée à dates fixes",
+            "Jusqu'à 12 participants multi-entreprises",
+            "Tous les templates & prompts",
+            "Agent GPT personnalisé",
+            "Attestation de fin de formation",
+            "Accès replay 6 mois"
+          ],
+          "ctaLabel": "Réserver ma place",
+          "badge": "★ Le plus choisi"
+        },
+        {
+          "name": "Formule 02",
+          "title": "Intra",
+          "description": "Dans vos locaux · pour vos équipes · à partir de 6 personnes.",
+          "features": [
+            "Formation dans vos locaux",
+            "Vos cas métier réels en atelier",
+            "Audit IA des process avant démarrage",
+            "Suivi privé Slack · 30 jours",
+            "Rapport de recommandations post-formation",
+            "Suivi 90 jours inclus"
+          ],
+          "ctaLabel": "Demander un devis"
+        },
+        {
+          "name": "Formule 03",
+          "title": "Personnalisée",
+          "description": "Programme 100% sur-mesure · co-construit avec un expert ACT.",
+          "features": [
+            "Programme 100% sur-mesure",
+            "Combinaison de plusieurs formations",
+            "Format flexible (durée, modalité, lieu)",
+            "Co-construction avec un expert ACT",
+            "Formation de formateurs en option",
+            "Accompagnement long terme"
+          ],
+          "ctaLabel": "Demander un devis"
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "Je suis débutant total. Est-ce que je vais suivre ?",
+          "answer": "Oui — aucun prérequis n'est demandé. 60% de nos stagiaires découvrent ChatGPT le jour 1. Dès le jour 2, ils construisent leur propre agent GPT."
+        },
+        {
+          "question": "Combien de temps avant de voir un retour sur investissement ?",
+          "answer": "En moyenne, nos stagiaires récupèrent 10h par semaine dès la première semaine. Le prix de la formule Pro est rentabilisé en moins de deux semaines."
+        },
+        {
+          "question": "Et si je ne peux pas venir à Casablanca ?",
+          "answer": "La formule Essentiel se déroule 100% en distanciel, en live avec le formateur et un petit groupe (max 12)."
+        },
+        {
+          "question": "Et le RGPD / les données sensibles ?",
+          "answer": "Un module complet est dédié à l'usage éthique et conforme : RGPD, IA Act, paramètres confidentialité des outils, alternatives on-premise."
+        }
+      ],
+      "midCta": {
+        "eyebrow": "Offre de lancement",
+        "titlePrefix": "Session en cours ·",
+        "titleHighlight": "5 places",
+        "titleSuffix": "restantes.",
+        "text": "Si vous hésitez, la meilleure chose à faire : bloquer un appel découverte gratuit de 15 minutes.",
+        "ctaPrimary": { "label": "Voir les tarifs", "url": "#pricing" },
+        "ctaGhost": { "label": "Appel découverte · 15 min", "url": "/contact" },
+        "ctaDark": { "label": "Je m'inscris" }
+      },
+      "finalCta": {
+        "eyebrow": "5 places restantes",
+        "titleLine1": "Votre équipe sera formée",
+        "titleLine2": "à l'IA. ",
+        "titleHighlight": "Avec vous",
+        "titleSuffix": ", ou sans vous.",
+        "text": "Chaque semaine sans formation = 10h de productivité perdues à chaque membre de votre équipe.",
+        "primaryLabel": "Je m'inscris",
+        "ghostLabel": "Planifier un appel 15 min"
+      },
+      "prixBarre": "6 500 MAD HT"
     }
   },
   "poles": {

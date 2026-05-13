@@ -52,6 +52,43 @@ export type FormationsDefaultsI18n = {
   marquee: string[];
   trustStats: Array<{ value: string; label: string }>;
   painPoints: Array<{ num: string; title: string; text: string }>;
+  valueRoi: {
+    bigStat: string;
+    bigStatLabel: string;
+    secondary: Array<{ value: string; label: string }>;
+  };
+  audienceCards: Array<{ icon: string; title: string }>;
+  testimonials: Array<{ quote: string; name: string; role: string }>;
+  pricingPlans: Array<{
+    name: string;
+    title: string;
+    description: string;
+    features: string[];
+    ctaLabel: string;
+    badge?: string;
+  }>;
+  faqItems: Array<{ question: string; answer: string }>;
+  midCta: {
+    eyebrow: string;
+    titlePrefix: string;
+    titleHighlight: string;
+    titleSuffix: string;
+    text: string;
+    ctaPrimary: { label: string; url: string };
+    ctaGhost: { label: string; url: string };
+    ctaDark: { label: string };
+  };
+  finalCta: {
+    eyebrow: string;
+    titleLine1: string;
+    titleLine2: string;
+    titleHighlight: string;
+    titleSuffix: string;
+    text: string;
+    primaryLabel: string;
+    ghostLabel: string;
+  };
+  prixBarre: string;
 };
 
 export type DataMessages = {

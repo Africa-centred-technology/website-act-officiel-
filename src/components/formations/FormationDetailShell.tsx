@@ -9,15 +9,8 @@ import FooterStrip from "../layout/FooterStrip";
 import FormationInscriptionModal from "./FormationInscriptionModal";
 import BrochureRequestModal from "./BrochureRequestModal";
 import AnnouncementBar from "../layout/AnnouncementBar";
-import {
-  DEFAULT_MARQUEE_ITEMS,
-  DEFAULT_TRUST_STATS,
-  DEFAULT_PAIN_POINTS,
-  DEFAULT_AUDIENCE_CARDS,
-  getDefaultPricingPlans,
-  getDefaultFaqItems,
-  DEFAULT_FINAL_CTA,
-} from "@/lib/data/formation-defaults";
+import { DEFAULT_PAIN_POINT_IMAGES } from "@/lib/data/formation-defaults";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 /* ── Tracking helpers (GTM dataLayer + Meta Pixel + GA4) ── */
 type TrackingWindow = Window & {
@@ -368,21 +361,37 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   }
 
   /* ── Derived content ─ valeurs par défaut partagées (hybride) ─ */
-  const marqueeItems  = DEFAULT_MARQUEE_ITEMS;
-  const trustStats    = DEFAULT_TRUST_STATS;
-  const painCards     = DEFAULT_PAIN_POINTS;
+  const msg           = useDataMessages();
+  const defaults      = msg.formations.defaults;
+  const marqueeItems  = defaults.marquee;
+  const trustStats    = defaults.trustStats;
+  const painCards     = defaults.painPoints.map((p, idx) => ({
+    ...p,
+    image_url: DEFAULT_PAIN_POINT_IMAGES[idx] ?? "",
+  }));
   const outils        = formation.outilsCouverts ?? [];
   const hasOutils     = outils.length > 0;
   const toolsRow1     = outils.slice(0, Math.ceil(outils.length / 2));
   const toolsRow2     = outils.slice(Math.ceil(outils.length / 2));
-  const audienceCards = DEFAULT_AUDIENCE_CARDS;
+  const audienceCards = defaults.audienceCards;
   const pricing       = (formation.pricingPlans && formation.pricingPlans.length > 0)
     ? formation.pricingPlans
-    : getDefaultPricingPlans(formation.prix);
+    : defaults.pricingPlans.map((p, idx) => ({
+        title: p.title,
+        description: p.description,
+        amount: idx === 0 ? (formation.prix || "Sur devis") : "Sur devis",
+        currency: idx === 0 ? "MAD HT" : undefined,
+        old_price: idx > 0 ? "Réponse sous 24h" : undefined,
+        badge: p.badge,
+        featured: idx === 0,
+        cta_label: p.ctaLabel,
+        cta_type: (idx === 0 ? "inscription" : "contact") as "inscription" | "contact",
+        features: p.features,
+      }));
   const faqs          = (formation.faqItems && formation.faqItems.length > 0)
     ? formation.faqItems
-    : getDefaultFaqItems(formation.prerequis);
-  const finalCta      = DEFAULT_FINAL_CTA;
+    : defaults.faqItems;
+  const finalCta      = defaults.finalCta;
 
   const featuredPlan = formation.pricingPlans?.find((p) => p.featured) ?? formation.pricingPlans?.[0];
   const heroPrixBarre = featuredPlan?.old_price;
@@ -1039,7 +1048,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Btn variant="primary" onClick={() => goInscription("final_primary")} style={{ padding: "22px 40px", fontSize: 13 }}>
-              {finalCta.primary_label} →
+              {finalCta.primaryLabel} →
             </Btn>
             <Btn
               variant="ghost"
