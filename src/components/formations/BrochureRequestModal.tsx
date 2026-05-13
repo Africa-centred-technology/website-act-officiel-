@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -61,6 +62,7 @@ export default function BrochureRequestModal({
   formationSlug,
   brochureUrl,
 }: BrochureRequestModalProps) {
+  const t = useTranslations("formations.brochure");
   const [name, setName]       = useState("");
   const [email, setEmail]     = useState("");
   const [company, setCompany] = useState("");
@@ -155,7 +157,7 @@ export default function BrochureRequestModal({
             >
               <button
                 onClick={onClose}
-                aria-label="Fermer"
+                aria-label={t("ariaClose")}
                 style={{
                   position: "absolute", top: 16, right: 16, zIndex: 2,
                   width: 36, height: 36, borderRadius: "50%",
@@ -182,13 +184,13 @@ export default function BrochureRequestModal({
                     fontFamily: FONT_DISPLAY, fontSize: 28, lineHeight: 1.2,
                     fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 12px",
                   }}>
-                    Téléchargement lancé !
+                    {t("successTitle")}
                   </h3>
                   <p style={{
                     fontFamily: FONT_LABEL, fontSize: 14, lineHeight: 1.6,
                     color: "rgba(255,255,255,0.65)", margin: "0 auto 28px", maxWidth: 380,
                   }}>
-                    Si la brochure ne s'est pas ouverte automatiquement, cliquez ci-dessous.
+                    {t("successMessage")}
                   </p>
                   <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
                     {downloadUrl && (
@@ -205,7 +207,7 @@ export default function BrochureRequestModal({
                           display: "inline-flex", alignItems: "center", gap: 10,
                         }}
                       >
-                        📥 Ouvrir la brochure
+                        {t("openBrochure")}
                       </a>
                     )}
                     <button
@@ -218,7 +220,7 @@ export default function BrochureRequestModal({
                         letterSpacing: "0.18em", textTransform: "uppercase",
                       }}
                     >
-                      Fermer
+                      {t("close")}
                     </button>
                   </div>
                 </div>
@@ -229,40 +231,40 @@ export default function BrochureRequestModal({
                     textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
                     marginBottom: 12,
                   }}>
-                    📄 Brochure formation
+                    {t("eyebrow")}
                   </div>
                   <h3 style={{
                     fontFamily: FONT_DISPLAY, fontSize: 26, lineHeight: 1.2,
                     fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 8px",
                   }}>
-                    Téléchargez la brochure
+                    {t("title")}
                   </h3>
                   <p style={{
                     fontFamily: FONT_LABEL, fontSize: 13, lineHeight: 1.55,
                     color: "rgba(255,255,255,0.6)", margin: "0 0 28px",
                   }}>
-                    Programme, livrables, modalités et tarifs · PDF accessible immédiatement.
+                    {t("subtitle")}
                   </p>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                     <input
                       type="text" required value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Nom complet *"
+                      placeholder={t("namePlaceholder")}
                       disabled={state === "submitting"}
                       style={inputStyle}
                     />
                     <input
                       type="email" required value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Email professionnel *"
+                      placeholder={t("emailPlaceholder")}
                       disabled={state === "submitting"}
                       style={inputStyle}
                     />
                     <input
                       type="text" value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      placeholder="Entreprise (optionnel)"
+                      placeholder={t("companyPlaceholder")}
                       disabled={state === "submitting"}
                       style={inputStyle}
                     />
@@ -276,7 +278,7 @@ export default function BrochureRequestModal({
                       color: "#fca5a5", fontSize: 13,
                       display: "flex", alignItems: "center", gap: 8,
                     }}>
-                      <AlertCircle size={16} /> {errorMsg || "Une erreur est survenue, réessayez."}
+                      <AlertCircle size={16} /> {errorMsg || t("errorDefault")}
                     </div>
                   )}
 
@@ -295,9 +297,9 @@ export default function BrochureRequestModal({
                     }}
                   >
                     {state === "submitting" ? (
-                      <><Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> Préparation…</>
+                      <><Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> {t("submitting")}</>
                     ) : (
-                      <>📥 Télécharger la brochure →</>
+                      <>{t("submitIdle")}</>
                     )}
                   </button>
 
@@ -305,7 +307,7 @@ export default function BrochureRequestModal({
                     margin: "16px 0 0", fontSize: 11, lineHeight: 1.5,
                     color: "rgba(255,255,255,0.4)", textAlign: "center",
                   }}>
-                    Aucun spam. Vous pouvez vous désabonner à tout moment.
+                    {t("noSpam")}
                   </p>
                 </form>
               )}

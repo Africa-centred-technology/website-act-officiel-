@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
@@ -32,6 +33,7 @@ interface FormationsCarouselItem {
 }
 
 export default function FormationsCarousel() {
+  const t = useTranslations("formations.catalogue");
   const [index, setIndex] = useState(0);
   const [formations, setFormations] = useState<FormationsCarouselItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -78,14 +80,14 @@ export default function FormationsCarousel() {
           <motion.h2
              initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }} transition={{ delay: 0.1 }}
-             style={{ 
-               fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", 
-               fontWeight: 900, color: "#fff", 
+             style={{
+               fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
+               fontWeight: 900, color: "#fff",
                textTransform: "uppercase", letterSpacing: "-0.02em",
                lineHeight: 1.05,
             }}
           >
-            Explorez nos <span style={{ color: ORANGE }}>Formations</span>
+            {t("carouselTitle")} <span style={{ color: ORANGE }}>{t("carouselTitleAccent")}</span>
           </motion.h2>
         </div>
 
@@ -97,7 +99,7 @@ export default function FormationsCarousel() {
             </div>
           ) : formations.length === 0 ? (
             <div style={{ minHeight: "400px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <p style={{ color: "rgba(255,255,255,0.5)" }}>Aucune formation disponible pour le moment.</p>
+              <p style={{ color: "rgba(255,255,255,0.5)" }}>{t("emptyCarousel")}</p>
             </div>
           ) : (
             <>
@@ -144,18 +146,18 @@ export default function FormationsCarousel() {
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                         <div style={{ padding: "1.1rem", borderRadius: "0.8rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                            <span style={{ fontSize: "0.72rem", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.15em", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>Niveau</span>
+                            <span style={{ fontSize: "0.72rem", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.15em", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>{t("carouselNiveauLabel")}</span>
                             <span style={{ color: "#fff", fontWeight: 700, fontSize: "1.2rem" }}>{current.niveau}</span>
                         </div>
                         <div style={{ padding: "1.1rem", borderRadius: "0.8rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                            <span style={{ fontSize: "0.72rem", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.15em", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>Durée</span>
+                            <span style={{ fontSize: "0.72rem", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.15em", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>{t("carouselDureeLabel")}</span>
                             <span style={{ color: "#fff", fontWeight: 700, fontSize: "1.2rem" }}>{current.duree}</span>
                         </div>
                     </div>
 
                     <div className="carousel-cta-container" style={{ marginTop: "1rem" }}>
                         <CTAButton href={`/formations/${current.slug}`}>
-                            Détails de la formation
+                            {t("carouselDetailCta")}
                         </CTAButton>
                     </div>
                   </div>

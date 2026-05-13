@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion, useInView } from "framer-motion";
 import {
@@ -131,26 +132,11 @@ interface FormationMeta {
   categorie: string;
 }
 
-const PROCESS_STEPS = [
-  {
-    icon: FileText,
-    title: "Remplissez le formulaire",
-    desc: "Complétez votre profil et vos attentes en 4 étapes guidées.",
-  },
-  {
-    icon: CalendarCheck,
-    title: "Confirmation sous 24h",
-    desc: "Un conseiller ACT vous contacte pour confirmer et planifier.",
-  },
-  {
-    icon: Users,
-    title: "Intégrez la formation",
-    desc: "Rejoignez votre groupe et démarrez votre parcours.",
-  },
-];
+// PROCESS_STEPS keys moved to i18n — see formations.inscription.processStep*
 
 /* ── Main ──────────────────────────────────────────────────────── */
 export default function FormationInscriptionShell({ slug }: { slug: string }) {
+  const t = useTranslations("formations.inscription");
   const [formation, setFormation] = useState<FormationMeta | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -252,7 +238,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
             }
           >
             <ChevronLeft size={16} strokeWidth={2} />
-            Retour à la formation
+            {t("backToFormation")}
           </Link>
         </motion.div>
 
@@ -287,7 +273,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
               color: "rgba(255,255,255,0.35)",
             }}
           >
-            Inscription Formation
+            {t("eyebrow")}
           </span>
         </motion.div>
 
@@ -306,9 +292,9 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
             zIndex: 1,
           }}
         >
-          <span style={{ color: "rgba(255,255,255,0.88)" }}>Inscrivez</span>
+          <span style={{ color: "rgba(255,255,255,0.88)" }}>{t("heroLine1")}</span>
           <br />
-          <span style={{ color: ORANGE }}>-vous</span>
+          <span style={{ color: ORANGE }}>{t("heroLine2")}</span>
         </motion.h1>
 
         {/* Formation title + meta pills */}
@@ -351,10 +337,10 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                 gap: "0.6rem",
               }}
             >
-              <MetaPill icon={BarChart3} label="Niveau" value={formation.niveau} />
-              <MetaPill icon={Clock} label="Durée" value={formation.duree} />
-              <MetaPill icon={MonitorPlay} label="Format" value={formation.format} />
-              <MetaPill icon={Tag} label="Prix" value={formation.prix} />
+              <MetaPill icon={BarChart3} label={t("metaNiveau")} value={formation.niveau} />
+              <MetaPill icon={Clock} label={t("metaDuree")} value={formation.duree} />
+              <MetaPill icon={MonitorPlay} label={t("metaFormat")} value={formation.format} />
+              <MetaPill icon={Tag} label={t("metaTarif")} value={formation.prix} />
             </div>
           )}
         </motion.div>
@@ -401,7 +387,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.1 }}
           >
-            <SLabel>Formulaire d'inscription</SLabel>
+            <SLabel>{t("formLabel")}</SLabel>
             <h2
               style={{
                 fontWeight: 900,
@@ -411,7 +397,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                 marginBottom: "clamp(2rem, 4vw, 3.5rem)",
               }}
             >
-              Votre <span style={{ color: ORANGE }}>dossier</span>
+              {t("formTitle")} <span style={{ color: ORANGE }}>{t("formTitleAccent")}</span>
             </h2>
 
             <FormationInscriptionForm
@@ -449,7 +435,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                     background: `linear-gradient(to right, ${ORANGE}, #F39C12)`,
                   }}
                 />
-                <SLabel>Récapitulatif</SLabel>
+                <SLabel>{t("sidebarRecap")}</SLabel>
                 <p
                   style={{
                     fontWeight: 700,
@@ -464,10 +450,10 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
                   {[
-                    { icon: BarChart3, label: "Niveau", value: formation.niveau },
-                    { icon: Clock, label: "Durée", value: formation.duree },
-                    { icon: MonitorPlay, label: "Format", value: formation.format },
-                    { icon: Tag, label: "Tarif", value: formation.prix },
+                    { icon: BarChart3, label: t("metaNiveau"), value: formation.niveau },
+                    { icon: Clock, label: t("metaDuree"), value: formation.duree },
+                    { icon: MonitorPlay, label: t("metaFormat"), value: formation.format },
+                    { icon: Tag, label: t("metaTarif"), value: formation.prix },
                   ]
                     .filter((r) => r.value)
                     .map(({ icon: Icon, label, value }) => (
@@ -551,9 +537,13 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                 padding: "clamp(1.5rem, 3vw, 2.2rem)",
               }}
             >
-              <SLabel>Comment ça se passe ?</SLabel>
+              <SLabel>{t("sidebarProcess")}</SLabel>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                {PROCESS_STEPS.map(({ icon: Icon, title: t, desc }, i) => (
+                {([
+                  { icon: FileText, titleKey: "processStep1Title", descKey: "processStep1Desc" },
+                  { icon: CalendarCheck, titleKey: "processStep2Title", descKey: "processStep2Desc" },
+                  { icon: Users, titleKey: "processStep3Title", descKey: "processStep3Desc" },
+                ] as const).map(({ icon: Icon, titleKey, descKey }, i) => (
                   <div key={i} style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
                     <div
                       style={{
@@ -579,7 +569,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                           marginBottom: "0.3rem",
                         }}
                       >
-                        {t}
+                        {t(titleKey)}
                       </p>
                       <p
                         style={{
@@ -590,7 +580,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                           letterSpacing: "0",
                         }}
                       >
-                        {desc}
+                        {t(descKey)}
                       </p>
                     </div>
                   </div>
@@ -607,12 +597,12 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                 padding: "clamp(1.5rem, 3vw, 2.2rem)",
               }}
             >
-              <SLabel>Nos engagements</SLabel>
+              <SLabel>{t("sidebarEngagements")}</SLabel>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
                 {[
-                  "Réponse garantie sous 24h ouvrées",
-                  "Conseiller dédié à votre dossier",
-                  "Confidentialité assurée (NDA disponible)",
+                  t("engagement1"),
+                  t("engagement2"),
+                  t("engagement3"),
                 ].map((e, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.8rem" }}>
                     <CheckCircle2 size={16} color={ORANGE} strokeWidth={2} style={{ flexShrink: 0, marginTop: "0.1rem" }} />
@@ -641,7 +631,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                 padding: "clamp(1.5rem, 3vw, 2.2rem)",
               }}
             >
-              <SLabel>Une question ?</SLabel>
+              <SLabel>{t("sidebarQuestion")}</SLabel>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
                 <a
                   href="tel:+212662777507"

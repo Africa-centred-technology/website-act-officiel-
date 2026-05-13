@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import {
@@ -201,6 +202,7 @@ function Grain() {
    HERO VIDEO
 ───────────────────────────────────────────────────────────────── */
 function MarketingVideo() {
+    const tc = useTranslations("formations.catalogue");
     return (
         <motion.section
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}
@@ -238,25 +240,24 @@ function MarketingVideo() {
                     transition={{ delay: 0.8, duration: 1, ease: [0.6, 0.08, 0.02, 0.99] }}
                     style={{ fontSize: "clamp(2.5rem, 7vw, 6.5rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 0.95, letterSpacing: "-0.03em", margin: "0 0 2rem", maxWidth: 1100 }}
                 >
-                    <span style={{ color: "#fff" }}>Maîtrisez les outils</span><br />
-                    <span style={{ color: COLOR }}>qui font la différence</span><br />
-                    <span style={{ color: "rgba(255,255,255,0.7)" }}>dès demain matin.</span>
+                    <span style={{ color: "#fff" }}>{tc("landpageHeroLine1")}</span><br />
+                    <span style={{ color: COLOR }}>{tc("landpageHeroLine2")}</span><br />
+                    <span style={{ color: "rgba(255,255,255,0.7)" }}>{tc("landpageHeroLine3")}</span>
                 </motion.h1>
 
                 <motion.p
                     initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}
                     style={{ fontSize: "clamp(1rem, 1.4vw, 1.2rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.65, maxWidth: 640, margin: "0 0 3rem", fontFamily: "var(--font-body)" }}
                 >
-                    Formations intensives conçues par des praticiens africains sur des cas réels.
-                    En 1 à 3 jours, vous repartez avec des compétences applicables le lendemain.
+                    {tc("landpageHeroSubtitle")}
                 </motion.p>
 
                 <motion.div
                     initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.6 }}
                     style={{ display: "flex", gap: "1.2rem", flexWrap: "wrap" }}
                 >
-                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">Voir le catalogue</RippleButton>
-                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">S&apos;inscrire maintenant</RippleButton>
+                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">{tc("heroCatalogCta")}</RippleButton>
+                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">{tc("heroRegisterCta")}</RippleButton>
                 </motion.div>
             </div>
 
@@ -358,6 +359,7 @@ interface FormationCardData {
 }
 
 function ProgramCard({ program, index, screenSize }: { program: FormationCardData; index: number; screenSize: string }) {
+    const tc = useTranslations("formations.catalogue");
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -412,7 +414,7 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
 
                     {/* CTA — arrow slides right */}
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: hovered ? "#fff" : COLOR, fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.3s" }}>
-                        En savoir plus
+                        {tc("discoverCta")}
                         <span style={{ display: "inline-flex", transition: "transform 0.3s ease", transform: hovered ? "translateX(6px)" : "translateX(0)" }}>
                             <ArrowRight size={17} />
                         </span>
@@ -453,6 +455,7 @@ function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
    INSCRIPTION FORM
 ───────────────────────────────────────────────────────────────── */
 function InscriptionForm({ screenSize, formations }: { screenSize: string; formations: FormationCardData[] }) {
+    const t = useTranslations("formations.inscription");
     const [form, setForm] = useState({ nom: "", email: "", telephone: "", formation: "", message: "" });
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
@@ -504,9 +507,9 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
             style={{ textAlign: "center", padding: "3.5rem 2rem", background: "rgba(22,163,74,0.07)", border: "1px solid rgba(22,163,74,0.25)", borderRadius: "1rem" }}>
             <div style={{ fontSize: "3rem", marginBottom: "1.2rem" }}>🎉</div>
-            <h3 style={{ fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>Demande envoyée !</h3>
+            <h3 style={{ fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{t("landpageSuccessTitle")}</h3>
             <p style={{ color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)", lineHeight: 1.8, fontSize: "1.1rem" }}>
-                Notre équipe vous contactera sous <strong style={{ color: "#fff" }}>24h ouvrées</strong> pour confirmer votre inscription et vous communiquer les modalités.
+                {t("landpageSuccessMessage", { hours: "24" })}
             </p>
         </motion.div>
     );
@@ -519,13 +522,13 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
 
             <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "1fr 1fr", gap: "1.4rem", marginBottom: "1.4rem" }}>
                 <div>
-                    <label style={labelStyle}>Nom complet *</label>
+                    <label style={labelStyle}>{t("landpageNomLabel")}</label>
                     <input required type="text" value={form.nom} onChange={e => setForm({ ...form, nom: e.target.value })}
-                        placeholder="Votre nom complet" style={iStyle}
+                        placeholder={t("landpageNomPlaceholder")} style={iStyle}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
                 </div>
                 <div>
-                    <label style={labelStyle}>Email *</label>
+                    <label style={labelStyle}>{t("landpageEmailLabel")}</label>
                     <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
                         placeholder="votre@email.com" style={iStyle}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
@@ -534,42 +537,42 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
 
             <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "1fr 1fr", gap: "1.4rem", marginBottom: "1.4rem" }}>
                 <div>
-                    <label style={labelStyle}>Téléphone</label>
+                    <label style={labelStyle}>{t("landpageTelLabel")}</label>
                     <input type="tel" value={form.telephone} onChange={e => setForm({ ...form, telephone: e.target.value })}
                         placeholder="+212 6XX XXX XXX" style={iStyle}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
                 </div>
                 <div>
-                    <label style={labelStyle}>Formation souhaitée *</label>
+                    <label style={labelStyle}>{t("landpageFormationLabel")}</label>
                     <select required value={form.formation} onChange={e => setForm({ ...form, formation: e.target.value })}
                         style={{ ...iStyle, cursor: "pointer" }}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}>
-                        <option value="" style={{ background: "#0A1410" }}>Choisissez une formation</option>
+                        <option value="" style={{ background: "#0A1410" }}>{t("landpageFormationDefault")}</option>
                         {formations.map(f => <option key={f.slug} value={f.title} style={{ background: "#0A1410" }}>{f.title}</option>)}
-                        <option value="Je ne sais pas encore" style={{ background: "#0A1410" }}>Je ne sais pas encore</option>
+                        <option value={t("landpageFormationUnknown")} style={{ background: "#0A1410" }}>{t("landpageFormationUnknown")}</option>
                     </select>
                 </div>
             </div>
 
             <div style={{ marginBottom: "2rem" }}>
-                <label style={labelStyle}>Message (facultatif)</label>
+                <label style={labelStyle}>{t("landpageMessageLabel")}</label>
                 <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                    rows={3} placeholder="Votre niveau actuel, vos objectifs, vos contraintes horaires..."
+                    rows={3} placeholder={t("landpageMessagePlaceholder")}
                     style={{ ...iStyle, resize: "vertical", lineHeight: 1.65 }}
                     onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
             </div>
 
             {submitError && (
                 <p style={{ color: "#ef4444", fontSize: "1rem", fontFamily: "var(--font-body)", marginBottom: "1rem", textAlign: "center" }}>
-                    Une erreur est survenue. Veuillez réessayer.
+                    {t("landpageError")}
                 </p>
             )}
             <RippleButton type="submit" arrowDeg={90} size="lg" disabled={sending} style={{ width: "100%", justifyContent: "center" }}>
-                {sending ? "Envoi en cours…" : "Réserver ma place"}
+                {sending ? t("landpageSubmitting") : t("landpageSubmitIdle")}
             </RippleButton>
 
             <p style={{ textAlign: "center", fontSize: "1rem", color: "rgba(255,255,255,0.3)", marginTop: "1.2rem", fontFamily: "var(--font-body)" }}>
-                ✓ Réponse sous 24h · ✓ Sans engagement
+                {t("landpageConfirmation")}
             </p>
         </motion.form>
     );
@@ -579,6 +582,8 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
    PAGE
 ───────────────────────────────────────────────────────────────── */
 export default function FormationLandpage() {
+    const t = useTranslations("formations.inscription");
+    const tc = useTranslations("formations.catalogue");
     const screenSize = useMediaQuery();
     const [formationsData, setFormationsData] = useState<FormationCardData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -661,14 +666,14 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem", textAlign: "center" }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 40, height: 2, background: `linear-gradient(to right, transparent, ${COLOR})` }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Storytelling</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageStorytellingEyebrow")}</span>
                                 <div style={{ width: 40, height: 2, background: `linear-gradient(to left, transparent, ${COLOR})` }} />
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem, 8vw, 3.2rem)" : "clamp(3rem, 5vw, 4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, margin: 0 }}>
-                                L&apos;expérience <span style={{ color: COLOR }}>ACT</span>
+                                {tc("landpageExperienceTitle")} <span style={{ color: COLOR }}>ACT</span>
                             </h2>
                             <p style={{ marginTop: "1.2rem", fontSize: "1.25rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", maxWidth: 560, margin: "1.2rem auto 0", lineHeight: 1.75 }}>
-                                On ne vous dit pas qu'on est bons — on vous montre comment ça se passe vraiment.
+                                {tc("landpageExperienceSubtitle")}
                             </p>
                         </motion.div>
 
@@ -686,10 +691,10 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3.5rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Notre méthode</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageMethodEyebrow")}</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, color: "#fff", margin: 0 }}>
-                                Pourquoi choisir <span style={{ color: COLOR }}>ACT Formation</span>
+                                {tc("landpageMethodTitle")} <span style={{ color: COLOR }}>ACT Formation</span>
                             </h2>
                         </motion.div>
 
@@ -720,10 +725,10 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Catalogue</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageCatalogueEyebrow")}</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, marginBottom: "2rem" }}>
-                                Nos <span style={{ color: COLOR }}>Formations</span>
+                                {tc("landpageCatalogueTitle")} <span style={{ color: COLOR }}>{tc("landpageCatalogueTitleAccent")}</span>
                             </h2>
 
                             {/* Filter chips */}
@@ -761,7 +766,7 @@ export default function FormationLandpage() {
                                             onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "none"; el.style.transform = "translateY(0)"; }}
                                         >
                                             <div style={{ position: "absolute", top: "1.2rem", left: "1.2rem", zIndex: 2, padding: "0.3rem 1rem", background: COLOR, borderRadius: "2rem", fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fff" }}>
-                                                ★ Populaire
+                                                {tc("popularBadge")}
                                             </div>
                                             {featured.imageUrl && (
                                                 <div style={{ position: "relative", overflow: "hidden", minHeight: screenSize === "mobile" ? 240 : "auto" }}>
@@ -779,7 +784,7 @@ export default function FormationLandpage() {
                                                     {featured.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", fontWeight: 700, color: COLOR }}><Tag      size={15} color={COLOR} />{featured.prix}</span>}
                                                 </div>
                                                 <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: COLOR, fontSize: "1.05rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                                                    Voir la formation <ArrowRight size={16} />
+                                                    {tc("viewFormation")} <ArrowRight size={16} />
                                                 </div>
                                             </div>
                                         </div>
@@ -798,12 +803,12 @@ export default function FormationLandpage() {
                                     </div>
                                 ) : fetchError ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
-                                        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "1.2rem", fontSize: "1rem", fontFamily: "var(--font-body)" }}>Impossible de charger les formations.</p>
-                                        <RippleButton onClick={loadFromShopify} arrowDeg={0} variant="outline">Réessayer</RippleButton>
+                                        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "1.2rem", fontSize: "1rem", fontFamily: "var(--font-body)" }}>{tc("loadError")}</p>
+                                        <RippleButton onClick={loadFromShopify} arrowDeg={0} variant="outline">{tc("retry")}</RippleButton>
                                     </div>
                                 ) : rest.length === 0 && !featured ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
-                                        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "1rem" }}>Aucune formation dans cette catégorie.</p>
+                                        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "1rem" }}>{tc("emptyCategoryMessage")}</p>
                                     </div>
                                 ) : (
                                     rest.map((program, i) => <ProgramCard key={program.slug} program={program} index={i} screenSize={screenSize} />)
@@ -813,7 +818,7 @@ export default function FormationLandpage() {
 
                         {formationsData.length > 0 && (
                             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ textAlign: "center", marginTop: "3rem" }}>
-                                <RippleButton href="/formations/all" arrowDeg={45}>Voir le catalogue complet</RippleButton>
+                                <RippleButton href="/formations/all" arrowDeg={45}>{tc("viewFullCatalogue")}</RippleButton>
                             </motion.div>
                         )}
                     </div>
@@ -825,10 +830,10 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Nos engagements</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageEngagementsEyebrow")}</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, margin: 0 }}>
-                                Des garanties <span style={{ color: COLOR }}>concrètes</span>
+                                {tc("landpageEngagementsTitle")} <span style={{ color: COLOR }}>{tc("landpageEngagementsTitleAccent")}</span>
                             </h2>
                         </motion.div>
                         <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: "1.2rem" }}>
@@ -856,7 +861,7 @@ export default function FormationLandpage() {
                             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.5rem" }}>
                                     <div style={{ width: 36, height: 2, background: COLOR }} />
-                                    <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Mot du fondateur</span>
+                                    <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageFounderEyebrow")}</span>
                                 </div>
                                 <blockquote style={{ margin: "0 0 2rem", padding: 0, border: "none" }}>
                                     <p style={{ fontSize: screenSize === "mobile" ? "1.4rem" : "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.5, marginBottom: "1.5rem" }}>
@@ -889,23 +894,23 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "2rem" }}>
                                 <div style={{ width: 60, height: 2, background: `linear-gradient(to right, transparent, ${COLOR})` }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Passez à l&apos;action</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageCtaEyebrow")}</span>
                                 <div style={{ width: 60, height: 2, background: `linear-gradient(to left, transparent, ${COLOR})` }} />
                             </div>
 
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.5rem,9vw,3.5rem)" : "clamp(3.5rem,6vw,5.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 0.95, marginBottom: "1.5rem" }}>
-                                Votre prochaine<br />
-                                <span style={{ color: COLOR }}>compétence commence</span><br />
-                                maintenant.
+                                {tc("landpageCtaTitle1")}<br />
+                                <span style={{ color: COLOR }}>{tc("landpageCtaTitle2")}</span><br />
+                                {tc("landpageCtaTitle3")}
                             </h2>
 
                             <p style={{ fontSize: "1.3rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", lineHeight: 1.8, maxWidth: 520, margin: "0 auto 3rem" }}>
-                                Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture.
+                                {tc("landpageCtaSubtitle")}
                             </p>
 
                             {/* Final CTA — arrow rotates 90° on hover */}
                             <RippleButton href="#inscription" arrowDeg={90} size="lg">
-                                Je m&apos;inscris maintenant
+                                {t("finalCtaBtn")}
                             </RippleButton>
                         </motion.div>
                     </div>
