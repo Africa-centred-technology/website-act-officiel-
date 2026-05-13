@@ -374,28 +374,133 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   GUARANTEE CARD — extracted to avoid hooks-in-loop
+   GUARANTEE CARD
 ───────────────────────────────────────────────────────────────── */
 function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
     const [hov, setHov] = useState(false);
+    const num = String(i + 1).padStart(2, "0");
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ delay: i * 0.13, duration: 0.7, ease: [0.6, 0.08, 0.02, 0.99] }}
             onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
             style={{
-                padding: "2rem 1.8rem",
-                background: hov ? (i === 0 ? `${COLOR}12` : "rgba(255,255,255,0.04)") : (i === 0 ? `${COLOR}08` : "rgba(255,255,255,0.02)"),
-                border: `1px solid ${hov ? (i === 0 ? COLOR + "55" : "rgba(255,255,255,0.12)") : (i === 0 ? COLOR + "2A" : "rgba(255,255,255,0.07)")}`,
-                borderRadius: "0.85rem",
-                transition: "all 0.3s ease",
-                transform: hov ? "translateY(-5px)" : "translateY(0)",
-                boxShadow: hov ? "0 16px 48px rgba(0,0,0,0.18)" : "none",
+                padding: "2.5rem 2.2rem",
+                background: hov ? "rgba(211,84,0,0.05)" : "rgba(255,255,255,0.02)",
+                border: `1px solid ${hov ? COLOR + "44" : "rgba(255,255,255,0.07)"}`,
+                borderRadius: "1rem",
+                transition: "all 0.35s ease",
+                transform: hov ? "translateY(-6px)" : "translateY(0)",
+                boxShadow: hov ? `0 20px 60px rgba(0,0,0,0.22)` : "none",
+                position: "relative", overflow: "hidden",
             }}
         >
-            <div style={{ fontSize: "1.8rem", marginBottom: "1rem" }}>{g.emoji}</div>
-            <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: i === 0 ? COLOR : "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{g.label}</h3>
-            <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.58)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{g.detail}</p>
+            {/* Ghost number */}
+            <div aria-hidden style={{
+                position: "absolute", top: "-1rem", right: "0.5rem",
+                fontSize: "7rem", fontWeight: 900, fontFamily: "var(--font-display)",
+                color: hov ? "rgba(211,84,0,0.06)" : "rgba(255,255,255,0.025)",
+                lineHeight: 1, userSelect: "none", pointerEvents: "none",
+                transition: "color 0.35s",
+            }}>{num}</div>
+
+            {/* Number label */}
+            <div style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: COLOR, marginBottom: "1.6rem", fontFamily: "var(--font-body)" }}>
+                {num} —
+            </div>
+
+            <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#fff", marginBottom: "0.8rem", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>
+                {g.label}
+            </h3>
+            <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.52)", lineHeight: 1.78, fontFamily: "var(--font-body)", margin: 0 }}>
+                {g.detail}
+            </p>
+
+            {/* Bottom accent */}
+            <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0, height: 2,
+                background: hov ? `linear-gradient(90deg, ${COLOR}, transparent)` : "transparent",
+                transition: "background 0.35s",
+            }} />
         </motion.div>
+    );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   GUARANTEES SECTION — avec parallax
+───────────────────────────────────────────────────────────────── */
+function GuaranteesSection({ screenSize }: { screenSize: string }) {
+    const ref = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+    const bgTextY  = useTransform(scrollYProgress, [0, 1], ["-8%",  "8%"]);
+    const glowX    = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+    const headerY  = useTransform(scrollYProgress, [0, 0.35], ["40px", "0px"]);
+    const headerOp = useTransform(scrollYProgress, [0, 0.3],  [0, 1]);
+
+    return (
+        <section
+            ref={ref}
+            style={{
+                padding: screenSize === "mobile" ? "6rem 1.5rem" : "8rem 6rem",
+                borderTop: "1px solid rgba(255,255,255,0.05)",
+                position: "relative", zIndex: 1, overflow: "hidden",
+            }}
+        >
+            {/* Texte fantôme parallax */}
+            <motion.div aria-hidden style={{
+                y: bgTextY,
+                position: "absolute", top: "50%", left: "50%",
+                translateX: "-50%", translateY: "-50%",
+                fontSize: "clamp(7rem, 18vw, 20rem)",
+                fontWeight: 900, fontFamily: "var(--font-display)",
+                textTransform: "uppercase", letterSpacing: "-0.04em",
+                color: "rgba(255,255,255,0.018)",
+                whiteSpace: "nowrap", userSelect: "none", pointerEvents: "none", zIndex: 0,
+            }}>
+                GARANTIES
+            </motion.div>
+
+            {/* Glow parallax horizontal */}
+            <motion.div aria-hidden style={{
+                x: glowX,
+                position: "absolute", top: "45%", left: "50%",
+                width: "60vw", height: "40vw",
+                background: `radial-gradient(ellipse, ${COLOR}07 0%, transparent 70%)`,
+                translateX: "-50%", translateY: "-50%",
+                pointerEvents: "none", zIndex: 0,
+            }} />
+
+            <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+                {/* Header avec parallax */}
+                <motion.div style={{ y: headerY, opacity: headerOp }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
+                        <div style={{ width: 36, height: 2, background: COLOR }} />
+                        <span style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR, fontFamily: "var(--font-body)" }}>
+                            Nos engagements
+                        </span>
+                    </div>
+                    <h2 style={{
+                        fontSize: screenSize === "mobile" ? "clamp(2.5rem,9vw,3.5rem)" : "clamp(3rem,5vw,4.5rem)",
+                        fontWeight: 900, fontFamily: "var(--font-display)",
+                        textTransform: "uppercase", lineHeight: 1.0,
+                        marginBottom: screenSize === "mobile" ? "3rem" : "4rem",
+                    }}>
+                        Des garanties <span style={{ color: COLOR }}>concrètes</span>
+                    </h2>
+                </motion.div>
+
+                {/* Grille 3 colonnes */}
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)",
+                    gap: "1.5rem",
+                }}>
+                    {GUARANTEES.map((g, i) => <GuaranteeCard key={i} g={g} i={i} />)}
+                </div>
+            </div>
+        </section>
     );
 }
 
@@ -838,11 +943,11 @@ export default function FormationLandpage() {
                                         Après des années à accompagner des entreprises africaines dans leur transformation digitale, j&apos;ai vu le même blocage : les compétences manquent, pas la motivation.
                                     </p>
                                     <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85 }}>
-                                        Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable, je vous rembourse.
+                                        Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable.
                                     </p>
                                 </blockquote>
                                 <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
-                                    {["15+ ans terrain", "Formé en Europe & Afrique", "200+ entreprises accompagnées"].map((tag, i) => (
+                                    {["15+ ans terrain", "Formé en Europe & Afrique", "200+ Etudiants accompagnées"].map((tag, i) => (
                                         <span key={i} style={{ padding: "0.4rem 1rem", background: `${COLOR}12`, border: `1px solid ${COLOR}2A`, borderRadius: "2rem", fontSize: "1rem", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-body)" }}>{tag}</span>
                                     ))}
                                 </div>
