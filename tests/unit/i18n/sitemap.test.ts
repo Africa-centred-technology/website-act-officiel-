@@ -23,17 +23,15 @@ describe("sitemap", () => {
     for (const entry of entries) {
       expect(entry.url).not.toContain("nous-decouvrir");
       expect(entry.url).not.toContain("notre-savoir-faire");
-      for (const v of Object.values(entry.alternates?.languages ?? {})) {
+      for (const v of Object.values(entry.alternates!.languages!)) {
         expect(v).not.toContain("nous-decouvrir");
         expect(v).not.toContain("notre-savoir-faire");
       }
     }
   });
 
-  it("home entry uses /fr as canonical (not bare /)", () => {
-    const home = entries.find(
-      (e) => e.url === "https://www.a-ct.ma/fr" || e.url === "https://www.a-ct.ma/fr/"
-    );
+  it("home entry uses /fr as canonical (no trailing slash)", () => {
+    const home = entries.find((e) => e.url === "https://www.a-ct.ma/fr");
     expect(home).toBeDefined();
   });
 });
