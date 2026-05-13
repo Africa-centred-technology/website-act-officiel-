@@ -162,7 +162,7 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
     await page.getByPlaceholder("Votre nom complet").fill("Test Smoke User");
     await page.getByPlaceholder("votre@entreprise.com").fill("smoke@test.com");
     // "Type de projet" est required — sans sélection la validation HTML5 bloque le submit
-    await page.locator("select").selectOption("web");
+    await page.locator("form select").selectOption("web");
     await page
       .getByPlaceholder("Décrivez votre projet, vos objectifs et vos contraintes...")
       .fill("Ceci est un message de test automatisé Playwright.");
@@ -205,11 +205,11 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
 
     // ── 3 selects en mode étudiant : niveau d'études, fonction, comment connu
     // 1er select : Niveau d'études
-    await page.locator("select").nth(0).selectOption({ index: 1 });
+    await page.locator("form select").nth(0).selectOption({ index: 1 });
     // 2ème select : Fonction du participant
-    await page.locator("select").nth(1).selectOption({ index: 1 });
+    await page.locator("form select").nth(1).selectOption({ index: 1 });
     // 3ème select : Comment nous avez-vous connu
-    await page.locator("select").nth(2).selectOption("Google");
+    await page.locator("form select").nth(2).selectOption("Google");
 
     // ── Consentement RGPD ────────────────────────────────────────────────────
     await page.locator('input[type="checkbox"]').check();
