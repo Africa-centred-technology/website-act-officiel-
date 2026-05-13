@@ -161,7 +161,7 @@
       "titleAccent": "لنُجسِّده.",
       "subtitle": "سواء كانت فكرة للتحقق منها، أو حلًا لبنائه، أو فريقًا لتدريبه — يستجيب خبراؤنا خلال 24 ساعة لتحويل طموحك إلى واقع.",
       "cta": "ابدأ مشروعًا",
-      "ctaSecondary": "اطّلع على مشاريعنا →",
+      "ctaSecondary": "اطّلع على مشاريعنا ←",
       "commitments": {
         "response": { "val": "24h", "label": "ردّ مضمون" },
         "free": { "val": "مجاني", "label": "محادثة أولى" },
@@ -345,7 +345,7 @@
       "deliverablesCount": "{n} مُخرَجات",
       "deliverablesAccent": "ملموسة",
       "relatedTitle": "خدمات القسم {poleN}",
-      "backLink": "← الخدمات",
+      "backLink": "→ الخدمات",
       "cta": {
         "eyebrow": "لنعمل معًا",
         "title": "مهتمّ بهذه الخدمة؟",
@@ -361,7 +361,7 @@
         "scrollHint": "مرِّر",
         "benefitsLabel": "لماذا تختار خدماتنا",
         "relatedTitle": "خدمات القسم {poleN}",
-        "backLink": "← الخدمات",
+        "backLink": "→ الخدمات",
         "cta": {
           "eyebrow": "لنعمل معًا",
           "title": "مهتمّ بهذه الخدمة؟",
@@ -376,7 +376,7 @@
         "scrollHint": "مرِّر",
         "benefitsLabel": "لماذا تختار خدماتنا",
         "relatedTitle": "خدمات القسم {poleN}",
-        "backLink": "← الخدمات",
+        "backLink": "→ الخدمات",
         "cta": {
           "eyebrow": "لنعمل معًا",
           "title": "مهتمّ بهذه الخدمة؟",
@@ -390,7 +390,7 @@
         "approachLabel": "مقاربتنا",
         "scrollHint": "مرِّر",
         "benefitsLabel": "لماذا تختار خدماتنا",
-        "backLink": "← الخدمات"
+        "backLink": "→ الخدمات"
       }
     },
     "items": {
@@ -661,8 +661,8 @@
       "retry": "إعادة المحاولة",
       "emptyTitle": "لا توجد نتائج لهذا البحث",
       "resetSearch": "إعادة ضبط البحث",
-      "paginationPrev": "← السابق",
-      "paginationNext": "التالي →",
+      "paginationPrev": "→ السابق",
+      "paginationNext": "التالي ←",
       "paginationPage": "الصفحة {current} / {total}",
       "defaultAccroche": "تدريب عملي لإتقان أدوات الغد.",
       "defaultNiveau": "مبتدئ",
@@ -766,7 +766,7 @@
       }
     },
     "detail": {
-      "inscriptionCta": "أسجِّل →",
+      "inscriptionCta": "أسجِّل ←",
       "voirProgramme": "عرض البرنامج",
       "inscriptionsOuvertes": "التسجيل مفتوح",
       "metaDuree": "المدة",
@@ -939,7 +939,7 @@
       "namePlaceholder": "الاسم الكامل *",
       "emailPlaceholder": "البريد المهني *",
       "companyPlaceholder": "الشركة (اختياري)",
-      "submitIdle": "📥 حمِّل الكتيِّب →",
+      "submitIdle": "📥 حمِّل الكتيِّب ←",
       "submitting": "جارٍ التحضير…",
       "noSpam": "لا رسائل مزعجة. يمكنك إلغاء الاشتراك في أي وقت.",
       "successTitle": "بدأ التحميل!",
@@ -955,7 +955,7 @@
       "ariaClose": "إغلاق السلة",
       "ariaCart": "سلة التسوّق",
       "empty": "سلّتك فارغة",
-      "discoverCta": "اكتشف تدريباتنا →",
+      "discoverCta": "اكتشف تدريباتنا ←",
       "orderConfirmed": "تم تأكيد الطلب!",
       "orderConfirmedMessage": "ستتلقّى بريدًا إلكترونيًا للتأكيد مع تفاصيل تدريبك.",
       "savings": "توفِّر {amount}!",
@@ -1427,7 +1427,7 @@
       }
     },
     "detail": {
-      "backLink": "← الأعمال",
+      "backLink": "→ الأعمال",
       "counter": "{index} / 04",
       "metaClient": "العميل",
       "metaYear": "السنة",
@@ -1443,7 +1443,7 @@
       "ctaH2Line2": "خبرتنا",
       "ctaDescription": "هل أنت مستعدّ لجعل مشروعك القادم قصّة نجاح تكنولوجية؟ فريق Africa Centred Technology في خدمتك.",
       "ctaButton": "ابدأ مشروعًا مماثلًا ←",
-      "navPrev": "← المشروع السابق",
+      "navPrev": "→ المشروع السابق",
       "navNext": "المشروع التالي ←"
     },
     "items": {
@@ -1577,7 +1577,7 @@
       "readCta": "اقرأ ←"
     },
     "articles": {
-      "backLink": "← العودة إلى الأقسام",
+      "backLink": "→ العودة إلى الأقسام",
       "titleAllPrefix": "كل",
       "titleAllAccent": "المقالات",
       "titleCategoryPrefix": "مقالات",
@@ -1594,7 +1594,7 @@
       "readArticleCta": "اقرأ المقال ←"
     },
     "post": {
-      "backLink": "← العودة إلى المدوّنة",
+      "backLink": "→ العودة إلى المدوّنة",
       "metaDate": "التاريخ",
       "metaReading": "القراءة",
       "metaTarget": "الجمهور",
