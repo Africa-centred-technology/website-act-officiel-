@@ -1,10 +1,15 @@
 import { Suspense } from 'react';
 import FormationsShell from '@/components/formations/FormationsShell';
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: 'Toutes nos Formations | ACT',
-  description: 'Explorez le catalogue complet de nos formations en Intelligence Artificielle et transformation digitale.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.formations", path: "/formations/all" });
+}
 
 function FormationsLoading() {
   return (

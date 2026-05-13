@@ -1,10 +1,15 @@
 import { Suspense } from 'react';
 import FormationLandpage from '@/components/formations/FormationLandpage';
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: 'Nos Formations | ACT',
-  description: 'Découvrez notre catalogue de formations en Intelligence Artificielle et transformation digitale.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.formations", path: "/formations" });
+}
 
 function FormationsLoading() {
   return (

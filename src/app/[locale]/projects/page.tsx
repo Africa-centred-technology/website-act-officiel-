@@ -1,10 +1,14 @@
 import RealisationsShell from "@/components/realisations/RealisationsShell";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: "Réalisations — Africa Centred Technology",
-  description:
-    "Découvrez nos projets qui transforment les entreprises africaines : IA multimodale, e-commerce, SIG, plateformes médias. Solutions technologiques à impact réel.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.projects", path: "/projects" });
+}
 
 export default function ProjectsPage() {
   return <RealisationsShell />;

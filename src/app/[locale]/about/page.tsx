@@ -1,10 +1,14 @@
 import AboutShell from "@/components/about/AboutShell";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: "À Propos — Africa Centred Technology",
-  description:
-    "Découvrez l'histoire, la mission et l'équipe d'Africa Centred Technology — pionniers de la transformation digitale en Afrique depuis 2023.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.about", path: "/about" });
+}
 
 export default function AboutPage() {
   return <AboutShell />;

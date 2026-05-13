@@ -1,10 +1,14 @@
 import ServicesShellClient from "@/components/services/ServicesShellClient";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: "Nos Services — Africa Centred Technology",
-  description:
-    "Voyage immersif à travers les 8 expertises ACT : ingénierie logicielle, IA agentique, architecture cloud, data, géomatique, conseil stratégique, conseil opérationnel et formation.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.services", path: "/services" });
+}
 
 export default function ServicesPage() {
   return <ServicesShellClient />;

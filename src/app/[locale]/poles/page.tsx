@@ -1,11 +1,14 @@
-import { Metadata } from "next";
 import PolesIndexShell from "@/components/poles/PolesIndexShell";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata: Metadata = {
-  title: "Nos Pôles d'Excellence | Africa Centred Technology",
-  description: "Découvrez les trois pôles d'ACT : Développement Technologique, Conseil & Stratégie IT, et Formation. Des solutions complètes pour votre transformation digitale.",
-  keywords: ["pôles ACT", "développement technologique", "conseil IT", "formation technologique", "transformation digitale", "Afrique"],
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.poles", path: "/poles" });
+}
 
 export default function PolesPage() {
   return <PolesIndexShell />;

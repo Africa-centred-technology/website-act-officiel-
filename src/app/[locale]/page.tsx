@@ -1,10 +1,14 @@
 import HomeShell from "@/components/home/Home";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: "ACT — Africa Centred Technology | Engineering the Future",
-  description:
-    "Découvrez ACT, la société africaine qui fusionne IA et ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.home", path: "" });
+}
 
 export default function Home() {
   return <HomeShell />;

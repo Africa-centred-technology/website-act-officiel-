@@ -1,11 +1,15 @@
 import { Suspense } from "react";
 import BlogArticlesShell from "../../../../components/blog/BlogArticlesShell";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: "Articles — Africa Centred Technology",
-  description:
-    "Tous les articles du blog ACT — explorez par rubrique les dernières analyses tech africaines, IA, cybersécurité, cloud et innovation digitale.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.blog", path: "/blog/articles" });
+}
 
 function ArticlesLoading() {
   return (

@@ -1,10 +1,14 @@
 import ContactShell from "@/components/contact/ContactShell";
+import { buildPageMetadata } from "@/i18n/seo";
 
-export const metadata = {
-  title: "Contact — Africa Centred Technology",
-  description:
-    "Parlons de votre projet. Consultation gratuite, réponse sous 24h. Contactez l'équipe ACT par formulaire, téléphone ou email.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata({ locale, namespace: "metadata.contact", path: "/contact" });
+}
 
 export default function ContactPage() {
   return <ContactShell />;
