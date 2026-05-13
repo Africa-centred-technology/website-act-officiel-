@@ -18,7 +18,10 @@
       "readMore": "Lire la suite",
       "register": "S'inscrire",
       "download": "Télécharger",
-      "downloadBrochure": "Télécharger la brochure"
+      "downloadBrochure": "Télécharger la brochure",
+      "startProject": "Démarrez votre projet",
+      "contactUs": "Contactez-nous",
+      "scrollToTop": "Remonter en haut"
     },
     "nav": {
       "home": "Accueil",
@@ -31,13 +34,47 @@
       "blog": "Blog",
       "contact": "Contact",
       "openMenu": "Ouvrir le menu",
-      "closeMenu": "Fermer le menu"
+      "closeMenu": "Fermer le menu",
+      "savoirFaire": "Notre savoir-faire",
+      "nousDecouvrir": "Nous découvrir",
+      "equipe": "Notre Équipe",
+      "valeurs": "Nos Valeurs",
+      "universite": "ACT-Université",
+      "polesExcellence": "Nos Pôles d'Excellence",
+      "secteursActivite": "Nos Secteurs d'Activité",
+      "nosServices": "Nos Services",
+      "catalogueFormations": "Catalogue de Formations",
+      "catalogueComplet": "Catalogue complet",
+      "aPropos": "À Propos",
+      "realisations": "Réalisations",
+      "africa": "Afrique — FR",
+      "contactUs": "Contactez-nous"
     },
     "footer": {
       "copyright": "© {year} Africa Centred Technology. Tous droits réservés.",
       "tagline": "Engineering the Future",
       "address": "Maroc — FR",
-      "followUs": "Suivez-nous"
+      "followUs": "Suivez-nous",
+      "navTitle": "Navigation",
+      "socialTitle": "Réseaux Sociaux",
+      "polesTitle": "Nos Pôles",
+      "contactTitle": "Contact",
+      "newsletterTitle": "Newsletter",
+      "privacyPolicy": "Politique de Confidentialité",
+      "terms": "CGU",
+      "emailPlaceholder": "Votre email",
+      "subscribeSuccess": "Merci ! Vous êtes bien inscrit(e) à notre newsletter.",
+      "subscribeError": "Une erreur est survenue. Veuillez réessayer.",
+      "subscribing": "Inscription...",
+      "poleDev": "Développement Technologique",
+      "poleConseil": "Conseil & Stratégie IT",
+      "poleFormation": "Formation & Développement"
+    },
+    "ctaSection": {
+      "eyebrow": "Votre secteur, notre expertise",
+      "title": "Parlons de votre projet",
+      "description": "Quelle que soit votre industrie, ACT dispose de l'expertise technologique pour vous accompagner dans votre transformation digitale.",
+      "buttonText": "Démarrez votre projet"
     }
   },
   "metadata": {
