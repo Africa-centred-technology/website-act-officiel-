@@ -266,14 +266,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           <Link
             href="/"
             className={`navbar-navigation__link${isActive("index") ? " --is-active" : ""}`}
-            style={{
-              position: "relative",
-              fontFamily: "var(--font-body)",
-              fontWeight: 700,
-              fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-            }}
+            style={{ position: "relative" }}
           >
             ACT
             {isActive("index") && (
