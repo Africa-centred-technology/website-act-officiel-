@@ -87,3 +87,51 @@ describe("formations Shopify fetcher — @inContext locale plumbing", () => {
     expect(bodyOf(0).variables.lang).toBe("FR");
   });
 });
+
+describe("/api/shopify/formations handler — locale query plumbing", () => {
+  const fetchMock = vi.fn();
+  const ORIGINAL_FETCH = global.fetch;
+
+  beforeEach(() => {
+    process.env.SHOPIFY_STORE_DOMAIN = "test.myshopify.com";
+    process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN = "test-token";
+    fetchMock.mockReset();
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: { products: { edges: [], pageInfo: { hasNextPage: false } } } }),
+    });
+    global.fetch = fetchMock as unknown as typeof fetch;
+  });
+
+  afterEach(() => {
+    global.fetch = ORIGINAL_FETCH;
+  });
+
+  function bodyOf(call: number) {
+    return JSON.parse(fetchMock.mock.calls[call][1].body as string);
+  }
+
+  it("GET /api/shopify/formations?locale=en forwards EN to Shopify", async () => {
+    vi.resetModules();
+    const { GET } = await import("@/lib/api/formations");
+    const req = new Request("http://localhost/api/shopify/formations?locale=en");
+    await GET(req as unknown as Parameters<typeof GET>[0]);
+    expect(bodyOf(0).variables.lang).toBe("EN");
+  });
+
+  it("GET /api/shopify/formations (no locale) defaults to FR", async () => {
+    vi.resetModules();
+    const { GET } = await import("@/lib/api/formations");
+    const req = new Request("http://localhost/api/shopify/formations");
+    await GET(req as unknown as Parameters<typeof GET>[0]);
+    expect(bodyOf(0).variables.lang).toBe("FR");
+  });
+
+  it("GET /api/shopify/formations?locale=invalid falls back to FR", async () => {
+    vi.resetModules();
+    const { GET } = await import("@/lib/api/formations");
+    const req = new Request("http://localhost/api/shopify/formations?locale=zz");
+    await GET(req as unknown as Parameters<typeof GET>[0]);
+    expect(bodyOf(0).variables.lang).toBe("FR");
+  });
+});

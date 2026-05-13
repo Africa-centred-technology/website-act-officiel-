@@ -3,11 +3,25 @@ import {
   fetchShopifyBlogPosts,
   fetchShopifyBlogPostByHandle,
 } from "@/lib/shopify/blog";
+import { routing, type Locale } from "@/i18n/routing";
 
-/** GET /api/shopify/blog */
-export async function GET() {
+function readLocale(url: string): Locale {
   try {
-    const posts = await fetchShopifyBlogPosts();
+    const param = new URL(url).searchParams.get("locale");
+    if (param && (routing.locales as readonly string[]).includes(param)) {
+      return param as Locale;
+    }
+  } catch {
+    // malformed URL — fall through to default
+  }
+  return routing.defaultLocale;
+}
+
+/** GET /api/shopify/blog?locale=<fr|en|ar> */
+export async function GET(req: Request) {
+  const locale = readLocale(req.url);
+  try {
+    const posts = await fetchShopifyBlogPosts(locale);
     return NextResponse.json({ posts });
   } catch (error) {
     console.error("[/api/shopify/blog] fetch failed:", error);
@@ -18,14 +32,15 @@ export async function GET() {
   }
 }
 
-/** GET /api/shopify/blog/[handle] */
+/** GET /api/shopify/blog/[handle]?locale=<fr|en|ar> */
 export async function getByHandle(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ handle: string }> }
 ) {
   const { handle } = await params;
+  const locale = readLocale(req.url);
   try {
-    const post = await fetchShopifyBlogPostByHandle(handle);
+    const post = await fetchShopifyBlogPostByHandle(handle, locale);
     if (!post) {
       return NextResponse.json({ error: "Article introuvable." }, { status: 404 });
     }
