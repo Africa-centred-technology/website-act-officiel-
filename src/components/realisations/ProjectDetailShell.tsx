@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { Project } from "@/lib/data/projects";
 import { PROJECTS } from "@/lib/data/projects";
 
@@ -82,6 +83,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
    MAIN
    ══════════════════════════════════════════════════════ */
 export default function ProjectDetailShell({ project }: { project: Project }) {
+  const t = useTranslations("projects.detail");
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -134,7 +136,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
           }}
         >
-          ← Réalisations
+          {t("backLink")}
         </Link>
       </div>
 
@@ -236,7 +238,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 letterSpacing: "0.18em",
               }}
             >
-              {project.index} / 04
+              {t("counter", { index: project.index })}
             </span>
           </motion.div>
 
@@ -303,10 +305,10 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         <Reveal>
           <div className="proj-meta-bar">
             {[
-              { label: "Client", value: project.client },
-              { label: "Année", value: project.year },
-              { label: "Durée", value: project.duration },
-              { label: "Domaine", value: project.categoryFull },
+              { label: t("metaClient"), value: project.client },
+              { label: t("metaYear"), value: project.year },
+              { label: t("metaDuration"), value: project.duration },
+              { label: t("metaDomain"), value: project.categoryFull },
             ].map((item) => (
               <div key={item.label}>
                 <p
@@ -348,7 +350,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                   marginBottom: "0.75rem",
                 }}
               >
-                Technologies
+                {t("metaTech")}
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
                 {project.tags.map((tag) => (
@@ -390,7 +392,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
           <div className="proj-body-split">
             {/* Left — label */}
             <div>
-              <SectionLabel>Présentation</SectionLabel>
+              <SectionLabel>{t("sectionPresentation")}</SectionLabel>
               <div
                 style={{
                   width: 40,
@@ -454,7 +456,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         <Reveal delay={0.05}>
           <div className="proj-body-split">
             <div>
-              <SectionLabel>Résultats</SectionLabel>
+              <SectionLabel>{t("sectionResults")}</SectionLabel>
               <div style={{ width: 40, height: 2, background: "#D35400", marginTop: "0.5rem" }} />
             </div>
             <div
@@ -513,7 +515,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         <Reveal delay={0.05}>
           <div className="proj-body-split">
             <div>
-              <SectionLabel>Défis</SectionLabel>
+              <SectionLabel>{t("sectionChallenges")}</SectionLabel>
               <div style={{ width: 40, height: 2, background: "#D35400", marginTop: "0.5rem" }} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -567,7 +569,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         <Reveal delay={0.05}>
           <div className="proj-body-split">
             <div>
-              <SectionLabel>Notre Approche</SectionLabel>
+              <SectionLabel>{t("sectionApproach")}</SectionLabel>
               <div style={{ width: 40, height: 2, background: "#D35400", marginTop: "0.5rem" }} />
             </div>
             <div
@@ -616,7 +618,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "1.8rem" }}>
               <span className="diamond diamond--sm" />
               <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.9rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>
-                Votre prochain projet
+                {t("ctaEyebrow")}
               </span>
               <span className="diamond diamond--sm" />
             </div>
@@ -631,8 +633,8 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 marginBottom: "1.2rem",
               }}
             >
-              Votre Vision,{" "}
-              <span style={{ color: "#D35400" }}>Notre Expertise</span>
+              {t("ctaH2Line1")}{" "}
+              <span style={{ color: "#D35400" }}>{t("ctaH2Line2")}</span>
             </h2>
             <p
               style={{
@@ -643,8 +645,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 margin: "0 auto 3rem",
               }}
             >
-              Prêt à faire de votre prochain projet une success story technologique ?
-              L'équipe Africa Centred Technology est à votre écoute.
+              {t("ctaDescription")}
             </p>
             <Link
               href="/contact"
@@ -673,7 +674,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
               }}
             >
-              Démarrer un projet similaire →
+              {t("ctaButton")}
             </Link>
           </div>
         </Reveal>
@@ -715,7 +716,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#ffffff",
               }}
             >
-              ← Projet précédent
+              {t("navPrev")}
             </span>
             <span
               style={{
@@ -768,7 +769,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#ffffff",
               }}
             >
-              Projet suivant →
+              {t("navNext")}
             </span>
             <span
               style={{

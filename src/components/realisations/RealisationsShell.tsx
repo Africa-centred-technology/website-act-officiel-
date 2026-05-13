@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { PROJECTS, CATEGORIES } from "@/lib/data/projects";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
@@ -97,6 +98,7 @@ function ProjectCard({
   project: (typeof PROJECTS)[0];
   index: number;
 }) {
+  const t      = useTranslations("projects.index");
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [hovered, setHovered] = useState(false);
@@ -227,7 +229,7 @@ function ProjectCard({
               transition={{ type: "spring", stiffness: 300, damping: 24 }}
               style={{ color: ORANGE, fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700, fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em", textTransform: "uppercase" }}
             >
-              Lire →
+              {t("cardCta")}
             </motion.span>
           </div>
         </div>
@@ -248,6 +250,7 @@ function ProjectCard({
    SHELL PRINCIPAL
    ══════════════════════════════════════════════════════════ */
 export default function RealisationsShell() {
+  const t = useTranslations("projects.index");
   const [activeCategory, setActiveCategory] = useState<string>("Tous");
 
   const filtered =
@@ -301,18 +304,18 @@ export default function RealisationsShell() {
             transition={{ delay: 0.5, duration: 0.45 }}
           />
           <span style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", letterSpacing: "0.35em", textTransform: "uppercase" }}>
-            Africa Centred Technology
+            {t("eyebrowBrand")}
           </span>
           <span style={{ color: ORANGE, fontWeight: 900, fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase" }}>
-            — Portfolio
+            {t("eyebrowAccent")}
           </span>
         </motion.div>
 
         {/* Titre — structure 3 mots identique à Room 1 / Secteurs */}
         <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-          <WordChars text="NOS"          fx="rollIn"   delay={0.10} stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
-          <WordChars text="RÉALISATIONS" fx="burstOut" delay={0.30} stagger={0.044} color="#FF6B00" mt="0.12em" size="clamp(2.5rem, 5vw, 7rem)" />
-          <WordChars text="ACT"          fx="riseUp"   delay={0.65} stagger={0.040} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
+          <WordChars text={t("h1Word1")}  fx="rollIn"   delay={0.10} stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
+          <WordChars text={t("h1Word2")} fx="burstOut" delay={0.30} stagger={0.044} color="#FF6B00" mt="0.12em" size="clamp(2.5rem, 5vw, 7rem)" />
+          <WordChars text={t("h1Word3")} fx="riseUp"   delay={0.65} stagger={0.040} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
         </div>
 
         {/* Subtitle + stats */}
@@ -323,14 +326,13 @@ export default function RealisationsShell() {
           style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", marginTop: "3rem" }}
         >
           <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.7, maxWidth: "600px" }}>
-            Découvrez nos projets qui transforment les entreprises africaines et créent un impact
-            durable sur le continent. Technologies de pointe, résultats mesurables.
+            {t("subtitle")}
           </p>
           <div style={{ display: "flex", gap: "3rem", flexWrap: "wrap" }}>
             {[
-              { value: "04",   label: "Projets réalisés" },
-              { value: "2+",   label: "Pays couverts"    },
-              { value: "100%", label: "Satisfaction"     },
+              { value: "04",   label: t("statProjects") },
+              { value: "2+",   label: t("statCountries") },
+              { value: "100%", label: t("statSatisfaction") },
             ].map(({ value, label }) => (
               <div key={label} style={{ textAlign: "right" }}>
                 <p style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: ORANGE, margin: 0, lineHeight: 1 }}>
@@ -374,7 +376,7 @@ export default function RealisationsShell() {
             color: "#ffffff", fontFamily: "Futura, system-ui, sans-serif",
             fontSize: "clamp(1.1rem, 1.6vw, 1.6rem)", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700,
           }}>
-            Filtrer par catégorie
+            {t("filterLabel")}
           </span>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             {CATEGORIES.map((cat) => {
@@ -450,7 +452,7 @@ export default function RealisationsShell() {
             style={{ textAlign: "center", padding: "6rem 0", color: "rgba(255,255,255,0.25)" }}
           >
             <span style={{ fontFamily: "Futura, system-ui, sans-serif", letterSpacing: "0.2em", textTransform: "uppercase" }}>
-              Aucun projet dans cette catégorie
+              {t("emptyState")}
             </span>
           </motion.div>
         )}
@@ -458,10 +460,10 @@ export default function RealisationsShell() {
 
       {/* ══ CTA BAND ════════════════════════════════════════════════════ */}
       <CTASection
-        eyebrow="Votre projet, notre expertise"
-        title="Parlons de votre projet"
-        description="ACT dispose de l'expertise technologique pour vous accompagner dans votre transformation digitale, quelle que soit votre industrie."
-        buttonText="Démarrer un projet"
+        eyebrow={t("cta.eyebrow")}
+        title={t("cta.title")}
+        description={t("cta.description")}
+        buttonText={t("cta.buttonText")}
       />
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════ */}

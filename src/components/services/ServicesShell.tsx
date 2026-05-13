@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useMemo, useCallback, memo } from "react";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import {
   motion, AnimatePresence,
@@ -458,6 +459,7 @@ function ServicePanel({ svc }: { svc: Svc }) {
   })), []);
 
   const isGold = svc.accent === GOLD;
+  const tIdx = useTranslations("services.index");
 
   return (
     <div
@@ -616,7 +618,7 @@ function ServicePanel({ svc }: { svc: Svc }) {
               fontSize: "clamp(1rem, 1.3vw, 1.25rem)", color: "#ffffff",
               letterSpacing: "0.28em", textTransform: "uppercase", marginBottom: "0.8rem"
             }}>
-              Bénéfices
+              {tIdx("benefits")}
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
               {svc.benefits.map((b, i) => (
@@ -646,7 +648,7 @@ function ServicePanel({ svc }: { svc: Svc }) {
               letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none",
             }}>
               <Diamond size="0.42rem" color={svc.accent} />
-              Discuter de ce service
+              {tIdx("discuss")}
             </Link>
           </motion.div>
         </div>
@@ -738,6 +740,7 @@ function ServiceNav({ current, services, onGoTo }: {
    HERO (scroll-through vers le journey)
    ══════════════════════════════════════════════════════ */
 function HeroSection() {
+  const tIdx = useTranslations("services.index");
   return (
     <section style={{
       height: "100vh", display: "flex", flexDirection: "column",
@@ -755,7 +758,7 @@ function HeroSection() {
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1.6, ease: [...BURST] }}
       >
-        NOS<br />EXPERTISES
+        NOS<br />EXPERTISES{/* ghost bg — not translated */}
       </motion.div>
 
       {/* Horizontal lines */}
@@ -774,7 +777,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}>
           <Diamond size="0.5rem" />
           <span style={{ fontSize: "clamp(1.05rem, 1.4vw, 1.35rem)", color: "#ffffff", letterSpacing: "0.3em", textTransform: "uppercase" }}>
-            L'Arborescence ACT
+            {tIdx("eyebrow")}
           </span>
         </motion.div>
 
@@ -783,7 +786,7 @@ function HeroSection() {
             style={{ fontSize: "var(--font-90)", lineHeight: 0.9, letterSpacing: "-0.03em" }}
             initial={{ y: "112%" }} animate={{ y: "0%" }}
             transition={{ duration: 1.1, ease: [...BURST], delay: 0.05 }}>
-            Nos Services
+            {tIdx("h1")}
           </motion.h1>
         </div>
 
@@ -795,7 +798,7 @@ function HeroSection() {
           <motion.p style={{ fontSize: "var(--font-20)", color: "#ffffff", lineHeight: 1.7, maxWidth: "36rem" }}
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 0.65 }}>
-            Trois pôles complémentaires — Ingénierie, Conseil et Formation — couvrant l&apos;intégralité de la chaîne de valeur de la transformation digitale africaine.
+            {tIdx("subtitle")}
           </motion.p>
 
           <motion.div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.5rem" }}
@@ -803,11 +806,11 @@ function HeroSection() {
             transition={{ delay: 1.1, duration: 0.6 }}>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
               <Diamond size="0.4rem" color={ORANGE} />
-              <span style={{ fontSize: "1.0rem", color: ORANGE, letterSpacing: "0.2em", textTransform: "uppercase" }}>5 services Ingénierie</span>
+              <span style={{ fontSize: "1.0rem", color: ORANGE, letterSpacing: "0.2em", textTransform: "uppercase" }}>{tIdx("countIngenierie")}</span>
             </div>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
               <Diamond size="0.4rem" color={GOLD} />
-              <span style={{ fontSize: "1.0rem", color: GOLD, letterSpacing: "0.2em", textTransform: "uppercase" }}>3 services Conseil</span>
+              <span style={{ fontSize: "1.0rem", color: GOLD, letterSpacing: "0.2em", textTransform: "uppercase" }}>{tIdx("countConseil")}</span>
             </div>
           </motion.div>
         </div>
@@ -824,7 +827,7 @@ function HeroSection() {
           <span style={{
             fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", color: "#ffffff",
             letterSpacing: "0.35em", textTransform: "uppercase"
-          }}>Scroll pour explorer</span>
+          }}>{tIdx("scrollHint")}</span>
         </motion.div>
       </div>
     </section>
@@ -836,6 +839,7 @@ function HeroSection() {
    CATALOGUE PANEL — accordion par catégorie
    ══════════════════════════════════════════════════════ */
 function CataloguePanel({ svc }: { svc: Svc }) {
+  const tIdx = useTranslations("services.index");
   const [formations, setFormations] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -920,7 +924,7 @@ function CataloguePanel({ svc }: { svc: Svc }) {
               letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700,
             }}>
               <Diamond size="0.35rem" color={svc.accent} />
-              Formation sur mesure
+              {tIdx("customFormation")}
             </Link>
           </motion.div>
         </div>
@@ -933,7 +937,7 @@ function CataloguePanel({ svc }: { svc: Svc }) {
             style={{ marginBottom: "1.2rem" }}
           >
             <p style={{ fontSize: "clamp(0.78rem, 0.9vw, 0.9rem)", color: "rgba(255,255,255,0.3)", letterSpacing: "0.22em", textTransform: "uppercase" }}>
-              {isLoading ? "Chargement..." : `${formations.length} formations disponibles`}
+              {isLoading ? tIdx("loading") : tIdx("formationsCount", { n: formations.length })}
             </p>
           </motion.div>
 
@@ -1086,6 +1090,7 @@ function ServicesJourney({ onCurrentChange }: { onCurrentChange?: (n: string) =>
   }, []);
 
   const svc = SERVICES[current];
+  const tIdx = useTranslations("services.index");
 
   /* Mobile fallback: render all services as scrollable sections */
   if (isMobile) {
@@ -1106,7 +1111,7 @@ function ServicesJourney({ onCurrentChange }: { onCurrentChange?: (n: string) =>
               {service.intro}
             </p>
             <Link href="/services" style={{ display: "inline-block", padding: "0.75rem 1.5rem", background: service.accent, color: "#fff", textDecoration: "none", borderRadius: "0.5rem", fontSize: "0.9rem", textTransform: "uppercase", fontWeight: 600 }}>
-              En savoir plus
+              {tIdx("learnMore")}
             </Link>
           </div>
         ))}
@@ -1158,6 +1163,7 @@ function ServicesJourney({ onCurrentChange }: { onCurrentChange?: (n: string) =>
    SHELL
    ══════════════════════════════════════════════════════ */
 export default function ServicesShell() {
+  const tIdx = useTranslations("services.index");
   const [currentN, setCurrentN] = useState("01");
   const isCatalogue = currentN === "09";
 
@@ -1176,10 +1182,10 @@ export default function ServicesShell() {
           <CatalogueSection />
         ) : (
           <CTASection
-            eyebrow="Votre projet"
-            title="Construisons l'avenir ensemble"
-            description="Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h."
-            buttonText="Démarrer votre projet"
+            eyebrow={tIdx("cta.eyebrow")}
+            title={tIdx("cta.title")}
+            description={tIdx("cta.description")}
+            buttonText={tIdx("cta.buttonText")}
           />
         )}
       </div>

@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 import {
   Code,
   Cloud,
@@ -50,59 +51,23 @@ function useMediaQuery() {
 const COLOR = "#D35400";
 
 const services = [
-  {
-    icon: Code,
-    title: "Ingénierie Logicielle",
-    slug: "ingenierie-logicielle",
-    description: "Conception et développement de solutions logicielles robustes et scalables avec les dernières technologies.",
-    features: ["Applications Web & Mobile", "Microservices & API", "Solutions sur mesure"],
-    image: "/images/services/Ingéneurie_logicielle.jpg"
-  },
-  {
-    icon: Cpu,
-    title: "Intelligence Artificielle Agentique",
-    slug: "automatisation-ia",
-    description: "Développement de systèmes d'IA autonomes capables de prendre des décisions intelligentes et d'automatiser des processus complexes.",
-    features: ["Agents intelligents", "Apprentissage automatique", "Automation avancée"],
-    image: "/images/services/Agentic_AI.jpg"
-  },
-  {
-    icon: Database,
-    title: "Big Data & Intelligence Artificielle",
-    slug: "data-intelligence-artificielle",
-    description: "Traitement et analyse de grandes masses de données combinées à l'IA pour extraire des insights stratégiques.",
-    features: ["Data Analytics", "Machine Learning", "Visualisation de données"],
-    image: "/images/services/big-data-and-et-artificial-intelligence.jpg"
-  },
-  {
-    icon: Cloud,
-    title: "Architecture Cloud",
-    slug: "architecture-infrastructure",
-    description: "Conception et déploiement d'infrastructures cloud natives, scalables et sécurisées.",
-    features: ["Infrastructure as Code", "Microservices", "Serverless Computing"],
-    image: "/images/services/architerture.png"
-  },
-  {
-    icon: Database,
-    title: "Systèmes d'Information Géographique",
-    slug: "geomatique-sig",
-    description: "Solutions SIG pour la collecte, l'analyse et la visualisation de données géospatiales.",
-    features: ["Cartographie interactive", "Analyse spatiale", "Géolocalisation"],
-    image: "/images/services/sig.jpg"
-  },
+  { icon: Code, slug: "ingenierie-logicielle", image: "/images/services/Ingéneurie_logicielle.jpg", key: "logicielle" },
+  { icon: Cpu, slug: "automatisation-ia", image: "/images/services/Agentic_AI.jpg", key: "ia" },
+  { icon: Database, slug: "data-intelligence-artificielle", image: "/images/services/big-data-and-et-artificial-intelligence.jpg", key: "data" },
+  { icon: Cloud, slug: "architecture-infrastructure", image: "/images/services/architerture.png", key: "cloud" },
+  { icon: Database, slug: "geomatique-sig", image: "/images/services/sig.jpg", key: "sig" },
 ];
 
-
-
-const process = [
-  { step: "01", title: "Analyse & Cadrage", desc: "Audit de l'existant, définition du périmètre et des objectifs" },
-  { step: "02", title: "Conception", desc: "Architecture technique, maquettes, spécifications détaillées" },
-  { step: "03", title: "Développement", desc: "Sprints agiles, revues régulières, tests continus" },
-  { step: "04", title: "Déploiement", desc: "Mise en production, formation des équipes, transfert de compétences" },
-  { step: "05", title: "Support & Évolution", desc: "Maintenance, monitoring, évolutions fonctionnelles" },
+const processList = [
+  { step: "01", key: "s01" },
+  { step: "02", key: "s02" },
+  { step: "03", key: "s03" },
+  { step: "04", key: "s04" },
+  { step: "05", key: "s05" },
 ];
 
 export default function PoleDeveloppementShell() {
+  const t = useTranslations("poles.developpement");
   const screenSize = useMediaQuery();
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
@@ -160,7 +125,7 @@ export default function PoleDeveloppementShell() {
               fontWeight: 700,
               fontFamily: 'var(--font-display)'
             }}>
-              Pôle 01
+              {t("eyebrow")}
             </span>
           </motion.div>
 
@@ -178,9 +143,9 @@ export default function PoleDeveloppementShell() {
               textTransform: 'uppercase'
             }}
           >
-            Développement
+            {t("h1Line1")}
             <br />
-            <span style={{ color: COLOR }}>Technologique</span>
+            <span style={{ color: COLOR }}>{t("h1Line2")}</span>
           </motion.h1>
 
           <motion.p
@@ -196,8 +161,7 @@ export default function PoleDeveloppementShell() {
               fontFamily: 'var(--font-body)'
             }}
           >
-            Nous transformons vos idées en produits technologiques performants et scalables.
-            De l'application web au système distribué, nous maîtrisons l'ensemble de la chaîne de valeur technique.
+            {t("heroDescription")}
           </motion.p>
 
           <motion.div
@@ -230,7 +194,7 @@ export default function PoleDeveloppementShell() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
               }}>
-                Nos Services
+                {t("heroCtaServices")}
               </button>
             </Link>
             <Link href="/contact">
@@ -254,7 +218,7 @@ export default function PoleDeveloppementShell() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
               }}>
-                Nous Contacter
+                {t("heroCtaContact")}
               </button>
             </Link>
           </motion.div>
@@ -282,7 +246,7 @@ export default function PoleDeveloppementShell() {
             fontFamily: 'var(--font-display)',
             textTransform: 'uppercase'
           }}>
-            Nos <span style={{ color: COLOR }}>Services</span>
+            {t.rich("servicesTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
@@ -290,7 +254,7 @@ export default function PoleDeveloppementShell() {
             maxWidth: '700px',
             fontFamily: 'var(--font-body)'
           }}>
-            Une expertise complète pour tous vos besoins de développement logiciel
+            {t("servicesDesc")}
           </p>
         </motion.div>
 
@@ -332,7 +296,7 @@ export default function PoleDeveloppementShell() {
                   }}>
                     <img
                       src={service.image}
-                      alt={service.title}
+                      alt={t(`services.${service.key}.title` as any)}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -382,7 +346,7 @@ export default function PoleDeveloppementShell() {
                       textTransform: 'uppercase',
                       lineHeight: 1.2,
                     }}>
-                      {service.title}
+                      {t(`services.${service.key}.title` as any)}
                     </h3>
                     <p style={{
                       fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
@@ -392,11 +356,11 @@ export default function PoleDeveloppementShell() {
                       fontFamily: 'var(--font-body)',
                       flex: 1,
                     }}>
-                      {service.description}
+                      {t(`services.${service.key}.description` as any)}
                     </p>
                     <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
-                      {service.features.map((feature, fi) => (
-                        <li key={fi} style={{
+                      {(["feature1", "feature2", "feature3"] as const).map((fk) => (
+                        <li key={fk} style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.5rem',
@@ -406,7 +370,7 @@ export default function PoleDeveloppementShell() {
                           fontFamily: 'var(--font-body)'
                         }}>
                           <CheckCircle2 size={16} color={COLOR} />
-                          {feature}
+                          {t(`services.${service.key}.${fk}` as any)}
                         </li>
                       ))}
                     </ul>
@@ -423,7 +387,7 @@ export default function PoleDeveloppementShell() {
                       letterSpacing: '0.1em',
                       transition: 'all 0.3s ease',
                     }}>
-                      En savoir plus <ArrowRight size={18} />
+                      {t("servicesCta")} <ArrowRight size={18} />
                     </div>
                   </div>
                 </motion.div>
@@ -453,11 +417,11 @@ export default function PoleDeveloppementShell() {
             textTransform: 'uppercase'
           }}
         >
-          Notre <span style={{ color: COLOR }}>Processus</span>
+          {t.rich("processTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
         </motion.h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          {process.map((item, i) => (
+          {processList.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, x: -40 }}
@@ -492,14 +456,14 @@ export default function PoleDeveloppementShell() {
                   color: '#fff',
                   fontFamily: 'var(--font-display)'
                 }}>
-                  {item.title}
+                  {t(`process.${item.key}.title` as any)}
                 </h3>
                 <p style={{
                   fontSize: '1rem',
                   color: 'rgba(255,255,255,0.80)',
                   fontFamily: 'var(--font-body)'
                 }}>
-                  {item.desc}
+                  {t(`process.${item.key}.desc` as any)}
                 </p>
               </div>
             </motion.div>
@@ -526,7 +490,7 @@ export default function PoleDeveloppementShell() {
             textAlign: 'center',
           }}
         >
-          Pourquoi nous <span style={{ color: COLOR }}>choisir</span>
+          {t.rich("whyUsTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
         </motion.h2>
 
         <div style={{
@@ -535,26 +499,10 @@ export default function PoleDeveloppementShell() {
           gap: screenSize === 'mobile' ? '1.5rem' : '2rem',
         }}>
           {[
-            {
-              icon: Zap,
-              title: "Livraison Rapide",
-              desc: "Méthode agile et sprints courts pour des livraisons incrémentales et une mise en production rapide."
-            },
-            {
-              icon: Shield,
-              title: "Qualité & Sécurité",
-              desc: "Tests automatisés, code reviews systématiques et conformité aux standards de sécurité internationaux."
-            },
-            {
-              icon: GitBranch,
-              title: "Évolutivité",
-              desc: "Architecture modulaire et scalable qui grandit avec vos besoins sans réécriture complète."
-            },
-            {
-              icon: CheckCircle2,
-              title: "Support Continu",
-              desc: "Accompagnement post-livraison, formation des équipes et maintenance proactive de vos solutions."
-            },
+            { icon: Zap, key: "livraison" },
+            { icon: Shield, key: "qualite" },
+            { icon: GitBranch, key: "evolutivite" },
+            { icon: CheckCircle2, key: "support" },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
@@ -601,7 +549,7 @@ export default function PoleDeveloppementShell() {
                   color: '#fff',
                   fontFamily: 'var(--font-display)',
                 }}>
-                  {item.title}
+                  {t(`whyUs.${item.key}.title` as any)}
                 </h3>
                 <p style={{
                   fontSize: '1rem',
@@ -609,7 +557,7 @@ export default function PoleDeveloppementShell() {
                   color: 'rgba(255,255,255,0.80)',
                   fontFamily: 'var(--font-body)',
                 }}>
-                  {item.desc}
+                  {t(`whyUs.${item.key}.desc` as any)}
                 </p>
               </motion.div>
             );
@@ -637,7 +585,7 @@ export default function PoleDeveloppementShell() {
             textTransform: 'uppercase',
             textAlign: 'center',
           }}>
-            Ce que nous <span style={{ color: COLOR }}>publions</span> sur le sujet 
+            {t.rich("blogTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
@@ -782,7 +730,7 @@ export default function PoleDeveloppementShell() {
                           textTransform: 'uppercase',
                           letterSpacing: '0.1em',
                         }}>
-                          Lire l'article complet
+                          {t("blogCta")}
                           <ArrowRight size={20} />
                         </div>
                       </div>

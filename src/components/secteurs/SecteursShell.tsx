@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { secteurs } from "@/lib/secteurs-data";
 import FooterStrip from "@/components/layout/FooterStrip";
@@ -27,6 +28,7 @@ type Dir = 1 | -1;
    ALBUM SECTION — fixed height, arrow + drag navigation
    ══════════════════════════════════════════════════════════ */
 function AlbumSection() {
+  const t = useTranslations("secteurs.index");
   const total = secteurs.length;
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState<Dir>(1);
@@ -211,7 +213,7 @@ function AlbumSection() {
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = ORANGE; el.style.borderBottomColor = ORANGE; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = "#ffffff"; el.style.borderBottomColor = "rgba(255,255,255,0.4)"; }}
               >
-                Explorer le secteur →
+                {t("exploreCta")}
               </Link>
             </div>
           </motion.div>
@@ -335,7 +337,7 @@ function AlbumSection() {
                       {/* Left arrow */}
                       <button
                         onClick={(e) => { e.stopPropagation(); go(-1); }}
-                        aria-label="Secteur précédent"
+                        aria-label={t("ariaPrev")}
                         style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
                         onMouseEnter={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.70)"; b.style.borderColor = "rgba(255,255,255,0.55)"; b.style.transform = "translateY(-50%) scale(1.08)"; }}
                         onMouseLeave={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.40)"; b.style.borderColor = "rgba(255,255,255,0.25)"; b.style.transform = "translateY(-50%) scale(1)"; }}
@@ -346,7 +348,7 @@ function AlbumSection() {
                       {/* Right arrow */}
                       <button
                         onClick={(e) => { e.stopPropagation(); go(1); }}
-                        aria-label="Secteur suivant"
+                        aria-label={t("ariaNext")}
                         style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
                         onMouseEnter={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.70)"; b.style.borderColor = "rgba(255,255,255,0.55)"; b.style.transform = "translateY(-50%) scale(1.08)"; }}
                         onMouseLeave={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.40)"; b.style.borderColor = "rgba(255,255,255,0.25)"; b.style.transform = "translateY(-50%) scale(1)"; }}
@@ -360,7 +362,7 @@ function AlbumSection() {
                           <button
                             key={di}
                             onClick={(e) => { e.stopPropagation(); goTo(di); }}
-                            aria-label={`Secteur ${di + 1}`}
+                            aria-label={t("ariaDot", { n: di + 1 })}
                             style={{ width: di === active ? "1.2rem" : "0.35rem", height: "0.35rem", borderRadius: "4px", background: di === active ? "#fff" : "rgba(255,255,255,0.35)", border: "none", padding: 0, cursor: "pointer", transition: "width 0.35s ease, background 0.35s ease" }}
                           />
                         ))}
@@ -377,11 +379,11 @@ function AlbumSection() {
                   </p>
                   {isActive && (
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <button title="Secteur précédent" onClick={(e) => { e.stopPropagation(); go(-1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
+                      <button title={t("titlePrev")} onClick={(e) => { e.stopPropagation(); go(-1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
                         <ChevronLeft size={14} strokeWidth={2.5} />
                       </button>
                       <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.58rem", letterSpacing: "0.14em", color: "rgba(27,48,34,0.45)", flexShrink: 0 }}>{num} / {tot}</span>
-                      <button title="Secteur suivant" onClick={(e) => { e.stopPropagation(); go(1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
+                      <button title={t("titleNext")} onClick={(e) => { e.stopPropagation(); go(1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
                         <ChevronRight size={14} strokeWidth={2.5} />
                       </button>
                     </div>
@@ -403,6 +405,7 @@ function AlbumSection() {
    MAIN SHELL
    ══════════════════════════════════════════════════════════ */
 export default function SecteursShell() {
+  const t = useTranslations("secteurs.index");
   return (
     <div
       style={{
@@ -454,10 +457,10 @@ export default function SecteursShell() {
             transition={{ delay: 0.5, duration: 0.45 }}
           />
           <span style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", letterSpacing: "0.35em", textTransform: "uppercase" }}>
-            Africa Centred Technology
+            {t("eyebrowBrand")}
           </span>
           <span style={{ color: ORANGE, fontWeight: 900, fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase" }}>
-            — Secteurs
+            {t("eyebrowAccent")}
           </span>
         </motion.div>
 
@@ -469,9 +472,9 @@ export default function SecteursShell() {
             transition={{ duration: 0.85, delay: 0.18, ease: [...EASE] }}
             style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
           >
-            NOS DOMAINES
+            {t("h1Line1")}
             <br />
-            <span style={{ color: ORANGE }}>D&apos;EXPERTISE</span>
+            <span style={{ color: ORANGE }}>{t("h1Line2")}</span>
           </motion.h1>
         </div>
 
@@ -483,7 +486,7 @@ export default function SecteursShell() {
           style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "2.5rem" }}
         >
           <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)", lineHeight: 1.6, maxWidth: "700px", margin: 0, textAlign: "justify", flex: "1 1 100%", order: 2 }} className="lg:flex-1 lg:order-1">
-            ACT intervient dans de nombreux secteurs, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.
+            {t("subtitle")}
           </p>
   
         </motion.div>

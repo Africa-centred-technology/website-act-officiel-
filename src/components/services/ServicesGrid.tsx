@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { SERVICES, POLE_I, POLE_II, POLE_III, type Service } from "@/lib/data/services";
 
 /* ── Variants ─────────────────────────────────────── */
@@ -123,6 +124,7 @@ function PoleSection({
 }: {
   number: string; label: string; accent: string; services: Service[]; delay: number;
 }) {
+  const t = useTranslations("services.grid");
   return (
     <section style={{ marginBottom: "5rem" }}>
       {/* En-tête du pôle */}
@@ -153,7 +155,7 @@ function PoleSection({
           textTransform: "uppercase",
           color: `${accent}BB`,
         }}>
-          Pôle {number} — {label}
+          {t("poleLabel", { number, label })}
         </motion.h2>
       </motion.div>
 
@@ -178,6 +180,7 @@ function PoleSection({
    COMPOSANT PRINCIPAL
    ══════════════════════════════════════════════════════ */
 export default function ServicesGrid() {
+  const t = useTranslations("services.grid");
   return (
     <div style={{
       minHeight: "100vh",
@@ -205,7 +208,7 @@ export default function ServicesGrid() {
             color: "rgba(255,255,255,0.35)",
             marginBottom: "1.2rem",
           }}>
-            Africa Centred Technology
+            {t("eyebrow")}
           </motion.p>
 
           <motion.h1 variants={fadeUp} style={{
@@ -217,7 +220,7 @@ export default function ServicesGrid() {
             letterSpacing: "-0.01em",
             marginBottom: "1.8rem",
           }}>
-            Nos Services
+            {t("h1")}
           </motion.h1>
 
           <motion.div variants={fadeUp} style={{
@@ -230,9 +233,7 @@ export default function ServicesGrid() {
               lineHeight: 1.75,
               color: "rgba(255,255,255,0.55)",
             }}>
-              Trois pôles d'expertise complémentaires — l'ingénierie technologique pour construire,
-              le conseil pour structurer et la formation pour durer. Ensemble, ils forment une proposition unique
-              taillée pour les organisations africaines.
+              {t("description")}
             </p>
 
             <div style={{
@@ -243,19 +244,19 @@ export default function ServicesGrid() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle I — Ingénierie Technologique
+                  {t("poleI")}
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle II — Conseil
+                  {t("poleII")}
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle III — Formation
+                  {t("poleIII")}
                 </span>
               </div>
             </div>
@@ -309,10 +310,10 @@ export default function ServicesGrid() {
               fontSize: "clamp(18px, 1.6rem, 1.8rem)",
               color: "#fff", fontWeight: 500, marginBottom: "0.5rem",
             }}>
-              Un projet en tête ?
+              {t("ctaTitle")}
             </p>
             <p style={{ fontSize: "clamp(13px, 0.9rem, 0.95rem)", color: "rgba(255,255,255,0.45)" }}>
-              Discutons de vos besoins et construisons ensemble la solution adaptée.
+              {t("ctaDesc")}
             </p>
           </div>
           <Link href="/contact" style={{
@@ -329,7 +330,7 @@ export default function ServicesGrid() {
             fontWeight: 500,
             transition: "background 0.2s",
           }}>
-            Démarrer un projet
+            {t("ctaButton")}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />

@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowLeft, CheckCircle, Settings, Wifi, Leaf, TrendingUp, ShoppingCart, Building2, Landmark } from "lucide-react";
 import type { Secteur } from "@/lib/secteurs-data";
 import FooterStrip from "@/components/layout/FooterStrip";
@@ -30,6 +31,7 @@ const SECTEUR_ICONS: Record<string, React.ComponentType<{ size?: number; strokeW
    MAIN DETAIL SHELL
    ══════════════════════════════════════════════════════════ */
 export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
+  const t = useTranslations("secteurs.detail");
   return (
     <div
       style={{
@@ -114,7 +116,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
             }
           >
             <ArrowLeft size={16} strokeWidth={1.8} />
-            Secteurs
+            {t("breadcrumb")}
             <span style={{ color: "rgba(255,255,255,0.25)" }}>/</span>
             <span style={{ color: secteur.color }}>{secteur.label}</span>
           </Link>
@@ -308,7 +310,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                 opacity: 0.9,
               }}
             >
-              Notre approche
+              {t("approachLabel")}
             </span>
           </div>
             <h2
@@ -324,7 +326,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               }}
             >
               <span style={{ color: secteur.color }}>ACT</span>
-              {" "}dans ce secteur
+              {" "}{t("approachH2Suffix")}
             </h2>
           </motion.div>
 
@@ -380,7 +382,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                 opacity: 0.9,
               }}
             >
-              Nos solutions
+              {t("solutionsLabel")}
             </span>
           </div>
           <h2
@@ -395,9 +397,9 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               margin: 0,
             }}
           >
-            Ce que nous
+            {t("solutionsH2Line1")}
             <br />
-            <span style={{ color: secteur.color }}>faisons</span>
+            <span style={{ color: secteur.color }}>{t("solutionsH2Line2")}</span>
           </h2>
         </motion.div>
 
@@ -452,10 +454,10 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
 
       {/* ── CTA section ── */}
       <CTASection
-        eyebrow="Passons à l'action"
-        title="Votre projet nous intéresse"
-        description="Discutons de votre contexte et explorons ensemble comment la technologie peut créer de la valeur dans votre organisation."
-        buttonText="Démarrer un projet"
+        eyebrow={t("cta.eyebrow")}
+        title={t("cta.title")}
+        description={t("cta.description")}
+        buttonText={t("cta.buttonText")}
       />
 
       {/* ── Footer ── */}

@@ -14,6 +14,7 @@
 
 import React, { useRef, useMemo } from "react";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import {
   motion,
@@ -142,6 +143,7 @@ function WordChars({ text, delay = 0, color = "#fff", fx, stagger: s = 0.034, si
    1 · HERO 100vh — image Ken Burns + gradient + effets
    ═══════════════════════════════════════════════════════ */
 function HeroSection({ svc, index }: { svc: Service; index: number }) {
+  const t = useTranslations("services.poles.ingenierie");
   const heroRef = useRef<HTMLDivElement>(null);
   const mx  = useMotionValue(0);
   const my  = useMotionValue(0);
@@ -263,9 +265,9 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
         }}
           initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.04 }}>
-          <Link href="/" style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)" }}>Accueil</Link>
+          <Link href="/" style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)" }}>{t("breadcrumbHome")}</Link>
           <span style={{ color: "rgba(255,255,255,0.5)" }}>›</span>
-          <Link href="/services" style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)" }}>Services</Link>
+          <Link href="/services" style={{ color: "#ffffff", textDecoration: "none", fontSize: "clamp(0.95rem, 1.2vw, 1.2rem)" }}>{t("breadcrumbServices")}</Link>
           <span style={{ color: "rgba(255,255,255,0.5)" }}>›</span>
           <span style={{
             marginLeft: "auto",
@@ -314,7 +316,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
             animate={{ scaleY: [0.3, 1, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
           <span style={{ fontSize: "clamp(10px, 0.7rem, 0.74rem)", letterSpacing: "0.3em",
-            color: "rgba(255,255,255,0.25)", textTransform: "uppercase" }}>Défiler</span>
+            color: "rgba(255,255,255,0.25)", textTransform: "uppercase" }}>{t("scrollHint")}</span>
         </motion.div>
       </motion.div>
     </div>
@@ -325,6 +327,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
    2 · INTRO — image latérale animée avec parallax scroll
    ═══════════════════════════════════════════════════════ */
 function IntroSection({ svc }: { svc: Service }) {
+  const t = useTranslations("services.poles.ingenierie");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imgY    = useTransform(scrollYProgress, [0, 1], ["8%", "-8%"]);
@@ -353,7 +356,7 @@ function IntroSection({ svc }: { svc: Service }) {
             fontSize: "clamp(0.85rem, 1vw, 1rem)",
             letterSpacing: "0.28em", textTransform: "uppercase",
             color: "#ffffff", marginBottom: "1.8rem", fontWeight: 700,
-          }}>Notre approche</motion.p>
+          }}>{t("approachLabel")}</motion.p>
 
           <motion.p variants={fadeUp} style={{
             fontSize: "clamp(1.2rem, 1.6vw, 1.8rem)",
@@ -577,6 +580,7 @@ const BENEFIT_ICONS = [
 ];
 
 function BenefitsSection({ svc }: { svc: Service }) {
+  const t = useTranslations("services.poles.ingenierie");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
@@ -617,7 +621,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
                 fontFamily: "Futura, system-ui, sans-serif",
                 fontSize: "clamp(0.85rem, 1vw, 1rem)",
                 letterSpacing: "0.28em", textTransform: "uppercase", color: ORANGE, fontWeight: 700,
-              }}>Pourquoi opter pour nos services</span>
+              }}>{t("benefitsLabel")}</span>
               <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${ORANGE}60, transparent)` }} />
             </motion.div>
 
@@ -676,6 +680,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
    6 · SERVICES CONNEXES
    ═══════════════════════════════════════════════════════ */
 function RelatedServices({ svc }: { svc: Service }) {
+  const t = useTranslations("services.poles.ingenierie");
   const related = SERVICES.filter(s => s.poleN === svc.poleN && s.slug !== svc.slug).slice(0, 3);
   if (!related.length) return null;
 
@@ -696,7 +701,7 @@ function RelatedServices({ svc }: { svc: Service }) {
               fontFamily: "Futura, system-ui, sans-serif",
               fontSize: "clamp(0.85rem, 1vw, 1rem)",
               letterSpacing: "0.28em", textTransform: "uppercase", color: "#ffffff", fontWeight: 700,
-            }}>Services du Pôle {svc.poleN}</p>
+            }}>{t("relatedTitle", { poleN: svc.poleN })}</p>
             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.06)" }} />
           </motion.div>
 
@@ -757,6 +762,7 @@ function RelatedServices({ svc }: { svc: Service }) {
    STICKY HEADER
    ═══════════════════════════════════════════════════════ */
 function StickyHeader({ svc }: { svc: Service }) {
+  const t = useTranslations("services.poles.ingenierie");
   const [visible, setVisible] = React.useState(false);
   React.useEffect(() => {
     const fn = () => setVisible(window.scrollY > window.innerHeight * 0.8);
@@ -780,7 +786,7 @@ function StickyHeader({ svc }: { svc: Service }) {
           display: "flex", alignItems: "center", gap: "0.4rem",
           textDecoration: "none", color: "rgba(255,255,255,0.72)",
           fontSize: "clamp(10px, 0.72rem, 0.76rem)", letterSpacing: "0.14em",
-        }}>← Services</Link>
+        }}>{t("backLink")}</Link>
         <span style={{ width: 1, height: 14, background: "rgba(255,255,255,0.1)" }} />
         <span style={{
           fontFamily: "Futura, system-ui, sans-serif",
@@ -802,6 +808,7 @@ function StickyHeader({ svc }: { svc: Service }) {
    EXPORT PRINCIPAL
    ═══════════════════════════════════════════════════════ */
 export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
+  const t = useTranslations("services.poles.ingenierie");
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
 
   return (
@@ -831,10 +838,10 @@ export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
           <CatalogueSection />
         ) : (
           <CTASection
-            eyebrow="Travaillons ensemble"
-            title="Intéressé par ce service ?"
-            description="Parlons de votre projet en 30 minutes — sans engagement."
-            buttonText="Démarrer un projet"
+            eyebrow={t("cta.eyebrow")}
+            title={t("cta.title")}
+            description={t("cta.description")}
+            buttonText={t("cta.buttonText")}
           />
         )}
         <FooterStrip />
