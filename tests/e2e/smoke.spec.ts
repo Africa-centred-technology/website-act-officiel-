@@ -75,13 +75,13 @@ const MOCK_DETAIL = {
 
 /** Intercepte les appels Shopify formations pour éviter les erreurs réseau en test. */
 async function mockFormationsAPI(page: Page) {
-  await page.route("**/api/shopify/formations", (route) => {
+  await page.route("**/api/shopify/formations*", (route) => {
     // Ne pas intercepter les routes avec un slug (/api/shopify/formations/foo)
     if (route.request().url().includes("/api/shopify/formations/")) return route.fallback();
     return route.fulfill({ json: { formations: [MOCK_CARD] } });
   });
 
-  await page.route(`**/api/shopify/formations/${MOCK_SLUG}`, (route) =>
+  await page.route(`**/api/shopify/formations/${MOCK_SLUG}*`, (route) =>
     route.fulfill({ json: { formation: MOCK_DETAIL } })
   );
 }
