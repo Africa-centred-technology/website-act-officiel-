@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 
@@ -400,6 +401,9 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                 </li>
               ))}
             </ul>
+
+            {/* Language switcher */}
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile hamburger button */}
@@ -553,6 +557,8 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                 </svg>
                 Contactez-nous
               </Link>
+              {/* Language switcher */}
+              <LanguageSwitcher />
               <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", color: "rgba(255,255,255,0.45)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
