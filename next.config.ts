@@ -20,6 +20,30 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.shopify.com" },
     ],
   },
+  async redirects() {
+    const ROUTES = [
+      "about",
+      "blog",
+      "contact",
+      "formations",
+      "poles",
+      "projects",
+      "secteurs",
+      "services",
+    ];
+    return [
+      ...ROUTES.map((r) => ({
+        source: `/${r}`,
+        destination: `/fr/${r}`,
+        permanent: true,
+      })),
+      ...ROUTES.map((r) => ({
+        source: `/${r}/:path*`,
+        destination: `/fr/${r}/:path*`,
+        permanent: true,
+      })),
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
