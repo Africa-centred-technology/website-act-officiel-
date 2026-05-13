@@ -4,6 +4,40 @@
       "fr": "Français",
       "en": "English",
       "ar": "العربية"
+    },
+    "cta": {
+      "learnMore": "En savoir plus",
+      "viewAll": "Voir tous",
+      "discover": "Découvrir",
+      "contact": "Nous contacter",
+      "subscribe": "S'abonner",
+      "back": "Retour",
+      "close": "Fermer",
+      "send": "Envoyer",
+      "loading": "Chargement…",
+      "readMore": "Lire la suite",
+      "register": "S'inscrire",
+      "download": "Télécharger",
+      "downloadBrochure": "Télécharger la brochure"
+    },
+    "nav": {
+      "home": "Accueil",
+      "about": "À propos",
+      "services": "Services",
+      "formations": "Formations",
+      "poles": "Pôles",
+      "secteurs": "Secteurs",
+      "projects": "Réalisations",
+      "blog": "Blog",
+      "contact": "Contact",
+      "openMenu": "Ouvrir le menu",
+      "closeMenu": "Fermer le menu"
+    },
+    "footer": {
+      "copyright": "© {year} Africa Centred Technology. Tous droits réservés.",
+      "tagline": "Engineering the Future",
+      "address": "Maroc — FR",
+      "followUs": "Suivez-nous"
     }
   },
   "metadata": {
@@ -47,5 +81,30 @@
       "title": "Contact — Africa Centred Technology",
       "description": "Contactez l'équipe ACT pour discuter de vos projets de transformation digitale, IA et formation au Maroc et en Afrique."
     }
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "email": "Email invalide",
+    "phone": "Numéro de téléphone invalide",
+    "minLength": "Minimum {min} caractères",
+    "maxLength": "Maximum {max} caractères"
+  },
+  "home": {},
+  "about": {},
+  "services": {},
+  "formations": {},
+  "poles": {},
+  "secteurs": {},
+  "projects": {},
+  "blog": {},
+  "contact": {},
+  "breadcrumb": {
+    "home": "Accueil",
+    "formations": "Formations",
+    "blog": "Blog",
+    "services": "Services",
+    "projects": "Réalisations",
+    "secteurs": "Secteurs",
+    "poles": "Pôles"
   }
 }
