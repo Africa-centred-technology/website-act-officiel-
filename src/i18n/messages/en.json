@@ -128,69 +128,69 @@
   },
   "home": {
     "manifeste": {
-      "pullQuote": "La technologie n'a de valeur que lorsqu'elle crée un impact réel.",
-      "bodyP1": "Nous ne nous contentons pas d'implémenter des technologies — nous concevons des solutions qui créent de la valeur durable pour les organisations.",
-      "bodyP2": "En combinant intelligence artificielle, analyse de données et automatisation, nous transformons les défis de nos clients en opportunités et bâtissons les systèmes qui soutiendront leur croissance de demain.",
-      "conviction": "Notre conviction",
-      "location": "Casablanca · Maroc · 2026",
-      "founderLabel": "Le Fondateur",
-      "founderRole": "Fondateur · CEO",
+      "pullQuote": "Technology has value only when it creates real impact.",
+      "bodyP1": "We don't just implement technologies — we design solutions that create lasting value for organizations.",
+      "bodyP2": "By combining artificial intelligence, data analytics, and automation, we transform our clients' challenges into opportunities and build the systems that will support their future growth.",
+      "conviction": "Our conviction",
+      "location": "Casablanca · Morocco · 2026",
+      "founderLabel": "The Founder",
+      "founderRole": "Founder · CEO",
       "founderCompany": "CEO · Africa Centred Technology",
-      "imageAlt": "Sohaib Baroud, fondateur d'ACT"
+      "imageAlt": "Sohaib Baroud, founder of ACT"
     },
     "hero": {
       "tagline": "Innovating Today, Transforming Tomorrow",
       "stats": {
-        "founded": "Fondée",
-        "collaborators": "Collaborateurs",
-        "domains": "Domaines",
+        "founded": "Founded",
+        "collaborators": "Collaborators",
+        "domains": "Domains",
         "ambition": "Ambition"
       }
     },
     "about": {
-      "eyebrow": "Qui sommes-nous",
+      "eyebrow": "Who we are",
       "title1": "AFRICA",
       "title2": "CENTRED",
       "title3": "TECHNOLOGY",
-      "intro": "Nous sommes une startup guidée par une <strong>raison d'être commune</strong> : libérer l'énergie humaine et technologique. Une approche profondément humaine y est cultivée, renforcée par la puissance de l'Intelligence Artificielle. L'ambition est de générer un impact concret et durable, afin de transformer les sociétés et de contribuer à la construction d'un écosystème numérique collaboratif.",
-      "vision": "« Contribuer à l'émergence d'un écosystème technologique fort, innovant et autonome — où l'Afrique devient productrice, et non uniquement consommatrice de technologies. »"
+      "intro": "We are a startup guided by a <strong>shared purpose</strong>: unleashing human and technological energy. A deeply human approach is cultivated here, reinforced by the power of Artificial Intelligence. Our ambition is to generate concrete and lasting impact, transforming societies and contributing to building a collaborative digital ecosystem.",
+      "vision": "\"Contribute to the emergence of a strong, innovative, and autonomous technological ecosystem — where Africa becomes a producer, and not merely a consumer of technologies.\""
     },
     "horizon": {
-      "eyebrow": "Démarrons ensemble",
-      "title": "Vous avez un projet ?",
-      "titleAccent": "Donnons-lui vie.",
-      "subtitle": "Que ce soit une idée à valider, une solution à bâtir, ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.",
-      "cta": "Démarrer un projet",
-      "ctaSecondary": "Voir nos réalisations →",
+      "eyebrow": "Let's start together",
+      "title": "Have a project?",
+      "titleAccent": "Let's bring it to life.",
+      "subtitle": "Whether it's an idea to validate, a solution to build, or a team to train — our experts respond within 24 hours to turn your ambition into reality.",
+      "cta": "Start a project",
+      "ctaSecondary": "View our projects →",
       "commitments": {
-        "response": { "val": "24h", "label": "Réponse garantie" },
-        "free": { "val": "Gratuit", "label": "Premier échange" },
-        "custom": { "val": "100%", "label": "Sur-mesure" }
+        "response": { "val": "24h", "label": "Guaranteed response" },
+        "free": { "val": "Free", "label": "First conversation" },
+        "custom": { "val": "100%", "label": "Tailored" }
       }
     },
     "poles": {
-      "title": "Ce que nous proposons",
-      "discover": "Découvrir",
-      "poleLabel": "Pôle"
+      "title": "What we offer",
+      "discover": "Discover",
+      "poleLabel": "Division"
     },
     "projects": {
-      "title": "Nos dernières",
-      "titleAccent": "réalisations",
-      "viewMore": "Voir plus"
+      "title": "Our latest",
+      "titleAccent": "projects",
+      "viewMore": "View more"
     },
     "blog": {
-      "title": "Nos Dernières",
+      "title": "Our Latest",
       "titleAccent": "publications",
-      "viewBlog": "Voir le blog",
-      "visitBlog": "Visitez notre Blog",
-      "subtitle": "Insights tech, tendances IA, conseils stratégiques — directement dans votre boîte.",
-      "readMore": "Lire l'article complet"
+      "viewBlog": "View the blog",
+      "visitBlog": "Visit our Blog",
+      "subtitle": "Tech insights, AI trends, strategic advice — straight to your inbox.",
+      "readMore": "Read the full article"
     },
     "cta": {
-      "eyebrow": "Démarrons ensemble",
-      "title": "Vous avez un projet ?",
-      "description": "Que ce soit une idée à valider, une solution à bâtir ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.",
-      "buttonText": "Démarrer un projet"
+      "eyebrow": "Let's start together",
+      "title": "Have a project?",
+      "description": "Whether it's an idea to validate, a solution to build, or a team to train — our experts respond within 24 hours to turn your ambition into reality.",
+      "buttonText": "Start a project"
     }
   },
   "about": {
