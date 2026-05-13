@@ -18,16 +18,11 @@
 import React, { useMemo } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;
 
-/* ── Stats bar items (displayed as an infinite-scroll marquee at the bottom) ── */
-const STATS = [
-  { n: "2026", label: "Fondée" },
-  { n: "8",    label: "Collaborateurs" },
-  { n: "5+",   label: "Domaines" },
-  { n: "∞",    label: "Ambition" },
-];
+/* ── Stats bar items are now localised inside the component via useTranslations ── */
 
 /* ── Arc de texte en orbite (SVG textPath) ──────────────────────────── */
 function OrbitArc() {
@@ -169,6 +164,15 @@ function WordChars({
 
 /* ── Room ────────────────────────────────────────────────────────────── */
 export default function HeroSection() {
+  const t = useTranslations("home.hero");
+
+  const STATS = [
+    { n: "2026", label: t("stats.founded") },
+    { n: "8",    label: t("stats.collaborators") },
+    { n: "5+",   label: t("stats.domains") },
+    { n: "∞",    label: t("stats.ambition") },
+  ];
+
   /* 3-layer parallax */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -338,7 +342,7 @@ export default function HeroSection() {
                 alignItems: "center"
               }}
             >
-              {"Innovating Today, Transforming Tomorrow".split("").map((char, index) => (
+              {t("tagline").split("").map((char, index) => (
                 <motion.span
                   key={index}
                   initial={{ opacity: 0 }}

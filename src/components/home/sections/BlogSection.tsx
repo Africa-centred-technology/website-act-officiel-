@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { type BlogPost } from "@/lib/blog";
+import { useTranslations } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -30,6 +31,7 @@ function useMediaQuery() {
 }
 
 export default function BlogSection() {
+    const t = useTranslations("home.blog");
     const screenSize = useMediaQuery();
     const [posts, setPosts] = useState<BlogPost[]>([]);
 
@@ -73,7 +75,7 @@ export default function BlogSection() {
                             fontFamily: "var(--font-body)",
                             fontSize: screenSize === 'mobile' ? 'clamp(0.85rem, 3vw, 1rem)' : screenSize === 'tablet' ? 'clamp(0.95rem, 2vw, 1.15rem)' : '1.25rem',
                         }}>
-                            Insights tech, tendances IA, conseils stratégiques — directement dans votre boîte.
+                            {t("subtitle")}
                         </p>
                     </motion.div>
                 </div>
@@ -169,7 +171,7 @@ export default function BlogSection() {
                                 <span className="cta-btn__background" aria-hidden />
                                 <span className="cta-btn__inner">
                                     <span className="cta-btn__icon" aria-hidden />
-                                    <span className="cta-btn__text">Visitez notre Blog </span>
+                                    <span className="cta-btn__text">{t("visitBlog")}</span>
                                 </span>
                             </Link>
                         </div>

@@ -126,8 +126,155 @@
     "minLength": "Minimum {min} caractères",
     "maxLength": "Maximum {max} caractères"
   },
-  "home": {},
-  "about": {},
+  "home": {
+    "hero": {
+      "tagline": "Innovating Today, Transforming Tomorrow",
+      "stats": {
+        "founded": "Fondée",
+        "collaborators": "Collaborateurs",
+        "domains": "Domaines",
+        "ambition": "Ambition"
+      }
+    },
+    "about": {
+      "eyebrow": "Qui sommes-nous",
+      "title1": "AFRICA",
+      "title2": "CENTRED",
+      "title3": "TECHNOLOGY",
+      "intro": "Nous sommes une startup guidée par une <strong>raison d'être commune</strong> : libérer l'énergie humaine et technologique. Une approche profondément humaine y est cultivée, renforcée par la puissance de l'Intelligence Artificielle. L'ambition est de générer un impact concret et durable, afin de transformer les sociétés et de contribuer à la construction d'un écosystème numérique collaboratif.",
+      "vision": "« Contribuer à l'émergence d'un écosystème technologique fort, innovant et autonome — où l'Afrique devient productrice, et non uniquement consommatrice de technologies. »"
+    },
+    "horizon": {
+      "eyebrow": "Démarrons ensemble",
+      "title": "Vous avez un projet ?",
+      "titleAccent": "Donnons-lui vie.",
+      "subtitle": "Que ce soit une idée à valider, une solution à bâtir, ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.",
+      "cta": "Démarrer un projet",
+      "ctaSecondary": "Voir nos réalisations →",
+      "commitments": {
+        "response": { "val": "24h", "label": "Réponse garantie" },
+        "free": { "val": "Gratuit", "label": "Premier échange" },
+        "custom": { "val": "100%", "label": "Sur-mesure" }
+      }
+    },
+    "poles": {
+      "title": "Ce que nous proposons",
+      "discover": "Découvrir",
+      "poleLabel": "Pôle"
+    },
+    "projects": {
+      "title": "Nos dernières",
+      "titleAccent": "réalisations",
+      "viewMore": "Voir plus"
+    },
+    "blog": {
+      "title": "Nos Dernières",
+      "titleAccent": "publications",
+      "viewBlog": "Voir le blog",
+      "visitBlog": "Visitez notre Blog",
+      "subtitle": "Insights tech, tendances IA, conseils stratégiques — directement dans votre boîte.",
+      "readMore": "Lire l'article complet"
+    },
+    "cta": {
+      "eyebrow": "Démarrons ensemble",
+      "title": "Vous avez un projet ?",
+      "description": "Que ce soit une idée à valider, une solution à bâtir ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.",
+      "buttonText": "Démarrer un projet"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "Africa Centred Technology · Expertise & Ingénierie",
+      "word1": "NOTRE",
+      "word2": "EXPERTISE",
+      "subtitle": "Nous accompagnons les organisations dans leur transformation numérique en déployant des solutions d'intelligence artificielle et d'ingénierie de données de haut niveau — conçues pour la performance et le passage à l'échelle.",
+      "ctaTeam": "L'Équipe",
+      "ctaApproach": "Notre approche"
+    },
+    "stats": {
+      "eyebrow": "Les chiffres qui parlent",
+      "title": "NOS CHIFFRES",
+      "indicator": "Indicateur",
+      "items": {
+        "projects": { "value": "15", "suffix": "+", "label": "Projets", "sub": "Solutions déployées avec succès" },
+        "satisfaction": { "value": "100", "suffix": "%", "label": "Satisfaction", "sub": "Clients satisfaits" },
+        "countries": { "value": "2", "suffix": "", "label": "Pays", "sub": "Maroc et au-delà" }
+      }
+    },
+    "adn": {
+      "eyebrow": "Vision · Impact · Expertise",
+      "title": "NOTRE ADN",
+      "manifesto": "La technologie n'a de valeur que lorsqu'elle crée un impact concret et mesurable. Chez ACT, nous ne nous contentons pas d'implémenter des outils : nous concevons des architectures systèmes qui optimisent le ROI et soutiennent la scalabilité des organisations. En combinant Intelligence Artificielle avancée, Ingénierie de Données et Automatisation Industrielle, nous transformons les défis technologiques complexes en avantages compétitifs durables.",
+      "attribution": "SOHAIB BAROUD — Fondateur & CEO, ACT"
+    },
+    "values": {
+      "eyebrow": "Nos piliers d'excellence",
+      "title": "NOS STANDARDS",
+      "standardLabel": "Standard ACT",
+      "valueLabel": "Valeur ACT",
+      "items": {
+        "collaboration": {
+          "title": "Collaboration",
+          "desc": "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences."
+        },
+        "transmission": {
+          "title": "Transmission",
+          "desc": "Nous partageons nos connaissances et nos compétences pour renforcer les capacités locales et favoriser l'autonomie des entreprises."
+        },
+        "excellence": {
+          "title": "Excellence",
+          "desc": "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "desc": "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets."
+        }
+      }
+    },
+    "timeline": {
+      "items": {
+        "2023": { "title": "Naissance", "desc": "Création d'Africa Centred Technology comme startup d'ingénierie tech portée par une équipe soudée autour d'une vision commune." },
+        "2024": { "title": "Premiers POC", "desc": "Déploiement des premiers prototypes IA et data pour des entreprises africaines, validation du modèle et des expertises." },
+        "2025": { "title": "Accélération", "desc": "Déploiement du Système RAG Multi-sources et montée en puissance des missions de conseil pour l'écosystème africain." },
+        "2026": { "title": "Cap 2030", "desc": "Consolidation de notre vision pan-africaine avec une équipe dynamique, agile et résolument tournée vers l'avenir du continent." }
+      }
+    },
+    "team": {
+      "eyebrow": "Le conseil d'administration de ACT",
+      "title": "LE CONSEIL D'ADMINISTRATION",
+      "members": {
+        "sohaib": {
+          "name": "SOHAIB BAROUD",
+          "role": "Fondateur & CEO",
+          "bio": "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux."
+        },
+        "mpiga": {
+          "name": "MPIGA-ODOUMBA JESSE",
+          "role": "Membre fondateur",
+          "bio": "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
+        },
+        "aldrin": {
+          "name": "Aldrin DJOUROBI",
+          "role": "Membre fondateur",
+          "bio": "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
+        },
+        "elvis": {
+          "name": "ELVIS-THEO AKIEME OYONO",
+          "role": "Membre fondateur",
+          "bio": "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Passez à l'action",
+      "line1": "REJOIGNEZ LA",
+      "line2": "RÉVOLUTION",
+      "line3": "TECH",
+      "subtitle": "Prêt à transformer vos défis en opportunités technologiques ? ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.",
+      "ctaStart": "Démarrer un projet",
+      "ctaServices": "Nos expertises IA"
+    }
+  },
   "services": {},
   "formations": {},
   "poles": {},

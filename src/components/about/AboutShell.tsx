@@ -15,6 +15,7 @@ import { type TeamMember } from "./TeamMemberCard";
 import CTAButton from "@/components/ui/CTAButton";
 import FooterStrip from "@/components/layout/FooterStrip";
 import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /* ── Background layers (comme SecteursShell) ─────────────────── */
 const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"), { ssr: false });
@@ -35,63 +36,32 @@ const SOCIALS = [
 const EASE3D  = [0.6, 0.08, 0.02, 0.99] as const;
 const BURST   = [0.04, 0.72, 0.08, 1.0] as const;
 
-const STATS = [
-  { n: "01", value: "15",  suffix: "+", label: "Projets",     sub: "Solutions déployées avec succès" },
-  { n: "02", value: "100", suffix: "%", label: "Satisfaction", sub: "Clients satisfaits" },
-  { n: "03", value: "2",   suffix: "",  label: "Pays",         sub: "Maroc et au-delà" },
+/* ── Static structural data (colours, numbers) — text sourced from t() at usage ── */
+const STATS_STRUCT = [
+  { n: "01", value: "15",  suffix: "+", key: "projects" },
+  { n: "02", value: "100", suffix: "%", key: "satisfaction" },
+  { n: "03", value: "2",   suffix: "",  key: "countries" },
 ];
 
-const MANIFESTO =
-  "La technologie n'a de valeur que lorsqu'elle crée un impact concret et mesurable. Chez ACT, nous ne nous contentons pas d'implémenter des outils : nous concevons des architectures systèmes qui optimisent le ROI et soutiennent la scalabilité des organisations. En combinant Intelligence Artificielle avancée, Ingénierie de Données et Automatisation Industrielle, nous transformons les défis technologiques complexes en avantages compétitifs durables.";
-
-const VALUES = [
-  { n: "01", title: "Collaboration",    color: "#D35400",
-    desc: "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences." },
-  { n: "02", title: "Transmission",    color: "#F39C12",
-    desc: "Nous partageons nos connaissances et nos compétences pour renforcer les capacités locales et favoriser l'autonomie des entreprises." },
-  { n: "03", title: "Excellence", color: "#2C4A35",
-    desc: "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet." },
-  { n: "04", title: "Innovation",     color: "#D35400",
-    desc: "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets." },
+const VALUES_STRUCT = [
+  { n: "01", key: "collaboration", color: "#D35400" },
+  { n: "02", key: "transmission",  color: "#F39C12" },
+  { n: "03", key: "excellence",    color: "#2C4A35" },
+  { n: "04", key: "innovation",    color: "#D35400" },
 ];
 
-const TIMELINE = [
-  { year: "2023", title: "Naissance",     color: "#D35400",
-    desc: "Création d'Africa Centred Technology comme startup d'ingénierie tech portée par une équipe soudée autour d'une vision commune." },
-  { year: "2024", title: "Premiers POC",  color: "#F39C12",
-    desc: "Déploiement des premiers prototypes IA et data pour des entreprises africaines, validation du modèle et des expertises." },
-  { year: "2025", title: "Accélération",  color: "#2C4A35",
-    desc: "Déploiement du Système RAG Multi-sources et montée en puissance des missions de conseil pour l'écosystème africain." },
-  { year: "2026", title: "Cap 2030",      color: "#D35400",
-    desc: "Consolidation de notre vision pan-africaine avec une équipe dynamique, agile et résolument tournée vers l'avenir du continent." },
+const TIMELINE_STRUCT = [
+  { year: "2023", color: "#D35400" },
+  { year: "2024", color: "#F39C12" },
+  { year: "2025", color: "#2C4A35" },
+  { year: "2026", color: "#D35400" },
 ];
 
-
-const TEAM: TeamMember[] = [
-  {
-    name: "SOHAIB BAROUD",
-    role: "Fondateur & CEO",
-    img: "/images/Equipe/sohaib_baroud.jpg",
-    bio: "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux."
-  },
-  {
-    name: "MPIGA-ODOUMBA JESSE",
-    role: "Membre fondateur",
-    img: "/images/Equipe/MPIGA.png",
-    bio: "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
-  },
-  {
-    name: "Aldrin DJOUROBI",
-    role: "Membre fondateur",
-    img: "/images/Equipe/Aldrin.png",
-    bio: "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
-  },
-  {
-    name: "ELVIS-THEO AKIEME OYONO",
-    role: "Membre fondateur",
-    img: "/images/Equipe/elvis.png",
-    bio: "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
-  },
+const TEAM_STRUCT = [
+  { key: "sohaib",  img: "/images/Equipe/sohaib_baroud.jpg" },
+  { key: "mpiga",   img: "/images/Equipe/MPIGA.png" },
+  { key: "aldrin",  img: "/images/Equipe/Aldrin.png" },
+  { key: "elvis",   img: "/images/Equipe/elvis.png" },
 ];
 
 const STAT_DEPTH = [
@@ -264,6 +234,7 @@ function Magnetic({ children }: { children: React.ReactNode }) {
    SECTION 01 — NOTRE HISTOIRE  (RoomEntree pattern)
    ══════════════════════════════════════════════════════════════════════ */
 function SectionHero() {
+  const t = useTranslations("about.hero");
   const { bgX, bgY, midX, midY, fgX, fgY, onMouseMove } = useParallax();
 
   return (
@@ -299,7 +270,7 @@ function SectionHero() {
           initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.60, delay: 0.04 }}>
           <span className="diamond diamond--sm" />
           <span className="text-white/40 uppercase" style={{ fontSize: "1.05rem", letterSpacing: "0.32em" }}>
-            Africa Centred Technology · Expertise & Ingénierie
+            {t("eyebrow")}
           </span>
         </motion.div>
 
@@ -307,8 +278,8 @@ function SectionHero() {
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
           <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
             {[
-              { word: "NOTRE",   color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
-              { word: "EXPERTISE",color: "#D35400",  size: "clamp(2rem,  4.5vw, 6.5rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
+              { word: t("word1"), color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
+              { word: t("word2"), color: "#D35400",  size: "clamp(2rem,  4.5vw, 6.5rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
             ].map(({ word, color, size, fx, delay, stagger }) => (
               <div key={word} style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-end" }}>
                 {word.split("").map((ch, i) => {
@@ -337,9 +308,7 @@ function SectionHero() {
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }} />
         <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "44rem" }}
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
-          Nous accompagnons les organisations dans leur transformation numérique
-          en déployant des solutions d&apos;intelligence artificielle et d&apos;ingénierie de données
-          de haut niveau — conçues pour la performance et le passage à l&apos;échelle.
+          {t("subtitle")}
         </motion.p>
         <motion.div className="flex flex-wrap items-center gap-8 mt-10"
           style={{ x: fgX, y: fgY }}
@@ -348,11 +317,11 @@ function SectionHero() {
           <a href="#equipe" className="cta-btn">
             <div className="cta-btn__border" /><div className="cta-btn__blur" />
             <div className="cta-btn__background" />
-            <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">L'Équipe</span></div>
+            <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">{t("ctaTeam")}</span></div>
           </a>
           <a href="#expertise" className="flex items-center gap-3 text-white/50 hover:text-white transition-colors uppercase"
             style={{ fontSize: "1.15rem", letterSpacing: "0.12em" }}>
-            <span className="diamond diamond--sm" />Notre approche
+            <span className="diamond diamond--sm" />{t("ctaApproach")}
           </a>
         </motion.div>
       </motion.div>
@@ -363,7 +332,8 @@ function SectionHero() {
 /* ══════════════════════════════════════════════════════════════════════
    SECTION 02 — NOS CHIFFRES  (RoomAtelier card pattern)
    ══════════════════════════════════════════════════════════════════════ */
-function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
+function StatCard({ stat, index }: { stat: typeof STATS_STRUCT[0]; index: number }) {
+  const t = useTranslations("about.stats");
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, on: false });
   const depth = STAT_DEPTH[index];
@@ -409,7 +379,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
           <div className="relative flex flex-col" style={{ zIndex: 3, flex: 1 }}>
             <div className="flex items-center gap-2 mb-4">
               <span className="diamond diamond--sm" />
-              <span className="text-[#D35400] uppercase" style={{ fontSize: "1rem", letterSpacing: "0.2em" }}>Indicateur</span>
+              <span className="text-[#D35400] uppercase" style={{ fontSize: "1rem", letterSpacing: "0.2em" }}>{t("indicator")}</span>
             </div>
             <span className="font-black text-white" style={{ fontSize: "clamp(3.5rem, 6vw, 6rem)", lineHeight: 1, marginBottom: "0.5rem" }}>
               {stat.value}<span style={{ color: "#F39C12" }}>{stat.suffix}</span>
@@ -417,10 +387,10 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
             <motion.div style={{ height: 1, background: "rgba(211,84,0,0.5)", originX: 0, margin: "1.5rem 0" }}
               animate={{ scaleX: tilt.on ? 1 : 0.18 }} transition={{ type: "spring", stiffness: 280, damping: 24 }} />
             <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 2.5vw, 2.8rem)", lineHeight: 1.05, marginBottom: "0.8rem" }}>
-              {stat.label}
+              {t(`items.${stat.key}.label` as Parameters<typeof t>[0])}
             </h3>
             <p className="text-white/60" style={{ fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)", lineHeight: 1.72 }}>
-              {stat.sub}
+              {t(`items.${stat.key}.sub` as Parameters<typeof t>[0])}
             </p>
           </div>
         </motion.div>
@@ -430,6 +400,7 @@ function StatCard({ stat, index }: { stat: typeof STATS[0]; index: number }) {
 }
 
 function SectionStats() {
+  const t = useTranslations("about.stats");
   const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
 
   return (
@@ -437,11 +408,11 @@ function SectionStats() {
       style={{ minHeight: "100vh" }}>
       <ScanLine />
 
-      <SectionHeader eyebrow="Les chiffres qui parlent" title="NOS CHIFFRES" midX={midX} midY={midY} />
+      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} midX={midX} midY={midY} />
       <OrangeRule />
 
       <div className="room-grid-3 gap-4">
-        {STATS.map((s, i) => <StatCard key={s.n} stat={s} index={i} />)}
+        {STATS_STRUCT.map((s, i) => <StatCard key={s.n} stat={s} index={i} />)}
       </div>
     </section>
   );
@@ -490,10 +461,11 @@ function BlinkCursor({ delay }: { delay: number }) {
 }
 
 function SectionADN() {
+  const t = useTranslations("about.adn");
   const { bgX, bgY, midX, midY, fgX, onMouseMove } = useParallax();
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15%" });
-  const words  = useMemo(() => MANIFESTO.split(/\s+/).filter(Boolean), []);
+  const words  = useMemo(() => t("manifesto").split(/\s+/).filter(Boolean), [t]);
 
   return (
     <section onMouseMove={onMouseMove} className="relative flex flex-col justify-center overflow-hidden about-sec-pad"
@@ -501,7 +473,7 @@ function SectionADN() {
       <ScanLine />
       <AmbiantLines positions={["12%", "88%"]} />
 
-      <SectionHeader eyebrow="Vision · Impact · Expertise" title="NOTRE ADN" midX={midX} midY={midY} />
+      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* Word-by-word manifesto */}
@@ -520,7 +492,7 @@ function SectionADN() {
         transition={{ delay: 0.28 + (words.length - 1) * (1.55 / words.length) + 1.1, duration: 0.7 }} style={{ x: fgX }}>
         <div style={{ width: 36, height: 1, background: "#D35400" }} />
         <span className="text-white/55 uppercase" style={{ fontSize: "1.15rem", letterSpacing: "0.2em" }}>
-          SOHAIB BAROUD — Fondateur &amp; CEO, ACT
+          {t("attribution")}
         </span>
       </motion.div>
     </section>
@@ -531,6 +503,7 @@ function SectionADN() {
    SECTION 04 — NOS VALEURS  (RoomGalerie card pattern)
    ══════════════════════════════════════════════════════════════════════ */
 function SectionValues() {
+  const t = useTranslations("about.values");
   const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -546,12 +519,12 @@ function SectionValues() {
       style={{ minHeight: "100vh" }}>
       <ScanLine />
 
-      <SectionHeader eyebrow="Nos piliers d'excellence" title="NOS STANDARDS" midX={midX} midY={midY} />
+      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} midX={midX} midY={midY} />
       <OrangeRule />
 
       {/* 2×2 grid — each card from its own corner like RoomGalerie */}
       <div className="about-2col-grid flex-1" style={{ minHeight: 0 }}>
-        {VALUES.map((v, i) => {
+        {VALUES_STRUCT.map((v, i) => {
           const entry = ENTRY[i];
           return (
             <motion.div key={v.n}
@@ -570,11 +543,11 @@ function SectionValues() {
                 <div className="flex items-center gap-2 mb-3">
                   <span className="diamond diamond--sm" style={{ background: v.color }} />
                     <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                      Standard ACT
+                      {t("standardLabel")}
                     </span>
                 </div>
                 <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 3vw, 3.5rem)", lineHeight: 1.05 }}>
-                  {v.title}
+                  {t(`items.${v.key}.title` as Parameters<typeof t>[0])}
                 </h3>
               </div>
 
@@ -589,15 +562,15 @@ function SectionValues() {
                     <div className="flex items-center gap-2 mb-3">
                       <span className="diamond diamond--sm" style={{ background: v.color }} />
                       <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                        Valeur ACT
+                        {t("valueLabel")}
                       </span>
                     </div>
                     <h3 className="font-black uppercase text-white mb-4" style={{ fontSize: "clamp(2rem, 3.2vw, 4rem)", lineHeight: 1.05 }}>
-                      {v.title}
+                      {t(`items.${v.key}.title` as Parameters<typeof t>[0])}
                     </h3>
                     <div style={{ width: 32, height: 1, background: v.color, marginBottom: "1.2rem" }} />
                     <p className="text-white/68" style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.5rem)", lineHeight: 1.7 }}>
-                      {v.desc}
+                      {t(`items.${v.key}.desc` as Parameters<typeof t>[0])}
                     </p>
                   </motion.div>
                 )}
@@ -616,6 +589,7 @@ function SectionValues() {
    SECTION 07 — L'HORIZON  (RoomSortie CTA pattern)
    ══════════════════════════════════════════════════════════════════════ */
 function SectionCTA() {
+  const t = useTranslations("about.cta");
   const { bgX, bgY, midX, midY, fgX, fgY, onMouseMove } = useParallax();
 
   return (
@@ -640,7 +614,7 @@ function SectionCTA() {
           transition={{ duration: 0.55, delay: 0.10 }}>
           <span className="diamond diamond--sm" />
           <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.88rem", letterSpacing: "0.38em", textTransform: "uppercase" }}>
-            Passez à l&apos;action
+            {t("eyebrow")}
           </span>
           <span className="diamond diamond--sm" />
         </motion.div>
@@ -653,7 +627,7 @@ function SectionCTA() {
               initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true }}
               transition={{ duration: 0.75, delay: 0.15, ease: [...EASE3D] }}>
-              REJOIGNEZ LA
+              {t("line1")}
             </motion.p>
             <div style={{ perspective: "1400px" }}>
               <motion.h2 className="font-black uppercase leading-none"
@@ -661,7 +635,7 @@ function SectionCTA() {
                 initial={{ scale: 0.04, opacity: 0, rotateX: 30, filter: "blur(44px) brightness(0.08)" }}
                 whileInView={{ scale: 1, opacity: 1, rotateX: 0, filter: "blur(0px) brightness(1.0)" }} viewport={{ once: true }}
                 transition={{ duration: 1.22, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.12 }}>
-                RÉVOLUTION
+                {t("line2")}
               </motion.h2>
             </div>
             <motion.p className="font-black uppercase leading-none"
@@ -669,7 +643,7 @@ function SectionCTA() {
               initial={{ opacity: 0, scale: 0.08, rotateX: -22, filter: "blur(28px)" }}
               whileInView={{ opacity: 1, scale: 1, rotateX: 0, filter: "blur(0px)" }} viewport={{ once: true }}
               transition={{ duration: 0.95, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.38 }}>
-              TECH
+              {t("line3")}
             </motion.p>
           </div>
         </div>
@@ -678,8 +652,7 @@ function SectionCTA() {
           style={{ fontSize: "var(--font-20)", lineHeight: 1.7, maxWidth: "50rem" }}
           initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           transition={{ delay: 0.35, duration: 0.7 }}>
-          Prêt à transformer vos défis en opportunités technologiques ?
-          ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.
+          {t("subtitle")}
         </motion.p>
 
         <motion.div className="flex flex-wrap items-center justify-center gap-8"
@@ -689,12 +662,12 @@ function SectionCTA() {
             <Link href="/contact" className="cta-btn">
               <div className="cta-btn__border" /><div className="cta-btn__blur" />
               <div className="cta-btn__background" />
-              <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">Démarrer un projet</span></div>
+              <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">{t("ctaStart")}</span></div>
             </Link>
           </Magnetic>
           <Link href="/services" className="flex items-center gap-3 text-white/55 hover:text-white transition-colors uppercase"
             style={{ fontSize: "1.2rem", letterSpacing: "0.12em" }}>
-            <span className="diamond diamond--sm" />Nos expertises IA
+            <span className="diamond diamond--sm" />{t("ctaServices")}
           </Link>
         </motion.div>
       </motion.div>
@@ -706,6 +679,14 @@ function SectionCTA() {
    MAIN SHELL — Page scrollable normale avec toutes les sections
    ══════════════════════════════════════════════════════════════════════ */
 export default function AboutShell() {
+  const t = useTranslations("about.team");
+  const team: TeamMember[] = TEAM_STRUCT.map((m) => ({
+    name: t(`members.${m.key}.name` as Parameters<typeof t>[0]),
+    role: t(`members.${m.key}.role` as Parameters<typeof t>[0]),
+    img:  m.img,
+    bio:  t(`members.${m.key}.bio`  as Parameters<typeof t>[0]),
+  }));
+
   return (
     <div style={{ background: "#0A1410", minHeight: "100vh", overflowX: "hidden", position: "relative" }}>
       {/* ── Background layers globaux ── */}
@@ -719,7 +700,7 @@ export default function AboutShell() {
         <SectionStats />
         <SectionADN />
         <SectionValues />
-        <TeamSection team={TEAM} />
+        <TeamSection team={team} />
         <SectionCTA />
         <FooterStrip />
       </div>

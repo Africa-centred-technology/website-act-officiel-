@@ -12,6 +12,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 import HeroSection from "@/components/home/sections/HeroSection";
 import AboutSection from "@/components/home/sections/AboutSection";
@@ -28,12 +29,13 @@ import FooterStrip from "@/components/layout/FooterStrip";
    orientés "démarrer un projet".
 ───────────────────────────────────────────────────────────────── */
 function HomeCTASection() {
+  const t = useTranslations("home.cta");
   return (
     <CTASection
-      eyebrow="Démarrons ensemble"
-      title="Vous avez un projet ?"
-      description="Que ce soit une idée à valider, une solution à bâtir ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité."
-      buttonText="Démarrer un projet"
+      eyebrow={t("eyebrow")}
+      title={t("title")}
+      description={t("description")}
+      buttonText={t("buttonText")}
       buttonHref="/contact"
     />
   );
@@ -100,6 +102,7 @@ export const SECTIONS: Section[] = [
   { id: "blog",      label: "LE BLOG",         number: "08", Component: BlogShowcaseSection },
   { id: "cta",       label: "DÉMARRONS",       number: "09", Component: HomeCTASection, flush: true },
 ];
+// Note: SECTIONS labels are UI navigation labels (immutable design tokens), not translated.
 
 /* ─────────────────────────────────────────────────────────────────
    MAIN COMPONENT

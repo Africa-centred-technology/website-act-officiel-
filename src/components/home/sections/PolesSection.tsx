@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { POLES } from "@/lib/data/poles";
+import { useTranslations } from "next-intl";
 
 const ORANGE  = "#D35400";
 const ORANGE2 = "#ff8c38";
@@ -69,6 +70,7 @@ function Panel({
   onClick: () => void;
   isMobile: boolean;
 }) {
+  const t = useTranslations("home.poles");
   const [scanKey, setScanKey] = useState(0);
 
   const handleClick = () => {
@@ -210,7 +212,7 @@ function Panel({
             color: "rgba(255,106,0,.6)", textDecoration: "none",
           }}
         >
-          Découvrir
+          {t("discover")}
           <span style={{ display: "block", width: "16px", height: "1px", background: ORANGE, opacity: 0.4 }} />
         </Link>
       </div>
@@ -237,7 +239,7 @@ function Panel({
               fontWeight: 400, letterSpacing: "4px",
               color: "rgba(255,106,0,.55)", marginBottom: "6px",
             }}>
-              Pôle {pole.n}
+              {t("poleLabel")} {pole.n}
             </div>
 
             {/* Titre */}
@@ -342,6 +344,7 @@ function Panel({
 
 /* ── Main ── */
 export default function PolesSection() {
+  const t = useTranslations("home.poles");
   const screenSize = useScreenSize();
   const isMobile   = screenSize !== "desktop";
 
@@ -393,7 +396,7 @@ export default function PolesSection() {
           alignItems: "baseline", flex: 1,
           textAlign: screenSize === "desktop" ? "right" : "left", gap: "0.1em",
         }}>
-          {"Ce que nous proposons".split("").map((ch, ci) => (
+          {t("title").split("").map((ch, ci) => (
             <motion.span
               key={ci}
               className="uppercase"

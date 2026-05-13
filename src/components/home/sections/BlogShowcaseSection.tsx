@@ -20,6 +20,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type BlogPost } from "@/lib/blog";
+import { useTranslations } from "next-intl";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -181,6 +182,7 @@ export default function BlogShowcaseSection() {
    HEADER
 ───────────────────────────────────────────────────────────── */
 function Header() {
+  const t = useTranslations("home.blog");
   return (
     <div
       style={{
@@ -204,8 +206,8 @@ function Header() {
           maxWidth: "30ch",
         }}
       >
-        Nos Dernières{" "}
-        <span style={{ color: COLOR, fontStyle: "italic" }}>publications</span>
+        {t("title")}{" "}
+        <span style={{ color: COLOR, fontStyle: "italic" }}>{t("titleAccent")}</span>
       </h2>
 
       <Link
@@ -234,7 +236,7 @@ function Header() {
           e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
         }}
       >
-        Voir le blog
+        {t("viewBlog")}
         <ArrowUpRight size={14} strokeWidth={2} />
       </Link>
     </div>
@@ -258,6 +260,7 @@ function StackCard({
   total: number;
   isMobile: boolean;
 }) {
+  const t = useTranslations("home.blog");
   /* Fallback-safe reads — Shopify posts may not have every field */
   const format = post.category;
   const readTime = (post as unknown as { readTime?: string }).readTime;
@@ -460,7 +463,7 @@ function StackCard({
                   letterSpacing: "0.15em",
                 }}
               >
-                Lire l'article complet
+                {t("readMore")}
                 <ArrowRight size={18} />
               </span>
               <span

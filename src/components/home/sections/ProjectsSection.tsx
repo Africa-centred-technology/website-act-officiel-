@@ -24,11 +24,13 @@ import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "@/lib/data/projects";
+import { useTranslations } from "next-intl";
 
 const ORANGE = "#D35400";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function ProjectsSection() {
+  const t = useTranslations("home.projects");
   const featured = PROJECTS.slice(0, 4);
 
   return (
@@ -67,9 +69,9 @@ export default function ProjectsSection() {
               maxWidth: "32ch",
             }}
           >
-            Nos dernières{" "}
+            {t("title")}{" "}
             <span style={{ color: ORANGE, fontStyle: "italic" }}>
-              réalisations
+              {t("titleAccent")}
             </span>
             .
           </h2>
@@ -100,7 +102,7 @@ export default function ProjectsSection() {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
             }}
           >
-            Voir plus
+            {t("viewMore")}
             <ArrowUpRight size={14} strokeWidth={2} />
           </Link>
         </motion.div>
