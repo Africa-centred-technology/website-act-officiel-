@@ -21,13 +21,14 @@ const STATIC_ROUTES: Array<{
   { path: "/contact",    changeFrequency: "monthly", priority: 0.6 },
 ];
 
-function entry(path: string, opts: {
+/** Build one sitemap entry per locale × path, each with alternates pointing at the other locales. */
+function entriesForPath(path: string, opts: {
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   priority: number;
   lastModified?: Date;
-}): MetadataRoute.Sitemap[number] {
-  return {
-    url: `${BASE_URL}/${routing.defaultLocale}${path}`,
+}): MetadataRoute.Sitemap {
+  return routing.locales.map((locale) => ({
+    url: `${BASE_URL}/${locale}${path}`,
     lastModified: opts.lastModified ?? new Date(),
     changeFrequency: opts.changeFrequency,
     priority: opts.priority,
@@ -37,18 +38,17 @@ function entry(path: string, opts: {
         ["x-default", `${BASE_URL}/${routing.defaultLocale}${path}`],
       ]),
     },
-  };
+  }));
 }
 
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticEntries = STATIC_ROUTES.map(({ path, changeFrequency, priority }) =>
-    entry(path, { changeFrequency, priority })
+  const staticEntries = STATIC_ROUTES.flatMap(({ path, changeFrequency, priority }) =>
+    entriesForPath(path, { changeFrequency, priority })
   );
 
-  // Enumerate slugs once using the default locale — handles are shared across locales.
-  // (Multi-locale canonical URLs are emitted in Task 9 by iterating routing.locales for each slug.)
+  // Slug enumeration uses the default locale; handles are the same across locales.
   const [formations, posts] = await Promise.allSettled([
     fetchShopifyFormations(routing.defaultLocale),
     fetchShopifyBlogPosts(routing.defaultLocale),
@@ -56,8 +56,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const formationEntries =
     formations.status === "fulfilled"
-      ? formations.value.map((f) =>
-          entry(`/formations/${f.slug}`, {
+      ? formations.value.flatMap((f) =>
+          entriesForPath(`/formations/${f.slug}`, {
             changeFrequency: "weekly",
             priority: 0.7,
           })
@@ -66,8 +66,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const blogEntries =
     posts.status === "fulfilled"
-      ? posts.value.map((p) =>
-          entry(`/blog/${p.slug}`, {
+      ? posts.value.flatMap((p) =>
+          entriesForPath(`/blog/${p.slug}`, {
             changeFrequency: "monthly",
             priority: 0.6,
             lastModified: p.date ? new Date(p.date) : undefined,
