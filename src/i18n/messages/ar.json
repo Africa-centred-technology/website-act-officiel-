@@ -1113,174 +1113,174 @@
   },
   "poles": {
     "index": {
-      "eyebrow": "Notre Expertise",
-      "h1Part1": "Nos ",
-      "h1Part2": "3 Pôles",
-      "h1Part3": "d'Excellence",
-      "description": "Trois domaines d'intervention complémentaires pour accompagner votre transformation digitale de bout en bout : de la stratégie à l'exécution, en passant par la montée en compétences de vos équipes.",
-      "poleBadge": "Pôle {number}",
-      "discoverCta": "Découvrir ce pôle"
+      "eyebrow": "خبرتنا",
+      "h1Part1": "أقسامنا ",
+      "h1Part2": "الثلاثة",
+      "h1Part3": "للتميُّز",
+      "description": "ثلاثة مجالات تدخُّل متكاملة لمرافقة تحوُّلك الرقمي من البداية إلى النهاية: من الاستراتيجية إلى التنفيذ، مرورًا برفع كفاءة فِرَقك.",
+      "poleBadge": "القسم {number}",
+      "discoverCta": "اكتشِف هذا القسم"
     },
     "items": {
       "developpement-technologique": {
-        "title": "Développement Technologique",
-        "titleWithBreaks": "Pôle\nDéveloppement\nTechnologique",
-        "tagline": "L'excellence technique au service de vos ambitions",
-        "tag": "Ingénierie",
-        "description": "Conception et déploiement de solutions technologiques sur mesure qui transforment vos idées en produits concrets.",
-        "desc": "Solutions sur mesure, plateformes robustes et développement logiciel adapté aux enjeux de chaque client.",
+        "title": "التطوير التكنولوجي",
+        "titleWithBreaks": "قسم\nالتطوير\nالتكنولوجي",
+        "tagline": "التميُّز التقني في خدمة طموحاتك",
+        "tag": "هندسة",
+        "description": "تصميم ونشر حلول تكنولوجية مخصَّصة تُحوِّل أفكارك إلى منتجات ملموسة.",
+        "desc": "حلول مخصَّصة، منصّات متينة، وتطوير برمجي مُكيَّف لتحدّيات كل عميل.",
         "stats": {
-          "left": "Sur-mesure",
-          "leftLabel": "Ingénierie",
-          "right": "Performance",
-          "rightLabel": "Robustesse"
+          "left": "مخصَّص",
+          "leftLabel": "هندسة",
+          "right": "أداء",
+          "rightLabel": "متانة"
         }
       },
       "conseil-strategie-it": {
-        "title": "Conseil & Stratégie IT",
-        "titleWithBreaks": "Pôle\nConseil",
-        "tagline": "Votre partenaire stratégique pour la transformation digitale",
-        "tag": "Stratégie IT",
-        "description": "Accompagnement stratégique et opérationnel dans votre transformation numérique, de l'audit au pilotage de projets.",
-        "desc": "Accompagnement stratégique, audit technologique et transformation globale pour accélérer votre croissance.",
+        "title": "الاستشارات والاستراتيجية الرقمية",
+        "titleWithBreaks": "قسم\nالاستشارات",
+        "tagline": "شريكك الاستراتيجي للتحوُّل الرقمي",
+        "tag": "استراتيجية رقمية",
+        "description": "مرافقة استراتيجية وتشغيلية في تحوُّلك الرقمي، من التدقيق إلى قيادة المشاريع.",
+        "desc": "مرافقة استراتيجية، تدقيق تكنولوجي، وتحوُّل شامل لتسريع نموّك.",
         "stats": {
-          "left": "Audit 360°",
-          "leftLabel": "Diagnostic",
-          "right": "Stratégie",
-          "rightLabel": "Accompagnement"
+          "left": "تدقيق 360°",
+          "leftLabel": "تشخيص",
+          "right": "استراتيجية",
+          "rightLabel": "مرافقة"
         }
       },
       "formation": {
-        "title": "Formation & Développement",
-        "titleWithBreaks": "Pôle\nFormation",
-        "tagline": "Former les talents qui construiront l'Afrique de demain",
-        "tag": "Transmission",
-        "description": "Démocratisation de l'accès aux compétences technologiques via formations certifiantes, ateliers et bootcamps.",
-        "desc": "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents.",
+        "title": "التدريب والتطوير",
+        "titleWithBreaks": "قسم\nالتدريب",
+        "tagline": "تدريب المواهب التي ستبني أفريقيا الغد",
+        "tag": "نقل المعرفة",
+        "description": "إتاحة المهارات التكنولوجية للجميع عبر تدريبات معتمَدة، ورش عمل، ومعسكرات تدريبية.",
+        "desc": "رفع الكفاءات، ورش عمل متخصِّصة، ومسارات تدريبية لتطوير المواهب.",
         "stats": {
-          "left": "Certifiant",
-          "leftLabel": "Parcours",
-          "right": "Innovation",
-          "rightLabel": "Impact Local"
+          "left": "معتمَد",
+          "leftLabel": "مسارات",
+          "right": "ابتكار",
+          "rightLabel": "أثر محلّي"
         }
       }
     },
     "conseil": {
-      "eyebrow": "Pôle 02",
-      "h1Line1": "Conseil &",
-      "h1Line2": "Stratégie IT",
-      "heroDescription": "Votre partenaire stratégique pour piloter et réussir votre transformation digitale. Nous vous accompagnons de l'audit à l'exécution, avec une approche pragmatique et orientée résultats.",
-      "heroCtaServices": "Nos Services",
-      "heroCtaAudit": "Demander un Audit",
-      "whyTitle": "Pourquoi se faire <accent>conseiller</accent> est stratégique ?",
-      "whySubtitle": "Dans un environnement digital complexe, le conseil stratégique n'est pas une option, c'est un accélérateur de performance",
+      "eyebrow": "القسم 02",
+      "h1Line1": "الاستشارات",
+      "h1Line2": "والاستراتيجية الرقمية",
+      "heroDescription": "شريكك الاستراتيجي لقيادة وإنجاح تحوُّلك الرقمي. نُرافقك من التدقيق إلى التنفيذ، بنهج عملي موجَّه بالنتائج.",
+      "heroCtaServices": "خدماتنا",
+      "heroCtaAudit": "اطلُب تدقيقًا",
+      "whyTitle": "لماذا <accent>الاستشارة</accent> استراتيجية؟",
+      "whySubtitle": "في بيئة رقمية معقَّدة، الاستشارة الاستراتيجية ليست خيارًا، بل مُسرِّع أداء",
       "stats": {
-        "projectsFail": { "label": "Des projets IT échouent", "desc": "par manque de stratégie claire et d'alignement métier-technologie" },
-        "roi": { "label": "Plus de ROI", "desc": "pour les entreprises qui investissent dans le conseil avant l'implémentation" },
-        "costs": { "label": "De coûts IT", "desc": "grâce à l'optimisation stratégique et l'élimination des redondances" },
-        "leaders": { "label": "Des dirigeants", "desc": "estiment que le conseil externe accélère leur transformation digitale" }
+        "projectsFail": { "label": "من مشاريع تقنية المعلومات تفشل", "desc": "بسبب غياب استراتيجية واضحة ومُحاذاة بين الأعمال والتكنولوجيا" },
+        "roi": { "label": "عائد استثمار إضافي", "desc": "للشركات التي تستثمر في الاستشارة قبل التنفيذ" },
+        "costs": { "label": "من تكاليف تقنية المعلومات", "desc": "بفضل التحسين الاستراتيجي والقضاء على التكرار" },
+        "leaders": { "label": "من القادة", "desc": "يرون أن الاستشارة الخارجية تُسرِّع تحوُّلهم الرقمي" }
       },
-      "servicesTitle": "Nos <accent>Services</accent>",
-      "servicesDesc": "Un accompagnement sur mesure pour chaque étape de votre transformation",
+      "servicesTitle": "<accent>خدماتنا</accent>",
+      "servicesDesc": "مرافقة مخصَّصة لكل مرحلة من مراحل تحوُّلك",
       "services": {
         "strategique": {
-          "title": "Conseil Stratégique & Transformation",
-          "description": "La stratégie avant l'outil. Nous définissons votre vision cible et votre feuille de route digitale avant tout investissement technologique.",
-          "feature1": "Audit de maturité digitale",
-          "feature2": "Roadmap stratégique",
-          "feature3": "Conduite du changement"
+          "title": "الاستشارات الاستراتيجية والتحوُّل",
+          "description": "الاستراتيجية قبل الأداة. نُحدِّد رؤيتك المستهدَفة وخارطة طريقك الرقمية قبل أي استثمار تكنولوجي.",
+          "feature1": "تدقيق النضج الرقمي",
+          "feature2": "خارطة طريق استراتيجية",
+          "feature3": "قيادة التغيير"
         },
         "operationnel": {
-          "title": "Conseil Opérationnel & Métier",
-          "description": "L'excellence opérationnelle au service de la performance. Nous optimisons vos processus métiers réels avant de les numériser.",
-          "feature1": "Business Analysis terrain",
-          "feature2": "Optimisation des processus BPMN",
-          "feature3": "Alignement Stratégie-Outil"
+          "title": "الاستشارات التشغيلية والأعمال",
+          "description": "التميُّز التشغيلي في خدمة الأداء. نُحسِّن عملياتك التجارية الحقيقية قبل رقمنتها.",
+          "feature1": "تحليل أعمال ميداني",
+          "feature2": "تحسين العمليات BPMN",
+          "feature3": "مُحاذاة الاستراتيجية والأداة"
         }
       },
-      "methodTitle": "Notre <accent>Méthodologie</accent>",
+      "methodTitle": "<accent>منهجيتنا</accent>",
       "process": {
-        "s01": { "title": "Diagnostic", "desc": "Analyse de l'existant, identification des enjeux et des opportunités" },
-        "s02": { "title": "Stratégie", "desc": "Définition de la vision cible et élaboration de la roadmap" },
-        "s03": { "title": "Planification", "desc": "Cadrage des initiatives, priorisation et allocation des ressources" },
-        "s04": { "title": "Exécution", "desc": "Pilotage opérationnel, coordination des équipes et suivi de la réalisation" },
-        "s05": { "title": "Optimisation", "desc": "Mesure des résultats, ajustements et amélioration continue" }
+        "s01": { "title": "التشخيص", "desc": "تحليل الواقع، تحديد التحدّيات والفرص" },
+        "s02": { "title": "الاستراتيجية", "desc": "تحديد الرؤية المستهدَفة وبناء خارطة الطريق" },
+        "s03": { "title": "التخطيط", "desc": "تأطير المبادرات، ترتيب الأولويات، وتخصيص الموارد" },
+        "s04": { "title": "التنفيذ", "desc": "قيادة تشغيلية، تنسيق الفِرَق، ومتابعة الإنجاز" },
+        "s05": { "title": "التحسين", "desc": "قياس النتائج، التعديلات، والتحسين المستمرّ" }
       },
-      "whyUsTitle": "Pourquoi nous <accent>choisir</accent>",
+      "whyUsTitle": "لماذا <accent>تختارنا</accent>",
       "whyUs": {
-        "pragmatique": { "title": "Approche Pragmatique", "desc": "Nous privilégions les solutions concrètes et mesurables, adaptées à votre contexte et vos ressources." },
-        "sectorielle": { "title": "Expertise Sectorielle", "desc": "Une connaissance approfondie des enjeux métiers et des spécificités de votre secteur d'activité." },
-        "roi": { "title": "ROI Démontré", "desc": "Accompagnement axé sur la création de valeur mesurable et l'optimisation de vos investissements IT." },
-        "neutralite": { "title": "Neutralité Technologique", "desc": "Recommandations indépendantes et objectives, sans parti pris technologique ou commercial." }
+        "pragmatique": { "title": "نهج عملي", "desc": "نُفضِّل الحلول الملموسة والقابلة للقياس، المُكيَّفة لسياقك ومواردك." },
+        "sectorielle": { "title": "خبرة قطاعية", "desc": "معرفة عميقة بتحدّيات الأعمال وخصوصيات قطاعك." },
+        "roi": { "title": "عائد استثمار مُثبَت", "desc": "مرافقة موجَّهة لخلق قيمة قابلة للقياس وتحسين استثماراتك التقنية." },
+        "neutralite": { "title": "الحياد التكنولوجي", "desc": "توصيات مستقلّة وموضوعية، بلا تحيُّز تكنولوجي أو تجاري." }
       },
-      "blogTitle": "Ce que nous <accent>publions</accent> sur le sujet",
-      "servicesCta": "En savoir plus",
-      "blogCta": "Lire l'article complet"
+      "blogTitle": "ما <accent>ننشره</accent> حول الموضوع",
+      "servicesCta": "اعرف المزيد",
+      "blogCta": "اقرأ المقال كاملًا"
     },
     "developpement": {
-      "eyebrow": "Pôle 01",
-      "h1Line1": "Développement",
-      "h1Line2": "Technologique",
-      "heroDescription": "Nous transformons vos idées en produits technologiques performants et scalables. De l'application web au système distribué, nous maîtrisons l'ensemble de la chaîne de valeur technique.",
-      "heroCtaServices": "Nos Services",
-      "heroCtaContact": "Nous Contacter",
-      "servicesTitle": "Nos <accent>Services</accent>",
-      "servicesDesc": "Une expertise complète pour tous vos besoins de développement logiciel",
+      "eyebrow": "القسم 01",
+      "h1Line1": "التطوير",
+      "h1Line2": "التكنولوجي",
+      "heroDescription": "نُحوِّل أفكارك إلى منتجات تكنولوجية عالية الأداء وقابلة للتوسّع. من تطبيق الويب إلى النظام الموزَّع، نُتقن سلسلة القيمة التقنية بأكملها.",
+      "heroCtaServices": "خدماتنا",
+      "heroCtaContact": "اتّصل بنا",
+      "servicesTitle": "<accent>خدماتنا</accent>",
+      "servicesDesc": "خبرة شاملة لكل احتياجاتك في تطوير البرمجيات",
       "services": {
         "logicielle": {
-          "title": "Ingénierie Logicielle",
-          "description": "Conception et développement de solutions logicielles robustes et scalables avec les dernières technologies.",
-          "feature1": "Applications Web & Mobile",
-          "feature2": "Microservices & API",
-          "feature3": "Solutions sur mesure"
+          "title": "هندسة البرمجيات",
+          "description": "تصميم وتطوير حلول برمجية متينة وقابلة للتوسّع بأحدث التقنيات.",
+          "feature1": "تطبيقات ويب وجوال",
+          "feature2": "Microservices وواجهات API",
+          "feature3": "حلول مخصَّصة"
         },
         "ia": {
-          "title": "Intelligence Artificielle Agentique",
-          "description": "Développement de systèmes d'IA autonomes capables de prendre des décisions intelligentes et d'automatiser des processus complexes.",
-          "feature1": "Agents intelligents",
-          "feature2": "Apprentissage automatique",
-          "feature3": "Automation avancée"
+          "title": "الذكاء الاصطناعي العميل",
+          "description": "تطوير أنظمة ذكاء اصطناعي مستقلّة قادرة على اتّخاذ قرارات ذكية وأتمتة عمليات معقَّدة.",
+          "feature1": "وكلاء ذكيون",
+          "feature2": "تعلُّم آلي",
+          "feature3": "أتمتة متقدِّمة"
         },
         "data": {
-          "title": "Big Data & Intelligence Artificielle",
-          "description": "Traitement et analyse de grandes masses de données combinées à l'IA pour extraire des insights stratégiques.",
-          "feature1": "Data Analytics",
-          "feature2": "Machine Learning",
-          "feature3": "Visualisation de données"
+          "title": "البيانات الضخمة والذكاء الاصطناعي",
+          "description": "معالجة وتحليل أحجام كبيرة من البيانات مدمَجة بالذكاء الاصطناعي لاستخراج رؤى استراتيجية.",
+          "feature1": "تحليلات البيانات",
+          "feature2": "تعلُّم الآلة",
+          "feature3": "تصوير البيانات"
         },
         "cloud": {
-          "title": "Architecture Cloud",
-          "description": "Conception et déploiement d'infrastructures cloud natives, scalables et sécurisées.",
-          "feature1": "Infrastructure as Code",
+          "title": "العمارة السحابية",
+          "description": "تصميم ونشر بُنى تحتية سحابية أصلية، قابلة للتوسّع وآمنة.",
+          "feature1": "البنية التحتية كرمز",
           "feature2": "Microservices",
-          "feature3": "Serverless Computing"
+          "feature3": "حوسبة بلا خوادم"
         },
         "sig": {
-          "title": "Systèmes d'Information Géographique",
-          "description": "Solutions SIG pour la collecte, l'analyse et la visualisation de données géospatiales.",
-          "feature1": "Cartographie interactive",
-          "feature2": "Analyse spatiale",
-          "feature3": "Géolocalisation"
+          "title": "نظم المعلومات الجغرافية",
+          "description": "حلول GIS لجمع وتحليل وتصوير البيانات الجغرافية المكانية.",
+          "feature1": "خرائط تفاعلية",
+          "feature2": "تحليل مكاني",
+          "feature3": "تحديد المواقع"
         }
       },
-      "processTitle": "Notre <accent>Processus</accent>",
+      "processTitle": "<accent>عمليتنا</accent>",
       "process": {
-        "s01": { "title": "Analyse & Cadrage", "desc": "Audit de l'existant, définition du périmètre et des objectifs" },
-        "s02": { "title": "Conception", "desc": "Architecture technique, maquettes, spécifications détaillées" },
-        "s03": { "title": "Développement", "desc": "Sprints agiles, revues régulières, tests continus" },
-        "s04": { "title": "Déploiement", "desc": "Mise en production, formation des équipes, transfert de compétences" },
-        "s05": { "title": "Support & Évolution", "desc": "Maintenance, monitoring, évolutions fonctionnelles" }
+        "s01": { "title": "التحليل والتأطير", "desc": "تدقيق الواقع، تحديد النطاق والأهداف" },
+        "s02": { "title": "التصميم", "desc": "العمارة التقنية، النماذج، المواصفات المفصَّلة" },
+        "s03": { "title": "التطوير", "desc": "Sprints رشيقة، مراجعات منتظمة، اختبارات مستمرّة" },
+        "s04": { "title": "النشر", "desc": "إطلاق الإنتاج، تدريب الفِرَق، نقل المعرفة" },
+        "s05": { "title": "الدعم والتطوير", "desc": "صيانة، مراقبة، تطوّرات وظيفية" }
       },
-      "whyUsTitle": "Pourquoi nous <accent>choisir</accent>",
+      "whyUsTitle": "لماذا <accent>تختارنا</accent>",
       "whyUs": {
-        "livraison": { "title": "Livraison Rapide", "desc": "Méthode agile et sprints courts pour des livraisons incrémentales et une mise en production rapide." },
-        "qualite": { "title": "Qualité & Sécurité", "desc": "Tests automatisés, code reviews systématiques et conformité aux standards de sécurité internationaux." },
-        "evolutivite": { "title": "Évolutivité", "desc": "Architecture modulaire et scalable qui grandit avec vos besoins sans réécriture complète." },
-        "support": { "title": "Support Continu", "desc": "Accompagnement post-livraison, formation des équipes et maintenance proactive de vos solutions." }
+        "livraison": { "title": "تسليم سريع", "desc": "منهجية رشيقة وsprints قصيرة لتسليمات تدريجية وإطلاق سريع للإنتاج." },
+        "qualite": { "title": "جودة وأمان", "desc": "اختبارات آلية، مراجعات منهجية للكود، والامتثال للمعايير الأمنية الدولية." },
+        "evolutivite": { "title": "قابلية التوسّع", "desc": "عمارة معيارية قابلة للتوسّع تنمو مع احتياجاتك دون إعادة كتابة كاملة." },
+        "support": { "title": "دعم مستمرّ", "desc": "مرافقة بعد التسليم، تدريب الفِرَق، وصيانة استباقية لحلولك." }
       },
-      "blogTitle": "Ce que nous <accent>publions</accent> sur le sujet",
-      "servicesCta": "En savoir plus",
-      "blogCta": "Lire l'article complet"
+      "blogTitle": "ما <accent>ننشره</accent> حول الموضوع",
+      "servicesCta": "اعرف المزيد",
+      "blogCta": "اقرأ المقال كاملًا"
     }
   },
   "secteurs": {
