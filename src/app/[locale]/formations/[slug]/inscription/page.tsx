@@ -1,18 +1,27 @@
 import { Suspense } from "react";
 import FormationInscriptionShell from "@/components/formations/FormationInscriptionShell";
+import { buildDynamicPageMetadata } from "@/i18n/seo";
+import { fetchShopifyFormationByHandle } from "@/lib/shopify/formations";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props) {
-  const { slug } = await params;
-  const slugReadable = slug.replace(/^\d+_/, "").replace(/_/g, " ");
-  const title = slugReadable.charAt(0).toUpperCase() + slugReadable.slice(1);
-  return {
-    title: `Inscription — ${title} — ACT`,
-    description: "Inscrivez-vous à cette formation proposée par Africa Centred Technology.",
-  };
+  const { locale, slug } = await params;
+  const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+
+  const formationTitle = formation?.title ?? "Formation ACT";
+  const title = `${formationTitle} — Inscription`;
+  const description = formation?.accroche ?? "Inscrivez-vous à cette formation proposée par Africa Centred Technology.";
+
+  return buildDynamicPageMetadata({
+    locale,
+    path: `/formations/${slug}/inscription`,
+    title,
+    description,
+    ogImage: `/api/og?title=${encodeURIComponent(title)}&subtitle=Inscription`,
+  });
 }
 
 function InscriptionLoading() {

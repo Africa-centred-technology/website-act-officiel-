@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import PoleDeveloppementShell from "@/components/poles/PoleDeveloppementShell";
 import PoleConseilShell from "@/components/poles/PoleConseilShell";
 import FormationLandpage from "@/components/formations/FormationLandpage";
+import { buildDynamicPageMetadata } from "@/i18n/seo";
 
 const poles = {
   "developpement-technologique": {
@@ -23,7 +24,7 @@ const poles = {
 };
 
 export async function generateMetadata(props: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const params = await props.params;
   const pole = poles[params.slug as keyof typeof poles];
@@ -34,10 +35,12 @@ export async function generateMetadata(props: {
     };
   }
 
-  return {
+  return buildDynamicPageMetadata({
+    locale: params.locale,
+    path: `/poles/${params.slug}`,
     title: pole.title,
     description: pole.description,
-  };
+  });
 }
 
 export async function generateStaticParams() {
@@ -46,7 +49,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PolePage(props: { params: Promise<{ slug: string }> }) {
+export default async function PolePage(props: { params: Promise<{ locale: string; slug: string }> }) {
   const params = await props.params;
   const pole = poles[params.slug as keyof typeof poles];
 

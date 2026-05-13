@@ -3,6 +3,7 @@ import { SERVICES, getServiceBySlug } from "@/lib/data/services";
 import PoleIngenieurieShell from "@/components/services/PoleIngenieurieShell";
 import PoleConseilShell from "@/components/services/PoleConseilShell";
 import PoleFormationShell from "@/components/services/PoleFormationShell";
+import { buildDynamicPageMetadata } from "@/i18n/seo";
 
 /* Pré-génère toutes les pages au build */
 export function generateStaticParams() {
@@ -10,20 +11,22 @@ export function generateStaticParams() {
 }
 
 /* Metadata dynamique par service */
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
   const svc = getServiceBySlug(slug);
   if (!svc) return {};
-  return {
+  return buildDynamicPageMetadata({
+    locale,
+    path: `/services/${slug}`,
     title: `${svc.title.replace(/\n/g, " ")} — ACT`,
     description: svc.intro.slice(0, 155),
-  };
+  });
 }
 
 export default async function ServiceDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
   const { slug } = await params;
   const svc = getServiceBySlug(slug);

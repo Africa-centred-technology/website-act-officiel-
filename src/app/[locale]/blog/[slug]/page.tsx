@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { fetchShopifyBlogPostByHandle, fetchShopifyBlogPosts } from "@/lib/shopify/blog";
 import BlogPostShell from "@/components/blog/BlogPostShell";
 import type { Metadata } from "next";
+import { buildDynamicPageMetadata } from "@/i18n/seo";
 
 /* ── Static params : générés depuis Shopify ── */
 export async function generateStaticParams() {
@@ -17,26 +18,31 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
 
   const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
 
-  if (!post) return { title: "Article introuvable — ACT" };
+  const title = post?.title ?? "Article ACT";
+  const description = post?.excerpt ?? "Lisez cet article sur le blog ACT.";
 
-  return {
-    title: `${post.title} — Africa Centred Technology`,
-    description: post.excerpt,
-    keywords: post.keywords,
-  };
+  return buildDynamicPageMetadata({
+    locale,
+    path: `/blog/${slug}`,
+    title,
+    description,
+    ogImage: post?.image
+      ? post.image
+      : `/api/og?title=${encodeURIComponent(title)}&subtitle=Article`,
+  });
 }
 
 /* ── Page ── */
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
   const { slug } = await params;
 

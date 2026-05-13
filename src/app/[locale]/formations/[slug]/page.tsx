@@ -1,19 +1,26 @@
 import { Suspense } from "react";
 import FormationDetailShell from "@/components/formations/FormationDetailShell";
+import { buildDynamicPageMetadata } from "@/i18n/seo";
+import { fetchShopifyFormationByHandle } from "@/lib/shopify/formations";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props) {
-  const { slug } = await params;
-  // Slug formatté pour le titre : "01_ia_productivite_quotidienne" → lisible
-  const slugReadable = slug.replace(/^\d+_/, "").replace(/_/g, " ");
-  const title = slugReadable.charAt(0).toUpperCase() + slugReadable.slice(1);
-  return {
-    title: `${title} — Formation ACT`,
-    description: "Découvrez cette formation en Intelligence Artificielle proposée par Africa Centred Technology.",
-  };
+  const { locale, slug } = await params;
+  const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+
+  const title = formation?.title ?? "Formation ACT";
+  const description = formation?.accroche ?? "Découvrez cette formation en Intelligence Artificielle proposée par Africa Centred Technology.";
+
+  return buildDynamicPageMetadata({
+    locale,
+    path: `/formations/${slug}`,
+    title,
+    description,
+    ogImage: `/api/og?title=${encodeURIComponent(title)}&subtitle=Formation`,
+  });
 }
 
 function FormationDetailLoading() {
