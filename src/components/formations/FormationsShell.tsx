@@ -128,7 +128,7 @@ export default function FormationsShell() {
           <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
             <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", opacity: 0.6 }}>
               <Link href="/" style={{ color: "#fff", textDecoration: "none" }}>{t("breadcrumbHome")}</Link>
-              <ChevronRight size={16} />
+              <ChevronRight size={16} className="mirror-in-rtl" />
               <span style={{ color: COLOR }}>{t("breadcrumbFormations")}</span>
             </motion.nav>
 
@@ -394,7 +394,7 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
 
         <Link href={`/formations/${handle}`} style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "0.5rem", color: "#fff", textDecoration: "none", fontWeight: 800, fontSize: "0.9rem", textTransform: "uppercase" }}>
           {t("discoverCta")}
-          <ChevronRight size={18} color={COLOR} />
+          <ChevronRight size={18} color={COLOR} className="mirror-in-rtl" />
         </Link>
       </div>
     </motion.div>

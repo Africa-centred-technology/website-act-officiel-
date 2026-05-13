@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { Search, ChevronLeft, ChevronRight, Star, Clock } from "lucide-react";
+import { Search, Star, Clock } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import FooterStrip from "@/components/layout/FooterStrip";

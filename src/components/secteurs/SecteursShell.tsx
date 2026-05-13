@@ -341,22 +341,22 @@ function AlbumSection() {
                       <button
                         onClick={(e) => { e.stopPropagation(); go(-1); }}
                         aria-label={t("ariaPrev")}
-                        style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
+                        style={{ position: "absolute", insetInlineStart: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
                         onMouseEnter={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.70)"; b.style.borderColor = "rgba(255,255,255,0.55)"; b.style.transform = "translateY(-50%) scale(1.08)"; }}
                         onMouseLeave={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.40)"; b.style.borderColor = "rgba(255,255,255,0.25)"; b.style.transform = "translateY(-50%) scale(1)"; }}
                       >
-                        <ChevronLeft size={16} strokeWidth={2.5} />
+                        <ChevronLeft size={16} strokeWidth={2.5} className="mirror-in-rtl" />
                       </button>
 
                       {/* Right arrow */}
                       <button
                         onClick={(e) => { e.stopPropagation(); go(1); }}
                         aria-label={t("ariaNext")}
-                        style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
+                        style={{ position: "absolute", insetInlineEnd: "1rem", top: "50%", transform: "translateY(-50%)", zIndex: 20, width: "2.6rem", height: "2.6rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(0,0,0,0.40)", backdropFilter: "blur(8px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.22s, border-color 0.22s, transform 0.22s" }}
                         onMouseEnter={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.70)"; b.style.borderColor = "rgba(255,255,255,0.55)"; b.style.transform = "translateY(-50%) scale(1.08)"; }}
                         onMouseLeave={(e) => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,0,0,0.40)"; b.style.borderColor = "rgba(255,255,255,0.25)"; b.style.transform = "translateY(-50%) scale(1)"; }}
                       >
-                        <ChevronRight size={16} strokeWidth={2.5} />
+                        <ChevronRight size={16} strokeWidth={2.5} className="mirror-in-rtl" />
                       </button>
 
                       {/* Progress dots */}
@@ -383,11 +383,11 @@ function AlbumSection() {
                   {isActive && (
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <button title={t("titlePrev")} onClick={(e) => { e.stopPropagation(); go(-1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
-                        <ChevronLeft size={14} strokeWidth={2.5} />
+                        <ChevronLeft size={14} strokeWidth={2.5} className="mirror-in-rtl" />
                       </button>
                       <span style={{ fontFamily: "Futura, system-ui, sans-serif", fontSize: "0.58rem", letterSpacing: "0.14em", color: "rgba(27,48,34,0.45)", flexShrink: 0 }}>{num} / {tot}</span>
                       <button title={t("titleNext")} onClick={(e) => { e.stopPropagation(); go(1); }} style={{ background: "none", border: "none", cursor: "pointer", color: "#1B3022", display: "flex", alignItems: "center", opacity: 0.45, padding: "0.1rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")} onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.45")}>
-                        <ChevronRight size={14} strokeWidth={2.5} />
+                        <ChevronRight size={14} strokeWidth={2.5} className="mirror-in-rtl" />
                       </button>
                     </div>
                   )}

@@ -238,7 +238,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
                 "rgba(255,255,255,0.45)")
             }
           >
-            <ChevronLeft size={16} strokeWidth={2} />
+            <ChevronLeft size={16} strokeWidth={2} className="mirror-in-rtl" />
             {t("backToFormation")}
           </Link>
         </motion.div>
