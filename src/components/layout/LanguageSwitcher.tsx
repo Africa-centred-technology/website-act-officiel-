@@ -25,7 +25,7 @@ export function LanguageSwitcher() {
       type="button"
       onClick={() => router.replace(pathname, { locale: next })}
       aria-label={`Switch to ${LOCALE_LABELS[next]}`}
-      className="inline-flex items-center gap-1.5 bg-transparent text-sm font-medium border border-current rounded px-2 py-1 hover:opacity-80 transition-opacity"
+      className="inline-flex items-center gap-1.5 bg-transparent text-sm font-medium hover:opacity-80 transition-opacity"
     >
       <Globe size={14} aria-hidden="true" />
       <span>{current.toUpperCase()}</span>
