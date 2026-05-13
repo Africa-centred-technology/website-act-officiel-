@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
+import { useTranslations } from "next-intl";
 
 const ease = [0.6, 0.08, 0.02, 0.99] as const;
 
@@ -53,6 +54,7 @@ function useMediaQuery() {
 
 
 export default function BlogHero() {
+  const t = useTranslations("blog.hero");
   const screenSize = useMediaQuery();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
@@ -160,7 +162,7 @@ const isMobile = screenSize === "mobile";
           >
             <Image
               src="/images/blog/reader.png"
-              alt="Personne lisant un journal"
+              alt={t("readerAlt")}
               width={600}
               height={780}
               style={{
@@ -207,7 +209,7 @@ const isMobile = screenSize === "mobile";
           >
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: ORANGE, flexShrink: 0, boxShadow: `0 0 8px ${ORANGE}` }} />
             <span style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE }}>
-              Veille & Insights
+              {t("eyebrow")}
             </span>
           </motion.div>
 
@@ -225,13 +227,13 @@ const isMobile = screenSize === "mobile";
               margin: 0,
             }}
           >
-            Décoder le présent pour
+            {t("headlinePart1")}
             <br />
             <em style={{ fontStyle: "italic", color: ORANGE }}>
-              bâtir l&apos;avenir numérique
+              {t("headlineAccent")}
             </em>
             <br />
-            de l&apos;Afrique.
+            {t("headlinePart2")}
           </motion.h1>
 
           {/* Description */}
@@ -248,8 +250,7 @@ const isMobile = screenSize === "mobile";
               fontFamily: "var(--font-body)",
             }}
           >
-            Nos experts décryptent les grandes tendances qui façonnent le numérique africain — IA,
-            souveraineté des données, cloud et Smart Cities.
+            {t("description")}
           </motion.p>
 
           {/* Topic selector */}
@@ -267,7 +268,7 @@ const isMobile = screenSize === "mobile";
               color: "rgba(255,255,255,0.3)",
               fontFamily: "var(--font-body)",
             }}>
-              Explorer par thème
+              {t("topicsLabel")}
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
               {topCategories.map((cat, i) => {
@@ -345,7 +346,7 @@ const isMobile = screenSize === "mobile";
               <div className="cta-btn__inner">
                 <span className="cta-btn__icon" />
                 <span className="cta-btn__text">
-                  Voir les articles · {topCategories[activeTopic]?.label || "Tech Trends"}
+                  {t("ctaArticles", { label: topCategories[activeTopic]?.label || "Tech Trends" })}
                 </span>
               </div>
             </Link>
@@ -369,7 +370,7 @@ const isMobile = screenSize === "mobile";
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
               </svg>
-              Contacter un expert
+              {t("ctaContact")}
             </Link>
           </motion.div>
         </div>

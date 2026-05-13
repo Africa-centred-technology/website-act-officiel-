@@ -8,6 +8,7 @@ import { Search, ChevronLeft, ChevronRight, Star, Clock } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import FooterStrip from "@/components/layout/FooterStrip";
+import { useTranslations } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -34,6 +35,7 @@ function useMediaQuery() {
 }
 
 export default function BlogArticlesShell() {
+  const t = useTranslations("blog.articles");
   const screenSize = useMediaQuery();
   const searchParams = useSearchParams();
   const initialCat = searchParams?.get("cat") || "all";
@@ -91,7 +93,7 @@ export default function BlogArticlesShell() {
   };
 
   const activeCatLabel =
-    categories.find((c) => c.value === activeCategory)?.label || "Tous les articles";
+    categories.find((c) => c.value === activeCategory)?.label || t("allArticlesLabel");
 
   const getCategoryCount = (val: string) => {
     if (val === "all") return allPosts.length;
@@ -149,7 +151,7 @@ export default function BlogArticlesShell() {
                 transition: "opacity 0.3s",
               }}
             >
-              ← Retour aux rubriques
+              {t("backLink")}
             </Link>
 
             <h1
@@ -164,11 +166,11 @@ export default function BlogArticlesShell() {
             >
               {activeCategory === "all" ? (
                 <>
-                  TOUS LES <span style={{ color: "#e85c1a" }}>ARTICLES</span>
+                  {t("titleAllPrefix")} <span style={{ color: "#e85c1a" }}>{t("titleAllAccent")}</span>
                 </>
               ) : (
                 <>
-                  ARTICLES <span style={{ color: "#e85c1a" }}>{activeCatLabel}</span>
+                  {t("titleCategoryPrefix")} <span style={{ color: "#e85c1a" }}>{activeCatLabel}</span>
                 </>
               )}
             </h1>
@@ -183,8 +185,8 @@ export default function BlogArticlesShell() {
               }}
             >
               {activeCategory === "all"
-                ? "Explorez l'ensemble de nos analyses, tendances et décryptages sur la tech africaine."
-                : `Découvrez tous nos articles dans la rubrique ${activeCatLabel}.`}
+                ? t("descriptionAll")
+                : t("descriptionCategory", { category: activeCatLabel })}
             </p>
 
             <div style={{ height: "1px", background: "var(--border-color)", width: "100%", marginBottom: "4rem" }} />
@@ -220,7 +222,7 @@ export default function BlogArticlesShell() {
               />
               <input
                 type="text"
-                placeholder="Rechercher un article..."
+                placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 style={{
@@ -307,7 +309,7 @@ export default function BlogArticlesShell() {
                   }}
                 >
                   <span style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>Filtre :</span>
+                    <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>{t("filterLabel")}</span>
                     <span style={{ color: "#e85c1a" }}>{activeCatLabel}</span>
                   </span>
                   <motion.svg 
@@ -461,7 +463,7 @@ export default function BlogArticlesShell() {
                 fontSize: "1.7rem",
               }}
             >
-              <span style={{ color: "var(--text-primary)", fontWeight: 700, fontSize: "1.9rem" }}>{filtered.length}</span> articles trouvés
+              <span style={{ color: "var(--text-primary)", fontWeight: 700, fontSize: "1.9rem" }}>{filtered.length}</span> {t("articlesFoundSuffix")}
             </div>
 
             {/* Small divider line under found articles count */}
@@ -524,7 +526,7 @@ export default function BlogArticlesShell() {
                   e.currentTarget.style.background = "transparent";
                 }}
               >
-                Voir plus d&apos;articles
+                {t("loadMoreCta")}
               </button>
             </div>
           )}
@@ -541,7 +543,7 @@ export default function BlogArticlesShell() {
                 textTransform: "uppercase",
               }}
             >
-              Aucun article dans cette catégorie pour l&apos;instant.
+              {t("emptyState")}
             </div>
           )}
         </div>
@@ -697,6 +699,7 @@ function ArticleCard({
 
 /* ─── Featured Article Card ─── */
 function FeaturedArticleCard({ post }: { post: BlogPost }) {
+  const t = useTranslations("blog.articles");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const screenSize = useMediaQuery();
@@ -774,7 +777,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
                 boxShadow: "0 4px 12px rgba(232,92,26,0.3)",
               }}
             >
-              <Star size={12} fill="#fff" /> À LA UNE
+              <Star size={12} fill="#fff" /> {t("featuredBadge")}
             </div>
           </div>
 
@@ -859,7 +862,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
               >
                 <span>{post.date}</span>
                 <span>•</span>
-                <span>{post.readTime} de lecture</span>
+                <span>{t("readingTime", { time: post.readTime })}</span>
               </div>
               <span
                 style={{
@@ -869,7 +872,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
                   fontWeight: 600,
                 }}
               >
-                Lire l&apos;article →
+                {t("readArticleCta")}
               </span>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube, Send } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
+import { useTranslations } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -31,63 +32,7 @@ function useMediaQuery() {
   return screenSize;
 }
 
-/* ── Data ──────────────────────────────────────────────── */
-const CONTACT_INFO = [
-  {
-    label: "Téléphone",
-    lines: [ "+212 662-777507"],
-    href: "tel:+212662777507",
-    cta: "Appeler →",
-    Icon: Phone,
-  },
-  {
-    label: "Email",
-    lines: ["sohaib.baroud@a-ct.ma"],
-    href: "mailto:sohaib.baroud@a-ct.ma",
-    cta: "Écrire →",
-    Icon: Mail,
-  },
-  {
-    label: "Adresse",
-    lines: ["Mer Sultan, 6e Rue château", "Casablanca, Maroc 🇲🇦"],
-    href: "#",
-    cta: "Voir →",
-    Icon: MapPin,
-  },
-  {
-    label: "Horaires",
-    lines: ["Lundi au Samedi"],
-    href: "#form",
-    cta: "Planifier →",
-    Icon: Clock,
-  },
-];
-
-const FAQS = [
-  {
-    q: "Comment démarrer un projet avec ACT ?",
-    a: "Contactez-nous via le formulaire ou par téléphone. Notre équipe vous recontactera sous 24h pour une discussion où sur le besoins.",
-  },
-  {
-    q: "Quels sont vos délais de livraison ?",
-    a: "Nous vous fournirons une estimation précise après analyse de votre projet.",
-  },
-  {
-    q: "Proposez-vous un support après livraison ?",
-    a: "Oui, avec différentes formules de 1 mois à plusieurs années. Chaque projet inclut une période de garantie de 2 mois minimum.",
-  },
- 
-  {
-    q: "Quelles technologies utilisez-vous ?",
-    a: "Nous utilisons les technologies les plus adaptées à chaque projet.Notre approche est technology-agnostic.",
-  },
-];
-
-const ENGAGEMENTS = [
-  "Réponse garantie sous 24h ouvrées",
-  "Devis détaillé et transparent",
-  "Confidentialité assurée (NDA disponible)",
-];
+/* ── Data defined inside component after useTranslations ── */
 
 /* ── Grain ─────────────────────────────────────────────── */
 function Grain() {
@@ -133,7 +78,53 @@ function SLabel({ children }: { children: React.ReactNode }) {
    MAIN
    ══════════════════════════════════════════════════════════ */
 export default function ContactShell() {
+  const t = useTranslations("contact");
   const screenSize = useMediaQuery();
+
+  const CONTACT_INFO = [
+    {
+      label: t("info.phone"),
+      lines: ["+212 662-777507"],
+      href: "tel:+212662777507",
+      cta: t("info.phoneCta"),
+      Icon: Phone,
+    },
+    {
+      label: t("info.email"),
+      lines: ["sohaib.baroud@a-ct.ma"],
+      href: "mailto:sohaib.baroud@a-ct.ma",
+      cta: t("info.emailCta"),
+      Icon: Mail,
+    },
+    {
+      label: t("info.address"),
+      lines: ["Mer Sultan, 6e Rue château", "Casablanca, Maroc 🇲🇦"],
+      href: "#",
+      cta: t("info.addressCta"),
+      Icon: MapPin,
+    },
+    {
+      label: t("info.hours"),
+      lines: ["Lundi au Samedi"],
+      href: "#form",
+      cta: t("info.hoursCta"),
+      Icon: Clock,
+    },
+  ];
+
+  const FAQS = [
+    { q: t("faq.q1"), a: t("faq.a1") },
+    { q: t("faq.q2"), a: t("faq.a2") },
+    { q: t("faq.q3"), a: t("faq.a3") },
+    { q: t("faq.q4"), a: t("faq.a4") },
+  ];
+
+  const ENGAGEMENTS = [
+    t("engagements.e1"),
+    t("engagements.e2"),
+    t("engagements.e3"),
+  ];
+
   const [form, setForm] = useState({
     name: "", email: "", company: "", phone: "", subject: "", budget: "", message: "",
   });
@@ -160,7 +151,7 @@ export default function ContactShell() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de l'envoi");
+        throw new Error(t("form.errorSend"));
       }
 
       setSending(false);
@@ -173,7 +164,7 @@ export default function ContactShell() {
     } catch (error) {
       console.error("Erreur:", error);
       setSending(false);
-      alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      alert(t("form.errorOccurred"));
     }
   };
 
@@ -240,7 +231,7 @@ export default function ContactShell() {
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.35)"
           }}>
-            Consultation Gratuite
+            {t("hero.eyebrow")}
           </span>
         </motion.div>
 
@@ -264,9 +255,9 @@ export default function ContactShell() {
             zIndex: 1
           }}
         >
-          <span style={{ color: "rgba(255,255,255,0.9)" }}>Construisons</span>
+          <span style={{ color: "rgba(255,255,255,0.9)" }}>{t("hero.titleLine1")}</span>
           <br />
-          <span style={{ color: "#D35400" }}>Ensemble</span>
+          <span style={{ color: "#D35400" }}>{t("hero.titleLine2")}</span>
         </motion.h1>
 
         {/* Sub + contact info row */}
@@ -292,8 +283,7 @@ export default function ContactShell() {
               marginBottom: screenSize === 'mobile' ? "2rem" : screenSize === 'tablet' ? "2.5rem" : "0"
             }}
           >
-            Vous avez une vision ? Nous avons l'expertise pour la concrétiser. Discutons de votre
-            projet et découvrez comment ACT peut transformer vos ambitions en réalité.
+            {t("hero.description")}
           </motion.p>
 
           <motion.div
@@ -355,7 +345,7 @@ export default function ContactShell() {
         <div style={{
           paddingTop: screenSize === 'mobile' ? "3rem" : screenSize === 'tablet' ? "4rem" : "clamp(4rem,7vw,7rem)"
         }}>
-          <SLabel>Formulaire de contact</SLabel>
+          <SLabel>{t("form.sectionLabel")}</SLabel>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             animate={formInView ? { opacity: 1, y: 0 } : {}}
@@ -373,7 +363,7 @@ export default function ContactShell() {
               marginBottom: screenSize === 'mobile' ? "2.5rem" : screenSize === 'tablet' ? "3rem" : "clamp(3rem,5vw,5rem)"
             }}
           >
-            Décrivez votre <span style={{ color: "#D35400" }}>Projet</span>
+            {t("form.sectionTitle")} <span style={{ color: "#D35400" }}>{t("form.sectionTitleAccent")}</span>
           </motion.h2>
         </div>
 
@@ -421,13 +411,13 @@ export default function ContactShell() {
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.4)",
                   marginBottom: "0.6rem"
-                }}>Nom complet *</label>
+                }}>{t("form.labelName")}</label>
                 <input
                   required
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="Votre nom complet"
+                  placeholder={t("form.placeholderName")}
                   style={inputStyle}
                   onFocus={(e) => ((e.target as HTMLInputElement).style.borderColor = "#D35400")}
                   onBlur={(e) => ((e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.09)")}
@@ -443,13 +433,13 @@ export default function ContactShell() {
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.4)",
                   marginBottom: "0.6rem"
-                }}>Email *</label>
+                }}>{t("form.labelEmail")}</label>
                 <input
                   required
                   type="email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="votre@entreprise.com"
+                  placeholder={t("form.placeholderEmail")}
                   style={inputStyle}
                   onFocus={(e) => ((e.target as HTMLInputElement).style.borderColor = "#D35400")}
                   onBlur={(e) => ((e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.09)")}
@@ -476,12 +466,12 @@ export default function ContactShell() {
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.4)",
                   marginBottom: "0.6rem"
-                }}>Entreprise</label>
+                }}>{t("form.labelCompany")}</label>
                 <input
                   type="text"
                   value={form.company}
                   onChange={(e) => setForm({ ...form, company: e.target.value })}
-                  placeholder="Nom de votre entreprise"
+                  placeholder={t("form.placeholderCompany")}
                   style={inputStyle}
                   onFocus={(e) => ((e.target as HTMLInputElement).style.borderColor = "#D35400")}
                   onBlur={(e) => ((e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.09)")}
@@ -497,12 +487,12 @@ export default function ContactShell() {
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.4)",
                   marginBottom: "0.6rem"
-                }}>Téléphone</label>
+                }}>{t("form.labelPhone")}</label>
                 <input
                   type="tel"
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  placeholder="+212 XX XXX XX XX"
+                  placeholder={t("form.placeholderPhone")}
                   style={inputStyle}
                   onFocus={(e) => ((e.target as HTMLInputElement).style.borderColor = "#D35400")}
                   onBlur={(e) => ((e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.09)")}
@@ -529,7 +519,7 @@ export default function ContactShell() {
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.4)",
                   marginBottom: "0.6rem"
-                }}>Type de projet *</label>
+                }}>{t("form.labelSubject")}</label>
                 <select
                   required
                   value={form.subject}
@@ -538,14 +528,14 @@ export default function ContactShell() {
                   onFocus={(e) => ((e.target as HTMLSelectElement).style.borderColor = "#D35400")}
                   onBlur={(e) => ((e.target as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.09)")}
                 >
-                  <option value="" style={{ background: "#0A1410" }}>Sélectionnez un type</option>
-                  <option value="web" style={{ background: "#0A1410" }}>Application Web</option>
-                  <option value="mobile" style={{ background: "#0A1410" }}>Application Mobile</option>
-                  <option value="ia" style={{ background: "#0A1410" }}>IA & Data</option>
-                  <option value="sig" style={{ background: "#0A1410" }}>SIG & Cartographie</option>
-                  <option value="media" style={{ background: "#0A1410" }}>Plateforme Média</option>
-                  <option value="conseil" style={{ background: "#0A1410" }}>Conseil Stratégique</option>
-                  <option value="autre" style={{ background: "#0A1410" }}>Autre</option>
+                  <option value="" style={{ background: "#0A1410" }}>{t("form.subjectDefault")}</option>
+                  <option value="web" style={{ background: "#0A1410" }}>{t("form.subjectWeb")}</option>
+                  <option value="mobile" style={{ background: "#0A1410" }}>{t("form.subjectMobile")}</option>
+                  <option value="ia" style={{ background: "#0A1410" }}>{t("form.subjectIa")}</option>
+                  <option value="sig" style={{ background: "#0A1410" }}>{t("form.subjectSig")}</option>
+                  <option value="media" style={{ background: "#0A1410" }}>{t("form.subjectMedia")}</option>
+                  <option value="conseil" style={{ background: "#0A1410" }}>{t("form.subjectConseil")}</option>
+                  <option value="autre" style={{ background: "#0A1410" }}>{t("form.subjectAutre")}</option>
                 </select>
               </div>
              
@@ -562,13 +552,13 @@ export default function ContactShell() {
                 textTransform: "uppercase",
                 color: "rgba(255,255,255,0.4)",
                 marginBottom: "0.6rem"
-              }}>Votre projet *</label>
+              }}>{t("form.labelMessage")}</label>
               <textarea
                 required
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 rows={5}
-                placeholder="Décrivez votre projet, vos objectifs et vos contraintes..."
+                placeholder={t("form.placeholderMessage")}
                 style={{ ...inputStyle, resize: "vertical", lineHeight: 1.6 }}
                 onFocus={(e) => ((e.target as HTMLTextAreaElement).style.borderColor = "#D35400")}
                 onBlur={(e) => ((e.target as HTMLTextAreaElement).style.borderColor = "rgba(255,255,255,0.09)")}
@@ -592,10 +582,10 @@ export default function ContactShell() {
                   }}
                 >
                   <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700, fontSize: "var(--font-20)", color: "#2ecc71", marginBottom: "0.3rem" }}>
-                    ✓ Message envoyé !
+                    {t("success.title")}
                   </p>
                   <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "var(--font-18)" }}>
-                    Nous vous recontacterons sous 24h.
+                    {t("success.message")}
                   </p>
                 </motion.div>
               ) : (
@@ -606,7 +596,7 @@ export default function ContactShell() {
                     icon={<Send size={18} />}
                     iconPosition="right"
                   >
-                    {sending ? "Envoi en cours…" : "Envoyer ma demande"}
+                    {sending ? t("form.submitSending") : t("form.submitIdle")}
                   </CTAButton>
                 </div>
               )}
@@ -634,7 +624,7 @@ export default function ContactShell() {
                 padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
               }}
             >
-              <SLabel>Nos engagements</SLabel>
+              <SLabel>{t("sidebar.engagementsLabel")}</SLabel>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
                 {ENGAGEMENTS.map((e, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.9rem" }}>
@@ -658,14 +648,14 @@ export default function ContactShell() {
                 padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
               }}
             >
-              <SLabel>Préférez-vous appeler ?</SLabel>
+              <SLabel>{t("sidebar.callLabel")}</SLabel>
               <p style={{
                 color: "rgba(255,255,255,0.45)",
                 fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
                 lineHeight: 1.7,
                 marginBottom: screenSize === 'mobile' ? "1.2rem" : "1.5rem"
               }}>
-                Parlez directement à un conseiller d'ACT. Disponible du Lundi au Samedi.
+                {t("sidebar.callDescription")}
               </p>
               <CTAButton
                 href="tel:+212662777507"
@@ -685,7 +675,7 @@ export default function ContactShell() {
                 padding: screenSize === 'mobile' ? "1.8rem" : screenSize === 'tablet' ? "2rem" : "clamp(1.5rem,3vw,2.2rem)",
               }}
             >
-              <SLabel>Suivez-nous</SLabel>
+              <SLabel>{t("sidebar.followLabel")}</SLabel>
               <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap" }}>
                 {[
                   { label: "Instagram", href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", Icon: Instagram },
@@ -839,7 +829,7 @@ export default function ContactShell() {
         }}
       >
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <SLabel>FAQ</SLabel>
+          <SLabel>{t("faq.sectionLabel")}</SLabel>
         </div>
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
@@ -859,7 +849,7 @@ export default function ContactShell() {
             marginBottom: screenSize === 'mobile' ? "2.5rem" : screenSize === 'tablet' ? "3rem" : "clamp(3rem,5vw,5rem)"
           }}
         >
-          Questions <span style={{ color: "#D35400" }}>Fréquentes</span>
+          {t("faq.sectionTitle")} <span style={{ color: "#D35400" }}>{t("faq.sectionTitleAccent")}</span>
         </motion.h2>
 
         <div style={{ maxWidth: 860, margin: "0 auto", display: "flex", flexDirection: "column", gap: "0.8rem", textAlign: "left" }}>
