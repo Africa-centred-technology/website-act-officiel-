@@ -395,255 +395,255 @@
     },
     "items": {
       "ingenierie-logicielle": {
-        "pole": "Ingénierie Technologique",
-        "title": "Ingénierie Logicielle\n& Développement de Solutions\nMétiers & Mobiles",
-        "tagline": "Des applications qui parlent africain",
-        "intro": "La transformation digitale et la généralisation du mobile redéfinissent la manière dont les organisations interagissent avec leurs clients et leurs équipes. Pourtant, beaucoup utilisent encore des outils génériques inadaptés à leurs réalités opérationnelles. ACT conçoit des solutions sur mesure en analysant les processus métiers réels, afin de livrer des plateformes performantes, évolutives et alignées sur les contextes africains.",
+        "pole": "الهندسة التكنولوجية",
+        "title": "هندسة البرمجيات\nوتطوير الحلول\nالأعمال والمحمول",
+        "tagline": "تطبيقات تتحدّث الأفريقية",
+        "intro": "إعادة تعريف التحول الرقمي وانتشار المحمول لطريقة تفاعل المؤسسات مع عملائها وفِرَقها. ومع ذلك، لا تزال الكثيرات تستخدم أدوات عامة غير مناسبة لواقعها التشغيلي. تُصمِّم ACT حلولًا مخصَّصة من خلال تحليل العمليات التجارية الحقيقية، لتقديم منصّات عالية الأداء وقابلة للتوسّع ومتوافقة مع السياقات الأفريقية.",
         "subs": [
           {
-            "title": "Applications Web & Mobiles « African-Ready »",
-            "desc": "Applications web et mobiles modernes alliant performance, fiabilité et excellence UX. Approche mobile-first avec développement natif Android/iOS et solutions hybrides. Interfaces ergonomiques optimisées pour les réseaux africains, mode hors-ligne intégré."
+            "title": "تطبيقات ويب وجوال « African-Ready »",
+            "desc": "تطبيقات ويب وجوال حديثة تجمع بين الأداء والموثوقية وتميّز تجربة المستخدم. نهج mobile-first مع تطوير أصلي Android/iOS وحلول هجينة. واجهات مريحة محسَّنة للشبكات الأفريقية مع وضع غير متّصل مدمج."
           },
           {
-            "title": "Logiciels Métiers Spécifiques",
-            "desc": "Solutions sur mesure pour les entreprises et institutions africaines : SIRH conformes OHADA, logiciels de comptabilité, CRM, gestion de projets et de stocks. Chaque solution naît d'une analyse approfondie des processus métiers réels de l'organisation."
+            "title": "برامج أعمال خاصة",
+            "desc": "حلول مخصَّصة للشركات والمؤسسات الأفريقية: نظم موارد بشرية متوافقة مع OHADA، برامج محاسبة، CRM، إدارة المشاريع والمخزون. كل حلّ ينشأ من تحليل عميق للعمليات التجارية الحقيقية للمؤسسة."
           }
         ],
         "benefits": [
-          "Efficacité opérationnelle améliorée",
-          "Gestion des processus métiers simplifiée",
-          "Expérience utilisateur renforcée",
-          "Indépendance des systèmes génériques",
-          "Plateformes digitales évolutives et performantes"
+          "تحسُّن الكفاءة التشغيلية",
+          "تبسيط إدارة العمليات التجارية",
+          "تعزيز تجربة المستخدم",
+          "الاستقلالية عن الأنظمة العامة",
+          "منصّات رقمية قابلة للتوسّع وعالية الأداء"
         ],
         "deliverables": [
-          "Application livrée & documentée",
-          "Formation des équipes techniques",
-          "Maintenance & support 12 mois",
-          "Tableau de bord de performance"
+          "تطبيق مُسلَّم وموثَّق",
+          "تدريب الفِرَق التقنية",
+          "صيانة ودعم 12 شهرًا",
+          "لوحة قيادة الأداء"
         ]
       },
       "automatisation-ia": {
-        "pole": "Ingénierie Technologique",
-        "title": "Automatisation\nIntelligente (IA Agentique)",
-        "tagline": "L'IA qui travaille avec vous",
-        "intro": "Les organisations gèrent des processus de plus en plus complexes reposant sur des tâches manuelles, des échanges fragmentés et des outils qui ne communiquent pas. Les solutions d'automatisation traditionnelles peinent à gérer des workflows à plusieurs étapes et sources d'information. ACT déploie des architectures d'agents IA qui collaborent pour transformer ces processus manuels en workflows intelligents — sans remplacer l'humain, mais en démultipliant ses capacités.",
+        "pole": "الهندسة التكنولوجية",
+        "title": "الأتمتة الذكية\n(الذكاء الاصطناعي العميل)",
+        "tagline": "ذكاء اصطناعي يعمل معك",
+        "intro": "تُدير المؤسسات عمليات معقَّدة بشكل متزايد تعتمد على مهام يدوية وتبادلات مجزَّأة وأدوات لا تتواصل فيما بينها. تواجه حلول الأتمتة التقليدية صعوبة في إدارة سير العمل متعدّد الخطوات والمصادر. تنشر ACT بُنى وكلاء ذكاء اصطناعي يتعاونون لتحويل هذه العمليات اليدوية إلى سير عمل ذكيّ — دون استبدال الإنسان، بل بمضاعفة قدراته.",
         "subs": [
           {
-            "title": "Architectures Multi-Agents",
-            "desc": "Plusieurs agents IA spécialisés coopèrent pour exécuter un processus métier complet : collecte de données, analyse d'informations, coordination entre services, génération de rapports et déclenchement d'actions automatisées. Gestion de workflows complexes à plusieurs étapes et sources."
+            "title": "بُنى متعدّدة الوكلاء",
+            "desc": "عدّة وكلاء ذكاء اصطناعي متخصِّصون يتعاونون لتنفيذ عملية تجارية كاملة: جمع البيانات، تحليل المعلومات، التنسيق بين الأقسام، توليد التقارير، وإطلاق الإجراءات الآلية. إدارة سير عمل معقَّد متعدّد الخطوات والمصادر."
           },
           {
-            "title": "Traitement Hybride Digital / Papier",
-            "desc": "Automatisation des flux mixtes grâce à la numérisation, l'OCR et l'extraction automatique d'informations. Formulaires, factures, contrats et dossiers administratifs sont analysés automatiquement et intégrés dans vos workflows numériques sans rupture de chaîne."
+            "title": "معالجة هجينة رقمية/ورقية",
+            "desc": "أتمتة التدفّقات المختلطة عبر الرقمنة، OCR، والاستخراج الآلي للمعلومات. النماذج والفواتير والعقود والملفات الإدارية تُحلَّل تلقائيًا وتُدمج في سير عملك الرقمي دون انقطاع."
           },
           {
-            "title": "IA de Soutien (Augmentation Humaine)",
-            "desc": "L'IA analyse, synthétise et recommande — l'humain supervise et décide. Un assistant avancé qui identifie les tendances, génère des synthèses et prépare l'information pour la prise de décision, sans jamais retirer le professionnel du centre du processus."
+            "title": "ذكاء اصطناعي داعم (تعزيز إنساني)",
+            "desc": "الذكاء الاصطناعي يحلِّل ويُلخِّص ويُوصي — والإنسان يُشرف ويُقرِّر. مساعد متقدّم يحدِّد الاتجاهات ويُولِّد التلخيصات ويُحضِّر المعلومات لاتّخاذ القرار، دون إخراج المحترف من قلب العملية."
           }
         ],
         "benefits": [
-          "Traitement des processus accéléré",
-          "Tâches manuelles répétitives réduites",
-          "Qualité et fiabilité des données améliorées",
-          "Coordination inter-services renforcée",
-          "Capacité de prise de décision augmentée"
+          "تسريع معالجة العمليات",
+          "تقليل المهام اليدوية المتكرِّرة",
+          "تحسُّن جودة وموثوقية البيانات",
+          "تعزيز التنسيق بين الأقسام",
+          "زيادة القدرة على اتّخاذ القرار"
         ],
         "deliverables": [
-          "Cartographie des processus automatisables",
-          "Agents déployés & testés",
-          "Tableau de bord de monitoring",
-          "Guide de gouvernance IA"
+          "خريطة العمليات القابلة للأتمتة",
+          "وكلاء منشورون ومُختَبَرون",
+          "لوحة قيادة للمتابعة",
+          "دليل حوكمة الذكاء الاصطناعي"
         ]
       },
       "architecture-infrastructure": {
-        "pole": "Ingénierie Technologique",
-        "title": "Architecture\n& Infrastructure",
-        "tagline": "Les fondations de votre croissance",
-        "intro": "Sans fondations solides, vos applications deviennent rapidement difficiles à faire évoluer, coûteuses à maintenir et incapables de suivre la croissance de l'organisation. ACT conçoit des architectures modernes, évolutives et sécurisées combinant architecture logicielle, cloud souverain adapté au contexte africain et conseil stratégique en systèmes d'information — pour transformer la technologie en véritable levier de performance.",
+        "pole": "الهندسة التكنولوجية",
+        "title": "العمارة\nوالبنية التحتية",
+        "tagline": "أُسس نموّك",
+        "intro": "بدون أُسس متينة، تُصبح تطبيقاتك بسرعة صعبة التطوير، مكلِفة الصيانة، وعاجزة عن مواكبة نمو المؤسسة. تُصمِّم ACT عمارات حديثة وقابلة للتوسّع وآمنة تجمع بين العمارة البرمجية، والسحابة السيادية المُكيَّفة للسياق الأفريقي، والاستشارات الاستراتيجية في نظم المعلومات — لتحويل التكنولوجيا إلى رافعة أداء حقيقية.",
         "subs": [
           {
-            "title": "Architecture Logicielle Évolutive",
-            "desc": "Architectures basées sur les standards modernes : microservices, event-driven, API-first. Des systèmes modulaires et flexibles qui s'étendent progressivement — de l'administration locale au système national — sans reconstruction majeure. Protège l'investissement technologique tout en préparant la croissance future."
+            "title": "عمارة برمجية قابلة للتوسّع",
+            "desc": "عمارات قائمة على المعايير الحديثة: microservices، event-driven، API-first. أنظمة معيارية ومرنة تتوسّع تدريجيًا — من الإدارة المحلية إلى النظام الوطني — دون إعادة بناء كبرى. تحمي الاستثمار التكنولوجي مع تحضير النموّ المستقبلي."
           },
           {
-            "title": "Solutions Cloud Souveraines",
-            "desc": "Adoption cloud alignée sur les réglementations africaines de localisation des données. Architectures hybrides cloud/local pour la conformité réglementaire, migration sans interruption de service. Choix des fournisseurs adapté aux réalités et exigences sectorielles du continent."
+            "title": "حلول سحابية سيادية",
+            "desc": "تبنّي سحابي متوافق مع اللوائح الأفريقية لتوطين البيانات. عمارات هجينة سحابة/محلّي للامتثال التنظيمي، هجرة دون انقطاع الخدمة. اختيار الموردين مُكيَّف لواقع ومتطلّبات قطاعات القارة."
           },
           {
-            "title": "IT Consulting & Solution Design",
-            "desc": "Conseil indépendant et orienté résultats : analyses comparatives de solutions, études de faisabilité technique et financière, évaluations TCO sur cycle de vie, recommandations stratégiques. Pour des décisions technologiques éclairées, sans conflit d'intérêt."
+            "title": "استشارات تقنية وتصميم حلول",
+            "desc": "استشارات مستقلّة وموجَّهة بالنتائج: تحليلات مقارنة للحلول، دراسات جدوى تقنية ومالية، تقييمات TCO على دورة الحياة، توصيات استراتيجية. لقرارات تكنولوجية مُستنيرة، بدون تضارب مصالح."
           }
         ],
         "benefits": [
-          "Investissement technologique protégé",
-          "Scalabilité native dès la conception",
-          "Conformité réglementaire africaine assurée",
-          "Coûts opérationnels maîtrisés"
+          "حماية الاستثمار التكنولوجي",
+          "قابلية توسّع أصلية منذ التصميم",
+          "ضمان الامتثال التنظيمي الأفريقي",
+          "تحكُّم في التكاليف التشغيلية"
         ],
         "deliverables": [
-          "Schéma d'architecture validé",
-          "Plan de migration détaillé",
-          "Rapport TCO 5 ans",
-          "Documentation technique complète"
+          "مخطّط عمارة معتمَد",
+          "خطة هجرة مفصَّلة",
+          "تقرير TCO لـ 5 سنوات",
+          "وثائق تقنية كاملة"
         ]
       },
       "data-intelligence-artificielle": {
-        "pole": "Ingénierie Technologique",
-        "title": "Data, Intelligence\nArtificielle & Big Data",
-        "tagline": "Vos données au service de votre mission",
-        "intro": "L'Afrique génère chaque jour des volumes considérables de données — transactions mobiles, données agricoles, informations de santé, flux logistiques. Pourtant, une grande partie reste inexploitable, dispersée dans des systèmes cloisonnés ou stockée dans des formats incompatibles. ACT accompagne les organisations dans la mise en place d'écosystèmes data complets couvrant l'ensemble du cycle de vie de la donnée : de la collecte à la valorisation en passant par le déploiement de modèles IA.",
+        "pole": "الهندسة التكنولوجية",
+        "title": "البيانات والذكاء\nالاصطناعي والبيانات الضخمة",
+        "tagline": "بياناتك في خدمة مهمّتك",
+        "intro": "تُولِّد أفريقيا يوميًا أحجامًا هائلة من البيانات — معاملات الجوال، البيانات الزراعية، معلومات الصحة، تدفّقات اللوجستيك. ومع ذلك، يبقى جزء كبير منها غير مُستغلّ، مبعثَر في أنظمة منعزلة أو مُخزَّن بصيغ غير متوافقة. ترافق ACT المؤسسات في إنشاء أنظمة بيانات متكاملة تُغطّي دورة حياة البيانات كاملةً: من الجمع إلى التثمين مرورًا بنشر نماذج الذكاء الاصطناعي.",
         "subs": [
           {
-            "title": "Data Science & Machine Learning",
-            "desc": "Modèles analytiques et prédictifs entraînés sur des données africaines, conçus par des équipes africaines : prévision de demande, détection de fraude, segmentation des populations, analyse de l'absentéisme scolaire, prédiction des pannes industrielles. Des résultats pertinents et adaptés aux réalités locales."
+            "title": "علم البيانات والتعلم الآلي",
+            "desc": "نماذج تحليلية وتنبؤية مدرَّبة على بيانات أفريقية، صمَّمتها فِرَق أفريقية: التنبؤ بالطلب، كشف الاحتيال، تجزئة السكان، تحليل التغيُّب المدرسي، التنبؤ بالأعطال الصناعية. نتائج ذات صلة ومُكيَّفة للواقع المحلي."
           },
           {
-            "title": "Data Engineering",
-            "desc": "Infrastructure technique de collecte et d'exploitation des données : pipelines automatisés, data warehouses, data lakes, systèmes de contrôle qualité, intégration multi-sources (systèmes métiers, capteurs, formulaires, APIs). La base indispensable à toute stratégie data ou IA."
+            "title": "هندسة البيانات",
+            "desc": "بنية تحتية تقنية لجمع واستغلال البيانات: pipelines آلية، data warehouses، data lakes، أنظمة مراقبة الجودة، تكامل متعدّد المصادر (أنظمة الأعمال، أجهزة الاستشعار، النماذج، APIs). الأساس الضروري لأي استراتيجية بيانات أو ذكاء اصطناعي."
           },
           {
-            "title": "Big Data",
-            "desc": "Architectures Big Data pour les organisations gérant de très grands volumes de données. Déploiement de plateformes basées sur des technologies open source (Hadoop, Spark, Kafka, Elasticsearch) qui traitent et analysent à grande échelle tout en optimisant les coûts d'infrastructure."
+            "title": "البيانات الضخمة",
+            "desc": "عمارات بيانات ضخمة للمؤسسات التي تُدير أحجامًا هائلة جدًا من البيانات. نشر منصّات قائمة على تقنيات مفتوحة المصدر (Hadoop، Spark، Kafka، Elasticsearch) تُعالج وتُحلّل على نطاق واسع مع تحسين تكاليف البنية التحتية."
           },
           {
-            "title": "Intelligence Artificielle",
-            "desc": "Solutions IA appliquées aux domaines spécifiques : santé (aide au diagnostic), agriculture (recommandations agronomiques), éducation (analyse des performances), finance (détection de fraude, analyse de risque). Chaque solution est conçue selon des principes d'IA responsable : transparence, équité et supervision humaine."
+            "title": "الذكاء الاصطناعي",
+            "desc": "حلول ذكاء اصطناعي مطبَّقة على مجالات محدَّدة: الصحة (مساعدة التشخيص)، الزراعة (توصيات زراعية)، التعليم (تحليل الأداء)، المالية (كشف الاحتيال، تحليل المخاطر). كل حلّ مُصمَّم وفق مبادئ الذكاء الاصطناعي المسؤول: الشفافية، الإنصاف، والإشراف الإنساني."
           }
         ],
         "benefits": [
-          "Données transformées en levier stratégique",
-          "Qualité et rapidité de prise de décision améliorées",
-          "Opérations optimisées et marchés anticipés",
-          "Inefficacités des systèmes fragmentés réduites",
-          "Services innovants basés sur la donnée développés"
+          "تحويل البيانات إلى رافعة استراتيجية",
+          "تحسُّن جودة وسرعة اتّخاذ القرار",
+          "تحسين العمليات وتوقّع الأسواق",
+          "تقليل عدم الكفاءة الناجم عن الأنظمة المُجزَّأة",
+          "تطوير خدمات مبتكرة قائمة على البيانات"
         ],
         "deliverables": [
-          "Modèles IA déployés & validés",
-          "Pipelines de données automatisés",
-          "Dashboard analytics temps réel",
-          "Charte IA & gouvernance"
+          "نماذج ذكاء اصطناعي منشورة ومُعتمَدة",
+          "Pipelines بيانات آلية",
+          "لوحة تحليلات بالزمن الحقيقي",
+          "ميثاق وحوكمة الذكاء الاصطناعي"
         ]
       },
       "geomatique-sig": {
-        "pole": "Ingénierie Technologique",
-        "title": "Géomatique\n& Systèmes d'Information\nGéographique",
-        "tagline": "Connaître son territoire pour le développer",
-        "intro": "On ne peut pas développer ce qu'on ne connaît pas. De nombreuses institutions africaines prennent encore des décisions d'aménagement, de gestion des ressources ou de planification d'infrastructures avec des informations géographiques incomplètes ou obsolètes. ACT combine technologies de cartographie, SIG et analyse spatiale pour transformer les données géographiques en outils d'aide à la décision — à partir d'imagerie satellitaire, de relevés terrain, de drones et de bases de données géospatiales ouvertes.",
+        "pole": "الهندسة التكنولوجية",
+        "title": "الجيوماتيكا\nونظم المعلومات\nالجغرافية",
+        "tagline": "اعرف إقليمك لتُطوِّره",
+        "intro": "لا يمكن تطوير ما لا نعرفه. لا تزال العديد من المؤسسات الأفريقية تتّخذ قرارات التهيئة وإدارة الموارد وتخطيط البنى التحتية بمعلومات جغرافية ناقصة أو قديمة. تجمع ACT بين تقنيات رسم الخرائط ونظم المعلومات الجغرافية والتحليل المكاني لتحويل البيانات الجغرافية إلى أدوات دعم قرار — انطلاقًا من الصور الفضائية، الرفع الميداني، الطائرات بدون طيار، وقواعد البيانات الجغرافية المفتوحة.",
         "subs": [
           {
-            "title": "Cartographie Numérique",
-            "desc": "Cartes numériques multi-échelles produites à partir d'imagerie satellitaire haute résolution, LiDAR, GPS et drones. Livrées en formats standards (GeoJSON, Shapefile, GeoTIFF). Processus de mise à jour continue — indispensable dans des territoires africains en mutation rapide où les cartes obsolètes coûtent des millions."
+            "title": "رسم الخرائط الرقمية",
+            "desc": "خرائط رقمية متعدّدة المقاييس مُنتَجة من صور فضائية عالية الدقة، LiDAR، GPS، والطائرات بدون طيار. مُسلَّمة بصيغ معيارية (GeoJSON، Shapefile، GeoTIFF). عملية تحديث مستمرّة — ضرورية في الأقاليم الأفريقية سريعة التغيُّر حيث تُكلِّف الخرائط القديمة الملايين."
           },
           {
-            "title": "Systèmes d'Information Géographique (SIG)",
-            "desc": "Plateformes décisionnelles centralisant, visualisant et analysant les données territoriales croisées avec des données socio-économiques, démographiques, environnementales et infrastructurelles. Aide à répondre aux questions stratégiques : où construire, quelles zones sont à risque, quels territoires ont le meilleur potentiel agricole ou économique."
+            "title": "نظم المعلومات الجغرافية (GIS)",
+            "desc": "منصّات قرارية تُمركز وتُصوِّر وتُحلِّل البيانات الإقليمية مع البيانات الاجتماعية والاقتصادية والديمغرافية والبيئية والبنية التحتية. تساعد في الإجابة على الأسئلة الاستراتيجية: أين نبني، أيّ المناطق مُعرَّضة للخطر، أيّ الأقاليم لها أفضل إمكانات زراعية أو اقتصادية."
           }
         ],
         "benefits": [
-          "Planification territoriale améliorée",
-          "Dynamiques spatiales mieux comprises",
-          "Investissements en infrastructures optimisés",
-          "Risques environnementaux et climatiques anticipés",
-          "Qualité des décisions publiques et stratégiques renforcée"
+          "تحسُّن التخطيط الإقليمي",
+          "فهم أفضل للديناميات المكانية",
+          "تحسين استثمارات البنية التحتية",
+          "توقُّع المخاطر البيئية والمناخية",
+          "تعزيز جودة القرارات العامة والاستراتيجية"
         ],
         "deliverables": [
-          "Cartographie numérique haute résolution",
-          "Plateforme SIG opérationnelle",
-          "Formation des équipes SIG",
-          "Protocole de mise à jour des données"
+          "خرائط رقمية عالية الدقة",
+          "منصّة GIS تشغيلية",
+          "تدريب فِرَق GIS",
+          "بروتوكول تحديث البيانات"
         ]
       },
       "conseil-strategique": {
-        "pole": "Conseil",
-        "title": "Conseil Stratégique\n& Transformation",
-        "tagline": "La stratégie avant l'outil",
-        "intro": "Beaucoup d'organisations africaines cherchent d'abord un logiciel — sans avoir défini pourquoi elles en ont besoin, ce qu'elles veulent changer, ni quel modèle elles visent. Cette approche conduit à des investissements coûteux, mal adoptés et rapidement abandonnés. ACT inverse cette logique : la vision stratégique précède toujours le choix technologique. Ce n'est qu'à l'issue d'un diagnostic de fond que les orientations technologiques sont définies — jamais l'inverse.",
+        "pole": "الاستشارات",
+        "title": "الاستشارات الاستراتيجية\nوالتحوُّل",
+        "tagline": "الاستراتيجية قبل الأداة",
+        "intro": "تبحث العديد من المؤسسات الأفريقية أوّلًا عن برنامج — دون أن تُحدِّد لماذا تحتاجه، أو ما الذي تريد تغييره، أو ما النموذج الذي تستهدفه. يقود هذا النهج إلى استثمارات مكلِفة، مُتبنّاة بشكل سيّئ، ومتروكة بسرعة. تعكس ACT هذا المنطق: الرؤية الاستراتيجية تسبق دائمًا الاختيار التكنولوجي. لا يتم تحديد التوجّهات التكنولوجية إلا بعد تشخيص عميق — وليس العكس.",
         "subs": [
           {
-            "title": "Conseil Digital & Growth",
-            "desc": "Audit rigoureux de maturité digitale : analyse des systèmes en place, identification des angles morts et opportunités inexploitées par rapport aux meilleures pratiques sectorielles. Co-construction d'une feuille de route digitale structurée sur mesure — pas un document théorique, mais un véritable outil de pilotage avec jalons, KPIs et indicateurs de succès."
+            "title": "استشارات رقمية ونمو",
+            "desc": "تدقيق صارم للنضج الرقمي: تحليل الأنظمة القائمة، تحديد النقاط العمياء والفرص غير المُستغلّة مقارنةً بأفضل الممارسات القطاعية. بناء مشترك لخارطة طريق رقمية مُهيكَلة ومخصَّصة — ليست وثيقة نظرية، بل أداة قيادة حقيقية مع مراحل ومؤشّرات أداء KPI ومؤشّرات نجاح."
           },
           {
-            "title": "Conseil en Digital Transformation Services",
-            "desc": "Accompagnement complet à la conduite du changement : communication interne, formation des managers, animation de groupes pilotes, gestion des résistances et suivi de l'adoption. Pilotage de projets de transformation de bout en bout avec instances de gouvernance, gestion des risques et tableaux de bord de suivi partagés avec les équipes dirigeantes."
+            "title": "استشارات في خدمات التحوّل الرقمي",
+            "desc": "مرافقة كاملة لقيادة التغيير: التواصل الداخلي، تدريب المديرين، تنشيط المجموعات التجريبية، إدارة المقاومات، ومتابعة التبنّي. قيادة مشاريع التحوُّل من البداية إلى النهاية بهيئات حوكمة وإدارة مخاطر ولوحات متابعة مشتركة مع الفِرَق التنفيذية."
           }
         ],
         "benefits": [
-          "Vision stratégique claire avant tout investissement",
-          "Transformation digitale adoptée durablement",
-          "Investissements technologiques rentabilisés",
-          "Pilotage éclairé par des données fiables"
+          "رؤية استراتيجية واضحة قبل أي استثمار",
+          "تبنّي مستدام للتحوُّل الرقمي",
+          "ربحية الاستثمارات التكنولوجية",
+          "قيادة مُستنيرة ببيانات موثوقة"
         ],
         "deliverables": [
-          "Rapport d'audit de maturité digitale",
-          "Feuille de route stratégique 3 ans",
-          "Plan de conduite du changement",
-          "Tableau de bord KPIs"
+          "تقرير تدقيق النضج الرقمي",
+          "خارطة طريق استراتيجية لـ 3 سنوات",
+          "خطة قيادة التغيير",
+          "لوحة قيادة KPI"
         ]
       },
       "conseil-operationnel": {
-        "pole": "Conseil",
-        "title": "Conseil Opérationnel\n& Métier",
-        "tagline": "Comprendre avant de numériser",
-        "intro": "Entre la stratégie digitale et le déploiement d'une solution technologique existe un espace critique trop souvent ignoré : l'espace opérationnel. C'est là que vivent les processus métiers réels, les flux d'information et les règles non écrites qui régissent le fonctionnement quotidien. Un processus inefficace numérisé reste un processus inefficace — simplement plus rapide et plus coûteux. ACT optimise l'opérationnel avant de choisir la technologie, en partant du terrain, pas d'une présentation PowerPoint.",
+        "pole": "الاستشارات",
+        "title": "الاستشارات التشغيلية\nوالأعمال",
+        "tagline": "افهم قبل أن تُرقمن",
+        "intro": "بين الاستراتيجية الرقمية ونشر حلٍّ تكنولوجي يوجد مجال حرج كثيرًا ما يُتجاهَل: المجال التشغيلي. هناك تعيش العمليات التجارية الحقيقية، وتدفّقات المعلومات، والقواعد غير المكتوبة التي تحكم العمل اليومي. عملية غير فعّالة، حين تُرقمَن، تظلّ غير فعّالة — أسرع وأكثر تكلفةً ليس إلّا. تُحسِّن ACT الجانب التشغيلي قبل اختيار التكنولوجيا، انطلاقًا من الميدان، لا من عرض PowerPoint.",
         "subs": [
           {
-            "title": "Business Analysis",
-            "desc": "Analyse terrain : entretiens avec les équipes opérationnelles, observation des pratiques réelles (pas celles des organigrammes). Cartographie des processus avec outils structurés (BPMN, analyse de flux, chaîne de valeur), identification des inefficacités, redondances et goulots d'étranglement. Cahiers des charges fonctionnels directement exploitables par les équipes techniques."
+            "title": "تحليل الأعمال",
+            "desc": "تحليل ميداني: مقابلات مع الفِرَق التشغيلية، ملاحظة الممارسات الحقيقية (لا تلك المُدوَّنة في الهياكل التنظيمية). رسم خرائط العمليات بأدوات مُهيكَلة (BPMN، تحليل التدفّقات، سلسلة القيمة)، تحديد أوجه عدم الكفاءة والتكرار وعنق الزجاجة. مواصفات وظيفية قابلة للاستخدام مباشرةً من الفِرَق التقنية."
           },
           {
-            "title": "Conseil Opérationnel",
-            "desc": "Optimisation des processus métiers avant toute numérisation : reconstruction des flux, alignement stratégie–opération–technologie, accompagnement à la mise en œuvre et mesure de l'impact. La technologie amplifie les processus efficaces ; ACT s'assure qu'ils le sont avant de les numériser."
+            "title": "الاستشارات التشغيلية",
+            "desc": "تحسين العمليات التجارية قبل أي رقمنة: إعادة بناء التدفّقات، مُحاذاة الاستراتيجية-العمليات-التكنولوجيا، مرافقة التنفيذ، وقياس الأثر. التكنولوجيا تُضخِّم العمليات الفعّالة؛ وتتأكّد ACT من فعّاليتها قبل رقمنتها."
           },
           {
-            "title": "Consulting",
-            "desc": "Expertise opérationnelle transversale : analyse des processus métiers, optimisation de la performance, alignement stratégie–opération–technologie, accompagnement à la mise en œuvre. Des résultats concrets et mesurables sur le terrain, pas des slides."
+            "title": "الاستشارات العامة",
+            "desc": "خبرة تشغيلية شاملة: تحليل العمليات التجارية، تحسين الأداء، مُحاذاة الاستراتيجية-العمليات-التكنولوجيا، مرافقة التنفيذ. نتائج ملموسة وقابلة للقياس على أرض الواقع، لا شرائح."
           }
         ],
         "benefits": [
-          "Processus métiers optimisés avant numérisation",
-          "Besoins réels identifiés par l'analyse terrain",
-          "ROI concret et mesurable",
-          "Adoption des outils facilitée"
+          "عمليات تجارية مُحسَّنة قبل الرقمنة",
+          "احتياجات حقيقية مُحدَّدة بالتحليل الميداني",
+          "عائد استثمار ملموس وقابل للقياس",
+          "تسهيل تبنّي الأدوات"
         ],
         "deliverables": [
-          "Cartographie BPMN des processus",
-          "Cahier des charges fonctionnel",
-          "Plan d'optimisation priorisé",
-          "Rapport ROI 6 mois"
+          "خريطة BPMN للعمليات",
+          "مواصفات وظيفية",
+          "خطة تحسين مُرتَّبة بالأولوية",
+          "تقرير ROI لـ 6 أشهر"
         ]
       },
       "catalogue-formations": {
-        "pole": "Formation",
-        "title": "Catalogue\nde Formations",
-        "tagline": "Se former aujourd'hui, c'est réussir demain",
-        "intro": "Se former aux compétences digitales est devenu incontournable. Nos formations en intelligence artificielle — comme l'intégration de l'IA au quotidien — permettent à tout professionnel de gagner en productivité et de faire de l'IA un véritable levier de performance. Au-delà de ces compétences transversales, c'est toute une culture numérique qu'il est essentiel d'acquérir pour répondre aux enjeux concrets du marché.Conçues par des experts du continent à partir de cas réels, ces formations offrent des compétences opérationnelles immédiatement mobilisable",
+        "pole": "التدريب",
+        "title": "كتالوج\nالتدريب",
+        "tagline": "تتدرَّب اليوم، تنجح غدًا",
+        "intro": "أصبح التدريب على المهارات الرقمية ضرورة. تُتيح تدريباتنا في الذكاء الاصطناعي — كدمج الذكاء الاصطناعي في العمل اليومي — لكل محترف زيادة إنتاجيته وجعل الذكاء الاصطناعي رافعة أداء حقيقية. وراء هذه المهارات العرضية، توجد ثقافة رقمية كاملة لا بدّ من اكتسابها لمواجهة التحدّيات الملموسة للسوق. مُصمَّمة من قِبَل خبراء القارة انطلاقًا من حالات حقيقية، تُقدِّم هذه التدريبات مهارات تشغيلية قابلة للاستخدام فورًا.",
         "subs": [
           {
-            "title": "Formations Techniques",
-            "desc": "Maîtrisez les compétences techniques essentielles pour concevoir, déployer et sécuriser des solutions numériques robustes. Des programmes conçus pour répondre aux besoins concrets du marché, avec une approche pratique et opérationnelle."
+            "title": "تدريبات تقنية",
+            "desc": "أتقِن المهارات التقنية الأساسية لتصميم ونشر وتأمين حلول رقمية متينة. برامج مُصمَّمة لتلبية احتياجات السوق الملموسة، بنهج عملي وتشغيلي."
           },
           {
-            "title": "Formations Business & Stratégie",
-            "desc": "Pilotez la transformation numérique de votre organisation. Acquérez les méthodes et la vision stratégique nécessaires pour manager des projets innovants, prendre des décisions data-driven et fédérer vos équipes autour des enjeux digitaux."
+            "title": "تدريبات في الأعمال والاستراتيجية",
+            "desc": "قُدْ التحوُّل الرقمي لمؤسستك. اكتسِب المنهجيات والرؤية الاستراتيجية اللازمة لإدارة مشاريع مبتكرة، اتّخاذ قرارات قائمة على البيانات، وتوحيد فِرَقك حول رهانات الرقمي."
           },
           {
-            "title": "Formations Spécialisées",
-            "desc": "Des programmes conçus pour ceux qui veulent se démarquer. Approfondissez des expertises de niche, développez des compétences rares et devenez une référence dans votre domaine"
+            "title": "تدريبات متخصِّصة",
+            "desc": "برامج مُصمَّمة لمن يريدون التميُّز. عمِّق خبرات متخصِّصة، طوِّر مهارات نادرة، وكُن مرجعًا في مجالك"
           }
         ],
         "benefits": [
-          "En Afrique, 61% des entreprises jugent les compétences en numerique importantes pour leur succès — nos formations vous préparent à cette demande",
-          "Apprentissage flexible (en ligne & présentiel)",
-          "Contenus adaptés au contexte d'entreprises",
-          "Des formateurs experts du continent"
+          "في أفريقيا، تعتبر 61% من الشركات أن المهارات الرقمية مهمّة لنجاحها — تدريباتنا تُحضِّرك لهذا الطلب",
+          "تعلُّم مرن (عبر الإنترنت وحضوريًا)",
+          "محتويات مُكيَّفة لسياق الشركات",
+          "مدرّبون خبراء من القارة"
         ],
         "deliverables": [
-          "Accès plateforme ACT University",
-          "Supports de cours téléchargeables",
-          "Certificats de réussite",
-          "Accès communauté alumni"
+          "الوصول إلى منصّة ACT University",
+          "مواد تدريبية قابلة للتحميل",
+          "شهادات إنجاز",
+          "الوصول إلى مجتمع الخرّيجين"
         ]
       }
     }

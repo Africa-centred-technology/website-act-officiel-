@@ -395,255 +395,255 @@
     },
     "items": {
       "ingenierie-logicielle": {
-        "pole": "Ingénierie Technologique",
-        "title": "Ingénierie Logicielle\n& Développement de Solutions\nMétiers & Mobiles",
-        "tagline": "Des applications qui parlent africain",
-        "intro": "La transformation digitale et la généralisation du mobile redéfinissent la manière dont les organisations interagissent avec leurs clients et leurs équipes. Pourtant, beaucoup utilisent encore des outils génériques inadaptés à leurs réalités opérationnelles. ACT conçoit des solutions sur mesure en analysant les processus métiers réels, afin de livrer des plateformes performantes, évolutives et alignées sur les contextes africains.",
+        "pole": "Technology Engineering",
+        "title": "Software Engineering\n& Development of Business\n& Mobile Solutions",
+        "tagline": "Applications that speak African",
+        "intro": "Digital transformation and the spread of mobile are redefining how organizations interact with their clients and teams. Yet many still use generic tools poorly suited to their operational realities. ACT designs custom solutions by analyzing real business processes, delivering high-performance, scalable platforms aligned with African contexts.",
         "subs": [
           {
-            "title": "Applications Web & Mobiles « African-Ready »",
-            "desc": "Applications web et mobiles modernes alliant performance, fiabilité et excellence UX. Approche mobile-first avec développement natif Android/iOS et solutions hybrides. Interfaces ergonomiques optimisées pour les réseaux africains, mode hors-ligne intégré."
+            "title": "African-Ready Web & Mobile Applications",
+            "desc": "Modern web and mobile applications combining performance, reliability, and UX excellence. Mobile-first approach with native Android/iOS development and hybrid solutions. Ergonomic interfaces optimized for African networks, integrated offline mode."
           },
           {
-            "title": "Logiciels Métiers Spécifiques",
-            "desc": "Solutions sur mesure pour les entreprises et institutions africaines : SIRH conformes OHADA, logiciels de comptabilité, CRM, gestion de projets et de stocks. Chaque solution naît d'une analyse approfondie des processus métiers réels de l'organisation."
+            "title": "Specific Business Software",
+            "desc": "Tailored solutions for African companies and institutions: OHADA-compliant HRIS, accounting software, CRM, project and inventory management. Each solution starts from in-depth analysis of the organization's real business processes."
           }
         ],
         "benefits": [
-          "Efficacité opérationnelle améliorée",
-          "Gestion des processus métiers simplifiée",
-          "Expérience utilisateur renforcée",
-          "Indépendance des systèmes génériques",
-          "Plateformes digitales évolutives et performantes"
+          "Improved operational efficiency",
+          "Simplified business process management",
+          "Enhanced user experience",
+          "Independence from generic systems",
+          "Scalable and high-performing digital platforms"
         ],
         "deliverables": [
-          "Application livrée & documentée",
-          "Formation des équipes techniques",
-          "Maintenance & support 12 mois",
-          "Tableau de bord de performance"
+          "Application delivered & documented",
+          "Technical team training",
+          "12-month maintenance & support",
+          "Performance dashboard"
         ]
       },
       "automatisation-ia": {
-        "pole": "Ingénierie Technologique",
-        "title": "Automatisation\nIntelligente (IA Agentique)",
-        "tagline": "L'IA qui travaille avec vous",
-        "intro": "Les organisations gèrent des processus de plus en plus complexes reposant sur des tâches manuelles, des échanges fragmentés et des outils qui ne communiquent pas. Les solutions d'automatisation traditionnelles peinent à gérer des workflows à plusieurs étapes et sources d'information. ACT déploie des architectures d'agents IA qui collaborent pour transformer ces processus manuels en workflows intelligents — sans remplacer l'humain, mais en démultipliant ses capacités.",
+        "pole": "Technology Engineering",
+        "title": "Intelligent\nAutomation (Agentic AI)",
+        "tagline": "AI that works with you",
+        "intro": "Organizations handle increasingly complex processes based on manual tasks, fragmented exchanges, and tools that don't communicate. Traditional automation solutions struggle with multi-step workflows and multi-source information. ACT deploys AI agent architectures that collaborate to transform these manual processes into intelligent workflows — without replacing humans, but multiplying their capabilities.",
         "subs": [
           {
-            "title": "Architectures Multi-Agents",
-            "desc": "Plusieurs agents IA spécialisés coopèrent pour exécuter un processus métier complet : collecte de données, analyse d'informations, coordination entre services, génération de rapports et déclenchement d'actions automatisées. Gestion de workflows complexes à plusieurs étapes et sources."
+            "title": "Multi-Agent Architectures",
+            "desc": "Multiple specialized AI agents cooperate to execute a complete business process: data collection, information analysis, cross-department coordination, report generation, and automated action triggering. Managing complex workflows with multiple steps and sources."
           },
           {
-            "title": "Traitement Hybride Digital / Papier",
-            "desc": "Automatisation des flux mixtes grâce à la numérisation, l'OCR et l'extraction automatique d'informations. Formulaires, factures, contrats et dossiers administratifs sont analysés automatiquement et intégrés dans vos workflows numériques sans rupture de chaîne."
+            "title": "Hybrid Digital / Paper Processing",
+            "desc": "Automation of mixed flows through digitization, OCR, and automatic information extraction. Forms, invoices, contracts, and administrative files are automatically analyzed and integrated into your digital workflows without interruption."
           },
           {
-            "title": "IA de Soutien (Augmentation Humaine)",
-            "desc": "L'IA analyse, synthétise et recommande — l'humain supervise et décide. Un assistant avancé qui identifie les tendances, génère des synthèses et prépare l'information pour la prise de décision, sans jamais retirer le professionnel du centre du processus."
+            "title": "Support AI (Human Augmentation)",
+            "desc": "AI analyzes, synthesizes, and recommends — humans supervise and decide. An advanced assistant that identifies trends, generates summaries, and prepares information for decision-making, without ever removing the professional from the center of the process."
           }
         ],
         "benefits": [
-          "Traitement des processus accéléré",
-          "Tâches manuelles répétitives réduites",
-          "Qualité et fiabilité des données améliorées",
-          "Coordination inter-services renforcée",
-          "Capacité de prise de décision augmentée"
+          "Accelerated process handling",
+          "Reduced manual repetitive tasks",
+          "Improved data quality and reliability",
+          "Strengthened cross-department coordination",
+          "Enhanced decision-making capacity"
         ],
         "deliverables": [
-          "Cartographie des processus automatisables",
-          "Agents déployés & testés",
-          "Tableau de bord de monitoring",
-          "Guide de gouvernance IA"
+          "Mapping of automatable processes",
+          "Agents deployed & tested",
+          "Monitoring dashboard",
+          "AI governance guide"
         ]
       },
       "architecture-infrastructure": {
-        "pole": "Ingénierie Technologique",
+        "pole": "Technology Engineering",
         "title": "Architecture\n& Infrastructure",
-        "tagline": "Les fondations de votre croissance",
-        "intro": "Sans fondations solides, vos applications deviennent rapidement difficiles à faire évoluer, coûteuses à maintenir et incapables de suivre la croissance de l'organisation. ACT conçoit des architectures modernes, évolutives et sécurisées combinant architecture logicielle, cloud souverain adapté au contexte africain et conseil stratégique en systèmes d'information — pour transformer la technologie en véritable levier de performance.",
+        "tagline": "The foundations of your growth",
+        "intro": "Without solid foundations, your applications quickly become difficult to scale, expensive to maintain, and unable to keep up with organizational growth. ACT designs modern, scalable, and secure architectures combining software architecture, sovereign cloud adapted to the African context, and strategic IT consulting — to transform technology into a true performance lever.",
         "subs": [
           {
-            "title": "Architecture Logicielle Évolutive",
-            "desc": "Architectures basées sur les standards modernes : microservices, event-driven, API-first. Des systèmes modulaires et flexibles qui s'étendent progressivement — de l'administration locale au système national — sans reconstruction majeure. Protège l'investissement technologique tout en préparant la croissance future."
+            "title": "Scalable Software Architecture",
+            "desc": "Architectures based on modern standards: microservices, event-driven, API-first. Modular and flexible systems that scale gradually — from local administration to national system — without major rebuilding. Protects technology investment while preparing future growth."
           },
           {
-            "title": "Solutions Cloud Souveraines",
-            "desc": "Adoption cloud alignée sur les réglementations africaines de localisation des données. Architectures hybrides cloud/local pour la conformité réglementaire, migration sans interruption de service. Choix des fournisseurs adapté aux réalités et exigences sectorielles du continent."
+            "title": "Sovereign Cloud Solutions",
+            "desc": "Cloud adoption aligned with African data localization regulations. Hybrid cloud/local architectures for regulatory compliance, migration without service interruption. Provider choice adapted to the continent's realities and sector requirements."
           },
           {
             "title": "IT Consulting & Solution Design",
-            "desc": "Conseil indépendant et orienté résultats : analyses comparatives de solutions, études de faisabilité technique et financière, évaluations TCO sur cycle de vie, recommandations stratégiques. Pour des décisions technologiques éclairées, sans conflit d'intérêt."
+            "desc": "Independent, results-oriented consulting: comparative solution analysis, technical and financial feasibility studies, lifecycle TCO assessments, strategic recommendations. For informed technology decisions, without conflicts of interest."
           }
         ],
         "benefits": [
-          "Investissement technologique protégé",
-          "Scalabilité native dès la conception",
-          "Conformité réglementaire africaine assurée",
-          "Coûts opérationnels maîtrisés"
+          "Technology investment protected",
+          "Native scalability from design",
+          "African regulatory compliance ensured",
+          "Operational costs under control"
         ],
         "deliverables": [
-          "Schéma d'architecture validé",
-          "Plan de migration détaillé",
-          "Rapport TCO 5 ans",
-          "Documentation technique complète"
+          "Validated architecture diagram",
+          "Detailed migration plan",
+          "5-year TCO report",
+          "Complete technical documentation"
         ]
       },
       "data-intelligence-artificielle": {
-        "pole": "Ingénierie Technologique",
-        "title": "Data, Intelligence\nArtificielle & Big Data",
-        "tagline": "Vos données au service de votre mission",
-        "intro": "L'Afrique génère chaque jour des volumes considérables de données — transactions mobiles, données agricoles, informations de santé, flux logistiques. Pourtant, une grande partie reste inexploitable, dispersée dans des systèmes cloisonnés ou stockée dans des formats incompatibles. ACT accompagne les organisations dans la mise en place d'écosystèmes data complets couvrant l'ensemble du cycle de vie de la donnée : de la collecte à la valorisation en passant par le déploiement de modèles IA.",
+        "pole": "Technology Engineering",
+        "title": "Data, Artificial\nIntelligence & Big Data",
+        "tagline": "Your data serving your mission",
+        "intro": "Africa generates massive volumes of data every day — mobile transactions, agricultural data, health information, logistics flows. Yet much of it remains unusable, scattered across siloed systems or stored in incompatible formats. ACT supports organizations in setting up complete data ecosystems covering the full data lifecycle: from collection to value creation through AI model deployment.",
         "subs": [
           {
             "title": "Data Science & Machine Learning",
-            "desc": "Modèles analytiques et prédictifs entraînés sur des données africaines, conçus par des équipes africaines : prévision de demande, détection de fraude, segmentation des populations, analyse de l'absentéisme scolaire, prédiction des pannes industrielles. Des résultats pertinents et adaptés aux réalités locales."
+            "desc": "Analytical and predictive models trained on African data, designed by African teams: demand forecasting, fraud detection, population segmentation, school absenteeism analysis, industrial failure prediction. Relevant results adapted to local realities."
           },
           {
             "title": "Data Engineering",
-            "desc": "Infrastructure technique de collecte et d'exploitation des données : pipelines automatisés, data warehouses, data lakes, systèmes de contrôle qualité, intégration multi-sources (systèmes métiers, capteurs, formulaires, APIs). La base indispensable à toute stratégie data ou IA."
+            "desc": "Technical infrastructure for data collection and use: automated pipelines, data warehouses, data lakes, quality control systems, multi-source integration (business systems, sensors, forms, APIs). The essential foundation for any data or AI strategy."
           },
           {
             "title": "Big Data",
-            "desc": "Architectures Big Data pour les organisations gérant de très grands volumes de données. Déploiement de plateformes basées sur des technologies open source (Hadoop, Spark, Kafka, Elasticsearch) qui traitent et analysent à grande échelle tout en optimisant les coûts d'infrastructure."
+            "desc": "Big Data architectures for organizations managing very large data volumes. Deployment of platforms based on open source technologies (Hadoop, Spark, Kafka, Elasticsearch) that process and analyze at scale while optimizing infrastructure costs."
           },
           {
-            "title": "Intelligence Artificielle",
-            "desc": "Solutions IA appliquées aux domaines spécifiques : santé (aide au diagnostic), agriculture (recommandations agronomiques), éducation (analyse des performances), finance (détection de fraude, analyse de risque). Chaque solution est conçue selon des principes d'IA responsable : transparence, équité et supervision humaine."
+            "title": "Artificial Intelligence",
+            "desc": "AI solutions applied to specific domains: healthcare (diagnostic assistance), agriculture (agronomic recommendations), education (performance analysis), finance (fraud detection, risk analysis). Each solution is designed with responsible AI principles: transparency, fairness, and human oversight."
           }
         ],
         "benefits": [
-          "Données transformées en levier stratégique",
-          "Qualité et rapidité de prise de décision améliorées",
-          "Opérations optimisées et marchés anticipés",
-          "Inefficacités des systèmes fragmentés réduites",
-          "Services innovants basés sur la donnée développés"
+          "Data transformed into a strategic lever",
+          "Improved decision quality and speed",
+          "Optimized operations and anticipated markets",
+          "Reduced inefficiencies from fragmented systems",
+          "Innovative data-based services developed"
         ],
         "deliverables": [
-          "Modèles IA déployés & validés",
-          "Pipelines de données automatisés",
-          "Dashboard analytics temps réel",
-          "Charte IA & gouvernance"
+          "AI models deployed & validated",
+          "Automated data pipelines",
+          "Real-time analytics dashboard",
+          "AI charter & governance"
         ]
       },
       "geomatique-sig": {
-        "pole": "Ingénierie Technologique",
-        "title": "Géomatique\n& Systèmes d'Information\nGéographique",
-        "tagline": "Connaître son territoire pour le développer",
-        "intro": "On ne peut pas développer ce qu'on ne connaît pas. De nombreuses institutions africaines prennent encore des décisions d'aménagement, de gestion des ressources ou de planification d'infrastructures avec des informations géographiques incomplètes ou obsolètes. ACT combine technologies de cartographie, SIG et analyse spatiale pour transformer les données géographiques en outils d'aide à la décision — à partir d'imagerie satellitaire, de relevés terrain, de drones et de bases de données géospatiales ouvertes.",
+        "pole": "Technology Engineering",
+        "title": "Geomatics\n& Geographic Information\nSystems",
+        "tagline": "Know your territory to develop it",
+        "intro": "You can't develop what you don't know. Many African institutions still make decisions on planning, resource management, or infrastructure with incomplete or outdated geographic information. ACT combines mapping technologies, GIS, and spatial analysis to transform geographic data into decision-support tools — using satellite imagery, ground surveys, drones, and open geospatial databases.",
         "subs": [
           {
-            "title": "Cartographie Numérique",
-            "desc": "Cartes numériques multi-échelles produites à partir d'imagerie satellitaire haute résolution, LiDAR, GPS et drones. Livrées en formats standards (GeoJSON, Shapefile, GeoTIFF). Processus de mise à jour continue — indispensable dans des territoires africains en mutation rapide où les cartes obsolètes coûtent des millions."
+            "title": "Digital Mapping",
+            "desc": "Multi-scale digital maps produced from high-resolution satellite imagery, LiDAR, GPS, and drones. Delivered in standard formats (GeoJSON, Shapefile, GeoTIFF). Continuous update process — essential in rapidly changing African territories where outdated maps cost millions."
           },
           {
-            "title": "Systèmes d'Information Géographique (SIG)",
-            "desc": "Plateformes décisionnelles centralisant, visualisant et analysant les données territoriales croisées avec des données socio-économiques, démographiques, environnementales et infrastructurelles. Aide à répondre aux questions stratégiques : où construire, quelles zones sont à risque, quels territoires ont le meilleur potentiel agricole ou économique."
+            "title": "Geographic Information Systems (GIS)",
+            "desc": "Decision platforms centralizing, visualizing, and analyzing territorial data crossed with socio-economic, demographic, environmental, and infrastructural data. Helps answer strategic questions: where to build, which areas are at risk, which territories have the best agricultural or economic potential."
           }
         ],
         "benefits": [
-          "Planification territoriale améliorée",
-          "Dynamiques spatiales mieux comprises",
-          "Investissements en infrastructures optimisés",
-          "Risques environnementaux et climatiques anticipés",
-          "Qualité des décisions publiques et stratégiques renforcée"
+          "Improved territorial planning",
+          "Better understanding of spatial dynamics",
+          "Optimized infrastructure investments",
+          "Anticipated environmental and climate risks",
+          "Strengthened quality of public and strategic decisions"
         ],
         "deliverables": [
-          "Cartographie numérique haute résolution",
-          "Plateforme SIG opérationnelle",
-          "Formation des équipes SIG",
-          "Protocole de mise à jour des données"
+          "High-resolution digital mapping",
+          "Operational GIS platform",
+          "Training for GIS teams",
+          "Data update protocol"
         ]
       },
       "conseil-strategique": {
-        "pole": "Conseil",
-        "title": "Conseil Stratégique\n& Transformation",
-        "tagline": "La stratégie avant l'outil",
-        "intro": "Beaucoup d'organisations africaines cherchent d'abord un logiciel — sans avoir défini pourquoi elles en ont besoin, ce qu'elles veulent changer, ni quel modèle elles visent. Cette approche conduit à des investissements coûteux, mal adoptés et rapidement abandonnés. ACT inverse cette logique : la vision stratégique précède toujours le choix technologique. Ce n'est qu'à l'issue d'un diagnostic de fond que les orientations technologiques sont définies — jamais l'inverse.",
+        "pole": "Consulting",
+        "title": "Strategic Consulting\n& Transformation",
+        "tagline": "Strategy before the tool",
+        "intro": "Many African organizations first look for software — without having defined why they need it, what they want to change, or what model they're aiming for. This approach leads to expensive investments, poorly adopted and quickly abandoned. ACT reverses this logic: strategic vision always precedes technology choice. Only after an in-depth diagnosis are technology directions defined — never the other way around.",
         "subs": [
           {
-            "title": "Conseil Digital & Growth",
-            "desc": "Audit rigoureux de maturité digitale : analyse des systèmes en place, identification des angles morts et opportunités inexploitées par rapport aux meilleures pratiques sectorielles. Co-construction d'une feuille de route digitale structurée sur mesure — pas un document théorique, mais un véritable outil de pilotage avec jalons, KPIs et indicateurs de succès."
+            "title": "Digital Consulting & Growth",
+            "desc": "Rigorous digital maturity audit: analysis of existing systems, identification of blind spots and untapped opportunities compared to sector best practices. Co-construction of a tailored digital roadmap — not a theoretical document, but a real management tool with milestones, KPIs, and success indicators."
           },
           {
-            "title": "Conseil en Digital Transformation Services",
-            "desc": "Accompagnement complet à la conduite du changement : communication interne, formation des managers, animation de groupes pilotes, gestion des résistances et suivi de l'adoption. Pilotage de projets de transformation de bout en bout avec instances de gouvernance, gestion des risques et tableaux de bord de suivi partagés avec les équipes dirigeantes."
+            "title": "Digital Transformation Services Consulting",
+            "desc": "Complete change management support: internal communication, manager training, pilot group facilitation, resistance management, and adoption tracking. End-to-end transformation project management with governance bodies, risk management, and tracking dashboards shared with executive teams."
           }
         ],
         "benefits": [
-          "Vision stratégique claire avant tout investissement",
-          "Transformation digitale adoptée durablement",
-          "Investissements technologiques rentabilisés",
-          "Pilotage éclairé par des données fiables"
+          "Clear strategic vision before any investment",
+          "Digital transformation adopted sustainably",
+          "Technology investments paid back",
+          "Decision-making informed by reliable data"
         ],
         "deliverables": [
-          "Rapport d'audit de maturité digitale",
-          "Feuille de route stratégique 3 ans",
-          "Plan de conduite du changement",
-          "Tableau de bord KPIs"
+          "Digital maturity audit report",
+          "3-year strategic roadmap",
+          "Change management plan",
+          "KPI dashboard"
         ]
       },
       "conseil-operationnel": {
-        "pole": "Conseil",
-        "title": "Conseil Opérationnel\n& Métier",
-        "tagline": "Comprendre avant de numériser",
-        "intro": "Entre la stratégie digitale et le déploiement d'une solution technologique existe un espace critique trop souvent ignoré : l'espace opérationnel. C'est là que vivent les processus métiers réels, les flux d'information et les règles non écrites qui régissent le fonctionnement quotidien. Un processus inefficace numérisé reste un processus inefficace — simplement plus rapide et plus coûteux. ACT optimise l'opérationnel avant de choisir la technologie, en partant du terrain, pas d'une présentation PowerPoint.",
+        "pole": "Consulting",
+        "title": "Operational\n& Business Consulting",
+        "tagline": "Understand before you digitize",
+        "intro": "Between digital strategy and technology solution deployment lies a critical space too often ignored: the operational space. This is where real business processes, information flows, and unwritten rules governing daily operations live. An inefficient process, once digitized, remains inefficient — just faster and more expensive. ACT optimizes operations before choosing technology, starting from the field, not from a PowerPoint presentation.",
         "subs": [
           {
             "title": "Business Analysis",
-            "desc": "Analyse terrain : entretiens avec les équipes opérationnelles, observation des pratiques réelles (pas celles des organigrammes). Cartographie des processus avec outils structurés (BPMN, analyse de flux, chaîne de valeur), identification des inefficacités, redondances et goulots d'étranglement. Cahiers des charges fonctionnels directement exploitables par les équipes techniques."
+            "desc": "Field analysis: interviews with operational teams, observation of real practices (not the ones on org charts). Process mapping with structured tools (BPMN, flow analysis, value chain), identification of inefficiencies, redundancies, and bottlenecks. Functional specifications directly usable by technical teams."
           },
           {
-            "title": "Conseil Opérationnel",
-            "desc": "Optimisation des processus métiers avant toute numérisation : reconstruction des flux, alignement stratégie–opération–technologie, accompagnement à la mise en œuvre et mesure de l'impact. La technologie amplifie les processus efficaces ; ACT s'assure qu'ils le sont avant de les numériser."
+            "title": "Operational Consulting",
+            "desc": "Business process optimization before any digitization: flow reconstruction, strategy–operations–technology alignment, implementation support, and impact measurement. Technology amplifies efficient processes; ACT makes sure they are efficient before digitizing them."
           },
           {
             "title": "Consulting",
-            "desc": "Expertise opérationnelle transversale : analyse des processus métiers, optimisation de la performance, alignement stratégie–opération–technologie, accompagnement à la mise en œuvre. Des résultats concrets et mesurables sur le terrain, pas des slides."
+            "desc": "Cross-functional operational expertise: business process analysis, performance optimization, strategy–operations–technology alignment, implementation support. Concrete and measurable results in the field, not slides."
           }
         ],
         "benefits": [
-          "Processus métiers optimisés avant numérisation",
-          "Besoins réels identifiés par l'analyse terrain",
-          "ROI concret et mesurable",
-          "Adoption des outils facilitée"
+          "Business processes optimized before digitization",
+          "Real needs identified through field analysis",
+          "Concrete and measurable ROI",
+          "Easier tool adoption"
         ],
         "deliverables": [
-          "Cartographie BPMN des processus",
-          "Cahier des charges fonctionnel",
-          "Plan d'optimisation priorisé",
-          "Rapport ROI 6 mois"
+          "BPMN process mapping",
+          "Functional specifications",
+          "Prioritized optimization plan",
+          "6-month ROI report"
         ]
       },
       "catalogue-formations": {
-        "pole": "Formation",
-        "title": "Catalogue\nde Formations",
-        "tagline": "Se former aujourd'hui, c'est réussir demain",
-        "intro": "Se former aux compétences digitales est devenu incontournable. Nos formations en intelligence artificielle — comme l'intégration de l'IA au quotidien — permettent à tout professionnel de gagner en productivité et de faire de l'IA un véritable levier de performance. Au-delà de ces compétences transversales, c'est toute une culture numérique qu'il est essentiel d'acquérir pour répondre aux enjeux concrets du marché.Conçues par des experts du continent à partir de cas réels, ces formations offrent des compétences opérationnelles immédiatement mobilisable",
+        "pole": "Training",
+        "title": "Training\nCatalog",
+        "tagline": "Train today, succeed tomorrow",
+        "intro": "Training in digital skills has become essential. Our artificial intelligence training — like integrating AI into daily work — enables any professional to gain productivity and make AI a true performance lever. Beyond these cross-cutting skills, an entire digital culture is essential to address the concrete challenges of the market. Designed by experts from the continent based on real cases, these training programs offer operational skills immediately deployable.",
         "subs": [
           {
-            "title": "Formations Techniques",
-            "desc": "Maîtrisez les compétences techniques essentielles pour concevoir, déployer et sécuriser des solutions numériques robustes. Des programmes conçus pour répondre aux besoins concrets du marché, avec une approche pratique et opérationnelle."
+            "title": "Technical Training",
+            "desc": "Master the essential technical skills to design, deploy, and secure robust digital solutions. Programs designed to meet concrete market needs, with a practical and operational approach."
           },
           {
-            "title": "Formations Business & Stratégie",
-            "desc": "Pilotez la transformation numérique de votre organisation. Acquérez les méthodes et la vision stratégique nécessaires pour manager des projets innovants, prendre des décisions data-driven et fédérer vos équipes autour des enjeux digitaux."
+            "title": "Business & Strategy Training",
+            "desc": "Lead your organization's digital transformation. Acquire the methods and strategic vision needed to manage innovative projects, make data-driven decisions, and unite your teams around digital challenges."
           },
           {
-            "title": "Formations Spécialisées",
-            "desc": "Des programmes conçus pour ceux qui veulent se démarquer. Approfondissez des expertises de niche, développez des compétences rares et devenez une référence dans votre domaine"
+            "title": "Specialized Training",
+            "desc": "Programs designed for those who want to stand out. Deepen niche expertise, develop rare skills, and become a reference in your field"
           }
         ],
         "benefits": [
-          "En Afrique, 61% des entreprises jugent les compétences en numerique importantes pour leur succès — nos formations vous préparent à cette demande",
-          "Apprentissage flexible (en ligne & présentiel)",
-          "Contenus adaptés au contexte d'entreprises",
-          "Des formateurs experts du continent"
+          "In Africa, 61% of companies consider digital skills important for their success — our training prepares you for this demand",
+          "Flexible learning (online & in-person)",
+          "Content adapted to business contexts",
+          "Expert trainers from the continent"
         ],
         "deliverables": [
-          "Accès plateforme ACT University",
-          "Supports de cours téléchargeables",
-          "Certificats de réussite",
-          "Accès communauté alumni"
+          "Access to ACT University platform",
+          "Downloadable course materials",
+          "Certificates of completion",
+          "Access to alumni community"
         ]
       }
     }
