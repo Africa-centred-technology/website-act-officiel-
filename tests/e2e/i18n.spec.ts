@@ -29,13 +29,13 @@ test.describe("i18n routing", () => {
 
   test("LanguageSwitcher preserves path when switching locale", async ({ page }) => {
     await page.goto("/fr/services");
-    await page.selectOption("select[aria-label='Change language']", "en");
+    await page.getByRole("button", { name: /switch to/i }).click();
     await expect(page).toHaveURL(/\/en\/services$/);
   });
 
   test("NEXT_LOCALE cookie set after switch", async ({ page, context }) => {
     await page.goto("/fr");
-    await page.selectOption("select[aria-label='Change language']", "en");
+    await page.getByRole("button", { name: /switch to/i }).click();
     await page.waitForURL(/\/en/);
     const cookies = await context.cookies();
     const cookie = cookies.find((c) => c.name === "NEXT_LOCALE");
