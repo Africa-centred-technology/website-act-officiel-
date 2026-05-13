@@ -52,6 +52,20 @@ async function auditOne(url) {
   }
 }
 
+/** Retry an audit once on Windows EPERM errors caused by Chrome temp-dir contention. */
+async function auditOneWithRetry(url) {
+  try {
+    return await auditOne(url);
+  } catch (err) {
+    if (err?.code === "EPERM" || /EPERM/.test(String(err?.message))) {
+      // Brief pause for Windows to release the previous Chrome temp dir lock.
+      await new Promise((r) => setTimeout(r, 3000));
+      return await auditOne(url);
+    }
+    throw err;
+  }
+}
+
 async function runAllAudits() {
   const rows = [];
   for (const locale of LOCALES) {
@@ -59,13 +73,15 @@ async function runAllAudits() {
       const url = `${BASE_URL}/${locale}${pathPart}`;
       process.stdout.write(`Auditing ${url} ... `);
       try {
-        const scores = await auditOne(url);
+        const scores = await auditOneWithRetry(url);
         rows.push({ url, locale, pathPart, ...scores });
         console.log(`perf=${scores.perf} a11y=${scores.a11y} bp=${scores.bp} seo=${scores.seo}`);
       } catch (err) {
         rows.push({ url, locale, pathPart, perf: "ERROR", a11y: "ERROR", bp: "ERROR", seo: "ERROR", error: err.message });
         console.log(`ERROR: ${err.message}`);
       }
+      // Brief gap between audits to reduce Windows temp-dir contention.
+      await new Promise((r) => setTimeout(r, 1500));
     }
   }
   return rows;
