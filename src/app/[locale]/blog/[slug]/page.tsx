@@ -3,6 +3,8 @@ import { fetchShopifyBlogPostByHandle, fetchShopifyBlogPosts } from "@/lib/shopi
 import BlogPostShell from "@/components/blog/BlogPostShell";
 import type { Metadata } from "next";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleJsonLd, breadcrumbJsonLd } from "@/i18n/seo-jsonld";
 
 /* ── Static params : générés depuis Shopify ── */
 export async function generateStaticParams() {
@@ -44,10 +46,32 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
 
   const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
   if (!post) notFound();
 
-  return <BlogPostShell post={post} />;
+  const articleData = articleJsonLd({
+    locale,
+    slug,
+    title: post.title,
+    excerpt: post.excerpt,
+    author: post.authorName,
+    publishedAt: post.date,
+    image: post.image || undefined,
+  });
+
+  const crumbData = breadcrumbJsonLd([
+    { name: "Accueil", url: `https://www.a-ct.ma/${locale}` },
+    { name: "Blog", url: `https://www.a-ct.ma/${locale}/blog` },
+    { name: post.title, url: `https://www.a-ct.ma/${locale}/blog/${slug}` },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={articleData} />
+      <JsonLd data={crumbData} />
+      <BlogPostShell post={post} />
+    </>
+  );
 }
