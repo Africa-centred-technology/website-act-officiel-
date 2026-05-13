@@ -5,6 +5,7 @@ import { buildDynamicPageMetadata } from "@/i18n/seo";
 import { fetchShopifyFormationByHandle } from "@/lib/shopify/formations";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { courseJsonLd, breadcrumbJsonLd } from "@/i18n/seo-jsonld";
+import { getTranslations } from "next-intl/server";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -48,6 +49,7 @@ function FormationDetailLoading() {
 export default async function FormationPage({ params }: Props) {
   const { locale, slug } = await params;
   const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+  const tBreadcrumb = await getTranslations("breadcrumb");
 
   const courseData = formation
     ? courseJsonLd({
@@ -59,8 +61,8 @@ export default async function FormationPage({ params }: Props) {
     : null;
 
   const crumbData = breadcrumbJsonLd([
-    { name: "Accueil", url: `https://www.a-ct.ma/${locale}` },
-    { name: "Formations", url: `https://www.a-ct.ma/${locale}/formations` },
+    { name: tBreadcrumb("home"), url: `https://www.a-ct.ma/${locale}` },
+    { name: tBreadcrumb("formations"), url: `https://www.a-ct.ma/${locale}/formations` },
     { name: formation?.title ?? slug, url: `https://www.a-ct.ma/${locale}/formations/${slug}` },
   ]);
 

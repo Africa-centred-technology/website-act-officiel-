@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleJsonLd, breadcrumbJsonLd } from "@/i18n/seo-jsonld";
+import { getTranslations } from "next-intl/server";
 
 /* ── Static params : générés depuis Shopify ── */
 export async function generateStaticParams() {
@@ -51,6 +52,8 @@ export default async function BlogPostPage({
   const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
   if (!post) notFound();
 
+  const tBreadcrumb = await getTranslations("breadcrumb");
+
   const articleData = articleJsonLd({
     locale,
     slug,
@@ -62,8 +65,8 @@ export default async function BlogPostPage({
   });
 
   const crumbData = breadcrumbJsonLd([
-    { name: "Accueil", url: `https://www.a-ct.ma/${locale}` },
-    { name: "Blog", url: `https://www.a-ct.ma/${locale}/blog` },
+    { name: tBreadcrumb("home"), url: `https://www.a-ct.ma/${locale}` },
+    { name: tBreadcrumb("blog"), url: `https://www.a-ct.ma/${locale}/blog` },
     { name: post.title, url: `https://www.a-ct.ma/${locale}/blog/${slug}` },
   ]);
 
