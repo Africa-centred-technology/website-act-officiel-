@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { PROJECTS, CATEGORIES } from "@/lib/data/projects";
+import { useDataMessages } from "@/i18n/data-i18n";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 
@@ -99,6 +100,8 @@ function ProjectCard({
   index: number;
 }) {
   const t      = useTranslations("projects.index");
+  const msg    = useDataMessages();
+  const i18n   = msg.projects.items[project.id];
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [hovered, setHovered] = useState(false);
@@ -130,7 +133,7 @@ function ProjectCard({
         <div style={{ position: "relative", height: "clamp(180px, 22vw, 280px)", background: "#0a1520", overflow: "hidden" }}>
           <Image
             src={project.image}
-            alt={project.title}
+            alt={i18n.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-contain"
@@ -170,12 +173,12 @@ function ProjectCard({
               padding: "0.35rem 0.85rem", borderRadius: "0.3rem",
             }}
           >
-            {project.category}
+            {i18n.category}
           </motion.span>
 
           {/* Tech tags */}
           <div style={{ position: "absolute", bottom: "1rem", left: "1rem", display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {project.tags.slice(0, 2).map((tag) => (
+            {i18n.tags.slice(0, 2).map((tag) => (
               <span key={tag} style={{
                 background: "rgba(255,255,255,0.09)", backdropFilter: "blur(8px)",
                 color: "#ffffff", fontSize: "clamp(0.8rem, 1vw, 1rem)",
@@ -193,7 +196,7 @@ function ProjectCard({
           <div style={{ padding: "clamp(1.2rem, 2.5vw, 1.8rem)" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.7rem" }}>
               <span style={{ color: ORANGE, fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(0.85rem, 1.1vw, 1.05rem)", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" }}>
-                {project.categoryFull}
+                {i18n.categoryFull}
               </span>
               <span style={{ color: "#ffffff", fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)", letterSpacing: "0.1em" }}>
                 {project.year}
@@ -207,7 +210,7 @@ function ProjectCard({
             fontSize: "var(--font-25)", lineHeight: 1.1, marginBottom: "0.75rem",
             transition: "color 0.3s",
           }}>
-            {project.title}
+            {i18n.title}
           </h3>
 
           <p style={{
@@ -217,12 +220,12 @@ function ProjectCard({
             WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
             overflow: "hidden",
           }}>
-            {project.description}
+            {i18n.description}
           </p>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
             <span style={{ color: "#ffffff", fontFamily: "Futura, system-ui, sans-serif", fontSize: "clamp(0.85rem, 1.1vw, 1rem)", letterSpacing: "0.1em" }}>
-              {project.client}
+              {i18n.client}
             </span>
             <motion.span
               animate={{ x: hovered ? 4 : 0 }}
@@ -251,12 +254,13 @@ function ProjectCard({
    ══════════════════════════════════════════════════════════ */
 export default function RealisationsShell() {
   const t = useTranslations("projects.index");
+  const msg = useDataMessages();
   const [activeCategory, setActiveCategory] = useState<string>("Tous");
 
   const filtered =
     activeCategory === "Tous"
       ? PROJECTS
-      : PROJECTS.filter((p) => p.category === activeCategory);
+      : PROJECTS.filter((p) => msg.projects.items[p.id]?.category === activeCategory);
 
   return (
     <div style={{ background: BG, minHeight: "100vh", color: "#fff", fontFamily: "Futura, system-ui, sans-serif" }}>
@@ -381,7 +385,9 @@ export default function RealisationsShell() {
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             {CATEGORIES.map((cat) => {
               const isActive = activeCategory === cat;
-              const count = cat === "Tous" ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
+              const count = cat === "Tous"
+                ? PROJECTS.length
+                : PROJECTS.filter((p) => msg.projects.items[p.id]?.category === cat).length;
               return (
                 <motion.button
                   key={cat}

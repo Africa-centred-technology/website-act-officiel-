@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useRef } from "react";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
 import type { Project } from "@/lib/data/projects";
 import { PROJECTS } from "@/lib/data/projects";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 /* ── Grain ───────────────────────────────────────────── */
 function Grain() {
@@ -84,6 +85,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
    ══════════════════════════════════════════════════════ */
 export default function ProjectDetailShell({ project }: { project: Project }) {
   const t = useTranslations("projects.detail");
+  const msg = useDataMessages();
+  const i18n = msg.projects.items[project.id];
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -93,6 +96,8 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
   const idx = PROJECTS.findIndex((p) => p.id === project.id);
   const prev = PROJECTS[idx - 1] ?? null;
   const next = PROJECTS[idx + 1] ?? null;
+  const prevI18n = prev ? msg.projects.items[prev.id] : null;
+  const nextI18n = next ? msg.projects.items[next.id] : null;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0A1410", color: "#fff", overflowX: "hidden", paddingTop: "clamp(5rem, 8vw, 8rem)" }}>
@@ -167,7 +172,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         >
           <Image
             src={project.image}
-            alt={project.title}
+            alt={i18n.title}
             fill
             sizes="100vw"
             className="object-contain"
@@ -228,7 +233,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 borderRadius: "0.3rem",
               }}
             >
-              {project.category}
+              {i18n.category}
             </span>
             <span
               style={{
@@ -258,7 +263,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
               maxWidth: "14ch",
             }}
           >
-            {project.title}
+            {i18n.title}
           </motion.h1>
 
           {/* Tagline */}
@@ -273,7 +278,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
               lineHeight: 1.6,
             }}
           >
-            {project.tagline}
+            {i18n.tagline}
           </motion.p>
         </div>
 
@@ -305,10 +310,10 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
         <Reveal>
           <div className="proj-meta-bar">
             {[
-              { label: t("metaClient"), value: project.client },
+              { label: t("metaClient"), value: i18n.client },
               { label: t("metaYear"), value: project.year },
-              { label: t("metaDuration"), value: project.duration },
-              { label: t("metaDomain"), value: project.categoryFull },
+              { label: t("metaDuration"), value: i18n.duration },
+              { label: t("metaDomain"), value: i18n.categoryFull },
             ].map((item) => (
               <div key={item.label}>
                 <p
@@ -353,7 +358,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 {t("metaTech")}
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {project.tags.map((tag) => (
+                {i18n.tags.map((tag) => (
                   <span
                     key={tag}
                     style={{
@@ -404,14 +409,14 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             </div>
             {/* Right — texte */}
             <div>
-              {project.descriptionLong.split("\n\n").map((para, i) => (
+              {i18n.descriptionLong.split("\n\n").map((para, i) => (
                 <p
                   key={i}
                   style={{
                     color: "rgba(255,255,255,0.6)",
                     fontSize: "var(--font-20)",
                     lineHeight: 1.85,
-                    marginBottom: i < project.descriptionLong.split("\n\n").length - 1 ? "1.8rem" : 0,
+                    marginBottom: i < i18n.descriptionLong.split("\n\n").length - 1 ? "1.8rem" : 0,
                   }}
                 >
                   {para.trim()}
@@ -435,7 +440,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
           >
             <Image
               src={project.image}
-              alt={project.title}
+              alt={i18n.title}
               fill
               sizes="(max-width: 768px) 100vw, 80vw"
               className="object-contain"
@@ -466,7 +471,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 gap: "1rem",
               }}
             >
-              {project.results.map((r, i) => (
+              {i18n.results.map((r, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
@@ -519,7 +524,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
               <div style={{ width: 40, height: 2, background: "#D35400", marginTop: "0.5rem" }} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {project.challenges.map((c, i) => (
+              {i18n.challenges.map((c, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -16 }}
@@ -588,7 +593,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                   margin: 0,
                 }}
               >
-                {project.approach}
+                {i18n.approach}
               </p>
             </div>
           </div>
@@ -688,7 +693,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
           gridTemplateColumns: prev ? (next ? "1fr 1fr" : "1fr") : "1fr",
         }}
       >
-        {prev && (
+        {prev && prevI18n && (
           <Link
             href={`/projects/${prev.id}`}
             style={{
@@ -727,7 +732,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#fff",
               }}
             >
-              {prev.title}
+              {prevI18n.title}
             </span>
             <span
               style={{
@@ -737,11 +742,11 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#D35400",
               }}
             >
-              {prev.category}
+              {prevI18n.category}
             </span>
           </Link>
         )}
-        {next && (
+        {next && nextI18n && (
           <Link
             href={`/projects/${next.id}`}
             style={{
@@ -781,7 +786,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 textAlign: "right",
               }}
             >
-              {next.title}
+              {nextI18n.title}
             </span>
             <span
               style={{
@@ -791,7 +796,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 color: "#D35400",
               }}
             >
-              {next.category}
+              {nextI18n.category}
             </span>
           </Link>
         )}
