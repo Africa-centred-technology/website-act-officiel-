@@ -131,7 +131,7 @@ function ScanLine() {
   return (
     <motion.div
       aria-hidden
-      className="absolute left-0 w-full pointer-events-none"
+      className="absolute start-0 w-full pointer-events-none"
       style={{
         height: "2px",
         zIndex: 4,

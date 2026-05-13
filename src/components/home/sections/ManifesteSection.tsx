@@ -69,7 +69,7 @@ export default function ManifesteSection() {
       {/* ── Halo orange diffus (background) ── */}
       <motion.div
         aria-hidden
-        className="absolute -top-20 -right-32 w-[36rem] h-[36rem] rounded-full pointer-events-none"
+        className="absolute -top-20 -end-32 w-[36rem] h-[36rem] rounded-full pointer-events-none"
         style={{
           background: `radial-gradient(circle, ${ORANGE}1A 0%, transparent 65%)`,
           filter: "blur(80px)",
@@ -79,7 +79,7 @@ export default function ManifesteSection() {
       />
       <motion.div
         aria-hidden
-        className="absolute -bottom-32 -left-20 w-[30rem] h-[30rem] rounded-full pointer-events-none"
+        className="absolute -bottom-32 -start-20 w-[30rem] h-[30rem] rounded-full pointer-events-none"
         style={{
           background: `radial-gradient(circle, rgba(255,140,40,0.08) 0%, transparent 65%)`,
           filter: "blur(90px)",

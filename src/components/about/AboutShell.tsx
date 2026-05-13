@@ -108,7 +108,7 @@ const STAT_DEPTH = [
 /** Scan-line horizontale (borrowed from RoomEntree) */
 function ScanLine() {
   return (
-    <motion.div aria-hidden className="absolute left-0 w-full pointer-events-none"
+    <motion.div aria-hidden className="absolute start-0 w-full pointer-events-none"
       style={{ height: "2px", zIndex: 4,
         background: "linear-gradient(to right, transparent, rgba(211,84,0,0.6) 30%, rgba(255,130,30,0.95) 50%, rgba(211,84,0,0.6) 70%, transparent)",
         boxShadow: "0 0 28px 5px rgba(211,84,0,0.28)" }}
@@ -144,7 +144,7 @@ function AmbiantLines({ positions = ["14%", "84%"] }: { positions?: string[] }) 
   return (
     <>
       {positions.map(pos => (
-        <motion.div key={pos} aria-hidden className="absolute left-0 w-full pointer-events-none"
+        <motion.div key={pos} aria-hidden className="absolute start-0 w-full pointer-events-none"
           style={{ height: 1, background: "rgba(255,255,255,0.05)", top: pos, originX: 0.5, zIndex: 1 }}
           initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }}
           transition={{ duration: 1.7 }} />

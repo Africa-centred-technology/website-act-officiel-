@@ -60,7 +60,7 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
       {/* Decoration */}
       <motion.div
         aria-hidden
-        className="absolute top-1/4 -right-40 w-[600px] h-[600px] bg-[#D35400]/10 blur-[150px] rounded-full"
+        className="absolute top-1/4 -end-40 w-[600px] h-[600px] bg-[#D35400]/10 blur-[150px] rounded-full"
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />

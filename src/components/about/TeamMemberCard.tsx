@@ -52,7 +52,7 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
       {/* Badge Fondateur (si c'est le CEO) */}
       {isFounder && (
         <div
-          className="absolute top-4 right-4 z-30 px-4 py-2 rounded-md backdrop-blur-md"
+          className="absolute top-4 end-4 z-30 px-4 py-2 rounded-md backdrop-blur-md"
           style={{
             background: "rgba(211,84,0,0.9)",
             border: "1px solid rgba(255,255,255,0.2)",

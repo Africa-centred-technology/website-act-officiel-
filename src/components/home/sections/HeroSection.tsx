@@ -77,7 +77,7 @@ function ScanLine() {
   return (
     <motion.div
       aria-hidden
-      className="absolute left-0 w-full pointer-events-none"
+      className="absolute start-0 w-full pointer-events-none"
       style={{
         height: "2px",
         background:
@@ -261,7 +261,7 @@ export default function HeroSection() {
         <motion.div
           key={pos}
           aria-hidden
-          className="absolute left-0 w-full pointer-events-none"
+          className="absolute start-0 w-full pointer-events-none"
           style={{
             height: 1,
             background: "rgba(255,255,255,0.05)",

@@ -139,7 +139,7 @@ export default function PoleDeveloppementShell() {
           }}>
 
         <motion.div
-          className="absolute top-1/4 -right-40 w-[800px] h-[800px] rounded-full"
+          className="absolute top-1/4 -end-40 w-[800px] h-[800px] rounded-full"
           style={{ background: `${COLOR}20`, filter: 'blur(150px)' }}
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 8, repeat: Infinity }}

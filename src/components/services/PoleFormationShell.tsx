@@ -77,7 +77,7 @@ function KenBurns({
 
 function ScanLine({ accent }: { accent: string }) {
   return (
-    <motion.div aria-hidden className="absolute left-0 w-full pointer-events-none"
+    <motion.div aria-hidden className="absolute start-0 w-full pointer-events-none"
       style={{
         height: "2px",
         background: `linear-gradient(to right, transparent 0%, ${accent}88 25%, ${accent}EE 50%, ${accent}88 75%, transparent 100%)`,

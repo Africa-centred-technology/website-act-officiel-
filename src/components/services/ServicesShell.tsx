@@ -407,7 +407,7 @@ function ServiceCanvas({ accent, seed }: { accent: string; seed: number }) {
    ══════════════════════════════════════════════════════ */
 function ScanLine({ color }: { color: string }) {
   return (
-    <motion.div aria-hidden className="absolute left-0 w-full pointer-events-none"
+    <motion.div aria-hidden className="absolute start-0 w-full pointer-events-none"
       style={{
         height: 1, zIndex: 4,
         background: `linear-gradient(to right, transparent, ${color}88 30%, ${color}dd 50%, ${color}88 70%, transparent)`,
