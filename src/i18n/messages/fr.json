@@ -10,6 +10,42 @@
     "default": {
       "title": "Africa Centred Technology | Engineering the Future",
       "description": "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+    },
+    "home": {
+      "title": "ACT — Africa Centred Technology | Engineering the Future",
+      "description": "Découvrez ACT, la société africaine qui fusionne IA et ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+    },
+    "about": {
+      "title": "À Propos — Africa Centred Technology",
+      "description": "Découvrez l'histoire, la mission et l'équipe d'Africa Centred Technology — pionniers de la transformation digitale en Afrique depuis 2023."
+    },
+    "services": {
+      "title": "Services — Africa Centred Technology",
+      "description": "Nos 9 services en ingénierie technologique, conseil et formation pour propulser votre entreprise africaine vers l'innovation."
+    },
+    "formations": {
+      "title": "Formations — Africa Centred Technology",
+      "description": "Catalogue des formations ACT en intelligence artificielle, data, et transformation digitale, conçues pour les professionnels africains."
+    },
+    "poles": {
+      "title": "Pôles — Africa Centred Technology",
+      "description": "Les 3 pôles métiers d'ACT : Ingénierie Technologique, Conseil et Formation. Découvrez notre expertise complète."
+    },
+    "secteurs": {
+      "title": "Secteurs — Africa Centred Technology",
+      "description": "Les secteurs d'activité où ACT intervient pour accompagner la transformation digitale des entreprises africaines."
+    },
+    "projects": {
+      "title": "Réalisations — Africa Centred Technology",
+      "description": "Découvrez les projets clients d'ACT : transformations digitales, IA, ingénierie. Études de cas concrètes en Afrique."
+    },
+    "blog": {
+      "title": "Blog — Africa Centred Technology",
+      "description": "Articles, analyses et veille technologique d'ACT. IA, transformation digitale, ingénierie : l'actualité tech africaine."
+    },
+    "contact": {
+      "title": "Contact — Africa Centred Technology",
+      "description": "Contactez l'équipe ACT pour discuter de vos projets de transformation digitale, IA et formation au Maroc et en Afrique."
     }
   }
 }
