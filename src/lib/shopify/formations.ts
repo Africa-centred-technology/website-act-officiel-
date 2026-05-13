@@ -19,10 +19,13 @@ const SHOPIFY_TOKEN = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ?? process.env
 const API_VERSION   = "2024-01";
 const ENDPOINT      = `https://${SHOPIFY_STORE}/api/${API_VERSION}/graphql.json`;
 
+import type { Locale } from "@/i18n/routing";
+import { toShopifyLanguage } from "@/lib/shopify/locale";
+
 // ── GraphQL query ─────────────────────────────────────────────────────────────
 
 const PRODUCTS_QUERY = `
-  query GetFormations($first: Int!, $after: String) {
+  query GetFormations($first: Int!, $after: String, $lang: LanguageCode!) @inContext(language: $lang) {
     products(first: $first, after: $after) {
       pageInfo {
         hasNextPage
@@ -228,13 +231,14 @@ function parsePricingPlans(value: string): PricingPlan[] {
 
 // ── Main fetcher ──────────────────────────────────────────────────────────────
 
-export async function fetchShopifyFormations(): Promise<ShopifyFormationCard[]> {
+export async function fetchShopifyFormations(locale: Locale): Promise<ShopifyFormationCard[]> {
+  const lang = toShopifyLanguage(locale);
   const all: ShopifyFormationCard[] = [];
   let after: string | null = null;
 
   // Pagination : récupère jusqu'à 250 produits (5 × 50)
   for (let page = 0; page < 5; page++) {
-    const variables: Record<string, any> = { first: 50 };
+    const variables: Record<string, any> = { first: 50, lang };
     if (after) variables.after = after;
 
     const res = await fetch(ENDPOINT, {
@@ -275,7 +279,7 @@ export async function fetchShopifyFormations(): Promise<ShopifyFormationCard[]> 
 // ── Single product query ───────────────────────────────────────────────────────
 
 const PRODUCT_BY_HANDLE_QUERY = `
-  query GetFormationByHandle($handle: String!) {
+  query GetFormationByHandle($handle: String!, $lang: LanguageCode!) @inContext(language: $lang) {
     product(handle: $handle) {
       id
       title
@@ -661,7 +665,8 @@ function mapProductDetail(node: any): ShopifyFormationDetail {
   };
 }
 
-export async function fetchShopifyFormationByHandle(handle: string): Promise<ShopifyFormationDetail | null> {
+export async function fetchShopifyFormationByHandle(handle: string, locale: Locale): Promise<ShopifyFormationDetail | null> {
+  const lang = toShopifyLanguage(locale);
   const res = await fetch(ENDPOINT, {
     method: "POST",
     headers: {
@@ -670,8 +675,7 @@ export async function fetchShopifyFormationByHandle(handle: string): Promise<Sho
     },
     body: JSON.stringify({
       query: PRODUCT_BY_HANDLE_QUERY,
-
-      variables: { handle },
+      variables: { handle, lang },
     }),
     next: { revalidate: 300 },
   });
