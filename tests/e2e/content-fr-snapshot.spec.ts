@@ -11,6 +11,13 @@ test.describe("Content FR — no regression after externalization", () => {
     { path: "/fr/projects", contains: ["Réalisations"] },
     { path: "/fr/blog", contains: ["Blog"] },
     { path: "/fr/contact", contains: ["Contact"] },
+    // Detail pages — added in C2 to validate i18n migration
+    { path: "/fr/poles/developpement-technologique", contains: ["Développement Technologique"] },
+    { path: "/fr/poles/conseil-strategie-it", contains: ["Conseil"] },
+    { path: "/fr/poles/formation", contains: ["Formation"] },
+    { path: "/fr/secteurs/industrie", contains: ["Industrie"] },
+    { path: "/fr/services/ingenierie-logicielle", contains: ["Ingénierie Logicielle"] },
+    { path: "/fr/projects/rag", contains: ["Système RAG Multi-sources"] },
   ];
 
   for (const { path, contains } of PAGES) {
