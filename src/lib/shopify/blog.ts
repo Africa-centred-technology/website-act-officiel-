@@ -16,10 +16,13 @@ const SHOPIFY_TOKEN = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ?? process.env
 const API_VERSION   = "2024-01";
 const ENDPOINT      = `https://${SHOPIFY_STORE}/api/${API_VERSION}/graphql.json`;
 
+import type { Locale } from "@/i18n/routing";
+import { toShopifyLanguage } from "@/lib/shopify/locale";
+
 // ── GraphQL query ────────────────────────────────────────────────────────────
 
 const ALL_ARTICLES_QUERY = `
-  query GetAllBlogArticles {
+  query GetAllBlogArticles($lang: LanguageCode!) @inContext(language: $lang) {
     blogs(first: 20) {
       edges {
         node {
@@ -177,14 +180,15 @@ function mapArticle(node: any, blogHandle: string): ShopifyBlogPost {
 // ── Fetchers ─────────────────────────────────────────────────────────────────
 
 /** Récupère tous les articles de tous les blogs Shopify */
-export async function fetchShopifyBlogPosts(): Promise<ShopifyBlogPost[]> {
+export async function fetchShopifyBlogPosts(locale: Locale): Promise<ShopifyBlogPost[]> {
+  const lang = toShopifyLanguage(locale);
   const res = await fetch(ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN,
     },
-    body: JSON.stringify({ query: ALL_ARTICLES_QUERY }),
+    body: JSON.stringify({ query: ALL_ARTICLES_QUERY, variables: { lang } }),
     next: { revalidate: 300 },
   });
 
@@ -207,7 +211,7 @@ export async function fetchShopifyBlogPosts(): Promise<ShopifyBlogPost[]> {
 }
 
 /** Récupère un seul article par son handle (cherche dans tous les blogs) */
-export async function fetchShopifyBlogPostByHandle(handle: string): Promise<ShopifyBlogPost | null> {
-  const all = await fetchShopifyBlogPosts();
+export async function fetchShopifyBlogPostByHandle(handle: string, locale: Locale): Promise<ShopifyBlogPost | null> {
+  const all = await fetchShopifyBlogPosts(locale);
   return all.find((p) => p.slug === handle) ?? null;
 }
