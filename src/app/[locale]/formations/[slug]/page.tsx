@@ -1,7 +1,10 @@
 import { Suspense } from "react";
+import type { Thing, WithContext } from "schema-dts";
 import FormationDetailShell from "@/components/formations/FormationDetailShell";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
 import { fetchShopifyFormationByHandle } from "@/lib/shopify/formations";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { courseJsonLd, breadcrumbJsonLd } from "@/i18n/seo-jsonld";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -43,9 +46,28 @@ function FormationDetailLoading() {
 }
 
 export default async function FormationPage({ params }: Props) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+
+  const courseData = formation
+    ? courseJsonLd({
+        locale,
+        slug,
+        title: formation.title,
+        description: formation.accroche,
+      })
+    : null;
+
+  const crumbData = breadcrumbJsonLd([
+    { name: "Accueil", url: `https://www.a-ct.ma/${locale}` },
+    { name: "Formations", url: `https://www.a-ct.ma/${locale}/formations` },
+    { name: formation?.title ?? slug, url: `https://www.a-ct.ma/${locale}/formations/${slug}` },
+  ]);
+
   return (
     <Suspense fallback={<FormationDetailLoading />}>
+      {courseData && <JsonLd data={courseData as unknown as WithContext<Thing>} />}
+      <JsonLd data={crumbData as unknown as WithContext<Thing>} />
       <FormationDetailShell slug={slug} />
     </Suspense>
   );
