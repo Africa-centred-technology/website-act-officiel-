@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * FormationsShell — Page catalogue de formations IA
@@ -7,7 +7,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import {
   Search,

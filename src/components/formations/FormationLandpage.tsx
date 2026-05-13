@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
     Clock, Users, BookOpen, Sparkles, ChevronRight, ArrowRight,
     Tag, Loader2, TrendingUp, Zap, Target, Shield, CheckCircle2,

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * CatalogueSection — Résumé interactif des formations par domaine
@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ORANGE = "#D35400";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * ProjectsSection — Editorial 2-column showcase.
@@ -21,7 +21,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "@/lib/data/projects";
 

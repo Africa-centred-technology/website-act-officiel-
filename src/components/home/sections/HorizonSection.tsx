@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * Room 06 — LA SORTIE
@@ -10,7 +10,7 @@
 
 import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 const NAV_LINKS = [
   { href: "/about", label: "À Propos" },

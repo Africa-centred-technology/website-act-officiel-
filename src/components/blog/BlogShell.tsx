@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * Pôle Conseil & Stratégie IT - Page Détaillée
@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import {
   Users,

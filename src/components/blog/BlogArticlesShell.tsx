@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Search, ChevronLeft, ChevronRight, Star, Clock } from "lucide-react";

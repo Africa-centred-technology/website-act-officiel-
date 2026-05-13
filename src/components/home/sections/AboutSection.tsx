@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 const EASE = [0.04, 0.72, 0.08, 1.0] as const;
 

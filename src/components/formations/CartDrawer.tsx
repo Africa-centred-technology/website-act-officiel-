@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   X, ShoppingCart, Minus, Plus, Trash2, ArrowRight,
   CheckCircle, Shield, CreditCard

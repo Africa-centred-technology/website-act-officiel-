@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle, Settings, Wifi, Leaf, TrendingUp, ShoppingCart, Building2, Landmark } from "lucide-react";

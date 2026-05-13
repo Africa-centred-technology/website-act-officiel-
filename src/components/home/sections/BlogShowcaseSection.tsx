@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * BlogShowcaseSection — Sticky-stacking blog cards.
@@ -15,7 +15,7 @@
  */
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

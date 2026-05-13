@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * PoleConseilShell — Page de détail pour le Pôle II - Conseil & Stratégie
@@ -13,7 +13,7 @@
  */
 
 import React, { useRef, useMemo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import {
   motion,

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * Room 01 — LE CONTINENT
@@ -16,7 +16,7 @@
  */
 
 import React, { useMemo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const BURST = [0.04, 0.72, 0.08, 1.0] as const;

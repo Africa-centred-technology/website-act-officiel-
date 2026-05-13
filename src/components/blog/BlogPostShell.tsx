@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Share2, Linkedin, Twitter, Link2, Facebook } from "lucide-react";

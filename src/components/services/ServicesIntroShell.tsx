@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * ServicesIntroShell — Expérience d'entrée des services ACT.
@@ -12,7 +12,7 @@ import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { SERVICES, type Service } from "@/lib/data/services";
 import LogoPhase from "./LogoPhase";
 import FooterStrip from "@/components/layout/FooterStrip";

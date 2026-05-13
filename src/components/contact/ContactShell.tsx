@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube, Send } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
