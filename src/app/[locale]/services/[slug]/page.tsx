@@ -4,6 +4,7 @@ import PoleIngenieurieShell from "@/components/services/PoleIngenieurieShell";
 import PoleConseilShell from "@/components/services/PoleConseilShell";
 import PoleFormationShell from "@/components/services/PoleFormationShell";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
+import { getDataMessages } from "@/i18n/data-i18n";
 
 /* Pré-génère toutes les pages au build */
 export function generateStaticParams() {
@@ -13,13 +14,15 @@ export function generateStaticParams() {
 /* Metadata dynamique par service */
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
-  const svc = getServiceBySlug(slug);
-  if (!svc) return {};
+  const msg = await getDataMessages();
+  const i18n = msg.services.items[slug];
+  const title = i18n?.title?.replace(/\n/g, " ") ?? `${slug} — ACT`;
+  const description = (i18n?.intro ?? "Service ACT — découvrez notre expertise.").slice(0, 155);
   return buildDynamicPageMetadata({
     locale,
     path: `/services/${slug}`,
-    title: `${svc.title.replace(/\n/g, " ")} — ACT`,
-    description: svc.intro.slice(0, 155),
+    title,
+    description,
   });
 }
 

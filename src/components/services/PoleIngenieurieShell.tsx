@@ -27,6 +27,7 @@ const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"),
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 import { SERVICES, type Service } from "@/lib/data/services";
+import { useDataMessages, type ServiceI18n } from "@/i18n/data-i18n";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import CatalogueSection from "@/components/formations/CatalogueSection";
@@ -142,7 +143,7 @@ function WordChars({ text, delay = 0, color = "#fff", fx, stagger: s = 0.034, si
 /* ═══════════════════════════════════════════════════════
    1 · HERO 100vh — image Ken Burns + gradient + effets
    ═══════════════════════════════════════════════════════ */
-function HeroSection({ svc, index }: { svc: Service; index: number }) {
+function HeroSection({ svc, i18n, index }: { svc: Service; i18n: ServiceI18n; index: number }) {
   const t = useTranslations("services.poles.ingenierie");
   const heroRef = useRef<HTMLDivElement>(null);
   const mx  = useMotionValue(0);
@@ -164,7 +165,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
     })), [index]);
 
   const fxCycle: CharFx[] = ["rollIn", "burstOut", "riseUp"];
-  const titleLines  = svc.title.split("\n");
+  const titleLines  = i18n.title.split("\n");
   const titleColors = ["#ffffff", ORANGE, "#ffffff"];
 
   return (
@@ -207,7 +208,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
       }} />
 
       {/* Orbit arc */}
-      <OrbitArc label={svc.tagline} />
+      <OrbitArc label={i18n.tagline} />
 
       {/* Scan-line */}
       <ScanLine accent={ORANGE} />
@@ -276,7 +277,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
             fontSize: "clamp(0.85rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em",
             textTransform: "uppercase", color: ORANGE,
           }}>
-            Pôle {svc.poleN} · {svc.pole}
+            Pôle {svc.poleN} · {i18n.pole}
           </span>
         </motion.nav>
 
@@ -302,7 +303,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
             transition={{ delay: 1.05, duration: 0.7, ease: [...EASE] }} />
           <p style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.6rem)",
             color: "rgba(255,255,255,0.75)", fontStyle: "italic", letterSpacing: "0.02em" }}>
-            {svc.tagline}
+            {i18n.tagline}
           </p>
         </motion.div>
 
@@ -326,7 +327,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
 /* ═══════════════════════════════════════════════════════
    2 · INTRO — image latérale animée avec parallax scroll
    ═══════════════════════════════════════════════════════ */
-function IntroSection({ svc }: { svc: Service }) {
+function IntroSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.poles.ingenierie");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -363,10 +364,10 @@ function IntroSection({ svc }: { svc: Service }) {
             lineHeight: 1.8, color: "#ffffff",
             fontStyle: "italic", marginBottom: "2.5rem",
           }}>
-            "{svc.intro}"
+            "{i18n.intro}"
           </motion.p>
 
-       
+
         </motion.div>
       </motion.div>
 
@@ -379,7 +380,7 @@ function IntroSection({ svc }: { svc: Service }) {
         {/* Image Ken Burns */}
         <motion.div style={{ position: "absolute", inset: 0, y: imgY }}>
           <KenBurns
-            src={svc.heroImage} alt={svc.title.replace(/\n/g, " ")}
+            src={svc.heroImage} alt={i18n.title.replace(/\n/g, " ")}
             duration={24} fromScale={1.0} toScale={1.1}
             fromX="0%" toX="-3%" fromY="0%" toY="-4%"
           />
@@ -579,7 +580,7 @@ const BENEFIT_ICONS = [
   "M12 15a3 3 0 100-6 3 3 0 000 6z M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z", // Settings
 ];
 
-function BenefitsSection({ svc }: { svc: Service }) {
+function BenefitsSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.poles.ingenierie");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -630,7 +631,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
               gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
               gap: "1.5rem",
             }}>
-              {svc.benefits.map((b, i) => (
+              {i18n.benefits.map((b, i) => (
                 <motion.div key={i} variants={fadeUp}
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: [...EASE] } }}
                   style={{
@@ -681,6 +682,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
    ═══════════════════════════════════════════════════════ */
 function RelatedServices({ svc }: { svc: Service }) {
   const t = useTranslations("services.poles.ingenierie");
+  const msg = useDataMessages();
   const related = SERVICES.filter(s => s.poleN === svc.poleN && s.slug !== svc.slug).slice(0, 3);
   if (!related.length) return null;
 
@@ -710,7 +712,9 @@ function RelatedServices({ svc }: { svc: Service }) {
             gridTemplateColumns: `repeat(${related.length}, 1fr)`,
             gap: "1.25rem",
           }} className="related-grid">
-            {related.map(r => (
+            {related.map(r => {
+              const ri18n = msg.services.items[r.slug];
+              return (
               <motion.div key={r.slug} variants={fadeUp}>
                 <Link href={`/services/${r.slug}`} style={{ textDecoration: "none", display: "block" }}>
                   <motion.div whileHover={{ y: -5, borderColor: `${r.accent}55` }}
@@ -741,14 +745,15 @@ function RelatedServices({ svc }: { svc: Service }) {
                         fontSize: "clamp(13px, 0.95rem, 1rem)",
                         fontWeight: 500, color: "#fff", whiteSpace: "pre-line",
                         lineHeight: 1.2, marginBottom: "0.6rem",
-                      }}>{r.title}</p>
+                      }}>{ri18n?.title ?? r.slug}</p>
                       <p style={{ fontSize: "clamp(11px, 0.75rem, 0.8rem)",
-                        color: "rgba(255,255,255,0.60)", fontStyle: "italic" }}>{r.tagline}</p>
+                        color: "rgba(255,255,255,0.60)", fontStyle: "italic" }}>{ri18n?.tagline ?? ""}</p>
                     </div>
                   </motion.div>
                 </Link>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
       </div>
@@ -761,7 +766,7 @@ function RelatedServices({ svc }: { svc: Service }) {
 /* ═══════════════════════════════════════════════════════
    STICKY HEADER
    ═══════════════════════════════════════════════════════ */
-function StickyHeader({ svc }: { svc: Service }) {
+function StickyHeader({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.poles.ingenierie");
   const [visible, setVisible] = React.useState(false);
   React.useEffect(() => {
@@ -791,7 +796,7 @@ function StickyHeader({ svc }: { svc: Service }) {
         <span style={{
           fontFamily: "Futura, system-ui, sans-serif",
           fontSize: "clamp(12px, 0.82rem, 0.88rem)", color: "#fff", letterSpacing: "0.1em",
-        }}>{svc.title.replace(/\n/g, " ")}</span>
+        }}>{i18n.title.replace(/\n/g, " ")}</span>
       </div>
       <span style={{
         background: `${ORANGE}18`, border: `1px solid ${ORANGE}35`,
@@ -809,7 +814,11 @@ function StickyHeader({ svc }: { svc: Service }) {
    ═══════════════════════════════════════════════════════ */
 export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
   const t = useTranslations("services.poles.ingenierie");
+  const msg = useDataMessages();
+  const i18n = msg.services.items[svc.slug];
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
+
+  if (!i18n) return null;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0A1410", color: "#fff", position: "relative" }}>
@@ -820,11 +829,11 @@ export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
         <Cursor />
       </div>
       <div style={{ position: "relative", zIndex: 1 }}>
-        <StickyHeader svc={svc} />
-        <HeroSection svc={svc} index={index} />
-        <IntroSection svc={svc} />
+        <StickyHeader svc={svc} i18n={i18n} />
+        <HeroSection svc={svc} i18n={i18n} index={index} />
+        <IntroSection svc={svc} i18n={i18n} />
         <div>
-          {svc.subs.map((sub, i) => (
+          {i18n.subs.map((sub, i) => (
             <SubServicePanel
               key={i} sub={sub} index={i}
               accent={ORANGE} svcN={svc.n}
@@ -832,7 +841,7 @@ export default function PoleIngenieurieShell({ svc }: { svc: Service }) {
             />
           ))}
         </div>
-        <BenefitsSection svc={svc} />
+        <BenefitsSection svc={svc} i18n={i18n} />
         <RelatedServices svc={svc} />
         {svc.n === "09" ? (
           <CatalogueSection />

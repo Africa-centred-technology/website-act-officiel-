@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { SERVICES, type Service } from "@/lib/data/services";
+import { useDataMessages } from "@/i18n/data-i18n";
 import LogoPhase from "./LogoPhase";
 import FooterStrip from "@/components/layout/FooterStrip";
 
@@ -44,6 +45,8 @@ function ServiceCard({
   svc: Service; index: number;
   onEnter: (i: number) => void;
 }) {
+  const msg = useDataMessages();
+  const i18n = msg.services.items[svc.slug];
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96 }}
@@ -154,8 +157,9 @@ function ServiceCard({
             lineHeight: 1.3,
             textAlign: "center",
             margin: 0,
+            whiteSpace: "pre-line",
           }}>
-            {svc.title}
+            {i18n?.title ?? svc.slug}
           </h2>
         </div>
       </div>

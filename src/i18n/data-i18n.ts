@@ -14,6 +14,7 @@ export type PoleI18n = {
 export type ServiceSubI18n = { title: string; desc: string };
 
 export type ServiceI18n = {
+  pole: string;
   title: string;
   tagline: string;
   intro: string;

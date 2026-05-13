@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { SERVICES, POLE_I, POLE_II, POLE_III, type Service } from "@/lib/data/services";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 /* ── Variants ─────────────────────────────────────── */
 const fadeUp = {
@@ -18,6 +19,8 @@ const stagger = (delay = 0) => ({
 
 /* ── Icône SVG inline ─────────────────────────────── */
 function ServiceCard({ svc, index }: { svc: Service; index: number }) {
+  const msg = useDataMessages();
+  const i18n = msg.services.items[svc.slug];
   return (
     <motion.div variants={fadeUp} style={{ position: "relative", padding: "0 12px", marginBottom: "4rem" }}>
       <Link href={`/services/${svc.slug}`} style={{ textDecoration: "none", display: "block", position: "relative" }}>
@@ -36,7 +39,7 @@ function ServiceCard({ svc, index }: { svc: Service; index: number }) {
           {/* Image de fond avec effet Ken Burns au hover */}
           <motion.img
             src={svc.heroImage}
-            alt={svc.title}
+            alt={i18n?.title ?? svc.slug}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             style={{
               opacity: 0.75,
@@ -104,8 +107,9 @@ function ServiceCard({ svc, index }: { svc: Service; index: number }) {
               lineHeight: 1.3,
               textAlign: "center",
               margin: 0,
+              whiteSpace: "pre-line",
             }}>
-              {svc.title}
+              {i18n?.title ?? svc.slug}
             </h1>
 
 
@@ -271,19 +275,19 @@ export default function ServicesGrid() {
 
         {/* ── Pôle I ── */}
         <PoleSection
-          number="I" label="Ingénierie Technologique"
+          number="I" label={t("poleI").replace(/Pôle I[^—]*— ?/, "")}
           accent="#D35400" services={POLE_I} delay={0.1}
         />
 
         {/* ── Pôle II ── */}
         <PoleSection
-          number="II" label="Conseil"
+          number="II" label={t("poleII").replace(/Pôle II[^—]*— ?/, "")}
           accent="#D35400" services={POLE_II} delay={0.15}
         />
 
         {/* ── Pôle III ── */}
         <PoleSection
-          number="III" label="Formation"
+          number="III" label={t("poleIII").replace(/Pôle III[^—]*— ?/, "")}
           accent="#D35400" services={POLE_III} delay={0.2}
         />
 

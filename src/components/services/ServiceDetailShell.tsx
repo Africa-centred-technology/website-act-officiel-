@@ -26,6 +26,7 @@ const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"),
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 import { SERVICES, type Service } from "@/lib/data/services";
+import { useDataMessages, type ServiceI18n } from "@/i18n/data-i18n";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import CatalogueSection from "@/components/formations/CatalogueSection";
@@ -138,7 +139,7 @@ function WordChars({ text, delay = 0, color = "#fff", fx, stagger: s = 0.034, si
 /* ═══════════════════════════════════════════════════════
    1 · HERO 100vh — image Ken Burns + gradient + effets
    ═══════════════════════════════════════════════════════ */
-function HeroSection({ svc, index }: { svc: Service; index: number }) {
+function HeroSection({ svc, i18n, index }: { svc: Service; i18n: ServiceI18n; index: number }) {
   const t = useTranslations("services.detail");
   const heroRef = useRef<HTMLDivElement>(null);
   const mx  = useMotionValue(0);
@@ -160,7 +161,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
     })), [index]);
 
   const fxCycle: CharFx[] = ["rollIn", "burstOut", "riseUp"];
-  const titleLines  = svc.title.split("\n");
+  const titleLines  = i18n.title.split("\n");
   const titleColors = ["#ffffff", svc.accent, "#ffffff"];
 
   return (
@@ -203,7 +204,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
       }} />
 
       {/* Orbit arc */}
-      <OrbitArc label={svc.tagline} accent={svc.accent} />
+      <OrbitArc label={i18n.tagline} accent={svc.accent} />
 
       {/* Scan-line */}
       <ScanLine accent={svc.accent} />
@@ -272,7 +273,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
             fontSize: "clamp(0.85rem, 1.1vw, 1.1rem)", letterSpacing: "0.18em",
             textTransform: "uppercase", color: svc.accent,
           }}>
-            Pôle {svc.poleN} · {svc.pole}
+            Pôle {svc.poleN} · {i18n.pole}
           </span>
         </motion.nav>
 
@@ -298,7 +299,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
             transition={{ delay: 1.05, duration: 0.7, ease: [...EASE] }} />
           <p style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.6rem)",
             color: "rgba(255,255,255,0.55)", fontStyle: "italic", letterSpacing: "0.02em" }}>
-            {svc.tagline}
+            {i18n.tagline}
           </p>
         </motion.div>
 
@@ -322,7 +323,7 @@ function HeroSection({ svc, index }: { svc: Service; index: number }) {
 /* ═══════════════════════════════════════════════════════
    2 · INTRO — image latérale animée avec parallax scroll
    ═══════════════════════════════════════════════════════ */
-function IntroSection({ svc }: { svc: Service }) {
+function IntroSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.detail");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -359,7 +360,7 @@ function IntroSection({ svc }: { svc: Service }) {
             lineHeight: 1.8, color: "#ffffff",
             fontStyle: "italic", marginBottom: "2.5rem",
           }}>
-            "{svc.intro}"
+            "{i18n.intro}"
           </motion.p>
 
           <motion.div variants={fadeUp} style={{
@@ -382,11 +383,11 @@ function IntroSection({ svc }: { svc: Service }) {
             <div>
               <p style={{ fontFamily: "Futura, system-ui, sans-serif",
                 fontSize: "clamp(14px, 1.1vw, 1.2rem)", color: "#fff", marginBottom: "0.2rem" }}>
-                {t("statsLabel", { subs: svc.subs.length, benefits: svc.benefits.length, deliverables: svc.deliverables.length })}
+                {t("statsLabel", { subs: i18n.subs.length, benefits: i18n.benefits.length, deliverables: i18n.deliverables.length })}
               </p>
               <p style={{ fontSize: "clamp(12px, 0.95vw, 1.05rem)",
                 color: svc.accent, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
-                Pôle {svc.poleN} — {svc.pole}
+                Pôle {svc.poleN} — {i18n.pole}
               </p>
             </div>
           </motion.div>
@@ -402,7 +403,7 @@ function IntroSection({ svc }: { svc: Service }) {
         {/* Image Ken Burns */}
         <motion.div style={{ position: "absolute", inset: 0, y: imgY }}>
           <KenBurns
-            src={svc.heroImage} alt={svc.title.replace(/\n/g, " ")}
+            src={svc.heroImage} alt={i18n.title.replace(/\n/g, " ")}
             duration={24} fromScale={1.0} toScale={1.1}
             fromX="0%" toX="-3%" fromY="0%" toY="-4%"
           />
@@ -586,7 +587,7 @@ const BENEFIT_ICONS = [
   "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
 ];
 
-function BenefitsSection({ svc }: { svc: Service }) {
+function BenefitsSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.detail");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -637,7 +638,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
               gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
               gap: "1.5rem",
             }}>
-              {svc.benefits.map((b, i) => (
+              {i18n.benefits.map((b, i) => (
                 <motion.div key={i} variants={fadeUp}
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: [...EASE] } }}
                   style={{
@@ -682,7 +683,7 @@ function BenefitsSection({ svc }: { svc: Service }) {
 /* ═══════════════════════════════════════════════════════
    5 · LIVRABLES — timeline avec image d'ambiance
    ═══════════════════════════════════════════════════════ */
-function DeliverablesSection({ svc }: { svc: Service }) {
+function DeliverablesSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.detail");
   const ref  = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -723,7 +724,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
               }} />
             </div>
 
-            {svc.deliverables.map((d, i) => (
+            {i18n.deliverables.map((d, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-20px" }}
@@ -731,7 +732,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
                 style={{
                   display: "flex", alignItems: "flex-start", gap: "1.75rem",
                   padding: "1.5rem 0",
-                  borderBottom: i < svc.deliverables.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
+                  borderBottom: i < i18n.deliverables.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                 }}>
                 <div style={{
                   flexShrink: 0, width: 44, height: 44, borderRadius: "50%",
@@ -783,7 +784,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
             fontWeight: 500, color: "#fff", lineHeight: 1.1,
             marginBottom: "0.8rem",
           }}>
-            {t("deliverablesCount", { n: svc.deliverables.length })}<br />
+            {t("deliverablesCount", { n: i18n.deliverables.length })}<br />
             <span style={{ color: svc.accent }}>{t("deliverablesAccent")}</span>
           </p>
           <p style={{ fontSize: "clamp(13px, 1vw, 1.15rem)",
@@ -803,6 +804,7 @@ function DeliverablesSection({ svc }: { svc: Service }) {
    ═══════════════════════════════════════════════════════ */
 function RelatedServices({ svc }: { svc: Service }) {
   const t = useTranslations("services.detail");
+  const msg = useDataMessages();
   const related = SERVICES.filter(s => s.poleN === svc.poleN && s.slug !== svc.slug).slice(0, 3);
   if (!related.length) return null;
 
@@ -832,7 +834,9 @@ function RelatedServices({ svc }: { svc: Service }) {
             gridTemplateColumns: `repeat(${related.length}, 1fr)`,
             gap: "1.25rem",
           }} className="related-grid">
-            {related.map(r => (
+            {related.map(r => {
+              const ri18n = msg.services.items[r.slug];
+              return (
               <motion.div key={r.slug} variants={fadeUp}>
                 <Link href={`/services/${r.slug}`} style={{ textDecoration: "none", display: "block" }}>
                   <motion.div whileHover={{ y: -5, borderColor: `${r.accent}55` }}
@@ -858,14 +862,15 @@ function RelatedServices({ svc }: { svc: Service }) {
                         fontSize: "clamp(13px, 0.95rem, 1rem)",
                         fontWeight: 500, color: "#fff", whiteSpace: "pre-line",
                         lineHeight: 1.2, marginBottom: "0.6rem",
-                      }}>{r.title}</p>
+                      }}>{ri18n?.title ?? r.slug}</p>
                       <p style={{ fontSize: "clamp(11px, 0.75rem, 0.8rem)",
-                        color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>{r.tagline}</p>
+                        color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>{ri18n?.tagline ?? ""}</p>
                     </div>
                   </motion.div>
                 </Link>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
       </div>
@@ -878,7 +883,7 @@ function RelatedServices({ svc }: { svc: Service }) {
 /* ═══════════════════════════════════════════════════════
    STICKY HEADER
    ═══════════════════════════════════════════════════════ */
-function StickyHeader({ svc }: { svc: Service }) {
+function StickyHeader({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.detail");
   const [visible, setVisible] = React.useState(false);
   React.useEffect(() => {
@@ -908,7 +913,7 @@ function StickyHeader({ svc }: { svc: Service }) {
         <span style={{
           fontFamily: "Futura, system-ui, sans-serif",
           fontSize: "clamp(12px, 0.82rem, 0.88rem)", color: "#fff", letterSpacing: "0.1em",
-        }}>{svc.title.replace(/\n/g, " ")}</span>
+        }}>{i18n.title.replace(/\n/g, " ")}</span>
       </div>
       <span style={{
         background: `${svc.accent}18`, border: `1px solid ${svc.accent}35`,
@@ -926,7 +931,11 @@ function StickyHeader({ svc }: { svc: Service }) {
    ═══════════════════════════════════════════════════════ */
 export default function ServiceDetailShell({ svc }: { svc: Service }) {
   const t = useTranslations("services.detail");
+  const msg = useDataMessages();
+  const i18n = msg.services.items[svc.slug];
   const index = SERVICES.findIndex(s => s.slug === svc.slug);
+
+  if (!i18n) return null;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0A1410", color: "#fff", position: "relative" }}>
@@ -937,11 +946,11 @@ export default function ServiceDetailShell({ svc }: { svc: Service }) {
         <Cursor />
       </div>
       <div style={{ position: "relative", zIndex: 1 }}>
-        <StickyHeader svc={svc} />
-        <HeroSection svc={svc} index={index} />
-        <IntroSection svc={svc} />
+        <StickyHeader svc={svc} i18n={i18n} />
+        <HeroSection svc={svc} i18n={i18n} index={index} />
+        <IntroSection svc={svc} i18n={i18n} />
         <div>
-          {svc.subs.map((sub, i) => (
+          {i18n.subs.map((sub, i) => (
             <SubServicePanel
               key={i} sub={sub} index={i}
               accent={svc.accent} svcN={svc.n}
@@ -949,8 +958,8 @@ export default function ServiceDetailShell({ svc }: { svc: Service }) {
             />
           ))}
         </div>
-        <BenefitsSection svc={svc} />
-        <DeliverablesSection svc={svc} />
+        <BenefitsSection svc={svc} i18n={i18n} />
+        <DeliverablesSection svc={svc} i18n={i18n} />
         <RelatedServices svc={svc} />
         {svc.n === "09" ? (
           <CatalogueSection />
