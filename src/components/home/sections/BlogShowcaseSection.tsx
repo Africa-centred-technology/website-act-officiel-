@@ -20,7 +20,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type BlogPost } from "@/lib/blog";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -54,6 +54,7 @@ function useScreenSize() {
 /* ────────────────────────────────────────────────────────────── */
 
 export default function BlogShowcaseSection() {
+  const locale = useLocale();
   const screenSize = useScreenSize();
   const containerRef = useRef<HTMLElement>(null);
   const isMobile = screenSize === "mobile";
@@ -61,7 +62,7 @@ export default function BlogShowcaseSection() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setPosts(posts);

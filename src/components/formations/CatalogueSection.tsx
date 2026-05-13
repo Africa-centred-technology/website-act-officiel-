@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -25,11 +25,12 @@ interface FormationItem {
 
 export default function CatalogueSection() {
   const t = useTranslations("formations.catalogue");
+  const locale = useLocale();
   const [formationsData, setFormationsData] = useState<FormationItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/shopify/formations")
+    fetch(`/api/shopify/formations?locale=${locale}`)
       .then((r) => r.json())
       .then((json) => setFormationsData(json.formations ?? []))
       .catch(() => setFormationsData([]))

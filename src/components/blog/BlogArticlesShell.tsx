@@ -8,7 +8,7 @@ import { Search, ChevronLeft, ChevronRight, Star, Clock } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import FooterStrip from "@/components/layout/FooterStrip";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -36,6 +36,7 @@ function useMediaQuery() {
 
 export default function BlogArticlesShell() {
   const t = useTranslations("blog.articles");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const searchParams = useSearchParams();
   const initialCat = searchParams?.get("cat") || "all";
@@ -54,7 +55,7 @@ export default function BlogArticlesShell() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setAllPosts(posts);

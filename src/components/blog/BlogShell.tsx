@@ -9,7 +9,7 @@ import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -42,6 +42,7 @@ const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: fa
 
 export default function BlogShell() {
   const t = useTranslations("blog.index");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const containerRef = useRef(null);
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
@@ -78,7 +79,7 @@ export default function BlogShell() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setAllPosts(posts);

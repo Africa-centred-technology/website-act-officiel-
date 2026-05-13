@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import {
@@ -535,6 +535,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
 export default function FormationLandpage() {
     const t = useTranslations("formations.inscription");
     const tc = useTranslations("formations.catalogue");
+    const locale = useLocale();
     const screenSize = useMediaQuery();
 
     // Resolved arrays from translations
@@ -575,7 +576,7 @@ export default function FormationLandpage() {
     const loadFromShopify = async () => {
         setIsLoading(true); setFetchError(false);
         try {
-            const res = await fetch("/api/shopify/formations");
+            const res = await fetch(`/api/shopify/formations?locale=${locale}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const json = await res.json();
             setFormationsData(json.formations ?? []);

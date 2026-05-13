@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const ease = [0.6, 0.08, 0.02, 0.99] as const;
 
@@ -55,6 +55,7 @@ function useMediaQuery() {
 
 export default function BlogHero() {
   const t = useTranslations("blog.hero");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
@@ -64,7 +65,7 @@ export default function BlogHero() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setPosts(posts);

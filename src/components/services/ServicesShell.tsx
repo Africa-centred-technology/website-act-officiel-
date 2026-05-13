@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useMemo, useCallback, memo } from "react";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import dynamic from "next/dynamic";
 import {
   motion, AnimatePresence,
@@ -840,11 +840,12 @@ function HeroSection() {
    ══════════════════════════════════════════════════════ */
 function CataloguePanel({ svc }: { svc: Svc }) {
   const tIdx = useTranslations("services.index");
+  const locale = useLocale();
   const [formations, setFormations] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/shopify/formations")
+    fetch(`/api/shopify/formations?locale=${locale}`)
       .then(res => res.json())
       .then(json => setFormations(json.formations || []))
       .catch(console.error)

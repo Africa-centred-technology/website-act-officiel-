@@ -40,6 +40,7 @@
  */
 
 import React, { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Loader2, AlertCircle, RefreshCw } from "lucide-react";
 import Header from "@/components/layout/Header";
@@ -176,6 +177,7 @@ function PageSkeleton() {
    MAIN COMPONENT
 ───────────────────────────────────────────────────────────────── */
 export default function LandingFormation({ slug }: { slug: string }) {
+  const locale = useLocale();
   const [data,      setData]      = useState<FormationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError,  setHasError]  = useState(false);
@@ -184,7 +186,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
   const load = async () => {
     setIsLoading(true); setHasError(false);
     try {
-      const res = await fetch(`/api/shopify/formations/${slug}`);
+      const res = await fetch(`/api/shopify/formations/${slug}?locale=${locale}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json.formation ?? null);

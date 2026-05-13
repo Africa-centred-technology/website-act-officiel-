@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
@@ -59,6 +59,7 @@ interface FormationCardData {
 
 export default function FormationsShell() {
   const t = useTranslations("formations.catalogue");
+  const locale = useLocale();
   const [formationsData, setFormationsData] = useState<FormationCardData[]>([]);
   const [isLoading, setIsLoading]           = useState(true);
   const [fetchError, setFetchError]         = useState(false);
@@ -67,7 +68,7 @@ export default function FormationsShell() {
     setIsLoading(true);
     setFetchError(false);
     try {
-      const res = await fetch("/api/shopify/formations");
+      const res = await fetch(`/api/shopify/formations?locale=${locale}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setFormationsData(json.formations ?? []);

@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion, useInView } from "framer-motion";
 import {
@@ -137,6 +137,7 @@ interface FormationMeta {
 /* ── Main ──────────────────────────────────────────────────────── */
 export default function FormationInscriptionShell({ slug }: { slug: string }) {
   const t = useTranslations("formations.inscription");
+  const locale = useLocale();
   const [formation, setFormation] = useState<FormationMeta | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -146,7 +147,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
   const formInView = useInView(formRef, { once: true, margin: "-80px" });
 
   useEffect(() => {
-    fetch(`/api/shopify/formations/${slug}`)
+    fetch(`/api/shopify/formations/${slug}?locale=${locale}`)
       .then((r) => r.json())
       .then((json) => {
         if (json.formation) setFormation(json.formation);

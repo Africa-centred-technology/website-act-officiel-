@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, RefreshCw } from "lucide-react";
@@ -289,6 +289,7 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
 /* ── Main component ──────────────────────────────────────── */
 export default function FormationDetailShell({ slug }: { slug: string }) {
   const t = useTranslations("formations.detail");
+  const locale = useLocale();
   const router = useRouter();
   const [formation, setFormation] = useState<FormationDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -303,7 +304,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     setIsLoading(true);
     setFetchError(false);
     try {
-      const res = await fetch(`/api/shopify/formations/${slug}`);
+      const res = await fetch(`/api/shopify/formations/${slug}?locale=${locale}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setFormation(json.formation ?? null);

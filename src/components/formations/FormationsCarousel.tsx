@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
@@ -34,12 +34,13 @@ interface FormationsCarouselItem {
 
 export default function FormationsCarousel() {
   const t = useTranslations("formations.catalogue");
+  const locale = useLocale();
   const [index, setIndex] = useState(0);
   const [formations, setFormations] = useState<FormationsCarouselItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
-    fetch("/api/shopify/formations")
+    fetch(`/api/shopify/formations?locale=${locale}`)
       .then((r) => r.json())
       .then((json) => {
         if (json.formations) setFormations(json.formations);

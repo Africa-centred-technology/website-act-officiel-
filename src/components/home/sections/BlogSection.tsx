@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { type BlogPost } from "@/lib/blog";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -32,12 +32,13 @@ function useMediaQuery() {
 
 export default function BlogSection() {
     const t = useTranslations("home.blog");
+    const locale = useLocale();
     const screenSize = useMediaQuery();
     const [posts, setPosts] = useState<BlogPost[]>([]);
 
     useEffect(() => {
         let cancelled = false;
-        fetch("/api/shopify/blog")
+        fetch(`/api/shopify/blog?locale=${locale}`)
             .then((r) => r.json())
             .then(({ posts }) => {
                 if (!cancelled && Array.isArray(posts)) setPosts(posts);

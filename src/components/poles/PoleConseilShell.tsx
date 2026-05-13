@@ -8,7 +8,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Users,
   Target,
@@ -78,12 +78,13 @@ const processList = [
 
 export default function PoleConseilShell() {
   const t = useTranslations("poles.conseil");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setPosts(posts);

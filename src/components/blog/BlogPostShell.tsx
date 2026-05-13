@@ -8,7 +8,7 @@ import { Share2, Linkedin, Twitter, Link2, Facebook } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { type BlogPost } from "@/lib/blog";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 /** Type structurel pour une section d'article (legacy/static fallback). */
 type ArticleSection = {
@@ -47,6 +47,7 @@ function useMediaQuery() {
 
 export default function BlogPostShell({ post }: { post: BlogPost }) {
   const t = useTranslations("blog.post");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
@@ -56,7 +57,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setAllPosts(posts);
