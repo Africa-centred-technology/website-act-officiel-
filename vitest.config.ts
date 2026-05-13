@@ -5,14 +5,15 @@ import { resolve } from "path";
  * Vitest config — unit & data-consistency tests
  *
  * Tests live in tests/unit/.
- * No DOM / React renderer needed — pure TypeScript data files.
+ * DOM environment enabled for React component tests.
  */
 export default defineConfig({
   test: {
-    environment: "node",
+    environment: "jsdom",
     globals: true,
-    include: ["tests/unit/**/*.test.ts"],
+    include: ["tests/unit/**/*.test.ts", "tests/unit/**/*.test.tsx"],
     reporters: ["verbose"],
+    setupFiles: [],
   },
   resolve: {
     alias: {
