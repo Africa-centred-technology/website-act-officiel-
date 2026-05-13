@@ -47,9 +47,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(path, { changeFrequency, priority })
   );
 
+  // Enumerate slugs once using the default locale — handles are shared across locales.
+  // (Multi-locale canonical URLs are emitted in Task 9 by iterating routing.locales for each slug.)
   const [formations, posts] = await Promise.allSettled([
-    fetchShopifyFormations(),
-    fetchShopifyBlogPosts(),
+    fetchShopifyFormations(routing.defaultLocale),
+    fetchShopifyBlogPosts(routing.defaultLocale),
   ]);
 
   const formationEntries =

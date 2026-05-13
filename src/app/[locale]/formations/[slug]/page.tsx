@@ -3,6 +3,7 @@ import type { Thing, WithContext } from "schema-dts";
 import FormationDetailShell from "@/components/formations/FormationDetailShell";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
 import { fetchShopifyFormationByHandle } from "@/lib/shopify/formations";
+import type { Locale } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { courseJsonLd, breadcrumbJsonLd } from "@/i18n/seo-jsonld";
 import { getTranslations } from "next-intl/server";
@@ -13,7 +14,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
-  const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+  const formation = await fetchShopifyFormationByHandle(slug, locale as Locale).catch(() => null);
 
   const title = formation?.title ?? "Formation ACT";
   const description = formation?.accroche ?? "Découvrez cette formation en Intelligence Artificielle proposée par Africa Centred Technology.";
@@ -48,7 +49,7 @@ function FormationDetailLoading() {
 
 export default async function FormationPage({ params }: Props) {
   const { locale, slug } = await params;
-  const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+  const formation = await fetchShopifyFormationByHandle(slug, locale as Locale).catch(() => null);
   const tBreadcrumb = await getTranslations("breadcrumb");
 
   const courseData = formation

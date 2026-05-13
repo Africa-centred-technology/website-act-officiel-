@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { fetchShopifyBlogPostByHandle, fetchShopifyBlogPosts } from "@/lib/shopify/blog";
+import { routing, type Locale } from "@/i18n/routing";
 import BlogPostShell from "@/components/blog/BlogPostShell";
 import type { Metadata } from "next";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
@@ -10,7 +11,9 @@ import { getTranslations } from "next-intl/server";
 /* ── Static params : générés depuis Shopify ── */
 export async function generateStaticParams() {
   try {
-    const posts = await fetchShopifyBlogPosts();
+    // generateStaticParams runs once per route — use defaultLocale to enumerate handles.
+    // (Handles are the same across locales per spec; only payload differs.)
+    const posts = await fetchShopifyBlogPosts(routing.defaultLocale);
     return posts.map((post) => ({ slug: post.slug }));
   } catch {
     return [];
@@ -25,7 +28,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
 
-  const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
+  const post = await fetchShopifyBlogPostByHandle(slug, locale as Locale).catch(() => null);
 
   const title = post?.title ?? "Article ACT";
   const description = post?.excerpt ?? "Lisez cet article sur le blog ACT.";
@@ -49,7 +52,7 @@ export default async function BlogPostPage({
 }) {
   const { locale, slug } = await params;
 
-  const post = await fetchShopifyBlogPostByHandle(slug).catch(() => null);
+  const post = await fetchShopifyBlogPostByHandle(slug, locale as Locale).catch(() => null);
   if (!post) notFound();
 
   const tBreadcrumb = await getTranslations("breadcrumb");

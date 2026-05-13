@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import FormationInscriptionShell from "@/components/formations/FormationInscriptionShell";
 import { buildDynamicPageMetadata } from "@/i18n/seo";
 import { fetchShopifyFormationByHandle } from "@/lib/shopify/formations";
+import type { Locale } from "@/i18n/routing";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -9,7 +10,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
-  const formation = await fetchShopifyFormationByHandle(slug).catch(() => null);
+  const formation = await fetchShopifyFormationByHandle(slug, locale as Locale).catch(() => null);
 
   const formationTitle = formation?.title ?? "Formation ACT";
   const title = `${formationTitle} — Inscription`;
