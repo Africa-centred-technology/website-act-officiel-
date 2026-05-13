@@ -172,7 +172,7 @@ export default function FormationsCarousel() {
                     background: "rgba(255,255,255,0.05)", color: "#fff", cursor: "pointer",
                     display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s var(--ease-uptown)"
                 }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                    <svg className="mirror-in-rtl" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
 
                 <div style={{ display: "flex", gap: "0.6rem" }}>
@@ -198,7 +198,7 @@ export default function FormationsCarousel() {
                     background: "rgba(255,255,255,0.05)", color: "#fff", cursor: "pointer",
                     display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s var(--ease-uptown)"
                 }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                    <svg className="mirror-in-rtl" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
               </div>
             </>
