@@ -195,95 +195,95 @@
   },
   "about": {
     "hero": {
-      "eyebrow": "Africa Centred Technology · Expertise & Ingénierie",
-      "word1": "NOTRE",
-      "word2": "EXPERTISE",
-      "subtitle": "Nous accompagnons les organisations dans leur transformation numérique en déployant des solutions d'intelligence artificielle et d'ingénierie de données de haut niveau — conçues pour la performance et le passage à l'échelle.",
-      "ctaTeam": "L'Équipe",
-      "ctaApproach": "Notre approche"
+      "eyebrow": "Africa Centred Technology · الخبرة والهندسة",
+      "word1": "خبرتنا",
+      "word2": "العميقة",
+      "subtitle": "نرافق المؤسسات في تحوّلها الرقمي من خلال نشر حلول الذكاء الاصطناعي وهندسة البيانات عالية المستوى — مصمَّمة من أجل الأداء والقابلية للتوسّع.",
+      "ctaTeam": "الفريق",
+      "ctaApproach": "مقاربتنا"
     },
     "stats": {
-      "eyebrow": "Les chiffres qui parlent",
-      "title": "NOS CHIFFRES",
-      "indicator": "Indicateur",
+      "eyebrow": "الأرقام التي تتحدّث",
+      "title": "أرقامنا",
+      "indicator": "مؤشّر",
       "items": {
-        "projects": { "value": "15", "suffix": "+", "label": "Projets", "sub": "Solutions déployées avec succès" },
-        "satisfaction": { "value": "100", "suffix": "%", "label": "Satisfaction", "sub": "Clients satisfaits" },
-        "countries": { "value": "2", "suffix": "", "label": "Pays", "sub": "Maroc et au-delà" }
+        "projects": { "value": "15", "suffix": "+", "label": "مشاريع", "sub": "حلول تم نشرها بنجاح" },
+        "satisfaction": { "value": "100", "suffix": "%", "label": "رضا", "sub": "عملاء راضون" },
+        "countries": { "value": "2", "suffix": "", "label": "بلدان", "sub": "المغرب وما بعده" }
       }
     },
     "adn": {
-      "eyebrow": "Vision · Impact · Expertise",
-      "title": "NOTRE ADN",
-      "manifesto": "La technologie n'a de valeur que lorsqu'elle crée un impact concret et mesurable. Chez ACT, nous ne nous contentons pas d'implémenter des outils : nous concevons des architectures systèmes qui optimisent le ROI et soutiennent la scalabilité des organisations. En combinant Intelligence Artificielle avancée, Ingénierie de Données et Automatisation Industrielle, nous transformons les défis technologiques complexes en avantages compétitifs durables.",
-      "attribution": "SOHAIB BAROUD — Fondateur & CEO, ACT"
+      "eyebrow": "رؤية · أثر · خبرة",
+      "title": "هويتنا",
+      "manifesto": "للتكنولوجيا قيمة فقط عندما تُحدث أثرًا ملموسًا وقابلاً للقياس. في ACT، لا نكتفي بتطبيق الأدوات: بل نُصمّم بُنى أنظمة تُحسِّن العائد على الاستثمار وتدعم قابلية التوسّع للمؤسسات. من خلال الجمع بين الذكاء الاصطناعي المتقدّم وهندسة البيانات والأتمتة الصناعية، نُحوّل التحدّيات التكنولوجية المعقَّدة إلى مزايا تنافسية مستدامة.",
+      "attribution": "SOHAIB BAROUD — المؤسس والرئيس التنفيذي، ACT"
     },
     "values": {
-      "eyebrow": "Nos piliers d'excellence",
-      "title": "NOS STANDARDS",
-      "standardLabel": "Standard ACT",
-      "valueLabel": "Valeur ACT",
+      "eyebrow": "ركائز تميّزنا",
+      "title": "معاييرنا",
+      "standardLabel": "معيار ACT",
+      "valueLabel": "قيمة ACT",
       "items": {
         "collaboration": {
-          "title": "Collaboration",
-          "desc": "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences."
+          "title": "التعاون",
+          "desc": "أفضل الحلول تنشأ من الذكاء الجماعي وتبادل المهارات."
         },
         "transmission": {
-          "title": "Transmission",
-          "desc": "Nous partageons nos connaissances et nos compétences pour renforcer les capacités locales et favoriser l'autonomie des entreprises."
+          "title": "نقل المعرفة",
+          "desc": "نتقاسم معارفنا ومهاراتنا لتعزيز القدرات المحلية ودعم استقلالية الشركات."
         },
         "excellence": {
-          "title": "Excellence",
-          "desc": "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet."
+          "title": "التميّز",
+          "desc": "معايير عالية من الجودة والموثوقية والصرامة في كل مشروع."
         },
         "innovation": {
-          "title": "Innovation",
-          "desc": "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets."
+          "title": "الابتكار",
+          "desc": "ابتكار متجذِّر في الواقع الأفريقي، يستجيب لاحتياجات ملموسة."
         }
       }
     },
     "timeline": {
       "items": {
-        "2023": { "title": "Naissance", "desc": "Création d'Africa Centred Technology comme startup d'ingénierie tech portée par une équipe soudée autour d'une vision commune." },
-        "2024": { "title": "Premiers POC", "desc": "Déploiement des premiers prototypes IA et data pour des entreprises africaines, validation du modèle et des expertises." },
-        "2025": { "title": "Accélération", "desc": "Déploiement du Système RAG Multi-sources et montée en puissance des missions de conseil pour l'écosystème africain." },
-        "2026": { "title": "Cap 2030", "desc": "Consolidation de notre vision pan-africaine avec une équipe dynamique, agile et résolument tournée vers l'avenir du continent." }
+        "2023": { "title": "النشأة", "desc": "تأسيس Africa Centred Technology كشركة ناشئة في هندسة التكنولوجيا يقودها فريق متماسك حول رؤية مشتركة." },
+        "2024": { "title": "الإثباتات الأولى", "desc": "نشر النماذج الأولى للذكاء الاصطناعي والبيانات لشركات أفريقية، والتحقق من النموذج والخبرات." },
+        "2025": { "title": "التسريع", "desc": "نشر نظام RAG متعدّد المصادر وتصاعد مهمّات الاستشارة للنظام البيئي الأفريقي." },
+        "2026": { "title": "نحو 2030", "desc": "ترسيخ رؤيتنا القارية الأفريقية مع فريق ديناميكي ورشيق وموجَّه بثبات نحو مستقبل القارة." }
       }
     },
     "team": {
-      "eyebrow": "Le conseil d'administration de ACT",
-      "title": "LE CONSEIL D'ADMINISTRATION",
+      "eyebrow": "مجلس إدارة ACT",
+      "title": "مجلس الإدارة",
       "members": {
         "sohaib": {
           "name": "SOHAIB BAROUD",
-          "role": "Fondateur & CEO",
-          "bio": "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux."
+          "role": "المؤسس والرئيس التنفيذي",
+          "bio": "صاحب رؤية وقائد في هندسة التكنولوجيا في أفريقيا. أسّس صهيب ACT برسالة تحويل الشركات الأفريقية إلى قادة تكنولوجيين عالميين."
         },
         "mpiga": {
           "name": "MPIGA-ODOUMBA JESSE",
-          "role": "Membre fondateur",
-          "bio": "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
+          "role": "عضو مؤسِّس",
+          "bio": "أحد مؤسِّسي ACT، ملتزم بالابتكار الأفريقي والأثر التكنولوجي على المستوى القاري."
         },
         "aldrin": {
           "name": "Aldrin DJOUROBI",
-          "role": "Membre fondateur",
-          "bio": "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
+          "role": "عضو مؤسِّس",
+          "bio": "أحد مؤسِّسي ACT، يقوده شغف الهندسة المتقدّمة ونمو الشركات الناشئة الأفريقية."
         },
         "elvis": {
           "name": "ELVIS-THEO AKIEME OYONO",
-          "role": "Membre fondateur",
-          "bio": "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
+          "role": "عضو مؤسِّس",
+          "bio": "أحد مؤسِّسي ACT، شغوف بحلول الذكاء الاصطناعي وتميّز المنتج في خدمة القارة."
         }
       }
     },
     "cta": {
-      "eyebrow": "Passez à l'action",
-      "line1": "REJOIGNEZ LA",
-      "line2": "RÉVOLUTION",
-      "line3": "TECH",
-      "subtitle": "Prêt à transformer vos défis en opportunités technologiques ? ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.",
-      "ctaStart": "Démarrer un projet",
-      "ctaServices": "Nos expertises IA"
+      "eyebrow": "انتقل إلى الفعل",
+      "line1": "انضم",
+      "line2": "للثورة",
+      "line3": "التقنية",
+      "subtitle": "هل أنت مستعدّ لتحويل تحدّياتك إلى فرص تكنولوجية؟ ترافق ACT الشركات والمؤسسات في إنشاء حلول تكنولوجية مبتكرة وذكية.",
+      "ctaStart": "ابدأ مشروعًا",
+      "ctaServices": "خبراتنا في الذكاء الاصطناعي"
     }
   },
   "services": {
