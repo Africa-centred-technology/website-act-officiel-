@@ -1,28 +1,58 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import "@testing-library/jest-dom";
 
-const replace = vi.fn();
+// Mock next-intl + navigation hooks
+const replaceMock = vi.fn();
 vi.mock("@/i18n/navigation", () => ({
   usePathname: () => "/services",
-  useRouter: () => ({ replace }),
+  useRouter: () => ({ replace: replaceMock }),
 }));
+
+// Per-test locale mock — reassignable so each `it` can swap it.
+// Captured by closure inside the factory below.
+let currentLocale = "fr";
 vi.mock("next-intl", () => ({
-  useLocale: () => "fr",
+  useLocale: () => currentLocale,
 }));
+
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 describe("LanguageSwitcher", () => {
-  it("renders all 3 locales as options", () => {
-    render(<LanguageSwitcher />);
-    expect(screen.getByRole("option", { name: "Français" })).toBeDefined();
-    expect(screen.getByRole("option", { name: "English" })).toBeDefined();
-    expect(screen.getByRole("option", { name: "العربية" })).toBeDefined();
+  beforeEach(() => {
+    replaceMock.mockReset();
   });
 
-  it("calls router.replace with the new locale and current pathname", () => {
+  it("displays the current locale code in uppercase", () => {
+    currentLocale = "fr";
     render(<LanguageSwitcher />);
-    const select = screen.getByRole("combobox") as HTMLSelectElement;
-    fireEvent.change(select, { target: { value: "en" } });
-    expect(replace).toHaveBeenCalledWith("/services", { locale: "en" });
+    expect(screen.getByRole("button")).toHaveTextContent("FR");
+  });
+
+  it("cycles fr → en when clicked", () => {
+    currentLocale = "fr";
+    render(<LanguageSwitcher />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(replaceMock).toHaveBeenCalledWith("/services", { locale: "en" });
+  });
+
+  it("cycles en → ar when clicked", () => {
+    currentLocale = "en";
+    render(<LanguageSwitcher />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(replaceMock).toHaveBeenCalledWith("/services", { locale: "ar" });
+  });
+
+  it("cycles ar → fr when clicked (wraps around)", () => {
+    currentLocale = "ar";
+    render(<LanguageSwitcher />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(replaceMock).toHaveBeenCalledWith("/services", { locale: "fr" });
+  });
+
+  it("aria-label announces the next locale", () => {
+    currentLocale = "fr";
+    render(<LanguageSwitcher />);
+    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "Switch to English");
   });
 });

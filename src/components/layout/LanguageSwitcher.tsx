@@ -1,31 +1,34 @@
 "use client";
+
+import { Globe } from "lucide-react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { routing, type Locale } from "@/i18n/routing";
+import { routing } from "@/i18n/routing";
 
-const LABELS: Record<Locale, string> = {
+const LOCALE_LABELS: Record<string, string> = {
   fr: "Français",
   en: "English",
   ar: "العربية",
 };
 
 export function LanguageSwitcher() {
-  const locale = useLocale();
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+  const current = useLocale();
+
+  const ordered = routing.locales as readonly string[];
+  const idx = ordered.indexOf(current);
+  const next = ordered[(idx + 1) % ordered.length] as (typeof routing.locales)[number];
 
   return (
-    <select
-      value={locale}
-      onChange={(e) => router.replace(pathname, { locale: e.target.value as Locale })}
-      aria-label="Change language"
-      className="bg-transparent text-sm font-medium border border-current rounded px-2 py-1"
+    <button
+      type="button"
+      onClick={() => router.replace(pathname, { locale: next })}
+      aria-label={`Switch to ${LOCALE_LABELS[next]}`}
+      className="inline-flex items-center gap-1.5 bg-transparent text-sm font-medium border border-current rounded px-2 py-1 hover:opacity-80 transition-opacity"
     >
-      {routing.locales.map((l) => (
-        <option key={l} value={l}>
-          {LABELS[l]}
-        </option>
-      ))}
-    </select>
+      <Globe size={14} aria-hidden="true" />
+      <span>{current.toUpperCase()}</span>
+    </button>
   );
 }
