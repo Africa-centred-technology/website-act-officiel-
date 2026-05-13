@@ -1286,122 +1286,122 @@
   "secteurs": {
     "index": {
       "eyebrowBrand": "Africa Centred Technology",
-      "eyebrowAccent": "— Secteurs",
-      "h1Line1": "NOS DOMAINES",
-      "h1Line2": "D'EXPERTISE",
-      "subtitle": "ACT intervient dans de nombreux secteurs, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.",
-      "exploreCta": "Explorer le secteur →",
-      "ariaPrev": "Secteur précédent",
-      "ariaNext": "Secteur suivant",
-      "ariaDot": "Secteur {n}",
-      "titlePrev": "Secteur précédent",
-      "titleNext": "Secteur suivant"
+      "eyebrowAccent": "— Sectors",
+      "h1Line1": "OUR AREAS",
+      "h1Line2": "OF EXPERTISE",
+      "subtitle": "ACT operates across many sectors, bringing technology expertise and local insight to turn the continent's challenges into concrete opportunities.",
+      "exploreCta": "Explore this sector →",
+      "ariaPrev": "Previous sector",
+      "ariaNext": "Next sector",
+      "ariaDot": "Sector {n}",
+      "titlePrev": "Previous sector",
+      "titleNext": "Next sector"
     },
     "detail": {
-      "breadcrumb": "Secteurs",
-      "approachLabel": "Notre approche",
-      "approachH2Suffix": "dans ce secteur",
-      "solutionsLabel": "Nos solutions",
-      "solutionsH2Line1": "Ce que nous",
-      "solutionsH2Line2": "faisons",
+      "breadcrumb": "Sectors",
+      "approachLabel": "Our approach",
+      "approachH2Suffix": "in this sector",
+      "solutionsLabel": "Our solutions",
+      "solutionsH2Line1": "What we",
+      "solutionsH2Line2": "do",
       "cta": {
-        "eyebrow": "Passons à l'action",
-        "title": "Votre projet nous intéresse",
-        "description": "Discutons de votre contexte et explorons ensemble comment la technologie peut créer de la valeur dans votre organisation.",
-        "buttonText": "Démarrer un projet"
+        "eyebrow": "Let's take action",
+        "title": "We're interested in your project",
+        "description": "Let's discuss your context and explore together how technology can create value in your organization.",
+        "buttonText": "Start a project"
       }
     },
     "items": {
       "industrie": {
-        "label": "Industrie",
-        "tagline": "Moderniser pour mieux compétir",
-        "description": "Dans un environnement industriel de plus en plus compétitif, les entreprises doivent accélérer leur transformation pour gagner en performance, en qualité et en agilité. ACT accompagne les acteurs industriels dans la digitalisation de leurs opérations en intégrant des technologies intelligentes qui optimisent les processus, renforcent la prise de décision et améliorent durablement la productivité.",
+        "label": "Industry",
+        "tagline": "Modernize to compete better",
+        "description": "In an increasingly competitive industrial environment, companies must accelerate their transformation to gain in performance, quality, and agility. ACT supports industrial players in digitizing their operations by integrating intelligent technologies that optimize processes, strengthen decision-making, and sustainably improve productivity.",
         "services": [
-          "Automatisation des lignes de production",
-          "IoT & maintenance prédictive",
-          "Digitalisation de la chaîne logistique",
-          "Systèmes de traçabilité & suivi temps réel",
-          "Optimisation des flux de production"
+          "Production line automation",
+          "IoT & predictive maintenance",
+          "Supply chain digitization",
+          "Traceability & real-time tracking systems",
+          "Production flow optimization"
         ],
-        "chiffre": { "label": "de gain potentiel en productivité" }
+        "chiffre": { "label": "potential productivity gain" }
       },
       "telecoms-medias": {
-        "label": "Télécommunications & Médias",
-        "tagline": "Accélérer la création de valeur dans l'économie numérique",
-        "description": "Au cœur de l'économie digitale, les télécommunications et les médias jouent un rôle clé dans la connectivité, la diffusion de contenus et la création de nouveaux usages. ACT accompagne les opérateurs, les régulateurs et les acteurs des médias dans la valorisation de leurs infrastructures et de leurs données, en développant des services innovants, des expériences personnalisées et des modèles économiques durables.",
+        "label": "Telecommunications & Media",
+        "tagline": "Accelerating value creation in the digital economy",
+        "description": "At the heart of the digital economy, telecommunications and media play a key role in connectivity, content distribution, and the creation of new uses. ACT supports operators, regulators, and media players in monetizing their infrastructure and data by developing innovative services, personalized experiences, and sustainable business models.",
         "services": [
-          "Plateformes de services à valeur ajoutée",
-          "Monétisation intelligente des données",
-          "Algorithmes de segmentation & personnalisation",
-          "Transition numérique des médias africains",
-          "Modèles économiques digitaux (abonnement, publicité programmatique)"
+          "Value-added service platforms",
+          "Intelligent data monetization",
+          "Segmentation & personalization algorithms",
+          "Digital transition of African media",
+          "Digital business models (subscription, programmatic advertising)"
         ],
-        "chiffre": { "label": "de revenus générés via les services digitaux" }
+        "chiffre": { "label": "of revenue generated through digital services" }
       },
       "finance": {
         "label": "Finance & FinTech",
-        "tagline": "Réinventer les services financiers à l'ère digitale",
-        "description": "Le secteur financier connaît une transformation accélérée sous l'effet des technologies digitales, des nouveaux usages et des exigences réglementaires. ACT accompagne les institutions financières, banques et fintechs dans la conception de solutions innovantes, sécurisées et centrées sur l'utilisateur, afin d'améliorer l'accès aux services, optimiser les opérations et renforcer la gestion des risques",
+        "tagline": "Reinventing financial services in the digital era",
+        "description": "The financial sector is undergoing an accelerated transformation driven by digital technologies, new uses, and regulatory requirements. ACT supports financial institutions, banks, and fintechs in designing innovative, secure, user-centric solutions, to improve service access, optimize operations, and strengthen risk management.",
         "services": [
-          "Développement de plateformes fintech",
-          "Solutions de mobile banking & paiement",
-          "Systèmes de scoring & gestion du risque",
-          "Conformité réglementaire & sécurité des données",
-          "Intégration API bancaires & interopérabilité"
+          "FinTech platform development",
+          "Mobile banking & payment solutions",
+          "Credit scoring & risk management systems",
+          "Regulatory compliance & data security",
+          "Banking API integration & interoperability"
         ],
-        "chiffre": { "label": "des africains sans accès aux services bancaires traditionnels" }
+        "chiffre": { "label": "of Africans without access to traditional banking services" }
       },
       "ecommerce": {
         "label": "E-commerce & Retail",
-        "tagline": "Créer des expériences d'achat performantes et scalables",
-        "description": "Le e-commerce redéfinit les standards du commerce en combinant expérience client, data et performance opérationnelle. ACT accompagne les acteurs du retail dans la conception et l'optimisation de plateformes digitales à forte valeur ajoutée, en intégrant des solutions innovantes pour maximiser les ventes, fluidifier les parcours d'achat et améliorer l'efficacité logistique.",
+        "tagline": "Build high-performance, scalable shopping experiences",
+        "description": "E-commerce is redefining commerce standards by combining customer experience, data, and operational performance. ACT supports retail players in designing and optimizing high-value digital platforms, integrating innovative solutions to maximize sales, smooth purchasing journeys, and improve logistics efficiency.",
         "services": [
-          "Développement de plateformes e-commerce",
-          "Solutions de paiement mobile & multi-canal",
-          "Systèmes de gestion des stocks & logistique",
-          "Outils de marketing digital & personnalisation",
-          "Applications mobiles commerce (iOS & Android)"
+          "E-commerce platform development",
+          "Mobile & omni-channel payment solutions",
+          "Inventory management & logistics systems",
+          "Digital marketing tools & personalization",
+          "Mobile commerce apps (iOS & Android)"
         ],
-        "chiffre": { "label": "d'augmentation potentielle du taux de conversion" }
+        "chiffre": { "label": "potential conversion rate increase" }
       },
       "sante": {
-        "label": "Santé & MedTech",
-        "tagline": "Transformer les systèmes de santé par le digital",
-        "description": "Le secteur de la santé connaît une تحول profonde portée par les technologies digitales, la data et l'intelligence artificielle. ACT accompagne les établissements de santé, les organismes publics et les acteurs MedTech dans la modernisation de leurs systèmes, l'amélioration des parcours patients et l'optimisation des performances opérationnelles, tout en garantissant la sécurité et la conformité des données.",
+        "label": "Health & MedTech",
+        "tagline": "Transforming healthcare systems through digital",
+        "description": "The healthcare sector is experiencing a deep transformation driven by digital technologies, data, and artificial intelligence. ACT supports healthcare institutions, public bodies, and MedTech players in modernizing their systems, improving patient journeys, and optimizing operational performance, while guaranteeing data security and compliance.",
         "services": [
-          "Digitalisation des parcours patients & dossiers médicaux",
-          "Systèmes d'information hospitaliers (SIH)",
-          "Analyse de données de santé & aide à la décision",
-          "Solutions de télémédecine & suivi à distance",
-          "Sécurité, conformité & gestion des données sensibles"
+          "Digitization of patient journeys & medical records",
+          "Hospital Information Systems (HIS)",
+          "Health data analysis & decision support",
+          "Telemedicine & remote monitoring solutions",
+          "Security, compliance & sensitive data management"
         ],
-        "chiffre": { "label": "d'amélioration de l'efficacité des processus de soins" }
+        "chiffre": { "label": "improvement in care process efficiency" }
       },
       "immobilier": {
-        "label": "Immobilier & PropTech",
-        "tagline": "Optimiser les décisions immobilières par la donnée",
-        "description": "Le secteur immobilier évolue vers un modèle piloté par la donnée, où chaque décision d'investissement, de gestion ou de valorisation repose sur des analyses précises et en temps réel. ACT accompagne les promoteurs, investisseurs et gestionnaires d'actifs dans la digitalisation de leurs processus, l'optimisation de leurs portefeuilles et l'amélioration de la performance des actifs immobiliers.",
+        "label": "Real Estate & PropTech",
+        "tagline": "Optimizing real estate decisions through data",
+        "description": "The real estate sector is moving toward a data-driven model, where every investment, management, or valuation decision relies on precise, real-time analysis. ACT supports developers, investors, and asset managers in digitizing their processes, optimizing their portfolios, and improving the performance of real estate assets.",
         "services": [
-          "Analyse de données immobilières & aide à l'investissement",
-          "Plateformes de gestion de biens (Property Management)",
-          "Modélisation des prix & prévision des tendances",
-          "Digitalisation des transactions & parcours client",
-          "Tableaux de bord de performance des actifs"
+          "Real estate data analysis & investment support",
+          "Property Management platforms",
+          "Price modeling & trend forecasting",
+          "Digitization of transactions & customer journeys",
+          "Asset performance dashboards"
         ],
-        "chiffre": { "label": "d'optimisation de la rentabilité des actifs" }
+        "chiffre": { "label": "asset profitability optimization" }
       },
       "education": {
-        "label": "Éducation & EdTech",
-        "tagline": "Accélérer la transformation éducative par le digital",
-        "description": "L'éducation est le principal levier de développement des sociétés. Dans un monde en mutation rapide, les technologies digitales offrent des opportunités inédites pour transformer les systèmes éducatifs, améliorer l'accès au savoir et développer les compétences du futur. ACT accompagne les institutions éducatives, les organismes de formation et les acteurs EdTech dans la conception et le déploiement de solutions innovantes, centrées sur l'apprenant et alignées sur les enjeux du XXIe siècle.",
+        "label": "Education & EdTech",
+        "tagline": "Accelerating educational transformation through digital",
+        "description": "Education is the main lever of societal development. In a fast-changing world, digital technologies offer unprecedented opportunities to transform educational systems, improve access to knowledge, and develop the skills of the future. ACT supports educational institutions, training organizations, and EdTech players in designing and deploying innovative, learner-centric solutions aligned with 21st-century challenges.",
         "services": [
-          "Plateformes d'apprentissage en ligne (LMS) & blended learning",
-          "Digitalisation des parcours étudiants & gestion administrative",
-          "Outils pédagogiques innovants & réalité augmentée",
-          "Analyse de données d'apprentissage & IA pour la personnalisation",
-          "Formation des enseignants aux outils numériques"
+          "Online learning platforms (LMS) & blended learning",
+          "Digitization of student journeys & administration",
+          "Innovative pedagogical tools & augmented reality",
+          "Learning analytics & AI for personalization",
+          "Teacher training in digital tools"
         ],
-        "chiffre": { "label": "d'amélioration de l'engagement des apprenants" }
+        "chiffre": { "label": "improvement in learner engagement" }
       }
     }
   },
