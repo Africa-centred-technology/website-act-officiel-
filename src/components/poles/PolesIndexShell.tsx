@@ -14,6 +14,7 @@ import { Code, Users, GraduationCap, ArrowRight } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { POLES } from "@/lib/data/poles";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 
 /* ── Background layers ── */
@@ -134,6 +135,8 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
    ══════════════════════════════════════════════════════════ */
 function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: number; screenSize: 'mobile' | 'tablet' | 'desktop' }) {
   const t = useTranslations("poles.index");
+  const msg = useDataMessages();
+  const i18n = msg.poles.items[pole.id];
   const [isHovered, setIsHovered] = useState(false);
   const Icon = pole.icon;
 
@@ -166,7 +169,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
           }}>
             <img
               src={pole.image}
-              alt={pole.title}
+              alt={i18n.title}
               style={{
                 width: '100%',
                 height: '100%',
@@ -240,7 +243,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               fontFamily: 'var(--font-display)',
               textTransform: 'uppercase',
             }}>
-              {pole.title}
+              {i18n.title}
             </h2>
 
             {/* Tagline */}
@@ -251,7 +254,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               marginBottom: '1rem',
               fontFamily: 'var(--font-body)',
             }}>
-              {pole.tagline}
+              {i18n.tagline}
             </p>
 
             {/* Description */}
@@ -262,7 +265,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               marginBottom: '1.5rem',
               fontFamily: 'var(--font-body)',
             }}>
-              {pole.description}
+              {i18n.description}
             </p>
 
             {/* Stats */}
@@ -276,7 +279,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   fontFamily: 'var(--font-display)',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.left}
+                  {i18n.stats.left}
                 </p>
                 <p style={{
                   fontSize: '0.8rem',
@@ -286,7 +289,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.leftLabel}
+                  {i18n.stats.leftLabel}
                 </p>
               </div>
               <div>
@@ -298,7 +301,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   fontFamily: 'var(--font-display)',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.right}
+                  {i18n.stats.right}
                 </p>
                 <p style={{
                   fontSize: '0.8rem',
@@ -308,7 +311,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.rightLabel}
+                  {i18n.stats.rightLabel}
                 </p>
               </div>
             </div>

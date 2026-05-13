@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motio
 import { Link } from "@/i18n/navigation";
 import { POLES } from "@/lib/data/poles";
 import { useTranslations } from "next-intl";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 const ORANGE  = "#D35400";
 const ORANGE2 = "#ff8c38";
@@ -60,12 +61,14 @@ function useScreenSize() {
 function Panel({
   pole,
   meta,
+  i18n,
   isActive,
   onClick,
   isMobile,
 }: {
   pole: (typeof POLES)[0];
   meta: (typeof POLE_META)[0];
+  i18n: { title: string; description: string };
   isActive: boolean;
   onClick: () => void;
   isMobile: boolean;
@@ -200,7 +203,7 @@ function Panel({
           fontWeight: 700, letterSpacing: "0.5px", color: "rgba(255,255,255,.9)",
           lineHeight: 1.2,
         }}>
-          {pole.title}
+          {i18n.title}
         </div>
         <Link
           href={pole.href}
@@ -248,7 +251,7 @@ function Panel({
               fontWeight: 700, letterSpacing: "0.5px",
               marginBottom: "8px", color: "#fff", lineHeight: 1.15,
             }}>
-              {pole.title}
+              {i18n.title}
             </div>
 
             {/* Barre orange animée */}
@@ -273,7 +276,7 @@ function Panel({
               marginBottom: isMobile ? "14px" : "16px",
               fontFamily: "var(--font-body)",
             }}>
-              {pole.description}
+              {i18n.description}
             </p>
 
             {/* Tags */}
@@ -345,6 +348,7 @@ function Panel({
 /* ── Main ── */
 export default function PolesSection() {
   const t = useTranslations("home.poles");
+  const msg = useDataMessages();
   const screenSize = useScreenSize();
   const isMobile   = screenSize !== "desktop";
 
@@ -440,6 +444,7 @@ export default function PolesSection() {
             key={pole.id}
             pole={pole}
             meta={POLE_META[i]}
+            i18n={msg.poles.items[pole.id]}
             isActive={activePanel === i}
             onClick={() => handlePanel(i)}
             isMobile={isMobile}
