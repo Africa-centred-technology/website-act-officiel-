@@ -56,7 +56,7 @@ export default function BlogCategoriesBlock({
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const rubriques = useMemo(
     () => deriveCategoriesFromPosts(posts).filter((c) => c.value !== "all"),

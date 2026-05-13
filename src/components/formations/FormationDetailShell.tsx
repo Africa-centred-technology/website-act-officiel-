@@ -316,7 +316,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     }
   };
 
-  useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug]);
+  useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug, locale]);
 
   /* ── Sticky CTA bar visibility ─ */
   const [showStickyBar, setShowStickyBar] = useState(false);

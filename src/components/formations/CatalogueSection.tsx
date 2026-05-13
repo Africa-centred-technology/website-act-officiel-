@@ -35,7 +35,7 @@ export default function CatalogueSection() {
       .then((json) => setFormationsData(json.formations ?? []))
       .catch(() => setFormationsData([]))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [locale]);
 
   // Regrouper par secteur
   const grouped = useMemo(() => {

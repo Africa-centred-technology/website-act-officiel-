@@ -45,7 +45,7 @@ export default function BlogSection() {
             })
             .catch(() => {});
         return () => { cancelled = true; };
-    }, []);
+    }, [locale]);
 
     return (
         <div className="h-full w-full overflow-hidden relative flex flex-col">

@@ -82,7 +82,7 @@ export default function FormationsShell() {
 
   useEffect(() => {
     loadFromShopify();
-  }, []);
+  }, [locale]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");

@@ -86,7 +86,7 @@ export default function BlogShell() {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
   return (
     <div ref={containerRef} style={{ background: "var(--bg-primary)", minHeight: "100vh", position: "relative" }}>
       {/* ── Background layers globaux ── */}

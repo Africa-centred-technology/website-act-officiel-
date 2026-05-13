@@ -69,7 +69,7 @@ export default function BlogShowcaseSection() {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const articles = posts.slice(0, 8);
 

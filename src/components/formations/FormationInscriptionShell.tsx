@@ -154,7 +154,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
       })
       .catch(() => {})
       .finally(() => setIsLoading(false));
-  }, [slug]);
+  }, [slug, locale]);
 
   const title = formation?.title ?? slug.replace(/-/g, " ");
 

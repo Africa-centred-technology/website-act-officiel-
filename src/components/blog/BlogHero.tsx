@@ -72,7 +72,7 @@ export default function BlogHero() {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const categories = useMemo(() => deriveCategoriesFromPosts(posts), [posts]);
 

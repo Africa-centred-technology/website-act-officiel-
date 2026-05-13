@@ -91,7 +91,7 @@ export default function PoleConseilShell() {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   return (
     <div style={{

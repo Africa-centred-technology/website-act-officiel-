@@ -198,7 +198,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
     }
   };
 
-  useEffect(() => { load(); }, [slug]);
+  useEffect(() => { load(); }, [slug, locale]);
 
   /* ── Dérivées depuis les données Shopify ─────────────── */
   const heroImage  = data?.images?.[0]  || data?.imageUrl  || null;

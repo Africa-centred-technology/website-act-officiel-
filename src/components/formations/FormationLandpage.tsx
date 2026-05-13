@@ -588,7 +588,7 @@ export default function FormationLandpage() {
         }
     };
 
-    useEffect(() => { loadFromShopify(); }, []);
+    useEffect(() => { loadFromShopify(); }, [locale]);
 
     const categories = useMemo(() =>
         ["Toutes", ...Array.from(new Set(formationsData.map(f => f.categorie).filter(Boolean)))],

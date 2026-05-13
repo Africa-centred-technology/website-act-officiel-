@@ -64,7 +64,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const recentPosts = allPosts
     .filter((p) => p.slug !== post.slug)

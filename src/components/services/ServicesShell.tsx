@@ -850,7 +850,7 @@ function CataloguePanel({ svc }: { svc: Svc }) {
       .then(json => setFormations(json.formations || []))
       .catch(console.error)
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [locale]);
 
   // Grouper les formations par secteur
   const grouped = useMemo(() => {

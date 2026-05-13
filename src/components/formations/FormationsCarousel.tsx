@@ -47,7 +47,7 @@ export default function FormationsCarousel() {
       })
       .catch((e) => console.error(e))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [locale]);
 
   const current = formations[index];
   const next = () => setIndex((i) => (i + 1) % formations.length);

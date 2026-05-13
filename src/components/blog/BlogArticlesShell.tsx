@@ -62,7 +62,7 @@ export default function BlogArticlesShell() {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const filtered = allPosts.filter((p) => {
     const cat = p.category

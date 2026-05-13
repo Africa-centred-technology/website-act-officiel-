@@ -81,7 +81,7 @@ export default function PoleDeveloppementShell() {
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   return (
     <div style={{
