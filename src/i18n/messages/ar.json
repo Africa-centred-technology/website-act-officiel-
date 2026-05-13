@@ -80,43 +80,43 @@
   "metadata": {
     "default": {
       "title": "Africa Centred Technology | Engineering the Future",
-      "description": "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+      "description": "تدمج ACT الذكاء الاصطناعي والهندسة المتقدمة لدفع الشركات الأفريقية إلى قمة الابتكار العالمي."
     },
     "home": {
       "title": "ACT — Africa Centred Technology | Engineering the Future",
-      "description": "Découvrez ACT, la société africaine qui fusionne IA et ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+      "description": "اكتشف ACT، الشركة الأفريقية التي تدمج الذكاء الاصطناعي والهندسة المتقدمة لدفع الشركات الأفريقية إلى قمة الابتكار العالمي."
     },
     "about": {
-      "title": "À Propos — Africa Centred Technology",
-      "description": "Découvrez l'histoire, la mission et l'équipe d'Africa Centred Technology — pionniers de la transformation digitale en Afrique depuis 2023."
+      "title": "عن الشركة — Africa Centred Technology",
+      "description": "اكتشف تاريخ ورسالة وفريق Africa Centred Technology — رواد التحول الرقمي في أفريقيا منذ 2023."
     },
     "services": {
-      "title": "Services — Africa Centred Technology",
-      "description": "Nos 9 services en ingénierie technologique, conseil et formation pour propulser votre entreprise africaine vers l'innovation."
+      "title": "الخدمات — Africa Centred Technology",
+      "description": "خدماتنا التسع في الهندسة التكنولوجية والاستشارات والتدريب لدفع شركتك الأفريقية نحو الابتكار."
     },
     "formations": {
-      "title": "Formations — Africa Centred Technology",
-      "description": "Catalogue des formations ACT en intelligence artificielle, data, et transformation digitale, conçues pour les professionnels africains."
+      "title": "التدريب — Africa Centred Technology",
+      "description": "كتالوج تدريب ACT في الذكاء الاصطناعي والبيانات والتحول الرقمي، مصمم للمحترفين الأفارقة."
     },
     "poles": {
-      "title": "Pôles — Africa Centred Technology",
-      "description": "Les 3 pôles métiers d'ACT : Ingénierie Technologique, Conseil et Formation. Découvrez notre expertise complète."
+      "title": "الأقسام — Africa Centred Technology",
+      "description": "أقسام ACT الثلاثة: الهندسة التكنولوجية، الاستشارات، والتدريب. اكتشف خبرتنا الكاملة."
     },
     "secteurs": {
-      "title": "Secteurs — Africa Centred Technology",
-      "description": "Les secteurs d'activité où ACT intervient pour accompagner la transformation digitale des entreprises africaines."
+      "title": "القطاعات — Africa Centred Technology",
+      "description": "القطاعات التي تنشط فيها ACT لدعم التحول الرقمي للشركات الأفريقية."
     },
     "projects": {
-      "title": "Réalisations — Africa Centred Technology",
-      "description": "Découvrez les projets clients d'ACT : transformations digitales, IA, ingénierie. Études de cas concrètes en Afrique."
+      "title": "المشاريع — Africa Centred Technology",
+      "description": "اكتشف مشاريع عملاء ACT: التحولات الرقمية، الذكاء الاصطناعي، الهندسة. دراسات حالة حقيقية عبر أفريقيا."
     },
     "blog": {
-      "title": "Blog — Africa Centred Technology",
-      "description": "Articles, analyses et veille technologique d'ACT. IA, transformation digitale, ingénierie : l'actualité tech africaine."
+      "title": "المدونة — Africa Centred Technology",
+      "description": "مقالات وتحليلات ورؤى تكنولوجية من ACT. الذكاء الاصطناعي، التحول الرقمي، الهندسة: أحدث ما في التكنولوجيا الأفريقية."
     },
     "contact": {
-      "title": "Contact — Africa Centred Technology",
-      "description": "Contactez l'équipe ACT pour discuter de vos projets de transformation digitale, IA et formation au Maroc et en Afrique."
+      "title": "اتصل بنا — Africa Centred Technology",
+      "description": "اتصل بفريق ACT لمناقشة مشاريع التحول الرقمي والذكاء الاصطناعي والتدريب في المغرب وأفريقيا."
     }
   },
   "validation": {
