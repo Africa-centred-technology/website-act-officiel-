@@ -12,7 +12,6 @@ vi.mock("@/lib/shopify/blog", () => ({
 }));
 
 import { describe, it, expect } from "vitest";
-import sitemap from "@/app/sitemap";
 
 describe("sitemap", () => {
   it("contains a /fr/services entry as canonical url", async () => {
@@ -74,6 +73,7 @@ describe("sitemap", () => {
   });
 
   it("emits a canonical /en/formations/<slug> entry (not just hreflang alternates)", async () => {
+    const sitemap = (await import("@/app/sitemap")).default;
     const entries = await sitemap();
     const urls = entries.map((e) => e.url);
     // Mock provides at least one formation slug
@@ -81,18 +81,21 @@ describe("sitemap", () => {
   });
 
   it("emits a canonical /ar/formations/<slug> entry", async () => {
+    const sitemap = (await import("@/app/sitemap")).default;
     const entries = await sitemap();
     const urls = entries.map((e) => e.url);
     expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/ar/formations/"))).toBe(true);
   });
 
   it("emits a canonical /en/blog/<slug> entry", async () => {
+    const sitemap = (await import("@/app/sitemap")).default;
     const entries = await sitemap();
     const urls = entries.map((e) => e.url);
     expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/en/blog/"))).toBe(true);
   });
 
   it("emits a canonical /ar/blog/<slug> entry", async () => {
+    const sitemap = (await import("@/app/sitemap")).default;
     const entries = await sitemap();
     const urls = entries.map((e) => e.url);
     expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/ar/blog/"))).toBe(true);
