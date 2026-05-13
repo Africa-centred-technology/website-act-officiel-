@@ -1,6 +1,6 @@
 /**
  * Default formation page assets — structural (images / URLs / numbers).
- * Text content lives in fr.json under `formations.defaults.*`
+ * Text content lives in fr.json under `formations.defaults.*`.
  */
 
 /* ── Pain point images (mapped by index to i18n painPoints) ── */
@@ -56,7 +56,7 @@ export const DEFAULT_TOOLS_COVERED = {
   ],
 };
 
-/* ── Pricing plan structural config (amounts, CTA types, featured flags) ── */
+/* ── Pricing plan structural config (amounts/CTA types/featured flags) ── */
 export interface PricingPlanStructural {
   amount: string;
   currency?: string;
@@ -66,26 +66,37 @@ export interface PricingPlanStructural {
   featured: boolean;
 }
 
-export const DEFAULT_PRICING_PLAN_STRUCTURAL: PricingPlanStructural[] = [
-  {
-    amount: "Sur devis",
-    currency: "MAD HT",
-    cta_type: "inscription",
-    featured: true,
-  },
-  {
-    amount: "Sur devis",
-    old_price: "Réponse sous 24h",
-    cta_type: "contact",
-    featured: false,
-  },
-  {
-    amount: "Sur devis",
-    old_price: "Réponse sous 24h",
-    cta_type: "contact",
-    featured: false,
-  },
-];
+/**
+ * Build the default pricing-plan placeholders, localized via the caller's translator.
+ * The `t` argument is a `useTranslations("formations")` instance — both server
+ * (`getTranslations`) and client (`useTranslations`) variants are compatible.
+ */
+export function getDefaultPricingPlanStructural(
+  t: (key: string) => string
+): PricingPlanStructural[] {
+  const surDevis = t("metaSurDevis");
+  const responseUnder24h = t("landpageConfirmation");
+  return [
+    {
+      amount: surDevis,
+      currency: "MAD HT",
+      cta_type: "inscription",
+      featured: true,
+    },
+    {
+      amount: surDevis,
+      old_price: responseUnder24h,
+      cta_type: "contact",
+      featured: false,
+    },
+    {
+      amount: surDevis,
+      old_price: responseUnder24h,
+      cta_type: "contact",
+      featured: false,
+    },
+  ];
+}
 
 /* ── Places / session capacity (numeric structural) ── */
 export const DEFAULT_PLACES_SESSION = {

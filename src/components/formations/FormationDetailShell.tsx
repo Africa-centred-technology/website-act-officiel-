@@ -289,6 +289,7 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
 /* ── Main component ──────────────────────────────────────── */
 export default function FormationDetailShell({ slug }: { slug: string }) {
   const t = useTranslations("formations.detail");
+  const tInsc = useTranslations("formations.inscription");
   const locale = useLocale();
   const router = useRouter();
   const [formation, setFormation] = useState<FormationDetail | null>(null);
@@ -380,9 +381,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     : defaults.pricingPlans.map((p, idx) => ({
         title: p.title,
         description: p.description,
-        amount: idx === 0 ? (formation.prix || "Sur devis") : "Sur devis",
+        amount: idx === 0 ? (formation.prix || t("metaSurDevis")) : t("metaSurDevis"),
         currency: idx === 0 ? "MAD HT" : undefined,
-        old_price: idx > 0 ? "Réponse sous 24h" : undefined,
+        old_price: idx > 0 ? tInsc("landpageConfirmation") : undefined,
         badge: p.badge,
         featured: idx === 0,
         cta_label: p.ctaLabel,
@@ -970,12 +971,12 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                       lineHeight: 0.95, letterSpacing: "-0.03em",
                       color: p.featured ? ACT_ORANGE : WHITE,
                     }}>{p.amount}</span>
-                    {p.amount !== "Sur devis" && p.currency && <span style={{ fontFamily: FONT_LABEL, fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{p.currency}</span>}
+                    {p.amount !== t("metaSurDevis") && p.amount !== "" && p.currency && <span style={{ fontFamily: FONT_LABEL, fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{p.currency}</span>}
                   </div>
                   {p.old_price && (
                     <div style={{
-                      textDecoration: p.old_price.startsWith("Réponse") ? "none" : "line-through",
-                      fontSize: 14, color: p.old_price.startsWith("Réponse") ? ACT_GOLD : "rgba(255,255,255,0.35)", marginTop: 6,
+                      textDecoration: p.old_price === tInsc("landpageConfirmation") ? "none" : "line-through",
+                      fontSize: 14, color: p.old_price === tInsc("landpageConfirmation") ? ACT_GOLD : "rgba(255,255,255,0.35)", marginTop: 6,
                     }}>{p.old_price}</div>
                   )}
                 </div>

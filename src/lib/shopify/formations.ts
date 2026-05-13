@@ -211,7 +211,7 @@ function parsePricingPlans(value: string): PricingPlan[] {
         return {
           title,
           description: String(p?.description || "").trim(),
-          amount:      String(p?.amount || p?.prix || "Sur devis").trim(),
+          amount:      String(p?.amount || p?.prix || "").trim(),
           currency:    p?.currency ? String(p.currency).trim() : undefined,
           old_price:   p?.old_price ? String(p.old_price).trim() : undefined,
           badge:       p?.badge ? String(p.badge).trim() : undefined,

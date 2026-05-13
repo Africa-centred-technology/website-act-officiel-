@@ -40,7 +40,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Loader2, AlertCircle, RefreshCw } from "lucide-react";
 import Header from "@/components/layout/Header";
@@ -178,6 +178,7 @@ function PageSkeleton() {
 ───────────────────────────────────────────────────────────────── */
 export default function LandingFormation({ slug }: { slug: string }) {
   const locale = useLocale();
+  const t = useTranslations("formations.inscription");
   const [data,      setData]      = useState<FormationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError,  setHasError]  = useState(false);
@@ -517,7 +518,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
                 <PrimaryBtn onClick={() => setIsModal(true)}>Réserver ma place</PrimaryBtn>
               </div>
               <p style={{ color: TEXT_GRAY, fontSize: "1rem", fontWeight: 500 }}>
-                ✓ Réponse sous 24h · ✓ Sans engagement
+                {t("landpageConfirmation")}
               </p>
             </div>
           </section>
