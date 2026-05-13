@@ -120,11 +120,11 @@
     }
   },
   "validation": {
-    "required": "Ce champ est requis",
-    "email": "Email invalide",
-    "phone": "Numéro de téléphone invalide",
-    "minLength": "Minimum {min} caractères",
-    "maxLength": "Maximum {max} caractères"
+    "required": "This field is required",
+    "email": "Invalid email",
+    "phone": "Invalid phone number",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters"
   },
   "home": {
     "manifeste": {
@@ -1694,12 +1694,12 @@
     }
   },
   "breadcrumb": {
-    "home": "Accueil",
-    "formations": "Formations",
+    "home": "Home",
+    "formations": "Training",
     "blog": "Blog",
     "services": "Services",
-    "projects": "Réalisations",
-    "secteurs": "Secteurs",
-    "poles": "Pôles"
+    "projects": "Projects",
+    "secteurs": "Industries",
+    "poles": "Divisions"
   }
 }

@@ -120,11 +120,11 @@
     }
   },
   "validation": {
-    "required": "Ce champ est requis",
-    "email": "Email invalide",
-    "phone": "Numéro de téléphone invalide",
-    "minLength": "Minimum {min} caractères",
-    "maxLength": "Maximum {max} caractères"
+    "required": "هذا الحقل مطلوب",
+    "email": "بريد إلكتروني غير صالح",
+    "phone": "رقم هاتف غير صالح",
+    "minLength": "الحد الأدنى {min} حرفًا",
+    "maxLength": "الحد الأقصى {max} حرفًا"
   },
   "home": {
     "manifeste": {
@@ -1694,12 +1694,12 @@
     }
   },
   "breadcrumb": {
-    "home": "Accueil",
-    "formations": "Formations",
-    "blog": "Blog",
-    "services": "Services",
-    "projects": "Réalisations",
-    "secteurs": "Secteurs",
-    "poles": "Pôles"
+    "home": "الرئيسية",
+    "formations": "التدريب",
+    "blog": "المدونة",
+    "services": "الخدمات",
+    "projects": "المشاريع",
+    "secteurs": "القطاعات",
+    "poles": "الأقسام"
   }
 }
