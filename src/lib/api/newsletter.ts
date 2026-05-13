@@ -1,11 +1,21 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminUrl } from "@/lib/api/shopify-admin";
+import { routing, type Locale } from "@/i18n/routing";
+
+function safeLocale(raw: unknown): Locale {
+  if (typeof raw === "string" && (routing.locales as readonly string[]).includes(raw)) {
+    return raw as Locale;
+  }
+  return routing.defaultLocale;
+}
 
 // ── POST handler ──────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
   try {
-    const { email } = await req.json();
+    const reqBody = await req.json();
+    const { email } = reqBody;
+    const locale = safeLocale(reqBody.locale);
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
       return NextResponse.json({ error: "Adresse email invalide." }, { status: 400 });
@@ -40,6 +50,7 @@ export async function POST(req: Request) {
         variables: {
           input: {
             email,
+            tags: [`lang:${locale}`],
             emailMarketingConsent: {
               marketingState: "SUBSCRIBED",
               marketingOptInLevel: "SINGLE_OPT_IN",

@@ -64,7 +64,7 @@ export default function BlogShell() {
       const res = await fetch("/api/shopify/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Erreur");

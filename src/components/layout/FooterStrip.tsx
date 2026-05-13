@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, LinkedinIcon, Mail, Phone, MapPin, Code2, Briefcase, GraduationCap } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const ORANGE = "#D35400";
 
@@ -23,6 +23,7 @@ interface FooterStripProps {
 
 export default function FooterStrip({ style }: FooterStripProps = {}) {
   const t = useTranslations("common");
+  const locale = useLocale();
   const year = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -34,7 +35,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
       const res = await fetch("/api/shopify/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
       const data = await res.json();
       if (res.ok && data.success) {

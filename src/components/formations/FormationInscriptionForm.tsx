@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Send, Loader2, Search, ChevronDown, X } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
@@ -366,6 +366,7 @@ export default function FormationInscriptionForm({
 }: FormationInscriptionFormProps) {
   const t = useTranslations("formations.inscription");
   const tOpts = useTranslations("formations.inscription.options");
+  const locale = useLocale();
 
   const CANAUX = [
     tOpts("canaux.instagram"),
@@ -457,6 +458,7 @@ export default function FormationInscriptionForm({
           formationSouhaitee: formationTitle,
           formationSlug,
           timestamp: new Date().toISOString(),
+          locale,
         }),
       });
       if (!res.ok) throw new Error();

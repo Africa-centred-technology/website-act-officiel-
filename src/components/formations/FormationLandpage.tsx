@@ -407,6 +407,7 @@ function GuaranteeCard({ g, i }: { g: ResolvedGuarantee; i: number }) {
 ───────────────────────────────────────────────────────────────── */
 function InscriptionForm({ screenSize, formations }: { screenSize: string; formations: FormationCardData[] }) {
     const t = useTranslations("formations.inscription");
+    const locale = useLocale();
     const [form, setForm] = useState({ nom: "", email: "", telephone: "", formation: "", message: "" });
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
@@ -440,6 +441,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
                     formationSlug: formations.find(f => f.title === form.formation)?.slug ?? "",
                     message: form.message, typeClient: "B2C",
                     ville: "", formatsPreferes: [], disponibilite: "",
+                    locale,
                 }),
             });
             if (res.ok) {

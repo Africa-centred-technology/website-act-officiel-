@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -63,6 +63,7 @@ export default function BrochureRequestModal({
   brochureUrl,
 }: BrochureRequestModalProps) {
   const t = useTranslations("formations.brochure");
+  const locale = useLocale();
   const [name, setName]       = useState("");
   const [email, setEmail]     = useState("");
   const [company, setCompany] = useState("");
@@ -105,6 +106,7 @@ export default function BrochureRequestModal({
           formationSlug,
           formationTitle,
           brochureUrl,
+          locale,
         }),
       });
       const json = await res.json();
