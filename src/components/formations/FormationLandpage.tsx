@@ -1,13 +1,8 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import {
-    Clock, Users, BookOpen, Sparkles, ChevronRight, ArrowRight,
-    Tag, Loader2, TrendingUp, Zap, Target, Shield, CheckCircle2,
-    Monitor, BarChart2, MessageCircle, GraduationCap,
-} from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 
 /* ─────────────────────────────────────────────────────────────────
@@ -15,59 +10,32 @@ import FooterStrip from "@/components/layout/FooterStrip";
 ───────────────────────────────────────────────────────────────── */
 const COLOR = "#D35400";
 
-const STATS = [
-    { value: "12+",     label: "Formations",  sub: "disponibles"          },
-    { value: "7h",      label: "Par journée", sub: "de pratique"          },
-    { value: "400 MAD", label: "À partir de", sub: "par formation"        },
-    { value: "100%",    label: "Pratique",    sub: "cas réels entreprise" },
-];
-
 const EXPERIENCE_BLOCKS = [
     {
-        icon: Monitor,
-        emoji: "👨‍💻",
         title: "Apprenants en situation réelle",
         desc: "Dès le premier jour, vous travaillez sur poste avec de vrais outils professionnels. Pas de simulation, pas de cas fictifs — vous produisez directement.",
-        highlight: "Environnement 100% pro",
-        barLabel: "Temps sur poste",
-        barValue: 100,
     },
     {
-        icon: BarChart2,
-        emoji: "📊",
         title: "80% pratique / 20% théorie",
         desc: "Notre ratio inversé garantit une montée en compétence rapide. Chaque concept est immédiatement appliqué via des exercices tirés de vrais projets africains.",
-        highlight: "Montée en compétence ×3",
-        barLabel: "Pratique",
-        barValue: 80,
     },
     {
-        icon: MessageCircle,
-        emoji: "🧑‍🏫",
         title: "Interaction directe formateur",
         desc: "Vos questions reçoivent une réponse immédiate. Le formateur corrige en temps réel, intervient sur votre écran et adapte le rythme à votre groupe.",
-        highlight: "Max 12 apprenants / session",
-        barLabel: null,
-        barValue: null,
     },
     {
-        icon: GraduationCap,
-        emoji: "🎓",
         title: "Certificat numérique ACT",
-        desc: "En fin de formation, vous obtenez un certificat numérique valué par les directions RH et les recruteurs. Un actif concret à ajouter à votre profil.",
-        highlight: "Reconnu par les RH",
-        barLabel: null,
-        barValue: null,
+        desc: "En fin de formation, vous obtenez un certificat numérique signé ACT. Une preuve concrète de vos nouvelles compétences, à ajouter à votre profil LinkedIn ou CV.",
     },
 ];
 
 const PILLARS = [
-    { icon: Zap,        title: "80 % Pratique",         desc: "Chaque concept est immédiatement appliqué. Zéro slide sans exercice." },
-    { icon: Target,     title: "Cas réels africains",    desc: "Nos exercices s'inspirent de vrais projets d'entreprises du continent." },
-    { icon: Users,      title: "Petits groupes",         desc: "Maximum 12 apprenants par session pour un suivi individualisé." },
-    { icon: TrendingUp, title: "Formateurs praticiens",  desc: "Chaque formateur exerce son métier activement — pas de théoriciens." },
-    { icon: Shield,     title: "Certification reconnue", desc: "Certificat ACT valué par les recruteurs et les directions RH." },
-    { icon: Sparkles,   title: "Suivi post-formation",   desc: "3 mois de support WhatsApp inclus après chaque programme." },
+    { title: "80 % Pratique",         desc: "Chaque concept est immédiatement appliqué. Zéro slide sans exercice." },
+    { title: "Cas réels africains",    desc: "Nos exercices s'inspirent de vrais projets d'entreprises du continent." },
+    { title: "Petits groupes",         desc: "Maximum 12 apprenants par session pour un suivi individualisé." },
+    { title: "Formateurs praticiens",  desc: "Chaque formateur exerce son métier activement — pas de théoriciens." },
+    { title: "Certificat de compétences", desc: "À l'issue de chaque formation, vous recevez un certificat ACT attestant de vos acquis — à valoriser sur LinkedIn ou votre CV." },
+    { title: "Suivi post-formation",   desc: "3 mois de support WhatsApp inclus après chaque programme." },
 ];
 
 const GUARANTEES = [
@@ -164,9 +132,6 @@ function RippleButton({
             onClick={addRipple}
         >
             {children}
-            <span style={{ display: "inline-block", lineHeight: 0, transition: "transform 0.3s ease", transform: hovered ? `rotate(${arrowDeg}deg)` : "rotate(0deg)" }}>
-                <ArrowRight size={size === "lg" ? 20 : 16} />
-            </span>
             {ripples.map(r => (
                 <span key={r.id} style={{
                     position: "absolute", borderRadius: "50%",
@@ -201,22 +166,29 @@ function Grain() {
    HERO VIDEO
 ───────────────────────────────────────────────────────────────── */
 function MarketingVideo() {
+    const { scrollY } = useScroll();
+    const contentY    = useTransform(scrollY, [0, 700], ["0%", "22%"]);
+    const contentOp   = useTransform(scrollY, [0, 500], [1, 0]);
+    const videoY      = useTransform(scrollY, [0, 700], ["0%", "10%"]);
+
     return (
         <motion.section
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}
             style={{ width: "100%", height: "100vh", minHeight: 600, position: "relative", zIndex: 2, overflow: "hidden", background: "#000" }}
         >
-            <video autoPlay muted loop playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            >
-                <source src="/Video/Promo.mp4" type="video/mp4" />
-            </video>
+            {/* Video — défilement lent (parallax couche basse) */}
+            <motion.div style={{ y: videoY, position: "absolute", inset: "-10% 0", zIndex: 0 }}>
+                <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                    <source src="/Video/Promo.mp4" type="video/mp4" />
+                </video>
+            </motion.div>
 
             {/* Overlay */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,16,0.62) 0%, rgba(10,20,16,0.12) 35%, rgba(10,20,16,0.48) 72%, rgba(10,20,16,1) 100%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(to bottom, rgba(10,20,16,0.62) 0%, rgba(10,20,16,0.12) 35%, rgba(10,20,16,0.48) 72%, rgba(10,20,16,1) 100%)", pointerEvents: "none" }} />
 
-            {/* Content */}
-            <div style={{
+            {/* Content — défilement rapide + fade (parallax couche haute) */}
+            <motion.div style={{
+                y: contentY, opacity: contentOp,
                 position: "absolute", inset: 0, zIndex: 3,
                 display: "flex", flexDirection: "column", justifyContent: "center",
                 padding: "clamp(1.5rem, 8vw, 8rem)",
@@ -258,14 +230,8 @@ function MarketingVideo() {
                     <RippleButton href="#catalogue" arrowDeg={45} size="lg">Voir le catalogue</RippleButton>
                     <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">S&apos;inscrire maintenant</RippleButton>
                 </motion.div>
-            </div>
-
-            {/* Scroll hint */}
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
-                style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)", zIndex: 4, color: "rgba(255,255,255,0.3)" }}
-            >
-                <ChevronRight size={32} style={{ transform: "rotate(90deg)" }} />
             </motion.div>
+
         </motion.section>
     );
 }
@@ -275,7 +241,6 @@ function MarketingVideo() {
 ───────────────────────────────────────────────────────────────── */
 function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENCE_BLOCKS[number]; index: number; screenSize: string }) {
     const [hovered, setHovered] = useState(false);
-    const Icon = block.icon;
 
     return (
         <motion.div
@@ -291,59 +256,13 @@ function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENC
                 boxShadow: hovered ? `0 24px 64px rgba(211,84,0,0.12)` : "none",
             }}
         >
-            {/* Icon row */}
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.6rem" }}>
-                <div style={{
-                    width: 56, height: 56, borderRadius: "0.75rem",
-                    background: hovered ? `${COLOR}22` : `${COLOR}12`,
-                    border: `1px solid ${hovered ? COLOR + "55" : COLOR + "22"}`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    transition: "all 0.35s ease",
-                    transform: hovered ? "scale(1.08) rotate(-4deg)" : "scale(1) rotate(0deg)",
-                }}>
-                    <Icon size={28} color={COLOR} />
-                </div>
-                <span style={{ fontSize: "2rem", lineHeight: 1 }}>{block.emoji}</span>
-            </div>
-
             <h3 style={{ fontSize: screenSize === "mobile" ? "1.5rem" : "1.8rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", marginBottom: "0.85rem", lineHeight: 1.2 }}>
                 {block.title}
             </h3>
 
-            <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontFamily: "var(--font-body)", marginBottom: block.barValue !== null ? "1.5rem" : "1.2rem" }}>
+            <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontFamily: "var(--font-body)" }}>
                 {block.desc}
             </p>
-
-            {/* Animated progress bar */}
-            {block.barValue !== null && block.barLabel !== null && (
-                <div style={{ marginBottom: "1.2rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                        <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em" }}>{block.barLabel}</span>
-                        <span style={{ fontSize: "1.05rem", fontWeight: 800, color: COLOR }}>{block.barValue}%</span>
-                    </div>
-                    <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 9999, overflow: "hidden" }}>
-                        <motion.div
-                            initial={{ width: 0 }} whileInView={{ width: `${block.barValue}%` }}
-                            viewport={{ once: true }} transition={{ duration: 1.3, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                            style={{ height: "100%", background: `linear-gradient(to right, ${COLOR}, #e8601a)`, borderRadius: 9999 }}
-                        />
-                    </div>
-                </div>
-            )}
-
-            {/* Badge */}
-            <div style={{
-                display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                padding: "0.35rem 0.9rem", borderRadius: "2rem",
-                background: hovered ? `${COLOR}18` : "rgba(255,255,255,0.04)",
-                border: `1px solid ${hovered ? COLOR + "44" : "rgba(255,255,255,0.08)"}`,
-                fontSize: "1rem", fontWeight: 700,
-                color: hovered ? COLOR : "rgba(255,255,255,0.5)",
-                transition: "all 0.3s ease", fontFamily: "var(--font-body)",
-            }}>
-                <CheckCircle2 size={14} color={hovered ? COLOR : "rgba(255,255,255,0.3)"} />
-                {block.highlight}
-            </div>
         </motion.div>
     );
 }
@@ -367,55 +286,86 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
                 onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
                 style={{
                     height: "100%", display: "flex", flexDirection: "column",
-                    background: "rgba(255,255,255,0.02)",
-                    border: hovered ? `1px solid ${COLOR}` : "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "1rem", overflow: "hidden",
-                    transition: "all 0.35s ease",
-                    transform: hovered ? "translateY(-8px)" : "translateY(0)",
-                    boxShadow: hovered ? `0 24px 64px ${COLOR}2A` : "none",
+                    background: hovered ? "rgba(211,84,0,0.04)" : "#0d1a14",
+                    border: hovered ? `1px solid ${COLOR}55` : "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: "0.875rem", overflow: "hidden",
+                    transition: "all 0.3s ease",
+                    transform: hovered ? "translateY(-5px)" : "translateY(0)",
+                    boxShadow: hovered ? `0 16px 48px ${COLOR}18` : "none",
                     cursor: "pointer",
                 }}
             >
+                {/* Accent top bar */}
+                <div style={{ height: 2, background: hovered ? `linear-gradient(90deg, ${COLOR}, #F39C12 60%, transparent)` : "rgba(255,255,255,0.04)", transition: "background 0.3s" }} />
+
                 {/* Image */}
-                <div style={{ position: "relative", height: screenSize === "mobile" ? 180 : 220, overflow: "hidden", background: "rgba(0,0,0,0.3)" }}>
-                    {program.imageUrl && (
+                <div style={{ position: "relative", height: screenSize === "mobile" ? 170 : 200, overflow: "hidden", flexShrink: 0 }}>
+                    {program.imageUrl ? (
                         <img src={program.imageUrl} alt={program.title}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease, filter 0.4s ease", transform: hovered ? "scale(1.08)" : "scale(1)", filter: hovered ? "brightness(0.75)" : "brightness(0.55) grayscale(30%)" }}
+                            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.55s ease, filter 0.4s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: hovered ? "brightness(0.65)" : "brightness(0.45) saturate(0.7)" }}
                         />
+                    ) : (
+                        <div style={{ width: "100%", height: "100%", background: `linear-gradient(135deg, ${COLOR}15, rgba(255,255,255,0.03))` }} />
                     )}
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(10,20,16,0.95) 100%)" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 30%, rgba(13,26,20,0.97) 100%)" }} />
+
+                    {/* Niveau badge — top right */}
                     {program.niveau && (
-                        <div style={{ position: "absolute", bottom: "1rem", left: "1.5rem", padding: "0.3rem 0.85rem", borderRadius: "2rem", background: COLOR, fontSize: "0.88rem", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                        <div style={{
+                            position: "absolute", top: "0.85rem", right: "0.85rem",
+                            padding: "0.2rem 0.7rem", borderRadius: "2rem",
+                            background: "rgba(0,0,0,0.55)", border: `1px solid ${COLOR}66`,
+                            backdropFilter: "blur(6px)",
+                            fontSize: "0.7rem", fontWeight: 700, color: COLOR,
+                            textTransform: "uppercase", letterSpacing: "0.1em",
+                        }}>
                             {program.niveau}
+                        </div>
+                    )}
+
+                    {/* Prix overlay — bottom left */}
+                    {program.prix && (
+                        <div style={{ position: "absolute", bottom: "0.9rem", left: "1.1rem" }}>
+                            <span style={{ fontSize: "1.5rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1 }}>{program.prix}</span>
                         </div>
                     )}
                 </div>
 
                 {/* Body */}
-                <div style={{ padding: screenSize === "mobile" ? "1.5rem" : "2rem", flex: 1, display: "flex", flexDirection: "column" }}>
-                    {program.secteur && (
-                        <span style={{ fontSize: "0.88rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR, marginBottom: "0.6rem", display: "block" }}>{program.secteur}</span>
-                    )}
-                    <h3 style={{ fontSize: screenSize === "mobile" ? "1.5rem" : "1.75rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: "0.9rem", textTransform: "uppercase" }}>
+                <div style={{ padding: screenSize === "mobile" ? "1.3rem 1.5rem" : "1.5rem 1.8rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                    {/* Secteur + durée */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.65rem" }}>
+                        {program.secteur && (
+                            <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: COLOR }}>{program.secteur}</span>
+                        )}
+                        {program.duree && (
+                            <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body)" }}>{program.duree}</span>
+                        )}
+                    </div>
+
+                    <h3 style={{ fontSize: screenSize === "mobile" ? "1.35rem" : "1.5rem", fontWeight: 800, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: "0.65rem" }}>
                         {program.title}
                     </h3>
-                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-body)", flex: 1, marginBottom: "1.4rem" }}>
+                    <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, fontFamily: "var(--font-body)", flex: 1, marginBottom: "1.2rem" }}>
                         {program.accroche}
                     </p>
 
-                    {/* Meta */}
-                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-                        {program.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", color: "rgba(255,255,255,0.5)" }}><Clock    size={14} color={COLOR} />{program.duree}</span>}
-                        {program.format && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", color: "rgba(255,255,255,0.5)" }}><BookOpen size={14} color={COLOR} />{program.format}</span>}
-                        {program.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", fontWeight: 700, color: COLOR }}><Tag      size={14} color={COLOR} />{program.prix}</span>}
-                    </div>
-
-                    {/* CTA — arrow slides right */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: hovered ? "#fff" : COLOR, fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.3s" }}>
-                        En savoir plus
-                        <span style={{ display: "inline-flex", transition: "transform 0.3s ease", transform: hovered ? "translateX(6px)" : "translateX(0)" }}>
-                            <ArrowRight size={17} />
+                    {/* CTA */}
+                    <div style={{
+                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                        paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.06)",
+                    }}>
+                        <span style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hovered ? COLOR : "rgba(255,255,255,0.4)", transition: "color 0.3s", fontFamily: "var(--font-body)" }}>
+                            Voir la formation
                         </span>
+                        <span style={{
+                            width: 30, height: 30, borderRadius: "0.4rem",
+                            background: hovered ? COLOR : "rgba(255,255,255,0.06)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: "1rem", color: "#fff",
+                            transition: "background 0.3s, transform 0.3s",
+                            transform: hovered ? "translateX(3px)" : "translateX(0)",
+                        }}>→</span>
                     </div>
                 </div>
             </motion.div>
@@ -615,6 +565,9 @@ export default function FormationLandpage() {
     const featured = useMemo(() => filtered[0] ?? null, [filtered]);
     const rest     = useMemo(() => filtered.slice(1), [filtered]);
 
+    const { scrollY } = useScroll();
+    const glowY = useTransform(scrollY, [0, 3000], ["20%", "65%"]);
+
     return (
         <div style={{ background: "#0A1410", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>
             {/* Ripple keyframe */}
@@ -633,27 +586,13 @@ export default function FormationLandpage() {
             {/* Grid bg */}
             <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 0, backgroundImage: `linear-gradient(rgba(211,84,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(211,84,0,0.03) 1px,transparent 1px)`, backgroundSize: "80px 80px", pointerEvents: "none" }} />
 
-            {/* Glow */}
-            <div aria-hidden style={{ position: "fixed", top: "20%", left: "50%", width: "80vw", height: "60vw", zIndex: 0, background: "radial-gradient(ellipse,rgba(211,84,0,0.055) 0%,transparent 70%)", transform: "translate(-50%,-50%)", pointerEvents: "none" }} />
+            {/* Glow — parallax vertical */}
+            <motion.div aria-hidden style={{ position: "fixed", top: glowY, left: "50%", width: "80vw", height: "60vw", zIndex: 0, background: "radial-gradient(ellipse,rgba(211,84,0,0.055) 0%,transparent 70%)", translateX: "-50%", translateY: "-50%", pointerEvents: "none" }} />
 
             <div style={{ position: "relative", zIndex: 1 }}>
 
                 {/* ── HERO ─────────────────────────────────────────── */}
                 <MarketingVideo />
-
-                {/* ── STATS BAR ────────────────────────────────────── */}
-                <section style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.025)", padding: screenSize === "mobile" ? "2.5rem 1.5rem" : "2.5rem 6rem" }}>
-                    <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: screenSize === "mobile" ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "0.75rem", overflow: "hidden" }}>
-                        {STATS.map((s, i) => (
-                            <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                                style={{ padding: screenSize === "mobile" ? "2rem 1.2rem" : "2.5rem", background: "#0A1410", textAlign: "center" }}>
-                                <div style={{ fontSize: screenSize === "mobile" ? "2.8rem" : "3.5rem", fontWeight: 900, color: COLOR, fontFamily: "var(--font-display)", lineHeight: 1 }}>{s.value}</div>
-                                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "0.5rem", fontFamily: "var(--font-display)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</div>
-                                <div style={{ fontSize: "1rem", color: "rgba(255,255,255,0.38)", marginTop: "0.25rem", fontFamily: "var(--font-body)" }}>{s.sub}</div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </section>
 
                 {/* ── L'EXPÉRIENCE ACT ─────────────────────────────── */}
                 <section style={{ padding: screenSize === "mobile" ? "5rem 1.5rem" : "7rem 6rem", position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
@@ -694,22 +633,16 @@ export default function FormationLandpage() {
                         </motion.div>
 
                         <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: "1.2rem" }}>
-                            {PILLARS.map((p, i) => {
-                                const Icon = p.icon;
-                                return (
-                                    <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                                        style={{ padding: "2rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "0.85rem", transition: "border-color 0.25s, transform 0.25s" }}
-                                        onMouseEnter={e => { e.currentTarget.style.borderColor = `${COLOR}44`; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.transform = "translateY(0)"; }}
-                                    >
-                                        <div style={{ width: 48, height: 48, borderRadius: "0.5rem", background: `${COLOR}18`, border: `1px solid ${COLOR}33`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.2rem" }}>
-                                            <Icon size={24} color={COLOR} />
-                                        </div>
-                                        <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#fff", marginBottom: "0.7rem", fontFamily: "var(--font-display)" }}>{p.title}</h3>
-                                        <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{p.desc}</p>
-                                    </motion.div>
-                                );
-                            })}
+                            {PILLARS.map((p, i) => (
+                                <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                                    style={{ padding: "2rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "0.85rem", transition: "border-color 0.25s, transform 0.25s" }}
+                                    onMouseEnter={e => { e.currentTarget.style.borderColor = `${COLOR}44`; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                                    onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                                >
+                                    <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#fff", marginBottom: "0.7rem", fontFamily: "var(--font-display)" }}>{p.title}</h3>
+                                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{p.desc}</p>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -749,37 +682,76 @@ export default function FormationLandpage() {
                         {/* Featured */}
                         <AnimatePresence mode="wait">
                             {!isLoading && featured && (
-                                <motion.div key={`feat-${activeFilter}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} style={{ marginBottom: "2.5rem" }}>
+                                <motion.div key={`feat-${activeFilter}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} style={{ marginBottom: "2rem" }}>
                                     <Link href={`/formations/${featured.slug}`} style={{ textDecoration: "none", display: "block" }}>
                                         <div style={{
                                             position: "relative", borderRadius: "1rem", overflow: "hidden",
-                                            background: "rgba(255,255,255,0.02)", border: `1px solid ${COLOR}44`,
-                                            display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "1fr 1fr",
-                                            minHeight: 340, transition: "box-shadow 0.3s, transform 0.3s",
+                                            background: "#0d1a14",
+                                            border: `1px solid ${COLOR}33`,
+                                            display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "5fr 6fr",
+                                            minHeight: 360, transition: "box-shadow 0.3s, border-color 0.3s",
                                         }}
-                                            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = `0 28px 72px ${COLOR}22`; el.style.transform = "translateY(-4px)"; }}
-                                            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "none"; el.style.transform = "translateY(0)"; }}
+                                            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = `0 24px 64px ${COLOR}18`; el.style.borderColor = `${COLOR}66`; }}
+                                            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "none"; el.style.borderColor = `${COLOR}33`; }}
                                         >
-                                            <div style={{ position: "absolute", top: "1.2rem", left: "1.2rem", zIndex: 2, padding: "0.3rem 1rem", background: COLOR, borderRadius: "2rem", fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fff" }}>
-                                                ★ Populaire
+                                            {/* Left accent bar */}
+                                            <div style={{ position: "absolute", top: 0, left: 0, width: 3, height: "100%", background: `linear-gradient(to bottom, ${COLOR}, #F39C12)`, zIndex: 2 }} />
+
+                                            {/* Image */}
+                                            <div style={{ position: "relative", overflow: "hidden", minHeight: screenSize === "mobile" ? 220 : "auto" }}>
+                                                {featured.imageUrl ? (
+                                                    <>
+                                                        <img src={featured.imageUrl} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.5) saturate(0.8)" }} />
+                                                        <div style={{ position: "absolute", inset: 0, background: screenSize === "mobile" ? "linear-gradient(to bottom, transparent 40%, rgba(13,26,20,0.98) 100%)" : "linear-gradient(to right, transparent 40%, rgba(13,26,20,0.98) 100%)" }} />
+                                                    </>
+                                                ) : (
+                                                    <div style={{ width: "100%", height: "100%", background: `linear-gradient(135deg, ${COLOR}12, rgba(255,255,255,0.02))` }} />
+                                                )}
+                                                {/* "Coup de cœur" badge */}
+                                                <div style={{ position: "absolute", top: "1.2rem", left: "1.5rem", zIndex: 3, display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.3rem 0.85rem", background: COLOR, borderRadius: "2rem", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "#fff" }}>
+                                                    ★ Notre sélection
+                                                </div>
                                             </div>
-                                            {featured.imageUrl && (
-                                                <div style={{ position: "relative", overflow: "hidden", minHeight: screenSize === "mobile" ? 240 : "auto" }}>
-                                                    <img src={featured.imageUrl} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.65)" }} />
-                                                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 50%, rgba(10,20,16,0.97) 100%)" }} />
+
+                                            {/* Content */}
+                                            <div style={{ padding: screenSize === "mobile" ? "2rem 1.8rem" : "2.8rem 3rem", display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
+                                                <div style={{ display: "flex", alignItems: "center", gap: "0.7rem" }}>
+                                                    {featured.secteur && <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: COLOR }}>{featured.secteur}</span>}
+                                                    {featured.niveau && (
+                                                        <>
+                                                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(255,255,255,0.25)" }} />
+                                                            <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{featured.niveau}</span>
+                                                        </>
+                                                    )}
                                                 </div>
-                                            )}
-                                            <div style={{ padding: screenSize === "mobile" ? "2rem 1.5rem" : "3rem", display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
-                                                <span style={{ fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR }}>{featured.secteur}</span>
-                                                <h3 style={{ fontSize: screenSize === "mobile" ? "1.6rem" : "2.2rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.15, margin: 0 }}>{featured.title}</h3>
-                                                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "1.15rem", lineHeight: 1.75, margin: 0, fontFamily: "var(--font-body)" }}>{featured.accroche}</p>
-                                                <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                                                    {featured.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)" }}><Clock    size={15} color={COLOR} />{featured.duree}</span>}
-                                                    {featured.format && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)" }}><BookOpen size={15} color={COLOR} />{featured.format}</span>}
-                                                    {featured.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", fontWeight: 700, color: COLOR }}><Tag      size={15} color={COLOR} />{featured.prix}</span>}
+
+                                                <h3 style={{ fontSize: screenSize === "mobile" ? "1.7rem" : "clamp(1.8rem, 2.8vw, 2.4rem)", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.1, margin: 0 }}>
+                                                    {featured.title}
+                                                </h3>
+
+                                                <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "1rem", lineHeight: 1.75, margin: 0, fontFamily: "var(--font-body)" }}>
+                                                    {featured.accroche}
+                                                </p>
+
+                                                {/* Durée + Prix */}
+                                                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap", paddingTop: "0.5rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                                                    {featured.duree && (
+                                                        <div>
+                                                            <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.15rem" }}>Durée</div>
+                                                            <div style={{ fontSize: "1rem", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>{featured.duree}</div>
+                                                        </div>
+                                                    )}
+                                                    {featured.prix && (
+                                                        <div>
+                                                            <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.15rem" }}>Tarif</div>
+                                                            <div style={{ fontSize: "1.5rem", fontWeight: 900, color: COLOR, fontFamily: "var(--font-display)", lineHeight: 1 }}>{featured.prix}</div>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: COLOR, fontSize: "1.05rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                                                    Voir la formation <ArrowRight size={16} />
+
+                                                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", marginTop: "0.25rem" }}>
+                                                    <span style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)" }}>Voir la formation</span>
+                                                    <span style={{ width: 30, height: 30, borderRadius: "0.4rem", background: COLOR, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", color: "#fff" }}>→</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -794,7 +766,7 @@ export default function FormationLandpage() {
                                 style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: "1.5rem" }}>
                                 {isLoading ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "4rem" }}>
-                                        <Loader2 size={28} color={COLOR} style={{ animation: "spin 1s linear infinite" }} />
+                                        <p style={{ color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-body)", fontSize: "1rem" }}>Chargement…</p>
                                     </div>
                                 ) : fetchError ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
