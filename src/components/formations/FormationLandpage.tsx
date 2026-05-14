@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTAButton from "@/components/ui/CTAButton";
 
 /* ─────────────────────────────────────────────────────────────────
    CONSTANTS & DATA
@@ -1098,10 +1099,13 @@ export default function FormationLandpage() {
                                 Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture.
                             </p>
 
-                            {/* Final CTA — arrow rotates 90° on hover */}
-                            <RippleButton href="#inscription" arrowDeg={90} size="lg">
-                                Je m&apos;inscris maintenant
-                            </RippleButton>
+                            {/* Final CTA — même CTAButton que sur tout le site */}
+                            <CTAButton href="/formations/all">
+                                Voir le catalogue complet
+                            </CTAButton>
+                            <p style={{ marginTop: "1.5rem", color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
+                                Réponse sous 24h · Sans engagement
+                            </p>
                         </motion.div>
                     </div>
                 </section>
