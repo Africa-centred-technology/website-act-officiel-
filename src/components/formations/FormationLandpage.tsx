@@ -39,9 +39,9 @@ const PILLARS = [
 ];
 
 const GUARANTEES = [
-    { emoji: "👥", label: "Petits groupes ≤ 12",    detail: "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
-    { emoji: "🎓", label: "Formateur praticien",    detail: "Votre formateur travaille en entreprise aujourd'hui. Pas de formateurs-bibliothèque." },
-    { emoji: "♾️", label: "Ressources à vie",       detail: "Slides, exercices et enregistrements restent accessibles sans limite de durée." },
+    {  label: "Petits groupes ≤ 15",    detail: "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
+    { label: "Suivi post-formation",   detail: "3 mois de support WhatsApp inclus après chaque programme. Vos questions reçoivent une réponse réelle." },
+    {  label: "Ressources à vie",       detail: "Slides, exercices et enregistrements restent accessibles sans limite de durée." },
 ];
 
 /* ─────────────────────────────────────────────────────────────────
@@ -165,70 +165,182 @@ function Grain() {
 /* ─────────────────────────────────────────────────────────────────
    HERO VIDEO
 ───────────────────────────────────────────────────────────────── */
+const HERO_STATS = [
+    { val: "+500",  lab: "professionnels formés" },
+    { val: "≤ 12",  lab: "apprenants / session"  },
+    { val: "80%",   lab: "pratique sur cas réels" },
+    { val: "100%",  lab: "formateurs praticiens"  },
+];
+
 function MarketingVideo() {
     const { scrollY } = useScroll();
-    const contentY    = useTransform(scrollY, [0, 700], ["0%", "22%"]);
-    const contentOp   = useTransform(scrollY, [0, 500], [1, 0]);
-    const videoY      = useTransform(scrollY, [0, 700], ["0%", "10%"]);
+    const contentY    = useTransform(scrollY, [0, 700], ["0%", "18%"]);
+    const contentOp   = useTransform(scrollY, [0, 450], [1, 0]);
+    const videoY      = useTransform(scrollY, [0, 700], ["0%", "8%"]);
 
     return (
         <motion.section
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}
-            style={{ width: "100%", height: "100vh", minHeight: 600, position: "relative", zIndex: 2, overflow: "hidden", background: "#000" }}
+            style={{ width: "100%", height: "100vh", minHeight: 640, position: "relative", zIndex: 2, overflow: "hidden", background: "#050e0a" }}
         >
-            {/* Video — défilement lent (parallax couche basse) */}
+            {/* Vidéo — parallax lent */}
             <motion.div style={{ y: videoY, position: "absolute", inset: "-10% 0", zIndex: 0 }}>
-                <video autoPlay muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                <video autoPlay muted loop playsInline
+                    style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(0.35) brightness(0.45)" }}>
                     <source src="/Video/Promo.mp4" type="video/mp4" />
                 </video>
             </motion.div>
 
-            {/* Overlay */}
-            <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(to bottom, rgba(10,20,16,0.62) 0%, rgba(10,20,16,0.12) 35%, rgba(10,20,16,0.48) 72%, rgba(10,20,16,1) 100%)", pointerEvents: "none" }} />
+            {/* Overlay principal — masque le stock footage, donne la teinte ACT */}
+            <div aria-hidden style={{
+                position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+                background: "linear-gradient(135deg, rgba(5,14,10,0.96) 0%, rgba(10,20,16,0.82) 45%, rgba(5,14,10,0.92) 100%)",
+            }} />
 
-            {/* Content — défilement rapide + fade (parallax couche haute) */}
+            {/* Grille graphique ACT (dot grid) */}
+            <div aria-hidden style={{
+                position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+                backgroundImage: "radial-gradient(rgba(211,84,0,0.18) 1px, transparent 1px)",
+                backgroundSize: "36px 36px",
+                maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+                WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+            }} />
+
+            {/* Glow orange gauche */}
+            <div aria-hidden style={{
+                position: "absolute", top: "20%", left: "-5%", zIndex: 1, pointerEvents: "none",
+                width: "45vw", height: "55vh",
+                background: "radial-gradient(ellipse, rgba(211,84,0,0.12) 0%, transparent 68%)",
+            }} />
+
+            {/* Glow vert ACT droite */}
+            <div aria-hidden style={{
+                position: "absolute", bottom: "15%", right: "5%", zIndex: 1, pointerEvents: "none",
+                width: "35vw", height: "40vh",
+                background: "radial-gradient(ellipse, rgba(27,48,34,0.55) 0%, transparent 70%)",
+            }} />
+
+            {/* Fondu bas vers la section suivante */}
+            <div aria-hidden style={{
+                position: "absolute", bottom: 0, left: 0, right: 0, height: "220px", zIndex: 2, pointerEvents: "none",
+                background: "linear-gradient(to bottom, transparent, #0A1410)",
+            }} />
+
+            {/* ── Contenu principal — parallax rapide ── */}
             <motion.div style={{
                 y: contentY, opacity: contentOp,
                 position: "absolute", inset: 0, zIndex: 3,
                 display: "flex", flexDirection: "column", justifyContent: "center",
-                padding: "clamp(1.5rem, 8vw, 8rem)",
-                paddingTop: "clamp(6rem, 14vh, 12rem)",
-                paddingBottom: "clamp(4rem, 10vh, 8rem)",
+                padding: "clamp(1.5rem, 7vw, 7rem)",
+                paddingTop: "clamp(7rem, 16vh, 13rem)",
+                paddingBottom: "clamp(3rem, 8vh, 6rem)",
             }}>
+
+                {/* Eyebrow */}
                 <motion.div
-                    initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.7 }}
-                    style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.2rem" }}
+                    initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 0.7 }}
+                    style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem" }}
                 >
-                    <div style={{ width: 48, height: 3, background: COLOR }} />
-                    <span style={{ fontSize: "clamp(0.7rem, 0.9vw, 0.85rem)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.32em", color: COLOR }}>
-                        Africa Centred Technology · Pôle Formation
+                    <div style={{ width: 40, height: 2, background: COLOR }} />
+                    <span style={{
+                        fontSize: "clamp(0.65rem, 0.85vw, 0.8rem)", fontWeight: 700,
+                        textTransform: "uppercase", letterSpacing: "0.3em", color: COLOR,
+                        fontFamily: "var(--font-body)",
+                    }}>
+                        Africa Centred Technology &nbsp;·&nbsp; Pôle Formation
                     </span>
                 </motion.div>
 
+                {/* H1 */}
                 <motion.h1
                     initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 1, ease: [0.6, 0.08, 0.02, 0.99] }}
-                    style={{ fontSize: "clamp(2.5rem, 7vw, 6.5rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 0.95, letterSpacing: "-0.03em", margin: "0 0 2rem", maxWidth: 1100 }}
+                    transition={{ delay: 0.75, duration: 1, ease: [0.6, 0.08, 0.02, 0.99] }}
+                    style={{
+                        fontSize: "clamp(2.6rem, 6.8vw, 6.2rem)",
+                        fontWeight: 900, textTransform: "uppercase",
+                        fontFamily: "var(--font-display)",
+                        lineHeight: 0.95, letterSpacing: "-0.03em",
+                        margin: "0 0 2rem", maxWidth: 1060,
+                    }}
                 >
-                    <span style={{ color: "#fff" }}>Maîtrisez les outils</span><br />
-                    <span style={{ color: COLOR }}>qui font la différence</span><br />
-                    <span style={{ color: "rgba(255,255,255,0.7)" }}>dès demain matin.</span>
+                    <span style={{ color: "#fff", display: "block" }}>Maîtrisez les outils</span>
+                    <span style={{ color: COLOR, display: "block" }}>qui font la différence</span>
+                    <span style={{ color: "rgba(255,255,255,0.55)", display: "block" }}>dès demain matin.</span>
                 </motion.h1>
 
+                {/* Description */}
                 <motion.p
-                    initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}
-                    style={{ fontSize: "clamp(1rem, 1.4vw, 1.2rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.65, maxWidth: 640, margin: "0 0 3rem", fontFamily: "var(--font-body)" }}
+                    initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.05, duration: 0.7 }}
+                    style={{
+                        fontSize: "clamp(1rem, 1.35vw, 1.18rem)",
+                        color: "rgba(255,255,255,0.72)", lineHeight: 1.7,
+                        maxWidth: 580, margin: "0 0 2.8rem",
+                        fontFamily: "var(--font-body)",
+                    }}
                 >
                     Formations intensives conçues par des praticiens africains sur des cas réels.
                     En 1 à 3 jours, vous repartez avec des compétences applicables le lendemain.
                 </motion.p>
 
+                {/* CTAs */}
                 <motion.div
-                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.6 }}
-                    style={{ display: "flex", gap: "1.2rem", flexWrap: "wrap" }}
+                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3, duration: 0.6 }}
+                    style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3.5rem" }}
                 >
-                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">Voir le catalogue</RippleButton>
-                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">S&apos;inscrire maintenant</RippleButton>
+                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">
+                        Voir le catalogue
+                    </RippleButton>
+                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">
+                        S&apos;inscrire maintenant
+                    </RippleButton>
+                    <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
+                        Réponse sous 24h · Sans engagement
+                    </span>
+                </motion.div>
+
+                {/* Stats strip */}
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.55, duration: 0.6 }}
+                    style={{
+                        display: "flex", gap: "0", flexWrap: "wrap",
+                        borderTop: "1px solid rgba(255,255,255,0.08)",
+                        paddingTop: "2rem", maxWidth: 720,
+                    }}
+                >
+                    {HERO_STATS.map((s, i) => (
+                        <div key={i} style={{
+                            flex: "1 1 160px",
+                            padding: "0 2rem 0 0",
+                            borderRight: i < HERO_STATS.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                            marginRight: i < HERO_STATS.length - 1 ? "2rem" : 0,
+                        }}>
+                            <div style={{ color: COLOR, fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 800, fontFamily: "var(--font-display)", lineHeight: 1 }}>
+                                {s.val}
+                            </div>
+                            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "0.35rem", fontFamily: "var(--font-body)" }}>
+                                {s.lab}
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
+
+            </motion.div>
+
+            {/* Flèche scroll */}
+            <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 0.6 }}
+                style={{ position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)", zIndex: 4, cursor: "pointer" }}
+                onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })}
+            >
+                <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                    style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}
+                >
+                    <div style={{ width: 1, height: 36, background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.3))" }} />
+                    <div style={{ width: 6, height: 6, borderRight: "1px solid rgba(255,255,255,0.4)", borderBottom: "1px solid rgba(255,255,255,0.4)", transform: "rotate(45deg)" }} />
                 </motion.div>
             </motion.div>
 
@@ -376,9 +488,10 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
 /* ─────────────────────────────────────────────────────────────────
    GUARANTEE CARD
 ───────────────────────────────────────────────────────────────── */
+const GUARANTEE_ICONS = ["◈", "◉", "◎"];
+
 function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
     const [hov, setHov] = useState(false);
-    const num = String(i + 1).padStart(2, "0");
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -387,43 +500,48 @@ function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
             transition={{ delay: i * 0.13, duration: 0.7, ease: [0.6, 0.08, 0.02, 0.99] }}
             onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
             style={{
-                padding: "2.5rem 2.2rem",
-                background: hov ? "rgba(211,84,0,0.05)" : "rgba(255,255,255,0.02)",
-                border: `1px solid ${hov ? COLOR + "44" : "rgba(255,255,255,0.07)"}`,
-                borderRadius: "1rem",
+                padding: "3rem 2.8rem 3.2rem",
+                minHeight: "240px",
+                background: hov ? "rgba(211,84,0,0.06)" : "rgba(255,255,255,0.025)",
+                border: `1px solid ${hov ? COLOR + "55" : "rgba(255,255,255,0.09)"}`,
+                borderRadius: "1.2rem",
                 transition: "all 0.35s ease",
-                transform: hov ? "translateY(-6px)" : "translateY(0)",
-                boxShadow: hov ? `0 20px 60px rgba(0,0,0,0.22)` : "none",
+                transform: hov ? "translateY(-8px)" : "translateY(0)",
+                boxShadow: hov ? `0 28px 72px rgba(0,0,0,0.28), 0 0 0 1px ${COLOR}22` : "none",
                 position: "relative", overflow: "hidden",
+                display: "flex", flexDirection: "column",
             }}
         >
-            {/* Ghost number */}
-            <div aria-hidden style={{
-                position: "absolute", top: "-1rem", right: "0.5rem",
-                fontSize: "7rem", fontWeight: 900, fontFamily: "var(--font-display)",
-                color: hov ? "rgba(211,84,0,0.06)" : "rgba(255,255,255,0.025)",
-                lineHeight: 1, userSelect: "none", pointerEvents: "none",
-                transition: "color 0.35s",
-            }}>{num}</div>
-
-            {/* Number label */}
-            <div style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: COLOR, marginBottom: "1.6rem", fontFamily: "var(--font-body)" }}>
-                {num} —
-            </div>
-
-            <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#fff", marginBottom: "0.8rem", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>
-                {g.label}
-            </h3>
-            <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.52)", lineHeight: 1.78, fontFamily: "var(--font-body)", margin: 0 }}>
-                {g.detail}
-            </p>
-
-            {/* Bottom accent */}
+            {/* Top accent bar */}
             <div style={{
-                position: "absolute", bottom: 0, left: 0, right: 0, height: 2,
-                background: hov ? `linear-gradient(90deg, ${COLOR}, transparent)` : "transparent",
+                position: "absolute", top: 0, left: 0, right: 0, height: 3,
+                background: hov
+                    ? `linear-gradient(90deg, ${COLOR}, #F39C12 60%, transparent)`
+                    : `linear-gradient(90deg, ${COLOR}44, transparent)`,
                 transition: "background 0.35s",
             }} />
+
+            {/* Icon */}
+            <div style={{
+                fontSize: "1.8rem", color: hov ? COLOR : `${COLOR}88`,
+                marginBottom: "1.4rem", lineHeight: 1,
+                transition: "color 0.35s",
+            }}>
+                {GUARANTEE_ICONS[i]}
+            </div>
+
+            <h3 style={{
+                fontSize: "1.4rem", fontWeight: 800, color: "#fff",
+                marginBottom: "1rem", fontFamily: "var(--font-display)", lineHeight: 1.2,
+            }}>
+                {g.label}
+            </h3>
+            <p style={{
+                fontSize: "1rem", color: "rgba(255,255,255,0.55)",
+                lineHeight: 1.85, fontFamily: "var(--font-body)", margin: 0, flex: 1,
+            }}>
+                {g.detail}
+            </p>
         </motion.div>
     );
 }
@@ -908,7 +1026,7 @@ export default function FormationLandpage() {
                                 Des garanties <span style={{ color: COLOR }}>concrètes</span>
                             </h2>
                         </motion.div>
-                        <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: "1.2rem" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: "1.8rem" }}>
                             {GUARANTEES.map((g, i) => <GuaranteeCard key={i} g={g} i={i} />)}
                         </div>
                     </div>
