@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminRestUrl } from "@/lib/api/shopify-admin";
+import { routing, type Locale } from "@/i18n/routing";
 
 const DEFAULT_BROCHURE_URL = process.env.DEFAULT_BROCHURE_URL ?? "";
 
@@ -10,12 +11,21 @@ interface BrochurePayload {
   formationSlug: string;
   formationTitle: string;
   brochureUrl?: string;
+  locale?: string;
+}
+
+function safeLocale(raw: unknown): Locale {
+  if (typeof raw === "string" && (routing.locales as readonly string[]).includes(raw)) {
+    return raw as Locale;
+  }
+  return routing.defaultLocale;
 }
 
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as Partial<BrochurePayload>;
     const { name, email, company, formationSlug, formationTitle, brochureUrl } = body;
+    const locale = safeLocale(body.locale);
 
     if (!name || !email || !formationSlug || !formationTitle) {
       return NextResponse.json(
@@ -39,11 +49,12 @@ export async function POST(req: Request) {
       const firstName = nameParts[0];
       const lastName  = nameParts.slice(1).join(" ") || "-";
 
-      const tags = ["Lead", "Brochure", `Formation:${formationSlug}`].join(", ");
+      const tags = ["Lead", "Brochure", `Formation:${formationSlug}`, `lang:${locale}`].join(", ");
       const note = [
         `Lead brochure — ${formationTitle}`,
         `Slug: ${formationSlug}`,
         `Entreprise: ${company || "N/A"}`,
+        `Locale: ${locale}`,
         `Date: ${new Date().toISOString()}`,
       ].join("\n");
 
@@ -67,7 +78,6 @@ export async function POST(req: Request) {
       console.warn("[brochure] Capture Shopify échouée (non-bloquant) :", err instanceof Error ? err.message : err);
     }
 
-    // ── Retourne l'URL pour download direct côté client ────────────────────
     return NextResponse.json({ success: true, brochureUrl: finalBrochureUrl });
 
   } catch (error) {

@@ -75,13 +75,13 @@ const MOCK_DETAIL = {
 
 /** Intercepte les appels Shopify formations pour éviter les erreurs réseau en test. */
 async function mockFormationsAPI(page: Page) {
-  await page.route("**/api/shopify/formations", (route) => {
+  await page.route("**/api/shopify/formations*", (route) => {
     // Ne pas intercepter les routes avec un slug (/api/shopify/formations/foo)
     if (route.request().url().includes("/api/shopify/formations/")) return route.fallback();
     return route.fulfill({ json: { formations: [MOCK_CARD] } });
   });
 
-  await page.route(`**/api/shopify/formations/${MOCK_SLUG}`, (route) =>
+  await page.route(`**/api/shopify/formations/${MOCK_SLUG}*`, (route) =>
     route.fulfill({ json: { formation: MOCK_DETAIL } })
   );
 }
@@ -162,7 +162,7 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
     await page.getByPlaceholder("Votre nom complet").fill("Test Smoke User");
     await page.getByPlaceholder("votre@entreprise.com").fill("smoke@test.com");
     // "Type de projet" est required — sans sélection la validation HTML5 bloque le submit
-    await page.locator("select").selectOption("web");
+    await page.locator("form select").selectOption("web");
     await page
       .getByPlaceholder("Décrivez votre projet, vos objectifs et vos contraintes...")
       .fill("Ceci est un message de test automatisé Playwright.");
@@ -205,11 +205,11 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
 
     // ── 3 selects en mode étudiant : niveau d'études, fonction, comment connu
     // 1er select : Niveau d'études
-    await page.locator("select").nth(0).selectOption({ index: 1 });
+    await page.locator("form select").nth(0).selectOption({ index: 1 });
     // 2ème select : Fonction du participant
-    await page.locator("select").nth(1).selectOption({ index: 1 });
+    await page.locator("form select").nth(1).selectOption({ index: 1 });
     // 3ème select : Comment nous avez-vous connu
-    await page.locator("select").nth(2).selectOption("Google");
+    await page.locator("form select").nth(2).selectOption("Google");
 
     // ── Consentement RGPD ────────────────────────────────────────────────────
     await page.locator('input[type="checkbox"]').check();

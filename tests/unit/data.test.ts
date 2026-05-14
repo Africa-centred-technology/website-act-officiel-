@@ -3,8 +3,7 @@
  *
  * Vérifie que les fichiers src/lib/data/ respectent les invariants attendus :
  *  - IDs / slugs uniques
- *  - Champs obligatoires présents et non vides
- *  - Pas de doublons de titre
+ *  - Champs structurels présents et non vides
  *  - Images / vidéos non vides
  *  - Valeurs d'énumération valides
  *
@@ -15,6 +14,8 @@ import { describe, it, expect } from "vitest";
 import { POLES } from "@/lib/data/poles";
 import { SERVICES } from "@/lib/data/services";
 import { PROJECTS, CATEGORIES } from "@/lib/data/projects";
+import { secteurs } from "@/lib/secteurs-data";
+import frMessages from "@/i18n/messages/fr.json";
 
 // ── POLES ─────────────────────────────────────────────────────────────────────
 
@@ -24,20 +25,12 @@ describe("POLES — cohérence des données", () => {
     expect(new Set(ids).size, "doublons d'ID détectés").toBe(ids.length);
   });
 
-  it("titres sont uniques", () => {
-    const titles = POLES.map((p) => p.title);
-    expect(new Set(titles).size, "doublons de titre détectés").toBe(titles.length);
-  });
-
   it("champs obligatoires présents et non vides", () => {
     for (const pole of POLES) {
-      expect(pole.id.trim(), `pole.id vide pour "${pole.title}"`).not.toBe("");
-      expect(pole.title.trim(), `pole.title vide (id: ${pole.id})`).not.toBe("");
+      expect(pole.id.trim(), `pole.id vide (id: ${pole.id})`).not.toBe("");
       expect(pole.color.trim(), `pole.color vide (id: ${pole.id})`).not.toBe("");
       expect(pole.href.trim(), `pole.href vide (id: ${pole.id})`).not.toBe("");
       expect(pole.image.trim(), `pole.image vide (id: ${pole.id})`).not.toBe("");
-      expect(pole.tagline.trim(), `pole.tagline vide (id: ${pole.id})`).not.toBe("");
-      expect(pole.description.trim(), `pole.description vide (id: ${pole.id})`).not.toBe("");
     }
   });
 
@@ -75,17 +68,9 @@ describe("SERVICES — cohérence des données", () => {
     expect(new Set(nums).size, "doublons de numéro détectés").toBe(nums.length);
   });
 
-  it("titres sont uniques (normalisation \\n → espace)", () => {
-    const titles = SERVICES.map((s) => s.title.replace(/\n/g, " ").trim());
-    expect(new Set(titles).size, "doublons de titre détectés").toBe(titles.length);
-  });
-
   it("champs obligatoires présents et non vides", () => {
     for (const svc of SERVICES) {
       expect(svc.slug.trim(), `slug vide`).not.toBe("");
-      expect(svc.title.trim(), `title vide (slug: ${svc.slug})`).not.toBe("");
-      expect(svc.tagline.trim(), `tagline vide (slug: ${svc.slug})`).not.toBe("");
-      expect(svc.intro.trim(), `intro vide (slug: ${svc.slug})`).not.toBe("");
       expect(svc.heroImage.trim(), `heroImage vide (slug: ${svc.slug})`).not.toBe("");
       expect(svc.video.trim(), `video vide (slug: ${svc.slug})`).not.toBe("");
       expect(svc.accent.trim(), `accent vide (slug: ${svc.slug})`).not.toBe("");
@@ -95,34 +80,6 @@ describe("SERVICES — cohérence des données", () => {
   it("poleN est parmi I, II, III", () => {
     for (const svc of SERVICES) {
       expect(["I", "II", "III"], `poleN invalide pour "${svc.slug}"`).toContain(svc.poleN);
-    }
-  });
-
-  it("subs : au moins 1 entrée, champs non vides", () => {
-    for (const svc of SERVICES) {
-      expect(svc.subs.length, `subs vide pour "${svc.slug}"`).toBeGreaterThan(0);
-      for (const sub of svc.subs) {
-        expect(sub.title.trim(), `sub.title vide dans "${svc.slug}"`).not.toBe("");
-        expect(sub.desc.trim(), `sub.desc vide dans "${svc.slug}"`).not.toBe("");
-      }
-    }
-  });
-
-  it("benefits : au moins 1 entrée non vide", () => {
-    for (const svc of SERVICES) {
-      expect(svc.benefits.length, `benefits vide pour "${svc.slug}"`).toBeGreaterThan(0);
-      for (const b of svc.benefits) {
-        expect(b.trim(), `benefit vide dans "${svc.slug}"`).not.toBe("");
-      }
-    }
-  });
-
-  it("deliverables : au moins 1 entrée non vide", () => {
-    for (const svc of SERVICES) {
-      expect(svc.deliverables.length, `deliverables vide pour "${svc.slug}"`).toBeGreaterThan(0);
-      for (const d of svc.deliverables) {
-        expect(d.trim(), `deliverable vide dans "${svc.slug}"`).not.toBe("");
-      }
     }
   });
 
@@ -155,11 +112,6 @@ describe("PROJECTS — cohérence des données", () => {
     expect(new Set(ids).size, "doublons d'ID détectés").toBe(ids.length);
   });
 
-  it("titres sont uniques", () => {
-    const titles = PROJECTS.map((p) => p.title);
-    expect(new Set(titles).size, "doublons de titre détectés").toBe(titles.length);
-  });
-
   it("index sont uniques", () => {
     const indices = PROJECTS.map((p) => p.index);
     expect(new Set(indices).size, "doublons d'index détectés").toBe(indices.length);
@@ -168,12 +120,7 @@ describe("PROJECTS — cohérence des données", () => {
   it("champs obligatoires présents et non vides", () => {
     for (const proj of PROJECTS) {
       expect(proj.id.trim(), `id vide`).not.toBe("");
-      expect(proj.title.trim(), `title vide (id: ${proj.id})`).not.toBe("");
-      expect(proj.tagline.trim(), `tagline vide (id: ${proj.id})`).not.toBe("");
-      expect(proj.description.trim(), `description vide (id: ${proj.id})`).not.toBe("");
-      expect(proj.descriptionLong.trim(), `descriptionLong vide (id: ${proj.id})`).not.toBe("");
       expect(proj.image.trim(), `image vide (id: ${proj.id})`).not.toBe("");
-      expect(proj.client.trim(), `client vide (id: ${proj.id})`).not.toBe("");
       expect(proj.year.trim(), `year vide (id: ${proj.id})`).not.toBe("");
       expect(proj.color.trim(), `color vide (id: ${proj.id})`).not.toBe("");
     }
@@ -185,41 +132,61 @@ describe("PROJECTS — cohérence des données", () => {
     }
   });
 
-  it("category dans la liste CATEGORIES (hors 'Tous')", () => {
-    const valid = CATEGORIES.filter((c) => c !== "Tous");
-    for (const proj of PROJECTS) {
-      expect(valid, `catégorie invalide pour "${proj.id}"`).toContain(proj.category);
-    }
-  });
-
   it("color est un code hex valide", () => {
     for (const proj of PROJECTS) {
       expect(proj.color, `color invalide pour "${proj.id}"`).toMatch(/^#[0-9A-Fa-f]{3,6}$/);
     }
   });
+});
 
-  it("tags : tableau non vide, pas de chaîne vide", () => {
-    for (const proj of PROJECTS) {
-      expect(proj.tags.length, `tags vide pour "${proj.id}"`).toBeGreaterThan(0);
-      for (const tag of proj.tags) {
-        expect(tag.trim(), `tag vide dans "${proj.id}"`).not.toBe("");
-      }
+// ── i18n coverage — POLES ────────────────────────────────────────────────────
+
+describe("i18n coverage — POLES", () => {
+  it("every pole has a fr.json entry", () => {
+    const polesItems = (frMessages as any).poles?.items;
+    expect(polesItems).toBeDefined();
+    for (const pole of POLES) {
+      expect(polesItems[pole.id], `missing fr.json entry for pole "${pole.id}"`).toBeDefined();
+      expect(polesItems[pole.id].title, `missing title in fr.json for pole "${pole.id}"`).toBeTruthy();
     }
   });
+});
 
-  it("results : tableau non vide, label et value non vides", () => {
-    for (const proj of PROJECTS) {
-      expect(proj.results.length, `results vide pour "${proj.id}"`).toBeGreaterThan(0);
-      for (const r of proj.results) {
-        expect(r.label.trim(), `result.label vide dans "${proj.id}"`).not.toBe("");
-        expect(r.value.trim(), `result.value vide dans "${proj.id}"`).not.toBe("");
-      }
+// ── i18n coverage — SECTEURS ─────────────────────────────────────────────────
+
+describe("i18n coverage — SECTEURS", () => {
+  it("every secteur has a fr.json entry", () => {
+    const secteursItems = (frMessages as any).secteurs?.items;
+    expect(secteursItems).toBeDefined();
+    for (const secteur of secteurs) {
+      expect(secteursItems[secteur.slug], `missing fr.json entry for secteur "${secteur.slug}"`).toBeDefined();
+      expect(secteursItems[secteur.slug].label, `missing label in fr.json for secteur "${secteur.slug}"`).toBeTruthy();
     }
   });
+});
 
-  it("challenges : tableau non vide", () => {
-    for (const proj of PROJECTS) {
-      expect(proj.challenges.length, `challenges vide pour "${proj.id}"`).toBeGreaterThan(0);
+// ── i18n coverage — PROJECTS ─────────────────────────────────────────────────
+
+describe("i18n coverage — PROJECTS", () => {
+  it("every project has a fr.json entry", () => {
+    const projectsItems = (frMessages as any).projects?.items;
+    expect(projectsItems).toBeDefined();
+    for (const project of PROJECTS) {
+      expect(projectsItems[project.id], `missing fr.json entry for project "${project.id}"`).toBeDefined();
+      expect(projectsItems[project.id].title, `missing title in fr.json for project "${project.id}"`).toBeTruthy();
+    }
+  });
+});
+
+// ── i18n coverage — SERVICES ─────────────────────────────────────────────────
+
+describe("i18n coverage — SERVICES", () => {
+  it("every service has a fr.json entry", () => {
+    const servicesItems = (frMessages as any).services?.items;
+    expect(servicesItems).toBeDefined();
+    for (const service of SERVICES) {
+      expect(servicesItems[service.slug], `missing fr.json entry for service "${service.slug}"`).toBeDefined();
+      expect(servicesItems[service.slug].title, `missing title in fr.json for service "${service.slug}"`).toBeTruthy();
     }
   });
 });

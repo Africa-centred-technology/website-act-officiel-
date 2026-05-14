@@ -1,47 +1,19 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 
 /* ── Tokens ─────────────────────────────────────────────── */
 const ORANGE = "#D35400";
-
-/* ── Data ───────────────────────────────────────────────── */
-const SAVOIR_FAIRE_MENU = [
-  { href: "/poles", label: "Nos Pôles d'Excellence", key: "poles", description: "" },
-  { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
-  { href: "/services", label: "Nos Services", key: "services", description: "" },
-  {
-    href: "/formations",
-    label: "Catalogue de Formations",
-    key: "formations",
-    description: "",
-    subItems: [
-      { href: "/formations/all", label: "Catalogue complet", key: "formations-all" },
-    ],
-  },
-];
-
-const NOUS_DECOUVRIR_MENU = [
-  { href: "/about", label: "À Propos", key: "about", description: "" },
-  { href: "/about#equipe", label: "Notre Équipe", key: "equipe", description: "" },
-  { href: "/about#valeurs", label: "Nos Valeurs", key: "valeurs", description: "" },
-  { href: "/projects", label: "Réalisations", key: "projects", description: "" },
-];
-
-const NAV_LINKS = [
-  { href: "/blog", label: "Blog", key: "blog" },
-  { href: "https://elearning.africacentredtechnology.com/", label: "ACT-University", key: "universite" },
-  { href: "/contact", label: "Contact", key: "contact" },
-];
 
 /* ══════════════════════════════════════════════════════════
    MAIN HEADER
@@ -92,6 +64,7 @@ function MobileAccordion({
       >
         {label}
         <motion.svg
+          className="mirror-in-rtl"
           width="14" height="14" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" strokeWidth="2.5"
           animate={{ rotate: open ? 90 : 0 }}
@@ -189,6 +162,37 @@ function MobileAccordion({
 }
 
 export default function Header({ hidden = false }: { hidden?: boolean }) {
+  const t = useTranslations("common");
+
+  /* ── Data (translated) ──────────────────────────────────── */
+  const SAVOIR_FAIRE_MENU = [
+    { href: "/poles", label: t("nav.polesExcellence"), key: "poles", description: "" },
+    { href: "/secteurs", label: t("nav.secteursActivite"), key: "secteurs", description: "" },
+    { href: "/services", label: t("nav.nosServices"), key: "services", description: "" },
+    {
+      href: "/formations",
+      label: t("nav.catalogueFormations"),
+      key: "formations",
+      description: "",
+      subItems: [
+        { href: "/formations/all", label: t("nav.catalogueComplet"), key: "formations-all" },
+      ],
+    },
+  ];
+
+  const NOUS_DECOUVRIR_MENU = [
+    { href: "/about", label: t("nav.aPropos"), key: "about", description: "" },
+    { href: "/about#equipe", label: t("nav.equipe"), key: "equipe", description: "" },
+    { href: "/about#valeurs", label: t("nav.valeurs"), key: "valeurs", description: "" },
+    { href: "/projects", label: t("nav.realisations"), key: "projects", description: "" },
+  ];
+
+  const NAV_LINKS = [
+    { href: "/blog", label: t("nav.blog"), key: "blog" },
+    { href: "https://elearning.africacentredtechnology.com/", label: t("nav.universite"), key: "universite" },
+    { href: "/contact", label: t("nav.contact"), key: "contact" },
+  ];
+
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [scrolledPast120, setScrolledPast120] = useState(false);
@@ -262,14 +266,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           <Link
             href="/"
             className={`navbar-navigation__link${isActive("index") ? " --is-active" : ""}`}
-            style={{
-              position: "relative",
-              fontFamily: "var(--font-body)",
-              fontWeight: 700,
-              fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-            }}
+            style={{ position: "relative" }}
           >
             ACT
             {isActive("index") && (
@@ -304,7 +301,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                   gap: "0.4rem",
                 }}
               >
-                Notre savoir-faire
+                {t("nav.savoirFaire")}
                 <motion.svg
                   width="12"
                   height="12"
@@ -349,7 +346,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                   gap: "0.4rem",
                 }}
               >
-                Nous découvrir
+                {t("nav.nousDecouvrir")}
                 <motion.svg
                   width="12"
                   height="12"
@@ -400,6 +397,9 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                 </li>
               ))}
             </ul>
+
+            {/* Language switcher */}
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile hamburger button */}
@@ -467,7 +467,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                aria-label="Fermer le menu"
+                aria-label={t("nav.closeMenu")}
               >
                 <X size={28} />
               </button>
@@ -480,7 +480,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
               {/* Notre Savoir-Faire — Accordion */}
               <MobileAccordion
-                label="Notre Savoir-Faire"
+                label={t("nav.savoirFaire")}
                 items={SAVOIR_FAIRE_MENU}
                 delay={0.15}
                 onClose={() => setMobileMenuOpen(false)}
@@ -488,7 +488,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
               {/* Nous Découvrir — Accordion */}
               <MobileAccordion
-                label="Nous Découvrir"
+                label={t("nav.nousDecouvrir")}
                 items={NOUS_DECOUVRIR_MENU}
                 delay={0.22}
                 onClose={() => setMobileMenuOpen(false)}
@@ -496,8 +496,8 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
               {/* Blog + Université */}
               {[
-                { label: "Blog", href: "/blog" },
-                { label: "ACT-Université", href: "https://elearning.africacentredtechnology.com/" },
+                { label: t("nav.blog"), href: "/blog" },
+                { label: t("nav.universite"), href: "https://elearning.africacentredtechnology.com/" },
               ].map((item, i) => (
                 <motion.div key={item.label} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.29 + i * 0.07, duration: 0.35 }}>
                   <Link
@@ -551,13 +551,15 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.82 19.79 19.79 0 01.14 2.18 2 2 0 012.12 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
                 </svg>
-                Contactez-nous
+                {t("nav.contactUs")}
               </Link>
+              {/* Language switcher */}
+              <LanguageSwitcher />
               <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", color: "rgba(255,255,255,0.45)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
                 </svg>
-                Afrique — FR
+                {t("nav.africa")}
               </div>
             </motion.div>
           </motion.div>
@@ -571,6 +573,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
 /* ── Scroll to Top Button ── */
 function ScrollToTop() {
+  const t = useTranslations("common");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -610,7 +613,7 @@ function ScrollToTop() {
         boxShadow: '0 4px 12px rgba(211, 84, 0, 0.4)',
         transition: 'transform 0.2s, background 0.2s',
       }}
-      aria-label="Remonter en haut"
+      aria-label={t("cta.scrollToTop")}
       className="scroll-to-top-btn"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

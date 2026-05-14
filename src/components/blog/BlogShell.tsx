@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, useInView } from "framer-motion";
@@ -9,6 +9,7 @@ import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
+import { useTranslations, useLocale } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -40,6 +41,8 @@ const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: fals
 const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 
 export default function BlogShell() {
+  const t = useTranslations("blog.index");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const containerRef = useRef(null);
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
@@ -52,7 +55,7 @@ export default function BlogShell() {
     e.preventDefault();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setNewsletterStatus("error");
-      setNewsletterMessage("Adresse email invalide.");
+      setNewsletterMessage(t("newsletterErrorEmail"));
       return;
     }
     setNewsletterStatus("loading");
@@ -61,29 +64,29 @@ export default function BlogShell() {
       const res = await fetch("/api/shopify/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Erreur");
       setNewsletterStatus("success");
-      setNewsletterMessage("Merci ! Vous êtes abonné à la veille ACT.");
+      setNewsletterMessage(t("newsletterSuccess"));
       setEmail("");
     } catch (err) {
       setNewsletterStatus("error");
-      setNewsletterMessage(err instanceof Error ? err.message : "Erreur serveur.");
+      setNewsletterMessage(err instanceof Error ? err.message : t("newsletterErrorServer"));
     }
   };
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setAllPosts(posts);
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
   return (
     <div ref={containerRef} style={{ background: "var(--bg-primary)", minHeight: "100vh", position: "relative" }}>
       {/* ── Background layers globaux ── */}
@@ -152,7 +155,7 @@ export default function BlogShell() {
               fontFamily: FONT_BODY,
             }}>
               <span style={{ width: "32px", height: "1px", background: V.orange, opacity: 0.6 }} />
-              Dossiers & Thématiques
+              {t("sectionEyebrow")}
               <span style={{ width: "32px", height: "1px", background: V.orange, opacity: 0.6 }} />
             </div>
 
@@ -169,7 +172,7 @@ export default function BlogShell() {
                 lineHeight: 1,
               }}
             >
-              L'écosystème <span style={{ color: V.orange }}>par Rubriques</span>
+              {t("sectionTitle")} <span style={{ color: V.orange }}>{t("sectionTitleAccent")}</span>
             </h2>
 
             <p style={{
@@ -180,7 +183,7 @@ export default function BlogShell() {
               lineHeight: 1.8,
               fontFamily: FONT_BODY,
             }}>
-              Naviguez à travers nos piliers stratégiques pour accéder aux analyses approfondies de nos consultants et experts métiers.
+              {t("sectionDescription")}
             </p>
           </motion.div>
 
@@ -302,7 +305,7 @@ export default function BlogShell() {
                         width: "fit-content"
                       }}>
                         <span style={{ fontSize: screenSize === 'mobile' ? "1.1rem" : "1.2rem", fontWeight: 700, color: V.orange, fontFamily: FONT_BODY }}>{articleCount}</span>
-                        <span style={{ fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem", fontWeight: 500, color: V.muted, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: FONT_BODY }}>Analyses</span>
+                        <span style={{ fontSize: screenSize === 'mobile' ? "0.9rem" : "1rem", fontWeight: 500, color: V.muted, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: FONT_BODY }}>{t("analysesLabel")}</span>
                       </div>
 
                       <h3 style={{
@@ -345,7 +348,7 @@ export default function BlogShell() {
                           transition: "all 0.6s cubic-bezier(0.2, 1, 0.2, 1)",
                         }}
                       >
-                        <span style={{ color: V.orange, fontSize: screenSize === 'mobile' ? "1.1rem" : "1.2rem", fontWeight: 700, fontFamily: FONT_BODY, letterSpacing: "0.05em", textTransform: "uppercase" }}>Explorer</span>
+                        <span style={{ color: V.orange, fontSize: screenSize === 'mobile' ? "1.1rem" : "1.2rem", fontWeight: 700, fontFamily: FONT_BODY, letterSpacing: "0.05em", textTransform: "uppercase" }}>{t("exploreCta")}</span>
                         <svg width={screenSize === 'mobile' ? "12" : "14"} height={screenSize === 'mobile' ? "12" : "14"} viewBox="0 0 24 24" fill="none" stroke={V.orange} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
@@ -414,7 +417,7 @@ export default function BlogShell() {
                 if (arrow) arrow.style.transform = "translateX(0)";
               }}
             >
-              Voir tous les articles
+              {t("viewAllCta")}
               <svg className="cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "transform 0.3s" }}>
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -437,7 +440,7 @@ export default function BlogShell() {
             style={{ justifyContent: "center", marginBottom: "3rem" }}
           >
             <span className="diamond diamond--sm" />
-            <span>Restez informé</span>
+            <span>{t("newsletterEyebrow")}</span>
           </div>
           <h2
             style={{
@@ -450,9 +453,9 @@ export default function BlogShell() {
               lineHeight: 1.05,
             }}
           >
-            La veille tech africaine,
+            {t("newsletterTitle")}
             <br />
-            <span style={{ color: "#D35400" }}>chaque semaine</span>
+            <span style={{ color: "#D35400" }}>{t("newsletterTitleAccent")}</span>
           </h2>
           <p
             style={{
@@ -463,8 +466,7 @@ export default function BlogShell() {
               lineHeight: 1.7,
             }}
           >
-            Recevez nos analyses sur l&apos;IA, le cloud, la cybersécurité et
-            l&apos;innovation digitale en Afrique directement dans votre boîte mail.
+            {t("newsletterDescription")}
           </p>
           <form
             onSubmit={handleNewsletterSubmit}
@@ -483,7 +485,7 @@ export default function BlogShell() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="votre.email@entreprise.com"
+              placeholder={t("newsletterPlaceholder")}
               disabled={newsletterStatus === "loading"}
               required
               style={{
@@ -512,7 +514,7 @@ export default function BlogShell() {
               }}
             />
             <CTAButton type="submit" disabled={newsletterStatus === "loading"}>
-              {newsletterStatus === "loading" ? "Envoi..." : "S'abonner"}
+              {newsletterStatus === "loading" ? t("newsletterSubmitLoading") : t("newsletterSubmitIdle")}
             </CTAButton>
           </form>
           <p
@@ -524,7 +526,7 @@ export default function BlogShell() {
               letterSpacing: "0.02em",
             }}
           >
-            Désinscription en un clic. Pas de spam — une newsletter par semaine.
+            {t("newsletterFootnote")}
           </p>
           {newsletterMessage && (
             <p
@@ -555,6 +557,7 @@ function FeaturedCard({
   post: BlogPost;
   index: number;
 }) {
+  const t = useTranslations("blog.index");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
 
@@ -666,7 +669,7 @@ function FeaturedCard({
                   letterSpacing: "0.1em",
                 }}
               >
-                ★ À la une
+                {t("featuredBadge")}
               </span>
             </div>
 
@@ -727,7 +730,7 @@ function FeaturedCard({
                   letterSpacing: "0.05em",
                 }}
               >
-                {post.readTime} de lecture
+                {t("readingTime", { time: post.readTime })}
               </span>
             </div>
             <span
@@ -739,7 +742,7 @@ function FeaturedCard({
                 letterSpacing: "0.1em",
               }}
             >
-              Lire →
+              {t("readCta")}
             </span>
           </div>
         </div>
@@ -756,6 +759,7 @@ function ArticleCard({
   post: BlogPost;
   index: number;
 }) {
+  const t = useTranslations("blog.index");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
 
@@ -903,7 +907,7 @@ function ArticleCard({
                 opacity: 0.8,
               }}
             >
-              Lire →
+              {t("readCta")}
             </span>
           </div>
           </div>

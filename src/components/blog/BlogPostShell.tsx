@@ -1,13 +1,14 @@
-"use client";
+﻿"use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Share2, Linkedin, Twitter, Link2, Facebook } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { type BlogPost } from "@/lib/blog";
+import { useTranslations, useLocale } from "next-intl";
 
 /** Type structurel pour une section d'article (legacy/static fallback). */
 type ArticleSection = {
@@ -45,6 +46,8 @@ function useMediaQuery() {
 }
 
 export default function BlogPostShell({ post }: { post: BlogPost }) {
+  const t = useTranslations("blog.post");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
@@ -54,14 +57,14 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setAllPosts(posts);
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const recentPosts = allPosts
     .filter((p) => p.slug !== post.slug)
@@ -132,7 +135,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
       setCopied(true);
     } catch {
       if (typeof window !== "undefined") {
-        window.prompt("Copiez ce lien :", articleUrl);
+        window.prompt(t("promptCopyLink"), articleUrl);
       }
     }
   };
@@ -210,7 +213,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 "rgba(255,255,255,0.4)")
               }
             >
-              ← Retour au Blog
+              {t("backLink")}
             </Link>
           </motion.div>
 
@@ -275,9 +278,9 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
             animate={heroInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.3, ease }}
           >
-            <MetaItem label="Date" value={post.date} screenSize={screenSize} />
-            <MetaItem label="Lecture" value={post.readTime} screenSize={screenSize} />
-            <MetaItem label="Cible" value={post.target} screenSize={screenSize} />
+            <MetaItem label={t("metaDate")} value={post.date} screenSize={screenSize} />
+            <MetaItem label={t("metaReading")} value={post.readTime} screenSize={screenSize} />
+            <MetaItem label={t("metaTarget")} value={post.target} screenSize={screenSize} />
           </motion.div>
         </div>
       </section>
@@ -361,7 +364,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <div className="cta-btn__background" />
                 <div className="cta-btn__inner">
                   <span className="cta-btn__icon" />
-                  <span className="cta-btn__text">Tous les articles</span>
+                  <span className="cta-btn__text">{t("allArticlesCta")}</span>
                 </div>
               </Link>
 
@@ -371,7 +374,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <div className="cta-btn__background" />
                 <div className="cta-btn__inner">
                   <span className="cta-btn__icon" />
-                  <span className="cta-btn__text">Un projet ? Parlons-en</span>
+                  <span className="cta-btn__text">{t("projectCta")}</span>
                 </div>
               </Link>
             </div>
@@ -410,7 +413,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                     gap: "0.7rem",
                   }}
                 >
-                  <Share2 size={screenSize === 'mobile' ? 12 : 14} /> Partager l&apos;article
+                  <Share2 size={screenSize === 'mobile' ? 12 : 14} /> {t("shareTitle")}
                 </p>
                 <div
                   style={{
@@ -452,7 +455,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: screenSize === 'mobile' ? "1rem" : "1.5rem" }}>
                   <ShareIcon
                     icon={<Share2 size={screenSize === 'mobile' ? 16 : 18} />}
-                    label="Partager"
+                    label={t("shareLabel")}
                     onClick={handleNativeShare}
                   />
                   <ShareIcon
@@ -478,7 +481,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                   />
                   <ShareIcon
                     icon={<Link2 size={screenSize === 'mobile' ? 16 : 18} />}
-                    label={copied ? "Lien copié" : "Copier"}
+                    label={copied ? t("copiedLabel") : t("copyLabel")}
                     onClick={handleCopyLink}
                     active={copied}
                   />
@@ -504,7 +507,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                     marginBottom: screenSize === 'mobile' ? "2rem" : "2.5rem",
                   }}
                 >
-                  Articles récents
+                  {t("recentArticlesTitle")}
                 </p>
                 <div
                   style={{
@@ -594,7 +597,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                     marginBottom: "1.5rem",
                   }}
                 >
-                  Mots-clés
+                  {t("keywordsTitle")}
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: screenSize === 'mobile' ? "0.6rem" : "0.8rem" }}>
                   {post.keywords.map((kw) => (
@@ -635,7 +638,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
                 textAlign: "center",
               }}
             >
-              Articles <span style={{ color: post.categoryColor }}>Connexes</span>
+              {t("relatedTitle")} <span style={{ color: post.categoryColor }}>{t("relatedTitleAccent")}</span>
             </h2>
             <div
               style={{
@@ -653,10 +656,10 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
       )}
 
       <CTASection
-        eyebrow="Besoin d'expertise ?"
-        title="Parlons de votre projet"
-        description="Nos équipes sont prêtes à vous accompagner dans votre transformation digitale et vos défis technologiques."
-        buttonText="Contactez-nous"
+        eyebrow={t("ctaEyebrow")}
+        title={t("ctaTitle")}
+        description={t("ctaDescription")}
+        buttonText={t("ctaButton")}
         buttonHref="/contact"
       />
 
@@ -907,6 +910,7 @@ function RelatedArticleCard({
   index: number;
   screenSize: 'mobile' | 'tablet' | 'desktop';
 }) {
+  const t = useTranslations("blog.post");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
 
@@ -1078,7 +1082,7 @@ function RelatedArticleCard({
                   letterSpacing: "0.08em",
                 }}
               >
-                Lire →
+                {t("readCta")}
               </span>
             </div>
           </div>

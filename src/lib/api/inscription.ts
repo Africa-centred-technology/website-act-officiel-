@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminUrl } from "@/lib/api/shopify-admin";
+import { routing, type Locale } from "@/i18n/routing";
 
 const STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+function safeLocale(raw: unknown): Locale {
+  if (typeof raw === "string" && (routing.locales as readonly string[]).includes(raw)) {
+    return raw as Locale;
+  }
+  return routing.defaultLocale;
+}
 
 // ── Storefront helper ─────────────────────────────────────────────────────────
 
@@ -77,6 +85,9 @@ export async function POST(req: Request) {
     noteLines.push(`Disponibilité: ${body.disponibilite}`);
     noteLines.push(`Message complémentaire: ${body.message || "Aucun"}`);
 
+    const locale = safeLocale(body.locale);
+    noteLines.push(`Locale: ${locale}`);
+
     const note = noteLines.join("\\n");
 
     // 3. Quantité (B2B = nombre de participants)
@@ -100,7 +111,7 @@ export async function POST(req: Request) {
     const variables = {
       input: {
         note,
-        tags: ["Inscription", "Formation", body.typeClient],
+        tags: ["Inscription", "Formation", body.typeClient, `lang:${locale}`],
         email: body.email,
         billingAddress: {
           firstName: body.prenom,

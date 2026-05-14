@@ -1,11 +1,13 @@
-"use client";
+﻿"use client";
 
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowLeft, CheckCircle, Settings, Wifi, Leaf, TrendingUp, ShoppingCart, Building2, Landmark } from "lucide-react";
 import type { Secteur } from "@/lib/secteurs-data";
+import { useDataMessages } from "@/i18n/data-i18n";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 
@@ -30,6 +32,9 @@ const SECTEUR_ICONS: Record<string, React.ComponentType<{ size?: number; strokeW
    MAIN DETAIL SHELL
    ══════════════════════════════════════════════════════════ */
 export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
+  const t = useTranslations("secteurs.detail");
+  const msg = useDataMessages();
+  const i18n = msg.secteurs.items[secteur.slug];
   return (
     <div
       style={{
@@ -54,7 +59,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
         <div style={{ position: "absolute", inset: 0 }}>
           <Image
             src={secteur.image}
-            alt={secteur.label}
+            alt={i18n?.label ?? secteur.slug}
             fill
             priority
             style={{ objectFit: "cover" }}
@@ -114,9 +119,9 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
             }
           >
             <ArrowLeft size={16} strokeWidth={1.8} />
-            Secteurs
+            {t("breadcrumb")}
             <span style={{ color: "rgba(255,255,255,0.25)" }}>/</span>
-            <span style={{ color: secteur.color }}>{secteur.label}</span>
+            <span style={{ color: secteur.color }}>{i18n?.label}</span>
           </Link>
         </motion.div>
 
@@ -175,7 +180,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                   fontWeight: 600,
                 }}
               >
-                {secteur.label}
+                {i18n?.label}
               </span>
           </motion.div>
 
@@ -196,7 +201,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                 margin: 0,
               }}
             >
-              {secteur.label}
+              {i18n?.label}
             </motion.h1>
           </div>
 
@@ -210,15 +215,15 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               color: "#ffffff",
               fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
               fontStyle: "italic",
-              marginBottom: secteur.chiffre ? "2.5rem" : "0",
+              marginBottom: secteur.chiffreValue ? "2.5rem" : "0",
               letterSpacing: "0.01em",
             }}
           >
-            {secteur.tagline}
+            {i18n?.tagline}
           </motion.p>
 
           {/* Chiffre clé */}
-          {secteur.chiffre && (
+          {secteur.chiffreValue && i18n?.chiffre && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -238,7 +243,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                   lineHeight: 1,
                 }}
               >
-                {secteur.chiffre.value}
+                {secteur.chiffreValue}
               </p>
               <p
                 style={{
@@ -251,7 +256,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                   opacity: 0.85,
                 }}
               >
-                {secteur.chiffre.label}
+                {i18n.chiffre.label}
               </p>
             </motion.div>
           )}
@@ -308,7 +313,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                 opacity: 0.9,
               }}
             >
-              Notre approche
+              {t("approachLabel")}
             </span>
           </div>
             <h2
@@ -324,7 +329,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               }}
             >
               <span style={{ color: secteur.color }}>ACT</span>
-              {" "}dans ce secteur
+              {" "}{t("approachH2Suffix")}
             </h2>
           </motion.div>
 
@@ -345,7 +350,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                 textAlign: "justify",
               }}
             >
-              {secteur.description}
+              {i18n?.description}
             </p>
           </motion.div>
         </div>
@@ -380,7 +385,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
                 opacity: 0.9,
               }}
             >
-              Nos solutions
+              {t("solutionsLabel")}
             </span>
           </div>
           <h2
@@ -395,9 +400,9 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
               margin: 0,
             }}
           >
-            Ce que nous
+            {t("solutionsH2Line1")}
             <br />
-            <span style={{ color: secteur.color }}>faisons</span>
+            <span style={{ color: secteur.color }}>{t("solutionsH2Line2")}</span>
           </h2>
         </motion.div>
 
@@ -409,7 +414,7 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
             gap: "1.25rem",
           }}
         >
-          {secteur.services.map((service, i) => (
+          {i18n?.services.map((service, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
@@ -452,10 +457,10 @@ export default function SecteurDetailShell({ secteur }: { secteur: Secteur }) {
 
       {/* ── CTA section ── */}
       <CTASection
-        eyebrow="Passons à l'action"
-        title="Votre projet nous intéresse"
-        description="Discutons de votre contexte et explorons ensemble comment la technologie peut créer de la valeur dans votre organisation."
-        buttonText="Démarrer un projet"
+        eyebrow={t("cta.eyebrow")}
+        title={t("cta.title")}
+        description={t("cta.description")}
+        buttonText={t("cta.buttonText")}
       />
 
       {/* ── Footer ── */}

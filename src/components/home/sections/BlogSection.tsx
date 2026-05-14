@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { type BlogPost } from "@/lib/blog";
+import { useTranslations, useLocale } from "next-intl";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -30,19 +31,21 @@ function useMediaQuery() {
 }
 
 export default function BlogSection() {
+    const t = useTranslations("home.blog");
+    const locale = useLocale();
     const screenSize = useMediaQuery();
     const [posts, setPosts] = useState<BlogPost[]>([]);
 
     useEffect(() => {
         let cancelled = false;
-        fetch("/api/shopify/blog")
+        fetch(`/api/shopify/blog?locale=${locale}`)
             .then((r) => r.json())
             .then(({ posts }) => {
                 if (!cancelled && Array.isArray(posts)) setPosts(posts);
             })
             .catch(() => {});
         return () => { cancelled = true; };
-    }, []);
+    }, [locale]);
 
     return (
         <div className="h-full w-full overflow-hidden relative flex flex-col">
@@ -73,7 +76,7 @@ export default function BlogSection() {
                             fontFamily: "var(--font-body)",
                             fontSize: screenSize === 'mobile' ? 'clamp(0.85rem, 3vw, 1rem)' : screenSize === 'tablet' ? 'clamp(0.95rem, 2vw, 1.15rem)' : '1.25rem',
                         }}>
-                            Insights tech, tendances IA, conseils stratégiques — directement dans votre boîte.
+                            {t("subtitle")}
                         </p>
                     </motion.div>
                 </div>
@@ -169,7 +172,7 @@ export default function BlogSection() {
                                 <span className="cta-btn__background" aria-hidden />
                                 <span className="cta-btn__inner">
                                     <span className="cta-btn__icon" aria-hidden />
-                                    <span className="cta-btn__text">Visitez notre Blog </span>
+                                    <span className="cta-btn__text">{t("visitBlog")}</span>
                                 </span>
                             </Link>
                         </div>

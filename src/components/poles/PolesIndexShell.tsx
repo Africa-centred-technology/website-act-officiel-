@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * Poles Index Page
@@ -7,12 +7,14 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { Code, Users, GraduationCap, ArrowRight } from "lucide-react";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTASection from "@/components/layout/CTASection";
 import { POLES } from "@/lib/data/poles";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 
 /* ── Background layers ── */
@@ -51,6 +53,7 @@ const poles = POLES;
    HERO SECTION
    ══════════════════════════════════════════════════════════ */
 function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'desktop' }) {
+  const t = useTranslations("poles.index");
   return (
     <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden"
       style={{
@@ -60,7 +63,7 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
       {/* Decoration */}
       <motion.div
         aria-hidden
-        className="absolute top-1/4 -right-40 w-[600px] h-[600px] bg-[#D35400]/10 blur-[150px] rounded-full"
+        className="absolute top-1/4 -end-40 w-[600px] h-[600px] bg-[#D35400]/10 blur-[150px] rounded-full"
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -82,7 +85,7 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
             fontWeight: 600,
             fontFamily: "var(--font-display)"
           }}>
-            Notre Expertise
+            {t("eyebrow")}
           </span>
         </motion.div>
 
@@ -100,10 +103,10 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <span style={{ color: "rgba(255,255,255,0.4)" }}>Nos </span>
-          <span style={{ color: "#D35400" }}>3 Pôles</span>
+          <span style={{ color: "rgba(255,255,255,0.4)" }}>{t("h1Part1")}</span>
+          <span style={{ color: "#D35400" }}>{t("h1Part2")}</span>
           <br />
-          <span>d'Excellence</span>
+          <span>{t("h1Part3")}</span>
         </motion.h1>
 
         {/* Description */}
@@ -120,7 +123,7 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Trois domaines d'intervention complémentaires pour accompagner votre transformation digitale de bout en bout : de la stratégie à l'exécution, en passant par la montée en compétences de vos équipes.
+          {t("description")}
         </motion.p>
       </div>
     </section>
@@ -131,6 +134,9 @@ function HeroSection({ screenSize }: { screenSize: 'mobile' | 'tablet' | 'deskto
    POLE CARD
    ══════════════════════════════════════════════════════════ */
 function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: number; screenSize: 'mobile' | 'tablet' | 'desktop' }) {
+  const t = useTranslations("poles.index");
+  const msg = useDataMessages();
+  const i18n = msg.poles.items[pole.id];
   const [isHovered, setIsHovered] = useState(false);
   const Icon = pole.icon;
 
@@ -163,7 +169,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
           }}>
             <img
               src={pole.image}
-              alt={pole.title}
+              alt={i18n.title}
               style={{
                 width: '100%',
                 height: '100%',
@@ -223,7 +229,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                 fontWeight: 700,
                 fontFamily: 'var(--font-display)',
               }}>
-                Pôle {pole.number}
+                {t("poleBadge", { number: pole.number })}
               </span>
             </div>
 
@@ -237,7 +243,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               fontFamily: 'var(--font-display)',
               textTransform: 'uppercase',
             }}>
-              {pole.title}
+              {i18n.title}
             </h2>
 
             {/* Tagline */}
@@ -248,7 +254,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               marginBottom: '1rem',
               fontFamily: 'var(--font-body)',
             }}>
-              {pole.tagline}
+              {i18n.tagline}
             </p>
 
             {/* Description */}
@@ -259,7 +265,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               marginBottom: '1.5rem',
               fontFamily: 'var(--font-body)',
             }}>
-              {pole.description}
+              {i18n.description}
             </p>
 
             {/* Stats */}
@@ -273,7 +279,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   fontFamily: 'var(--font-display)',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.left}
+                  {i18n.stats.left}
                 </p>
                 <p style={{
                   fontSize: '0.8rem',
@@ -283,7 +289,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.leftLabel}
+                  {i18n.stats.leftLabel}
                 </p>
               </div>
               <div>
@@ -295,7 +301,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   fontFamily: 'var(--font-display)',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.right}
+                  {i18n.stats.right}
                 </p>
                 <p style={{
                   fontSize: '0.8rem',
@@ -305,7 +311,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
                 }}>
-                  {pole.stats.rightLabel}
+                  {i18n.stats.rightLabel}
                 </p>
               </div>
             </div>
@@ -320,7 +326,7 @@ function PoleCard({ pole, index, screenSize }: { pole: typeof poles[0]; index: n
               fontFamily: 'var(--font-display)',
               transition: 'color 0.3s ease',
             }}>
-              <span>Découvrir ce pôle</span>
+              <span>{t("discoverCta")}</span>
               <ArrowRight size={18} style={{
                 transform: isHovered ? 'translateX(4px)' : 'translateX(0)',
                 transition: 'transform 0.3s ease',

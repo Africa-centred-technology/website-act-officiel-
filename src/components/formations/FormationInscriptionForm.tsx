@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Send, Loader2, Search, ChevronDown, X } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
@@ -64,6 +65,7 @@ function CountrySearchSelect({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const tInsc = useTranslations("formations.inscription");
   const [query, setQuery]     = useState("");
   const [open, setOpen]       = useState(false);
   const containerRef          = useRef<HTMLDivElement>(null);
@@ -130,7 +132,7 @@ function CountrySearchSelect({
             <span style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.35)", flexShrink: 0 }}>{selected.code}</span>
           </span>
         ) : (
-          <span>— Choisir un pays —</span>
+          <span>{tInsc("countrySelectPlaceholder")}</span>
         )}
         <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0, marginLeft: "0.75rem" }}>
           {selected && (
@@ -189,7 +191,7 @@ function CountrySearchSelect({
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher un pays…"
+                placeholder={tInsc("countrySearchPlaceholder")}
                 style={{
                   flex: 1,
                   background: "none",
@@ -214,7 +216,7 @@ function CountrySearchSelect({
             <div style={{ maxHeight: "260px", overflowY: "auto" }}>
               {filtered.length === 0 ? (
                 <p style={{ padding: "1rem", color: "rgba(255,255,255,0.35)", fontSize: "1.3rem", textAlign: "center", fontFamily: "Futura, system-ui, sans-serif" }}>
-                  Aucun pays trouvé
+                  {tInsc("countryNotFound")}
                 </p>
               ) : (
                 filtered.map((country) => (
@@ -260,30 +262,6 @@ function CountrySearchSelect({
   );
 }
 
-const CANAUX = [
-  "Instagram", "LinkedIn", "YouTube", "Facebook", "Bouche-à-oreille", "Google", "Autre",
-];
-
-const FONCTIONS_PRO = [
-  "Directeur Général (DG)",
-  "DSI / CTO",
-  "DRH",
-  "Directeur Innovation / Digital",
-  "Responsable Formation",
-  "Manager / Chef de département",
-  "Développeur / Ingénieur",
-  "Autre",
-];
-
-const FONCTIONS_ETU = [
-  "Étudiant (Licence / Master)",
-  "Étudiant Ingénieur",
-  "Jeune diplômé (< 2 ans)",
-  "Salarié en entreprise",
-  "Freelance / Consultant",
-  "En reconversion professionnelle",
-  "Demandeur d'emploi",
-];
 
 /* ── Input helpers ─────────────────────────────────────── */
 const fieldStyle: React.CSSProperties = {
@@ -350,8 +328,8 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
-function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options: string[] }) {
-  const { options, ...rest } = props;
+function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options: string[]; placeholder?: string }) {
+  const { options, placeholder, ...rest } = props;
   return (
     <select
       {...rest}
@@ -363,7 +341,7 @@ function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options
         (e.currentTarget as HTMLSelectElement).style.borderColor = "rgba(255,255,255,0.1)";
       }}
     >
-      <option value="" style={{ background: "#0A1410" }}>— Choisir —</option>
+      <option value="" style={{ background: "#0A1410" }}>{placeholder ?? "— Choisir —"}</option>
       {options.map((o) => (
         <option key={o} value={o} style={{ background: "#0A1410" }}>
           {o}
@@ -386,6 +364,50 @@ export default function FormationInscriptionForm({
   formationSlug,
   onSuccess,
 }: FormationInscriptionFormProps) {
+  const t = useTranslations("formations.inscription");
+  const tOpts = useTranslations("formations.inscription.options");
+  const locale = useLocale();
+
+  const CANAUX = [
+    tOpts("canaux.instagram"),
+    tOpts("canaux.linkedin"),
+    tOpts("canaux.youtube"),
+    tOpts("canaux.facebook"),
+    tOpts("canaux.boucheAOreille"),
+    tOpts("canaux.google"),
+    tOpts("canaux.autre"),
+  ];
+
+  const FONCTIONS_PRO = [
+    tOpts("fonctionsPro.dg"),
+    tOpts("fonctionsPro.dsi"),
+    tOpts("fonctionsPro.drh"),
+    tOpts("fonctionsPro.directionInnovation"),
+    tOpts("fonctionsPro.responsableFormation"),
+    tOpts("fonctionsPro.manager"),
+    tOpts("fonctionsPro.developpeur"),
+    tOpts("fonctionsPro.autre"),
+  ];
+
+  const FONCTIONS_ETU = [
+    tOpts("fonctionsEtu.etudiantLicence"),
+    tOpts("fonctionsEtu.etudiantIngenieur"),
+    tOpts("fonctionsEtu.jeuneDiplome"),
+    tOpts("fonctionsEtu.salarie"),
+    tOpts("fonctionsEtu.freelance"),
+    tOpts("fonctionsEtu.reconversion"),
+    tOpts("fonctionsEtu.demandeurEmploi"),
+  ];
+
+  const NIVEAUX_ETUDES = [
+    tOpts("niveauxEtudes.bac"),
+    tOpts("niveauxEtudes.bac2"),
+    tOpts("niveauxEtudes.licence"),
+    tOpts("niveauxEtudes.master"),
+    tOpts("niveauxEtudes.ingenieur"),
+    tOpts("niveauxEtudes.doctorat"),
+  ];
+
   const [tab] = useState<"pro" | "etudiant">("etudiant");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -436,6 +458,7 @@ export default function FormationInscriptionForm({
           formationSouhaitee: formationTitle,
           formationSlug,
           timestamp: new Date().toISOString(),
+          locale,
         }),
       });
       if (!res.ok) throw new Error();
@@ -477,13 +500,13 @@ export default function FormationInscriptionForm({
             fontFamily: "Futura, system-ui, sans-serif",
           }}
         >
-          Inscription validée !
+          {t("successTitle")}
         </h3>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.65rem", lineHeight: 1.7 }}>
-          Vous allez être redirigé vers le paiement sécurisé Shopify…
+          {t("successMessage")}
           <br />
           <span style={{ fontSize: "1.2rem", opacity: 0.7 }}>
-            Si la redirection ne se fait pas automatiquement, vérifiez les bloqueurs de popups.
+            {t("successRedirectNote")}
           </span>
         </p>
         <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
@@ -530,7 +553,7 @@ export default function FormationInscriptionForm({
             className="inscription-fields"
           >
             {/* Email — full row */}
-            <Field label="Adresse mail" required style={{ gridColumn: "1 / -1" }}>
+            <Field label={t("fieldEmail")} required style={{ gridColumn: "1 / -1" }}>
               <Input
                 type="email"
                 required
@@ -541,7 +564,7 @@ export default function FormationInscriptionForm({
             </Field>
 
             {/* Formation — full row */}
-            <Field label="Thème de la formation" required style={{ gridColumn: "1 / -1" }}>
+            <Field label={t("fieldFormation")} required style={{ gridColumn: "1 / -1" }}>
               <Input
                 type="text"
                 required
@@ -566,13 +589,13 @@ export default function FormationInscriptionForm({
                   exit={{ opacity: 0 }}
                   style={{ gridColumn: "1 / -1" }}
                 >
-                  <Field label="Organisme employeur" required>
+                  <Field label={t("fieldOrganisme")} required>
                     <Input
                       type="text"
                       required
                       value={form.organisme}
                       onChange={(e) => set("organisme", e.target.value)}
-                      placeholder="Nom de votre entreprise / organisme"
+                      placeholder={t("fieldOrganismePlaceholder")}
                     />
                   </Field>
                 </motion.div>
@@ -584,11 +607,12 @@ export default function FormationInscriptionForm({
                   exit={{ opacity: 0 }}
                   style={{ gridColumn: "1 / -1" }}
                 >
-                  <Field label="Niveau d'études">
+                  <Field label={t("fieldNiveauEtudes")}>
                     <Select
                       value={form.niveauEtudes}
                       onChange={(e) => set("niveauEtudes", e.target.value)}
-                      options={["Bac", "Bac+2 (DUT/BTS)", "Licence (Bac+3)", "Master (Bac+5)", "Ingénieur", "Doctorat"]}
+                      options={NIVEAUX_ETUDES}
+                      placeholder={t("selectDefault")}
                     />
                   </Field>
                 </motion.div>
@@ -596,7 +620,7 @@ export default function FormationInscriptionForm({
             </AnimatePresence>
 
             {/* Civilité */}
-            <Field label="Civilité" style={{ gridColumn: "1 / -1" }}>
+            <Field label={t("fieldCivilite")} style={{ gridColumn: "1 / -1" }}>
               <div style={{ display: "flex", gap: "2rem", paddingTop: "0.3rem" }}>
                 {["M.", "Mme."].map((c) => (
                   <label
@@ -627,36 +651,37 @@ export default function FormationInscriptionForm({
             </Field>
 
             {/* Nom + Prénom */}
-            <Field label="Nom" required>
+            <Field label={t("fieldNom")} required>
               <Input
                 type="text"
                 required
                 value={form.nom}
                 onChange={(e) => set("nom", e.target.value)}
-                placeholder="Votre nom"
+                placeholder={t("fieldNomPlaceholder")}
               />
             </Field>
-            <Field label="Prénom" required>
+            <Field label={t("fieldPrenom")} required>
               <Input
                 type="text"
                 required
                 value={form.prenom}
                 onChange={(e) => set("prenom", e.target.value)}
-                placeholder="Votre prénom"
+                placeholder={t("fieldPrenomPlaceholder")}
               />
             </Field>
 
             {/* Fonction */}
-            <Field label="Fonction du participant" required>
+            <Field label={t("fieldFonction")} required>
               <Select
                 value={form.fonction}
                 onChange={(e) => set("fonction", e.target.value)}
                 options={tab === "pro" ? FONCTIONS_PRO : FONCTIONS_ETU}
+                placeholder={t("selectDefault")}
               />
             </Field>
 
             {/* Téléphone */}
-            <Field label="Téléphone" required style={{ gridColumn: "1 / -1" }}>
+            <Field label={t("fieldTelephone")} required style={{ gridColumn: "1 / -1" }}>
               <Input
                 type="tel"
                 required
@@ -667,18 +692,19 @@ export default function FormationInscriptionForm({
             </Field>
 
             {/* Comment connu */}
-            <Field label="Comment nous avez-vous connu ?" required>
+            <Field label={t("fieldCommentConnu")} required>
               <Select
                 value={form.commentConnu}
                 onChange={(e) => set("commentConnu", e.target.value)}
                 options={CANAUX}
+                placeholder={t("selectDefault")}
               />
             </Field>
 
   
             {/* Nb participants */}
             <Field
-              label="N° de participants"
+              label={t("fieldNbParticipants")}
               style={tab === "pro" ? {} : { display: "none" }}
             >
               <Input
@@ -691,12 +717,12 @@ export default function FormationInscriptionForm({
             </Field>
 
             {/* Message — full row */}
-            <Field label="Laissez-nous un message" style={{ gridColumn: "1 / -1" }}>
+            <Field label={t("fieldMessage")} style={{ gridColumn: "1 / -1" }}>
               <textarea
                 value={form.message}
                 onChange={(e) => set("message", e.target.value)}
                 rows={4}
-                placeholder="Décrivez vos attentes, objectifs ou contraintes particulières…"
+                placeholder={t("fieldMessagePlaceholder")}
                 style={{
                   ...fieldStyle,
                   resize: "vertical",
@@ -739,8 +765,7 @@ export default function FormationInscriptionForm({
                   letterSpacing: "0",
                 }}
               >
-                J'accepte que mes données personnelles soient collectées et traitées par ACT
-                dans le cadre de ma demande d'inscription.{" "}
+                {t("rgpdConsent")}{" "}
                 <span style={{ color: ORANGE }}>*</span>
               </span>
             </label>
@@ -756,7 +781,7 @@ export default function FormationInscriptionForm({
                   fontFamily: "Futura, system-ui, sans-serif",
                 }}
               >
-                Une erreur est survenue. Veuillez réessayer.
+                {t("errorMessage")}
               </p>
             )}
 
@@ -767,7 +792,7 @@ export default function FormationInscriptionForm({
                 disabled={status === "loading"}
                 icon={status === "loading" ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
               >
-                {status === "loading" ? "Envoi en cours…" : "S'inscrire"}
+                {status === "loading" ? t("submitting") : t("submitBtn")}
               </CTAButton>
             </div>
           </div>

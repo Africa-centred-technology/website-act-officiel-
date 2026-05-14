@@ -1,18 +1,79 @@
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
+import { fetchShopifyFormations } from "@/lib/shopify/formations";
+import { fetchShopifyBlogPosts } from "@/lib/shopify/blog";
 
 const BASE_URL = "https://www.a-ct.ma";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+const STATIC_ROUTES: Array<{
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}> = [
+  { path: "",            changeFrequency: "weekly",  priority: 1.0 },
+  { path: "/formations", changeFrequency: "weekly",  priority: 0.9 },
+  { path: "/poles",      changeFrequency: "monthly", priority: 0.8 },
+  { path: "/services",   changeFrequency: "monthly", priority: 0.8 },
+  { path: "/secteurs",   changeFrequency: "monthly", priority: 0.7 },
+  { path: "/projects",   changeFrequency: "monthly", priority: 0.7 },
+  { path: "/about",      changeFrequency: "monthly", priority: 0.6 },
+  { path: "/blog",       changeFrequency: "daily",   priority: 0.7 },
+  { path: "/contact",    changeFrequency: "monthly", priority: 0.6 },
+];
 
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL,                    lastModified: now, changeFrequency: "weekly",  priority: 1.0 },
-    { url: `${BASE_URL}/formations`,    lastModified: now, changeFrequency: "weekly",  priority: 0.9 },
-    { url: `${BASE_URL}/contact`,       lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE_URL}/blog`,          lastModified: now, changeFrequency: "daily",   priority: 0.8 },
-    { url: `${BASE_URL}/nous-decouvrir`,lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE_URL}/notre-savoir-faire`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-  ];
+/** Build one sitemap entry per locale × path, each with alternates pointing at the other locales. */
+function entriesForPath(path: string, opts: {
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+  lastModified?: Date;
+}): MetadataRoute.Sitemap {
+  return routing.locales.map((locale) => ({
+    url: `${BASE_URL}/${locale}${path}`,
+    lastModified: opts.lastModified ?? new Date(),
+    changeFrequency: opts.changeFrequency,
+    priority: opts.priority,
+    alternates: {
+      languages: Object.fromEntries([
+        ...routing.locales.map((l) => [l, `${BASE_URL}/${l}${path}`]),
+        ["x-default", `${BASE_URL}/${routing.defaultLocale}${path}`],
+      ]),
+    },
+  }));
+}
 
-  return staticRoutes;
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticEntries = STATIC_ROUTES.flatMap(({ path, changeFrequency, priority }) =>
+    entriesForPath(path, { changeFrequency, priority })
+  );
+
+  // Slug enumeration uses the default locale; handles are the same across locales.
+  const [formations, posts] = await Promise.allSettled([
+    fetchShopifyFormations(routing.defaultLocale),
+    fetchShopifyBlogPosts(routing.defaultLocale),
+  ]);
+
+  const formationEntries =
+    formations.status === "fulfilled"
+      ? formations.value.flatMap((f) =>
+          entriesForPath(`/formations/${f.slug}`, {
+            changeFrequency: "weekly",
+            priority: 0.7,
+          })
+        )
+      : [];
+
+  const blogEntries =
+    posts.status === "fulfilled"
+      ? posts.value.flatMap((p) =>
+          entriesForPath(`/blog/${p.slug}`, {
+            changeFrequency: "monthly",
+            priority: 0.6,
+            lastModified: p.date ? new Date(p.date) : undefined,
+          })
+        )
+      : [];
+
+  return [...staticEntries, ...formationEntries, ...blogEntries];
 }

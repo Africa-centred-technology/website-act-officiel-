@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const ease3D = [0.6, 0.08, 0.02, 0.99] as const;
 const ORANGE = "#D35400";
@@ -29,15 +30,8 @@ function useMediaQuery() {
   return screenSize;
 }
 
-const PULL_QUOTE =
-  "La technologie n'a de valeur que lorsqu'elle crée un impact réel.";
-
-const BODY_PARAGRAPHS = [
-  "Nous ne nous contentons pas d'implémenter des technologies — nous concevons des solutions qui créent de la valeur durable pour les organisations.",
-  "En combinant intelligence artificielle, analyse de données et automatisation, nous transformons les défis de nos clients en opportunités et bâtissons les systèmes qui soutiendront leur croissance de demain.",
-];
-
 export default function ManifesteSection() {
+  const tm = useTranslations("home.manifeste");
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const screenSize = useMediaQuery();
@@ -69,7 +63,7 @@ export default function ManifesteSection() {
       {/* ── Halo orange diffus (background) ── */}
       <motion.div
         aria-hidden
-        className="absolute -top-20 -right-32 w-[36rem] h-[36rem] rounded-full pointer-events-none"
+        className="absolute -top-20 -end-32 w-[36rem] h-[36rem] rounded-full pointer-events-none"
         style={{
           background: `radial-gradient(circle, ${ORANGE}1A 0%, transparent 65%)`,
           filter: "blur(80px)",
@@ -79,7 +73,7 @@ export default function ManifesteSection() {
       />
       <motion.div
         aria-hidden
-        className="absolute -bottom-32 -left-20 w-[30rem] h-[30rem] rounded-full pointer-events-none"
+        className="absolute -bottom-32 -start-20 w-[30rem] h-[30rem] rounded-full pointer-events-none"
         style={{
           background: `radial-gradient(circle, rgba(255,140,40,0.08) 0%, transparent 65%)`,
           filter: "blur(90px)",
@@ -146,8 +140,8 @@ export default function ManifesteSection() {
               lineHeight: 1.6,
             }}
           >
-            <div style={{ color: "#fff" }}>Notre conviction</div>
-            <div>Casablanca · Maroc · 2026</div>
+            <div style={{ color: "#fff" }}>{tm("conviction")}</div>
+            <div>{tm("location")}</div>
           </motion.div>
         </div>
 
@@ -220,7 +214,7 @@ export default function ManifesteSection() {
               zIndex: 1,
             }}
           >
-            {PULL_QUOTE.split(" ").map((w, i) => (
+            {tm("pullQuote").split(" ").map((w, i) => (
               <motion.span
                 key={i}
                 initial={{ opacity: 0, y: 8 }}
@@ -252,7 +246,7 @@ export default function ManifesteSection() {
           />
 
           {/* Paragraphes du manifeste */}
-          {BODY_PARAGRAPHS.map((para, i) => (
+          {([tm("bodyP1"), tm("bodyP2")] as string[]).map((para, i, arr) => (
             <motion.p
               key={i}
               initial={{ opacity: 0, y: 14 }}
@@ -266,7 +260,7 @@ export default function ManifesteSection() {
                 marginTop: 0,
                 marginRight: 0,
                 marginLeft: 0,
-                marginBottom: i === BODY_PARAGRAPHS.length - 1 ? 0 : "1.5rem",
+                marginBottom: i === arr.length - 1 ? 0 : "1.5rem",
                 maxWidth: "62ch",
               }}
             >
@@ -308,7 +302,7 @@ export default function ManifesteSection() {
                 color: "rgba(255,255,255,0.45)",
               }}
             >
-              Fondateur · CEO
+              {tm("founderRole")}
             </span>
           </motion.div>
         </motion.div>
@@ -355,7 +349,7 @@ export default function ManifesteSection() {
           >
             <img
               src="/images/Manifeste.png"
-              alt="Sohaib Baroud, fondateur d'ACT"
+              alt={tm("imageAlt")}
               style={{
                 position: "absolute",
                 inset: 0,
@@ -403,7 +397,7 @@ export default function ManifesteSection() {
                       marginBottom: "0.4rem",
                     }}
                   >
-                    Le Fondateur
+                    {tm("founderLabel")}
                   </div>
                   <div
                     style={{
@@ -426,7 +420,7 @@ export default function ManifesteSection() {
                       letterSpacing: "0.04em",
                     }}
                   >
-                    CEO · Africa Centred Technology
+                    {tm("founderCompany")}
                   </div>
                 </div>
 

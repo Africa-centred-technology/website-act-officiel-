@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * ServicesIntroShell — Expérience d'entrée des services ACT.
@@ -12,8 +12,10 @@ import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { SERVICES, type Service } from "@/lib/data/services";
+import { useDataMessages } from "@/i18n/data-i18n";
 import LogoPhase from "./LogoPhase";
 import FooterStrip from "@/components/layout/FooterStrip";
 
@@ -43,6 +45,8 @@ function ServiceCard({
   svc: Service; index: number;
   onEnter: (i: number) => void;
 }) {
+  const msg = useDataMessages();
+  const i18n = msg.services.items[svc.slug];
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96 }}
@@ -107,7 +111,7 @@ function ServiceCard({
 
         {/* Cadre de focus et numéro */}
         <div className="absolute inset-3 border border-white/0 group-hover:border-white/10 rounded-lg transition-all duration-500 pointer-events-none" />
-        <div className="absolute top-4 left-4 font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 text-5xl select-none" style={{ fontFamily: "Futura" }}>
+        <div className="absolute top-4 start-4 font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 text-5xl select-none" style={{ fontFamily: "Futura" }}>
           {svc.n}
         </div>
 
@@ -153,8 +157,9 @@ function ServiceCard({
             lineHeight: 1.3,
             textAlign: "center",
             margin: 0,
+            whiteSpace: "pre-line",
           }}>
-            {svc.title}
+            {i18n?.title ?? svc.slug}
           </h2>
         </div>
       </div>
@@ -166,6 +171,7 @@ function ServiceCard({
    SERVICES OVERVIEW
    ══════════════════════════════════════════════════════════ */
 function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
+  const t = useTranslations("services.intro");
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -208,10 +214,10 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
             transition={{ delay: 0.5, duration: 0.45 }}
           />
           <span style={{ color: "#ffffff", fontSize: "clamp(1.1rem, 1.4vw, 1.4rem)", letterSpacing: "0.35em", textTransform: "uppercase" }}>
-            Africa Centred Technology
+            {t("eyebrowBrand")}
           </span>
           <span style={{ color: ORANGE, fontWeight: 900, fontSize: "clamp(1.2rem, 1.6vw, 1.6rem)", letterSpacing: "0.25em", textTransform: "uppercase" }}>
-            — Services
+            {t("eyebrowAccent")}
           </span>
         </motion.div>
 
@@ -222,9 +228,9 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
             transition={{ duration: 0.85, delay: 0.18, ease: [...EASE] }}
             style={{ fontWeight: 900, fontSize: "clamp(3rem, 8vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", textTransform: "uppercase", color: "#fff", margin: 0 }}
           >
-            NOS SERVICES
+            {t("h1Line1")}
             <br />
-            <span style={{ color: ORANGE }}>&amp; SOLUTIONS</span>
+            <span style={{ color: ORANGE }}>{t("h1Line2")}</span>
           </motion.h1>
         </div>
 
@@ -235,12 +241,12 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}
         >
           <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)", lineHeight: 1.65, maxWidth: "680px", margin: 0, textAlign: "justify", flex: 1 }}>
-            ACT déploie des services complémentaires pour couvrir l&apos;intégralité des besoins de transformation digitale des entreprises.
+            {t("subtitle")}
           </p>
             {[
-              { label: "Pôle I · Ingénierie", color: ORANGE },
-              { label: "Pôle II · Conseil", color: GOLD },
-              { label: "Pôle III · Formation", color: GREEN }
+              { label: t("poleI"), color: ORANGE },
+              { label: t("poleII"), color: GOLD },
+              { label: t("poleIII"), color: GREEN }
             ].map(p => (
               <div key={p.label} style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: p.color, flexShrink: 0, boxShadow: `0 0 7px ${p.color}` }} />
@@ -262,7 +268,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: ORANGE, flexShrink: 0, boxShadow: `0 0 6px ${ORANGE}` }} />
             <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${ORANGE}CC`, whiteSpace: "nowrap" }}>
-              Pôle I — Ingénierie Technologique
+              {t("poleIFull")}
             </span>
             <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${ORANGE}50, transparent)` }} />
           </div>
@@ -278,7 +284,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: GOLD, flexShrink: 0, boxShadow: `0 0 6px ${GOLD}` }} />
             <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${GOLD}CC`, whiteSpace: "nowrap" }}>
-              Pôle II — Conseil
+              {t("poleIIFull")}
             </span>
             <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${GOLD}50, transparent)` }} />
           </div>
@@ -294,7 +300,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
           <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.2rem" }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: GREEN, flexShrink: 0, boxShadow: `0 0 6px ${GREEN}` }} />
             <span style={{ fontSize: "clamp(1rem, 1.1vw, 1.1rem)", letterSpacing: "0.22em", textTransform: "uppercase", color: `${GREEN}CC`, whiteSpace: "nowrap" }}>
-              Pôle III — Formation
+              {t("poleIIIFull")}
             </span>
             <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${GREEN}50, transparent)` }} />
           </div>

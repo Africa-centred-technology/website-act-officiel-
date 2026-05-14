@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 const EASE = [0.04, 0.72, 0.08, 1.0] as const;
 
@@ -30,14 +31,8 @@ function useMediaQuery() {
   return screenSize;
 }
 
-const STATS = [
-    { n: "2026", label: "Fondée" },
-    { n: "8", label: "Collaborateurs" },
-    { n: "5+", label: "Domaines" },
-    { n: "∞", label: "Ambition" },
-];
-
 export default function AboutSection() {
+    const t = useTranslations("home.about");
     const mx = useMotionValue(0);
     const my = useMotionValue(0);
     const midX = useSpring(mx, { stiffness: 55, damping: 22 });
@@ -85,7 +80,7 @@ export default function AboutSection() {
                                 textTransform: "uppercase",
                                 color: "rgba(255,255,255,0.28)",
                             }}>
-                                Qui sommes-nous
+                                {t("eyebrow")}
                             </span>
                         </motion.div>
 
@@ -106,9 +101,9 @@ export default function AboutSection() {
                                 textAlign: "left",
                             }}
                         >
-                            AFRICA<br />
-                            <span style={{ color: "#D35400" }}>CENTRED</span><br />
-                            TECHNOLOGY
+                            {t("title1")}<br />
+                            <span style={{ color: "#D35400" }}>{t("title2")}</span><br />
+                            {t("title3")}
                         </motion.h2>
 
                         {/* CTA - Desktop uniquement */}
@@ -142,9 +137,7 @@ export default function AboutSection() {
                                 hyphens: "auto",
                             }}
                         >
-                            Nous sommes une startup guidée par une <strong style={{ color: "#fff" }}>raison d’être commune</strong> : libérer l'énergie humaine et technologique.
-                            Une approche profondément humaine y est cultivée, renforcée par la puissance de l’Intelligence Artificielle.
-                            L’ambition est de générer un impact concret et durable, afin de transformer les sociétés et de contribuer à la construction d’un écosystème numérique collaboratif.
+                            {t.rich("intro", { strong: (chunks) => <strong style={{ color: "#fff" }}>{chunks}</strong> })}
                         </motion.p>
 
                         {/* Vision tag — placée en bas de la colonne droite */}
@@ -169,9 +162,7 @@ export default function AboutSection() {
                                 fontStyle: "italic",
                                 textAlign: "left",
                             }}>
-                                « Contribuer à l'émergence d'un écosystème technologique fort,
-                                innovant et autonome — où l'Afrique devient productrice,
-                                et non uniquement consommatrice de technologies. »
+                                {t("vision")}
                             </p>
                         </motion.div>
                     </div>

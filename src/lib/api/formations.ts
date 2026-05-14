@@ -3,11 +3,25 @@ import {
   fetchShopifyFormations,
   fetchShopifyFormationByHandle,
 } from "@/lib/shopify/formations";
+import { routing, type Locale } from "@/i18n/routing";
 
-/** GET /api/shopify/formations */
-export async function GET() {
+function readLocale(url: string): Locale {
   try {
-    const formations = await fetchShopifyFormations();
+    const param = new URL(url).searchParams.get("locale");
+    if (param && (routing.locales as readonly string[]).includes(param)) {
+      return param as Locale;
+    }
+  } catch {
+    // malformed URL — fall through to default
+  }
+  return routing.defaultLocale;
+}
+
+/** GET /api/shopify/formations?locale=<fr|en|ar> */
+export async function GET(req: Request) {
+  const locale = readLocale(req.url);
+  try {
+    const formations = await fetchShopifyFormations(locale);
     return NextResponse.json({ formations });
   } catch (error) {
     console.error("[/api/shopify/formations] Shopify fetch failed:", error);
@@ -18,14 +32,15 @@ export async function GET() {
   }
 }
 
-/** GET /api/shopify/formations/[slug] */
+/** GET /api/shopify/formations/[slug]?locale=<fr|en|ar> */
 export async function getBySlug(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  const locale = readLocale(req.url);
   try {
-    const formation = await fetchShopifyFormationByHandle(slug);
+    const formation = await fetchShopifyFormationByHandle(slug, locale);
     if (!formation) {
       return NextResponse.json(
         { error: "Formation introuvable sur Shopify." },

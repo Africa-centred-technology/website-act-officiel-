@@ -1,0 +1,1705 @@
+{
+  "common": {
+    "lang": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    },
+    "cta": {
+      "learnMore": "Learn more",
+      "viewAll": "View all",
+      "discover": "Discover",
+      "contact": "Contact us",
+      "subscribe": "Subscribe",
+      "back": "Back",
+      "close": "Close",
+      "send": "Send",
+      "loading": "Loading…",
+      "readMore": "Read more",
+      "register": "Register",
+      "download": "Download",
+      "downloadBrochure": "Download the brochure",
+      "startProject": "Start your project",
+      "contactUs": "Contact us",
+      "scrollToTop": "Back to top"
+    },
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "services": "Services",
+      "formations": "Training",
+      "poles": "Divisions",
+      "secteurs": "Industries",
+      "projects": "Projects",
+      "blog": "Blog",
+      "contact": "Contact",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "savoirFaire": "Our expertise",
+      "nousDecouvrir": "Discover us",
+      "equipe": "Our Team",
+      "valeurs": "Our Values",
+      "universite": "ACT-University",
+      "polesExcellence": "Our Divisions of Excellence",
+      "secteursActivite": "Our Industries",
+      "nosServices": "Our Services",
+      "catalogueFormations": "Training Catalog",
+      "catalogueComplet": "Full Catalog",
+      "aPropos": "About",
+      "realisations": "Projects",
+      "africa": "Africa — EN",
+      "contactUs": "Contact us"
+    },
+    "footer": {
+      "copyright": "© {year} Africa Centred Technology. All rights reserved.",
+      "tagline": "Engineering the Future",
+      "address": "Morocco — EN",
+      "followUs": "Follow us",
+      "navTitle": "Navigation",
+      "socialTitle": "Social Networks",
+      "polesTitle": "Our Divisions",
+      "contactTitle": "Contact",
+      "newsletterTitle": "Newsletter",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "emailPlaceholder": "Your email",
+      "subscribeSuccess": "Thank you! You are successfully subscribed to our newsletter.",
+      "subscribeError": "An error occurred. Please try again.",
+      "subscribing": "Subscribing...",
+      "poleDev": "Technology Development",
+      "poleConseil": "IT Consulting & Strategy",
+      "poleFormation": "Training & Development"
+    },
+    "ctaSection": {
+      "eyebrow": "Your industry, our expertise",
+      "title": "Let's talk about your project",
+      "description": "Whatever your industry, ACT has the technology expertise to support you in your digital transformation.",
+      "buttonText": "Start your project"
+    }
+  },
+  "metadata": {
+    "default": {
+      "title": "Africa Centred Technology | Engineering the Future",
+      "description": "ACT merges artificial intelligence and cutting-edge engineering to propel African companies to the top of global innovation."
+    },
+    "home": {
+      "title": "ACT — Africa Centred Technology | Engineering the Future",
+      "description": "Discover ACT, the African company that merges AI and cutting-edge engineering to propel African companies to the top of global innovation."
+    },
+    "about": {
+      "title": "About — Africa Centred Technology",
+      "description": "Discover the story, mission, and team behind Africa Centred Technology — pioneers of digital transformation in Africa since 2023."
+    },
+    "services": {
+      "title": "Services — Africa Centred Technology",
+      "description": "Our 9 services in technology engineering, consulting, and training to propel your African company toward innovation."
+    },
+    "formations": {
+      "title": "Training — Africa Centred Technology",
+      "description": "ACT training catalog in artificial intelligence, data, and digital transformation, designed for African professionals."
+    },
+    "poles": {
+      "title": "Divisions — Africa Centred Technology",
+      "description": "ACT's 3 business divisions: Technology Engineering, Consulting, and Training. Discover our full expertise."
+    },
+    "secteurs": {
+      "title": "Industries — Africa Centred Technology",
+      "description": "The industries where ACT operates to support digital transformation of African companies."
+    },
+    "projects": {
+      "title": "Projects — Africa Centred Technology",
+      "description": "Discover ACT client projects: digital transformations, AI, engineering. Real-world case studies across Africa."
+    },
+    "blog": {
+      "title": "Blog — Africa Centred Technology",
+      "description": "Articles, analyses, and technology insights from ACT. AI, digital transformation, engineering: the latest in African tech."
+    },
+    "contact": {
+      "title": "Contact — Africa Centred Technology",
+      "description": "Contact the ACT team to discuss your digital transformation, AI, and training projects in Morocco and Africa."
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email",
+    "phone": "Invalid phone number",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters"
+  },
+  "home": {
+    "manifeste": {
+      "pullQuote": "Technology has value only when it creates real impact.",
+      "bodyP1": "We don't just implement technologies — we design solutions that create lasting value for organizations.",
+      "bodyP2": "By combining artificial intelligence, data analytics, and automation, we transform our clients' challenges into opportunities and build the systems that will support their future growth.",
+      "conviction": "Our conviction",
+      "location": "Casablanca · Morocco · 2026",
+      "founderLabel": "The Founder",
+      "founderRole": "Founder · CEO",
+      "founderCompany": "CEO · Africa Centred Technology",
+      "imageAlt": "Sohaib Baroud, founder of ACT"
+    },
+    "hero": {
+      "tagline": "Innovating Today, Transforming Tomorrow",
+      "stats": {
+        "founded": "Founded",
+        "collaborators": "Collaborators",
+        "domains": "Domains",
+        "ambition": "Ambition"
+      }
+    },
+    "about": {
+      "eyebrow": "Who we are",
+      "title1": "AFRICA",
+      "title2": "CENTRED",
+      "title3": "TECHNOLOGY",
+      "intro": "We are a startup guided by a <strong>shared purpose</strong>: unleashing human and technological energy. A deeply human approach is cultivated here, reinforced by the power of Artificial Intelligence. Our ambition is to generate concrete and lasting impact, transforming societies and contributing to building a collaborative digital ecosystem.",
+      "vision": "\"Contribute to the emergence of a strong, innovative, and autonomous technological ecosystem — where Africa becomes a producer, and not merely a consumer of technologies.\""
+    },
+    "horizon": {
+      "eyebrow": "Let's start together",
+      "title": "Have a project?",
+      "titleAccent": "Let's bring it to life.",
+      "subtitle": "Whether it's an idea to validate, a solution to build, or a team to train — our experts respond within 24 hours to turn your ambition into reality.",
+      "cta": "Start a project",
+      "ctaSecondary": "View our projects →",
+      "commitments": {
+        "response": { "val": "24h", "label": "Guaranteed response" },
+        "free": { "val": "Free", "label": "First conversation" },
+        "custom": { "val": "100%", "label": "Tailored" }
+      }
+    },
+    "poles": {
+      "title": "What we offer",
+      "discover": "Discover",
+      "poleLabel": "Division"
+    },
+    "projects": {
+      "title": "Our latest",
+      "titleAccent": "projects",
+      "viewMore": "View more"
+    },
+    "blog": {
+      "title": "Our Latest",
+      "titleAccent": "publications",
+      "viewBlog": "View the blog",
+      "visitBlog": "Visit our Blog",
+      "subtitle": "Tech insights, AI trends, strategic advice — straight to your inbox.",
+      "readMore": "Read the full article"
+    },
+    "cta": {
+      "eyebrow": "Let's start together",
+      "title": "Have a project?",
+      "description": "Whether it's an idea to validate, a solution to build, or a team to train — our experts respond within 24 hours to turn your ambition into reality.",
+      "buttonText": "Start a project"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "Africa Centred Technology · Expertise & Engineering",
+      "word1": "OUR",
+      "word2": "EXPERTISE",
+      "subtitle": "We support organizations in their digital transformation by deploying high-level artificial intelligence and data engineering solutions — designed for performance and scalability.",
+      "ctaTeam": "The Team",
+      "ctaApproach": "Our approach"
+    },
+    "stats": {
+      "eyebrow": "The numbers that speak",
+      "title": "OUR NUMBERS",
+      "indicator": "Indicator",
+      "items": {
+        "projects": { "value": "15", "suffix": "+", "label": "Projects", "sub": "Successfully deployed solutions" },
+        "satisfaction": { "value": "100", "suffix": "%", "label": "Satisfaction", "sub": "Satisfied clients" },
+        "countries": { "value": "2", "suffix": "", "label": "Countries", "sub": "Morocco and beyond" }
+      }
+    },
+    "adn": {
+      "eyebrow": "Vision · Impact · Expertise",
+      "title": "OUR DNA",
+      "manifesto": "Technology has value only when it creates concrete and measurable impact. At ACT, we don't just implement tools: we design system architectures that optimize ROI and support organizational scalability. By combining advanced Artificial Intelligence, Data Engineering, and Industrial Automation, we transform complex technological challenges into lasting competitive advantages.",
+      "attribution": "SOHAIB BAROUD — Founder & CEO, ACT"
+    },
+    "values": {
+      "eyebrow": "Our pillars of excellence",
+      "title": "OUR STANDARDS",
+      "standardLabel": "ACT Standard",
+      "valueLabel": "ACT Value",
+      "items": {
+        "collaboration": {
+          "title": "Collaboration",
+          "desc": "The best solutions emerge from collective intelligence and skill-sharing."
+        },
+        "transmission": {
+          "title": "Transmission",
+          "desc": "We share our knowledge and skills to strengthen local capabilities and foster business autonomy."
+        },
+        "excellence": {
+          "title": "Excellence",
+          "desc": "High standards of quality, reliability, and rigor in every project."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "desc": "Innovation rooted in African realities, addressing concrete needs."
+        }
+      }
+    },
+    "timeline": {
+      "items": {
+        "2023": { "title": "Birth", "desc": "Creation of Africa Centred Technology as a tech engineering startup driven by a tight-knit team united around a common vision." },
+        "2024": { "title": "First POCs", "desc": "Deployment of the first AI and data prototypes for African companies, validating the model and expertise." },
+        "2025": { "title": "Acceleration", "desc": "Deployment of the Multi-source RAG System and scaling of consulting missions for the African ecosystem." },
+        "2026": { "title": "Direction 2030", "desc": "Consolidation of our pan-African vision with a dynamic, agile team resolutely focused on the continent's future." }
+      }
+    },
+    "team": {
+      "eyebrow": "ACT's Board of Directors",
+      "title": "BOARD OF DIRECTORS",
+      "members": {
+        "sohaib": {
+          "name": "SOHAIB BAROUD",
+          "role": "Founder & CEO",
+          "bio": "Visionary and leader in technology engineering in Africa. Sohaib founded ACT with the mission of transforming African companies into global technology leaders."
+        },
+        "mpiga": {
+          "name": "MPIGA-ODOUMBA JESSE",
+          "role": "Founding Member",
+          "bio": "Co-creator of ACT, committed to African innovation and technological impact at the continental scale."
+        },
+        "aldrin": {
+          "name": "Aldrin DJOUROBI",
+          "role": "Founding Member",
+          "bio": "Co-creator of ACT, driven by cutting-edge engineering and the growth of African startups."
+        },
+        "elvis": {
+          "name": "ELVIS-THEO AKIEME OYONO",
+          "role": "Founding Member",
+          "bio": "Co-creator of ACT, passionate about AI solutions and product excellence serving the continent."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Take action",
+      "line1": "JOIN THE",
+      "line2": "TECH",
+      "line3": "REVOLUTION",
+      "subtitle": "Ready to turn your challenges into technology opportunities? ACT supports companies and organizations in creating innovative and intelligent technology solutions.",
+      "ctaStart": "Start a project",
+      "ctaServices": "Our AI expertise"
+    }
+  },
+  "services": {
+    "index": {
+      "ghostText": "OUR\nEXPERTISE",
+      "eyebrow": "The ACT Tree",
+      "h1": "Our Services",
+      "subtitle": "Three complementary divisions — Engineering, Consulting, and Training — covering the entire value chain of African digital transformation.",
+      "countIngenierie": "5 Engineering services",
+      "countConseil": "3 Consulting services",
+      "scrollHint": "Scroll to explore",
+      "learnMore": "Learn more",
+      "benefits": "Benefits",
+      "discuss": "Discuss this service",
+      "loading": "Loading...",
+      "formationsCount": "{n} trainings available",
+      "customFormation": "Custom training",
+      "cta": {
+        "eyebrow": "Your project",
+        "title": "Let's build the future together",
+        "description": "Every transformation starts with a conversation. Share your project with us — our team responds within 48 hours.",
+        "buttonText": "Start your project"
+      }
+    },
+    "intro": {
+      "eyebrowBrand": "Africa Centred Technology",
+      "eyebrowAccent": "— Services",
+      "h1Line1": "OUR SERVICES",
+      "h1Line2": "& SOLUTIONS",
+      "subtitle": "ACT deploys complementary services to cover the full range of digital transformation needs for businesses.",
+      "poleI": "Division I · Engineering",
+      "poleII": "Division II · Consulting",
+      "poleIII": "Division III · Training",
+      "poleIFull": "Division I — Technology Engineering",
+      "poleIIFull": "Division II — Consulting",
+      "poleIIIFull": "Division III — Training"
+    },
+    "grid": {
+      "eyebrow": "Africa Centred Technology",
+      "h1": "Our Services",
+      "description": "Three complementary expertise divisions — technology engineering to build, consulting to structure, and training to last. Together, they form a unique proposition tailored for African organizations.",
+      "poleI": "Division I — Technology Engineering",
+      "poleII": "Division II — Consulting",
+      "poleIII": "Division III — Training",
+      "poleLabel": "Division {number} — {label}",
+      "ctaTitle": "Have a project in mind?",
+      "ctaDesc": "Let's discuss your needs and build the right solution together.",
+      "ctaButton": "Start a project"
+    },
+    "detail": {
+      "breadcrumbHome": "Home",
+      "breadcrumbServices": "Services",
+      "approachLabel": "Our approach",
+      "scrollHint": "Scroll",
+      "statsLabel": "{subs} sub-services · {benefits} benefits · {deliverables} deliverables",
+      "benefitsLabel": "What you gain",
+      "deliverablesLabel": "What you receive",
+      "deliverablesSuffix": "Documentation · Training · Support",
+      "deliverablesCount": "{n} deliverables",
+      "deliverablesAccent": "concrete",
+      "relatedTitle": "Division {poleN} services",
+      "backLink": "← Services",
+      "cta": {
+        "eyebrow": "Let's work together",
+        "title": "Interested in this service?",
+        "description": "Let's talk about your project in 30 minutes — no commitment.",
+        "buttonText": "Start a project"
+      }
+    },
+    "poles": {
+      "ingenierie": {
+        "breadcrumbHome": "Home",
+        "breadcrumbServices": "Services",
+        "approachLabel": "Our approach",
+        "scrollHint": "Scroll",
+        "benefitsLabel": "Why choose our services",
+        "relatedTitle": "Division {poleN} services",
+        "backLink": "← Services",
+        "cta": {
+          "eyebrow": "Let's work together",
+          "title": "Interested in this service?",
+          "description": "Let's talk about your project in 30 minutes — no commitment.",
+          "buttonText": "Start a project"
+        }
+      },
+      "conseil": {
+        "breadcrumbHome": "Home",
+        "breadcrumbServices": "Services",
+        "approachLabel": "Our approach",
+        "scrollHint": "Scroll",
+        "benefitsLabel": "Why choose our services",
+        "relatedTitle": "Division {poleN} services",
+        "backLink": "← Services",
+        "cta": {
+          "eyebrow": "Let's work together",
+          "title": "Interested in this service?",
+          "description": "Let's talk about your project in 30 minutes — no commitment.",
+          "buttonText": "Start a project"
+        }
+      },
+      "formation": {
+        "breadcrumbHome": "Home",
+        "breadcrumbServices": "Services",
+        "approachLabel": "Our approach",
+        "scrollHint": "Scroll",
+        "benefitsLabel": "Why choose our services",
+        "backLink": "← Services"
+      }
+    },
+    "items": {
+      "ingenierie-logicielle": {
+        "pole": "Technology Engineering",
+        "title": "Software Engineering\n& Development of Business\n& Mobile Solutions",
+        "tagline": "Applications that speak African",
+        "intro": "Digital transformation and the spread of mobile are redefining how organizations interact with their clients and teams. Yet many still use generic tools poorly suited to their operational realities. ACT designs custom solutions by analyzing real business processes, delivering high-performance, scalable platforms aligned with African contexts.",
+        "subs": [
+          {
+            "title": "African-Ready Web & Mobile Applications",
+            "desc": "Modern web and mobile applications combining performance, reliability, and UX excellence. Mobile-first approach with native Android/iOS development and hybrid solutions. Ergonomic interfaces optimized for African networks, integrated offline mode."
+          },
+          {
+            "title": "Specific Business Software",
+            "desc": "Tailored solutions for African companies and institutions: OHADA-compliant HRIS, accounting software, CRM, project and inventory management. Each solution starts from in-depth analysis of the organization's real business processes."
+          }
+        ],
+        "benefits": [
+          "Improved operational efficiency",
+          "Simplified business process management",
+          "Enhanced user experience",
+          "Independence from generic systems",
+          "Scalable and high-performing digital platforms"
+        ],
+        "deliverables": [
+          "Application delivered & documented",
+          "Technical team training",
+          "12-month maintenance & support",
+          "Performance dashboard"
+        ]
+      },
+      "automatisation-ia": {
+        "pole": "Technology Engineering",
+        "title": "Intelligent\nAutomation (Agentic AI)",
+        "tagline": "AI that works with you",
+        "intro": "Organizations handle increasingly complex processes based on manual tasks, fragmented exchanges, and tools that don't communicate. Traditional automation solutions struggle with multi-step workflows and multi-source information. ACT deploys AI agent architectures that collaborate to transform these manual processes into intelligent workflows — without replacing humans, but multiplying their capabilities.",
+        "subs": [
+          {
+            "title": "Multi-Agent Architectures",
+            "desc": "Multiple specialized AI agents cooperate to execute a complete business process: data collection, information analysis, cross-department coordination, report generation, and automated action triggering. Managing complex workflows with multiple steps and sources."
+          },
+          {
+            "title": "Hybrid Digital / Paper Processing",
+            "desc": "Automation of mixed flows through digitization, OCR, and automatic information extraction. Forms, invoices, contracts, and administrative files are automatically analyzed and integrated into your digital workflows without interruption."
+          },
+          {
+            "title": "Support AI (Human Augmentation)",
+            "desc": "AI analyzes, synthesizes, and recommends — humans supervise and decide. An advanced assistant that identifies trends, generates summaries, and prepares information for decision-making, without ever removing the professional from the center of the process."
+          }
+        ],
+        "benefits": [
+          "Accelerated process handling",
+          "Reduced manual repetitive tasks",
+          "Improved data quality and reliability",
+          "Strengthened cross-department coordination",
+          "Enhanced decision-making capacity"
+        ],
+        "deliverables": [
+          "Mapping of automatable processes",
+          "Agents deployed & tested",
+          "Monitoring dashboard",
+          "AI governance guide"
+        ]
+      },
+      "architecture-infrastructure": {
+        "pole": "Technology Engineering",
+        "title": "Architecture\n& Infrastructure",
+        "tagline": "The foundations of your growth",
+        "intro": "Without solid foundations, your applications quickly become difficult to scale, expensive to maintain, and unable to keep up with organizational growth. ACT designs modern, scalable, and secure architectures combining software architecture, sovereign cloud adapted to the African context, and strategic IT consulting — to transform technology into a true performance lever.",
+        "subs": [
+          {
+            "title": "Scalable Software Architecture",
+            "desc": "Architectures based on modern standards: microservices, event-driven, API-first. Modular and flexible systems that scale gradually — from local administration to national system — without major rebuilding. Protects technology investment while preparing future growth."
+          },
+          {
+            "title": "Sovereign Cloud Solutions",
+            "desc": "Cloud adoption aligned with African data localization regulations. Hybrid cloud/local architectures for regulatory compliance, migration without service interruption. Provider choice adapted to the continent's realities and sector requirements."
+          },
+          {
+            "title": "IT Consulting & Solution Design",
+            "desc": "Independent, results-oriented consulting: comparative solution analysis, technical and financial feasibility studies, lifecycle TCO assessments, strategic recommendations. For informed technology decisions, without conflicts of interest."
+          }
+        ],
+        "benefits": [
+          "Technology investment protected",
+          "Native scalability from design",
+          "African regulatory compliance ensured",
+          "Operational costs under control"
+        ],
+        "deliverables": [
+          "Validated architecture diagram",
+          "Detailed migration plan",
+          "5-year TCO report",
+          "Complete technical documentation"
+        ]
+      },
+      "data-intelligence-artificielle": {
+        "pole": "Technology Engineering",
+        "title": "Data, Artificial\nIntelligence & Big Data",
+        "tagline": "Your data serving your mission",
+        "intro": "Africa generates massive volumes of data every day — mobile transactions, agricultural data, health information, logistics flows. Yet much of it remains unusable, scattered across siloed systems or stored in incompatible formats. ACT supports organizations in setting up complete data ecosystems covering the full data lifecycle: from collection to value creation through AI model deployment.",
+        "subs": [
+          {
+            "title": "Data Science & Machine Learning",
+            "desc": "Analytical and predictive models trained on African data, designed by African teams: demand forecasting, fraud detection, population segmentation, school absenteeism analysis, industrial failure prediction. Relevant results adapted to local realities."
+          },
+          {
+            "title": "Data Engineering",
+            "desc": "Technical infrastructure for data collection and use: automated pipelines, data warehouses, data lakes, quality control systems, multi-source integration (business systems, sensors, forms, APIs). The essential foundation for any data or AI strategy."
+          },
+          {
+            "title": "Big Data",
+            "desc": "Big Data architectures for organizations managing very large data volumes. Deployment of platforms based on open source technologies (Hadoop, Spark, Kafka, Elasticsearch) that process and analyze at scale while optimizing infrastructure costs."
+          },
+          {
+            "title": "Artificial Intelligence",
+            "desc": "AI solutions applied to specific domains: healthcare (diagnostic assistance), agriculture (agronomic recommendations), education (performance analysis), finance (fraud detection, risk analysis). Each solution is designed with responsible AI principles: transparency, fairness, and human oversight."
+          }
+        ],
+        "benefits": [
+          "Data transformed into a strategic lever",
+          "Improved decision quality and speed",
+          "Optimized operations and anticipated markets",
+          "Reduced inefficiencies from fragmented systems",
+          "Innovative data-based services developed"
+        ],
+        "deliverables": [
+          "AI models deployed & validated",
+          "Automated data pipelines",
+          "Real-time analytics dashboard",
+          "AI charter & governance"
+        ]
+      },
+      "geomatique-sig": {
+        "pole": "Technology Engineering",
+        "title": "Geomatics\n& Geographic Information\nSystems",
+        "tagline": "Know your territory to develop it",
+        "intro": "You can't develop what you don't know. Many African institutions still make decisions on planning, resource management, or infrastructure with incomplete or outdated geographic information. ACT combines mapping technologies, GIS, and spatial analysis to transform geographic data into decision-support tools — using satellite imagery, ground surveys, drones, and open geospatial databases.",
+        "subs": [
+          {
+            "title": "Digital Mapping",
+            "desc": "Multi-scale digital maps produced from high-resolution satellite imagery, LiDAR, GPS, and drones. Delivered in standard formats (GeoJSON, Shapefile, GeoTIFF). Continuous update process — essential in rapidly changing African territories where outdated maps cost millions."
+          },
+          {
+            "title": "Geographic Information Systems (GIS)",
+            "desc": "Decision platforms centralizing, visualizing, and analyzing territorial data crossed with socio-economic, demographic, environmental, and infrastructural data. Helps answer strategic questions: where to build, which areas are at risk, which territories have the best agricultural or economic potential."
+          }
+        ],
+        "benefits": [
+          "Improved territorial planning",
+          "Better understanding of spatial dynamics",
+          "Optimized infrastructure investments",
+          "Anticipated environmental and climate risks",
+          "Strengthened quality of public and strategic decisions"
+        ],
+        "deliverables": [
+          "High-resolution digital mapping",
+          "Operational GIS platform",
+          "Training for GIS teams",
+          "Data update protocol"
+        ]
+      },
+      "conseil-strategique": {
+        "pole": "Consulting",
+        "title": "Strategic Consulting\n& Transformation",
+        "tagline": "Strategy before the tool",
+        "intro": "Many African organizations first look for software — without having defined why they need it, what they want to change, or what model they're aiming for. This approach leads to expensive investments, poorly adopted and quickly abandoned. ACT reverses this logic: strategic vision always precedes technology choice. Only after an in-depth diagnosis are technology directions defined — never the other way around.",
+        "subs": [
+          {
+            "title": "Digital Consulting & Growth",
+            "desc": "Rigorous digital maturity audit: analysis of existing systems, identification of blind spots and untapped opportunities compared to sector best practices. Co-construction of a tailored digital roadmap — not a theoretical document, but a real management tool with milestones, KPIs, and success indicators."
+          },
+          {
+            "title": "Digital Transformation Services Consulting",
+            "desc": "Complete change management support: internal communication, manager training, pilot group facilitation, resistance management, and adoption tracking. End-to-end transformation project management with governance bodies, risk management, and tracking dashboards shared with executive teams."
+          }
+        ],
+        "benefits": [
+          "Clear strategic vision before any investment",
+          "Digital transformation adopted sustainably",
+          "Technology investments paid back",
+          "Decision-making informed by reliable data"
+        ],
+        "deliverables": [
+          "Digital maturity audit report",
+          "3-year strategic roadmap",
+          "Change management plan",
+          "KPI dashboard"
+        ]
+      },
+      "conseil-operationnel": {
+        "pole": "Consulting",
+        "title": "Operational\n& Business Consulting",
+        "tagline": "Understand before you digitize",
+        "intro": "Between digital strategy and technology solution deployment lies a critical space too often ignored: the operational space. This is where real business processes, information flows, and unwritten rules governing daily operations live. An inefficient process, once digitized, remains inefficient — just faster and more expensive. ACT optimizes operations before choosing technology, starting from the field, not from a PowerPoint presentation.",
+        "subs": [
+          {
+            "title": "Business Analysis",
+            "desc": "Field analysis: interviews with operational teams, observation of real practices (not the ones on org charts). Process mapping with structured tools (BPMN, flow analysis, value chain), identification of inefficiencies, redundancies, and bottlenecks. Functional specifications directly usable by technical teams."
+          },
+          {
+            "title": "Operational Consulting",
+            "desc": "Business process optimization before any digitization: flow reconstruction, strategy–operations–technology alignment, implementation support, and impact measurement. Technology amplifies efficient processes; ACT makes sure they are efficient before digitizing them."
+          },
+          {
+            "title": "Consulting",
+            "desc": "Cross-functional operational expertise: business process analysis, performance optimization, strategy–operations–technology alignment, implementation support. Concrete and measurable results in the field, not slides."
+          }
+        ],
+        "benefits": [
+          "Business processes optimized before digitization",
+          "Real needs identified through field analysis",
+          "Concrete and measurable ROI",
+          "Easier tool adoption"
+        ],
+        "deliverables": [
+          "BPMN process mapping",
+          "Functional specifications",
+          "Prioritized optimization plan",
+          "6-month ROI report"
+        ]
+      },
+      "catalogue-formations": {
+        "pole": "Training",
+        "title": "Training\nCatalog",
+        "tagline": "Train today, succeed tomorrow",
+        "intro": "Training in digital skills has become essential. Our artificial intelligence training — like integrating AI into daily work — enables any professional to gain productivity and make AI a true performance lever. Beyond these cross-cutting skills, an entire digital culture is essential to address the concrete challenges of the market. Designed by experts from the continent based on real cases, these training programs offer operational skills immediately deployable.",
+        "subs": [
+          {
+            "title": "Technical Training",
+            "desc": "Master the essential technical skills to design, deploy, and secure robust digital solutions. Programs designed to meet concrete market needs, with a practical and operational approach."
+          },
+          {
+            "title": "Business & Strategy Training",
+            "desc": "Lead your organization's digital transformation. Acquire the methods and strategic vision needed to manage innovative projects, make data-driven decisions, and unite your teams around digital challenges."
+          },
+          {
+            "title": "Specialized Training",
+            "desc": "Programs designed for those who want to stand out. Deepen niche expertise, develop rare skills, and become a reference in your field"
+          }
+        ],
+        "benefits": [
+          "In Africa, 61% of companies consider digital skills important for their success — our training prepares you for this demand",
+          "Flexible learning (online & in-person)",
+          "Content adapted to business contexts",
+          "Expert trainers from the continent"
+        ],
+        "deliverables": [
+          "Access to ACT University platform",
+          "Downloadable course materials",
+          "Certificates of completion",
+          "Access to alumni community"
+        ]
+      }
+    }
+  },
+  "formations": {
+    "catalogue": {
+      "breadcrumbHome": "Home",
+      "breadcrumbFormations": "Training",
+      "heroTitle": "Training",
+      "heroTitleAccent": "Catalog",
+      "heroSubtitle": "Develop your skills with our intensive programs designed for the AI world.",
+      "searchPlaceholder": "Search a training...",
+      "countLabel": "training programs found",
+      "loadError": "Unable to load training programs.",
+      "retry": "Retry",
+      "emptyTitle": "No results for this search",
+      "resetSearch": "Reset search",
+      "paginationPrev": "← Previous",
+      "paginationNext": "Next →",
+      "paginationPage": "Page {current} / {total}",
+      "defaultAccroche": "Hands-on training to master tomorrow's tools.",
+      "defaultNiveau": "Beginner",
+      "defaultSecteur": "Cross-functional",
+      "discoverCta": "Discover the program",
+      "noResultsEmpty": "No training program available at the moment.",
+      "sectionLabel": "Division III · Training",
+      "sectionTitle": "Training",
+      "sectionTitleAccent": "Catalog",
+      "customCta": "Custom training",
+      "loadingCatalogue": "Loading catalog…",
+      "programmesCount": "{count} programs available, organized by field — from beginner to expert level. Click a program to access the full curriculum.",
+      "formationCount": "{count} training",
+      "formationCountPlural": "{count} trainings",
+      "carouselTitle": "Explore our",
+      "carouselTitleAccent": "Training",
+      "carouselNiveauLabel": "Level",
+      "carouselDureeLabel": "Duration",
+      "carouselDetailCta": "Training details",
+      "emptyCarousel": "No training program available at the moment.",
+      "heroCatalogCta": "View the catalog",
+      "heroRegisterCta": "Register now",
+      "popularBadge": "★ Popular",
+      "viewFormation": "View the training",
+      "viewFullCatalogue": "View the full catalog",
+      "emptyCategoryMessage": "No training in this category.",
+      "landpageHeroLine1": "Master the tools",
+      "landpageHeroLine2": "that make the difference",
+      "landpageHeroLine3": "starting tomorrow morning.",
+      "landpageHeroSubtitle": "Intensive training designed by African practitioners on real cases. In 1 to 3 days, you leave with skills you can apply the next day.",
+      "landpageStorytellingEyebrow": "Storytelling",
+      "landpageExperienceTitle": "The experience",
+      "landpageExperienceSubtitle": "We don't tell you we're good — we show you how it really happens.",
+      "landpageMethodEyebrow": "Our method",
+      "landpageMethodTitle": "Why choose",
+      "landpageCatalogueEyebrow": "Catalog",
+      "landpageCatalogueTitle": "Our",
+      "landpageCatalogueTitleAccent": "Training",
+      "landpageEngagementsEyebrow": "Our commitments",
+      "landpageEngagementsTitle": "Concrete",
+      "landpageEngagementsTitleAccent": "guarantees",
+      "landpageFounderEyebrow": "Founder's word",
+      "landpageCtaEyebrow": "Take action",
+      "landpageCtaTitle1": "Your next",
+      "landpageCtaTitle2": "skill starts",
+      "landpageCtaTitle3": "now.",
+      "landpageCtaSubtitle": "Seats are limited to 12 per session. Don't miss the next opening.",
+      "stats": {
+        "formations": { "value": "12+", "label": "Trainings", "sub": "available" },
+        "pratique": { "value": "7h", "label": "Per day", "sub": "of practice" },
+        "prix": { "value": "400 MAD", "label": "Starting at", "sub": "per training" },
+        "ratio": { "value": "100%", "label": "Hands-on", "sub": "real business cases" }
+      },
+      "experience": {
+        "block1": {
+          "title": "Learners in real situations",
+          "desc": "From day one, you work on-site with real professional tools. No simulation, no fictional cases — you produce directly.",
+          "highlight": "100% professional environment",
+          "barLabel": "Time on task"
+        },
+        "block2": {
+          "title": "80% practice / 20% theory",
+          "desc": "Our inverted ratio guarantees rapid skill development. Each concept is immediately applied through exercises drawn from real African projects.",
+          "highlight": "3× skill development",
+          "barLabel": "Practice"
+        },
+        "block3": {
+          "title": "Direct trainer interaction",
+          "desc": "Your questions receive immediate answers. The trainer corrects in real time, intervenes on your screen, and adapts the pace to your group.",
+          "highlight": "Max 12 learners / session"
+        },
+        "block4": {
+          "title": "ACT digital certificate",
+          "desc": "At the end of the training, you receive a digital certificate valued by HR departments and recruiters. A concrete asset to add to your profile.",
+          "highlight": "Recognized by HR"
+        }
+      },
+      "pillars": {
+        "p1": { "title": "80% Practice", "desc": "Every concept is immediately applied. Zero slides without exercises." },
+        "p2": { "title": "Real African cases", "desc": "Our exercises are inspired by real projects from companies across the continent." },
+        "p3": { "title": "Small groups", "desc": "Maximum 12 learners per session for individualized follow-up." },
+        "p4": { "title": "Practitioner trainers", "desc": "Every trainer actively practices their field — no theorists." },
+        "p5": { "title": "Recognized certification", "desc": "ACT certificate valued by recruiters and HR departments." },
+        "p6": { "title": "Post-training support", "desc": "3 months of WhatsApp support included after every program." }
+      },
+      "guarantees": {
+        "g1": { "label": "Small groups ≤ 12", "detail": "We turn down registrants rather than inflate groups. Quality > volume." },
+        "g2": { "label": "Practitioner trainer", "detail": "Your trainer works in a company today. No library-trainers." },
+        "g3": { "label": "Lifetime resources", "detail": "Slides, exercises, and recordings remain accessible without time limit." }
+      },
+      "founder": {
+        "quote1": "I created ACT Training because I was tired of theoretical training that doesn't help anyone make concrete progress.",
+        "quote2": "After years supporting African companies in their digital transformation, I saw the same blocker: skills are missing, not motivation.",
+        "quote3": "Our training programs are designed by people who do, for people who want to do. Every program is tested in the field — if it doesn't create measurable value, I refund you.",
+        "tag1": "15+ years field experience",
+        "tag2": "Trained in Europe & Africa",
+        "tag3": "200+ companies supported",
+        "name": "Sohaib Baroud",
+        "roleLabel": "Founder & CEO · ACT",
+        "imageAlt": "Sohaib Baroud — ACT Founder"
+      }
+    },
+    "detail": {
+      "inscriptionCta": "Register →",
+      "voirProgramme": "View the program",
+      "inscriptionsOuvertes": "Registration open",
+      "metaDuree": "Duration",
+      "metaFormat": "Format",
+      "metaNiveau": "Level",
+      "metaProchaineSession": "Next session",
+      "metaSecteur": "Industry",
+      "metaLieu": "Location",
+      "metaTarif": "Price",
+      "metaTarifPromo": "Promotional price",
+      "metaSurDevis": "On request",
+      "leConstatLabel": "The diagnosis",
+      "problemesLabel": "The recurring problems you encounter:",
+      "ceQueVousRepartirezAvecLabel": "What you'll leave with",
+      "ceQueVousRepartirezAvecTitle": "Not a training.",
+      "ceQueVousRepartirezAvecAccent": "breakthrough",
+      "equipeLabel": "The teaching team",
+      "outilsCouvertsLabel": "Tools covered",
+      "programmeLabel": "Program",
+      "programmeTitle": "A dense",
+      "programmeTitleAccent": "journey",
+      "programme100Op": "100% operational.",
+      "programmeSubtitle": "No lectures. Every module alternates 30% theory, 70% workshop, with a concrete deliverable at the end.",
+      "moduleLabel": "Module",
+      "brochureLabel": "Not ready to register yet?",
+      "brochureTitle": "Download the",
+      "brochureTitleAccent": "brochure",
+      "brochureTitleSuffix": "complete.",
+      "brochureSubtitle": "The full program, deliverables, and pricing in 1 PDF · Immediate download after form submission.",
+      "brochureCta": "📄 Download the brochure (PDF)",
+      "brochureFree": "100% free",
+      "brochureInstant": "Instant access",
+      "audienceLabel": "For whom?",
+      "audienceTitle": "Designed for pros",
+      "audienceTitleAccent": "who get results",
+      "pricingLabel": "Pricing",
+      "pricingTitle": "Three ways to",
+      "pricingTitleAccent": "start",
+      "pricingTitleSuffix": "Only one, the right one for you.",
+      "pricingSubtitle": "All prices include materials, templates, personalized GPT agent, and 30-day follow-up.",
+      "formuleLabel": "Plan",
+      "faqLabel": "Frequently asked questions",
+      "faqTitle": "You have questions, here are our answers",
+      "faqCta": "Another question? Ask us",
+      "finalCtaLabel": "Ready to take action?",
+      "finalCtaLine1": "Stop enduring.",
+      "finalCtaLine2": "Start mastering.",
+      "finalCtaSubtitle": "Reserve your seat now — or if you prefer, talk with one of our experts over coffee before deciding.",
+      "finalCtaCafe": "☕ Let's talk over coffee?",
+      "loadError": "Unable to load the training",
+      "retryBtn": "Retry",
+      "eyebrowFormation": "Training",
+      "fallbacks": {
+        "session": "Session · 2026",
+        "format": "On-site + live",
+        "niveau": "All levels"
+      }
+    },
+    "inscription": {
+      "backToFormation": "Back to training",
+      "eyebrow": "Training Registration",
+      "heroLine1": "Register",
+      "heroLine2": "now",
+      "formLabel": "Registration form",
+      "formTitle": "Your",
+      "formTitleAccent": "application",
+      "sidebarRecap": "Summary",
+      "sidebarProcess": "How it works",
+      "sidebarEngagements": "Our commitments",
+      "sidebarQuestion": "A question?",
+      "metaNiveau": "Level",
+      "metaDuree": "Duration",
+      "metaFormat": "Format",
+      "metaTarif": "Price",
+      "processStep1Title": "Fill out the form",
+      "processStep1Desc": "Complete your profile and expectations in 4 guided steps.",
+      "processStep2Title": "Confirmation within 24h",
+      "processStep2Desc": "An ACT advisor contacts you to confirm and plan.",
+      "processStep3Title": "Join the training",
+      "processStep3Desc": "Join your group and start your journey.",
+      "engagement1": "Guaranteed response within 24 business hours",
+      "engagement2": "Dedicated advisor for your application",
+      "engagement3": "Confidentiality assured (NDA available)",
+      "fieldEmail": "Email address",
+      "fieldFormation": "Training topic",
+      "fieldOrganisme": "Employer organization",
+      "fieldOrganismePlaceholder": "Name of your company / organization",
+      "fieldNiveauEtudes": "Education level",
+      "fieldCivilite": "Title",
+      "fieldNom": "Last name",
+      "fieldNomPlaceholder": "Your last name",
+      "fieldPrenom": "First name",
+      "fieldPrenomPlaceholder": "Your first name",
+      "fieldFonction": "Participant's role",
+      "fieldTelephone": "Phone",
+      "fieldCommentConnu": "How did you hear about us?",
+      "fieldNbParticipants": "Number of participants",
+      "fieldMessage": "Leave us a message",
+      "fieldMessagePlaceholder": "Describe your expectations, goals, or specific constraints…",
+      "rgpdConsent": "I consent that my personal data be collected and processed by ACT in connection with my registration request.",
+      "selectDefault": "— Choose —",
+      "countrySelectPlaceholder": "— Choose a country —",
+      "countrySearchPlaceholder": "Search a country…",
+      "countryNotFound": "No country found",
+      "submitBtn": "Register",
+      "submitting": "Submitting…",
+      "successTitle": "Registration confirmed!",
+      "successMessage": "You will be redirected to secure Shopify checkout…",
+      "successRedirectNote": "If redirection doesn't happen automatically, check your popup blockers.",
+      "errorMessage": "An error occurred. Please try again.",
+      "landpageNomLabel": "Full name *",
+      "landpageNomPlaceholder": "Your full name",
+      "landpageEmailLabel": "Email *",
+      "landpageTelLabel": "Phone",
+      "landpageFormationLabel": "Desired training *",
+      "landpageFormationDefault": "Choose a training",
+      "landpageFormationUnknown": "I don't know yet",
+      "landpageMessageLabel": "Message (optional)",
+      "landpageMessagePlaceholder": "Your current level, your goals, your schedule constraints...",
+      "landpageSubmitIdle": "Reserve my seat",
+      "landpageSubmitting": "Submitting…",
+      "landpageConfirmation": "✓ Response within 24h · ✓ No commitment",
+      "landpageSuccessTitle": "Request sent!",
+      "landpageSuccessMessage": "Our team will contact you within {hours} business hours to confirm your registration and share the details.",
+      "landpageError": "An error occurred. Please try again.",
+      "finalCtaBtn": "Register now",
+      "options": {
+        "canaux": {
+          "instagram": "Instagram",
+          "linkedin": "LinkedIn",
+          "youtube": "YouTube",
+          "facebook": "Facebook",
+          "boucheAOreille": "Word of mouth",
+          "google": "Google",
+          "autre": "Other"
+        },
+        "fonctionsPro": {
+          "dg": "CEO / Managing Director",
+          "dsi": "CIO / CTO",
+          "drh": "HR Director",
+          "directionInnovation": "Innovation / Digital Director",
+          "responsableFormation": "Training Manager",
+          "manager": "Manager / Department Head",
+          "developpeur": "Developer / Engineer",
+          "autre": "Other"
+        },
+        "fonctionsEtu": {
+          "etudiantLicence": "Student (Bachelor / Master)",
+          "etudiantIngenieur": "Engineering Student",
+          "jeuneDiplome": "Recent graduate (< 2 years)",
+          "salarie": "Employed",
+          "freelance": "Freelance / Consultant",
+          "reconversion": "Career change",
+          "demandeurEmploi": "Job seeker"
+        },
+        "niveauxEtudes": {
+          "bac": "High School",
+          "bac2": "2-year college (DUT/BTS)",
+          "licence": "Bachelor's (3 years)",
+          "master": "Master's (5 years)",
+          "ingenieur": "Engineering degree",
+          "doctorat": "PhD"
+        }
+      }
+    },
+    "brochure": {
+      "eyebrow": "📄 Training brochure",
+      "title": "Download the brochure",
+      "subtitle": "Program, deliverables, modalities, and pricing · PDF accessible immediately.",
+      "namePlaceholder": "Full name *",
+      "emailPlaceholder": "Professional email *",
+      "companyPlaceholder": "Company (optional)",
+      "submitIdle": "📥 Download the brochure →",
+      "submitting": "Preparing…",
+      "noSpam": "No spam. You can unsubscribe at any time.",
+      "successTitle": "Download started!",
+      "successMessage": "If the brochure didn't open automatically, click below.",
+      "openBrochure": "📥 Open the brochure",
+      "close": "Close",
+      "errorDefault": "An error occurred, please retry.",
+      "ariaClose": "Close"
+    },
+    "cart": {
+      "title": "Cart",
+      "titleWithCount": "Cart ({count})",
+      "ariaClose": "Close the cart",
+      "ariaCart": "Shopping cart",
+      "empty": "Your cart is empty",
+      "discoverCta": "Discover our training →",
+      "orderConfirmed": "Order confirmed!",
+      "orderConfirmedMessage": "You will receive a confirmation email with the details of your training.",
+      "savings": "You save {amount}!",
+      "subtotal": "Subtotal",
+      "tva": "VAT",
+      "tvaValue": "Pending",
+      "total": "Total",
+      "checkoutBtn": "Proceed to checkout",
+      "ariaCheckout": "Proceed to checkout",
+      "securePayment": "100% secure payment",
+      "paymentMethods": "Credit card · Bank transfer · PayPal",
+      "removeTitle": "Remove from cart?",
+      "removeMessage": "Do you want to remove this training from your cart?",
+      "cancelBtn": "Cancel",
+      "confirmRemove": "Remove",
+      "ariaDecrease": "Decrease quantity",
+      "ariaIncrease": "Increase quantity",
+      "ariaDelete": "Remove this item",
+      "removeBtn": "Remove"
+    },
+    "defaults": {
+      "marquee": [
+        "+400 professionals trained",
+        "4.9/5 rating on 213 reviews",
+        "OpenAI & Anthropic partner",
+        "97% recommend",
+        "32 client companies"
+      ],
+      "trustStats": [
+        { "value": "+400", "label": "Pros trained" },
+        { "value": "4.9/5", "label": "Satisfaction" },
+        { "value": "97%", "label": "Recommend" }
+      ],
+      "painPoints": [
+        { "num": "01", "title": "Overwhelmed by the tools?", "text": "ChatGPT, Claude, Gemini, Copilot... impossible to know where to start." },
+        { "num": "02", "title": "Prompts that don't work?", "text": "You test, but the answers remain generic. More time lost than gained." },
+        { "num": "03", "title": "Team falling behind?", "text": "Some adopt, others resist. No common method, GDPR risk." }
+      ],
+      "valueRoi": {
+        "bigStat": "10h",
+        "bigStatLabel": "recovered / week",
+        "secondary": [
+          { "value": "×4", "label": "writing speed" },
+          { "value": "-60%", "label": "analysis time" }
+        ]
+      },
+      "audienceCards": [
+        { "icon": "01", "title": "Executives\n& Leadership" },
+        { "icon": "02", "title": "Managers\n& project leads" },
+        { "icon": "03", "title": "Marketing\n& communication" },
+        { "icon": "04", "title": "Consultants\n& freelancers" }
+      ],
+      "testimonials": [
+        {
+          "quote": "I cut my weekly reports time by three. Paid back in 10 days.",
+          "name": "Samira Bennani",
+          "role": "Marketing Director · Casablanca"
+        },
+        {
+          "quote": "Zero fluff, concrete from the first hour. I leave with my own prompts that work.",
+          "name": "Youssef Kabbaj",
+          "role": "Strategy Consultant · Rabat"
+        },
+        {
+          "quote": "Trained 18 people in-house. +22% productivity measured on the team six months later.",
+          "name": "Fatima Ouali",
+          "role": "HR Director · Industrial group · Tangier"
+        }
+      ],
+      "pricingPlans": [
+        {
+          "name": "Plan 01",
+          "title": "Inter",
+          "description": "Inter-company session · open to individual registrations.",
+          "features": [
+            "Session scheduled at fixed dates",
+            "Up to 12 multi-company participants",
+            "All templates & prompts",
+            "Personalized GPT agent",
+            "Training completion certificate",
+            "6-month replay access"
+          ],
+          "ctaLabel": "Reserve my seat",
+          "badge": "★ Most chosen"
+        },
+        {
+          "name": "Plan 02",
+          "title": "Intra",
+          "description": "On your premises · for your teams · from 6 people.",
+          "features": [
+            "Training at your premises",
+            "Your real business cases in workshop",
+            "AI audit of processes before launch",
+            "Private Slack follow-up · 30 days",
+            "Post-training recommendations report",
+            "90-day follow-up included"
+          ],
+          "ctaLabel": "Request a quote"
+        },
+        {
+          "name": "Plan 03",
+          "title": "Custom",
+          "description": "100% tailored program · co-built with an ACT expert.",
+          "features": [
+            "100% tailored program",
+            "Combination of multiple trainings",
+            "Flexible format (duration, modality, location)",
+            "Co-built with an ACT expert",
+            "Train-the-trainer option",
+            "Long-term support"
+          ],
+          "ctaLabel": "Request a quote"
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "I'm a complete beginner. Will I keep up?",
+          "answer": "Yes — no prerequisites are required. 60% of our learners discover ChatGPT on day 1. By day 2, they build their own GPT agent."
+        },
+        {
+          "question": "How long before I see a return on investment?",
+          "answer": "On average, our learners recover 10 hours per week from the first week. The Pro plan price pays back in less than two weeks."
+        },
+        {
+          "question": "What if I can't come to Casablanca?",
+          "answer": "The Essential plan is 100% remote, live with the trainer and a small group (max 12)."
+        },
+        {
+          "question": "What about GDPR / sensitive data?",
+          "answer": "A full module is dedicated to ethical and compliant use: GDPR, AI Act, tool privacy settings, on-premise alternatives."
+        }
+      ],
+      "midCta": {
+        "eyebrow": "Launch offer",
+        "titlePrefix": "Current session ·",
+        "titleHighlight": "5 seats",
+        "titleSuffix": "remaining.",
+        "text": "If you're hesitating, the best thing to do: book a free 15-minute discovery call.",
+        "ctaPrimary": { "label": "View pricing", "url": "#pricing" },
+        "ctaGhost": { "label": "Discovery call · 15 min", "url": "/contact" },
+        "ctaDark": { "label": "Register" }
+      },
+      "finalCta": {
+        "eyebrow": "5 seats remaining",
+        "titleLine1": "Your team will be trained",
+        "titleLine2": "in AI. ",
+        "titleHighlight": "With you",
+        "titleSuffix": ", or without you.",
+        "text": "Each week without training = 10 hours of productivity lost for every team member.",
+        "primaryLabel": "Register",
+        "ghostLabel": "Schedule a 15 min call"
+      },
+      "prixBarre": "6,500 MAD excl. tax"
+    }
+  },
+  "poles": {
+    "index": {
+      "eyebrow": "Our Expertise",
+      "h1Part1": "Our ",
+      "h1Part2": "3 Divisions",
+      "h1Part3": "of Excellence",
+      "description": "Three complementary areas of intervention to support your end-to-end digital transformation: from strategy to execution, including upskilling your teams.",
+      "poleBadge": "Division {number}",
+      "discoverCta": "Explore this division"
+    },
+    "items": {
+      "developpement-technologique": {
+        "title": "Technology Development",
+        "titleWithBreaks": "Technology\nDevelopment\nDivision",
+        "tagline": "Technical excellence serving your ambitions",
+        "tag": "Engineering",
+        "description": "Design and deployment of tailored technology solutions that turn your ideas into concrete products.",
+        "desc": "Custom solutions, robust platforms, and software development tailored to each client's challenges.",
+        "stats": {
+          "left": "Custom",
+          "leftLabel": "Engineering",
+          "right": "Performance",
+          "rightLabel": "Robustness"
+        }
+      },
+      "conseil-strategie-it": {
+        "title": "IT Consulting & Strategy",
+        "titleWithBreaks": "Consulting\nDivision",
+        "tagline": "Your strategic partner for digital transformation",
+        "tag": "IT Strategy",
+        "description": "Strategic and operational support throughout your digital transformation, from audit to project management.",
+        "desc": "Strategic support, technology audit, and global transformation to accelerate your growth.",
+        "stats": {
+          "left": "360° Audit",
+          "leftLabel": "Diagnostic",
+          "right": "Strategy",
+          "rightLabel": "Support"
+        }
+      },
+      "formation": {
+        "title": "Training & Development",
+        "titleWithBreaks": "Training\nDivision",
+        "tagline": "Training the talents who will build tomorrow's Africa",
+        "tag": "Transmission",
+        "description": "Democratizing access to tech skills through certifying programs, workshops, and bootcamps.",
+        "desc": "Skill development, specialized workshops, and training paths to grow talent.",
+        "stats": {
+          "left": "Certifying",
+          "leftLabel": "Programs",
+          "right": "Innovation",
+          "rightLabel": "Local Impact"
+        }
+      }
+    },
+    "conseil": {
+      "eyebrow": "Division 02",
+      "h1Line1": "IT Consulting",
+      "h1Line2": "& Strategy",
+      "heroDescription": "Your strategic partner to steer and succeed in your digital transformation. We accompany you from audit to execution, with a pragmatic, results-driven approach.",
+      "heroCtaServices": "Our Services",
+      "heroCtaAudit": "Request an Audit",
+      "whyTitle": "Why expert <accent>consulting</accent> is strategic",
+      "whySubtitle": "In a complex digital environment, strategic consulting is not an option — it's a performance accelerator",
+      "stats": {
+        "projectsFail": { "label": "Of IT projects fail", "desc": "due to lack of clear strategy and business-technology alignment" },
+        "roi": { "label": "More ROI", "desc": "for companies that invest in consulting before implementation" },
+        "costs": { "label": "Of IT costs", "desc": "thanks to strategic optimization and elimination of redundancies" },
+        "leaders": { "label": "Of executives", "desc": "believe external consulting accelerates their digital transformation" }
+      },
+      "servicesTitle": "Our <accent>Services</accent>",
+      "servicesDesc": "Tailored support for every stage of your transformation",
+      "services": {
+        "strategique": {
+          "title": "Strategic Consulting & Transformation",
+          "description": "Strategy before the tool. We define your target vision and digital roadmap before any technology investment.",
+          "feature1": "Digital maturity audit",
+          "feature2": "Strategic roadmap",
+          "feature3": "Change management"
+        },
+        "operationnel": {
+          "title": "Operational & Business Consulting",
+          "description": "Operational excellence in service of performance. We optimize your real business processes before digitizing them.",
+          "feature1": "Field business analysis",
+          "feature2": "BPMN process optimization",
+          "feature3": "Strategy–Tool alignment"
+        }
+      },
+      "methodTitle": "Our <accent>Methodology</accent>",
+      "process": {
+        "s01": { "title": "Diagnostic", "desc": "Analysis of existing systems, identification of challenges and opportunities" },
+        "s02": { "title": "Strategy", "desc": "Definition of the target vision and roadmap development" },
+        "s03": { "title": "Planning", "desc": "Framing of initiatives, prioritization, and resource allocation" },
+        "s04": { "title": "Execution", "desc": "Operational steering, team coordination, and delivery follow-up" },
+        "s05": { "title": "Optimization", "desc": "Results measurement, adjustments, and continuous improvement" }
+      },
+      "whyUsTitle": "Why <accent>choose us</accent>",
+      "whyUs": {
+        "pragmatique": { "title": "Pragmatic Approach", "desc": "We favor concrete, measurable solutions tailored to your context and resources." },
+        "sectorielle": { "title": "Sector Expertise", "desc": "Deep knowledge of business challenges and the specifics of your sector." },
+        "roi": { "title": "Proven ROI", "desc": "Support focused on creating measurable value and optimizing your IT investments." },
+        "neutralite": { "title": "Technology Neutrality", "desc": "Independent and objective recommendations, with no technological or commercial bias." }
+      },
+      "blogTitle": "What we <accent>publish</accent> on the topic",
+      "servicesCta": "Learn more",
+      "blogCta": "Read the full article"
+    },
+    "developpement": {
+      "eyebrow": "Division 01",
+      "h1Line1": "Technology",
+      "h1Line2": "Development",
+      "heroDescription": "We turn your ideas into high-performance, scalable technology products. From web applications to distributed systems, we master the entire technical value chain.",
+      "heroCtaServices": "Our Services",
+      "heroCtaContact": "Contact Us",
+      "servicesTitle": "Our <accent>Services</accent>",
+      "servicesDesc": "Complete expertise for all your software development needs",
+      "services": {
+        "logicielle": {
+          "title": "Software Engineering",
+          "description": "Design and development of robust, scalable software solutions using the latest technologies.",
+          "feature1": "Web & Mobile Applications",
+          "feature2": "Microservices & APIs",
+          "feature3": "Custom solutions"
+        },
+        "ia": {
+          "title": "Agentic Artificial Intelligence",
+          "description": "Development of autonomous AI systems capable of making intelligent decisions and automating complex processes.",
+          "feature1": "Intelligent agents",
+          "feature2": "Machine learning",
+          "feature3": "Advanced automation"
+        },
+        "data": {
+          "title": "Big Data & Artificial Intelligence",
+          "description": "Processing and analysis of large datasets combined with AI to extract strategic insights.",
+          "feature1": "Data Analytics",
+          "feature2": "Machine Learning",
+          "feature3": "Data visualization"
+        },
+        "cloud": {
+          "title": "Cloud Architecture",
+          "description": "Design and deployment of cloud-native, scalable, and secure infrastructures.",
+          "feature1": "Infrastructure as Code",
+          "feature2": "Microservices",
+          "feature3": "Serverless Computing"
+        },
+        "sig": {
+          "title": "Geographic Information Systems",
+          "description": "GIS solutions for collecting, analyzing, and visualizing geospatial data.",
+          "feature1": "Interactive mapping",
+          "feature2": "Spatial analysis",
+          "feature3": "Geolocation"
+        }
+      },
+      "processTitle": "Our <accent>Process</accent>",
+      "process": {
+        "s01": { "title": "Analysis & Scoping", "desc": "Audit of existing systems, definition of scope and objectives" },
+        "s02": { "title": "Design", "desc": "Technical architecture, mockups, detailed specifications" },
+        "s03": { "title": "Development", "desc": "Agile sprints, regular reviews, continuous testing" },
+        "s04": { "title": "Deployment", "desc": "Production rollout, team training, knowledge transfer" },
+        "s05": { "title": "Support & Evolution", "desc": "Maintenance, monitoring, functional evolutions" }
+      },
+      "whyUsTitle": "Why <accent>choose us</accent>",
+      "whyUs": {
+        "livraison": { "title": "Fast Delivery", "desc": "Agile method and short sprints for incremental deliveries and rapid production rollout." },
+        "qualite": { "title": "Quality & Security", "desc": "Automated testing, systematic code reviews, and compliance with international security standards." },
+        "evolutivite": { "title": "Scalability", "desc": "Modular and scalable architecture that grows with your needs without full rewrites." },
+        "support": { "title": "Ongoing Support", "desc": "Post-delivery support, team training, and proactive maintenance of your solutions." }
+      },
+      "blogTitle": "What we <accent>publish</accent> on the topic",
+      "servicesCta": "Learn more",
+      "blogCta": "Read the full article"
+    }
+  },
+  "secteurs": {
+    "index": {
+      "eyebrowBrand": "Africa Centred Technology",
+      "eyebrowAccent": "— Sectors",
+      "h1Line1": "OUR AREAS",
+      "h1Line2": "OF EXPERTISE",
+      "subtitle": "ACT operates across many sectors, bringing technology expertise and local insight to turn the continent's challenges into concrete opportunities.",
+      "exploreCta": "Explore this sector →",
+      "ariaPrev": "Previous sector",
+      "ariaNext": "Next sector",
+      "ariaDot": "Sector {n}",
+      "titlePrev": "Previous sector",
+      "titleNext": "Next sector"
+    },
+    "detail": {
+      "breadcrumb": "Sectors",
+      "approachLabel": "Our approach",
+      "approachH2Suffix": "in this sector",
+      "solutionsLabel": "Our solutions",
+      "solutionsH2Line1": "What we",
+      "solutionsH2Line2": "do",
+      "cta": {
+        "eyebrow": "Let's take action",
+        "title": "We're interested in your project",
+        "description": "Let's discuss your context and explore together how technology can create value in your organization.",
+        "buttonText": "Start a project"
+      }
+    },
+    "items": {
+      "industrie": {
+        "label": "Industry",
+        "tagline": "Modernize to compete better",
+        "description": "In an increasingly competitive industrial environment, companies must accelerate their transformation to gain in performance, quality, and agility. ACT supports industrial players in digitizing their operations by integrating intelligent technologies that optimize processes, strengthen decision-making, and sustainably improve productivity.",
+        "services": [
+          "Production line automation",
+          "IoT & predictive maintenance",
+          "Supply chain digitization",
+          "Traceability & real-time tracking systems",
+          "Production flow optimization"
+        ],
+        "chiffre": { "label": "potential productivity gain" }
+      },
+      "telecoms-medias": {
+        "label": "Telecommunications & Media",
+        "tagline": "Accelerating value creation in the digital economy",
+        "description": "At the heart of the digital economy, telecommunications and media play a key role in connectivity, content distribution, and the creation of new uses. ACT supports operators, regulators, and media players in monetizing their infrastructure and data by developing innovative services, personalized experiences, and sustainable business models.",
+        "services": [
+          "Value-added service platforms",
+          "Intelligent data monetization",
+          "Segmentation & personalization algorithms",
+          "Digital transition of African media",
+          "Digital business models (subscription, programmatic advertising)"
+        ],
+        "chiffre": { "label": "of revenue generated through digital services" }
+      },
+      "finance": {
+        "label": "Finance & FinTech",
+        "tagline": "Reinventing financial services in the digital era",
+        "description": "The financial sector is undergoing an accelerated transformation driven by digital technologies, new uses, and regulatory requirements. ACT supports financial institutions, banks, and fintechs in designing innovative, secure, user-centric solutions, to improve service access, optimize operations, and strengthen risk management.",
+        "services": [
+          "FinTech platform development",
+          "Mobile banking & payment solutions",
+          "Credit scoring & risk management systems",
+          "Regulatory compliance & data security",
+          "Banking API integration & interoperability"
+        ],
+        "chiffre": { "label": "of Africans without access to traditional banking services" }
+      },
+      "ecommerce": {
+        "label": "E-commerce & Retail",
+        "tagline": "Build high-performance, scalable shopping experiences",
+        "description": "E-commerce is redefining commerce standards by combining customer experience, data, and operational performance. ACT supports retail players in designing and optimizing high-value digital platforms, integrating innovative solutions to maximize sales, smooth purchasing journeys, and improve logistics efficiency.",
+        "services": [
+          "E-commerce platform development",
+          "Mobile & omni-channel payment solutions",
+          "Inventory management & logistics systems",
+          "Digital marketing tools & personalization",
+          "Mobile commerce apps (iOS & Android)"
+        ],
+        "chiffre": { "label": "potential conversion rate increase" }
+      },
+      "sante": {
+        "label": "Health & MedTech",
+        "tagline": "Transforming healthcare systems through digital",
+        "description": "The healthcare sector is experiencing a deep transformation driven by digital technologies, data, and artificial intelligence. ACT supports healthcare institutions, public bodies, and MedTech players in modernizing their systems, improving patient journeys, and optimizing operational performance, while guaranteeing data security and compliance.",
+        "services": [
+          "Digitization of patient journeys & medical records",
+          "Hospital Information Systems (HIS)",
+          "Health data analysis & decision support",
+          "Telemedicine & remote monitoring solutions",
+          "Security, compliance & sensitive data management"
+        ],
+        "chiffre": { "label": "improvement in care process efficiency" }
+      },
+      "immobilier": {
+        "label": "Real Estate & PropTech",
+        "tagline": "Optimizing real estate decisions through data",
+        "description": "The real estate sector is moving toward a data-driven model, where every investment, management, or valuation decision relies on precise, real-time analysis. ACT supports developers, investors, and asset managers in digitizing their processes, optimizing their portfolios, and improving the performance of real estate assets.",
+        "services": [
+          "Real estate data analysis & investment support",
+          "Property Management platforms",
+          "Price modeling & trend forecasting",
+          "Digitization of transactions & customer journeys",
+          "Asset performance dashboards"
+        ],
+        "chiffre": { "label": "asset profitability optimization" }
+      },
+      "education": {
+        "label": "Education & EdTech",
+        "tagline": "Accelerating educational transformation through digital",
+        "description": "Education is the main lever of societal development. In a fast-changing world, digital technologies offer unprecedented opportunities to transform educational systems, improve access to knowledge, and develop the skills of the future. ACT supports educational institutions, training organizations, and EdTech players in designing and deploying innovative, learner-centric solutions aligned with 21st-century challenges.",
+        "services": [
+          "Online learning platforms (LMS) & blended learning",
+          "Digitization of student journeys & administration",
+          "Innovative pedagogical tools & augmented reality",
+          "Learning analytics & AI for personalization",
+          "Teacher training in digital tools"
+        ],
+        "chiffre": { "label": "improvement in learner engagement" }
+      }
+    }
+  },
+  "projects": {
+    "index": {
+      "eyebrowBrand": "Africa Centred Technology",
+      "eyebrowAccent": "— Portfolio",
+      "h1Word1": "OUR",
+      "h1Word2": "ACT",
+      "h1Word3": "WORK",
+      "subtitle": "Discover our projects transforming African businesses and creating lasting impact across the continent. Cutting-edge technology, measurable results.",
+      "statProjects": "Projects delivered",
+      "statCountries": "Countries covered",
+      "statSatisfaction": "Satisfaction",
+      "filterLabel": "Filter by category",
+      "emptyState": "No projects in this category",
+      "cardCta": "Read →",
+      "cta": {
+        "eyebrow": "Your project, our expertise",
+        "title": "Let's talk about your project",
+        "description": "ACT brings the technology expertise to support your digital transformation, whatever your industry.",
+        "buttonText": "Start a project"
+      }
+    },
+    "detail": {
+      "backLink": "← Portfolio",
+      "counter": "{index} / 04",
+      "metaClient": "Client",
+      "metaYear": "Year",
+      "metaDuration": "Duration",
+      "metaDomain": "Domain",
+      "metaTech": "Technologies",
+      "sectionPresentation": "Overview",
+      "sectionResults": "Results",
+      "sectionChallenges": "Challenges",
+      "sectionApproach": "Our Approach",
+      "ctaEyebrow": "Your next project",
+      "ctaH2Line1": "Your Vision,",
+      "ctaH2Line2": "Our Expertise",
+      "ctaDescription": "Ready to turn your next project into a technology success story? The Africa Centred Technology team is listening.",
+      "ctaButton": "Start a similar project →",
+      "navPrev": "← Previous project",
+      "navNext": "Next project →"
+    },
+    "items": {
+      "rag": {
+        "title": "Multi-source RAG System",
+        "category": "AI",
+        "categoryFull": "Artificial Intelligence",
+        "tagline": "Multimodal chatbot for low-connectivity environments",
+        "description": "A multimodal chatbot capable of answering from documents, images, audio, and video through a RAG pipeline and multimodal embeddings.",
+        "descriptionLong": "The Multi-source RAG System is a cutting-edge artificial intelligence solution designed to transform how African organizations access their knowledge bases. Unlike traditional text-only chatbots, this system seamlessly ingests and indexes PDF documents, images, audio files, and videos into a unified vector space.\n\nAt the system's core is a RAG (Retrieval-Augmented Generation) pipeline optimized for environments with variable connectivity. Thanks to pgvector, multimodal embeddings are stored locally, enabling ultra-fast semantic searches even in partial offline mode.\n\nThe Streamlit interface allows non-technical teams to submit natural-language questions and receive contextualized answers citing exact sources — document, page, audio timestamp, or video segment.",
+        "tags": ["RAG", "OpenAI GPT-5", "pgvector", "Streamlit", "Python", "FastAPI"],
+        "client": "ACT Lab",
+        "duration": "6 months",
+        "results": [
+          { "label": "Multimodal search", "value": "4 media types" },
+          { "label": "Vector indexing", "value": "< 50 ms / query" },
+          { "label": "Robust pipeline", "value": "99.2% uptime" },
+          { "label": "Document base", "value": "10,000+ documents" }
+        ],
+        "challenges": [
+          "Consistent indexing of heterogeneous media (PDF, audio, video, images)",
+          "Search performance in low-bandwidth environments",
+          "Answer accuracy with citation of exact sources"
+        ],
+        "approach": "Our approach unfolded in three phases: first, designing a unified vector schema able to accommodate all media types; then optimizing the RAG pipeline to minimize costly API calls through intelligent caching; and finally implementing a scoring system that ranks sources by contextual relevance."
+      },
+      "cod": {
+        "title": "CODRescue",
+        "category": "E-commerce",
+        "categoryFull": "E-commerce & Logistics",
+        "tagline": "E-commerce management with real-time dashboards",
+        "description": "E-commerce management system for order preparation, logistics, and supervision with real-time dashboards.",
+        "descriptionLong": "CODRescue is an e-commerce operations management platform designed for African markets where Cash On Delivery dominates. The system addresses the specific challenges of last-mile logistics: high return rates, geographic dispersion of couriers, and difficulty tracking in real time.\n\nThe platform centralizes the entire order flow from reception to final delivery. Supervisors have real-time dashboards showing the exact status of each order, courier positions, and key operational KPIs (delivery rate, average time, returns).\n\nAn AI-assisted layer analyzes order patterns to predict high-demand zones, optimize delivery routes, and proactively flag orders at risk of failure even before the delivery attempt.",
+        "tags": ["Django", "Tailwind", "PostgreSQL", "AI-assisted", "Celery", "Redis"],
+        "client": "CODRescue",
+        "duration": "8 months",
+        "results": [
+          { "label": "Optimized processes", "value": "−40% processing time" },
+          { "label": "Logistics tracking", "value": "Real-time GPS" },
+          { "label": "Real-time KPIs", "value": "15 key metrics" },
+          { "label": "Delivery rate", "value": "+28% success" }
+        ],
+        "challenges": [
+          "Real-time GPS tracking in areas with partial network coverage",
+          "Returns handling and automatic financial reconciliation",
+          "Scalability to absorb order spikes (promotions, events)"
+        ],
+        "approach": "We adopted an event-driven architecture with Celery/Redis for asynchronous processing of position updates, ensuring an always-responsive interface even under heavy load. The AI layer relies on classification models trained on the client's order history to predict delivery failure risks with 84% accuracy."
+      },
+      "sig": {
+        "title": "GreenSIG V1",
+        "category": "GIS",
+        "categoryFull": "Geographic Information Systems",
+        "tagline": "Interactive mapping of urban green spaces",
+        "description": "A GIS platform for green-space management with interactive mapping, planning, and intervention tracking.",
+        "descriptionLong": "GreenSIG V1 is a web platform for managing urban green spaces, designed for African local authorities and landscape companies. It meets a critical need: replacing paper sheets and Excel spreadsheets with a centralized geospatial system accessible from the field.\n\nInteractive mapping is built on Leaflet.js with OpenStreetMap tiles, enabling precise visualization of each green space (area, vegetation type, health status). Field teams access the application from their phones to record interventions with automatic geolocation.\n\nThe planning module lets managers create recurring maintenance programs, assign teams by geographic zone, and track progress in real time. Automatic alerts flag spaces where maintenance is overdue or urgent intervention is needed.",
+        "tags": ["React", "TypeScript", "Leaflet", "Tailwind", "Django", "GeoJSON"],
+        "client": "GreenSIG",
+        "duration": "5 months",
+        "results": [
+          { "label": "Centralized mapping", "value": "500+ green spaces" },
+          { "label": "Team management", "value": "12 field teams" },
+          { "label": "Optimized inventory", "value": "−60% admin time" },
+          { "label": "Geographic coverage", "value": "3 pilot cities" }
+        ],
+        "challenges": [
+          "Offline mode for field data entry in unconnected areas",
+          "Synchronization of geospatial data without conflicts",
+          "Interface usable on entry-level smartphones"
+        ],
+        "approach": "The main constraint was field resilience: we implemented a Service Worker with IndexedDB for local storage of data and map tiles. Deferred synchronization ensures teams can work an entire day offline and reconcile data upon returning to a coverage area."
+      },
+      "gam": {
+        "title": "GAM — Génies Afrique Médias",
+        "category": "Media",
+        "categoryFull": "Media & Editorial",
+        "tagline": "Pan-African Web TV in headless architecture",
+        "description": "A pan-African digital media platform (Web TV + editorial content) in headless architecture.",
+        "descriptionLong": "GAM (Génies Afrique Médias) is a pan-African digital media platform developed for AFRITECK INSTITUT, combining Web TV, editorial articles, and podcasts in a unified multimedia experience. The ambition: to become the reference for tech and innovation content in francophone Africa.\n\nThe headless architecture fully decouples the editorial CMS (Django + Wagtail) from the presentation frontend (Next.js), allowing the editorial team to manage content without any technical constraints while offering visitors performance worthy of major international media.\n\nThe Web TV integrates a video player optimized for African connections with adaptive bitrate streaming. The SEO system is configured specifically for Google News with appropriate structured-data tags, dynamic sitemaps, and RSS feeds — result: indexation within 24h of publication.",
+        "tags": ["Next.js", "Django", "Wagtail", "PWA", "TypeScript", "Cloudinary"],
+        "client": "AFRITECK INSTITUT",
+        "duration": "7 months",
+        "results": [
+          { "label": "Editorial CMS", "value": "No-code interface" },
+          { "label": "Web TV", "value": "Adaptive streaming" },
+          { "label": "Google News SEO", "value": "Indexation < 24h" },
+          { "label": "Coverage", "value": "15 African countries" }
+        ],
+        "challenges": [
+          "Adaptive video streaming for African 2G/3G connections",
+          "Multi-author editorial workflow with validation before publication",
+          "Google News compliance and international SEO"
+        ],
+        "approach": "Headless architecture was non-negotiable for performance: Next.js with ISR (Incremental Static Regeneration) serves articles from the CDN while keeping content fresh. Cloudinary handles automatic image and video optimization based on the detected device and connection."
+      }
+    }
+  },
+  "blog": {
+    "hero": {
+      "eyebrow": "Insights & Trends",
+      "headlinePart1": "Decoding the present to",
+      "headlineAccent": "build Africa's digital future",
+      "headlinePart2": ".",
+      "description": "Our experts decode the major trends shaping African digital — AI, data sovereignty, cloud, and Smart Cities.",
+      "topicsLabel": "Browse by topic",
+      "ctaArticles": "See articles · {label}",
+      "ctaContact": "Contact an expert",
+      "readerAlt": "Person reading a newspaper"
+    },
+    "index": {
+      "sectionEyebrow": "Dossiers & Topics",
+      "sectionTitle": "The ecosystem",
+      "sectionTitleAccent": "by Section",
+      "sectionDescription": "Navigate our strategic pillars to access in-depth analyses from our consultants and business experts.",
+      "analysesLabel": "Analyses",
+      "exploreCta": "Explore",
+      "viewAllCta": "See all articles",
+      "newsletterEyebrow": "Stay informed",
+      "newsletterTitle": "African tech insights,",
+      "newsletterTitleAccent": "every week",
+      "newsletterDescription": "Receive our analyses on AI, cloud, cybersecurity, and digital innovation in Africa straight to your inbox.",
+      "newsletterPlaceholder": "your.email@company.com",
+      "newsletterSubmitIdle": "Subscribe",
+      "newsletterSubmitLoading": "Sending...",
+      "newsletterFootnote": "One-click unsubscribe. No spam — one newsletter per week.",
+      "newsletterErrorEmail": "Invalid email address.",
+      "newsletterSuccess": "Thanks! You're subscribed to the ACT newsletter.",
+      "newsletterErrorServer": "Server error.",
+      "featuredBadge": "★ Featured",
+      "readingTime": "{time} read",
+      "readCta": "Read →"
+    },
+    "articles": {
+      "backLink": "← Back to sections",
+      "titleAllPrefix": "ALL",
+      "titleAllAccent": "ARTICLES",
+      "titleCategoryPrefix": "ARTICLES",
+      "descriptionAll": "Explore all our analyses, trends, and decodings on African tech.",
+      "descriptionCategory": "Discover all our articles in the {category} section.",
+      "searchPlaceholder": "Search an article...",
+      "filterLabel": "Filter:",
+      "allArticlesLabel": "All articles",
+      "articlesFoundSuffix": "articles found",
+      "loadMoreCta": "Load more articles",
+      "emptyState": "No articles in this category yet.",
+      "featuredBadge": "FEATURED",
+      "readingTime": "{time} read",
+      "readArticleCta": "Read article →"
+    },
+    "post": {
+      "backLink": "← Back to Blog",
+      "metaDate": "Date",
+      "metaReading": "Reading",
+      "metaTarget": "Audience",
+      "shareTitle": "Share article",
+      "shareLabel": "Share",
+      "copyLabel": "Copy",
+      "copiedLabel": "Link copied",
+      "promptCopyLink": "Copy this link:",
+      "recentArticlesTitle": "Recent articles",
+      "keywordsTitle": "Keywords",
+      "allArticlesCta": "All articles",
+      "projectCta": "A project? Let's talk",
+      "relatedTitle": "Related",
+      "relatedTitleAccent": "Articles",
+      "readCta": "Read →",
+      "ctaEyebrow": "Need expertise?",
+      "ctaTitle": "Let's talk about your project",
+      "ctaDescription": "Our teams are ready to support your digital transformation and your technology challenges.",
+      "ctaButton": "Contact us"
+    }
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Free Consultation",
+      "titleLine1": "Let's Build",
+      "titleLine2": "Together",
+      "description": "Have a vision? We have the expertise to bring it to life. Let's discuss your project and discover how ACT can turn your ambitions into reality."
+    },
+    "form": {
+      "sectionLabel": "Contact form",
+      "sectionTitle": "Tell us about your",
+      "sectionTitleAccent": "Project",
+      "labelName": "Full name *",
+      "placeholderName": "Your full name",
+      "labelEmail": "Email *",
+      "placeholderEmail": "your@company.com",
+      "labelCompany": "Company",
+      "placeholderCompany": "Your company name",
+      "labelPhone": "Phone",
+      "placeholderPhone": "+212 XX XXX XX XX",
+      "labelSubject": "Project type *",
+      "subjectDefault": "Select a type",
+      "subjectWeb": "Web Application",
+      "subjectMobile": "Mobile Application",
+      "subjectIa": "AI & Data",
+      "subjectSig": "GIS & Mapping",
+      "subjectMedia": "Media Platform",
+      "subjectConseil": "Strategic Consulting",
+      "subjectAutre": "Other",
+      "labelMessage": "Your project *",
+      "placeholderMessage": "Describe your project, goals, and constraints...",
+      "submitIdle": "Send my request",
+      "submitSending": "Sending…",
+      "errorSend": "Error during sending",
+      "errorOccurred": "An error occurred during sending. Please try again."
+    },
+    "success": {
+      "title": "✓ Message sent!",
+      "message": "We'll get back to you within 24h."
+    },
+    "info": {
+      "phone": "Phone",
+      "phoneCta": "Call →",
+      "email": "Email",
+      "emailCta": "Write →",
+      "address": "Address",
+      "addressLine1": "Mer Sultan, 6e Rue château",
+      "addressLine2": "Casablanca, Morocco 🇲🇦",
+      "addressCta": "View →",
+      "hours": "Hours",
+      "hoursLine1": "Monday to Saturday",
+      "hoursCta": "Schedule →"
+    },
+    "sidebar": {
+      "engagementsLabel": "Our commitments",
+      "callLabel": "Prefer to call?",
+      "callDescription": "Speak directly with an ACT advisor. Available Monday to Saturday.",
+      "followLabel": "Follow us"
+    },
+    "faq": {
+      "sectionLabel": "FAQ",
+      "sectionTitle": "Frequently",
+      "sectionTitleAccent": "Asked",
+      "q1": "How do I start a project with ACT?",
+      "a1": "Contact us via the form or by phone. Our team will get back to you within 24h for a discussion of your needs.",
+      "q2": "What are your delivery timelines?",
+      "a2": "We'll provide a precise estimate after analyzing your project.",
+      "q3": "Do you offer post-delivery support?",
+      "a3": "Yes, with various packages from 1 month to several years. Every project includes a minimum 2-month warranty period.",
+      "q4": "What technologies do you use?",
+      "a4": "We use the technologies best suited to each project. Our approach is technology-agnostic."
+    },
+    "engagements": {
+      "e1": "Guaranteed response within 24 business hours",
+      "e2": "Detailed, transparent quote",
+      "e3": "Confidentiality assured (NDA available)"
+    }
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "formations": "Training",
+    "blog": "Blog",
+    "services": "Services",
+    "projects": "Portfolio",
+    "secteurs": "Sectors",
+    "poles": "Divisions"
+  }
+}

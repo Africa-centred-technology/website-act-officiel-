@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { deriveCategoriesFromPosts, type BlogPost } from "@/lib/blog";
 
@@ -41,20 +42,21 @@ export default function BlogCategoriesBlock({
   onCategoryChange,
   className = "",
 }: BlogCategoriesBlockProps) {
+  const locale = useLocale();
   const screenSize = useMediaQuery();
 
   // Catégories dérivées des articles Shopify (live)
   const [posts, setPosts] = useState<BlogPost[]>([]);
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setPosts(posts);
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   const rubriques = useMemo(
     () => deriveCategoriesFromPosts(posts).filter((c) => c.value !== "all"),

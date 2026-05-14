@@ -40,6 +40,7 @@
  */
 
 import React, { useState, useEffect } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Loader2, AlertCircle, RefreshCw } from "lucide-react";
 import Header from "@/components/layout/Header";
@@ -176,6 +177,8 @@ function PageSkeleton() {
    MAIN COMPONENT
 ───────────────────────────────────────────────────────────────── */
 export default function LandingFormation({ slug }: { slug: string }) {
+  const locale = useLocale();
+  const t = useTranslations("formations.inscription");
   const [data,      setData]      = useState<FormationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError,  setHasError]  = useState(false);
@@ -184,7 +187,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
   const load = async () => {
     setIsLoading(true); setHasError(false);
     try {
-      const res = await fetch(`/api/shopify/formations/${slug}`);
+      const res = await fetch(`/api/shopify/formations/${slug}?locale=${locale}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json.formation ?? null);
@@ -196,7 +199,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
     }
   };
 
-  useEffect(() => { load(); }, [slug]);
+  useEffect(() => { load(); }, [slug, locale]);
 
   /* ── Dérivées depuis les données Shopify ─────────────── */
   const heroImage  = data?.images?.[0]  || data?.imageUrl  || null;
@@ -515,7 +518,7 @@ export default function LandingFormation({ slug }: { slug: string }) {
                 <PrimaryBtn onClick={() => setIsModal(true)}>Réserver ma place</PrimaryBtn>
               </div>
               <p style={{ color: TEXT_GRAY, fontSize: "1rem", fontWeight: 500 }}>
-                ✓ Réponse sous 24h · ✓ Sans engagement
+                {t("landpageConfirmation")}
               </p>
             </div>
           </section>

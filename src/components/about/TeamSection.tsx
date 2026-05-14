@@ -3,6 +3,7 @@
 import React, { useCallback } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import TeamMemberCard, { type TeamMember } from "./TeamMemberCard";
+import { useTranslations } from "next-intl";
 
 interface TeamSectionProps {
   team: TeamMember[];
@@ -35,8 +36,9 @@ function SectionHeader({
   midY: ReturnType<typeof useSpring>;
 }) {
   const EASE3D = [0.6, 0.08, 0.02, 0.99] as const;
-  const eyebrow = "Le conseil d'administration de ACT";
-  const title = "LE CONSEIL D'ADMINISTRATION";
+  const t = useTranslations("about.team");
+  const eyebrow = t("eyebrow");
+  const title = t("title");
 
   return (
     <motion.div
@@ -131,7 +133,7 @@ function ScanLine() {
   return (
     <motion.div
       aria-hidden
-      className="absolute left-0 w-full pointer-events-none"
+      className="absolute start-0 w-full pointer-events-none"
       style={{
         height: "2px",
         zIndex: 4,

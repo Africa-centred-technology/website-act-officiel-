@@ -21,14 +21,18 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "@/lib/data/projects";
+import { useTranslations } from "next-intl";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 const ORANGE = "#D35400";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function ProjectsSection() {
+  const t = useTranslations("home.projects");
+  const msg = useDataMessages();
   const featured = PROJECTS.slice(0, 4);
 
   return (
@@ -67,9 +71,9 @@ export default function ProjectsSection() {
               maxWidth: "32ch",
             }}
           >
-            Nos dernières{" "}
+            {t("title")}{" "}
             <span style={{ color: ORANGE, fontStyle: "italic" }}>
-              réalisations
+              {t("titleAccent")}
             </span>
             .
           </h2>
@@ -100,7 +104,7 @@ export default function ProjectsSection() {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
             }}
           >
-            Voir plus
+            {t("viewMore")}
             <ArrowUpRight size={14} strokeWidth={2} />
           </Link>
         </motion.div>
@@ -116,7 +120,7 @@ export default function ProjectsSection() {
           }}
         >
           {featured.map((project, idx) => (
-            <ProjectCard key={project.id} project={project} index={idx} />
+            <ProjectCard key={project.id} project={project} index={idx} msg={msg} />
           ))}
         </div>
       </div>
@@ -140,10 +144,14 @@ export default function ProjectsSection() {
 function ProjectCard({
   project,
   index,
+  msg,
 }: {
   project: (typeof PROJECTS)[number];
   index: number;
+  msg: ReturnType<typeof useDataMessages>;
 }) {
+  const i18n = msg.projects.items[project.id];
+
   /* Asymmetric editorial grid — pattern flipped row-by-row :
        row 0 :  [ TALL  ]  [ short ]    tops aligned — TALL overflows into row 1
        row 1 :  [ short ]  [ TALL  ]    short card bottom-aligned
@@ -208,7 +216,7 @@ function ProjectCard({
         >
           <img
             src={project.image}
-            alt={project.title}
+            alt={i18n.title}
             className="project-image"
             style={{
               position: "absolute",
@@ -245,7 +253,7 @@ function ProjectCard({
               minWidth: 0,
             }}
           >
-            {project.title}
+            {i18n.title}
           </h3>
 
           <span
@@ -260,7 +268,7 @@ function ProjectCard({
               flexShrink: 0,
             }}
           >
-            {project.category}
+            {i18n.category}
           </span>
         </div>
       </Link>

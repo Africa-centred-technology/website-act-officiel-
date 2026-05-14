@@ -113,4 +113,5 @@ fbq('track', 'PageView');`}
       </body>
     </html>
   );
+  return children;
 }

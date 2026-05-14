@@ -1,0 +1,1705 @@
+{
+  "common": {
+    "lang": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    },
+    "cta": {
+      "learnMore": "En savoir plus",
+      "viewAll": "Voir tous",
+      "discover": "Découvrir",
+      "contact": "Nous contacter",
+      "subscribe": "S'abonner",
+      "back": "Retour",
+      "close": "Fermer",
+      "send": "Envoyer",
+      "loading": "Chargement…",
+      "readMore": "Lire la suite",
+      "register": "S'inscrire",
+      "download": "Télécharger",
+      "downloadBrochure": "Télécharger la brochure",
+      "startProject": "Démarrez votre projet",
+      "contactUs": "Contactez-nous",
+      "scrollToTop": "Remonter en haut"
+    },
+    "nav": {
+      "home": "Accueil",
+      "about": "À propos",
+      "services": "Services",
+      "formations": "Formations",
+      "poles": "Pôles",
+      "secteurs": "Secteurs",
+      "projects": "Réalisations",
+      "blog": "Blog",
+      "contact": "Contact",
+      "openMenu": "Ouvrir le menu",
+      "closeMenu": "Fermer le menu",
+      "savoirFaire": "Notre savoir-faire",
+      "nousDecouvrir": "Nous découvrir",
+      "equipe": "Notre Équipe",
+      "valeurs": "Nos Valeurs",
+      "universite": "ACT-Université",
+      "polesExcellence": "Nos Pôles d'Excellence",
+      "secteursActivite": "Nos Secteurs d'Activité",
+      "nosServices": "Nos Services",
+      "catalogueFormations": "Catalogue de Formations",
+      "catalogueComplet": "Catalogue complet",
+      "aPropos": "À Propos",
+      "realisations": "Réalisations",
+      "africa": "Afrique — FR",
+      "contactUs": "Contactez-nous"
+    },
+    "footer": {
+      "copyright": "© {year} Africa Centred Technology. Tous droits réservés.",
+      "tagline": "Engineering the Future",
+      "address": "Maroc — FR",
+      "followUs": "Suivez-nous",
+      "navTitle": "Navigation",
+      "socialTitle": "Réseaux Sociaux",
+      "polesTitle": "Nos Pôles",
+      "contactTitle": "Contact",
+      "newsletterTitle": "Newsletter",
+      "privacyPolicy": "Politique de Confidentialité",
+      "terms": "CGU",
+      "emailPlaceholder": "Votre email",
+      "subscribeSuccess": "Merci ! Vous êtes bien inscrit(e) à notre newsletter.",
+      "subscribeError": "Une erreur est survenue. Veuillez réessayer.",
+      "subscribing": "Inscription...",
+      "poleDev": "Développement Technologique",
+      "poleConseil": "Conseil & Stratégie IT",
+      "poleFormation": "Formation & Développement"
+    },
+    "ctaSection": {
+      "eyebrow": "Votre secteur, notre expertise",
+      "title": "Parlons de votre projet",
+      "description": "Quelle que soit votre industrie, ACT dispose de l'expertise technologique pour vous accompagner dans votre transformation digitale.",
+      "buttonText": "Démarrez votre projet"
+    }
+  },
+  "metadata": {
+    "default": {
+      "title": "Africa Centred Technology | Engineering the Future",
+      "description": "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+    },
+    "home": {
+      "title": "ACT — Africa Centred Technology | Engineering the Future",
+      "description": "Découvrez ACT, la société africaine qui fusionne IA et ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale."
+    },
+    "about": {
+      "title": "À Propos — Africa Centred Technology",
+      "description": "Découvrez l'histoire, la mission et l'équipe d'Africa Centred Technology — pionniers de la transformation digitale en Afrique depuis 2023."
+    },
+    "services": {
+      "title": "Services — Africa Centred Technology",
+      "description": "Nos 9 services en ingénierie technologique, conseil et formation pour propulser votre entreprise africaine vers l'innovation."
+    },
+    "formations": {
+      "title": "Formations — Africa Centred Technology",
+      "description": "Catalogue des formations ACT en intelligence artificielle, data, et transformation digitale, conçues pour les professionnels africains."
+    },
+    "poles": {
+      "title": "Pôles — Africa Centred Technology",
+      "description": "Les 3 pôles métiers d'ACT : Ingénierie Technologique, Conseil et Formation. Découvrez notre expertise complète."
+    },
+    "secteurs": {
+      "title": "Secteurs — Africa Centred Technology",
+      "description": "Les secteurs d'activité où ACT intervient pour accompagner la transformation digitale des entreprises africaines."
+    },
+    "projects": {
+      "title": "Réalisations — Africa Centred Technology",
+      "description": "Découvrez les projets clients d'ACT : transformations digitales, IA, ingénierie. Études de cas concrètes en Afrique."
+    },
+    "blog": {
+      "title": "Blog — Africa Centred Technology",
+      "description": "Articles, analyses et veille technologique d'ACT. IA, transformation digitale, ingénierie : l'actualité tech africaine."
+    },
+    "contact": {
+      "title": "Contact — Africa Centred Technology",
+      "description": "Contactez l'équipe ACT pour discuter de vos projets de transformation digitale, IA et formation au Maroc et en Afrique."
+    }
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "email": "Email invalide",
+    "phone": "Numéro de téléphone invalide",
+    "minLength": "Minimum {min} caractères",
+    "maxLength": "Maximum {max} caractères"
+  },
+  "home": {
+    "manifeste": {
+      "pullQuote": "La technologie n'a de valeur que lorsqu'elle crée un impact réel.",
+      "bodyP1": "Nous ne nous contentons pas d'implémenter des technologies — nous concevons des solutions qui créent de la valeur durable pour les organisations.",
+      "bodyP2": "En combinant intelligence artificielle, analyse de données et automatisation, nous transformons les défis de nos clients en opportunités et bâtissons les systèmes qui soutiendront leur croissance de demain.",
+      "conviction": "Notre conviction",
+      "location": "Casablanca · Maroc · 2026",
+      "founderLabel": "Le Fondateur",
+      "founderRole": "Fondateur · CEO",
+      "founderCompany": "CEO · Africa Centred Technology",
+      "imageAlt": "Sohaib Baroud, fondateur d'ACT"
+    },
+    "hero": {
+      "tagline": "Innovating Today, Transforming Tomorrow",
+      "stats": {
+        "founded": "Fondée",
+        "collaborators": "Collaborateurs",
+        "domains": "Domaines",
+        "ambition": "Ambition"
+      }
+    },
+    "about": {
+      "eyebrow": "Qui sommes-nous",
+      "title1": "AFRICA",
+      "title2": "CENTRED",
+      "title3": "TECHNOLOGY",
+      "intro": "Nous sommes une startup guidée par une <strong>raison d'être commune</strong> : libérer l'énergie humaine et technologique. Une approche profondément humaine y est cultivée, renforcée par la puissance de l'Intelligence Artificielle. L'ambition est de générer un impact concret et durable, afin de transformer les sociétés et de contribuer à la construction d'un écosystème numérique collaboratif.",
+      "vision": "« Contribuer à l'émergence d'un écosystème technologique fort, innovant et autonome — où l'Afrique devient productrice, et non uniquement consommatrice de technologies. »"
+    },
+    "horizon": {
+      "eyebrow": "Démarrons ensemble",
+      "title": "Vous avez un projet ?",
+      "titleAccent": "Donnons-lui vie.",
+      "subtitle": "Que ce soit une idée à valider, une solution à bâtir, ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.",
+      "cta": "Démarrer un projet",
+      "ctaSecondary": "Voir nos réalisations →",
+      "commitments": {
+        "response": { "val": "24h", "label": "Réponse garantie" },
+        "free": { "val": "Gratuit", "label": "Premier échange" },
+        "custom": { "val": "100%", "label": "Sur-mesure" }
+      }
+    },
+    "poles": {
+      "title": "Ce que nous proposons",
+      "discover": "Découvrir",
+      "poleLabel": "Pôle"
+    },
+    "projects": {
+      "title": "Nos dernières",
+      "titleAccent": "réalisations",
+      "viewMore": "Voir plus"
+    },
+    "blog": {
+      "title": "Nos Dernières",
+      "titleAccent": "publications",
+      "viewBlog": "Voir le blog",
+      "visitBlog": "Visitez notre Blog",
+      "subtitle": "Insights tech, tendances IA, conseils stratégiques — directement dans votre boîte.",
+      "readMore": "Lire l'article complet"
+    },
+    "cta": {
+      "eyebrow": "Démarrons ensemble",
+      "title": "Vous avez un projet ?",
+      "description": "Que ce soit une idée à valider, une solution à bâtir ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.",
+      "buttonText": "Démarrer un projet"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "Africa Centred Technology · Expertise & Ingénierie",
+      "word1": "NOTRE",
+      "word2": "EXPERTISE",
+      "subtitle": "Nous accompagnons les organisations dans leur transformation numérique en déployant des solutions d'intelligence artificielle et d'ingénierie de données de haut niveau — conçues pour la performance et le passage à l'échelle.",
+      "ctaTeam": "L'Équipe",
+      "ctaApproach": "Notre approche"
+    },
+    "stats": {
+      "eyebrow": "Les chiffres qui parlent",
+      "title": "NOS CHIFFRES",
+      "indicator": "Indicateur",
+      "items": {
+        "projects": { "value": "15", "suffix": "+", "label": "Projets", "sub": "Solutions déployées avec succès" },
+        "satisfaction": { "value": "100", "suffix": "%", "label": "Satisfaction", "sub": "Clients satisfaits" },
+        "countries": { "value": "2", "suffix": "", "label": "Pays", "sub": "Maroc et au-delà" }
+      }
+    },
+    "adn": {
+      "eyebrow": "Vision · Impact · Expertise",
+      "title": "NOTRE ADN",
+      "manifesto": "La technologie n'a de valeur que lorsqu'elle crée un impact concret et mesurable. Chez ACT, nous ne nous contentons pas d'implémenter des outils : nous concevons des architectures systèmes qui optimisent le ROI et soutiennent la scalabilité des organisations. En combinant Intelligence Artificielle avancée, Ingénierie de Données et Automatisation Industrielle, nous transformons les défis technologiques complexes en avantages compétitifs durables.",
+      "attribution": "SOHAIB BAROUD — Fondateur & CEO, ACT"
+    },
+    "values": {
+      "eyebrow": "Nos piliers d'excellence",
+      "title": "NOS STANDARDS",
+      "standardLabel": "Standard ACT",
+      "valueLabel": "Valeur ACT",
+      "items": {
+        "collaboration": {
+          "title": "Collaboration",
+          "desc": "Les meilleures solutions naissent de l'intelligence collective et du partage de compétences."
+        },
+        "transmission": {
+          "title": "Transmission",
+          "desc": "Nous partageons nos connaissances et nos compétences pour renforcer les capacités locales et favoriser l'autonomie des entreprises."
+        },
+        "excellence": {
+          "title": "Excellence",
+          "desc": "Des standards élevés de qualité, de fiabilité et de rigueur dans chaque projet."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "desc": "Une innovation ancrée dans les réalités africaines, qui répond à des besoins concrets."
+        }
+      }
+    },
+    "timeline": {
+      "items": {
+        "2023": { "title": "Naissance", "desc": "Création d'Africa Centred Technology comme startup d'ingénierie tech portée par une équipe soudée autour d'une vision commune." },
+        "2024": { "title": "Premiers POC", "desc": "Déploiement des premiers prototypes IA et data pour des entreprises africaines, validation du modèle et des expertises." },
+        "2025": { "title": "Accélération", "desc": "Déploiement du Système RAG Multi-sources et montée en puissance des missions de conseil pour l'écosystème africain." },
+        "2026": { "title": "Cap 2030", "desc": "Consolidation de notre vision pan-africaine avec une équipe dynamique, agile et résolument tournée vers l'avenir du continent." }
+      }
+    },
+    "team": {
+      "eyebrow": "Le conseil d'administration de ACT",
+      "title": "LE CONSEIL D'ADMINISTRATION",
+      "members": {
+        "sohaib": {
+          "name": "SOHAIB BAROUD",
+          "role": "Fondateur & CEO",
+          "bio": "Visionnaire et leader de l'ingénierie technologique en Afrique. Sohaib a fondé ACT avec la mission de transformer les entreprises africaines en leaders technologiques mondiaux."
+        },
+        "mpiga": {
+          "name": "MPIGA-ODOUMBA JESSE",
+          "role": "Membre fondateur",
+          "bio": "Co-créateur d'ACT, engagé pour l'innovation africaine et l'impact technologique à l'échelle continentale."
+        },
+        "aldrin": {
+          "name": "Aldrin DJOUROBI",
+          "role": "Membre fondateur",
+          "bio": "Co-créateur d'ACT, porté par l'ingénierie de pointe et la croissance des startups africaines."
+        },
+        "elvis": {
+          "name": "ELVIS-THEO AKIEME OYONO",
+          "role": "Membre fondateur",
+          "bio": "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Passez à l'action",
+      "line1": "REJOIGNEZ LA",
+      "line2": "RÉVOLUTION",
+      "line3": "TECH",
+      "subtitle": "Prêt à transformer vos défis en opportunités technologiques ? ACT accompagne entreprises et organisations dans la création de solutions technologiques innovantes et intelligentes.",
+      "ctaStart": "Démarrer un projet",
+      "ctaServices": "Nos expertises IA"
+    }
+  },
+  "services": {
+    "index": {
+      "ghostText": "NOS\nEXPERTISES",
+      "eyebrow": "L'Arborescence ACT",
+      "h1": "Nos Services",
+      "subtitle": "Trois pôles complémentaires — Ingénierie, Conseil et Formation — couvrant l'intégralité de la chaîne de valeur de la transformation digitale africaine.",
+      "countIngenierie": "5 services Ingénierie",
+      "countConseil": "3 services Conseil",
+      "scrollHint": "Scroll pour explorer",
+      "learnMore": "En savoir plus",
+      "benefits": "Bénéfices",
+      "discuss": "Discuter de ce service",
+      "loading": "Chargement...",
+      "formationsCount": "{n} formations disponibles",
+      "customFormation": "Formation sur mesure",
+      "cta": {
+        "eyebrow": "Votre projet",
+        "title": "Construisons l'avenir ensemble",
+        "description": "Chaque transformation commence par une conversation. Partagez-nous votre projet — notre équipe vous répond sous 48h.",
+        "buttonText": "Démarrer votre projet"
+      }
+    },
+    "intro": {
+      "eyebrowBrand": "Africa Centred Technology",
+      "eyebrowAccent": "— Services",
+      "h1Line1": "NOS SERVICES",
+      "h1Line2": "& SOLUTIONS",
+      "subtitle": "ACT déploie des services complémentaires pour couvrir l'intégralité des besoins de transformation digitale des entreprises.",
+      "poleI": "Pôle I · Ingénierie",
+      "poleII": "Pôle II · Conseil",
+      "poleIII": "Pôle III · Formation",
+      "poleIFull": "Pôle I — Ingénierie Technologique",
+      "poleIIFull": "Pôle II — Conseil",
+      "poleIIIFull": "Pôle III — Formation"
+    },
+    "grid": {
+      "eyebrow": "Africa Centred Technology",
+      "h1": "Nos Services",
+      "description": "Trois pôles d'expertise complémentaires — l'ingénierie technologique pour construire, le conseil pour structurer et la formation pour durer. Ensemble, ils forment une proposition unique taillée pour les organisations africaines.",
+      "poleI": "Pôle I — Ingénierie Technologique",
+      "poleII": "Pôle II — Conseil",
+      "poleIII": "Pôle III — Formation",
+      "poleLabel": "Pôle {number} — {label}",
+      "ctaTitle": "Un projet en tête ?",
+      "ctaDesc": "Discutons de vos besoins et construisons ensemble la solution adaptée.",
+      "ctaButton": "Démarrer un projet"
+    },
+    "detail": {
+      "breadcrumbHome": "Accueil",
+      "breadcrumbServices": "Services",
+      "approachLabel": "Notre approche",
+      "scrollHint": "Défiler",
+      "statsLabel": "{subs} sous-services · {benefits} avantages · {deliverables} livrables",
+      "benefitsLabel": "Ce que vous gagnez",
+      "deliverablesLabel": "Ce que vous recevez",
+      "deliverablesSuffix": "Documentation · Formation · Support",
+      "deliverablesCount": "{n} livrables",
+      "deliverablesAccent": "concrets",
+      "relatedTitle": "Services du Pôle {poleN}",
+      "backLink": "← Services",
+      "cta": {
+        "eyebrow": "Travaillons ensemble",
+        "title": "Intéressé par ce service ?",
+        "description": "Parlons de votre projet en 30 minutes — sans engagement.",
+        "buttonText": "Démarrer un projet"
+      }
+    },
+    "poles": {
+      "ingenierie": {
+        "breadcrumbHome": "Accueil",
+        "breadcrumbServices": "Services",
+        "approachLabel": "Notre approche",
+        "scrollHint": "Défiler",
+        "benefitsLabel": "Pourquoi opter pour nos services",
+        "relatedTitle": "Services du Pôle {poleN}",
+        "backLink": "← Services",
+        "cta": {
+          "eyebrow": "Travaillons ensemble",
+          "title": "Intéressé par ce service ?",
+          "description": "Parlons de votre projet en 30 minutes — sans engagement.",
+          "buttonText": "Démarrer un projet"
+        }
+      },
+      "conseil": {
+        "breadcrumbHome": "Accueil",
+        "breadcrumbServices": "Services",
+        "approachLabel": "Notre approche",
+        "scrollHint": "Défiler",
+        "benefitsLabel": "Pourquoi opter pour nos services",
+        "relatedTitle": "Services du Pôle {poleN}",
+        "backLink": "← Services",
+        "cta": {
+          "eyebrow": "Travaillons ensemble",
+          "title": "Intéressé par ce service ?",
+          "description": "Parlons de votre projet en 30 minutes — sans engagement.",
+          "buttonText": "Démarrer un projet"
+        }
+      },
+      "formation": {
+        "breadcrumbHome": "Accueil",
+        "breadcrumbServices": "Services",
+        "approachLabel": "Notre approche",
+        "scrollHint": "Défiler",
+        "benefitsLabel": "Pourquoi opter pour nos services",
+        "backLink": "← Services"
+      }
+    },
+    "items": {
+      "ingenierie-logicielle": {
+        "pole": "Ingénierie Technologique",
+        "title": "Ingénierie Logicielle\n& Développement de Solutions\nMétiers & Mobiles",
+        "tagline": "Des applications qui parlent africain",
+        "intro": "La transformation digitale et la généralisation du mobile redéfinissent la manière dont les organisations interagissent avec leurs clients et leurs équipes. Pourtant, beaucoup utilisent encore des outils génériques inadaptés à leurs réalités opérationnelles. ACT conçoit des solutions sur mesure en analysant les processus métiers réels, afin de livrer des plateformes performantes, évolutives et alignées sur les contextes africains.",
+        "subs": [
+          {
+            "title": "Applications Web & Mobiles « African-Ready »",
+            "desc": "Applications web et mobiles modernes alliant performance, fiabilité et excellence UX. Approche mobile-first avec développement natif Android/iOS et solutions hybrides. Interfaces ergonomiques optimisées pour les réseaux africains, mode hors-ligne intégré."
+          },
+          {
+            "title": "Logiciels Métiers Spécifiques",
+            "desc": "Solutions sur mesure pour les entreprises et institutions africaines : SIRH conformes OHADA, logiciels de comptabilité, CRM, gestion de projets et de stocks. Chaque solution naît d'une analyse approfondie des processus métiers réels de l'organisation."
+          }
+        ],
+        "benefits": [
+          "Efficacité opérationnelle améliorée",
+          "Gestion des processus métiers simplifiée",
+          "Expérience utilisateur renforcée",
+          "Indépendance des systèmes génériques",
+          "Plateformes digitales évolutives et performantes"
+        ],
+        "deliverables": [
+          "Application livrée & documentée",
+          "Formation des équipes techniques",
+          "Maintenance & support 12 mois",
+          "Tableau de bord de performance"
+        ]
+      },
+      "automatisation-ia": {
+        "pole": "Ingénierie Technologique",
+        "title": "Automatisation\nIntelligente (IA Agentique)",
+        "tagline": "L'IA qui travaille avec vous",
+        "intro": "Les organisations gèrent des processus de plus en plus complexes reposant sur des tâches manuelles, des échanges fragmentés et des outils qui ne communiquent pas. Les solutions d'automatisation traditionnelles peinent à gérer des workflows à plusieurs étapes et sources d'information. ACT déploie des architectures d'agents IA qui collaborent pour transformer ces processus manuels en workflows intelligents — sans remplacer l'humain, mais en démultipliant ses capacités.",
+        "subs": [
+          {
+            "title": "Architectures Multi-Agents",
+            "desc": "Plusieurs agents IA spécialisés coopèrent pour exécuter un processus métier complet : collecte de données, analyse d'informations, coordination entre services, génération de rapports et déclenchement d'actions automatisées. Gestion de workflows complexes à plusieurs étapes et sources."
+          },
+          {
+            "title": "Traitement Hybride Digital / Papier",
+            "desc": "Automatisation des flux mixtes grâce à la numérisation, l'OCR et l'extraction automatique d'informations. Formulaires, factures, contrats et dossiers administratifs sont analysés automatiquement et intégrés dans vos workflows numériques sans rupture de chaîne."
+          },
+          {
+            "title": "IA de Soutien (Augmentation Humaine)",
+            "desc": "L'IA analyse, synthétise et recommande — l'humain supervise et décide. Un assistant avancé qui identifie les tendances, génère des synthèses et prépare l'information pour la prise de décision, sans jamais retirer le professionnel du centre du processus."
+          }
+        ],
+        "benefits": [
+          "Traitement des processus accéléré",
+          "Tâches manuelles répétitives réduites",
+          "Qualité et fiabilité des données améliorées",
+          "Coordination inter-services renforcée",
+          "Capacité de prise de décision augmentée"
+        ],
+        "deliverables": [
+          "Cartographie des processus automatisables",
+          "Agents déployés & testés",
+          "Tableau de bord de monitoring",
+          "Guide de gouvernance IA"
+        ]
+      },
+      "architecture-infrastructure": {
+        "pole": "Ingénierie Technologique",
+        "title": "Architecture\n& Infrastructure",
+        "tagline": "Les fondations de votre croissance",
+        "intro": "Sans fondations solides, vos applications deviennent rapidement difficiles à faire évoluer, coûteuses à maintenir et incapables de suivre la croissance de l'organisation. ACT conçoit des architectures modernes, évolutives et sécurisées combinant architecture logicielle, cloud souverain adapté au contexte africain et conseil stratégique en systèmes d'information — pour transformer la technologie en véritable levier de performance.",
+        "subs": [
+          {
+            "title": "Architecture Logicielle Évolutive",
+            "desc": "Architectures basées sur les standards modernes : microservices, event-driven, API-first. Des systèmes modulaires et flexibles qui s'étendent progressivement — de l'administration locale au système national — sans reconstruction majeure. Protège l'investissement technologique tout en préparant la croissance future."
+          },
+          {
+            "title": "Solutions Cloud Souveraines",
+            "desc": "Adoption cloud alignée sur les réglementations africaines de localisation des données. Architectures hybrides cloud/local pour la conformité réglementaire, migration sans interruption de service. Choix des fournisseurs adapté aux réalités et exigences sectorielles du continent."
+          },
+          {
+            "title": "IT Consulting & Solution Design",
+            "desc": "Conseil indépendant et orienté résultats : analyses comparatives de solutions, études de faisabilité technique et financière, évaluations TCO sur cycle de vie, recommandations stratégiques. Pour des décisions technologiques éclairées, sans conflit d'intérêt."
+          }
+        ],
+        "benefits": [
+          "Investissement technologique protégé",
+          "Scalabilité native dès la conception",
+          "Conformité réglementaire africaine assurée",
+          "Coûts opérationnels maîtrisés"
+        ],
+        "deliverables": [
+          "Schéma d'architecture validé",
+          "Plan de migration détaillé",
+          "Rapport TCO 5 ans",
+          "Documentation technique complète"
+        ]
+      },
+      "data-intelligence-artificielle": {
+        "pole": "Ingénierie Technologique",
+        "title": "Data, Intelligence\nArtificielle & Big Data",
+        "tagline": "Vos données au service de votre mission",
+        "intro": "L'Afrique génère chaque jour des volumes considérables de données — transactions mobiles, données agricoles, informations de santé, flux logistiques. Pourtant, une grande partie reste inexploitable, dispersée dans des systèmes cloisonnés ou stockée dans des formats incompatibles. ACT accompagne les organisations dans la mise en place d'écosystèmes data complets couvrant l'ensemble du cycle de vie de la donnée : de la collecte à la valorisation en passant par le déploiement de modèles IA.",
+        "subs": [
+          {
+            "title": "Data Science & Machine Learning",
+            "desc": "Modèles analytiques et prédictifs entraînés sur des données africaines, conçus par des équipes africaines : prévision de demande, détection de fraude, segmentation des populations, analyse de l'absentéisme scolaire, prédiction des pannes industrielles. Des résultats pertinents et adaptés aux réalités locales."
+          },
+          {
+            "title": "Data Engineering",
+            "desc": "Infrastructure technique de collecte et d'exploitation des données : pipelines automatisés, data warehouses, data lakes, systèmes de contrôle qualité, intégration multi-sources (systèmes métiers, capteurs, formulaires, APIs). La base indispensable à toute stratégie data ou IA."
+          },
+          {
+            "title": "Big Data",
+            "desc": "Architectures Big Data pour les organisations gérant de très grands volumes de données. Déploiement de plateformes basées sur des technologies open source (Hadoop, Spark, Kafka, Elasticsearch) qui traitent et analysent à grande échelle tout en optimisant les coûts d'infrastructure."
+          },
+          {
+            "title": "Intelligence Artificielle",
+            "desc": "Solutions IA appliquées aux domaines spécifiques : santé (aide au diagnostic), agriculture (recommandations agronomiques), éducation (analyse des performances), finance (détection de fraude, analyse de risque). Chaque solution est conçue selon des principes d'IA responsable : transparence, équité et supervision humaine."
+          }
+        ],
+        "benefits": [
+          "Données transformées en levier stratégique",
+          "Qualité et rapidité de prise de décision améliorées",
+          "Opérations optimisées et marchés anticipés",
+          "Inefficacités des systèmes fragmentés réduites",
+          "Services innovants basés sur la donnée développés"
+        ],
+        "deliverables": [
+          "Modèles IA déployés & validés",
+          "Pipelines de données automatisés",
+          "Dashboard analytics temps réel",
+          "Charte IA & gouvernance"
+        ]
+      },
+      "geomatique-sig": {
+        "pole": "Ingénierie Technologique",
+        "title": "Géomatique\n& Systèmes d'Information\nGéographique",
+        "tagline": "Connaître son territoire pour le développer",
+        "intro": "On ne peut pas développer ce qu'on ne connaît pas. De nombreuses institutions africaines prennent encore des décisions d'aménagement, de gestion des ressources ou de planification d'infrastructures avec des informations géographiques incomplètes ou obsolètes. ACT combine technologies de cartographie, SIG et analyse spatiale pour transformer les données géographiques en outils d'aide à la décision — à partir d'imagerie satellitaire, de relevés terrain, de drones et de bases de données géospatiales ouvertes.",
+        "subs": [
+          {
+            "title": "Cartographie Numérique",
+            "desc": "Cartes numériques multi-échelles produites à partir d'imagerie satellitaire haute résolution, LiDAR, GPS et drones. Livrées en formats standards (GeoJSON, Shapefile, GeoTIFF). Processus de mise à jour continue — indispensable dans des territoires africains en mutation rapide où les cartes obsolètes coûtent des millions."
+          },
+          {
+            "title": "Systèmes d'Information Géographique (SIG)",
+            "desc": "Plateformes décisionnelles centralisant, visualisant et analysant les données territoriales croisées avec des données socio-économiques, démographiques, environnementales et infrastructurelles. Aide à répondre aux questions stratégiques : où construire, quelles zones sont à risque, quels territoires ont le meilleur potentiel agricole ou économique."
+          }
+        ],
+        "benefits": [
+          "Planification territoriale améliorée",
+          "Dynamiques spatiales mieux comprises",
+          "Investissements en infrastructures optimisés",
+          "Risques environnementaux et climatiques anticipés",
+          "Qualité des décisions publiques et stratégiques renforcée"
+        ],
+        "deliverables": [
+          "Cartographie numérique haute résolution",
+          "Plateforme SIG opérationnelle",
+          "Formation des équipes SIG",
+          "Protocole de mise à jour des données"
+        ]
+      },
+      "conseil-strategique": {
+        "pole": "Conseil",
+        "title": "Conseil Stratégique\n& Transformation",
+        "tagline": "La stratégie avant l'outil",
+        "intro": "Beaucoup d'organisations africaines cherchent d'abord un logiciel — sans avoir défini pourquoi elles en ont besoin, ce qu'elles veulent changer, ni quel modèle elles visent. Cette approche conduit à des investissements coûteux, mal adoptés et rapidement abandonnés. ACT inverse cette logique : la vision stratégique précède toujours le choix technologique. Ce n'est qu'à l'issue d'un diagnostic de fond que les orientations technologiques sont définies — jamais l'inverse.",
+        "subs": [
+          {
+            "title": "Conseil Digital & Growth",
+            "desc": "Audit rigoureux de maturité digitale : analyse des systèmes en place, identification des angles morts et opportunités inexploitées par rapport aux meilleures pratiques sectorielles. Co-construction d'une feuille de route digitale structurée sur mesure — pas un document théorique, mais un véritable outil de pilotage avec jalons, KPIs et indicateurs de succès."
+          },
+          {
+            "title": "Conseil en Digital Transformation Services",
+            "desc": "Accompagnement complet à la conduite du changement : communication interne, formation des managers, animation de groupes pilotes, gestion des résistances et suivi de l'adoption. Pilotage de projets de transformation de bout en bout avec instances de gouvernance, gestion des risques et tableaux de bord de suivi partagés avec les équipes dirigeantes."
+          }
+        ],
+        "benefits": [
+          "Vision stratégique claire avant tout investissement",
+          "Transformation digitale adoptée durablement",
+          "Investissements technologiques rentabilisés",
+          "Pilotage éclairé par des données fiables"
+        ],
+        "deliverables": [
+          "Rapport d'audit de maturité digitale",
+          "Feuille de route stratégique 3 ans",
+          "Plan de conduite du changement",
+          "Tableau de bord KPIs"
+        ]
+      },
+      "conseil-operationnel": {
+        "pole": "Conseil",
+        "title": "Conseil Opérationnel\n& Métier",
+        "tagline": "Comprendre avant de numériser",
+        "intro": "Entre la stratégie digitale et le déploiement d'une solution technologique existe un espace critique trop souvent ignoré : l'espace opérationnel. C'est là que vivent les processus métiers réels, les flux d'information et les règles non écrites qui régissent le fonctionnement quotidien. Un processus inefficace numérisé reste un processus inefficace — simplement plus rapide et plus coûteux. ACT optimise l'opérationnel avant de choisir la technologie, en partant du terrain, pas d'une présentation PowerPoint.",
+        "subs": [
+          {
+            "title": "Business Analysis",
+            "desc": "Analyse terrain : entretiens avec les équipes opérationnelles, observation des pratiques réelles (pas celles des organigrammes). Cartographie des processus avec outils structurés (BPMN, analyse de flux, chaîne de valeur), identification des inefficacités, redondances et goulots d'étranglement. Cahiers des charges fonctionnels directement exploitables par les équipes techniques."
+          },
+          {
+            "title": "Conseil Opérationnel",
+            "desc": "Optimisation des processus métiers avant toute numérisation : reconstruction des flux, alignement stratégie–opération–technologie, accompagnement à la mise en œuvre et mesure de l'impact. La technologie amplifie les processus efficaces ; ACT s'assure qu'ils le sont avant de les numériser."
+          },
+          {
+            "title": "Consulting",
+            "desc": "Expertise opérationnelle transversale : analyse des processus métiers, optimisation de la performance, alignement stratégie–opération–technologie, accompagnement à la mise en œuvre. Des résultats concrets et mesurables sur le terrain, pas des slides."
+          }
+        ],
+        "benefits": [
+          "Processus métiers optimisés avant numérisation",
+          "Besoins réels identifiés par l'analyse terrain",
+          "ROI concret et mesurable",
+          "Adoption des outils facilitée"
+        ],
+        "deliverables": [
+          "Cartographie BPMN des processus",
+          "Cahier des charges fonctionnel",
+          "Plan d'optimisation priorisé",
+          "Rapport ROI 6 mois"
+        ]
+      },
+      "catalogue-formations": {
+        "pole": "Formation",
+        "title": "Catalogue\nde Formations",
+        "tagline": "Se former aujourd'hui, c'est réussir demain",
+        "intro": "Se former aux compétences digitales est devenu incontournable. Nos formations en intelligence artificielle — comme l'intégration de l'IA au quotidien — permettent à tout professionnel de gagner en productivité et de faire de l'IA un véritable levier de performance. Au-delà de ces compétences transversales, c'est toute une culture numérique qu'il est essentiel d'acquérir pour répondre aux enjeux concrets du marché.Conçues par des experts du continent à partir de cas réels, ces formations offrent des compétences opérationnelles immédiatement mobilisable",
+        "subs": [
+          {
+            "title": "Formations Techniques",
+            "desc": "Maîtrisez les compétences techniques essentielles pour concevoir, déployer et sécuriser des solutions numériques robustes. Des programmes conçus pour répondre aux besoins concrets du marché, avec une approche pratique et opérationnelle."
+          },
+          {
+            "title": "Formations Business & Stratégie",
+            "desc": "Pilotez la transformation numérique de votre organisation. Acquérez les méthodes et la vision stratégique nécessaires pour manager des projets innovants, prendre des décisions data-driven et fédérer vos équipes autour des enjeux digitaux."
+          },
+          {
+            "title": "Formations Spécialisées",
+            "desc": "Des programmes conçus pour ceux qui veulent se démarquer. Approfondissez des expertises de niche, développez des compétences rares et devenez une référence dans votre domaine"
+          }
+        ],
+        "benefits": [
+          "En Afrique, 61% des entreprises jugent les compétences en numerique importantes pour leur succès — nos formations vous préparent à cette demande",
+          "Apprentissage flexible (en ligne & présentiel)",
+          "Contenus adaptés au contexte d'entreprises",
+          "Des formateurs experts du continent"
+        ],
+        "deliverables": [
+          "Accès plateforme ACT University",
+          "Supports de cours téléchargeables",
+          "Certificats de réussite",
+          "Accès communauté alumni"
+        ]
+      }
+    }
+  },
+  "formations": {
+    "catalogue": {
+      "breadcrumbHome": "Accueil",
+      "breadcrumbFormations": "Formations",
+      "heroTitle": "Catalogue de",
+      "heroTitleAccent": "Formations",
+      "heroSubtitle": "Développez vos compétences avec nos programmes intensifs conçus pour le monde de l'IA.",
+      "searchPlaceholder": "Rechercher une formation...",
+      "countLabel": "formations trouvées",
+      "loadError": "Impossible de charger les formations.",
+      "retry": "Réessayer",
+      "emptyTitle": "Aucun résultat pour cette recherche",
+      "resetSearch": "Réinitialiser la recherche",
+      "paginationPrev": "← Précédent",
+      "paginationNext": "Suivant →",
+      "paginationPage": "Page {current} / {total}",
+      "defaultAccroche": "Une formation pratique pour maîtriser les outils de demain.",
+      "defaultNiveau": "Débutant",
+      "defaultSecteur": "Transversal",
+      "discoverCta": "Découvrir le programme",
+      "noResultsEmpty": "Aucune formation disponible pour le moment.",
+      "sectionLabel": "Pôle III · Formation",
+      "sectionTitle": "Catalogue",
+      "sectionTitleAccent": "de Formations",
+      "customCta": "Formation sur mesure",
+      "loadingCatalogue": "Chargement du catalogue…",
+      "programmesCount": "{count} programmes disponibles, organisés par domaine — du niveau initiation à expert. Cliquez sur une formation pour accéder au programme complet.",
+      "formationCount": "{count} formation",
+      "formationCountPlural": "{count} formations",
+      "carouselTitle": "Explorez nos",
+      "carouselTitleAccent": "Formations",
+      "carouselNiveauLabel": "Niveau",
+      "carouselDureeLabel": "Durée",
+      "carouselDetailCta": "Détails de la formation",
+      "emptyCarousel": "Aucune formation disponible pour le moment.",
+      "heroCatalogCta": "Voir le catalogue",
+      "heroRegisterCta": "S'inscrire maintenant",
+      "popularBadge": "★ Populaire",
+      "viewFormation": "Voir la formation",
+      "viewFullCatalogue": "Voir le catalogue complet",
+      "emptyCategoryMessage": "Aucune formation dans cette catégorie.",
+      "landpageHeroLine1": "Maîtrisez les outils",
+      "landpageHeroLine2": "qui font la différence",
+      "landpageHeroLine3": "dès demain matin.",
+      "landpageHeroSubtitle": "Formations intensives conçues par des praticiens africains sur des cas réels. En 1 à 3 jours, vous repartez avec des compétences applicables le lendemain.",
+      "landpageStorytellingEyebrow": "Storytelling",
+      "landpageExperienceTitle": "L'expérience",
+      "landpageExperienceSubtitle": "On ne vous dit pas qu'on est bons — on vous montre comment ça se passe vraiment.",
+      "landpageMethodEyebrow": "Notre méthode",
+      "landpageMethodTitle": "Pourquoi choisir",
+      "landpageCatalogueEyebrow": "Catalogue",
+      "landpageCatalogueTitle": "Nos",
+      "landpageCatalogueTitleAccent": "Formations",
+      "landpageEngagementsEyebrow": "Nos engagements",
+      "landpageEngagementsTitle": "Des garanties",
+      "landpageEngagementsTitleAccent": "concrètes",
+      "landpageFounderEyebrow": "Mot du fondateur",
+      "landpageCtaEyebrow": "Passez à l'action",
+      "landpageCtaTitle1": "Votre prochaine",
+      "landpageCtaTitle2": "compétence commence",
+      "landpageCtaTitle3": "maintenant.",
+      "landpageCtaSubtitle": "Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture.",
+      "stats": {
+        "formations": { "value": "12+", "label": "Formations", "sub": "disponibles" },
+        "pratique": { "value": "7h", "label": "Par journée", "sub": "de pratique" },
+        "prix": { "value": "400 MAD", "label": "À partir de", "sub": "par formation" },
+        "ratio": { "value": "100%", "label": "Pratique", "sub": "cas réels entreprise" }
+      },
+      "experience": {
+        "block1": {
+          "title": "Apprenants en situation réelle",
+          "desc": "Dès le premier jour, vous travaillez sur poste avec de vrais outils professionnels. Pas de simulation, pas de cas fictifs — vous produisez directement.",
+          "highlight": "Environnement 100% pro",
+          "barLabel": "Temps sur poste"
+        },
+        "block2": {
+          "title": "80% pratique / 20% théorie",
+          "desc": "Notre ratio inversé garantit une montée en compétence rapide. Chaque concept est immédiatement appliqué via des exercices tirés de vrais projets africains.",
+          "highlight": "Montée en compétence ×3",
+          "barLabel": "Pratique"
+        },
+        "block3": {
+          "title": "Interaction directe formateur",
+          "desc": "Vos questions reçoivent une réponse immédiate. Le formateur corrige en temps réel, intervient sur votre écran et adapte le rythme à votre groupe.",
+          "highlight": "Max 12 apprenants / session"
+        },
+        "block4": {
+          "title": "Certificat numérique ACT",
+          "desc": "En fin de formation, vous obtenez un certificat numérique valué par les directions RH et les recruteurs. Un actif concret à ajouter à votre profil.",
+          "highlight": "Reconnu par les RH"
+        }
+      },
+      "pillars": {
+        "p1": { "title": "80 % Pratique", "desc": "Chaque concept est immédiatement appliqué. Zéro slide sans exercice." },
+        "p2": { "title": "Cas réels africains", "desc": "Nos exercices s'inspirent de vrais projets d'entreprises du continent." },
+        "p3": { "title": "Petits groupes", "desc": "Maximum 12 apprenants par session pour un suivi individualisé." },
+        "p4": { "title": "Formateurs praticiens", "desc": "Chaque formateur exerce son métier activement — pas de théoriciens." },
+        "p5": { "title": "Certification reconnue", "desc": "Certificat ACT valué par les recruteurs et les directions RH." },
+        "p6": { "title": "Suivi post-formation", "desc": "3 mois de support WhatsApp inclus après chaque programme." }
+      },
+      "guarantees": {
+        "g1": { "label": "Petits groupes ≤ 12", "detail": "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
+        "g2": { "label": "Formateur praticien", "detail": "Votre formateur travaille en entreprise aujourd'hui. Pas de formateurs-bibliothèque." },
+        "g3": { "label": "Ressources à vie", "detail": "Slides, exercices et enregistrements restent accessibles sans limite de durée." }
+      },
+      "founder": {
+        "quote1": "J'ai créé ACT Formation parce que j'en avais assez des formations théoriques qui n'aident personne à avancer concrètement.",
+        "quote2": "Après des années à accompagner des entreprises africaines dans leur transformation digitale, j'ai vu le même blocage : les compétences manquent, pas la motivation.",
+        "quote3": "Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable, je vous rembourse.",
+        "tag1": "15+ ans terrain",
+        "tag2": "Formé en Europe & Afrique",
+        "tag3": "200+ entreprises accompagnées",
+        "name": "Sohaib Baroud",
+        "roleLabel": "Fondateur & CEO · ACT",
+        "imageAlt": "Sohaib Baroud — Fondateur ACT"
+      }
+    },
+    "detail": {
+      "inscriptionCta": "Je m'inscris →",
+      "voirProgramme": "Voir le programme",
+      "inscriptionsOuvertes": "Inscriptions ouvertes",
+      "metaDuree": "Durée",
+      "metaFormat": "Format",
+      "metaNiveau": "Niveau",
+      "metaProchaineSession": "Prochaine session",
+      "metaSecteur": "Secteur",
+      "metaLieu": "Lieu",
+      "metaTarif": "Tarif",
+      "metaTarifPromo": "Tarif promotionnel",
+      "metaSurDevis": "Sur devis",
+      "leConstatLabel": "Le constat",
+      "problemesLabel": "Les problèmes récurrents que vous rencontrez :",
+      "ceQueVousRepartirezAvecLabel": "Ce que vous repartirez avec",
+      "ceQueVousRepartirezAvecTitle": "Pas une formation.",
+      "ceQueVousRepartirezAvecAccent": "déclic",
+      "equipeLabel": "L'équipe pédagogique",
+      "outilsCouvertsLabel": "Les outils couverts",
+      "programmeLabel": "Programme",
+      "programmeTitle": "Un parcours",
+      "programmeTitleAccent": "dense",
+      "programme100Op": "100% opérationnel.",
+      "programmeSubtitle": "Pas de cours magistral. Chaque module alterne 30% de théorie, 70% d'atelier, avec un livrable concret à la fin.",
+      "moduleLabel": "Module",
+      "brochureLabel": "Pas encore prêt à vous inscrire ?",
+      "brochureTitle": "Téléchargez la",
+      "brochureTitleAccent": "brochure",
+      "brochureTitleSuffix": "complète.",
+      "brochureSubtitle": "Tout le programme, les livrables et les tarifs en 1 PDF · Téléchargement immédiat après validation du formulaire.",
+      "brochureCta": "📄 Télécharger la brochure (PDF)",
+      "brochureFree": "100% gratuit",
+      "brochureInstant": "Accès immédiat",
+      "audienceLabel": "Pour qui ?",
+      "audienceTitle": "Conçu pour les pros",
+      "audienceTitleAccent": "des résultats",
+      "pricingLabel": "Tarifs",
+      "pricingTitle": "Trois façons de",
+      "pricingTitleAccent": "démarrer",
+      "pricingTitleSuffix": "Une seule, la bonne pour vous.",
+      "pricingSubtitle": "Tous les tarifs incluent les supports, les templates, l'agent GPT personnalisé et le suivi 30 jours.",
+      "formuleLabel": "Formule",
+      "faqLabel": "Questions fréquentes",
+      "faqTitle": "Vous posez des questions, voici nos réponses",
+      "faqCta": "Une autre question ? Posez-la nous",
+      "finalCtaLabel": "Prêt à passer à l'action ?",
+      "finalCtaLine1": "Arrêtez de subir.",
+      "finalCtaLine2": "Commencez à maîtriser.",
+      "finalCtaSubtitle": "Réservez votre place dès maintenant — ou si vous préférez, échangez avec un de nos experts autour d'un café avant de vous décider.",
+      "finalCtaCafe": "☕ On en parle autour d'un café ?",
+      "loadError": "Impossible de charger la formation",
+      "retryBtn": "Réessayer",
+      "eyebrowFormation": "Formation",
+      "fallbacks": {
+        "session": "Session · 2026",
+        "format": "Présentiel + live",
+        "niveau": "Tous niveaux"
+      }
+    },
+    "inscription": {
+      "backToFormation": "Retour à la formation",
+      "eyebrow": "Inscription Formation",
+      "heroLine1": "Inscrivez",
+      "heroLine2": "-vous",
+      "formLabel": "Formulaire d'inscription",
+      "formTitle": "Votre",
+      "formTitleAccent": "dossier",
+      "sidebarRecap": "Récapitulatif",
+      "sidebarProcess": "Comment ça se passe ?",
+      "sidebarEngagements": "Nos engagements",
+      "sidebarQuestion": "Une question ?",
+      "metaNiveau": "Niveau",
+      "metaDuree": "Durée",
+      "metaFormat": "Format",
+      "metaTarif": "Tarif",
+      "processStep1Title": "Remplissez le formulaire",
+      "processStep1Desc": "Complétez votre profil et vos attentes en 4 étapes guidées.",
+      "processStep2Title": "Confirmation sous 24h",
+      "processStep2Desc": "Un conseiller ACT vous contacte pour confirmer et planifier.",
+      "processStep3Title": "Intégrez la formation",
+      "processStep3Desc": "Rejoignez votre groupe et démarrez votre parcours.",
+      "engagement1": "Réponse garantie sous 24h ouvrées",
+      "engagement2": "Conseiller dédié à votre dossier",
+      "engagement3": "Confidentialité assurée (NDA disponible)",
+      "fieldEmail": "Adresse mail",
+      "fieldFormation": "Thème de la formation",
+      "fieldOrganisme": "Organisme employeur",
+      "fieldOrganismePlaceholder": "Nom de votre entreprise / organisme",
+      "fieldNiveauEtudes": "Niveau d'études",
+      "fieldCivilite": "Civilité",
+      "fieldNom": "Nom",
+      "fieldNomPlaceholder": "Votre nom",
+      "fieldPrenom": "Prénom",
+      "fieldPrenomPlaceholder": "Votre prénom",
+      "fieldFonction": "Fonction du participant",
+      "fieldTelephone": "Téléphone",
+      "fieldCommentConnu": "Comment nous avez-vous connu ?",
+      "fieldNbParticipants": "N° de participants",
+      "fieldMessage": "Laissez-nous un message",
+      "fieldMessagePlaceholder": "Décrivez vos attentes, objectifs ou contraintes particulières…",
+      "rgpdConsent": "J'accepte que mes données personnelles soient collectées et traitées par ACT dans le cadre de ma demande d'inscription.",
+      "selectDefault": "— Choisir —",
+      "countrySelectPlaceholder": "— Choisir un pays —",
+      "countrySearchPlaceholder": "Rechercher un pays…",
+      "countryNotFound": "Aucun pays trouvé",
+      "submitBtn": "S'inscrire",
+      "submitting": "Envoi en cours…",
+      "successTitle": "Inscription validée !",
+      "successMessage": "Vous allez être redirigé vers le paiement sécurisé Shopify…",
+      "successRedirectNote": "Si la redirection ne se fait pas automatiquement, vérifiez les bloqueurs de popups.",
+      "errorMessage": "Une erreur est survenue. Veuillez réessayer.",
+      "landpageNomLabel": "Nom complet *",
+      "landpageNomPlaceholder": "Votre nom complet",
+      "landpageEmailLabel": "Email *",
+      "landpageTelLabel": "Téléphone",
+      "landpageFormationLabel": "Formation souhaitée *",
+      "landpageFormationDefault": "Choisissez une formation",
+      "landpageFormationUnknown": "Je ne sais pas encore",
+      "landpageMessageLabel": "Message (facultatif)",
+      "landpageMessagePlaceholder": "Votre niveau actuel, vos objectifs, vos contraintes horaires...",
+      "landpageSubmitIdle": "Réserver ma place",
+      "landpageSubmitting": "Envoi en cours…",
+      "landpageConfirmation": "✓ Réponse sous 24h · ✓ Sans engagement",
+      "landpageSuccessTitle": "Demande envoyée !",
+      "landpageSuccessMessage": "Notre équipe vous contactera sous {hours}h ouvrées pour confirmer votre inscription et vous communiquer les modalités.",
+      "landpageError": "Une erreur est survenue. Veuillez réessayer.",
+      "finalCtaBtn": "Je m'inscris maintenant",
+      "options": {
+        "canaux": {
+          "instagram": "Instagram",
+          "linkedin": "LinkedIn",
+          "youtube": "YouTube",
+          "facebook": "Facebook",
+          "boucheAOreille": "Bouche-à-oreille",
+          "google": "Google",
+          "autre": "Autre"
+        },
+        "fonctionsPro": {
+          "dg": "Directeur Général (DG)",
+          "dsi": "DSI / CTO",
+          "drh": "DRH",
+          "directionInnovation": "Directeur Innovation / Digital",
+          "responsableFormation": "Responsable Formation",
+          "manager": "Manager / Chef de département",
+          "developpeur": "Développeur / Ingénieur",
+          "autre": "Autre"
+        },
+        "fonctionsEtu": {
+          "etudiantLicence": "Étudiant (Licence / Master)",
+          "etudiantIngenieur": "Étudiant Ingénieur",
+          "jeuneDiplome": "Jeune diplômé (< 2 ans)",
+          "salarie": "Salarié en entreprise",
+          "freelance": "Freelance / Consultant",
+          "reconversion": "En reconversion professionnelle",
+          "demandeurEmploi": "Demandeur d'emploi"
+        },
+        "niveauxEtudes": {
+          "bac": "Bac",
+          "bac2": "Bac+2 (DUT/BTS)",
+          "licence": "Licence (Bac+3)",
+          "master": "Master (Bac+5)",
+          "ingenieur": "Ingénieur",
+          "doctorat": "Doctorat"
+        }
+      }
+    },
+    "brochure": {
+      "eyebrow": "📄 Brochure formation",
+      "title": "Téléchargez la brochure",
+      "subtitle": "Programme, livrables, modalités et tarifs · PDF accessible immédiatement.",
+      "namePlaceholder": "Nom complet *",
+      "emailPlaceholder": "Email professionnel *",
+      "companyPlaceholder": "Entreprise (optionnel)",
+      "submitIdle": "📥 Télécharger la brochure →",
+      "submitting": "Préparation…",
+      "noSpam": "Aucun spam. Vous pouvez vous désabonner à tout moment.",
+      "successTitle": "Téléchargement lancé !",
+      "successMessage": "Si la brochure ne s'est pas ouverte automatiquement, cliquez ci-dessous.",
+      "openBrochure": "📥 Ouvrir la brochure",
+      "close": "Fermer",
+      "errorDefault": "Une erreur est survenue, réessayez.",
+      "ariaClose": "Fermer"
+    },
+    "cart": {
+      "title": "Panier",
+      "titleWithCount": "Panier ({count})",
+      "ariaClose": "Fermer le panier",
+      "ariaCart": "Panier d'achat",
+      "empty": "Votre panier est vide",
+      "discoverCta": "Découvrir nos formations →",
+      "orderConfirmed": "Commande confirmée !",
+      "orderConfirmedMessage": "Vous recevrez un email de confirmation avec les détails de votre formation.",
+      "savings": "Vous économisez {amount} !",
+      "subtotal": "Sous-total",
+      "tva": "TVA",
+      "tvaValue": "En cours",
+      "total": "Total",
+      "checkoutBtn": "Procéder au paiement",
+      "ariaCheckout": "Procéder au paiement",
+      "securePayment": "Paiement 100% sécurisé",
+      "paymentMethods": "Carte bancaire · Virement · PayPal",
+      "removeTitle": "Retirer du panier ?",
+      "removeMessage": "Voulez-vous retirer cette formation de votre panier ?",
+      "cancelBtn": "Annuler",
+      "confirmRemove": "Retirer",
+      "ariaDecrease": "Diminuer la quantité",
+      "ariaIncrease": "Augmenter la quantité",
+      "ariaDelete": "Supprimer cet article",
+      "removeBtn": "Retirer"
+    },
+    "defaults": {
+      "marquee": [
+        "+400 professionnels formés",
+        "Note 4,9/5 sur 213 avis",
+        "Partenaire OpenAI & Anthropic",
+        "97% recommandent",
+        "32 entreprises clientes"
+      ],
+      "trustStats": [
+        { "value": "+400", "label": "Pros formés" },
+        { "value": "4,9/5", "label": "Satisfaction" },
+        { "value": "97%", "label": "Recommandent" }
+      ],
+      "painPoints": [
+        { "num": "01", "title": "Submergé par les outils ?", "text": "ChatGPT, Claude, Gemini, Copilot... impossible de savoir par où commencer." },
+        { "num": "02", "title": "Prompts qui ne marchent pas ?", "text": "Vous testez, mais les réponses restent génériques. Plus de temps perdu que gagné." },
+        { "num": "03", "title": "Équipe qui décroche ?", "text": "Certains adoptent, d'autres résistent. Pas de méthode commune, risque RGPD." }
+      ],
+      "valueRoi": {
+        "bigStat": "10h",
+        "bigStatLabel": "récupérées / semaine",
+        "secondary": [
+          { "value": "×4", "label": "vitesse de rédaction" },
+          { "value": "-60%", "label": "temps d'analyse" }
+        ]
+      },
+      "audienceCards": [
+        { "icon": "01", "title": "Dirigeants\n& CODIR" },
+        { "icon": "02", "title": "Managers\n& chefs de projet" },
+        { "icon": "03", "title": "Marketing\n& communication" },
+        { "icon": "04", "title": "Consultants\n& freelances" }
+      ],
+      "testimonials": [
+        {
+          "quote": "J'ai divisé par trois le temps passé sur mes comptes-rendus hebdo. Rentabilisé en 10 jours.",
+          "name": "Samira Bennani",
+          "role": "Directrice Marketing · Casablanca"
+        },
+        {
+          "quote": "Zéro blabla, du concret dès la première heure. Je repars avec mes propres prompts qui tournent.",
+          "name": "Youssef Kabbaj",
+          "role": "Consultant stratégie · Rabat"
+        },
+        {
+          "quote": "Formé 18 personnes en intra. +22% de productivité mesurés sur le pôle six mois plus tard.",
+          "name": "Fatima Ouali",
+          "role": "DRH · Groupe industriel · Tanger"
+        }
+      ],
+      "pricingPlans": [
+        {
+          "name": "Formule 01",
+          "title": "Inter",
+          "description": "Session inter-entreprises · ouverte aux inscriptions individuelles.",
+          "features": [
+            "Session planifiée à dates fixes",
+            "Jusqu'à 12 participants multi-entreprises",
+            "Tous les templates & prompts",
+            "Agent GPT personnalisé",
+            "Attestation de fin de formation",
+            "Accès replay 6 mois"
+          ],
+          "ctaLabel": "Réserver ma place",
+          "badge": "★ Le plus choisi"
+        },
+        {
+          "name": "Formule 02",
+          "title": "Intra",
+          "description": "Dans vos locaux · pour vos équipes · à partir de 6 personnes.",
+          "features": [
+            "Formation dans vos locaux",
+            "Vos cas métier réels en atelier",
+            "Audit IA des process avant démarrage",
+            "Suivi privé Slack · 30 jours",
+            "Rapport de recommandations post-formation",
+            "Suivi 90 jours inclus"
+          ],
+          "ctaLabel": "Demander un devis"
+        },
+        {
+          "name": "Formule 03",
+          "title": "Personnalisée",
+          "description": "Programme 100% sur-mesure · co-construit avec un expert ACT.",
+          "features": [
+            "Programme 100% sur-mesure",
+            "Combinaison de plusieurs formations",
+            "Format flexible (durée, modalité, lieu)",
+            "Co-construction avec un expert ACT",
+            "Formation de formateurs en option",
+            "Accompagnement long terme"
+          ],
+          "ctaLabel": "Demander un devis"
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "Je suis débutant total. Est-ce que je vais suivre ?",
+          "answer": "Oui — aucun prérequis n'est demandé. 60% de nos stagiaires découvrent ChatGPT le jour 1. Dès le jour 2, ils construisent leur propre agent GPT."
+        },
+        {
+          "question": "Combien de temps avant de voir un retour sur investissement ?",
+          "answer": "En moyenne, nos stagiaires récupèrent 10h par semaine dès la première semaine. Le prix de la formule Pro est rentabilisé en moins de deux semaines."
+        },
+        {
+          "question": "Et si je ne peux pas venir à Casablanca ?",
+          "answer": "La formule Essentiel se déroule 100% en distanciel, en live avec le formateur et un petit groupe (max 12)."
+        },
+        {
+          "question": "Et le RGPD / les données sensibles ?",
+          "answer": "Un module complet est dédié à l'usage éthique et conforme : RGPD, IA Act, paramètres confidentialité des outils, alternatives on-premise."
+        }
+      ],
+      "midCta": {
+        "eyebrow": "Offre de lancement",
+        "titlePrefix": "Session en cours ·",
+        "titleHighlight": "5 places",
+        "titleSuffix": "restantes.",
+        "text": "Si vous hésitez, la meilleure chose à faire : bloquer un appel découverte gratuit de 15 minutes.",
+        "ctaPrimary": { "label": "Voir les tarifs", "url": "#pricing" },
+        "ctaGhost": { "label": "Appel découverte · 15 min", "url": "/contact" },
+        "ctaDark": { "label": "Je m'inscris" }
+      },
+      "finalCta": {
+        "eyebrow": "5 places restantes",
+        "titleLine1": "Votre équipe sera formée",
+        "titleLine2": "à l'IA. ",
+        "titleHighlight": "Avec vous",
+        "titleSuffix": ", ou sans vous.",
+        "text": "Chaque semaine sans formation = 10h de productivité perdues à chaque membre de votre équipe.",
+        "primaryLabel": "Je m'inscris",
+        "ghostLabel": "Planifier un appel 15 min"
+      },
+      "prixBarre": "6 500 MAD HT"
+    }
+  },
+  "poles": {
+    "index": {
+      "eyebrow": "Notre Expertise",
+      "h1Part1": "Nos ",
+      "h1Part2": "3 Pôles",
+      "h1Part3": "d'Excellence",
+      "description": "Trois domaines d'intervention complémentaires pour accompagner votre transformation digitale de bout en bout : de la stratégie à l'exécution, en passant par la montée en compétences de vos équipes.",
+      "poleBadge": "Pôle {number}",
+      "discoverCta": "Découvrir ce pôle"
+    },
+    "items": {
+      "developpement-technologique": {
+        "title": "Développement Technologique",
+        "titleWithBreaks": "Pôle\nDéveloppement\nTechnologique",
+        "tagline": "L'excellence technique au service de vos ambitions",
+        "tag": "Ingénierie",
+        "description": "Conception et déploiement de solutions technologiques sur mesure qui transforment vos idées en produits concrets.",
+        "desc": "Solutions sur mesure, plateformes robustes et développement logiciel adapté aux enjeux de chaque client.",
+        "stats": {
+          "left": "Sur-mesure",
+          "leftLabel": "Ingénierie",
+          "right": "Performance",
+          "rightLabel": "Robustesse"
+        }
+      },
+      "conseil-strategie-it": {
+        "title": "Conseil & Stratégie IT",
+        "titleWithBreaks": "Pôle\nConseil",
+        "tagline": "Votre partenaire stratégique pour la transformation digitale",
+        "tag": "Stratégie IT",
+        "description": "Accompagnement stratégique et opérationnel dans votre transformation numérique, de l'audit au pilotage de projets.",
+        "desc": "Accompagnement stratégique, audit technologique et transformation globale pour accélérer votre croissance.",
+        "stats": {
+          "left": "Audit 360°",
+          "leftLabel": "Diagnostic",
+          "right": "Stratégie",
+          "rightLabel": "Accompagnement"
+        }
+      },
+      "formation": {
+        "title": "Formation & Développement",
+        "titleWithBreaks": "Pôle\nFormation",
+        "tagline": "Former les talents qui construiront l'Afrique de demain",
+        "tag": "Transmission",
+        "description": "Démocratisation de l'accès aux compétences technologiques via formations certifiantes, ateliers et bootcamps.",
+        "desc": "Montée en compétences, ateliers spécialisés et parcours de formation pour développer les talents.",
+        "stats": {
+          "left": "Certifiant",
+          "leftLabel": "Parcours",
+          "right": "Innovation",
+          "rightLabel": "Impact Local"
+        }
+      }
+    },
+    "conseil": {
+      "eyebrow": "Pôle 02",
+      "h1Line1": "Conseil &",
+      "h1Line2": "Stratégie IT",
+      "heroDescription": "Votre partenaire stratégique pour piloter et réussir votre transformation digitale. Nous vous accompagnons de l'audit à l'exécution, avec une approche pragmatique et orientée résultats.",
+      "heroCtaServices": "Nos Services",
+      "heroCtaAudit": "Demander un Audit",
+      "whyTitle": "Pourquoi se faire <accent>conseiller</accent> est stratégique ?",
+      "whySubtitle": "Dans un environnement digital complexe, le conseil stratégique n'est pas une option, c'est un accélérateur de performance",
+      "stats": {
+        "projectsFail": { "label": "Des projets IT échouent", "desc": "par manque de stratégie claire et d'alignement métier-technologie" },
+        "roi": { "label": "Plus de ROI", "desc": "pour les entreprises qui investissent dans le conseil avant l'implémentation" },
+        "costs": { "label": "De coûts IT", "desc": "grâce à l'optimisation stratégique et l'élimination des redondances" },
+        "leaders": { "label": "Des dirigeants", "desc": "estiment que le conseil externe accélère leur transformation digitale" }
+      },
+      "servicesTitle": "Nos <accent>Services</accent>",
+      "servicesDesc": "Un accompagnement sur mesure pour chaque étape de votre transformation",
+      "services": {
+        "strategique": {
+          "title": "Conseil Stratégique & Transformation",
+          "description": "La stratégie avant l'outil. Nous définissons votre vision cible et votre feuille de route digitale avant tout investissement technologique.",
+          "feature1": "Audit de maturité digitale",
+          "feature2": "Roadmap stratégique",
+          "feature3": "Conduite du changement"
+        },
+        "operationnel": {
+          "title": "Conseil Opérationnel & Métier",
+          "description": "L'excellence opérationnelle au service de la performance. Nous optimisons vos processus métiers réels avant de les numériser.",
+          "feature1": "Business Analysis terrain",
+          "feature2": "Optimisation des processus BPMN",
+          "feature3": "Alignement Stratégie-Outil"
+        }
+      },
+      "methodTitle": "Notre <accent>Méthodologie</accent>",
+      "process": {
+        "s01": { "title": "Diagnostic", "desc": "Analyse de l'existant, identification des enjeux et des opportunités" },
+        "s02": { "title": "Stratégie", "desc": "Définition de la vision cible et élaboration de la roadmap" },
+        "s03": { "title": "Planification", "desc": "Cadrage des initiatives, priorisation et allocation des ressources" },
+        "s04": { "title": "Exécution", "desc": "Pilotage opérationnel, coordination des équipes et suivi de la réalisation" },
+        "s05": { "title": "Optimisation", "desc": "Mesure des résultats, ajustements et amélioration continue" }
+      },
+      "whyUsTitle": "Pourquoi nous <accent>choisir</accent>",
+      "whyUs": {
+        "pragmatique": { "title": "Approche Pragmatique", "desc": "Nous privilégions les solutions concrètes et mesurables, adaptées à votre contexte et vos ressources." },
+        "sectorielle": { "title": "Expertise Sectorielle", "desc": "Une connaissance approfondie des enjeux métiers et des spécificités de votre secteur d'activité." },
+        "roi": { "title": "ROI Démontré", "desc": "Accompagnement axé sur la création de valeur mesurable et l'optimisation de vos investissements IT." },
+        "neutralite": { "title": "Neutralité Technologique", "desc": "Recommandations indépendantes et objectives, sans parti pris technologique ou commercial." }
+      },
+      "blogTitle": "Ce que nous <accent>publions</accent> sur le sujet",
+      "servicesCta": "En savoir plus",
+      "blogCta": "Lire l'article complet"
+    },
+    "developpement": {
+      "eyebrow": "Pôle 01",
+      "h1Line1": "Développement",
+      "h1Line2": "Technologique",
+      "heroDescription": "Nous transformons vos idées en produits technologiques performants et scalables. De l'application web au système distribué, nous maîtrisons l'ensemble de la chaîne de valeur technique.",
+      "heroCtaServices": "Nos Services",
+      "heroCtaContact": "Nous Contacter",
+      "servicesTitle": "Nos <accent>Services</accent>",
+      "servicesDesc": "Une expertise complète pour tous vos besoins de développement logiciel",
+      "services": {
+        "logicielle": {
+          "title": "Ingénierie Logicielle",
+          "description": "Conception et développement de solutions logicielles robustes et scalables avec les dernières technologies.",
+          "feature1": "Applications Web & Mobile",
+          "feature2": "Microservices & API",
+          "feature3": "Solutions sur mesure"
+        },
+        "ia": {
+          "title": "Intelligence Artificielle Agentique",
+          "description": "Développement de systèmes d'IA autonomes capables de prendre des décisions intelligentes et d'automatiser des processus complexes.",
+          "feature1": "Agents intelligents",
+          "feature2": "Apprentissage automatique",
+          "feature3": "Automation avancée"
+        },
+        "data": {
+          "title": "Big Data & Intelligence Artificielle",
+          "description": "Traitement et analyse de grandes masses de données combinées à l'IA pour extraire des insights stratégiques.",
+          "feature1": "Data Analytics",
+          "feature2": "Machine Learning",
+          "feature3": "Visualisation de données"
+        },
+        "cloud": {
+          "title": "Architecture Cloud",
+          "description": "Conception et déploiement d'infrastructures cloud natives, scalables et sécurisées.",
+          "feature1": "Infrastructure as Code",
+          "feature2": "Microservices",
+          "feature3": "Serverless Computing"
+        },
+        "sig": {
+          "title": "Systèmes d'Information Géographique",
+          "description": "Solutions SIG pour la collecte, l'analyse et la visualisation de données géospatiales.",
+          "feature1": "Cartographie interactive",
+          "feature2": "Analyse spatiale",
+          "feature3": "Géolocalisation"
+        }
+      },
+      "processTitle": "Notre <accent>Processus</accent>",
+      "process": {
+        "s01": { "title": "Analyse & Cadrage", "desc": "Audit de l'existant, définition du périmètre et des objectifs" },
+        "s02": { "title": "Conception", "desc": "Architecture technique, maquettes, spécifications détaillées" },
+        "s03": { "title": "Développement", "desc": "Sprints agiles, revues régulières, tests continus" },
+        "s04": { "title": "Déploiement", "desc": "Mise en production, formation des équipes, transfert de compétences" },
+        "s05": { "title": "Support & Évolution", "desc": "Maintenance, monitoring, évolutions fonctionnelles" }
+      },
+      "whyUsTitle": "Pourquoi nous <accent>choisir</accent>",
+      "whyUs": {
+        "livraison": { "title": "Livraison Rapide", "desc": "Méthode agile et sprints courts pour des livraisons incrémentales et une mise en production rapide." },
+        "qualite": { "title": "Qualité & Sécurité", "desc": "Tests automatisés, code reviews systématiques et conformité aux standards de sécurité internationaux." },
+        "evolutivite": { "title": "Évolutivité", "desc": "Architecture modulaire et scalable qui grandit avec vos besoins sans réécriture complète." },
+        "support": { "title": "Support Continu", "desc": "Accompagnement post-livraison, formation des équipes et maintenance proactive de vos solutions." }
+      },
+      "blogTitle": "Ce que nous <accent>publions</accent> sur le sujet",
+      "servicesCta": "En savoir plus",
+      "blogCta": "Lire l'article complet"
+    }
+  },
+  "secteurs": {
+    "index": {
+      "eyebrowBrand": "Africa Centred Technology",
+      "eyebrowAccent": "— Secteurs",
+      "h1Line1": "NOS DOMAINES",
+      "h1Line2": "D'EXPERTISE",
+      "subtitle": "ACT intervient dans de nombreux secteurs, apporter expertise technologique et vision locale pour transformer les défis du continent en opportunités concrètes.",
+      "exploreCta": "Explorer le secteur →",
+      "ariaPrev": "Secteur précédent",
+      "ariaNext": "Secteur suivant",
+      "ariaDot": "Secteur {n}",
+      "titlePrev": "Secteur précédent",
+      "titleNext": "Secteur suivant"
+    },
+    "detail": {
+      "breadcrumb": "Secteurs",
+      "approachLabel": "Notre approche",
+      "approachH2Suffix": "dans ce secteur",
+      "solutionsLabel": "Nos solutions",
+      "solutionsH2Line1": "Ce que nous",
+      "solutionsH2Line2": "faisons",
+      "cta": {
+        "eyebrow": "Passons à l'action",
+        "title": "Votre projet nous intéresse",
+        "description": "Discutons de votre contexte et explorons ensemble comment la technologie peut créer de la valeur dans votre organisation.",
+        "buttonText": "Démarrer un projet"
+      }
+    },
+    "items": {
+      "industrie": {
+        "label": "Industrie",
+        "tagline": "Moderniser pour mieux compétir",
+        "description": "Dans un environnement industriel de plus en plus compétitif, les entreprises doivent accélérer leur transformation pour gagner en performance, en qualité et en agilité. ACT accompagne les acteurs industriels dans la digitalisation de leurs opérations en intégrant des technologies intelligentes qui optimisent les processus, renforcent la prise de décision et améliorent durablement la productivité.",
+        "services": [
+          "Automatisation des lignes de production",
+          "IoT & maintenance prédictive",
+          "Digitalisation de la chaîne logistique",
+          "Systèmes de traçabilité & suivi temps réel",
+          "Optimisation des flux de production"
+        ],
+        "chiffre": { "label": "de gain potentiel en productivité" }
+      },
+      "telecoms-medias": {
+        "label": "Télécommunications & Médias",
+        "tagline": "Accélérer la création de valeur dans l'économie numérique",
+        "description": "Au cœur de l'économie digitale, les télécommunications et les médias jouent un rôle clé dans la connectivité, la diffusion de contenus et la création de nouveaux usages. ACT accompagne les opérateurs, les régulateurs et les acteurs des médias dans la valorisation de leurs infrastructures et de leurs données, en développant des services innovants, des expériences personnalisées et des modèles économiques durables.",
+        "services": [
+          "Plateformes de services à valeur ajoutée",
+          "Monétisation intelligente des données",
+          "Algorithmes de segmentation & personnalisation",
+          "Transition numérique des médias africains",
+          "Modèles économiques digitaux (abonnement, publicité programmatique)"
+        ],
+        "chiffre": { "label": "de revenus générés via les services digitaux" }
+      },
+      "finance": {
+        "label": "Finance & FinTech",
+        "tagline": "Réinventer les services financiers à l'ère digitale",
+        "description": "Le secteur financier connaît une transformation accélérée sous l'effet des technologies digitales, des nouveaux usages et des exigences réglementaires. ACT accompagne les institutions financières, banques et fintechs dans la conception de solutions innovantes, sécurisées et centrées sur l'utilisateur, afin d'améliorer l'accès aux services, optimiser les opérations et renforcer la gestion des risques",
+        "services": [
+          "Développement de plateformes fintech",
+          "Solutions de mobile banking & paiement",
+          "Systèmes de scoring & gestion du risque",
+          "Conformité réglementaire & sécurité des données",
+          "Intégration API bancaires & interopérabilité"
+        ],
+        "chiffre": { "label": "des africains sans accès aux services bancaires traditionnels" }
+      },
+      "ecommerce": {
+        "label": "E-commerce & Retail",
+        "tagline": "Créer des expériences d'achat performantes et scalables",
+        "description": "Le e-commerce redéfinit les standards du commerce en combinant expérience client, data et performance opérationnelle. ACT accompagne les acteurs du retail dans la conception et l'optimisation de plateformes digitales à forte valeur ajoutée, en intégrant des solutions innovantes pour maximiser les ventes, fluidifier les parcours d'achat et améliorer l'efficacité logistique.",
+        "services": [
+          "Développement de plateformes e-commerce",
+          "Solutions de paiement mobile & multi-canal",
+          "Systèmes de gestion des stocks & logistique",
+          "Outils de marketing digital & personnalisation",
+          "Applications mobiles commerce (iOS & Android)"
+        ],
+        "chiffre": { "label": "d'augmentation potentielle du taux de conversion" }
+      },
+      "sante": {
+        "label": "Santé & MedTech",
+        "tagline": "Transformer les systèmes de santé par le digital",
+        "description": "Le secteur de la santé connaît une تحول profonde portée par les technologies digitales, la data et l'intelligence artificielle. ACT accompagne les établissements de santé, les organismes publics et les acteurs MedTech dans la modernisation de leurs systèmes, l'amélioration des parcours patients et l'optimisation des performances opérationnelles, tout en garantissant la sécurité et la conformité des données.",
+        "services": [
+          "Digitalisation des parcours patients & dossiers médicaux",
+          "Systèmes d'information hospitaliers (SIH)",
+          "Analyse de données de santé & aide à la décision",
+          "Solutions de télémédecine & suivi à distance",
+          "Sécurité, conformité & gestion des données sensibles"
+        ],
+        "chiffre": { "label": "d'amélioration de l'efficacité des processus de soins" }
+      },
+      "immobilier": {
+        "label": "Immobilier & PropTech",
+        "tagline": "Optimiser les décisions immobilières par la donnée",
+        "description": "Le secteur immobilier évolue vers un modèle piloté par la donnée, où chaque décision d'investissement, de gestion ou de valorisation repose sur des analyses précises et en temps réel. ACT accompagne les promoteurs, investisseurs et gestionnaires d'actifs dans la digitalisation de leurs processus, l'optimisation de leurs portefeuilles et l'amélioration de la performance des actifs immobiliers.",
+        "services": [
+          "Analyse de données immobilières & aide à l'investissement",
+          "Plateformes de gestion de biens (Property Management)",
+          "Modélisation des prix & prévision des tendances",
+          "Digitalisation des transactions & parcours client",
+          "Tableaux de bord de performance des actifs"
+        ],
+        "chiffre": { "label": "d'optimisation de la rentabilité des actifs" }
+      },
+      "education": {
+        "label": "Éducation & EdTech",
+        "tagline": "Accélérer la transformation éducative par le digital",
+        "description": "L'éducation est le principal levier de développement des sociétés. Dans un monde en mutation rapide, les technologies digitales offrent des opportunités inédites pour transformer les systèmes éducatifs, améliorer l'accès au savoir et développer les compétences du futur. ACT accompagne les institutions éducatives, les organismes de formation et les acteurs EdTech dans la conception et le déploiement de solutions innovantes, centrées sur l'apprenant et alignées sur les enjeux du XXIe siècle.",
+        "services": [
+          "Plateformes d'apprentissage en ligne (LMS) & blended learning",
+          "Digitalisation des parcours étudiants & gestion administrative",
+          "Outils pédagogiques innovants & réalité augmentée",
+          "Analyse de données d'apprentissage & IA pour la personnalisation",
+          "Formation des enseignants aux outils numériques"
+        ],
+        "chiffre": { "label": "d'amélioration de l'engagement des apprenants" }
+      }
+    }
+  },
+  "projects": {
+    "index": {
+      "eyebrowBrand": "Africa Centred Technology",
+      "eyebrowAccent": "— Portfolio",
+      "h1Word1": "NOS",
+      "h1Word2": "RÉALISATIONS",
+      "h1Word3": "ACT",
+      "subtitle": "Découvrez nos projets qui transforment les entreprises africaines et créent un impact durable sur le continent. Technologies de pointe, résultats mesurables.",
+      "statProjects": "Projets réalisés",
+      "statCountries": "Pays couverts",
+      "statSatisfaction": "Satisfaction",
+      "filterLabel": "Filtrer par catégorie",
+      "emptyState": "Aucun projet dans cette catégorie",
+      "cardCta": "Lire →",
+      "cta": {
+        "eyebrow": "Votre projet, notre expertise",
+        "title": "Parlons de votre projet",
+        "description": "ACT dispose de l'expertise technologique pour vous accompagner dans votre transformation digitale, quelle que soit votre industrie.",
+        "buttonText": "Démarrer un projet"
+      }
+    },
+    "detail": {
+      "backLink": "← Réalisations",
+      "counter": "{index} / 04",
+      "metaClient": "Client",
+      "metaYear": "Année",
+      "metaDuration": "Durée",
+      "metaDomain": "Domaine",
+      "metaTech": "Technologies",
+      "sectionPresentation": "Présentation",
+      "sectionResults": "Résultats",
+      "sectionChallenges": "Défis",
+      "sectionApproach": "Notre Approche",
+      "ctaEyebrow": "Votre prochain projet",
+      "ctaH2Line1": "Votre Vision,",
+      "ctaH2Line2": "Notre Expertise",
+      "ctaDescription": "Prêt à faire de votre prochain projet une success story technologique ? L'équipe Africa Centred Technology est à votre écoute.",
+      "ctaButton": "Démarrer un projet similaire →",
+      "navPrev": "← Projet précédent",
+      "navNext": "Projet suivant →"
+    },
+    "items": {
+      "rag": {
+        "title": "Système RAG Multi-sources",
+        "category": "IA",
+        "categoryFull": "Intelligence Artificielle",
+        "tagline": "Chatbot multimodal pour environnements à faible connectivité",
+        "description": "Chatbot multimodal capable de répondre à partir de documents, images, audio et vidéo grâce à un pipeline RAG et embeddings multimodaux.",
+        "descriptionLong": "Le Système RAG Multi-sources est une solution d'intelligence artificielle de pointe conçue pour transformer la manière dont les organisations africaines accèdent à leur base de connaissances. Contrairement aux chatbots traditionnels limités au texte, ce système ingère et indexe de manière transparente des documents PDF, des images, des fichiers audio et des vidéos dans un espace vectoriel unifié.\n\nLe cœur du système repose sur un pipeline RAG (Retrieval-Augmented Generation) optimisé pour des environnements à connectivité variable. Grâce à pgvector, les embeddings multimodaux sont stockés localement, permettant des recherches sémantiques ultra-rapides même en mode hors-ligne partiel.\n\nL'interface Streamlit permet aux équipes non-techniques de soumettre des questions en langage naturel et d'obtenir des réponses contextualisées avec les sources exactes citées — document, page, horodatage audio ou segment vidéo.",
+        "tags": ["RAG", "OpenAI GPT-5", "pgvector", "Streamlit", "Python", "FastAPI"],
+        "client": "ACT Lab",
+        "duration": "6 mois",
+        "results": [
+          { "label": "Recherche multimodale", "value": "4 types de médias" },
+          { "label": "Indexation vectorielle", "value": "< 50 ms / requête" },
+          { "label": "Pipeline robuste", "value": "99.2% uptime" },
+          { "label": "Base documentaire", "value": "10 000+ documents" }
+        ],
+        "challenges": [
+          "Indexation cohérente de médias hétérogènes (PDF, audio, vidéo, images)",
+          "Performance de recherche en environnement à faible bande passante",
+          "Précision des réponses avec citation des sources exactes"
+        ],
+        "approach": "Notre approche s'est articulée en trois phases : d'abord la conception d'un schéma vectoriel unifié capable d'accueillir tous les types de médias, ensuite l'optimisation du pipeline RAG pour minimiser les appels API coûteux via un cache intelligent, et enfin la mise en place d'un système de scoring qui hiérarchise les sources par pertinence contextuelle."
+      },
+      "cod": {
+        "title": "CODRescue",
+        "category": "E-commerce",
+        "categoryFull": "E-commerce & Logistique",
+        "tagline": "Gestion e-commerce avec dashboards temps réel",
+        "description": "Système de gestion e-commerce pour la préparation de commandes, logistique et supervision avec dashboards temps réel.",
+        "descriptionLong": "CODRescue est une plateforme de gestion opérationnelle e-commerce conçue pour les marchés africains où le paiement à la livraison (Cash On Delivery) domine. Le système adresse les défis spécifiques de la logistique last-mile : taux de retour élevés, dispersion géographique des livreurs, difficulté de suivi en temps réel.\n\nLa plateforme centralise l'ensemble du flux de commandes depuis la réception jusqu'à la livraison finale. Les superviseurs disposent de dashboards temps réel montrant l'état exact de chaque commande, la position des livreurs et les KPIs opérationnels clés (taux de livraison, temps moyen, retours).\n\nUne couche d'IA assistée analyse les patterns de commandes pour prédire les zones de forte demande, optimiser les tournées de livraison et signaler proactivement les commandes à risque d'échec avant même la tentative de livraison.",
+        "tags": ["Django", "Tailwind", "PostgreSQL", "IA assistée", "Celery", "Redis"],
+        "client": "CODRescue",
+        "duration": "8 mois",
+        "results": [
+          { "label": "Process optimisés", "value": "−40% temps de traitement" },
+          { "label": "Suivi logistique", "value": "Temps réel GPS" },
+          { "label": "KPI temps réel", "value": "15 métriques clés" },
+          { "label": "Taux de livraison", "value": "+28% de succès" }
+        ],
+        "challenges": [
+          "Suivi GPS en temps réel sur des zones avec couverture réseau partielle",
+          "Gestion des retours et réconciliation financière automatique",
+          "Scalabilité pour gérer des pics de commandes (promotions, événements)"
+        ],
+        "approach": "Nous avons adopté une architecture événementielle avec Celery/Redis pour le traitement asynchrone des mises à jour de position, garantissant une interface toujours réactive même sous forte charge. La couche IA repose sur des modèles de classification entraînés sur l'historique des commandes du client pour prédire les risques d'échec de livraison avec 84% de précision."
+      },
+      "sig": {
+        "title": "GreenSIG V1",
+        "category": "SIG",
+        "categoryFull": "Systèmes d'Information Géographique",
+        "tagline": "Cartographie interactive des espaces verts urbains",
+        "description": "Plateforme SIG de gestion des espaces verts avec cartographie interactive, planification et suivi des interventions.",
+        "descriptionLong": "GreenSIG V1 est une plateforme web de gestion des espaces verts urbains conçue pour les collectivités et sociétés d'aménagement paysager africaines. Elle répond à un besoin crucial : remplacer les feuilles de papier et tableurs Excel par un système géospatial centralisé et accessible depuis le terrain.\n\nLa cartographie interactive repose sur Leaflet.js avec des tuiles OpenStreetMap, permettant une visualisation précise de chaque espace vert (surface, type de végétation, état sanitaire). Les équipes terrain accèdent à l'application depuis leurs téléphones pour enregistrer les interventions avec géolocalisation automatique.\n\nLe module de planification permet aux responsables de créer des programmes d'entretien récurrents, d'assigner des équipes par zone géographique et de suivre l'avancement en temps réel. Des alertes automatiques signalent les espaces dont l'entretien est en retard ou dont l'état nécessite une intervention urgente.",
+        "tags": ["React", "TypeScript", "Leaflet", "Tailwind", "Django", "GeoJSON"],
+        "client": "GreenSIG",
+        "duration": "5 mois",
+        "results": [
+          { "label": "Cartographie centralisée", "value": "500+ espaces verts" },
+          { "label": "Gestion des équipes", "value": "12 équipes terrain" },
+          { "label": "Inventaire optimisé", "value": "−60% temps admin" },
+          { "label": "Couverture géographique", "value": "3 villes pilotes" }
+        ],
+        "challenges": [
+          "Mode hors-ligne pour la saisie terrain en zone sans réseau",
+          "Synchronisation des données géospatiales sans conflits",
+          "Interface utilisable sur des téléphones d'entrée de gamme"
+        ],
+        "approach": "La contrainte majeure était la résilience terrain : nous avons implémenté un Service Worker avec IndexedDB pour le stockage local des données et des tuiles cartographiques. La synchronisation différée garantit que les équipes peuvent travailler toute une journée hors-ligne et réconcilier les données au retour en zone de couverture."
+      },
+      "gam": {
+        "title": "GAM — Génies Afrique Médias",
+        "category": "Média",
+        "categoryFull": "Média & Éditorial",
+        "tagline": "Web TV panafricaine en architecture headless",
+        "description": "Plateforme média digitale panafricaine (Web TV + contenus éditoriaux) en architecture headless.",
+        "descriptionLong": "GAM (Génies Afrique Médias) est une plateforme média digitale panafricaine développée pour AFRITECK INSTITUT, combinant Web TV, articles éditoriaux et podcasts dans une expérience multimédia unifiée. L'ambition : devenir la référence du contenu tech et innovation en Afrique francophone.\n\nL'architecture headless découple totalement le CMS éditorial (Django + Wagtail) du frontend de présentation (Next.js), permettant à l'équipe éditoriale de gérer les contenus sans aucune contrainte technique tout en offrant aux visiteurs des performances dignes des grands médias internationaux.\n\nLa Web TV intègre un player vidéo optimisé pour les connexions africaines avec adaptive bitrate streaming. Le système SEO est configuré spécifiquement pour Google News avec les balises structured data adéquates, les sitemaps dynamiques et les flux RSS — résultat : indexation sous 24h après publication.",
+        "tags": ["Next.js", "Django", "Wagtail", "PWA", "TypeScript", "Cloudinary"],
+        "client": "AFRITECK INSTITUT",
+        "duration": "7 mois",
+        "results": [
+          { "label": "CMS éditorial", "value": "Interface no-code" },
+          { "label": "Web TV", "value": "Adaptive streaming" },
+          { "label": "SEO Google News", "value": "Indexation < 24h" },
+          { "label": "Couverture", "value": "15 pays africains" }
+        ],
+        "challenges": [
+          "Streaming vidéo adaptatif pour des connexions 2G/3G africaines",
+          "Workflow éditorial multi-auteurs avec validation avant publication",
+          "Conformité Google News et référencement international"
+        ],
+        "approach": "L'architecture headless était non-négociable pour la performance : Next.js en ISR (Incremental Static Regeneration) permet de servir les articles depuis le CDN tout en maintenant des contenus frais. Cloudinary gère l'optimisation automatique des images et vidéos selon le device et la connexion détectée."
+      }
+    }
+  },
+  "blog": {
+    "hero": {
+      "eyebrow": "Veille & Insights",
+      "headlinePart1": "Décoder le présent pour",
+      "headlineAccent": "bâtir l'avenir numérique",
+      "headlinePart2": "de l'Afrique.",
+      "description": "Nos experts décryptent les grandes tendances qui façonnent le numérique africain — IA, souveraineté des données, cloud et Smart Cities.",
+      "topicsLabel": "Explorer par thème",
+      "ctaArticles": "Voir les articles · {label}",
+      "ctaContact": "Contacter un expert",
+      "readerAlt": "Personne lisant un journal"
+    },
+    "index": {
+      "sectionEyebrow": "Dossiers & Thématiques",
+      "sectionTitle": "L'écosystème",
+      "sectionTitleAccent": "par Rubriques",
+      "sectionDescription": "Naviguez à travers nos piliers stratégiques pour accéder aux analyses approfondies de nos consultants et experts métiers.",
+      "analysesLabel": "Analyses",
+      "exploreCta": "Explorer",
+      "viewAllCta": "Voir tous les articles",
+      "newsletterEyebrow": "Restez informé",
+      "newsletterTitle": "La veille tech africaine,",
+      "newsletterTitleAccent": "chaque semaine",
+      "newsletterDescription": "Recevez nos analyses sur l'IA, le cloud, la cybersécurité et l'innovation digitale en Afrique directement dans votre boîte mail.",
+      "newsletterPlaceholder": "votre.email@entreprise.com",
+      "newsletterSubmitIdle": "S'abonner",
+      "newsletterSubmitLoading": "Envoi...",
+      "newsletterFootnote": "Désinscription en un clic. Pas de spam — une newsletter par semaine.",
+      "newsletterErrorEmail": "Adresse email invalide.",
+      "newsletterSuccess": "Merci ! Vous êtes abonné à la veille ACT.",
+      "newsletterErrorServer": "Erreur serveur.",
+      "featuredBadge": "★ À la une",
+      "readingTime": "{time} de lecture",
+      "readCta": "Lire →"
+    },
+    "articles": {
+      "backLink": "← Retour aux rubriques",
+      "titleAllPrefix": "TOUS LES",
+      "titleAllAccent": "ARTICLES",
+      "titleCategoryPrefix": "ARTICLES",
+      "descriptionAll": "Explorez l'ensemble de nos analyses, tendances et décryptages sur la tech africaine.",
+      "descriptionCategory": "Découvrez tous nos articles dans la rubrique {category}.",
+      "searchPlaceholder": "Rechercher un article...",
+      "filterLabel": "Filtre :",
+      "allArticlesLabel": "Tous les articles",
+      "articlesFoundSuffix": "articles trouvés",
+      "loadMoreCta": "Voir plus d'articles",
+      "emptyState": "Aucun article dans cette catégorie pour l'instant.",
+      "featuredBadge": "À LA UNE",
+      "readingTime": "{time} de lecture",
+      "readArticleCta": "Lire l'article →"
+    },
+    "post": {
+      "backLink": "← Retour au Blog",
+      "metaDate": "Date",
+      "metaReading": "Lecture",
+      "metaTarget": "Cible",
+      "shareTitle": "Partager l'article",
+      "shareLabel": "Partager",
+      "copyLabel": "Copier",
+      "copiedLabel": "Lien copié",
+      "promptCopyLink": "Copiez ce lien :",
+      "recentArticlesTitle": "Articles récents",
+      "keywordsTitle": "Mots-clés",
+      "allArticlesCta": "Tous les articles",
+      "projectCta": "Un projet ? Parlons-en",
+      "relatedTitle": "Articles",
+      "relatedTitleAccent": "Connexes",
+      "readCta": "Lire →",
+      "ctaEyebrow": "Besoin d'expertise ?",
+      "ctaTitle": "Parlons de votre projet",
+      "ctaDescription": "Nos équipes sont prêtes à vous accompagner dans votre transformation digitale et vos défis technologiques.",
+      "ctaButton": "Contactez-nous"
+    }
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Consultation Gratuite",
+      "titleLine1": "Construisons",
+      "titleLine2": "Ensemble",
+      "description": "Vous avez une vision ? Nous avons l'expertise pour la concrétiser. Discutons de votre projet et découvrez comment ACT peut transformer vos ambitions en réalité."
+    },
+    "form": {
+      "sectionLabel": "Formulaire de contact",
+      "sectionTitle": "Décrivez votre",
+      "sectionTitleAccent": "Projet",
+      "labelName": "Nom complet *",
+      "placeholderName": "Votre nom complet",
+      "labelEmail": "Email *",
+      "placeholderEmail": "votre@entreprise.com",
+      "labelCompany": "Entreprise",
+      "placeholderCompany": "Nom de votre entreprise",
+      "labelPhone": "Téléphone",
+      "placeholderPhone": "+212 XX XXX XX XX",
+      "labelSubject": "Type de projet *",
+      "subjectDefault": "Sélectionnez un type",
+      "subjectWeb": "Application Web",
+      "subjectMobile": "Application Mobile",
+      "subjectIa": "IA & Data",
+      "subjectSig": "SIG & Cartographie",
+      "subjectMedia": "Plateforme Média",
+      "subjectConseil": "Conseil Stratégique",
+      "subjectAutre": "Autre",
+      "labelMessage": "Votre projet *",
+      "placeholderMessage": "Décrivez votre projet, vos objectifs et vos contraintes...",
+      "submitIdle": "Envoyer ma demande",
+      "submitSending": "Envoi en cours…",
+      "errorSend": "Erreur lors de l'envoi",
+      "errorOccurred": "Une erreur est survenue lors de l'envoi. Veuillez réessayer."
+    },
+    "success": {
+      "title": "✓ Message envoyé !",
+      "message": "Nous vous recontacterons sous 24h."
+    },
+    "info": {
+      "phone": "Téléphone",
+      "phoneCta": "Appeler →",
+      "email": "Email",
+      "emailCta": "Écrire →",
+      "address": "Adresse",
+      "addressLine1": "Mer Sultan, 6e Rue château",
+      "addressLine2": "Casablanca, Maroc 🇲🇦",
+      "addressCta": "Voir →",
+      "hours": "Horaires",
+      "hoursLine1": "Lundi au Samedi",
+      "hoursCta": "Planifier →"
+    },
+    "sidebar": {
+      "engagementsLabel": "Nos engagements",
+      "callLabel": "Préférez-vous appeler ?",
+      "callDescription": "Parlez directement à un conseiller d'ACT. Disponible du Lundi au Samedi.",
+      "followLabel": "Suivez-nous"
+    },
+    "faq": {
+      "sectionLabel": "FAQ",
+      "sectionTitle": "Questions",
+      "sectionTitleAccent": "Fréquentes",
+      "q1": "Comment démarrer un projet avec ACT ?",
+      "a1": "Contactez-nous via le formulaire ou par téléphone. Notre équipe vous recontactera sous 24h pour une discussion où sur le besoins.",
+      "q2": "Quels sont vos délais de livraison ?",
+      "a2": "Nous vous fournirons une estimation précise après analyse de votre projet.",
+      "q3": "Proposez-vous un support après livraison ?",
+      "a3": "Oui, avec différentes formules de 1 mois à plusieurs années. Chaque projet inclut une période de garantie de 2 mois minimum.",
+      "q4": "Quelles technologies utilisez-vous ?",
+      "a4": "Nous utilisons les technologies les plus adaptées à chaque projet.Notre approche est technology-agnostic."
+    },
+    "engagements": {
+      "e1": "Réponse garantie sous 24h ouvrées",
+      "e2": "Devis détaillé et transparent",
+      "e3": "Confidentialité assurée (NDA disponible)"
+    }
+  },
+  "breadcrumb": {
+    "home": "Accueil",
+    "formations": "Formations",
+    "blog": "Blog",
+    "services": "Services",
+    "projects": "Réalisations",
+    "secteurs": "Secteurs",
+    "poles": "Pôles"
+  }
+}

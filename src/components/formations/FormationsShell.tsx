@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * FormationsShell — Page catalogue de formations IA
@@ -6,8 +6,9 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import {
   Search,
@@ -57,6 +58,8 @@ interface FormationCardData {
 }
 
 export default function FormationsShell() {
+  const t = useTranslations("formations.catalogue");
+  const locale = useLocale();
   const [formationsData, setFormationsData] = useState<FormationCardData[]>([]);
   const [isLoading, setIsLoading]           = useState(true);
   const [fetchError, setFetchError]         = useState(false);
@@ -65,7 +68,7 @@ export default function FormationsShell() {
     setIsLoading(true);
     setFetchError(false);
     try {
-      const res = await fetch("/api/shopify/formations");
+      const res = await fetch(`/api/shopify/formations?locale=${locale}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setFormationsData(json.formations ?? []);
@@ -79,7 +82,7 @@ export default function FormationsShell() {
 
   useEffect(() => {
     loadFromShopify();
-  }, []);
+  }, [locale]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -124,20 +127,20 @@ export default function FormationsShell() {
         <section style={{ padding: "8rem clamp(1.5rem, 5vw, 6rem) 4rem", position: "relative" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
             <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", opacity: 0.6 }}>
-              <Link href="/" style={{ color: "#fff", textDecoration: "none" }}>Accueil</Link>
-              <ChevronRight size={16} />
-              <span style={{ color: COLOR }}>Formations</span>
+              <Link href="/" style={{ color: "#fff", textDecoration: "none" }}>{t("breadcrumbHome")}</Link>
+              <ChevronRight size={16} className="mirror-in-rtl" />
+              <span style={{ color: COLOR }}>{t("breadcrumbFormations")}</span>
             </motion.nav>
 
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
                 <Sparkles size={36} color={COLOR} />
                 <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 1 }}>
-                  Catalogue de <span style={{ color: COLOR }}>Formations</span>
+                  {t("heroTitle")} <span style={{ color: COLOR }}>{t("heroTitleAccent")}</span>
                 </h1>
               </div>
               <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", maxWidth: "800px", marginTop: "1.5rem", lineHeight: 1.6 }}>
-                Développez vos compétences avec nos programmes intensifs conçus pour le monde de l'IA.
+                {t("heroSubtitle")}
               </p>
 
             </motion.div>
@@ -147,7 +150,7 @@ export default function FormationsShell() {
               <Search style={{ position: "absolute", left: "1.2rem", top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.4)" }} />
               <input 
                 type="text" 
-                placeholder="Rechercher une formation..."
+                placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{ width: "100%", padding: "1.2rem 1.2rem 1.2rem 3.5rem", background: "rgba(255,255,255,0.05)", border: `1px solid ${COLOR}40`, borderRadius: "0.75rem", color: "#fff", outline: "none" }}
@@ -160,7 +163,7 @@ export default function FormationsShell() {
         <section style={{ padding: "1.5rem clamp(1.5rem, 5vw, 6rem)", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
             <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.5)", margin: 0 }}>
-              <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> formations trouvées
+              <span style={{ color: COLOR, fontWeight: 700 }}>{filteredFormations.length}</span> {t("countLabel")}
             </p>
             <div style={{ display: "flex", background: "rgba(255,255,255,0.05)", padding: "0.25rem", borderRadius: "0.5rem" }}>
               <button onClick={() => setViewMode("grid")} style={{ padding: "0.5rem", background: viewMode === "grid" ? COLOR : "transparent", border: "none", borderRadius: "0.4rem", color: "#fff", cursor: "pointer" }}><Grid3x3 size={20}/></button>
@@ -189,14 +192,14 @@ export default function FormationsShell() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                   <AlertCircle size={20} color="#f87171" />
                   <p style={{ margin: 0, color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
-                    Impossible de charger les formations.
+                    {t("loadError")}
                   </p>
                 </div>
                 <button
                   onClick={loadFromShopify}
                   style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1.2rem", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "0.4rem", color: "#fff", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600 }}
                 >
-                  <RefreshCw size={14} /> Réessayer
+                  <RefreshCw size={14} /> {t("retry")}
                 </button>
               </motion.div>
             )}
@@ -234,8 +237,8 @@ export default function FormationsShell() {
                 {filteredFormations.length === 0 && (
                   <div style={{ textAlign: "center", padding: "4rem" }}>
                     <BookOpen size={48} color={COLOR} style={{ opacity: 0.3, marginBottom: "1.5rem" }}/>
-                    <h3>Aucun résultat pour cette recherche</h3>
-                    <button onClick={() => setSearchQuery("")} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>Réinitialiser la recherche</button>
+                    <h3>{t("emptyTitle")}</h3>
+                    <button onClick={() => setSearchQuery("")} style={{ marginTop: "1rem", color: COLOR, background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>{t("resetSearch")}</button>
                   </div>
                 )}
 
@@ -258,7 +261,7 @@ export default function FormationsShell() {
                         transition: "all 0.2s",
                       }}
                     >
-                      ← Précédent
+                      {t("paginationPrev")}
                     </button>
 
                     {/* Numéros de pages */}
@@ -299,12 +302,12 @@ export default function FormationsShell() {
                         transition: "all 0.2s",
                       }}
                     >
-                      Suivant →
+                      {t("paginationNext")}
                     </button>
 
                     {/* Indicateur */}
                     <span style={{ marginLeft: "0.5rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body)" }}>
-                      Page {currentPage} / {totalPages}
+                      {t("paginationPage", { current: currentPage, total: totalPages })}
                     </span>
                   </motion.div>
                 )}
@@ -320,6 +323,7 @@ export default function FormationsShell() {
 }
 
 function FormationCard({ formation, viewMode }: { formation: any; viewMode: "grid" | "list" }) {
+  const t = useTranslations("formations.catalogue");
   const niveauValue = formation.niveau;
   const secteurValue = formation.secteur;
   const accrocheValue = formation.accroche;
@@ -347,7 +351,7 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
     >
       {/* Badge Niveau */}
       <div style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 1, padding: "0.3rem 0.8rem", background: `${color}cc`, backdropFilter: "blur(4px)", borderRadius: "2rem", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase" }}>
-        {niveauValue || "Débutant"}
+        {niveauValue || t("defaultNiveau")}
       </div>
 
       {/* Image */}
@@ -362,13 +366,13 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
       <div style={{ padding: "2rem", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
           <Tag size={14} color={COLOR}/>
-          <span style={{ fontSize: "0.8rem", color: COLOR, fontWeight: 700, textTransform: "uppercase" }}>{secteurValue || "Transversal"}</span>
+          <span style={{ fontSize: "0.8rem", color: COLOR, fontWeight: 700, textTransform: "uppercase" }}>{secteurValue || t("defaultSecteur")}</span>
         </div>
 
         <h3 style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "var(--font-display)", marginBottom: "1rem" }}>{formation.title}</h3>
         
         <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.5rem", lineClamp: 2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-          {accrocheValue || "Une formation pratique pour maîtriser les outils de demain."}
+          {accrocheValue || t("defaultAccroche")}
         </p>
 
         <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -389,8 +393,8 @@ function FormationCard({ formation, viewMode }: { formation: any; viewMode: "gri
         </div>
 
         <Link href={`/formations/${handle}`} style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "0.5rem", color: "#fff", textDecoration: "none", fontWeight: 800, fontSize: "0.9rem", textTransform: "uppercase" }}>
-          Découvrir le programme 
-          <ChevronRight size={18} color={COLOR} />
+          {t("discoverCta")}
+          <ChevronRight size={18} color={COLOR} className="mirror-in-rtl" />
         </Link>
       </div>
     </motion.div>

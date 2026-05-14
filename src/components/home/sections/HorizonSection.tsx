@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * Room 06 — LA SORTIE
@@ -10,15 +10,8 @@
 
 import React, { useRef, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import Link from "next/link";
-
-const NAV_LINKS = [
-  { href: "/about", label: "À Propos" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Réalisations" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-];
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 /** Button drifts toward cursor, snaps back on leave */
 function Magnetic({ children }: { children: React.ReactNode }) {
@@ -75,6 +68,8 @@ function PortalRing() {
 }
 
 export default function HorizonSection() {
+  const t = useTranslations("home.horizon");
+
   /* ── 3-layer parallax ── */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -185,7 +180,7 @@ export default function HorizonSection() {
         <motion.div
           key={pos}
           aria-hidden
-          className="absolute left-0 w-full pointer-events-none"
+          className="absolute start-0 w-full pointer-events-none"
           style={{ height: 1, background: "rgba(255,255,255,0.04)", top: pos, originX: 0.5 }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
@@ -214,7 +209,7 @@ export default function HorizonSection() {
         >
           <span className="diamond diamond--sm" />
           <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem", letterSpacing: "0.38em", textTransform: "uppercase", fontFamily: "var(--font-body)" }}>
-            Démarrons ensemble
+            {t("eyebrow")}
           </span>
           <span className="diamond diamond--sm" />
         </motion.div>
@@ -239,9 +234,9 @@ export default function HorizonSection() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.9, ease }}
         >
-          Vous avez un projet ?
+          {t("title")}
           <br />
-          <span style={{ color: "#D35400", WebkitTextFillColor: "#D35400" }}>Donnons-lui vie.</span>
+          <span style={{ color: "#D35400", WebkitTextFillColor: "#D35400" }}>{t("titleAccent")}</span>
         </motion.h1>
 
         {/* Sous-texte */}
@@ -258,7 +253,7 @@ export default function HorizonSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.7 }}
         >
-          Que ce soit une idée à valider, une solution à bâtir, ou une équipe à former — nos experts vous répondent sous 24 h pour transformer votre ambition en réalité.
+          {t("subtitle")}
         </motion.p>
 
         {/* CTA principal + secondaire */}
@@ -276,7 +271,7 @@ export default function HorizonSection() {
               <span className="cta-btn__background" aria-hidden />
               <span className="cta-btn__inner">
                 <span className="cta-btn__icon" aria-hidden />
-                <span className="cta-btn__text">Démarrer un projet</span>
+                <span className="cta-btn__text">{t("cta")}</span>
               </span>
             </Link>
           </Magnetic>
@@ -307,7 +302,7 @@ export default function HorizonSection() {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
             }}
           >
-            Voir nos réalisations →
+            {t("ctaSecondary")}
           </Link>
         </motion.div>
 
@@ -327,9 +322,9 @@ export default function HorizonSection() {
           }}
         >
           {[
-            { val: "24h", label: "Réponse garantie" },
-            { val: "Gratuit", label: "Premier échange" },
-            { val: "100%", label: "Sur-mesure" },
+            { val: t("commitments.response.val"), label: t("commitments.response.label") },
+            { val: t("commitments.free.val"),     label: t("commitments.free.label") },
+            { val: t("commitments.custom.val"),   label: t("commitments.custom.label") },
           ].map((item) => (
             <div key={item.label} style={{ textAlign: "center" }}>
               <div

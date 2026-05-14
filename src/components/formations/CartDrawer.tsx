@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   X, ShoppingCart, Minus, Plus, Trash2, ArrowRight,
   CheckCircle, Shield, CreditCard
@@ -31,6 +32,7 @@ const fmtMAD = (n: number) =>
   new Intl.NumberFormat("fr-MA", { style: "decimal", maximumFractionDigits: 0 }).format(n) + " MAD";
 
 export default function CartDrawer() {
+  const t = useTranslations("formations.cart");
   const { items, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice, totalSavings } = useCart();
   const [checkoutStep, setCheckoutStep] = useState<"cart" | "success">("cart");
   // Remplace window.confirm (bloquant, non stylé sur mobile) par un dialog React
@@ -182,7 +184,7 @@ export default function CartDrawer() {
               className="cart-drawer-panel"
               role="dialog"
               aria-modal="true"
-              aria-label="Panier d'achat"
+              aria-label={t("ariaCart")}
               initial={{ x: "100%" }}
               animate={{ x: swipeDelta > 0 ? swipeDelta : 0 }}
               exit={{ x: "100%" }}
@@ -236,13 +238,13 @@ export default function CartDrawer() {
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                   }}>
-                    Panier {totalItems > 0 && `(${totalItems})`}
+                    {totalItems > 0 ? t("titleWithCount", { count: totalItems }) : t("title")}
                   </h2>
                 </div>
                 {/* Bouton fermer — 44×44 touch target (WCAG 2.5.5) */}
                 <button
                   type="button"
-                  aria-label="Fermer le panier"
+                  aria-label={t("ariaClose")}
                   onClick={() => setIsCartOpen(false)}
                   style={{
                     width: "44px",
@@ -295,7 +297,7 @@ export default function CartDrawer() {
                       marginBottom: "0.75rem",
                       fontFamily: "var(--font-display, Lora, serif)",
                     }}>
-                      Commande confirmée !
+                      {t("orderConfirmed")}
                     </h3>
                     <p style={{
                       color: W.textMid,
@@ -303,7 +305,7 @@ export default function CartDrawer() {
                       fontFamily: "var(--font-body, Poppins, sans-serif)",
                       fontSize: "clamp(0.85rem, 3vw, 0.95rem)",
                     }}>
-                      Vous recevrez un email de confirmation avec les détails de votre formation.
+                      {t("orderConfirmedMessage")}
                     </p>
                   </motion.div>
                 ) : items.length === 0 ? (
@@ -316,7 +318,7 @@ export default function CartDrawer() {
                       fontFamily: "var(--font-body, Poppins, sans-serif)",
                       lineHeight: 1.5,
                     }}>
-                      Votre panier est vide
+                      {t("empty")}
                     </p>
                     <Link
                       href="/formations"
@@ -331,7 +333,7 @@ export default function CartDrawer() {
                         letterSpacing: "0.06em",
                       }}
                     >
-                      Découvrir nos formations →
+                      {t("discoverCta")}
                     </Link>
                   </div>
                 ) : (
@@ -376,7 +378,7 @@ export default function CartDrawer() {
                         color: W.green,
                         fontFamily: "var(--font-body, Poppins, sans-serif)",
                       }}>
-                        Vous économisez {fmtMAD(totalSavings)} !
+                        {t("savings", { amount: fmtMAD(totalSavings) })}
                       </span>
                     </div>
                   )}
@@ -390,7 +392,7 @@ export default function CartDrawer() {
                         fontSize: "clamp(0.75rem, 3vw, 0.875rem)",
                         textTransform: "uppercase",
                         letterSpacing: "0.05em",
-                      }}>Sous-total</span>
+                      }}>{t("subtotal")}</span>
                       <span style={{
                         fontWeight: 700,
                         color: W.text,
@@ -405,12 +407,12 @@ export default function CartDrawer() {
                         fontSize: "clamp(0.75rem, 3vw, 0.875rem)",
                         textTransform: "uppercase",
                         letterSpacing: "0.05em",
-                      }}>TVA</span>
+                      }}>{t("tva")}</span>
                       <span style={{
                         color: W.textLight,
                         fontFamily: "var(--font-body, Poppins, sans-serif)",
                         fontSize: "clamp(0.75rem, 3vw, 0.875rem)",
-                      }}>En cours</span>
+                      }}>{t("tvaValue")}</span>
                     </div>
                     <div style={{ height: "1px", background: W.border, margin: "0.625rem 0" }} />
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -421,7 +423,7 @@ export default function CartDrawer() {
                         fontFamily: "'Futura', 'Trebuchet MS', sans-serif",
                         textTransform: "uppercase",
                         letterSpacing: "0.07em",
-                      }}>Total</span>
+                      }}>{t("total")}</span>
                       <span style={{
                         fontSize: "clamp(1rem, 4vw, 1.3rem)",
                         fontWeight: 700,
@@ -436,7 +438,7 @@ export default function CartDrawer() {
                   {/* Bouton checkout — 48px min height, touch-friendly */}
                   <motion.button
                     type="button"
-                    aria-label="Procéder au paiement"
+                    aria-label={t("ariaCheckout")}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleCheckout}
@@ -477,7 +479,7 @@ export default function CartDrawer() {
                       }
                     }}
                   >
-                    Procéder au paiement <ArrowRight size={18} />
+                    {t("checkoutBtn")} <ArrowRight size={18} />
                   </motion.button>
 
                   {/* Trust signals */}
@@ -491,7 +493,7 @@ export default function CartDrawer() {
                       fontFamily: "var(--font-body, Poppins, sans-serif)",
                     }}>
                       <Shield size={14} style={{ flexShrink: 0 }} />
-                      <span>Paiement 100% sécurisé</span>
+                      <span>{t("securePayment")}</span>
                     </div>
                     <div style={{
                       display: "flex",
@@ -502,7 +504,7 @@ export default function CartDrawer() {
                       fontFamily: "var(--font-body, Poppins, sans-serif)",
                     }}>
                       <CreditCard size={14} style={{ flexShrink: 0 }} />
-                      <span>Carte bancaire · Virement · PayPal</span>
+                      <span>{t("paymentMethods")}</span>
                     </div>
                   </div>
                 </div>
@@ -556,7 +558,7 @@ export default function CartDrawer() {
                   marginBottom: "0.625rem",
                 }}
               >
-                Retirer du panier ?
+                {t("removeTitle")}
               </h4>
               <p
                 id="cart-del-desc"
@@ -568,7 +570,7 @@ export default function CartDrawer() {
                   marginBottom: "1.25rem",
                 }}
               >
-                Voulez-vous retirer cette formation de votre panier ?
+                {t("removeMessage")}
               </p>
               <div style={{ display: "flex", gap: "0.75rem" }}>
                 <button
@@ -589,7 +591,7 @@ export default function CartDrawer() {
                     letterSpacing: "0.06em",
                   }}
                 >
-                  Annuler
+                  {t("cancelBtn")}
                 </button>
                 <button
                   type="button"
@@ -609,7 +611,7 @@ export default function CartDrawer() {
                     letterSpacing: "0.06em",
                   }}
                 >
-                  Retirer
+                  {t("confirmRemove")}
                 </button>
               </div>
             </motion.div>
@@ -629,6 +631,7 @@ function CartItemCard({
   onRemove: () => void;
   onUpdateQuantity: (qty: number) => void;
 }) {
+  const t = useTranslations("formations.cart");
   return (
     <motion.div
       layout
@@ -732,7 +735,7 @@ function CartItemCard({
           }}>
             <button
               type="button"
-              aria-label="Diminuer la quantité"
+              aria-label={t("ariaDecrease")}
               onClick={() => onUpdateQuantity(item.quantity - 1)}
               style={{
                 /* 44×44 touch target (WCAG 2.5.5) */
@@ -762,7 +765,7 @@ function CartItemCard({
             </span>
             <button
               type="button"
-              aria-label="Augmenter la quantité"
+              aria-label={t("ariaIncrease")}
               onClick={() => onUpdateQuantity(item.quantity + 1)}
               style={{
                 width: "44px",
@@ -784,7 +787,7 @@ function CartItemCard({
           {/* Bouton supprimer — 44×44 touch target */}
           <button
             type="button"
-            aria-label="Supprimer cet article"
+            aria-label={t("ariaDelete")}
             onClick={onRemove}
             style={{
               minWidth: "44px",
@@ -809,7 +812,7 @@ function CartItemCard({
             onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "#F87171"; }}
           >
             <Trash2 size={14} />
-            <span>Retirer</span>
+            <span>{t("removeBtn")}</span>
           </button>
         </div>
 

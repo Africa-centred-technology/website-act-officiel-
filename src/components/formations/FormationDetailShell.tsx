@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, RefreshCw } from "lucide-react";
@@ -8,15 +9,8 @@ import FooterStrip from "../layout/FooterStrip";
 import FormationInscriptionModal from "./FormationInscriptionModal";
 import BrochureRequestModal from "./BrochureRequestModal";
 import AnnouncementBar from "../layout/AnnouncementBar";
-import {
-  DEFAULT_MARQUEE_ITEMS,
-  DEFAULT_TRUST_STATS,
-  DEFAULT_PAIN_POINTS,
-  DEFAULT_AUDIENCE_CARDS,
-  getDefaultPricingPlans,
-  getDefaultFaqItems,
-  DEFAULT_FINAL_CTA,
-} from "@/lib/data/formation-defaults";
+import { DEFAULT_PAIN_POINT_IMAGES } from "@/lib/data/formation-defaults";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 /* ── Tracking helpers (GTM dataLayer + Meta Pixel + GA4) ── */
 type TrackingWindow = Window & {
@@ -294,6 +288,9 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
 
 /* ── Main component ──────────────────────────────────────── */
 export default function FormationDetailShell({ slug }: { slug: string }) {
+  const t = useTranslations("formations.detail");
+  const tInsc = useTranslations("formations.inscription");
+  const locale = useLocale();
   const router = useRouter();
   const [formation, setFormation] = useState<FormationDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -308,7 +305,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     setIsLoading(true);
     setFetchError(false);
     try {
-      const res = await fetch(`/api/shopify/formations/${slug}`);
+      const res = await fetch(`/api/shopify/formations/${slug}?locale=${locale}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setFormation(json.formation ?? null);
@@ -320,7 +317,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     }
   };
 
-  useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug]);
+  useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug, locale]);
 
   /* ── Sticky CTA bar visibility ─ */
   const [showStickyBar, setShowStickyBar] = useState(false);
@@ -355,10 +352,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <div style={loadingStyle}>
         <div style={{ textAlign: "center" }}>
           <h2 style={{ fontFamily: FONT_DISPLAY, fontSize: 32, color: TXT, marginBottom: 16 }}>
-            Impossible de charger la formation
+            {t("loadError")}
           </h2>
           <Btn variant="primary" onClick={loadFormation}>
-            <RefreshCw size={14} /> Réessayer
+            <RefreshCw size={14} /> {t("retryBtn")}
           </Btn>
         </div>
       </div>
@@ -366,21 +363,37 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   }
 
   /* ── Derived content ─ valeurs par défaut partagées (hybride) ─ */
-  const marqueeItems  = DEFAULT_MARQUEE_ITEMS;
-  const trustStats    = DEFAULT_TRUST_STATS;
-  const painCards     = DEFAULT_PAIN_POINTS;
+  const msg           = useDataMessages();
+  const defaults      = msg.formations.defaults;
+  const marqueeItems  = defaults.marquee;
+  const trustStats    = defaults.trustStats;
+  const painCards     = defaults.painPoints.map((p, idx) => ({
+    ...p,
+    image_url: DEFAULT_PAIN_POINT_IMAGES[idx] ?? "",
+  }));
   const outils        = formation.outilsCouverts ?? [];
   const hasOutils     = outils.length > 0;
   const toolsRow1     = outils.slice(0, Math.ceil(outils.length / 2));
   const toolsRow2     = outils.slice(Math.ceil(outils.length / 2));
-  const audienceCards = DEFAULT_AUDIENCE_CARDS;
+  const audienceCards = defaults.audienceCards;
   const pricing       = (formation.pricingPlans && formation.pricingPlans.length > 0)
     ? formation.pricingPlans
-    : getDefaultPricingPlans(formation.prix);
+    : defaults.pricingPlans.map((p, idx) => ({
+        title: p.title,
+        description: p.description,
+        amount: idx === 0 ? (formation.prix || t("metaSurDevis")) : t("metaSurDevis"),
+        currency: idx === 0 ? "MAD HT" : undefined,
+        old_price: idx > 0 ? tInsc("landpageConfirmation") : undefined,
+        badge: p.badge,
+        featured: idx === 0,
+        cta_label: p.ctaLabel,
+        cta_type: (idx === 0 ? "inscription" : "contact") as "inscription" | "contact",
+        features: p.features,
+      }));
   const faqs          = (formation.faqItems && formation.faqItems.length > 0)
     ? formation.faqItems
-    : getDefaultFaqItems(formation.prerequis);
-  const finalCta      = DEFAULT_FINAL_CTA;
+    : defaults.faqItems;
+  const finalCta      = defaults.finalCta;
 
   const featuredPlan = formation.pricingPlans?.find((p) => p.featured) ?? formation.pricingPlans?.[0];
   const heroPrixBarre = featuredPlan?.old_price;
@@ -422,7 +435,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             {/* ── Left column ── */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
              
-              <Eyebrow>Formation </Eyebrow>
+              <Eyebrow>{t("eyebrowFormation")}</Eyebrow>
               <h1 style={{
                 fontFamily: FONT_DISPLAY, fontSize: "clamp(46px, 6.4vw, 96px)",
                 lineHeight: 0.98, fontWeight: 500, letterSpacing: "-0.025em",
@@ -438,9 +451,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <p style={ledeStyle}>{formation.accroche}</p>
 
               <div className="act-hero-btns" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-                <Btn variant="primary" onClick={() => goInscription("hero_primary")}>Je m'inscris →</Btn>
+                <Btn variant="primary" onClick={() => goInscription("hero_primary")}>{t("inscriptionCta")}</Btn>
                 <Btn variant="ghost" onClick={() => { trackCtaClick("hero_voir_programme", slug); scrollTo("programme")(); }}>
-                  <Diamond /> Voir le programme
+                  <Diamond /> {t("voirProgramme")}
                 </Btn>
               </div>
 
@@ -462,10 +475,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
               <div className="act-hero-card" style={heroCardStyle}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
                   <span style={cardTagStyle}>
-                    <Diamond color={ACT_CREAM} size={7} /> {formation.sessionDateCourte || formation.secteur || "Session · 2026"}
+                    <Diamond color={ACT_CREAM} size={7} /> {formation.sessionDateCourte || formation.secteur || t("fallbacks.session")}
                   </span>
                   <span style={{ ...monoStyle, color: ACT_GOLD }}>
-                    ● Inscriptions ouvertes
+                    ● {t("inscriptionsOuvertes")}
                   </span>
                 </div>
                 <h3 style={{
@@ -475,31 +488,31 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <div className="act-card-meta" style={cardMetaStyle}>
                   <div>
-                    <div style={metaLabelStyle}>Durée</div>
+                    <div style={metaLabelStyle}>{t("metaDuree")}</div>
                     <div style={metaValueStyle}>{formation.duree || ""} </div>
                   </div>
                   <div>
-                    <div style={metaLabelStyle}>Format</div>
-                    <div style={metaValueStyle}>{formation.format || "Présentiel + live"}</div>
+                    <div style={metaLabelStyle}>{t("metaFormat")}</div>
+                    <div style={metaValueStyle}>{formation.format || t("fallbacks.format")}</div>
                   </div>
                   <div>
-                    <div style={metaLabelStyle}>Niveau</div>
-                    <div style={metaValueStyle}>{formation.niveau || "Tous niveaux"}</div>
+                    <div style={metaLabelStyle}>{t("metaNiveau")}</div>
+                    <div style={metaValueStyle}>{formation.niveau || t("fallbacks.niveau")}</div>
                   </div>
                   {formation.sessionDate ? (
                     <div>
-                      <div style={metaLabelStyle}>Prochaine session</div>
+                      <div style={metaLabelStyle}>{t("metaProchaineSession")}</div>
                       <div style={metaValueStyle}>{formation.sessionDate}</div>
                     </div>
                   ) : formation.secteur && (
                     <div>
-                      <div style={metaLabelStyle}>Secteur</div>
+                      <div style={metaLabelStyle}>{t("metaSecteur")}</div>
                       <div style={metaValueStyle}>{formation.secteur}</div>
                     </div>
                   )}
                   {formation.sessionLieu && (
                     <div style={{ gridColumn: "1 / -1" }}>
-                      <div style={metaLabelStyle}>Lieu</div>
+                      <div style={metaLabelStyle}>{t("metaLieu")}</div>
                       <div style={metaValueStyle}>📍 {formation.sessionLieu}</div>
                     </div>
                   )}
@@ -507,12 +520,12 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
 
                 <div style={cardPriceRowStyle}>
                   <div>
-                    <div style={{ ...monoStyle, marginBottom: 4 }}>{heroPromoLabel ? "Tarif promotionnel" : "Tarif"}</div>
+                    <div style={{ ...monoStyle, marginBottom: 4 }}>{heroPromoLabel ? t("metaTarifPromo") : t("metaTarif")}</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
                       <span className="act-hero-price" style={{
                         fontFamily: FONT_DISPLAY, fontSize: 52, color: ACT_ORANGE,
                         letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic",
-                      }}>{formation.prix || "Sur devis"}</span>
+                      }}>{formation.prix || t("metaSurDevis")}</span>
                     </div>
                     {heroPrixBarre && (
                       <div style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)", fontSize: 16, marginTop: 4 }}>
@@ -530,7 +543,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 </div>
 
                 <Btn variant="primary" onClick={() => goInscription("hero_card")} style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
-                  Je m'inscris →
+                  {t("inscriptionCta")}
                 </Btn>
               </div>
             </motion.div>
@@ -557,7 +570,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section className="act-section" style={secStyle}>
         <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
-            <Eyebrow>Le constat</Eyebrow>
+            <Eyebrow>{t("leConstatLabel")}</Eyebrow>
             <h2 style={h2Style}>
               {formation.hookPain || (
                 <>Même outils, même brief :<br /><em style={emStyle}>résultats pas à la hauteur</em> de vos attentes.</>
@@ -581,7 +594,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
           </motion.div>
 
           <div style={painSubheadStyle}>
-            <Diamond color={ACT_GOLD} size={6} />  Les problèmes récurrents que vous rencontrez :
+            <Diamond color={ACT_GOLD} size={6} />  {t("problemesLabel")}
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
@@ -626,7 +639,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
         <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
-            <Eyebrow>Ce que vous repartirez avec</Eyebrow>
+            <Eyebrow>{t("ceQueVousRepartirezAvecLabel")}</Eyebrow>
             <h2 style={h2Style}>Pas une formation.<br />Un <em style={emStyle}>déclic</em> opérationnel.</h2>
           </div>
 
@@ -679,7 +692,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             {formation.experts && formation.experts.length > 0 && (
               <div className="act-value-visual" style={valueVisualStyle}>
                 <div>
-                  <div style={{ ...monoStyle, color: ACT_CREAM, opacity: 0.8 }}>L'équipe pédagogique</div>
+                  <div style={{ ...monoStyle, color: ACT_CREAM, opacity: 0.8 }}>{t("equipeLabel")}</div>
                   <h4 style={{ fontFamily: FONT_DISPLAY, fontSize: 42, lineHeight: 1.05, letterSpacing: "-0.02em", marginTop: 16, color: TXT, fontWeight: 500 }}>
                     Conçue par<br /><em style={emStyle}>{formation.experts.length} experts</em><br />de leur domaine.
                   </h4>
@@ -725,7 +738,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         <section className="act-section" style={secStyle}>
           <div className="act-container" style={containerStyle}>
             <div style={secHeadStyle}>
-              <Eyebrow>Les outils couverts</Eyebrow>
+              <Eyebrow>{t("outilsCouvertsLabel")}</Eyebrow>
               <h2 style={{ ...h2Style, maxWidth: 780 }}>{outils.length}+ outils IA maîtrisés.<br />Aucune <em style={emStyle}>install</em> obligatoire.</h2>
             </div>
           </div>
@@ -756,9 +769,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section id="programme" className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
         <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
-            <Eyebrow>Programme · {formation.duree || "14 heures"}</Eyebrow>
+            <Eyebrow>{t("programmeLabel")} · {formation.duree || "14 heures"}</Eyebrow>
             <h2 style={h2Style}>Un parcours <em style={emStyle}>dense</em>,<br />100% opérationnel.</h2>
-            <p style={secPStyle}>Pas de cours magistral. Chaque module alterne 30% de théorie, 70% d'atelier, avec un livrable concret à la fin.</p>
+            <p style={secPStyle}>{t("programmeSubtitle")}</p>
           </div>
 
           <div style={{ position: "relative" }}>
@@ -791,7 +804,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                       <div style={{
                         fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
                         textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
-                      }}>Module {String(i + 1).padStart(2, "0")}</div>
+                      }}>{t("moduleLabel")} {String(i + 1).padStart(2, "0")}</div>
                       <h3 className="act-prog-h3" style={{
                         fontFamily: FONT_DISPLAY, fontSize: 36, lineHeight: 1.1,
                         marginTop: 8, color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500,
@@ -849,12 +862,12 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
         <div className="act-container" style={containerStyle}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
             <div>
-              <Eyebrow>Pas encore prêt à vous inscrire ?</Eyebrow>
+              <Eyebrow>{t("brochureLabel")}</Eyebrow>
               <h2 style={{ ...h2Style, fontSize: "clamp(36px, 4.5vw, 64px)", marginTop: 20 }}>
-                Téléchargez la <em style={emStyle}>brochure</em> complète.
+                {t("brochureTitle")} <em style={emStyle}>{t("brochureTitleAccent")}</em> {t("brochureTitleSuffix")}
               </h2>
               <p style={{ ...secPStyle, fontSize: 17 }}>
-                Tout le programme, les livrables et les tarifs en 1 PDF · Téléchargement immédiat après validation du formulaire.
+                {t("brochureSubtitle")}
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-start" }}>
@@ -866,7 +879,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 }}
                 minWidth={300}
               >
-                <span>📄 Télécharger la brochure (PDF)</span><span>→</span>
+                <span>{t("brochureCta")}</span><span>→</span>
               </Btn>
               <div style={{
                 display: "flex", alignItems: "center", gap: 18, marginTop: 6,
@@ -874,10 +887,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontWeight: 500,
               }}>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  <Diamond color={ACT_GOLD} size={6} /> 100% gratuit
+                  <Diamond color={ACT_GOLD} size={6} /> {t("brochureFree")}
                 </span>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  <Diamond color={ACT_GOLD} size={6} /> Accès immédiat
+                  <Diamond color={ACT_GOLD} size={6} /> {t("brochureInstant")}
                 </span>
               </div>
             </div>
@@ -890,7 +903,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section className="act-section" style={secStyle}>
         <div className="act-container" style={containerStyle}>
           <div style={secHeadStyle}>
-            <Eyebrow>Pour qui ?</Eyebrow>
+            <Eyebrow>{t("audienceLabel")}</Eyebrow>
             <h2 style={h2Style}>Conçu pour les pros<br />qui veulent <em style={emStyle}>des résultats</em>.</h2>
           </div>
         </div>
@@ -928,10 +941,10 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section id="pricing" className="act-section" style={secStyle}>
         <div className="act-container" style={containerStyle}>
           <div style={{ ...secHeadStyle, textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>Tarifs</Eyebrow></div>
+            <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>{t("pricingLabel")}</Eyebrow></div>
             <h2 style={{ ...h2Style, textAlign: "center" }}>Trois façons de <em style={emStyle}>démarrer</em>.<br />Une seule, la bonne pour vous.</h2>
             <p style={{ ...secPStyle, marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-              Tous les tarifs incluent les supports, les templates, l'agent GPT personnalisé et le suivi 30 jours.
+              {t("pricingSubtitle")}
             </p>
           </div>
 
@@ -945,7 +958,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 {p.featured && p.badge && (
                   <div style={priceBadgeStyle}>{p.badge}</div>
                 )}
-                <div style={{ fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600 }}>Formule {String(i + 1).padStart(2, "0")}</div>
+                <div style={{ fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600 }}>{t("formuleLabel")} {String(i + 1).padStart(2, "0")}</div>
                 <div style={{ fontFamily: FONT_DISPLAY, fontSize: 30, lineHeight: 1.05, marginTop: 10, color: TXT, fontWeight: 500 }}>
                   <em style={emStyle}>{p.title}</em>
                 </div>
@@ -958,12 +971,12 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                       lineHeight: 0.95, letterSpacing: "-0.03em",
                       color: p.featured ? ACT_ORANGE : WHITE,
                     }}>{p.amount}</span>
-                    {p.amount !== "Sur devis" && p.currency && <span style={{ fontFamily: FONT_LABEL, fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{p.currency}</span>}
+                    {p.amount !== t("metaSurDevis") && p.amount !== "" && p.currency && <span style={{ fontFamily: FONT_LABEL, fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{p.currency}</span>}
                   </div>
                   {p.old_price && (
                     <div style={{
-                      textDecoration: p.old_price.startsWith("Réponse") ? "none" : "line-through",
-                      fontSize: 14, color: p.old_price.startsWith("Réponse") ? ACT_GOLD : "rgba(255,255,255,0.35)", marginTop: 6,
+                      textDecoration: p.old_price === tInsc("landpageConfirmation") ? "none" : "line-through",
+                      fontSize: 14, color: p.old_price === tInsc("landpageConfirmation") ? ACT_GOLD : "rgba(255,255,255,0.35)", marginTop: 6,
                     }}>{p.old_price}</div>
                   )}
                 </div>
@@ -996,7 +1009,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       <section className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
         <div className="act-container" style={containerStyle}>
           <div style={{ ...secHeadStyle, textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>Questions fréquentes</Eyebrow></div>
+            <div style={{ display: "flex", justifyContent: "center" }}><Eyebrow centered>{t("faqLabel")}</Eyebrow></div>
             <h2 style={{ ...h2Style, textAlign: "center" }}>
 Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2>
           </div>
@@ -1009,7 +1022,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
 
           <div style={{ marginTop: 60, textAlign: "center" }}>
             <Btn variant="ghost" href="/contact">
-              <Diamond /> Une autre question ? Posez-la nous
+              <Diamond /> {t("faqCta")}
             </Btn>
           </div>
         </div>
@@ -1019,32 +1032,32 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
       <section style={finalStyle}>
         <div style={{ ...containerStyle, position: "relative", zIndex: 5 }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Eyebrow centered>Prêt à passer à l'action ?</Eyebrow>
+            <Eyebrow centered>{t("finalCtaLabel")}</Eyebrow>
           </div>
           <h2 style={{
             fontFamily: FONT_DISPLAY, fontSize: "clamp(48px, 7vw, 110px)",
             lineHeight: 0.95, maxWidth: 1000, margin: "20px auto 32px",
             color: TXT, fontWeight: 500, letterSpacing: "-0.025em", textWrap: "balance",
           }}>
-            <>Arrêtez de subir.<br /><em style={emStyle}>Commencez à maîtriser.</em></>
+            <>{t("finalCtaLine1")}<br /><em style={emStyle}>{t("finalCtaLine2")}</em></>
 
           </h2>
           <p style={{
             fontSize: 18, lineHeight: 1.55, color: "rgba(255,255,255,0.72)",
             maxWidth: 620, margin: "0 auto 48px", fontWeight: 300,
           }}>
-            Réservez votre place dès maintenant — ou si vous préférez, échangez avec un de nos experts autour d'un café avant de vous décider.
+            {t("finalCtaSubtitle")}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Btn variant="primary" onClick={() => goInscription("final_primary")} style={{ padding: "22px 40px", fontSize: 13 }}>
-              {finalCta.primary_label} →
+              {finalCta.primaryLabel} →
             </Btn>
             <Btn
               variant="ghost"
               href={`/contact?formation=${slug}&intent=cafe`}
               style={{ padding: "22px 40px", fontSize: 13 }}
             >
-              ☕ On en parle autour d'un café ?
+              {t("finalCtaCafe")}
             </Btn>
           </div>
         </div>
@@ -1075,7 +1088,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
                     fontFamily: FONT_DISPLAY, fontSize: 26, fontStyle: "italic",
                     color: ACT_ORANGE, letterSpacing: "-0.02em", lineHeight: 1,
                   }}>
-                    {formation.prix || "Sur devis"}
+                    {formation.prix || t("metaSurDevis")}
                   </span>
                   {formation.prix && (
                     <span style={{ fontFamily: FONT_LABEL, fontSize: 11, color: TXT_MID }}>MAD</span>
@@ -1083,7 +1096,7 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
                 </div>
               </div>
               <Btn variant="primary" onClick={() => goInscription("sticky_bar")} style={{ flexShrink: 0 }}>
-                Je m'inscris →
+                {t("inscriptionCta")}
               </Btn>
             </div>
           </motion.div>

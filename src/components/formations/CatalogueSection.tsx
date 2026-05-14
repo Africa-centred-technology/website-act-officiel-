@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * CatalogueSection — Résumé interactif des formations par domaine
@@ -6,7 +6,8 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ORANGE = "#D35400";
@@ -23,16 +24,18 @@ interface FormationItem {
 }
 
 export default function CatalogueSection() {
+  const t = useTranslations("formations.catalogue");
+  const locale = useLocale();
   const [formationsData, setFormationsData] = useState<FormationItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/shopify/formations")
+    fetch(`/api/shopify/formations?locale=${locale}`)
       .then((r) => r.json())
       .then((json) => setFormationsData(json.formations ?? []))
       .catch(() => setFormationsData([]))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [locale]);
 
   // Regrouper par secteur
   const grouped = useMemo(() => {
@@ -72,7 +75,7 @@ export default function CatalogueSection() {
             >
               <span style={{ width: 8, height: 8, borderRadius: "50%", background: ORANGE, boxShadow: `0 0 8px ${ORANGE}` }} />
               <span style={{ fontSize: "0.8rem", color: ORANGE, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 700 }}>
-                Pôle III · Formation
+                {t("sectionLabel")}
               </span>
             </motion.div>
 
@@ -84,8 +87,8 @@ export default function CatalogueSection() {
                 textTransform: "uppercase", lineHeight: 1.0, letterSpacing: "-0.02em", color: "#fff",
               }}
             >
-              Catalogue<br />
-              <span style={{ color: ORANGE }}>de Formations</span>
+              {t("sectionTitle")}<br />
+              <span style={{ color: ORANGE }}>{t("sectionTitleAccent")}</span>
             </motion.h2>
           </div>
 
@@ -104,7 +107,7 @@ export default function CatalogueSection() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
               </svg>
-              Formation sur mesure
+              {t("customCta")}
             </Link>
           </motion.div>
         </div>
@@ -119,8 +122,8 @@ export default function CatalogueSection() {
           }}
         >
           {isLoading
-            ? "Chargement du catalogue…"
-            : `${formationsData.length} programmes disponibles, organisés par domaine — du niveau initiation à expert. Cliquez sur une formation pour accéder au programme complet.`
+            ? t("loadingCatalogue")
+            : t("programmesCount", { count: formationsData.length })
           }
         </motion.p>
 
@@ -188,7 +191,7 @@ export default function CatalogueSection() {
                   fontSize: "0.75rem", color: "rgba(255,255,255,0.25)",
                   letterSpacing: "0.12em", flexShrink: 0,
                 }}>
-                  {formations.length} formation{formations.length > 1 ? "s" : ""}
+                  {formations.length > 1 ? t("formationCountPlural", { count: formations.length }) : t("formationCount", { count: formations.length })}
                 </span>
               </button>
 

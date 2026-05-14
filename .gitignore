@@ -48,6 +48,7 @@ Thumbs.db
 coverage/
 .cache/
 .aider*
+.worktrees/
 
 #Skills du projet
 skills/

@@ -1,9 +1,11 @@
-"use client";
+﻿"use client";
 
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { SERVICES, POLE_I, POLE_II, POLE_III, type Service } from "@/lib/data/services";
+import { useDataMessages } from "@/i18n/data-i18n";
 
 /* ── Variants ─────────────────────────────────────── */
 const fadeUp = {
@@ -17,6 +19,8 @@ const stagger = (delay = 0) => ({
 
 /* ── Icône SVG inline ─────────────────────────────── */
 function ServiceCard({ svc, index }: { svc: Service; index: number }) {
+  const msg = useDataMessages();
+  const i18n = msg.services.items[svc.slug];
   return (
     <motion.div variants={fadeUp} style={{ position: "relative", padding: "0 12px", marginBottom: "4rem" }}>
       <Link href={`/services/${svc.slug}`} style={{ textDecoration: "none", display: "block", position: "relative" }}>
@@ -35,7 +39,7 @@ function ServiceCard({ svc, index }: { svc: Service; index: number }) {
           {/* Image de fond avec effet Ken Burns au hover */}
           <motion.img
             src={svc.heroImage}
-            alt={svc.title}
+            alt={i18n?.title ?? svc.slug}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             style={{
               opacity: 0.75,
@@ -103,8 +107,9 @@ function ServiceCard({ svc, index }: { svc: Service; index: number }) {
               lineHeight: 1.3,
               textAlign: "center",
               margin: 0,
+              whiteSpace: "pre-line",
             }}>
-              {svc.title}
+              {i18n?.title ?? svc.slug}
             </h1>
 
 
@@ -123,6 +128,7 @@ function PoleSection({
 }: {
   number: string; label: string; accent: string; services: Service[]; delay: number;
 }) {
+  const t = useTranslations("services.grid");
   return (
     <section style={{ marginBottom: "5rem" }}>
       {/* En-tête du pôle */}
@@ -153,7 +159,7 @@ function PoleSection({
           textTransform: "uppercase",
           color: `${accent}BB`,
         }}>
-          Pôle {number} — {label}
+          {t("poleLabel", { number, label })}
         </motion.h2>
       </motion.div>
 
@@ -178,6 +184,7 @@ function PoleSection({
    COMPOSANT PRINCIPAL
    ══════════════════════════════════════════════════════ */
 export default function ServicesGrid() {
+  const t = useTranslations("services.grid");
   return (
     <div style={{
       minHeight: "100vh",
@@ -205,7 +212,7 @@ export default function ServicesGrid() {
             color: "rgba(255,255,255,0.35)",
             marginBottom: "1.2rem",
           }}>
-            Africa Centred Technology
+            {t("eyebrow")}
           </motion.p>
 
           <motion.h1 variants={fadeUp} style={{
@@ -217,7 +224,7 @@ export default function ServicesGrid() {
             letterSpacing: "-0.01em",
             marginBottom: "1.8rem",
           }}>
-            Nos Services
+            {t("h1")}
           </motion.h1>
 
           <motion.div variants={fadeUp} style={{
@@ -230,9 +237,7 @@ export default function ServicesGrid() {
               lineHeight: 1.75,
               color: "rgba(255,255,255,0.55)",
             }}>
-              Trois pôles d'expertise complémentaires — l'ingénierie technologique pour construire,
-              le conseil pour structurer et la formation pour durer. Ensemble, ils forment une proposition unique
-              taillée pour les organisations africaines.
+              {t("description")}
             </p>
 
             <div style={{
@@ -243,19 +248,19 @@ export default function ServicesGrid() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle I — Ingénierie Technologique
+                  {t("poleI")}
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle II — Conseil
+                  {t("poleII")}
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#D35400" }} />
                 <span style={{ fontSize: "clamp(11px, 0.78rem, 0.82rem)", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
-                  Pôle III — Formation
+                  {t("poleIII")}
                 </span>
               </div>
             </div>
@@ -270,19 +275,19 @@ export default function ServicesGrid() {
 
         {/* ── Pôle I ── */}
         <PoleSection
-          number="I" label="Ingénierie Technologique"
+          number="I" label={t("poleI").replace(/Pôle I[^—]*— ?/, "")}
           accent="#D35400" services={POLE_I} delay={0.1}
         />
 
         {/* ── Pôle II ── */}
         <PoleSection
-          number="II" label="Conseil"
+          number="II" label={t("poleII").replace(/Pôle II[^—]*— ?/, "")}
           accent="#D35400" services={POLE_II} delay={0.15}
         />
 
         {/* ── Pôle III ── */}
         <PoleSection
-          number="III" label="Formation"
+          number="III" label={t("poleIII").replace(/Pôle III[^—]*— ?/, "")}
           accent="#D35400" services={POLE_III} delay={0.2}
         />
 
@@ -309,10 +314,10 @@ export default function ServicesGrid() {
               fontSize: "clamp(18px, 1.6rem, 1.8rem)",
               color: "#fff", fontWeight: 500, marginBottom: "0.5rem",
             }}>
-              Un projet en tête ?
+              {t("ctaTitle")}
             </p>
             <p style={{ fontSize: "clamp(13px, 0.9rem, 0.95rem)", color: "rgba(255,255,255,0.45)" }}>
-              Discutons de vos besoins et construisons ensemble la solution adaptée.
+              {t("ctaDesc")}
             </p>
           </div>
           <Link href="/contact" style={{
@@ -329,7 +334,7 @@ export default function ServicesGrid() {
             fontWeight: 500,
             transition: "background 0.2s",
           }}>
-            Démarrer un projet
+            {t("ctaButton")}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />

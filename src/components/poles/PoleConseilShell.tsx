@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * Pôle Conseil & Stratégie IT - Page Détaillée
@@ -6,8 +6,9 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Users,
   Target,
@@ -55,44 +56,42 @@ const COLOR = "#D35400";
 const services = [
   {
     icon: Target,
-    title: "Conseil Stratégique & Transformation",
     slug: "conseil-strategique",
-    description: "La stratégie avant l'outil. Nous définissons votre vision cible et votre feuille de route digitale avant tout investissement technologique.",
-    features: ["Audit de maturité digitale", "Roadmap stratégique", "Conduite du changement"],
-    image: "/images/poles/pole-conseil.jpg"
+    image: "/images/poles/pole-conseil.jpg",
+    key: "strategique",
   },
   {
     icon: Briefcase,
-    title: "Conseil Opérationnel & Métier",
     slug: "conseil-operationnel",
-    description: "L'excellence opérationnelle au service de la performance. Nous optimisons vos processus métiers réels avant de les numériser.",
-    features: ["Business Analysis terrain", "Optimisation des processus BPMN", "Alignement Stratégie-Outil"],
-    image: "/images/poles/pole-conseil.jpg"
+    image: "/images/poles/pole-conseil.jpg",
+    key: "operationnel",
   },
 ];
 
-const process = [
-  { step: "01", title: "Diagnostic", desc: "Analyse de l'existant, identification des enjeux et des opportunités" },
-  { step: "02", title: "Stratégie", desc: "Définition de la vision cible et élaboration de la roadmap" },
-  { step: "03", title: "Planification", desc: "Cadrage des initiatives, priorisation et allocation des ressources" },
-  { step: "04", title: "Exécution", desc: "Pilotage opérationnel, coordination des équipes et suivi de la réalisation" },
-  { step: "05", title: "Optimisation", desc: "Mesure des résultats, ajustements et amélioration continue" },
+const processList = [
+  { step: "01", key: "s01" },
+  { step: "02", key: "s02" },
+  { step: "03", key: "s03" },
+  { step: "04", key: "s04" },
+  { step: "05", key: "s05" },
 ];
 
 export default function PoleConseilShell() {
+  const t = useTranslations("poles.conseil");
+  const locale = useLocale();
   const screenSize = useMediaQuery();
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/shopify/blog")
+    fetch(`/api/shopify/blog?locale=${locale}`)
       .then((r) => r.json())
       .then(({ posts }) => {
         if (!cancelled && Array.isArray(posts)) setPosts(posts);
       })
       .catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [locale]);
 
   return (
     <div style={{
@@ -116,7 +115,7 @@ export default function PoleConseilShell() {
           }}>
 
         <motion.div
-          className="absolute top-1/4 -right-40 w-[800px] h-[800px] rounded-full"
+          className="absolute top-1/4 -end-40 w-[800px] h-[800px] rounded-full"
           style={{ background: `${COLOR}20`, filter: 'blur(150px)' }}
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 8, repeat: Infinity }}
@@ -137,7 +136,7 @@ export default function PoleConseilShell() {
               fontWeight: 700,
               fontFamily: 'var(--font-display)'
             }}>
-              Pôle 02
+              {t("eyebrow")}
             </span>
           </motion.div>
 
@@ -155,9 +154,9 @@ export default function PoleConseilShell() {
               textTransform: 'uppercase'
             }}
           >
-            Conseil &
+            {t("h1Line1")}
             <br />
-            <span style={{ color: COLOR }}>Stratégie IT</span>
+            <span style={{ color: COLOR }}>{t("h1Line2")}</span>
           </motion.h1>
 
           <motion.p
@@ -173,8 +172,7 @@ export default function PoleConseilShell() {
               fontFamily: 'var(--font-body)'
             }}
           >
-            Votre partenaire stratégique pour piloter et réussir votre transformation digitale.
-            Nous vous accompagnons de l'audit à l'exécution, avec une approche pragmatique et orientée résultats.
+            {t("heroDescription")}
           </motion.p>
 
           <motion.div
@@ -207,7 +205,7 @@ export default function PoleConseilShell() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
               }}>
-                Nos Services
+                {t("heroCtaServices")}
               </button>
             </Link>
             <Link href="/contact">
@@ -231,7 +229,7 @@ export default function PoleConseilShell() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
               }}>
-                Demander un Audit
+                {t("heroCtaAudit")}
               </button>
             </Link>
           </motion.div>
@@ -260,7 +258,7 @@ export default function PoleConseilShell() {
               lineHeight: 1.2,
               marginBottom: '1rem',
             }}>
-              Pourquoi se faire <span style={{ color: COLOR }}>conseiller</span> est stratégique ?
+              {t.rich("whyTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
             </h2>
             <p style={{
               fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
@@ -270,7 +268,7 @@ export default function PoleConseilShell() {
               fontFamily: 'var(--font-body)',
               lineHeight: 1.6,
             }}>
-              Dans un environnement digital complexe, le conseil stratégique n'est pas une option, c'est un accélérateur de performance
+              {t("whySubtitle")}
             </p>
           </motion.div>
 
@@ -280,30 +278,10 @@ export default function PoleConseilShell() {
             gap: screenSize === 'mobile' ? '2rem' : '2.5rem',
           }}>
             {[
-              {
-                icon: TrendingUp,
-                stat: "70%",
-                label: "Des projets IT échouent",
-                description: "par manque de stratégie claire et d'alignement métier-technologie"
-              },
-              {
-                icon: Target,
-                stat: "3x",
-                label: "Plus de ROI",
-                description: "pour les entreprises qui investissent dans le conseil avant l'implémentation"
-              },
-              {
-                icon: Zap,
-                stat: "-40%",
-                label: "De coûts IT",
-                description: "grâce à l'optimisation stratégique et l'élimination des redondances"
-              },
-              {
-                icon: LineChart,
-                stat: "85%",
-                label: "Des dirigeants",
-                description: "estiment que le conseil externe accélère leur transformation digitale"
-              },
+              { icon: TrendingUp, stat: "70%", labelKey: "stats.projectsFail.label", descKey: "stats.projectsFail.desc" },
+              { icon: Target, stat: "3x", labelKey: "stats.roi.label", descKey: "stats.roi.desc" },
+              { icon: Zap, stat: "-40%", labelKey: "stats.costs.label", descKey: "stats.costs.desc" },
+              { icon: LineChart, stat: "85%", labelKey: "stats.leaders.label", descKey: "stats.leaders.desc" },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -360,7 +338,7 @@ export default function PoleConseilShell() {
                     letterSpacing: '0.05em',
                     marginBottom: '1rem',
                   }}>
-                    {item.label}
+                    {t(item.labelKey as any)}
                   </div>
 
                   <p style={{
@@ -369,7 +347,7 @@ export default function PoleConseilShell() {
                     fontFamily: 'var(--font-body)',
                     lineHeight: 1.6,
                   }}>
-                    {item.description}
+                    {t(item.descKey as any)}
                   </p>
                 </motion.div>
               );
@@ -401,7 +379,7 @@ export default function PoleConseilShell() {
             fontFamily: 'var(--font-display)',
             textTransform: 'uppercase'
           }}>
-            Nos <span style={{ color: COLOR }}>Services</span>
+            {t.rich("servicesTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
@@ -409,7 +387,7 @@ export default function PoleConseilShell() {
             maxWidth: '700px',
             fontFamily: 'var(--font-body)'
           }}>
-            Un accompagnement sur mesure pour chaque étape de votre transformation
+            {t("servicesDesc")}
           </p>
         </motion.div>
 
@@ -451,7 +429,7 @@ export default function PoleConseilShell() {
                   }}>
                     <img
                       src={service.image}
-                      alt={service.title}
+                      alt={t(`services.${service.key}.title` as any)}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -501,7 +479,7 @@ export default function PoleConseilShell() {
                       textTransform: 'uppercase',
                       lineHeight: 1.2,
                     }}>
-                      {service.title}
+                      {t(`services.${service.key}.title` as any)}
                     </h3>
                     <p style={{
                       fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
@@ -511,11 +489,11 @@ export default function PoleConseilShell() {
                       fontFamily: 'var(--font-body)',
                       flex: 1,
                     }}>
-                      {service.description}
+                      {t(`services.${service.key}.description` as any)}
                     </p>
                     <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
-                      {service.features.map((feature, fi) => (
-                        <li key={fi} style={{
+                      {(["feature1", "feature2", "feature3"] as const).map((fk) => (
+                        <li key={fk} style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.5rem',
@@ -525,7 +503,7 @@ export default function PoleConseilShell() {
                           fontFamily: 'var(--font-body)'
                         }}>
                           <CheckCircle2 size={16} color={COLOR} />
-                          {feature}
+                          {t(`services.${service.key}.${fk}` as any)}
                         </li>
                       ))}
                     </ul>
@@ -542,7 +520,7 @@ export default function PoleConseilShell() {
                       letterSpacing: '0.1em',
                       transition: 'all 0.3s ease',
                     }}>
-                      En savoir plus <ArrowRight size={18} />
+                      {t("servicesCta")} <ArrowRight size={18} />
                     </div>
                   </div>
                 </motion.div>
@@ -570,11 +548,11 @@ export default function PoleConseilShell() {
             textTransform: 'uppercase'
           }}
         >
-          Notre <span style={{ color: COLOR }}>Méthodologie</span>
+          {t.rich("methodTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
         </motion.h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          {process.map((item, i) => (
+          {processList.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, x: -40 }}
@@ -609,14 +587,14 @@ export default function PoleConseilShell() {
                   color: '#fff',
                   fontFamily: 'var(--font-display)'
                 }}>
-                  {item.title}
+                  {t(`process.${item.key}.title` as any)}
                 </h3>
                 <p style={{
                   fontSize: '1rem',
                   color: 'rgba(255,255,255,0.80)',
                   fontFamily: 'var(--font-body)'
                 }}>
-                  {item.desc}
+                  {t(`process.${item.key}.desc` as any)}
                 </p>
               </div>
             </motion.div>
@@ -643,7 +621,7 @@ export default function PoleConseilShell() {
             textAlign: 'center',
           }}
         >
-          Pourquoi nous <span style={{ color: COLOR }}>choisir</span>
+          {t.rich("whyUsTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
         </motion.h2>
 
         <div style={{
@@ -652,26 +630,10 @@ export default function PoleConseilShell() {
           gap: screenSize === 'mobile' ? '1.5rem' : '2rem',
         }}>
           {[
-            {
-              icon: Target,
-              title: "Approche Pragmatique",
-              desc: "Nous privilégions les solutions concrètes et mesurables, adaptées à votre contexte et vos ressources."
-            },
-            {
-              icon: Users,
-              title: "Expertise Sectorielle",
-              desc: "Une connaissance approfondie des enjeux métiers et des spécificités de votre secteur d'activité."
-            },
-            {
-              icon: TrendingUp,
-              title: "ROI Démontré",
-              desc: "Accompagnement axé sur la création de valeur mesurable et l'optimisation de vos investissements IT."
-            },
-            {
-              icon: Shield,
-              title: "Neutralité Technologique",
-              desc: "Recommandations indépendantes et objectives, sans parti pris technologique ou commercial."
-            },
+            { icon: Target, key: "pragmatique" },
+            { icon: Users, key: "sectorielle" },
+            { icon: TrendingUp, key: "roi" },
+            { icon: Shield, key: "neutralite" },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
@@ -718,7 +680,7 @@ export default function PoleConseilShell() {
                   color: '#fff',
                   fontFamily: 'var(--font-display)',
                 }}>
-                  {item.title}
+                  {t(`whyUs.${item.key}.title` as any)}
                 </h3>
                 <p style={{
                   fontSize: '1rem',
@@ -726,7 +688,7 @@ export default function PoleConseilShell() {
                   color: 'rgba(255,255,255,0.80)',
                   fontFamily: 'var(--font-body)',
                 }}>
-                  {item.desc}
+                  {t(`whyUs.${item.key}.desc` as any)}
                 </p>
               </motion.div>
             );
@@ -754,7 +716,7 @@ export default function PoleConseilShell() {
             textTransform: 'uppercase',
             textAlign: 'center',
           }}>
-            Ce que nous <span style={{ color: COLOR }}>publions</span> sur le sujet
+            {t.rich("blogTitle", { accent: (chunks) => <span style={{ color: COLOR }}>{chunks}</span> })}
           </h2>
           <p style={{
             fontSize: screenSize === 'mobile' ? '1rem' : '1.2rem',
@@ -899,7 +861,7 @@ export default function PoleConseilShell() {
                           textTransform: 'uppercase',
                           letterSpacing: '0.1em',
                         }}>
-                          Lire l'article complet
+                          {t("blogCta")}
                           <ArrowRight size={20} />
                         </div>
                       </div>
