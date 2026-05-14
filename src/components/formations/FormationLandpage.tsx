@@ -1,21 +1,49 @@
 ﻿"use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { useTranslations, useLocale } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import {
-    Clock, Users, BookOpen, Sparkles, ChevronRight, ArrowRight,
-    Tag, Loader2, TrendingUp, Zap, Target, Shield, CheckCircle2,
-    Monitor, BarChart2, MessageCircle, GraduationCap,
-} from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
 import FooterStrip from "@/components/layout/FooterStrip";
+import CTAButton from "@/components/ui/CTAButton";
 
 /* ─────────────────────────────────────────────────────────────────
    CONSTANTS & DATA
 ───────────────────────────────────────────────────────────────── */
 const COLOR = "#D35400";
 
+const EXPERIENCE_BLOCKS = [
+    {
+        title: "Apprenants en situation réelle",
+        desc: "Dès le premier jour, vous travaillez sur poste avec de vrais outils professionnels. Pas de simulation, pas de cas fictifs — vous produisez directement.",
+    },
+    {
+        title: "80% pratique / 20% théorie",
+        desc: "Notre ratio inversé garantit une montée en compétence rapide. Chaque concept est immédiatement appliqué via des exercices tirés de vrais projets africains.",
+    },
+    {
+        title: "Interaction directe formateur",
+        desc: "Vos questions reçoivent une réponse immédiate. Le formateur corrige en temps réel, intervient sur votre écran et adapte le rythme à votre groupe.",
+    },
+    {
+        title: "Certificat numérique ACT",
+        desc: "En fin de formation, vous obtenez un certificat numérique signé ACT. Une preuve concrète de vos nouvelles compétences, à ajouter à votre profil LinkedIn ou CV.",
+    },
+];
+
+const PILLARS = [
+    { title: "80 % Pratique",         desc: "Chaque concept est immédiatement appliqué. Zéro slide sans exercice." },
+    { title: "Cas réels africains",    desc: "Nos exercices s'inspirent de vrais projets d'entreprises du continent." },
+    { title: "Petits groupes",         desc: "Maximum 12 apprenants par session pour un suivi individualisé." },
+    { title: "Formateurs praticiens",  desc: "Chaque formateur exerce son métier activement — pas de théoriciens." },
+    { title: "Certificat de compétences", desc: "À l'issue de chaque formation, vous recevez un certificat ACT attestant de vos acquis — à valoriser sur LinkedIn ou votre CV." },
+    { title: "Suivi post-formation",   desc: "3 mois de support WhatsApp inclus après chaque programme." },
+];
+
+const GUARANTEES = [
+    {  label: "Petits groupes ≤ 15",    detail: "On refuse des inscrits plutôt que de gonfler les groupes. Qualité > volume." },
+    { label: "Suivi post-formation",   detail: "3 mois de support WhatsApp inclus après chaque programme. Vos questions reçoivent une réponse réelle." },
+    {  label: "Ressources à vie",       detail: "Slides, exercices et enregistrements restent accessibles sans limite de durée." },
+];
 
 /* ─────────────────────────────────────────────────────────────────
    HOOK
@@ -105,9 +133,6 @@ function RippleButton({
             onClick={addRipple}
         >
             {children}
-            <span style={{ display: "inline-block", lineHeight: 0, transition: "transform 0.3s ease", transform: hovered ? `rotate(${arrowDeg}deg)` : "rotate(0deg)" }}>
-                <ArrowRight size={size === "lg" ? 20 : 16} />
-            </span>
             {ripples.map(r => (
                 <span key={r.id} style={{
                     position: "absolute", borderRadius: "50%",
@@ -141,72 +166,185 @@ function Grain() {
 /* ─────────────────────────────────────────────────────────────────
    HERO VIDEO
 ───────────────────────────────────────────────────────────────── */
+const HERO_STATS = [
+    { val: "+500",  lab: "professionnels formés" },
+    { val: "≤ 12",  lab: "apprenants / session"  },
+    { val: "80%",   lab: "pratique sur cas réels" },
+    { val: "100%",  lab: "formateurs praticiens"  },
+];
+
 function MarketingVideo() {
-    const tc = useTranslations("formations.catalogue");
+    const { scrollY } = useScroll();
+    const contentY    = useTransform(scrollY, [0, 700], ["0%", "18%"]);
+    const contentOp   = useTransform(scrollY, [0, 450], [1, 0]);
+    const videoY      = useTransform(scrollY, [0, 700], ["0%", "8%"]);
+
     return (
         <motion.section
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}
-            style={{ width: "100%", height: "100vh", minHeight: 600, position: "relative", zIndex: 2, overflow: "hidden", background: "#000" }}
+            style={{ width: "100%", height: "100vh", minHeight: 640, position: "relative", zIndex: 2, overflow: "hidden", background: "#050e0a" }}
         >
-            <video autoPlay muted loop playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            >
-                <source src="/Video/Promo.mp4" type="video/mp4" />
-            </video>
+            {/* Vidéo — parallax lent */}
+            <motion.div style={{ y: videoY, position: "absolute", inset: "-10% 0", zIndex: 0 }}>
+                <video autoPlay muted loop playsInline
+                    style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(0.35) brightness(0.45)" }}>
+                    <source src="/Video/Promo.mp4" type="video/mp4" />
+                </video>
+            </motion.div>
 
-            {/* Overlay */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,16,0.62) 0%, rgba(10,20,16,0.12) 35%, rgba(10,20,16,0.48) 72%, rgba(10,20,16,1) 100%)", pointerEvents: "none" }} />
+            {/* Overlay principal — masque le stock footage, donne la teinte ACT */}
+            <div aria-hidden style={{
+                position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+                background: "linear-gradient(135deg, rgba(5,14,10,0.96) 0%, rgba(10,20,16,0.82) 45%, rgba(5,14,10,0.92) 100%)",
+            }} />
 
-            {/* Content */}
-            <div style={{
+            {/* Grille graphique ACT (dot grid) */}
+            <div aria-hidden style={{
+                position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+                backgroundImage: "radial-gradient(rgba(211,84,0,0.18) 1px, transparent 1px)",
+                backgroundSize: "36px 36px",
+                maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+                WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+            }} />
+
+            {/* Glow orange gauche */}
+            <div aria-hidden style={{
+                position: "absolute", top: "20%", left: "-5%", zIndex: 1, pointerEvents: "none",
+                width: "45vw", height: "55vh",
+                background: "radial-gradient(ellipse, rgba(211,84,0,0.12) 0%, transparent 68%)",
+            }} />
+
+            {/* Glow vert ACT droite */}
+            <div aria-hidden style={{
+                position: "absolute", bottom: "15%", right: "5%", zIndex: 1, pointerEvents: "none",
+                width: "35vw", height: "40vh",
+                background: "radial-gradient(ellipse, rgba(27,48,34,0.55) 0%, transparent 70%)",
+            }} />
+
+            {/* Fondu bas vers la section suivante */}
+            <div aria-hidden style={{
+                position: "absolute", bottom: 0, left: 0, right: 0, height: "220px", zIndex: 2, pointerEvents: "none",
+                background: "linear-gradient(to bottom, transparent, #0A1410)",
+            }} />
+
+            {/* ── Contenu principal — parallax rapide ── */}
+            <motion.div style={{
+                y: contentY, opacity: contentOp,
                 position: "absolute", inset: 0, zIndex: 3,
                 display: "flex", flexDirection: "column", justifyContent: "center",
-                padding: "clamp(1.5rem, 8vw, 8rem)",
-                paddingTop: "clamp(6rem, 14vh, 12rem)",
-                paddingBottom: "clamp(4rem, 10vh, 8rem)",
+                padding: "clamp(1.5rem, 7vw, 7rem)",
+                paddingTop: "clamp(7rem, 16vh, 13rem)",
+                paddingBottom: "clamp(3rem, 8vh, 6rem)",
             }}>
+
+                {/* Eyebrow */}
                 <motion.div
-                    initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.7 }}
-                    style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.2rem" }}
+                    initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 0.7 }}
+                    style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem" }}
                 >
-                    <div style={{ width: 48, height: 3, background: COLOR }} />
-                    <span style={{ fontSize: "clamp(0.7rem, 0.9vw, 0.85rem)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.32em", color: COLOR }}>
-                        Africa Centred Technology · Pôle Formation
+                    <div style={{ width: 40, height: 2, background: COLOR }} />
+                    <span style={{
+                        fontSize: "clamp(0.65rem, 0.85vw, 0.8rem)", fontWeight: 700,
+                        textTransform: "uppercase", letterSpacing: "0.3em", color: COLOR,
+                        fontFamily: "var(--font-body)",
+                    }}>
+                        Africa Centred Technology &nbsp;·&nbsp; Pôle Formation
                     </span>
                 </motion.div>
 
+                {/* H1 */}
                 <motion.h1
                     initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 1, ease: [0.6, 0.08, 0.02, 0.99] }}
-                    style={{ fontSize: "clamp(2.5rem, 7vw, 6.5rem)", fontWeight: 900, textTransform: "uppercase", fontFamily: "var(--font-display)", lineHeight: 0.95, letterSpacing: "-0.03em", margin: "0 0 2rem", maxWidth: 1100 }}
+                    transition={{ delay: 0.75, duration: 1, ease: [0.6, 0.08, 0.02, 0.99] }}
+                    style={{
+                        fontSize: "clamp(2.6rem, 6.8vw, 6.2rem)",
+                        fontWeight: 900, textTransform: "uppercase",
+                        fontFamily: "var(--font-display)",
+                        lineHeight: 0.95, letterSpacing: "-0.03em",
+                        margin: "0 0 2rem", maxWidth: 1060,
+                    }}
                 >
-                    <span style={{ color: "#fff" }}>{tc("landpageHeroLine1")}</span><br />
-                    <span style={{ color: COLOR }}>{tc("landpageHeroLine2")}</span><br />
-                    <span style={{ color: "rgba(255,255,255,0.7)" }}>{tc("landpageHeroLine3")}</span>
+                    <span style={{ color: "#fff", display: "block" }}>Maîtrisez les outils</span>
+                    <span style={{ color: COLOR, display: "block" }}>qui font la différence</span>
+                    <span style={{ color: "rgba(255,255,255,0.55)", display: "block" }}>dès demain matin.</span>
                 </motion.h1>
 
+                {/* Description */}
                 <motion.p
-                    initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}
-                    style={{ fontSize: "clamp(1rem, 1.4vw, 1.2rem)", color: "rgba(255,255,255,0.78)", lineHeight: 1.65, maxWidth: 640, margin: "0 0 3rem", fontFamily: "var(--font-body)" }}
+                    initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.05, duration: 0.7 }}
+                    style={{
+                        fontSize: "clamp(1rem, 1.35vw, 1.18rem)",
+                        color: "rgba(255,255,255,0.72)", lineHeight: 1.7,
+                        maxWidth: 580, margin: "0 0 2.8rem",
+                        fontFamily: "var(--font-body)",
+                    }}
                 >
-                    {tc("landpageHeroSubtitle")}
+                    Formations intensives conçues par des praticiens africains sur des cas réels.
+                    En 1 à 3 jours, vous repartez avec des compétences applicables le lendemain.
                 </motion.p>
 
+                {/* CTAs */}
                 <motion.div
-                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.6 }}
-                    style={{ display: "flex", gap: "1.2rem", flexWrap: "wrap" }}
+                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3, duration: 0.6 }}
+                    style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3.5rem" }}
                 >
-                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">{tc("heroCatalogCta")}</RippleButton>
-                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">{tc("heroRegisterCta")}</RippleButton>
+                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">
+                        Voir le catalogue
+                    </RippleButton>
+                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">
+                        S&apos;inscrire maintenant
+                    </RippleButton>
+                    <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
+                        Réponse sous 24h · Sans engagement
+                    </span>
                 </motion.div>
-            </div>
 
-            {/* Scroll hint */}
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
-                style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)", zIndex: 4, color: "rgba(255,255,255,0.3)" }}
-            >
-                <ChevronRight size={32} style={{ transform: "rotate(90deg)" }} />
+                {/* Stats strip */}
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.55, duration: 0.6 }}
+                    style={{
+                        display: "flex", gap: "0", flexWrap: "wrap",
+                        borderTop: "1px solid rgba(255,255,255,0.08)",
+                        paddingTop: "2rem", maxWidth: 720,
+                    }}
+                >
+                    {HERO_STATS.map((s, i) => (
+                        <div key={i} style={{
+                            flex: "1 1 160px",
+                            padding: "0 2rem 0 0",
+                            borderRight: i < HERO_STATS.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                            marginRight: i < HERO_STATS.length - 1 ? "2rem" : 0,
+                        }}>
+                            <div style={{ color: COLOR, fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 800, fontFamily: "var(--font-display)", lineHeight: 1 }}>
+                                {s.val}
+                            </div>
+                            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "0.35rem", fontFamily: "var(--font-body)" }}>
+                                {s.lab}
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
+
             </motion.div>
+
+            {/* Flèche scroll */}
+            <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 0.6 }}
+                style={{ position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)", zIndex: 4, cursor: "pointer" }}
+                onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })}
+            >
+                <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                    style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}
+                >
+                    <div style={{ width: 1, height: 36, background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.3))" }} />
+                    <div style={{ width: 6, height: 6, borderRight: "1px solid rgba(255,255,255,0.4)", borderBottom: "1px solid rgba(255,255,255,0.4)", transform: "rotate(45deg)" }} />
+                </motion.div>
+            </motion.div>
+
         </motion.section>
     );
 }
@@ -214,19 +352,8 @@ function MarketingVideo() {
 /* ─────────────────────────────────────────────────────────────────
    EXPÉRIENCE ACT — 4 storytelling blocks
 ───────────────────────────────────────────────────────────────── */
-interface ResolvedExperienceBlock {
-    icon: React.ElementType;
-    emoji: string;
-    title: string;
-    desc: string;
-    highlight: string;
-    barLabel: string | null;
-    barValue: number | null;
-}
-
-function ExperienceBlock({ block, index, screenSize }: { block: ResolvedExperienceBlock; index: number; screenSize: string }) {
+function ExperienceBlock({ block, index, screenSize }: { block: typeof EXPERIENCE_BLOCKS[number]; index: number; screenSize: string }) {
     const [hovered, setHovered] = useState(false);
-    const Icon = block.icon;
 
     return (
         <motion.div
@@ -242,59 +369,13 @@ function ExperienceBlock({ block, index, screenSize }: { block: ResolvedExperien
                 boxShadow: hovered ? `0 24px 64px rgba(211,84,0,0.12)` : "none",
             }}
         >
-            {/* Icon row */}
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.6rem" }}>
-                <div style={{
-                    width: 56, height: 56, borderRadius: "0.75rem",
-                    background: hovered ? `${COLOR}22` : `${COLOR}12`,
-                    border: `1px solid ${hovered ? COLOR + "55" : COLOR + "22"}`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    transition: "all 0.35s ease",
-                    transform: hovered ? "scale(1.08) rotate(-4deg)" : "scale(1) rotate(0deg)",
-                }}>
-                    <Icon size={28} color={COLOR} />
-                </div>
-                <span style={{ fontSize: "2rem", lineHeight: 1 }}>{block.emoji}</span>
-            </div>
-
             <h3 style={{ fontSize: screenSize === "mobile" ? "1.5rem" : "1.8rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", marginBottom: "0.85rem", lineHeight: 1.2 }}>
                 {block.title}
             </h3>
 
-            <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontFamily: "var(--font-body)", marginBottom: block.barValue !== null ? "1.5rem" : "1.2rem" }}>
+            <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, fontFamily: "var(--font-body)" }}>
                 {block.desc}
             </p>
-
-            {/* Animated progress bar */}
-            {block.barValue !== null && block.barLabel !== null && (
-                <div style={{ marginBottom: "1.2rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                        <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em" }}>{block.barLabel}</span>
-                        <span style={{ fontSize: "1.05rem", fontWeight: 800, color: COLOR }}>{block.barValue}%</span>
-                    </div>
-                    <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 9999, overflow: "hidden" }}>
-                        <motion.div
-                            initial={{ width: 0 }} whileInView={{ width: `${block.barValue}%` }}
-                            viewport={{ once: true }} transition={{ duration: 1.3, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                            style={{ height: "100%", background: `linear-gradient(to right, ${COLOR}, #e8601a)`, borderRadius: 9999 }}
-                        />
-                    </div>
-                </div>
-            )}
-
-            {/* Badge */}
-            <div style={{
-                display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                padding: "0.35rem 0.9rem", borderRadius: "2rem",
-                background: hovered ? `${COLOR}18` : "rgba(255,255,255,0.04)",
-                border: `1px solid ${hovered ? COLOR + "44" : "rgba(255,255,255,0.08)"}`,
-                fontSize: "1rem", fontWeight: 700,
-                color: hovered ? COLOR : "rgba(255,255,255,0.5)",
-                transition: "all 0.3s ease", fontFamily: "var(--font-body)",
-            }}>
-                <CheckCircle2 size={14} color={hovered ? COLOR : "rgba(255,255,255,0.3)"} />
-                {block.highlight}
-            </div>
         </motion.div>
     );
 }
@@ -309,7 +390,6 @@ interface FormationCardData {
 }
 
 function ProgramCard({ program, index, screenSize }: { program: FormationCardData; index: number; screenSize: string }) {
-    const tc = useTranslations("formations.catalogue");
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -319,55 +399,86 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
                 onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
                 style={{
                     height: "100%", display: "flex", flexDirection: "column",
-                    background: "rgba(255,255,255,0.02)",
-                    border: hovered ? `1px solid ${COLOR}` : "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "1rem", overflow: "hidden",
-                    transition: "all 0.35s ease",
-                    transform: hovered ? "translateY(-8px)" : "translateY(0)",
-                    boxShadow: hovered ? `0 24px 64px ${COLOR}2A` : "none",
+                    background: hovered ? "rgba(211,84,0,0.04)" : "#0d1a14",
+                    border: hovered ? `1px solid ${COLOR}55` : "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: "0.875rem", overflow: "hidden",
+                    transition: "all 0.3s ease",
+                    transform: hovered ? "translateY(-5px)" : "translateY(0)",
+                    boxShadow: hovered ? `0 16px 48px ${COLOR}18` : "none",
                     cursor: "pointer",
                 }}
             >
+                {/* Accent top bar */}
+                <div style={{ height: 2, background: hovered ? `linear-gradient(90deg, ${COLOR}, #F39C12 60%, transparent)` : "rgba(255,255,255,0.04)", transition: "background 0.3s" }} />
+
                 {/* Image */}
-                <div style={{ position: "relative", height: screenSize === "mobile" ? 180 : 220, overflow: "hidden", background: "rgba(0,0,0,0.3)" }}>
-                    {program.imageUrl && (
+                <div style={{ position: "relative", height: screenSize === "mobile" ? 170 : 200, overflow: "hidden", flexShrink: 0 }}>
+                    {program.imageUrl ? (
                         <img src={program.imageUrl} alt={program.title}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease, filter 0.4s ease", transform: hovered ? "scale(1.08)" : "scale(1)", filter: hovered ? "brightness(0.75)" : "brightness(0.55) grayscale(30%)" }}
+                            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.55s ease, filter 0.4s ease", transform: hovered ? "scale(1.06)" : "scale(1)", filter: hovered ? "brightness(0.65)" : "brightness(0.45) saturate(0.7)" }}
                         />
+                    ) : (
+                        <div style={{ width: "100%", height: "100%", background: `linear-gradient(135deg, ${COLOR}15, rgba(255,255,255,0.03))` }} />
                     )}
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(10,20,16,0.95) 100%)" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 30%, rgba(13,26,20,0.97) 100%)" }} />
+
+                    {/* Niveau badge — top right */}
                     {program.niveau && (
-                        <div style={{ position: "absolute", bottom: "1rem", left: "1.5rem", padding: "0.3rem 0.85rem", borderRadius: "2rem", background: COLOR, fontSize: "0.88rem", fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                        <div style={{
+                            position: "absolute", top: "0.85rem", right: "0.85rem",
+                            padding: "0.2rem 0.7rem", borderRadius: "2rem",
+                            background: "rgba(0,0,0,0.55)", border: `1px solid ${COLOR}66`,
+                            backdropFilter: "blur(6px)",
+                            fontSize: "0.7rem", fontWeight: 700, color: COLOR,
+                            textTransform: "uppercase", letterSpacing: "0.1em",
+                        }}>
                             {program.niveau}
+                        </div>
+                    )}
+
+                    {/* Prix overlay — bottom left */}
+                    {program.prix && (
+                        <div style={{ position: "absolute", bottom: "0.9rem", left: "1.1rem" }}>
+                            <span style={{ fontSize: "1.5rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1 }}>{program.prix}</span>
                         </div>
                     )}
                 </div>
 
                 {/* Body */}
-                <div style={{ padding: screenSize === "mobile" ? "1.5rem" : "2rem", flex: 1, display: "flex", flexDirection: "column" }}>
-                    {program.secteur && (
-                        <span style={{ fontSize: "0.88rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR, marginBottom: "0.6rem", display: "block" }}>{program.secteur}</span>
-                    )}
-                    <h3 style={{ fontSize: screenSize === "mobile" ? "1.5rem" : "1.75rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: "0.9rem", textTransform: "uppercase" }}>
+                <div style={{ padding: screenSize === "mobile" ? "1.3rem 1.5rem" : "1.5rem 1.8rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                    {/* Secteur + durée */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.65rem" }}>
+                        {program.secteur && (
+                            <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: COLOR }}>{program.secteur}</span>
+                        )}
+                        {program.duree && (
+                            <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-body)" }}>{program.duree}</span>
+                        )}
+                    </div>
+
+                    <h3 style={{ fontSize: screenSize === "mobile" ? "1.35rem" : "1.5rem", fontWeight: 800, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: "0.65rem" }}>
                         {program.title}
                     </h3>
-                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontFamily: "var(--font-body)", flex: 1, marginBottom: "1.4rem" }}>
+                    <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, fontFamily: "var(--font-body)", flex: 1, marginBottom: "1.2rem" }}>
                         {program.accroche}
                     </p>
 
-                    {/* Meta */}
-                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-                        {program.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", color: "rgba(255,255,255,0.5)" }}><Clock    size={14} color={COLOR} />{program.duree}</span>}
-                        {program.format && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", color: "rgba(255,255,255,0.5)" }}><BookOpen size={14} color={COLOR} />{program.format}</span>}
-                        {program.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "1rem", fontWeight: 700, color: COLOR }}><Tag      size={14} color={COLOR} />{program.prix}</span>}
-                    </div>
-
-                    {/* CTA — arrow slides right */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: hovered ? "#fff" : COLOR, fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.3s" }}>
-                        {tc("discoverCta")}
-                        <span style={{ display: "inline-flex", transition: "transform 0.3s ease", transform: hovered ? "translateX(6px)" : "translateX(0)" }}>
-                            <ArrowRight size={17} />
+                    {/* CTA */}
+                    <div style={{
+                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                        paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.06)",
+                    }}>
+                        <span style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hovered ? COLOR : "rgba(255,255,255,0.4)", transition: "color 0.3s", fontFamily: "var(--font-body)" }}>
+                            Voir la formation
                         </span>
+                        <span style={{
+                            width: 30, height: 30, borderRadius: "0.4rem",
+                            background: hovered ? COLOR : "rgba(255,255,255,0.06)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: "1rem", color: "#fff",
+                            transition: "background 0.3s, transform 0.3s",
+                            transform: hovered ? "translateX(3px)" : "translateX(0)",
+                        }}>→</span>
                     </div>
                 </div>
             </motion.div>
@@ -376,29 +487,139 @@ function ProgramCard({ program, index, screenSize }: { program: FormationCardDat
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   GUARANTEE CARD — extracted to avoid hooks-in-loop
+   GUARANTEE CARD
 ───────────────────────────────────────────────────────────────── */
-interface ResolvedGuarantee { emoji: string; label: string; detail: string; }
-function GuaranteeCard({ g, i }: { g: ResolvedGuarantee; i: number }) {
+const GUARANTEE_ICONS = ["◈", "◉", "◎"];
+
+function GuaranteeCard({ g, i }: { g: typeof GUARANTEES[number]; i: number }) {
     const [hov, setHov] = useState(false);
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ delay: i * 0.13, duration: 0.7, ease: [0.6, 0.08, 0.02, 0.99] }}
             onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
             style={{
-                padding: "2rem 1.8rem",
-                background: hov ? (i === 0 ? `${COLOR}12` : "rgba(255,255,255,0.04)") : (i === 0 ? `${COLOR}08` : "rgba(255,255,255,0.02)"),
-                border: `1px solid ${hov ? (i === 0 ? COLOR + "55" : "rgba(255,255,255,0.12)") : (i === 0 ? COLOR + "2A" : "rgba(255,255,255,0.07)")}`,
-                borderRadius: "0.85rem",
-                transition: "all 0.3s ease",
-                transform: hov ? "translateY(-5px)" : "translateY(0)",
-                boxShadow: hov ? "0 16px 48px rgba(0,0,0,0.18)" : "none",
+                padding: "3rem 2.8rem 3.2rem",
+                minHeight: "240px",
+                background: hov ? "rgba(211,84,0,0.06)" : "rgba(255,255,255,0.025)",
+                border: `1px solid ${hov ? COLOR + "55" : "rgba(255,255,255,0.09)"}`,
+                borderRadius: "1.2rem",
+                transition: "all 0.35s ease",
+                transform: hov ? "translateY(-8px)" : "translateY(0)",
+                boxShadow: hov ? `0 28px 72px rgba(0,0,0,0.28), 0 0 0 1px ${COLOR}22` : "none",
+                position: "relative", overflow: "hidden",
+                display: "flex", flexDirection: "column",
             }}
         >
-            <div style={{ fontSize: "1.8rem", marginBottom: "1rem" }}>{g.emoji}</div>
-            <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: i === 0 ? COLOR : "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{g.label}</h3>
-            <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.58)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{g.detail}</p>
+            {/* Top accent bar */}
+            <div style={{
+                position: "absolute", top: 0, left: 0, right: 0, height: 3,
+                background: hov
+                    ? `linear-gradient(90deg, ${COLOR}, #F39C12 60%, transparent)`
+                    : `linear-gradient(90deg, ${COLOR}44, transparent)`,
+                transition: "background 0.35s",
+            }} />
+
+            {/* Icon */}
+            <div style={{
+                fontSize: "1.8rem", color: hov ? COLOR : `${COLOR}88`,
+                marginBottom: "1.4rem", lineHeight: 1,
+                transition: "color 0.35s",
+            }}>
+                {GUARANTEE_ICONS[i]}
+            </div>
+
+            <h3 style={{
+                fontSize: "1.4rem", fontWeight: 800, color: "#fff",
+                marginBottom: "1rem", fontFamily: "var(--font-display)", lineHeight: 1.2,
+            }}>
+                {g.label}
+            </h3>
+            <p style={{
+                fontSize: "1rem", color: "rgba(255,255,255,0.55)",
+                lineHeight: 1.85, fontFamily: "var(--font-body)", margin: 0, flex: 1,
+            }}>
+                {g.detail}
+            </p>
         </motion.div>
+    );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   GUARANTEES SECTION — avec parallax
+───────────────────────────────────────────────────────────────── */
+function GuaranteesSection({ screenSize }: { screenSize: string }) {
+    const ref = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+    const bgTextY  = useTransform(scrollYProgress, [0, 1], ["-8%",  "8%"]);
+    const glowX    = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+    const headerY  = useTransform(scrollYProgress, [0, 0.35], ["40px", "0px"]);
+    const headerOp = useTransform(scrollYProgress, [0, 0.3],  [0, 1]);
+
+    return (
+        <section
+            ref={ref}
+            style={{
+                padding: screenSize === "mobile" ? "6rem 1.5rem" : "8rem 6rem",
+                borderTop: "1px solid rgba(255,255,255,0.05)",
+                position: "relative", zIndex: 1, overflow: "hidden",
+            }}
+        >
+            {/* Texte fantôme parallax */}
+            <motion.div aria-hidden style={{
+                y: bgTextY,
+                position: "absolute", top: "50%", left: "50%",
+                translateX: "-50%", translateY: "-50%",
+                fontSize: "clamp(7rem, 18vw, 20rem)",
+                fontWeight: 900, fontFamily: "var(--font-display)",
+                textTransform: "uppercase", letterSpacing: "-0.04em",
+                color: "rgba(255,255,255,0.018)",
+                whiteSpace: "nowrap", userSelect: "none", pointerEvents: "none", zIndex: 0,
+            }}>
+                GARANTIES
+            </motion.div>
+
+            {/* Glow parallax horizontal */}
+            <motion.div aria-hidden style={{
+                x: glowX,
+                position: "absolute", top: "45%", left: "50%",
+                width: "60vw", height: "40vw",
+                background: `radial-gradient(ellipse, ${COLOR}07 0%, transparent 70%)`,
+                translateX: "-50%", translateY: "-50%",
+                pointerEvents: "none", zIndex: 0,
+            }} />
+
+            <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+                {/* Header avec parallax */}
+                <motion.div style={{ y: headerY, opacity: headerOp }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
+                        <div style={{ width: 36, height: 2, background: COLOR }} />
+                        <span style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR, fontFamily: "var(--font-body)" }}>
+                            Nos engagements
+                        </span>
+                    </div>
+                    <h2 style={{
+                        fontSize: screenSize === "mobile" ? "clamp(2.5rem,9vw,3.5rem)" : "clamp(3rem,5vw,4.5rem)",
+                        fontWeight: 900, fontFamily: "var(--font-display)",
+                        textTransform: "uppercase", lineHeight: 1.0,
+                        marginBottom: screenSize === "mobile" ? "3rem" : "4rem",
+                    }}>
+                        Des garanties <span style={{ color: COLOR }}>concrètes</span>
+                    </h2>
+                </motion.div>
+
+                {/* Grille 3 colonnes */}
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)",
+                    gap: "1.5rem",
+                }}>
+                    {GUARANTEES.map((g, i) => <GuaranteeCard key={i} g={g} i={i} />)}
+                </div>
+            </div>
+        </section>
     );
 }
 
@@ -406,8 +627,6 @@ function GuaranteeCard({ g, i }: { g: ResolvedGuarantee; i: number }) {
    INSCRIPTION FORM
 ───────────────────────────────────────────────────────────────── */
 function InscriptionForm({ screenSize, formations }: { screenSize: string; formations: FormationCardData[] }) {
-    const t = useTranslations("formations.inscription");
-    const locale = useLocale();
     const [form, setForm] = useState({ nom: "", email: "", telephone: "", formation: "", message: "" });
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
@@ -441,7 +660,6 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
                     formationSlug: formations.find(f => f.title === form.formation)?.slug ?? "",
                     message: form.message, typeClient: "B2C",
                     ville: "", formatsPreferes: [], disponibilite: "",
-                    locale,
                 }),
             });
             if (res.ok) {
@@ -460,9 +678,9 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
             style={{ textAlign: "center", padding: "3.5rem 2rem", background: "rgba(22,163,74,0.07)", border: "1px solid rgba(22,163,74,0.25)", borderRadius: "1rem" }}>
             <div style={{ fontSize: "3rem", marginBottom: "1.2rem" }}>🎉</div>
-            <h3 style={{ fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{t("landpageSuccessTitle")}</h3>
+            <h3 style={{ fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>Demande envoyée !</h3>
             <p style={{ color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)", lineHeight: 1.8, fontSize: "1.1rem" }}>
-                {t("landpageSuccessMessage", { hours: "24" })}
+                Notre équipe vous contactera sous <strong style={{ color: "#fff" }}>24h ouvrées</strong> pour confirmer votre inscription et vous communiquer les modalités.
             </p>
         </motion.div>
     );
@@ -475,13 +693,13 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
 
             <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "1fr 1fr", gap: "1.4rem", marginBottom: "1.4rem" }}>
                 <div>
-                    <label style={labelStyle}>{t("landpageNomLabel")}</label>
+                    <label style={labelStyle}>Nom complet *</label>
                     <input required type="text" value={form.nom} onChange={e => setForm({ ...form, nom: e.target.value })}
-                        placeholder={t("landpageNomPlaceholder")} style={iStyle}
+                        placeholder="Votre nom complet" style={iStyle}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
                 </div>
                 <div>
-                    <label style={labelStyle}>{t("landpageEmailLabel")}</label>
+                    <label style={labelStyle}>Email *</label>
                     <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
                         placeholder="votre@email.com" style={iStyle}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
@@ -490,42 +708,42 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
 
             <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "1fr 1fr", gap: "1.4rem", marginBottom: "1.4rem" }}>
                 <div>
-                    <label style={labelStyle}>{t("landpageTelLabel")}</label>
+                    <label style={labelStyle}>Téléphone</label>
                     <input type="tel" value={form.telephone} onChange={e => setForm({ ...form, telephone: e.target.value })}
                         placeholder="+212 6XX XXX XXX" style={iStyle}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
                 </div>
                 <div>
-                    <label style={labelStyle}>{t("landpageFormationLabel")}</label>
+                    <label style={labelStyle}>Formation souhaitée *</label>
                     <select required value={form.formation} onChange={e => setForm({ ...form, formation: e.target.value })}
                         style={{ ...iStyle, cursor: "pointer" }}
                         onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}>
-                        <option value="" style={{ background: "#0A1410" }}>{t("landpageFormationDefault")}</option>
+                        <option value="" style={{ background: "#0A1410" }}>Choisissez une formation</option>
                         {formations.map(f => <option key={f.slug} value={f.title} style={{ background: "#0A1410" }}>{f.title}</option>)}
-                        <option value={t("landpageFormationUnknown")} style={{ background: "#0A1410" }}>{t("landpageFormationUnknown")}</option>
+                        <option value="Je ne sais pas encore" style={{ background: "#0A1410" }}>Je ne sais pas encore</option>
                     </select>
                 </div>
             </div>
 
             <div style={{ marginBottom: "2rem" }}>
-                <label style={labelStyle}>{t("landpageMessageLabel")}</label>
+                <label style={labelStyle}>Message (facultatif)</label>
                 <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                    rows={3} placeholder={t("landpageMessagePlaceholder")}
+                    rows={3} placeholder="Votre niveau actuel, vos objectifs, vos contraintes horaires..."
                     style={{ ...iStyle, resize: "vertical", lineHeight: 1.65 }}
                     onFocus={e => (e.target.style.borderColor = COLOR)} onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.09)")} />
             </div>
 
             {submitError && (
                 <p style={{ color: "#ef4444", fontSize: "1rem", fontFamily: "var(--font-body)", marginBottom: "1rem", textAlign: "center" }}>
-                    {t("landpageError")}
+                    Une erreur est survenue. Veuillez réessayer.
                 </p>
             )}
             <RippleButton type="submit" arrowDeg={90} size="lg" disabled={sending} style={{ width: "100%", justifyContent: "center" }}>
-                {sending ? t("landpageSubmitting") : t("landpageSubmitIdle")}
+                {sending ? "Envoi en cours…" : "Réserver ma place"}
             </RippleButton>
 
             <p style={{ textAlign: "center", fontSize: "1rem", color: "rgba(255,255,255,0.3)", marginTop: "1.2rem", fontFamily: "var(--font-body)" }}>
-                {t("landpageConfirmation")}
+                ✓ Réponse sous 24h · ✓ Sans engagement
             </p>
         </motion.form>
     );
@@ -535,41 +753,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
    PAGE
 ───────────────────────────────────────────────────────────────── */
 export default function FormationLandpage() {
-    const t = useTranslations("formations.inscription");
-    const tc = useTranslations("formations.catalogue");
-    const locale = useLocale();
     const screenSize = useMediaQuery();
-
-    // Resolved arrays from translations
-    const STATS = [
-        { value: tc("stats.formations.value"), label: tc("stats.formations.label"), sub: tc("stats.formations.sub") },
-        { value: tc("stats.pratique.value"),   label: tc("stats.pratique.label"),   sub: tc("stats.pratique.sub")   },
-        { value: tc("stats.prix.value"),       label: tc("stats.prix.label"),       sub: tc("stats.prix.sub")       },
-        { value: tc("stats.ratio.value"),      label: tc("stats.ratio.label"),      sub: tc("stats.ratio.sub")      },
-    ];
-
-    const EXPERIENCE_BLOCKS: ResolvedExperienceBlock[] = [
-        { icon: Monitor,       emoji: "👨‍💻", title: tc("experience.block1.title"), desc: tc("experience.block1.desc"), highlight: tc("experience.block1.highlight"), barLabel: tc("experience.block1.barLabel"), barValue: 100 },
-        { icon: BarChart2,     emoji: "📊", title: tc("experience.block2.title"), desc: tc("experience.block2.desc"), highlight: tc("experience.block2.highlight"), barLabel: tc("experience.block2.barLabel"), barValue: 80  },
-        { icon: MessageCircle, emoji: "🧑‍🏫", title: tc("experience.block3.title"), desc: tc("experience.block3.desc"), highlight: tc("experience.block3.highlight"), barLabel: null, barValue: null },
-        { icon: GraduationCap, emoji: "🎓", title: tc("experience.block4.title"), desc: tc("experience.block4.desc"), highlight: tc("experience.block4.highlight"), barLabel: null, barValue: null },
-    ];
-
-    const PILLARS = [
-        { icon: Zap,        title: tc("pillars.p1.title"), desc: tc("pillars.p1.desc") },
-        { icon: Target,     title: tc("pillars.p2.title"), desc: tc("pillars.p2.desc") },
-        { icon: Users,      title: tc("pillars.p3.title"), desc: tc("pillars.p3.desc") },
-        { icon: TrendingUp, title: tc("pillars.p4.title"), desc: tc("pillars.p4.desc") },
-        { icon: Shield,     title: tc("pillars.p5.title"), desc: tc("pillars.p5.desc") },
-        { icon: Sparkles,   title: tc("pillars.p6.title"), desc: tc("pillars.p6.desc") },
-    ];
-
-    const GUARANTEES: ResolvedGuarantee[] = [
-        { emoji: "👥", label: tc("guarantees.g1.label"), detail: tc("guarantees.g1.detail") },
-        { emoji: "🎓", label: tc("guarantees.g2.label"), detail: tc("guarantees.g2.detail") },
-        { emoji: "♾️", label: tc("guarantees.g3.label"), detail: tc("guarantees.g3.detail") },
-    ];
-
     const [formationsData, setFormationsData] = useState<FormationCardData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [fetchError, setFetchError] = useState(false);
@@ -578,7 +762,7 @@ export default function FormationLandpage() {
     const loadFromShopify = async () => {
         setIsLoading(true); setFetchError(false);
         try {
-            const res = await fetch(`/api/shopify/formations?locale=${locale}`);
+            const res = await fetch("/api/shopify/formations");
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const json = await res.json();
             setFormationsData(json.formations ?? []);
@@ -590,7 +774,7 @@ export default function FormationLandpage() {
         }
     };
 
-    useEffect(() => { loadFromShopify(); }, [locale]);
+    useEffect(() => { loadFromShopify(); }, []);
 
     const categories = useMemo(() =>
         ["Toutes", ...Array.from(new Set(formationsData.map(f => f.categorie).filter(Boolean)))],
@@ -604,6 +788,9 @@ export default function FormationLandpage() {
 
     const featured = useMemo(() => filtered[0] ?? null, [filtered]);
     const rest     = useMemo(() => filtered.slice(1), [filtered]);
+
+    const { scrollY } = useScroll();
+    const glowY = useTransform(scrollY, [0, 3000], ["20%", "65%"]);
 
     return (
         <div style={{ background: "#0A1410", minHeight: "100vh", overflowX: "hidden", position: "relative", color: "#fff" }}>
@@ -623,27 +810,13 @@ export default function FormationLandpage() {
             {/* Grid bg */}
             <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 0, backgroundImage: `linear-gradient(rgba(211,84,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(211,84,0,0.03) 1px,transparent 1px)`, backgroundSize: "80px 80px", pointerEvents: "none" }} />
 
-            {/* Glow */}
-            <div aria-hidden style={{ position: "fixed", top: "20%", left: "50%", width: "80vw", height: "60vw", zIndex: 0, background: "radial-gradient(ellipse,rgba(211,84,0,0.055) 0%,transparent 70%)", transform: "translate(-50%,-50%)", pointerEvents: "none" }} />
+            {/* Glow — parallax vertical */}
+            <motion.div aria-hidden style={{ position: "fixed", top: glowY, left: "50%", width: "80vw", height: "60vw", zIndex: 0, background: "radial-gradient(ellipse,rgba(211,84,0,0.055) 0%,transparent 70%)", translateX: "-50%", translateY: "-50%", pointerEvents: "none" }} />
 
             <div style={{ position: "relative", zIndex: 1 }}>
 
                 {/* ── HERO ─────────────────────────────────────────── */}
                 <MarketingVideo />
-
-                {/* ── STATS BAR ────────────────────────────────────── */}
-                <section style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.025)", padding: screenSize === "mobile" ? "2.5rem 1.5rem" : "2.5rem 6rem" }}>
-                    <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: screenSize === "mobile" ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: "1px", background: "rgba(255,255,255,0.06)", borderRadius: "0.75rem", overflow: "hidden" }}>
-                        {STATS.map((s, i) => (
-                            <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                                style={{ padding: screenSize === "mobile" ? "2rem 1.2rem" : "2.5rem", background: "#0A1410", textAlign: "center" }}>
-                                <div style={{ fontSize: screenSize === "mobile" ? "2.8rem" : "3.5rem", fontWeight: 900, color: COLOR, fontFamily: "var(--font-display)", lineHeight: 1 }}>{s.value}</div>
-                                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "0.5rem", fontFamily: "var(--font-display)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</div>
-                                <div style={{ fontSize: "1rem", color: "rgba(255,255,255,0.38)", marginTop: "0.25rem", fontFamily: "var(--font-body)" }}>{s.sub}</div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </section>
 
                 {/* ── L'EXPÉRIENCE ACT ─────────────────────────────── */}
                 <section style={{ padding: screenSize === "mobile" ? "5rem 1.5rem" : "7rem 6rem", position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
@@ -651,14 +824,14 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4rem", textAlign: "center" }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 40, height: 2, background: `linear-gradient(to right, transparent, ${COLOR})` }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageStorytellingEyebrow")}</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Storytelling</span>
                                 <div style={{ width: 40, height: 2, background: `linear-gradient(to left, transparent, ${COLOR})` }} />
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem, 8vw, 3.2rem)" : "clamp(3rem, 5vw, 4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, margin: 0 }}>
-                                {tc("landpageExperienceTitle")} <span style={{ color: COLOR }}>ACT</span>
+                                L&apos;expérience <span style={{ color: COLOR }}>ACT</span>
                             </h2>
                             <p style={{ marginTop: "1.2rem", fontSize: "1.25rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", maxWidth: 560, margin: "1.2rem auto 0", lineHeight: 1.75 }}>
-                                {tc("landpageExperienceSubtitle")}
+                                On ne vous dit pas qu'on est bons — on vous montre comment ça se passe vraiment.
                             </p>
                         </motion.div>
 
@@ -676,30 +849,24 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3.5rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageMethodEyebrow")}</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Notre méthode</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, color: "#fff", margin: 0 }}>
-                                {tc("landpageMethodTitle")} <span style={{ color: COLOR }}>ACT Formation</span>
+                                Pourquoi choisir <span style={{ color: COLOR }}>ACT Formation</span>
                             </h2>
                         </motion.div>
 
                         <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: "1.2rem" }}>
-                            {PILLARS.map((p, i) => {
-                                const Icon = p.icon;
-                                return (
-                                    <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                                        style={{ padding: "2rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "0.85rem", transition: "border-color 0.25s, transform 0.25s" }}
-                                        onMouseEnter={e => { e.currentTarget.style.borderColor = `${COLOR}44`; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.transform = "translateY(0)"; }}
-                                    >
-                                        <div style={{ width: 48, height: 48, borderRadius: "0.5rem", background: `${COLOR}18`, border: `1px solid ${COLOR}33`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.2rem" }}>
-                                            <Icon size={24} color={COLOR} />
-                                        </div>
-                                        <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#fff", marginBottom: "0.7rem", fontFamily: "var(--font-display)" }}>{p.title}</h3>
-                                        <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{p.desc}</p>
-                                    </motion.div>
-                                );
-                            })}
+                            {PILLARS.map((p, i) => (
+                                <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                                    style={{ padding: "2rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "0.85rem", transition: "border-color 0.25s, transform 0.25s" }}
+                                    onMouseEnter={e => { e.currentTarget.style.borderColor = `${COLOR}44`; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                                    onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                                >
+                                    <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#fff", marginBottom: "0.7rem", fontFamily: "var(--font-display)" }}>{p.title}</h3>
+                                    <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, fontFamily: "var(--font-body)", margin: 0 }}>{p.desc}</p>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -710,10 +877,10 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageCatalogueEyebrow")}</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Catalogue</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, marginBottom: "2rem" }}>
-                                {tc("landpageCatalogueTitle")} <span style={{ color: COLOR }}>{tc("landpageCatalogueTitleAccent")}</span>
+                                Nos <span style={{ color: COLOR }}>Formations</span>
                             </h2>
 
                             {/* Filter chips */}
@@ -739,37 +906,76 @@ export default function FormationLandpage() {
                         {/* Featured */}
                         <AnimatePresence mode="wait">
                             {!isLoading && featured && (
-                                <motion.div key={`feat-${activeFilter}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} style={{ marginBottom: "2.5rem" }}>
+                                <motion.div key={`feat-${activeFilter}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} style={{ marginBottom: "2rem" }}>
                                     <Link href={`/formations/${featured.slug}`} style={{ textDecoration: "none", display: "block" }}>
                                         <div style={{
                                             position: "relative", borderRadius: "1rem", overflow: "hidden",
-                                            background: "rgba(255,255,255,0.02)", border: `1px solid ${COLOR}44`,
-                                            display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "1fr 1fr",
-                                            minHeight: 340, transition: "box-shadow 0.3s, transform 0.3s",
+                                            background: "#0d1a14",
+                                            border: `1px solid ${COLOR}33`,
+                                            display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "5fr 6fr",
+                                            minHeight: 360, transition: "box-shadow 0.3s, border-color 0.3s",
                                         }}
-                                            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = `0 28px 72px ${COLOR}22`; el.style.transform = "translateY(-4px)"; }}
-                                            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "none"; el.style.transform = "translateY(0)"; }}
+                                            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = `0 24px 64px ${COLOR}18`; el.style.borderColor = `${COLOR}66`; }}
+                                            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "none"; el.style.borderColor = `${COLOR}33`; }}
                                         >
-                                            <div style={{ position: "absolute", top: "1.2rem", left: "1.2rem", zIndex: 2, padding: "0.3rem 1rem", background: COLOR, borderRadius: "2rem", fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fff" }}>
-                                                {tc("popularBadge")}
+                                            {/* Left accent bar */}
+                                            <div style={{ position: "absolute", top: 0, left: 0, width: 3, height: "100%", background: `linear-gradient(to bottom, ${COLOR}, #F39C12)`, zIndex: 2 }} />
+
+                                            {/* Image */}
+                                            <div style={{ position: "relative", overflow: "hidden", minHeight: screenSize === "mobile" ? 220 : "auto" }}>
+                                                {featured.imageUrl ? (
+                                                    <>
+                                                        <img src={featured.imageUrl} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.5) saturate(0.8)" }} />
+                                                        <div style={{ position: "absolute", inset: 0, background: screenSize === "mobile" ? "linear-gradient(to bottom, transparent 40%, rgba(13,26,20,0.98) 100%)" : "linear-gradient(to right, transparent 40%, rgba(13,26,20,0.98) 100%)" }} />
+                                                    </>
+                                                ) : (
+                                                    <div style={{ width: "100%", height: "100%", background: `linear-gradient(135deg, ${COLOR}12, rgba(255,255,255,0.02))` }} />
+                                                )}
+                                                {/* "Coup de cœur" badge */}
+                                                <div style={{ position: "absolute", top: "1.2rem", left: "1.5rem", zIndex: 3, display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.3rem 0.85rem", background: COLOR, borderRadius: "2rem", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "#fff" }}>
+                                                    ★ Notre sélection
+                                                </div>
                                             </div>
-                                            {featured.imageUrl && (
-                                                <div style={{ position: "relative", overflow: "hidden", minHeight: screenSize === "mobile" ? 240 : "auto" }}>
-                                                    <img src={featured.imageUrl} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.65)" }} />
-                                                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 50%, rgba(10,20,16,0.97) 100%)" }} />
+
+                                            {/* Content */}
+                                            <div style={{ padding: screenSize === "mobile" ? "2rem 1.8rem" : "2.8rem 3rem", display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
+                                                <div style={{ display: "flex", alignItems: "center", gap: "0.7rem" }}>
+                                                    {featured.secteur && <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: COLOR }}>{featured.secteur}</span>}
+                                                    {featured.niveau && (
+                                                        <>
+                                                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(255,255,255,0.25)" }} />
+                                                            <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{featured.niveau}</span>
+                                                        </>
+                                                    )}
                                                 </div>
-                                            )}
-                                            <div style={{ padding: screenSize === "mobile" ? "2rem 1.5rem" : "3rem", display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
-                                                <span style={{ fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: COLOR }}>{featured.secteur}</span>
-                                                <h3 style={{ fontSize: screenSize === "mobile" ? "1.6rem" : "2.2rem", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.15, margin: 0 }}>{featured.title}</h3>
-                                                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "1.15rem", lineHeight: 1.75, margin: 0, fontFamily: "var(--font-body)" }}>{featured.accroche}</p>
-                                                <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                                                    {featured.duree  && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)" }}><Clock    size={15} color={COLOR} />{featured.duree}</span>}
-                                                    {featured.format && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)" }}><BookOpen size={15} color={COLOR} />{featured.format}</span>}
-                                                    {featured.prix   && <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "1.05rem", fontWeight: 700, color: COLOR }}><Tag      size={15} color={COLOR} />{featured.prix}</span>}
+
+                                                <h3 style={{ fontSize: screenSize === "mobile" ? "1.7rem" : "clamp(1.8rem, 2.8vw, 2.4rem)", fontWeight: 900, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.1, margin: 0 }}>
+                                                    {featured.title}
+                                                </h3>
+
+                                                <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "1rem", lineHeight: 1.75, margin: 0, fontFamily: "var(--font-body)" }}>
+                                                    {featured.accroche}
+                                                </p>
+
+                                                {/* Durée + Prix */}
+                                                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap", paddingTop: "0.5rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                                                    {featured.duree && (
+                                                        <div>
+                                                            <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.15rem" }}>Durée</div>
+                                                            <div style={{ fontSize: "1rem", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>{featured.duree}</div>
+                                                        </div>
+                                                    )}
+                                                    {featured.prix && (
+                                                        <div>
+                                                            <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "0.15rem" }}>Tarif</div>
+                                                            <div style={{ fontSize: "1.5rem", fontWeight: 900, color: COLOR, fontFamily: "var(--font-display)", lineHeight: 1 }}>{featured.prix}</div>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: COLOR, fontSize: "1.05rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                                                    {tc("viewFormation")} <ArrowRight size={16} />
+
+                                                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", marginTop: "0.25rem" }}>
+                                                    <span style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)" }}>Voir la formation</span>
+                                                    <span style={{ width: 30, height: 30, borderRadius: "0.4rem", background: COLOR, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", color: "#fff" }}>→</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -784,16 +990,16 @@ export default function FormationLandpage() {
                                 style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: "1.5rem" }}>
                                 {isLoading ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "4rem" }}>
-                                        <Loader2 size={28} color={COLOR} style={{ animation: "spin 1s linear infinite" }} />
+                                        <p style={{ color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-body)", fontSize: "1rem" }}>Chargement…</p>
                                     </div>
                                 ) : fetchError ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
-                                        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "1.2rem", fontSize: "1rem", fontFamily: "var(--font-body)" }}>{tc("loadError")}</p>
-                                        <RippleButton onClick={loadFromShopify} arrowDeg={0} variant="outline">{tc("retry")}</RippleButton>
+                                        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "1.2rem", fontSize: "1rem", fontFamily: "var(--font-body)" }}>Impossible de charger les formations.</p>
+                                        <RippleButton onClick={loadFromShopify} arrowDeg={0} variant="outline">Réessayer</RippleButton>
                                     </div>
                                 ) : rest.length === 0 && !featured ? (
                                     <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "3rem" }}>
-                                        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "1rem" }}>{tc("emptyCategoryMessage")}</p>
+                                        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "1rem" }}>Aucune formation dans cette catégorie.</p>
                                     </div>
                                 ) : (
                                     rest.map((program, i) => <ProgramCard key={program.slug} program={program} index={i} screenSize={screenSize} />)
@@ -803,7 +1009,7 @@ export default function FormationLandpage() {
 
                         {formationsData.length > 0 && (
                             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ textAlign: "center", marginTop: "3rem" }}>
-                                <RippleButton href="/formations/all" arrowDeg={45}>{tc("viewFullCatalogue")}</RippleButton>
+                                <RippleButton href="/formations/all" arrowDeg={45}>Voir le catalogue complet</RippleButton>
                             </motion.div>
                         )}
                     </div>
@@ -815,13 +1021,13 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
                                 <div style={{ width: 36, height: 2, background: COLOR }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageEngagementsEyebrow")}</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Nos engagements</span>
                             </div>
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.2rem,8vw,3.2rem)" : "clamp(3rem,5vw,4.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 1.05, margin: 0 }}>
-                                {tc("landpageEngagementsTitle")} <span style={{ color: COLOR }}>{tc("landpageEngagementsTitleAccent")}</span>
+                                Des garanties <span style={{ color: COLOR }}>concrètes</span>
                             </h2>
                         </motion.div>
-                        <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: "1.2rem" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : screenSize === "tablet" ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: "1.8rem" }}>
                             {GUARANTEES.map((g, i) => <GuaranteeCard key={i} g={g} i={i} />)}
                         </div>
                     </div>
@@ -833,11 +1039,11 @@ export default function FormationLandpage() {
                         <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "420px 1fr", gap: screenSize === "mobile" ? "3rem" : "5rem", alignItems: "center" }}>
                             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: "relative" }}>
                                 <div style={{ borderRadius: "1rem", overflow: "hidden", border: `1px solid ${COLOR}33`, position: "relative", aspectRatio: "4/5", maxWidth: 420 }}>
-                                    <img src="/Sohaib_baroud_Manifeste.png" alt={tc("founder.imageAlt")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+                                    <img src="/Sohaib_baroud_Manifeste.png" alt="Sohaib Baroud — Fondateur ACT" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
                                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,20,16,0.7) 0%, transparent 55%)" }} />
                                     <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
-                                        <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>{tc("founder.name")}</p>
-                                        <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.95rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>{tc("founder.roleLabel")}</p>
+                                        <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>Sohaib Baroud</p>
+                                        <p style={{ margin: "0.2rem 0 0", color: COLOR, fontSize: "0.95rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>Fondateur & CEO · ACT</p>
                                     </div>
                                 </div>
                                 <div aria-hidden style={{ position: "absolute", top: "-1.5rem", left: "-1.5rem", width: 80, height: 80, border: `2px solid ${COLOR}22`, borderRadius: "0.5rem", zIndex: -1 }} />
@@ -846,21 +1052,21 @@ export default function FormationLandpage() {
                             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.5rem" }}>
                                     <div style={{ width: 36, height: 2, background: COLOR }} />
-                                    <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageFounderEyebrow")}</span>
+                                    <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Mot du fondateur</span>
                                 </div>
                                 <blockquote style={{ margin: "0 0 2rem", padding: 0, border: "none" }}>
                                     <p style={{ fontSize: screenSize === "mobile" ? "1.4rem" : "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.5, marginBottom: "1.5rem" }}>
-                                        &ldquo;{tc("founder.quote1")}&rdquo;
+                                        &ldquo;J&apos;ai créé ACT Formation parce que j&apos;en avais assez des formations théoriques qui n&apos;aident personne à avancer concrètement.&rdquo;
                                     </p>
                                     <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85, marginBottom: "1.2rem" }}>
-                                        {tc("founder.quote2")}
+                                        Après des années à accompagner des entreprises africaines dans leur transformation digitale, j&apos;ai vu le même blocage : les compétences manquent, pas la motivation.
                                     </p>
                                     <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.65)", fontFamily: "var(--font-body)", lineHeight: 1.85 }}>
-                                        {tc("founder.quote3")}
+                                        Nos formations sont conçues par des gens qui font, pour des gens qui veulent faire. Chaque programme est testé sur le terrain — si ça ne crée pas de valeur mesurable.
                                     </p>
                                 </blockquote>
                                 <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
-                                    {[tc("founder.tag1"), tc("founder.tag2"), tc("founder.tag3")].map((tag, i) => (
+                                    {["15+ ans terrain", "Formé en Europe & Afrique", "200+ Etudiants accompagnées"].map((tag, i) => (
                                         <span key={i} style={{ padding: "0.4rem 1rem", background: `${COLOR}12`, border: `1px solid ${COLOR}2A`, borderRadius: "2rem", fontSize: "1rem", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-body)" }}>{tag}</span>
                                     ))}
                                 </div>
@@ -879,24 +1085,27 @@ export default function FormationLandpage() {
                         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.8rem", marginBottom: "2rem" }}>
                                 <div style={{ width: 60, height: 2, background: `linear-gradient(to right, transparent, ${COLOR})` }} />
-                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>{tc("landpageCtaEyebrow")}</span>
+                                <span style={{ fontSize: "1rem", fontWeight: 800, letterSpacing: "0.35em", textTransform: "uppercase", color: COLOR }}>Passez à l&apos;action</span>
                                 <div style={{ width: 60, height: 2, background: `linear-gradient(to left, transparent, ${COLOR})` }} />
                             </div>
 
                             <h2 style={{ fontSize: screenSize === "mobile" ? "clamp(2.5rem,9vw,3.5rem)" : "clamp(3.5rem,6vw,5.5rem)", fontWeight: 900, fontFamily: "var(--font-display)", textTransform: "uppercase", lineHeight: 0.95, marginBottom: "1.5rem" }}>
-                                {tc("landpageCtaTitle1")}<br />
-                                <span style={{ color: COLOR }}>{tc("landpageCtaTitle2")}</span><br />
-                                {tc("landpageCtaTitle3")}
+                                Votre prochaine<br />
+                                <span style={{ color: COLOR }}>compétence commence</span><br />
+                                maintenant.
                             </h2>
 
                             <p style={{ fontSize: "1.3rem", color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-body)", lineHeight: 1.8, maxWidth: 520, margin: "0 auto 3rem" }}>
-                                {tc("landpageCtaSubtitle")}
+                                Les places sont limitées à 12 par session. Ne ratez pas la prochaine ouverture.
                             </p>
 
-                            {/* Final CTA — arrow rotates 90° on hover */}
-                            <RippleButton href="#inscription" arrowDeg={90} size="lg">
-                                {t("finalCtaBtn")}
-                            </RippleButton>
+                            {/* Final CTA — même CTAButton que sur tout le site */}
+                            <CTAButton href="/formations/all">
+                                Voir le catalogue complet
+                            </CTAButton>
+                            <p style={{ marginTop: "1.5rem", color: "rgba(255,255,255,0.3)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
+                                Réponse sous 24h · Sans engagement
+                            </p>
                         </motion.div>
                     </div>
                 </section>

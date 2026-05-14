@@ -3,15 +3,16 @@
    Colors: ACT brand  |  Layout: Uptown clone structure
    ══════════════════════════════════════════════════════ */
 
+@import "tailwindcss";
+
+/* Futura local — accent display uniquement (titres hero, menu overlay) */
 @font-face {
-  font-family: Poppins;
+  font-family: "Futura";
   src: url('/fonts/futura-medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
-
-@import "tailwindcss";
 
 @theme {
   /* ACT Brand Colors — aligned with Landing Formation IA charter */
@@ -129,7 +130,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -1001,8 +1002,11 @@ h1, h2, h3, h4, h5, h6 {
   --grain-opacity: 0.015;
 }
 
-/* Theme transition smooth */
-* {
+/* Theme transition smooth — ciblé pour ne pas interférer avec GSAP/Framer Motion */
+body,
+header, nav, footer, main,
+.navbar, .menu, .menu-flex,
+input, textarea, select, button {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -1193,13 +1197,8 @@ a:hover {
 }
 
 /* ══════════════════════════════════════════════════════
-   TEXTES - Adaptation complète au light mode
+   TEXTES - Adaptation light mode (sélecteurs ciblés)
    ══════════════════════════════════════════════════════ */
-
-/* Tous les textes s'adaptent automatiquement */
-[data-theme="light"] * {
-  color: var(--text-primary);
-}
 
 /* Titres et headings */
 [data-theme="light"] h1,
@@ -1212,9 +1211,7 @@ a:hover {
 }
 
 /* Paragraphes et texte de base */
-[data-theme="light"] p,
-[data-theme="light"] span,
-[data-theme="light"] div {
+[data-theme="light"] p {
   color: var(--text-secondary);
 }
 
@@ -1348,8 +1345,8 @@ a:hover {
 .shopify-blog-content h3,
 .shopify-blog-content h4 {
   color: #fff;
-  font-family: var(--font-body, sans-serif);
-  font-weight: 900;
+  font-family: var(--font-display, serif);
+  font-weight: 700;
   text-transform: uppercase;
   line-height: 1.1;
   letter-spacing: -0.01em;

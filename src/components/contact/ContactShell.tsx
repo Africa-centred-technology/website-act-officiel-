@@ -54,13 +54,16 @@ function Grain() {
 }
 
 /* ── Section label ─────────────────────────────────────── */
+const FONT_DISPLAY = "'Lora', 'Times New Roman', serif";
+const FONT_LABEL   = "'Poppins', system-ui, sans-serif";
+
 function SLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.2rem" }}>
       <span className="diamond diamond--sm" />
       <span
         style={{
-          fontFamily: "Futura, system-ui, sans-serif",
+          fontFamily: FONT_LABEL,
           fontSize: "0.68rem",
           fontWeight: 700,
           letterSpacing: "0.3em",
@@ -175,8 +178,8 @@ export default function ContactShell() {
     border: "1px solid rgba(255,255,255,0.09)",
     borderRadius: "0.5rem",
     color: "#fff",
-    fontFamily: "Futura, system-ui, sans-serif",
-    fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-18)",
+    fontFamily: FONT_LABEL,
+    fontSize: "0.95rem",
     outline: "none",
     transition: "border-color 0.25s",
     boxSizing: "border-box",
@@ -225,7 +228,7 @@ export default function ContactShell() {
         >
           <span className="diamond diamond--sm" />
           <span style={{
-            fontFamily: "Futura, system-ui, sans-serif",
+            fontFamily: FONT_LABEL,
             fontSize: screenSize === 'mobile' ? "0.8rem" : screenSize === 'tablet' ? "0.9rem" : "1rem",
             letterSpacing: "0.28em",
             textTransform: "uppercase",
@@ -241,7 +244,7 @@ export default function ContactShell() {
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.6, 0.08, 0.02, 0.99] }}
           style={{
-            fontFamily: "Futura, system-ui, sans-serif",
+            fontFamily: FONT_DISPLAY,
             fontWeight: 900,
             textTransform: "uppercase",
             fontSize: screenSize === 'mobile'
@@ -304,7 +307,7 @@ export default function ContactShell() {
                   alignItems: "center",
                   gap: "0.85rem",
                   color: "rgba(255,255,255,0.55)",
-                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontFamily: FONT_LABEL,
                   fontSize: screenSize === 'mobile' ? "1.4rem" : screenSize === 'tablet' ? "1.6rem" : "var(--font-20)",
                   textDecoration: "none",
                   transition: "color 0.2s",
@@ -351,7 +354,7 @@ export default function ContactShell() {
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7 }}
             style={{
-              fontFamily: "Futura, system-ui, sans-serif",
+              fontFamily: FONT_DISPLAY,
               fontWeight: 900,
               textTransform: "uppercase",
               fontSize: screenSize === 'mobile'
@@ -404,7 +407,7 @@ export default function ContactShell() {
               <div>
                 <label style={{
                   display: "block",
-                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontFamily: FONT_LABEL,
                   fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
                   fontWeight: 700,
                   letterSpacing: "0.28em",
@@ -426,7 +429,7 @@ export default function ContactShell() {
               <div>
                 <label style={{
                   display: "block",
-                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontFamily: FONT_LABEL,
                   fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
                   fontWeight: 700,
                   letterSpacing: "0.28em",
@@ -459,7 +462,7 @@ export default function ContactShell() {
               <div>
                 <label style={{
                   display: "block",
-                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontFamily: FONT_LABEL,
                   fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
                   fontWeight: 700,
                   letterSpacing: "0.28em",
@@ -480,7 +483,7 @@ export default function ContactShell() {
               <div>
                 <label style={{
                   display: "block",
-                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontFamily: FONT_LABEL,
                   fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
                   fontWeight: 700,
                   letterSpacing: "0.28em",
@@ -512,7 +515,7 @@ export default function ContactShell() {
               <div>
                 <label style={{
                   display: "block",
-                  fontFamily: "Futura, system-ui, sans-serif",
+                  fontFamily: FONT_LABEL,
                   fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
                   fontWeight: 700,
                   letterSpacing: "0.28em",
@@ -545,7 +548,7 @@ export default function ContactShell() {
             <div style={{ marginBottom: screenSize === 'mobile' ? "1.5rem" : "2rem" }}>
               <label style={{
                 display: "block",
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: FONT_LABEL,
                 fontSize: screenSize === 'mobile' ? "0.6rem" : "0.65rem",
                 fontWeight: 700,
                 letterSpacing: "0.28em",
@@ -581,8 +584,8 @@ export default function ContactShell() {
                     textAlign: "center",
                   }}
                 >
-                  <p style={{ fontFamily: "Futura, system-ui, sans-serif", fontWeight: 700, fontSize: "var(--font-20)", color: "#2ecc71", marginBottom: "0.3rem" }}>
-                    {t("success.title")}
+                  <p style={{ fontFamily: FONT_LABEL, fontWeight: 700, fontSize: "var(--font-20)", color: "#2ecc71", marginBottom: "0.3rem" }}>
+                    ✓ Message envoyé !
                   </p>
                   <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "var(--font-18)" }}>
                     {t("success.message")}
@@ -783,7 +786,7 @@ export default function ContactShell() {
                 <c.Icon size={screenSize === 'mobile' ? 18 : 20} strokeWidth={1.8} />
               </div>
               <p style={{
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: FONT_LABEL,
                 fontSize: screenSize === 'mobile' ? "0.6rem" : "0.68rem",
                 fontWeight: 700,
                 letterSpacing: "0.28em",
@@ -801,7 +804,7 @@ export default function ContactShell() {
                 }}>{l}</p>
               ))}
               <p style={{
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: FONT_LABEL,
                 fontWeight: 700,
                 fontSize: screenSize === 'mobile' ? "0.65rem" : "0.72rem",
                 letterSpacing: "0.18em",
@@ -837,7 +840,7 @@ export default function ContactShell() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7 }}
           style={{
-            fontFamily: "Futura, system-ui, sans-serif",
+            fontFamily: FONT_DISPLAY,
             fontWeight: 900,
             textTransform: "uppercase",
             fontSize: screenSize === 'mobile'
@@ -890,7 +893,7 @@ export default function ContactShell() {
                   }}
                 >
                   <span style={{
-                    fontFamily: "Futura, system-ui, sans-serif",
+                    fontFamily: FONT_LABEL,
                     fontWeight: 700,
                     fontSize: screenSize === 'mobile' ? "1.5rem" : screenSize === 'tablet' ? "1.7rem" : "var(--font-20)",
                     color: isOpen ? "#D35400" : "#fff",
