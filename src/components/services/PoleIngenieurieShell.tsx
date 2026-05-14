@@ -55,11 +55,13 @@ const stagger = (d = 0) => ({
 function KenBurns({
   src, alt = "", duration = 20, fromScale = 1.0, toScale = 1.12,
   fromX = "0%", toX = "0%", fromY = "0%", toY = "-4%",
+  priority = false,
   style,
 }: {
   src: string; alt?: string; duration?: number;
   fromScale?: number; toScale?: number;
   fromX?: string; toX?: string; fromY?: string; toY?: string;
+  priority?: boolean;
   style?: React.CSSProperties;
 }) {
   return (
@@ -80,30 +82,31 @@ function KenBurns({
 
 function ScanLine({ accent }: { accent: string }) {
   return (
-    <motion.div aria-hidden className="absolute start-0 w-full pointer-events-none"
+    <div
+      aria-hidden
+      className="absolute w-full pointer-events-none"
       style={{
         height: "2px",
         background: `linear-gradient(to right, transparent 0%, ${accent}88 25%, ${accent}EE 50%, ${accent}88 75%, transparent 100%)`,
-        boxShadow: `0 0 28px 5px ${accent}44`, zIndex: 5,
+        boxShadow: `0 0 28px 5px ${accent}44`,
+        zIndex: 5,
+        insetInlineStart: 0,
+        animation: "scanLine 14.2s ease-in-out infinite",
       }}
-      initial={{ top: "-4px", opacity: 0 }}
-      animate={{ top: ["-4px", "102%"], opacity: [0, 1, 1, 0] }}
-      transition={{ duration: 3.2, ease: "easeInOut", repeat: Infinity, repeatDelay: 11, times: [0, 0.05, 0.93, 1] }}
     />
   );
 }
 
 function OrbitArc({ label }: { label: string }) {
   return (
-    <motion.div aria-hidden className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 1 }}
-      animate={{ rotate: 360 }} transition={{ duration: 120, ease: "linear", repeat: Infinity }}>
+    <div aria-hidden className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 1, animation: "orbitRotate 120s linear infinite", transformOrigin: "center" }}>
       <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
         <defs><path id="heroOrbitD" d="M 50,50 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" /></defs>
         <text style={{ fontSize: "2.6", fill: `${ORANGE}14`, fontWeight: 700, letterSpacing: "0.8" }}>
           <textPath href="#heroOrbitD">{`${label.toUpperCase()} · `.repeat(6)}</textPath>
         </text>
       </svg>
-    </motion.div>
+    </div>
   );
 }
 
@@ -181,7 +184,8 @@ function HeroSection({ svc, i18n, index }: { svc: Service; i18n: ServiceI18n; in
         filter: `brightness(${imgBrightness.get()})`,
       }}>
         <KenBurns
-          src={svc.heroImage} alt=""
+          src={svc.heroImage}
+          priority alt=""
           duration={22}
           fromScale={1.0} toScale={1.14}
           fromX="-1%" toX="1%" fromY="0%" toY="-3%"
@@ -422,8 +426,7 @@ function IntroSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
         />
       </motion.div>
 
-      <style>{`@media(max-width:768px){.intro-grid{grid-template-columns:1fr!important}}`}</style>
-    </section>
+      </section>
   );
 }
 
@@ -559,14 +562,7 @@ function SubServicePanel({ sub, index, accent, svcN, img }: {
         }}>{sub.desc}</motion.p>
       </motion.div>
 
-      <style>{`
-        @media(max-width:768px){
-          .sub-panel{grid-template-columns:1fr!important}
-          .sub-panel-content{order:1!important}
-          .sub-panel-image{order:2!important}
-        }
-      `}</style>
-    </motion.div>
+      </motion.div>
   );
 }
 
@@ -757,8 +753,7 @@ function RelatedServices({ svc }: { svc: Service }) {
           </div>
         </motion.div>
       </div>
-      <style>{`@media(max-width:768px){.related-grid{grid-template-columns:1fr!important}}`}</style>
-    </section>
+      </section>
   );
 }
 
@@ -770,9 +765,16 @@ function StickyHeader({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   const t = useTranslations("services.poles.ingenierie");
   const [visible, setVisible] = React.useState(false);
   React.useEffect(() => {
-    const fn = () => setVisible(window.scrollY > window.innerHeight * 0.8);
+    let rafId = 0;
+    const fn = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        setVisible(window.scrollY > window.innerHeight * 0.8);
+      });
+    };
     window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
+    return () => { window.removeEventListener("scroll", fn); if (rafId) cancelAnimationFrame(rafId); };
   }, []);
 
   return (

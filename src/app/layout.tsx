@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Africa Centred Technology | Engineering the Future",
@@ -25,8 +26,30 @@ export const metadata: Metadata = {
   },
 };
 
-// The [locale]/layout.tsx owns the <html>/<body> shell and all providers.
-// This root layout is a required pass-through for next-intl's App Router setup.
+// Minimal shell — [locale]/layout.tsx owns html/body attrs, providers, Header.
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  return (
+    <html suppressHydrationWarning>
+      <head>
+        {/* Preload the LCP hero image */}
+        <link rel="preload" as="image" href="/logo/logo_continent.png" fetchPriority="high" />
+        {/* Preload Futura to eliminate FOUT on service pages */}
+        <link rel="preload" as="font" href="/fonts/futura-medium.woff" type="font/woff" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Only the 3 font families used via CSS variables — block avoids swap CLS */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=block"
+          rel="stylesheet"
+        />
+      </head>
+      <body
+        suppressHydrationWarning
+        className="antialiased flex flex-col min-h-screen overflow-x-hidden"
+        style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
+      >
+        {children}
+      </body>
+    </html>
+  );
 }

@@ -24,15 +24,13 @@ const BURST = [0.04, 0.72, 0.08, 1.0] as const;
 
 /* ── Stats bar items are now localised inside the component via useTranslations ── */
 
-/* ── Arc de texte en orbite (SVG textPath) ──────────────────────────── */
+/* ── Arc de texte en orbite (SVG textPath) — CSS animation, off main thread ── */
 function OrbitArc() {
   return (
-    <motion.div
+    <div
       aria-hidden
       className="absolute inset-0 pointer-events-none select-none"
-      style={{ zIndex: 0 }}
-      animate={{ rotate: 360 }}
-      transition={{ duration: 90, ease: "linear", repeat: Infinity }}
+      style={{ zIndex: 0, animation: "orbitRotate 90s linear infinite", transformOrigin: "center" }}
     >
       <svg
         width="100%"
@@ -63,31 +61,24 @@ function OrbitArc() {
           </textPath>
         </text>
       </svg>
-    </motion.div>
+    </div>
   );
 }
 
-/* ── Scan-line horizontale orange (toutes les ~10 s) ────────────────── */
+/* ── Scan-line horizontale orange — CSS animation, off main thread ────── */
 function ScanLine() {
   return (
-    <motion.div
+    <div
       aria-hidden
-      className="absolute start-0 w-full pointer-events-none"
+      className="absolute w-full pointer-events-none"
       style={{
         height: "2px",
         background:
           "linear-gradient(to right, transparent 0%, rgba(211,84,0,0.50) 25%, rgba(255,130,30,0.90) 50%, rgba(211,84,0,0.50) 75%, transparent 100%)",
         boxShadow: "0 0 28px 5px rgba(211,84,0,0.28)",
         zIndex: 4,
-      }}
-      initial={{ top: "-4px", opacity: 0 }}
-      animate={{ top: ["−4px", "102%"], opacity: [0, 1, 1, 0] }}
-      transition={{
-        duration: 2.6,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatDelay: 8.5,
-        times: [0, 0.06, 0.92, 1],
+        insetInlineStart: 0,
+        animation: "scanLine 11.1s ease-in-out infinite",
       }}
     />
   );
@@ -307,15 +298,19 @@ export default function HeroSection() {
               <img
                 src="/logo/logo_continent.png"
                 alt="ACT - Africa Centred Technology"
+                width={1200}
+                height={900}
+                fetchPriority="high"
+                decoding="sync"
                 style={{
                   width: "clamp(30rem, 65vw, 75rem)",
                   height: "auto",
                   filter: "drop-shadow(0 40px 100px rgba(211,84,0,0.35)) brightness(1.1)",
-                opacity: 0.99,
-                pointerEvents: "none",
-                userSelect: "none",
-                cursor: "pointer",
-              }}
+                  opacity: 0.99,
+                  pointerEvents: "none",
+                  userSelect: "none",
+                  cursor: "pointer",
+                }}
               />
             </Link>
           </motion.div>
@@ -327,7 +322,7 @@ export default function HeroSection() {
             <WordChars text="CENTRED" delay={0.30} fx="burstOut" color="#FF6B00" stagger={0.044} mt="0.15em" size="clamp(2.4rem, 4.2vw, 6rem)" />
             <WordChars text="TECHNOLOGY" delay={0.52} fx="riseUp" stagger={0.020} mt="0.10em" size="clamp(2.8rem, 5.8vw, 8rem)" />
 
-            <motion.p
+            <p
               style={{
                 marginTop: "2.5rem",
                 color: "rgba(255,255,255,0.85)",
@@ -339,40 +334,24 @@ export default function HeroSection() {
                 fontFamily: "var(--font-body)",
                 textAlign: "left",
                 display: "inline-flex",
-                alignItems: "center"
+                alignItems: "center",
+                opacity: 0,
+                animation: "taglineFadeIn 0.4s ease forwards 1.4s",
               }}
             >
-              {t("tagline").split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.4 + index * 0.05, duration: 0 }}
-                  style={{ display: "inline-block" }}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-              {/* Le curseur clignotant de la machine à écrire */}
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ 
-                  delay: 1.4,
-                  duration: 0.8, 
-                  repeat: Infinity, 
-                  ease: "linear" 
-                }}
+              {t("tagline")}
+              <span
                 style={{
                   display: "inline-block",
                   width: "12px",
                   height: "clamp(0.75rem, 1.5vw, 1.15rem)",
                   backgroundColor: "#D35400",
                   marginLeft: "8px",
-                  verticalAlign: "middle"
+                  verticalAlign: "middle",
+                  animation: "cursorBlink 0.8s linear infinite 1.4s",
                 }}
               />
-            </motion.p>
+            </p>
           </div>
 
         </div>
@@ -459,13 +438,6 @@ export default function HeroSection() {
             ))
           )}
         </div>
-
-        <style jsx>{`
-          @keyframes heroStatsMarquee {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-          }
-        `}</style>
       </div>
     </div>
   );

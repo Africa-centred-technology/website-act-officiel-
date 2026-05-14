@@ -139,6 +139,29 @@ export default function HomeShell() {
       <Cursor />
 
       <style>{`
+        @keyframes orbitRotate {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        @keyframes scanLine {
+          0%   { top: -4px;  opacity: 0; }
+          6%   { opacity: 1; }
+          92%  { opacity: 1; top: 102%; }
+          100% { top: 102%; opacity: 0; }
+        }
+        @keyframes taglineFadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        @keyframes cursorBlink {
+          0%, 49% { opacity: 0; }
+          50%, 100% { opacity: 1; }
+        }
+        @keyframes heroStatsMarquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+
         /* Let each section's inner component fill the flex column so
            children that use height:100% (e.g. PolesSection panels) render. */
         [data-section] > * {

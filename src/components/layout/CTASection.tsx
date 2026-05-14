@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import CTAButton from "@/components/ui/CTAButton";
-import { useTranslations } from "next-intl";
 
 interface CTASectionProps {
   eyebrow?: string;
@@ -14,17 +13,12 @@ interface CTASectionProps {
 }
 
 export default function CTASection({
-  eyebrow,
-  title,
-  description,
-  buttonText,
+  eyebrow = "Votre secteur, notre expertise",
+  title = "Parlons de votre projet",
+  description = "Quelle que soit votre industrie, ACT dispose de l'expertise technologique pour vous accompagner dans votre transformation digitale.",
+  buttonText = "Démarrez votre projet",
   buttonHref = "/contact",
 }: CTASectionProps) {
-  const t = useTranslations("common");
-  const resolvedEyebrow = eyebrow ?? t("ctaSection.eyebrow");
-  const resolvedTitle = title ?? t("ctaSection.title");
-  const resolvedDescription = description ?? t("ctaSection.description");
-  const resolvedButtonText = buttonText ?? t("ctaSection.buttonText");
   return (
     <motion.section
       initial={{ opacity: 0, y: 30 }}
@@ -50,7 +44,7 @@ export default function CTASection({
           fontFamily: "var(--font-body)",
         }}
       >
-        {resolvedEyebrow}
+        {eyebrow}
       </p>
       <h2
         style={{
@@ -64,7 +58,7 @@ export default function CTASection({
           marginBottom: "2rem",
         }}
       >
-        {resolvedTitle}
+        {title}
       </h2>
       <p
         style={{
@@ -78,9 +72,9 @@ export default function CTASection({
           textAlign: "center",
         }}
       >
-        {resolvedDescription}
+        {description}
       </p>
-      <CTAButton href={buttonHref}>{resolvedButtonText}</CTAButton>
+      <CTAButton href={buttonHref}>{buttonText}</CTAButton>
     </motion.section>
   );
 }

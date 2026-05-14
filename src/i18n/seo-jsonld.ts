@@ -8,13 +8,13 @@ import type {
 
 const BASE_URL = "https://www.a-ct.ma";
 
-export function organizationJsonLd(locale: string): WithContext<Organization> {
+export function organizationJsonLd(): WithContext<Organization> {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Africa Centred Technology",
     alternateName: "ACT",
-    url: `${BASE_URL}/${locale}`,
+    url: BASE_URL,
     logo: `${BASE_URL}/logo/logo.png`,
     description:
       "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
@@ -28,7 +28,7 @@ export function organizationJsonLd(locale: string): WithContext<Organization> {
       contactType: "customer service",
       email: "contact@a-ct.ma",
       areaServed: ["MA", "FR", "Africa"],
-      availableLanguage: ["fr", "en", "ar"],
+      availableLanguage: ["fr"],
     },
   };
 }
@@ -49,7 +49,6 @@ export function breadcrumbJsonLd(
 }
 
 export function courseJsonLd(opts: {
-  locale: string;
   slug: string;
   title: string;
   description: string;
@@ -68,10 +67,10 @@ export function courseJsonLd(opts: {
     provider: {
       "@type": "Organization",
       name: "Africa Centred Technology",
-      sameAs: `${BASE_URL}/${opts.locale}`,
+      sameAs: BASE_URL,
     },
-    url: `${BASE_URL}/${opts.locale}/formations/${opts.slug}`,
-    inLanguage: opts.locale,
+    url: `${BASE_URL}/formations/${opts.slug}`,
+    inLanguage: "fr",
   };
 
   if (opts.price !== undefined && opts.currency) {
@@ -80,7 +79,7 @@ export function courseJsonLd(opts: {
       price: opts.price,
       priceCurrency: opts.currency,
       availability: "https://schema.org/InStock",
-      url: `${BASE_URL}/${opts.locale}/formations/${opts.slug}`,
+      url: `${BASE_URL}/formations/${opts.slug}`,
     };
   }
 
@@ -96,7 +95,6 @@ export function courseJsonLd(opts: {
 }
 
 export function articleJsonLd(opts: {
-  locale: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -116,8 +114,8 @@ export function articleJsonLd(opts: {
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo/logo.png` },
     },
     datePublished: opts.publishedAt,
-    inLanguage: opts.locale,
-    url: `${BASE_URL}/${opts.locale}/blog/${opts.slug}`,
+    inLanguage: "fr",
+    url: `${BASE_URL}/blog/${opts.slug}`,
   };
 
   if (opts.image) {

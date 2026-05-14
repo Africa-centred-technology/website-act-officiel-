@@ -1,5 +1,4 @@
-import { useMessages } from "next-intl";
-import { getMessages } from "next-intl/server";
+import frMessages from "./messages/fr.json";
 
 export type PoleI18n = {
   title: string;
@@ -99,10 +98,14 @@ export type DataMessages = {
   formations: { defaults: FormationsDefaultsI18n };
 };
 
+const dataMessages = frMessages as unknown as DataMessages;
+
+/** Client component hook — returns French data directly from fr.json */
 export function useDataMessages(): DataMessages {
-  return useMessages() as unknown as DataMessages;
+  return dataMessages;
 }
 
+/** Server function — returns French data directly from fr.json */
 export async function getDataMessages(): Promise<DataMessages> {
-  return (await getMessages()) as unknown as DataMessages;
+  return dataMessages;
 }

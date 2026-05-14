@@ -316,13 +316,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
       {/* Footer dans le flux scrollable — identique à SecteursShell */}
       <FooterStrip />
 
-      <style>{`
-        /* ── Grid responsive ── */
-        .svc-overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-        @media (max-width: 900px) { .svc-overview-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 640px)  { .svc-overview-grid { grid-template-columns: 1fr !important; } }
-      `}</style>
-    </motion.div>
+      </motion.div>
   );
 }
 

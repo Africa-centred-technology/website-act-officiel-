@@ -1,16 +1,15 @@
 /**
  * Default formation page assets — structural (images / URLs / numbers).
- * Text content lives in fr.json under `formations.defaults.*`.
  */
 
-/* ── Pain point images (mapped by index to i18n painPoints) ── */
+/* ── Pain point images (mapped by index) ── */
 export const DEFAULT_PAIN_POINT_IMAGES: string[] = [
   "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80",
   "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=1200&q=80",
   "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
 ];
 
-/* ── Audience card images (mapped by index to i18n audienceCards) ── */
+/* ── Audience card images (mapped by index) ── */
 export const DEFAULT_AUDIENCE_CARD_IMAGES: string[] = [
   "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80",
   "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80",
@@ -18,7 +17,7 @@ export const DEFAULT_AUDIENCE_CARD_IMAGES: string[] = [
   "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=800&q=80",
 ];
 
-/* ── Testimonial avatars (mapped by index to i18n testimonials) ── */
+/* ── Testimonial avatars (mapped by index) ── */
 export const DEFAULT_TESTIMONIAL_AVATARS: string[] = [
   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80",
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
@@ -66,32 +65,23 @@ export interface PricingPlanStructural {
   featured: boolean;
 }
 
-/**
- * Build the default pricing-plan placeholders, localized via the caller's translator.
- * The `t` argument is a `useTranslations("formations")` instance — both server
- * (`getTranslations`) and client (`useTranslations`) variants are compatible.
- */
-export function getDefaultPricingPlanStructural(
-  t: (key: string) => string
-): PricingPlanStructural[] {
-  const surDevis = t("metaSurDevis");
-  const responseUnder24h = t("landpageConfirmation");
+export function getDefaultPricingPlanStructural(): PricingPlanStructural[] {
   return [
     {
-      amount: surDevis,
+      amount: "Sur devis",
       currency: "MAD HT",
       cta_type: "inscription",
       featured: true,
     },
     {
-      amount: surDevis,
-      old_price: responseUnder24h,
+      amount: "Sur devis",
+      old_price: "Réponse sous 24h",
       cta_type: "contact",
       featured: false,
     },
     {
-      amount: surDevis,
-      old_price: responseUnder24h,
+      amount: "Sur devis",
+      old_price: "Réponse sous 24h",
       cta_type: "contact",
       featured: false,
     },
