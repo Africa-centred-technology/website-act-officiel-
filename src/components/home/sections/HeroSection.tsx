@@ -15,7 +15,7 @@
  *  5. 3-layer parallax + RoomBackground savane (Ken Burns)
  */
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -177,6 +177,22 @@ export default function HeroSection() {
     my.set((e.clientY / window.innerHeight - 0.5) * 2);
   };
 
+  /* Typewriter tagline */
+  const tagline = t("tagline");
+  const [typed, setTyped] = useState("");
+  useEffect(() => {
+    let i = 0;
+    const t0 = setTimeout(() => {
+      const iv = setInterval(() => {
+        i++;
+        setTyped(tagline.slice(0, i));
+        if (i >= tagline.length) clearInterval(iv);
+      }, 48);
+      return () => clearInterval(iv);
+    }, 1400);
+    return () => clearTimeout(t0);
+  }, [tagline]);
+
   /* Particules flottantes déterministes */
   const particles = useMemo(
     () =>
@@ -332,25 +348,27 @@ export default function HeroSection() {
                 fontSize: "clamp(0.75rem, 1.5vw, 1.15rem)",
                 textShadow: "0px 4px 15px rgba(0,0,0,0.5)",
                 fontFamily: "var(--font-body)",
-                textAlign: "left",
-                display: "inline-flex",
-                alignItems: "center",
-                opacity: 0,
-                animation: "taglineFadeIn 0.4s ease forwards 1.4s",
+                position: "relative",
+                whiteSpace: "nowrap",
               }}
             >
-              {t("tagline")}
-              <span
-                style={{
-                  display: "inline-block",
-                  width: "12px",
-                  height: "clamp(0.75rem, 1.5vw, 1.15rem)",
-                  backgroundColor: "#D35400",
-                  marginLeft: "8px",
-                  verticalAlign: "middle",
-                  animation: "cursorBlink 0.8s linear infinite 1.4s",
-                }}
-              />
+              {/* Reserve full width so the block stays right-aligned like the title */}
+              <span style={{ visibility: "hidden" }}>{tagline}</span>
+              {/* Typed text overlaid left-to-right */}
+              <span style={{ position: "absolute", left: 0, top: 0, display: "inline-flex", alignItems: "center" }}>
+                {typed}
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "2px",
+                    height: "clamp(0.75rem, 1.5vw, 1.15rem)",
+                    backgroundColor: "#D35400",
+                    marginLeft: "3px",
+                    verticalAlign: "middle",
+                    animation: "cursorBlink 0.8s linear infinite",
+                  }}
+                />
+              </span>
             </p>
           </div>
 

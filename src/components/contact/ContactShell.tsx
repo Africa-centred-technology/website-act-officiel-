@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube, Send } from "lucide-react";
+import { identifyUser } from "@/lib/session";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
 import { useTranslations } from "next-intl";
@@ -157,6 +158,7 @@ export default function ContactShell() {
         throw new Error(t("form.errorSend"));
       }
 
+      identifyUser({ name: form.name, email: form.email, source: "contact" });
       setSending(false);
       setSent(true);
 

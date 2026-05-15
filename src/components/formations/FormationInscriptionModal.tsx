@@ -126,10 +126,7 @@ export default function FormationInscriptionModal({
               <FormationInscriptionForm
                 formationTitle={formationTitle}
                 formationSlug={formationSlug}
-                onSuccess={() => {
-                  // Attendre 3s puis fermer le modal
-                  setTimeout(() => onClose(), 3000);
-                }}
+                onSuccess={onClose}
               />
             </motion.div>
           </div>

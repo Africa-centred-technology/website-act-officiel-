@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { identifyUser } from "@/lib/session";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, LinkedinIcon, Mail, Phone, MapPin, Code2, Briefcase, GraduationCap } from "lucide-react";
@@ -35,6 +36,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
       });
       const data = await res.json();
       if (res.ok && data.success) {
+        identifyUser({ name: email, email, source: "newsletter" });
         setStatus("success");
         setEmail("");
       } else {

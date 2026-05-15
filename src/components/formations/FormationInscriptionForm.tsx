@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Send, Loader2, Search, ChevronDown, X } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
+import { identifyUser } from "@/lib/session";
 // @ts-ignore
 import { CountryRegionData } from "react-country-region-selector";
 
@@ -463,14 +464,13 @@ export default function FormationInscriptionForm({
       });
       if (!res.ok) throw new Error();
       const json = await res.json();
+      identifyUser({
+        name: `${form.prenom ?? ""} ${form.nom ?? ""}`.trim(),
+        email: form.email,
+        source: "inscription",
+      });
       setStatus("success");
       onSuccess?.();
-      // Redirect vers le checkout Shopify si disponible
-      const checkoutUrl: string | undefined = json?.checkoutUrl;
-      if (checkoutUrl) {
-        // Petite latence pour permettre l'affichage du screen succès, puis redirect
-        setTimeout(() => { window.location.href = checkoutUrl; }, 1200);
-      }
     } catch {
       setStatus("error");
     }
@@ -502,17 +502,32 @@ export default function FormationInscriptionForm({
         >
           {t("successTitle")}
         </h3>
-        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.65rem", lineHeight: 1.7 }}>
+        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.4rem", lineHeight: 1.8, maxWidth: "520px", margin: "0 auto" }}>
           {t("successMessage")}
-          <br />
-          <span style={{ fontSize: "1.2rem", opacity: 0.7 }}>
-            {t("successRedirectNote")}
-          </span>
         </p>
-        <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
-          <Loader2 size={32} color={ORANGE} style={{ animation: "spin 1s linear infinite" }} />
-        </div>
-        <style jsx global>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <p style={{ marginTop: "1rem", color: "rgba(255,255,255,0.4)", fontSize: "1rem" }}>
+          {t("successRedirectNote")}
+        </p>
+        {onSuccess && (
+          <button
+            onClick={onSuccess}
+            style={{
+              marginTop: "2.5rem",
+              padding: "0.85rem 2.5rem",
+              background: ORANGE,
+              color: "#fff",
+              border: "none",
+              borderRadius: "0.5rem",
+              fontSize: "1rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.05em",
+            }}
+          >
+            {t("successClose")}
+          </button>
+        )}
       </motion.div>
     );
   }

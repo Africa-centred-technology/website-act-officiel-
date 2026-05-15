@@ -108,7 +108,7 @@ export async function POST(req: Request) {
         ];
 
     // 5. Draft Order via GraphQL Admin
-    const variables = {
+    const draftInput = {
       input: {
         note,
         tags: ["Inscription", "Formation", body.typeClient, `lang:${locale}`],
@@ -129,46 +129,73 @@ export async function POST(req: Request) {
       },
     };
 
-    const response = await fetch(shopifyAdminUrl(), {
+    const adminHeaders = {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": activeAdminToken,
+    };
+
+    const draftRes = await fetch(shopifyAdminUrl(), {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Access-Token": activeAdminToken,
-      },
+      headers: adminHeaders,
       body: JSON.stringify({
         query: `
           mutation draftOrderCreate($input: DraftOrderInput!) {
             draftOrderCreate(input: $input) {
-              draftOrder { id name invoiceUrl }
+              draftOrder { id name }
               userErrors { field message }
             }
           }
         `,
-        variables,
+        variables: draftInput,
       }),
     });
 
-    const json = await response.json();
+    const draftJson = await draftRes.json();
 
-    if (json.errors || json?.data?.draftOrderCreate?.userErrors?.length > 0) {
-      console.error(
-        "Erreur GraphQL Shopify Admin:",
-        json.errors || json.data.draftOrderCreate.userErrors
-      );
+    if (draftJson.errors || draftJson?.data?.draftOrderCreate?.userErrors?.length > 0) {
+      console.error("Erreur draftOrderCreate:", draftJson.errors || draftJson.data.draftOrderCreate.userErrors);
       return NextResponse.json(
-        {
-          error: "Impossible de créer le bon de commande.",
-          details: json.errors || json.data.draftOrderCreate.userErrors,
-        },
+        { error: "Impossible de créer l'inscription.", details: draftJson.errors || draftJson.data.draftOrderCreate.userErrors },
         { status: 400 }
       );
     }
 
-    const draftOrder = json.data.draftOrderCreate.draftOrder;
+    const draftOrderId = draftJson.data.draftOrderCreate.draftOrder.id;
+
+    // 6. Compléter immédiatement → convertit en vrai Order (paiement en attente)
+    const completeRes = await fetch(shopifyAdminUrl(), {
+      method: "POST",
+      headers: adminHeaders,
+      body: JSON.stringify({
+        query: `
+          mutation draftOrderComplete($id: ID!, $paymentPending: Boolean) {
+            draftOrderComplete(id: $id, paymentPending: $paymentPending) {
+              draftOrder {
+                order { id name }
+              }
+              userErrors { field message }
+            }
+          }
+        `,
+        variables: { id: draftOrderId, paymentPending: true },
+      }),
+    });
+
+    const completeJson = await completeRes.json();
+
+    if (completeJson.errors || completeJson?.data?.draftOrderComplete?.userErrors?.length > 0) {
+      console.error("Erreur draftOrderComplete:", completeJson.errors || completeJson.data.draftOrderComplete.userErrors);
+      return NextResponse.json(
+        { error: "Inscription créée mais non finalisée.", details: completeJson.errors || completeJson.data.draftOrderComplete.userErrors },
+        { status: 400 }
+      );
+    }
+
+    const order = completeJson.data.draftOrderComplete.draftOrder.order;
     return NextResponse.json({
       success: true,
-      draftOrder,
-      checkoutUrl: draftOrder?.invoiceUrl ?? null,
+      orderId: order?.id ?? null,
+      orderName: order?.name ?? null,
     });
 
   } catch (error) {

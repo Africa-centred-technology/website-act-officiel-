@@ -50,6 +50,19 @@
       "africa": "Africa — EN",
       "contactUs": "Contact us"
     },
+    "cookies": {
+      "title": "We use cookies",
+      "intro": "By browsing this site, you agree that we may use cookies to enhance your experience, analyse our audience and serve you relevant content.",
+      "essentialTitle": "Essential cookies",
+      "essentialDesc": "Required for the site to function (navigation, security, preferences). Always active — they collect no personal data.",
+      "analyticsTitle": "Analytics cookies",
+      "analyticsDesc": "Google Analytics anonymously measures the number of visitors, page views and browsing behaviour to help us improve our site.",
+      "marketingTitle": "Marketing cookies",
+      "marketingDesc": "Meta Pixel (Facebook) tracks interactions to show you relevant ads on social media and measure the effectiveness of our campaigns.",
+      "accept": "Accept all",
+      "decline": "Decline optional",
+      "policy": "Privacy policy"
+    },
     "footer": {
       "copyright": "© {year} Africa Centred Technology. All rights reserved.",
       "tagline": "Engineering the Future",
@@ -874,8 +887,9 @@
       "submitBtn": "Register",
       "submitting": "Submitting…",
       "successTitle": "Registration confirmed!",
-      "successMessage": "You will be redirected to secure Shopify checkout…",
-      "successRedirectNote": "If redirection doesn't happen automatically, check your popup blockers.",
+      "successMessage": "Your registration has been recorded. Our team will contact you within 24-48 hours to complete the payment.",
+      "successRedirectNote": "Please check your spam folder if you don't hear from us.",
+      "successClose": "Close",
       "errorMessage": "An error occurred. Please try again.",
       "landpageNomLabel": "Full name *",
       "landpageNomPlaceholder": "Your full name",
