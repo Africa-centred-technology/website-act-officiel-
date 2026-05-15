@@ -26,18 +26,19 @@ export const metadata: Metadata = {
   },
 };
 
-// Minimal shell — [locale]/layout.tsx owns html/body attrs, providers, Header.
+// Root layout — owns <html> and <body>.
+// [locale]/layout.tsx owns providers, Header, analytics scripts.
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html suppressHydrationWarning>
       <head>
-        {/* Preload the LCP hero image */}
+        {/* Preload LCP hero image (home page) */}
         <link rel="preload" as="image" href="/logo/logo_continent.png" fetchPriority="high" />
         {/* Preload Futura to eliminate FOUT on service pages */}
         <link rel="preload" as="font" href="/fonts/futura-medium.woff" type="font/woff" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Only the 3 font families used via CSS variables — block avoids swap CLS */}
+        {/* 3 font families used via CSS variables — display=block avoids swap CLS */}
         <link
           href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=block"
           rel="stylesheet"
