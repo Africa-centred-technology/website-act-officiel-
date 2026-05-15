@@ -8,7 +8,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  return buildPageMetadata({ locale, namespace: "metadata.formations", path: "/formations/all" });
+  return await buildPageMetadata({ locale, namespace: "metadata.formations", path: "/formations/all" });
 }
 
 function FormationsLoading() {

@@ -7,7 +7,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  return buildPageMetadata({ locale, namespace: "metadata.about", path: "/about" });
+  return await buildPageMetadata({ locale, namespace: "metadata.about", path: "/about" });
 }
 
 export default function AboutPage() {

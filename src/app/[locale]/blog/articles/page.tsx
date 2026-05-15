@@ -8,7 +8,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  return buildPageMetadata({ locale, namespace: "metadata.blog", path: "/blog/articles" });
+  return await buildPageMetadata({ locale, namespace: "metadata.blog", path: "/blog/articles" });
 }
 
 function ArticlesLoading() {

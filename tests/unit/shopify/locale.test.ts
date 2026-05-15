@@ -12,7 +12,6 @@ describe("toShopifyLanguage", () => {
     expect(toShopifyLanguage("ar")).toBe("AR");
   });
   it("throws on unknown locale", () => {
-    // @ts-expect-error — testing runtime guard
     expect(() => toShopifyLanguage("de")).toThrow(/unsupported locale/i);
   });
 });

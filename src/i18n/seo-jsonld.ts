@@ -8,13 +8,14 @@ import type {
 
 const BASE_URL = "https://www.a-ct.ma";
 
-export function organizationJsonLd(): WithContext<Organization> {
+export function organizationJsonLd(locale?: string): WithContext<Organization> {
+  const localePath = locale ? `/${locale}` : "/fr";
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Africa Centred Technology",
     alternateName: "ACT",
-    url: BASE_URL,
+    url: `${BASE_URL}${localePath}`,
     logo: `${BASE_URL}/logo/logo.png`,
     description:
       "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
@@ -49,6 +50,7 @@ export function breadcrumbJsonLd(
 }
 
 export function courseJsonLd(opts: {
+  locale?: string;
   slug: string;
   title: string;
   description: string;
@@ -69,8 +71,8 @@ export function courseJsonLd(opts: {
       name: "Africa Centred Technology",
       sameAs: BASE_URL,
     },
-    url: `${BASE_URL}/formations/${opts.slug}`,
-    inLanguage: "fr",
+    url: `${BASE_URL}/${opts.locale ?? "fr"}/formations/${opts.slug}`,
+    inLanguage: opts.locale ?? "fr",
   };
 
   if (opts.price !== undefined && opts.currency) {
@@ -95,6 +97,7 @@ export function courseJsonLd(opts: {
 }
 
 export function articleJsonLd(opts: {
+  locale?: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -114,8 +117,8 @@ export function articleJsonLd(opts: {
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo/logo.png` },
     },
     datePublished: opts.publishedAt,
-    inLanguage: "fr",
-    url: `${BASE_URL}/blog/${opts.slug}`,
+    inLanguage: opts.locale ?? "fr",
+    url: `${BASE_URL}/${opts.locale ?? "fr"}/blog/${opts.slug}`,
   };
 
   if (opts.image) {
