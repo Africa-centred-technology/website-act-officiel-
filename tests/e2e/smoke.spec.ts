@@ -203,16 +203,11 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
     // Téléphone (plus de Téléphone 2 / WhatsApp / Pays — un seul champ tel)
     await page.getByPlaceholder("+212 6XX XXX XXX").first().fill("+212600112233");
 
-    // ── 3 selects en mode étudiant : niveau d'études, fonction, comment connu
+    // ── 2 selects en mode étudiant : niveau d'études, fonction
     // 1er select : Niveau d'études
     await page.locator("form select").nth(0).selectOption({ index: 1 });
     // 2ème select : Fonction du participant
     await page.locator("form select").nth(1).selectOption({ index: 1 });
-    // 3ème select : Comment nous avez-vous connu
-    await page.locator("form select").nth(2).selectOption("Google");
-
-    // ── Consentement RGPD ────────────────────────────────────────────────────
-    await page.locator('input[type="checkbox"]').check();
 
     // ── Soumettre (scopé au form pour éviter le bouton newsletter du footer) ──
     await page.locator("form").getByRole("button", { name: /s'inscrire/i }).click();

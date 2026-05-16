@@ -705,17 +705,8 @@ export default function FormationInscriptionForm({
               />
             </Field>
 
-            {/* Comment connu */}
-            <Field label={t("fieldCommentConnu")} required>
-              <Select
-                value={form.commentConnu}
-                onChange={(e) => set("commentConnu", e.target.value)}
-                options={CANAUX}
-                placeholder={t("selectDefault")}
-              />
-            </Field>
 
-  
+
             {/* Nb participants */}
             <Field
               label={t("fieldNbParticipants")}
@@ -752,37 +743,6 @@ export default function FormationInscriptionForm({
               />
             </Field>
 
-            {/* RGPD */}
-            <label
-              style={{
-                gridColumn: "1 / -1",
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "0.75rem",
-                cursor: "pointer",
-              }}
-            >
-              <input
-                type="checkbox"
-                required
-                checked={form.consentementRGPD}
-                onChange={(e) => set("consentementRGPD", e.target.checked)}
-                style={{ accentColor: ORANGE, width: 18, height: 18, marginTop: "0.2rem", flexShrink: 0 }}
-              />
-              <span
-                style={{
-                  fontSize: "1.6rem",
-                  color: "rgba(255,255,255,0.5)",
-                  lineHeight: 1.65,
-                  fontFamily: "Futura, system-ui, sans-serif",
-                  textTransform: "none",
-                  letterSpacing: "0",
-                }}
-              >
-                {t("rgpdConsent")}{" "}
-                <span style={{ color: ORANGE }}>*</span>
-              </span>
-            </label>
 
             {/* Error */}
             {status === "error" && (
