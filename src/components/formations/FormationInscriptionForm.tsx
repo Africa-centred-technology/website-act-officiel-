@@ -5,7 +5,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Send, Loader2, Search, ChevronDown, X } from "lucide-react";
 import CTAButton from "@/components/ui/CTAButton";
-import { identifyUser } from "@/lib/session";
+import { identifyUser, setUserProfile } from "@/lib/session";
+import { getCsrfToken } from "@/lib/csrf";
 // @ts-ignore
 import { CountryRegionData } from "react-country-region-selector";
 
@@ -442,7 +443,7 @@ export default function FormationInscriptionForm({
     try {
       const res = await fetch("/api/shopify/inscription", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfToken() },
         body: JSON.stringify({
           typeClient: tab === "pro" ? "B2B" : "B2C",
           prenom: form.prenom,
@@ -464,11 +465,9 @@ export default function FormationInscriptionForm({
       });
       if (!res.ok) throw new Error();
       const json = await res.json();
-      identifyUser({
-        name: `${form.prenom ?? ""} ${form.nom ?? ""}`.trim(),
-        email: form.email,
-        source: "inscription",
-      });
+      const fullName = `${form.prenom ?? ""} ${form.nom ?? ""}`.trim();
+      identifyUser({ name: fullName, email: form.email, source: "inscription" });
+      setUserProfile({ name: fullName, email: form.email, phone: form.telephone1, company: form.organisme });
       setStatus("success");
       onSuccess?.();
     } catch {

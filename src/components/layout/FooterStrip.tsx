@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { identifyUser } from "@/lib/session";
+import { identifyUser, setUserProfile } from "@/lib/session";
+import { getCsrfToken } from "@/lib/csrf";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, LinkedinIcon, Mail, Phone, MapPin, Code2, Briefcase, GraduationCap } from "lucide-react";
@@ -31,12 +32,13 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
     try {
       const res = await fetch("/api/shopify/newsletter", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfToken() },
         body: JSON.stringify({ email, locale: "fr" }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         identifyUser({ name: email, email, source: "newsletter" });
+        setUserProfile({ email });
         setStatus("success");
         setEmail("");
       } else {

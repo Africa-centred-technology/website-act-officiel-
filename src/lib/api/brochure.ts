@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminRestUrl } from "@/lib/api/shopify-admin";
 import { routing, type Locale } from "@/i18n/routing";
+import { sendCAPIEvent, extractClientInfo } from "@/lib/facebook/capi";
+import { validateCsrf } from "@/lib/csrf";
 
 const DEFAULT_BROCHURE_URL = process.env.DEFAULT_BROCHURE_URL ?? "";
 
@@ -22,6 +24,9 @@ function safeLocale(raw: unknown): Locale {
 }
 
 export async function POST(req: Request) {
+  const csrfError = validateCsrf(req);
+  if (csrfError) return csrfError;
+
   try {
     const body = (await req.json()) as Partial<BrochurePayload>;
     const { name, email, company, formationSlug, formationTitle, brochureUrl } = body;
@@ -78,7 +83,27 @@ export async function POST(req: Request) {
       console.warn("[brochure] Capture Shopify échouée (non-bloquant) :", err instanceof Error ? err.message : err);
     }
 
-    return NextResponse.json({ success: true, brochureUrl: finalBrochureUrl });
+    // ── Facebook Conversions API (non-bloquant) ───────────────────────────────
+    const nameParts2 = name.trim().split(/\s+/);
+    const capiEventId = crypto.randomUUID();
+    sendCAPIEvent({
+      eventName: "Lead",
+      eventId:   capiEventId,
+      sourceUrl: req.headers.get("referer") ?? undefined,
+      userData: {
+        email,
+        firstName: nameParts2[0],
+        lastName:  nameParts2.slice(1).join(" ") || undefined,
+        ...extractClientInfo(req),
+      },
+      customData: {
+        content_name:     formationTitle,
+        content_category: "brochure",
+        content_ids:      [formationSlug],
+      },
+    }).catch((err: unknown) => console.warn("[CAPI brochure]", err));
+
+    return NextResponse.json({ success: true, brochureUrl: finalBrochureUrl, eventId: capiEventId });
 
   } catch (error) {
     console.error("Brochure API error:", error);

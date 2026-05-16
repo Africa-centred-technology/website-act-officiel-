@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminUrl, shopifyAdminRestUrl } from "@/lib/api/shopify-admin";
+import { sendCAPIEvent, extractClientInfo } from "@/lib/facebook/capi";
+import { validateCsrf } from "@/lib/csrf";
 
 const RESEND_KEY = process.env.RESEND_API_KEY;
 
@@ -31,6 +33,9 @@ const SERVICE_LABELS: Record<string, string> = {
 // ── POST handler ──────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
+  const csrfError = validateCsrf(req);
+  if (csrfError) return csrfError;
+
   try {
     const body = await req.json();
     const { name, email, company, phone, pole, service, message } =
@@ -233,6 +238,24 @@ export async function POST(req: Request) {
         console.error("Resend error:", await emailRes.json());
       }
     }
+
+    // ── 4. Facebook Conversions API (non-bloquant) ────────────────────────────
+    sendCAPIEvent({
+      eventName: "Lead",
+      eventId:   crypto.randomUUID(),
+      sourceUrl: req.headers.get("referer") ?? undefined,
+      userData: {
+        email,
+        phone:     phone     || undefined,
+        firstName,
+        lastName,
+        ...extractClientInfo(req),
+      },
+      customData: {
+        content_name:     `${poleLabel} — ${serviceLabel}`,
+        content_category: pole ?? "contact",
+      },
+    }).catch((err: unknown) => console.error("[CAPI contact]", err));
 
     return NextResponse.json({ success: true, draftOrder: draftOrder ?? null });
 

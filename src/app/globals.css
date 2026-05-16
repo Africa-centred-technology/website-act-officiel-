@@ -11,10 +11,31 @@
   src: url('/fonts/futura-medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
   ascent-override: 90%;
   descent-override: 22%;
   line-gap-override: 0%;
+  size-adjust: 96%;
+}
+
+/* Lora fallback — minimise le CLS quand Lora swap depuis Georgia/serif */
+@font-face {
+  font-family: "Lora-Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  ascent-override: 91%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+  size-adjust: 98%;
+}
+
+/* Poppins fallback — minimise le CLS quand Poppins swap depuis Arial/system-ui */
+@font-face {
+  font-family: "Poppins-Fallback";
+  src: local("Arial"), local("Helvetica Neue");
+  ascent-override: 95%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+  size-adjust: 105%;
 }
 
 @theme {
@@ -82,9 +103,9 @@
   --font-body-base: clamp(15px, calc(1.6rem + 6px), 1.75rem);
   --font-body-lg:   clamp(17px, calc(1.9rem + 6px), 2rem);
 
-  --font-display: "Lora", serif;
-  --font-body:    "Poppins", sans-serif;
-  --font-label:   "Poppins", system-ui, sans-serif;
+  --font-display: "Lora", "Lora-Fallback", Georgia, serif;
+  --font-body:    "Poppins", "Poppins-Fallback", system-ui, sans-serif;
+  --font-label:   "Poppins", "Poppins-Fallback", system-ui, sans-serif;
 
   --ease-uptown: cubic-bezier(0.6, 0.08, 0.02, 0.99);
 }

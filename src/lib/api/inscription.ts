@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminUrl } from "@/lib/api/shopify-admin";
 import { routing, type Locale } from "@/i18n/routing";
+import { sendCAPIEvent, extractClientInfo } from "@/lib/facebook/capi";
+import { validateCsrf } from "@/lib/csrf";
 
 const STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
@@ -29,6 +31,9 @@ async function storefrontFetch(query: string, variables = {}) {
 // ── POST handler ──────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
+  const csrfError = validateCsrf(req);
+  if (csrfError) return csrfError;
+
   try {
     const body = await req.json();
 
@@ -43,20 +48,25 @@ export async function POST(req: Request) {
     const activeAdminToken = await getAdminToken();
     const { formationSlug } = body;
 
-    // 1. Récupérer le Variant ID du produit (optionnel)
+    // 1. Récupérer le Variant ID + prix du produit (optionnel)
     let variantId: string | null = null;
+    let variantPrice: string | null = null;
+    let variantCurrency = "MAD";
     if (formationSlug) {
       const productRes = await storefrontFetch(
         `query getProductVariant($handle: String!) {
           product(handle: $handle) {
             variants(first: 1) {
-              edges { node { id } }
+              edges { node { id price { amount currencyCode } } }
             }
           }
         }`,
         { handle: formationSlug }
       );
-      variantId = productRes?.data?.product?.variants?.edges?.[0]?.node?.id ?? null;
+      const variantNode = productRes?.data?.product?.variants?.edges?.[0]?.node;
+      variantId = variantNode?.id ?? null;
+      variantPrice    = variantNode?.price?.amount ?? null;
+      variantCurrency = variantNode?.price?.currencyCode ?? "MAD";
     }
 
     // 2. Note récapitulative
@@ -192,10 +202,37 @@ export async function POST(req: Request) {
     }
 
     const order = completeJson.data.draftOrderComplete.draftOrder.order;
+
+    // ── Facebook Conversions API — Purchase (non-bloquant) ───────────────────
+    const capiEventId = crypto.randomUUID();
+    sendCAPIEvent({
+      eventName: "Purchase",
+      eventId:   capiEventId,
+      sourceUrl: req.headers.get("referer") ?? undefined,
+      userData: {
+        email:     body.email,
+        phone:     body.telephone || undefined,
+        firstName: body.prenom,
+        lastName:  body.nom,
+        ...extractClientInfo(req),
+      },
+      customData: {
+        currency:         variantCurrency,
+        value:            variantPrice ?? "0",
+        content_name:     body.formationSouhaitee || formationSlug || "Formation",
+        content_category: body.typeClient,
+        content_ids:      formationSlug ? [formationSlug] : [],
+        content_type:     "product",
+        num_items:        quantity,
+      },
+      attributionData: { attributionShare: "1.0" },
+    }).catch((err: unknown) => console.error("[CAPI inscription]", err));
+
     return NextResponse.json({
       success: true,
       orderId: order?.id ?? null,
       orderName: order?.name ?? null,
+      eventId: capiEventId,
     });
 
   } catch (error) {

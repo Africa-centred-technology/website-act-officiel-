@@ -176,9 +176,11 @@ export default function WaveTerrain() {
       rafId = requestAnimationFrame(draw);
     };
 
-    draw();
+    // Delay start by 1.2 s so hydration and LCP paint complete first
+    const startTimer = setTimeout(() => draw(), 1200);
 
     return () => {
+      clearTimeout(startTimer);
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMouse);

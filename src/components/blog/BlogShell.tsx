@@ -10,6 +10,7 @@ import BlogHero, { V, FONT_BODY } from "./BlogHero";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
 import { useTranslations, useLocale } from "next-intl";
+import { getCsrfToken } from "@/lib/csrf";
 
 // Hook pour détecter la taille d'écran
 function useMediaQuery() {
@@ -63,7 +64,7 @@ export default function BlogShell() {
     try {
       const res = await fetch("/api/shopify/newsletter", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfToken() },
         body: JSON.stringify({ email, locale }),
       });
       const data = await res.json();

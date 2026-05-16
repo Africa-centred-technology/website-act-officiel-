@@ -4,7 +4,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, Youtube, Send } from "lucide-react";
-import { identifyUser } from "@/lib/session";
+import { identifyUser, setUserProfile } from "@/lib/session";
+import { getCsrfToken } from "@/lib/csrf";
 import FooterStrip from "@/components/layout/FooterStrip";
 import CTAButton from "@/components/ui/CTAButton";
 import { useTranslations } from "next-intl";
@@ -150,6 +151,7 @@ export default function ContactShell() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRF-Token": getCsrfToken(),
         },
         body: JSON.stringify(form),
       });
@@ -159,6 +161,7 @@ export default function ContactShell() {
       }
 
       identifyUser({ name: form.name, email: form.email, source: "contact" });
+      setUserProfile({ name: form.name, email: form.email, phone: form.phone, company: form.company });
       setSending(false);
       setSent(true);
 

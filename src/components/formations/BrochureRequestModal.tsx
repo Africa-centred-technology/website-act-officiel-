@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
+import { identifyUser, setUserProfile } from "@/lib/session";
+import { getCsrfToken } from "@/lib/csrf";
 import { X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
 const ACT_DARK   = "#0A1410";
@@ -30,7 +32,7 @@ type TrackingWindow = Window & {
   gtag?: (...args: unknown[]) => void;
 };
 
-function trackBrochureLead(formationTitle: string, formationSlug: string) {
+function trackBrochureLead(formationTitle: string, formationSlug: string, eventId?: string) {
   if (typeof window === "undefined") return;
   const w = window as TrackingWindow;
   w.dataLayer = w.dataLayer || [];
@@ -41,11 +43,12 @@ function trackBrochureLead(formationTitle: string, formationSlug: string) {
     formation_title: formationTitle,
   });
   if (typeof w.fbq === "function") {
-    w.fbq("track", "Lead", {
-      content_name: formationTitle,
-      content_category: "brochure",
-      content_ids: [formationSlug],
-    });
+    w.fbq(
+      "track",
+      "Lead",
+      { content_name: formationTitle, content_category: "brochure", content_ids: [formationSlug] },
+      ...(eventId ? [{ eventID: eventId }] : [])
+    );
   }
   if (typeof w.gtag === "function") {
     w.gtag("event", "generate_lead", {
@@ -98,7 +101,7 @@ export default function BrochureRequestModal({
     try {
       const res = await fetch("/api/brochure", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfToken() },
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
@@ -113,7 +116,9 @@ export default function BrochureRequestModal({
       if (!res.ok) {
         throw new Error(json.error || "Erreur d'envoi");
       }
-      trackBrochureLead(formationTitle, formationSlug);
+      trackBrochureLead(formationTitle, formationSlug, json.eventId as string | undefined);
+      identifyUser({ name: name.trim(), email: email.trim(), source: "brochure" });
+      setUserProfile({ name: name.trim(), email: email.trim(), company: company.trim() || undefined });
       const url: string | undefined = json.brochureUrl;
       if (url) {
         setDownloadUrl(url);

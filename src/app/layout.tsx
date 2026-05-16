@@ -43,9 +43,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preload" as="font" href="/fonts/futura-medium.woff" type="font/woff" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* 3 font families used via CSS variables — display=block avoids swap CLS */}
+        {/* 3 font families — display=swap lets browser paint immediately with fallback, then swap */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=block"
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>

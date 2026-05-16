@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import FooterStrip from "@/components/layout/FooterStrip";
+import { getCsrfToken } from "@/lib/csrf";
 import CTAButton from "@/components/ui/CTAButton";
 
 /* ─────────────────────────────────────────────────────────────────
@@ -651,7 +652,7 @@ function InscriptionForm({ screenSize, formations }: { screenSize: string; forma
         try {
             const res = await fetch("/api/shopify/inscription", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfToken() },
                 body: JSON.stringify({
                     prenom: form.nom.split(" ")[0] ?? form.nom,
                     nom: form.nom.split(" ").slice(1).join(" ") || form.nom,

@@ -305,8 +305,8 @@ export default function HeroSection() {
           <motion.div
             layoutId="logo-continent"
             style={{ x: bgX, y: bgY, flexShrink: 0, zIndex: 10 }}
-            initial={{ opacity: 0, scale: 0.7, x: -80, rotate: -3 }}
-            animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
+            initial={{ scale: 0.7, x: -80, rotate: -3 }}
+            animate={{ scale: 1, x: 0, rotate: 0 }}
             exit={{ scale: 0.2, x: 400, y: 400, opacity: 0, rotate: 10 }}
             transition={{ duration: 1.8, delay: 0.1, ease: BURST }}
           >
@@ -317,7 +317,7 @@ export default function HeroSection() {
                 width={1200}
                 height={900}
                 fetchPriority="high"
-                decoding="sync"
+                decoding="async"
                 style={{
                   width: "clamp(30rem, 65vw, 75rem)",
                   height: "auto",

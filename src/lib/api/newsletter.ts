@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, shopifyAdminUrl } from "@/lib/api/shopify-admin";
 import { routing, type Locale } from "@/i18n/routing";
+import { sendCAPIEvent, extractClientInfo } from "@/lib/facebook/capi";
+import { validateCsrf } from "@/lib/csrf";
 
 function safeLocale(raw: unknown): Locale {
   if (typeof raw === "string" && (routing.locales as readonly string[]).includes(raw)) {
@@ -12,6 +14,9 @@ function safeLocale(raw: unknown): Locale {
 // ── POST handler ──────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
+  const csrfError = validateCsrf(req);
+  if (csrfError) return csrfError;
+
   try {
     const reqBody = await req.json();
     const { email } = reqBody;
@@ -70,6 +75,17 @@ export async function POST(req: Request) {
         e.message?.toLowerCase().includes("taken") ||
         e.message?.toLowerCase().includes("déjà")
     );
+
+    // ── Facebook Conversions API (non-bloquant) ───────────────────────────────
+    sendCAPIEvent({
+      eventName: "Subscribe",
+      eventId:   crypto.randomUUID(),
+      sourceUrl: req.headers.get("referer") ?? undefined,
+      userData: {
+        email,
+        ...extractClientInfo(req),
+      },
+    }).catch((err: unknown) => console.warn("[CAPI newsletter]", err));
 
     if (emailTaken) {
       const searchRes = await fetch(endpoint, {
