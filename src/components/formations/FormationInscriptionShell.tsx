@@ -162,6 +162,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
     <div
       style={{
         minHeight: "100vh",
+        paddingTop: "clamp(4rem, 7vh, 5.5rem)",
         background: DARK,
         color: "#fff",
         overflowX: "hidden",
@@ -369,7 +370,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
         ref={formRef}
         style={{
           padding:
-            "clamp(4rem, 7vw, 7rem) clamp(1.5rem, 6vw, 8rem) clamp(5rem, 9vw, 9rem)",
+            "clamp(7rem, 10vw, 10rem) clamp(1.5rem, 6vw, 8rem) clamp(5rem, 9vw, 9rem)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
         }}
       >
@@ -412,7 +413,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
             initial={{ opacity: 0, y: 30 }}
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.25 }}
-            style={{ display: "flex", flexDirection: "column", gap: "1.5rem", position: "sticky", top: "2rem" }}
+            style={{ display: "flex", flexDirection: "column", gap: "1.5rem", position: "sticky", top: "clamp(6rem, 8vh, 8rem)" }}
           >
             {/* Formation summary card */}
             {formation && (

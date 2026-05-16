@@ -123,6 +123,8 @@
 /* ── Responsive root font (clone approach: anchored on 1920px) ── */
 html {
   font-size: clamp(11px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px);
+  /* Reserve space below the fixed navbar when browser auto-scrolls to focused elements */
+  scroll-padding-top: 6rem;
 }
 @media screen and (min-width:1500px) and (max-width:1600px) and (orientation:landscape) {
   html { font-size: clamp(10.5px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px); }
