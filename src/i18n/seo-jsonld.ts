@@ -166,12 +166,24 @@ export function articleJsonLd(opts: {
   author: string;
   publishedAt: string;
   image?: string;
+  keywords?: string[];
 }): WithContext<Article> {
-  const base: WithContext<Article> & { image?: string; speakable?: object } = {
+  const alternativeHeadline = opts.excerpt
+    ? opts.excerpt.slice(0, 110).replace(/\s+\S*$/, "…")
+    : undefined;
+
+  const base: WithContext<Article> & {
+    image?: string;
+    speakable?: object;
+    alternativeHeadline?: string;
+    keywords?: string;
+  } = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: opts.title,
     description: opts.excerpt,
+    ...(alternativeHeadline ? { alternativeHeadline } : {}),
+    ...(opts.keywords?.length ? { keywords: opts.keywords.join(", ") } : {}),
     author: { "@type": "Person", name: opts.author },
     publisher: {
       "@type": "Organization",

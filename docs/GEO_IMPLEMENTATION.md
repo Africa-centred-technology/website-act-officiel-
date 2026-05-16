@@ -24,8 +24,9 @@ Contrairement au SEO classique (optimisation pour les crawlers de liens), le GEO
 | Fichier | Statut | Rôle |
 |---|---|---|
 | `public/llms.txt` | ✅ Fait | Guide textuel structuré pour les LLMs — standard emergent (Anthropic, OpenAI) |
+| `public/llms-full.txt` | ✅ Fait | Version longue (~300 lignes) pour You.com, Cohere — services, formations, FAQ complètes |
 | `src/app/robots.ts` | ✅ Fait | Autorise explicitement 14 crawlers IA |
-| `src/i18n/seo-jsonld.ts` | ✅ Partiel | Schemas JSON-LD (WebSite, Organization, Course, Article, FAQ) |
+| `src/i18n/seo-jsonld.ts` | ✅ Complet | Schemas JSON-LD (WebSite, Organization, Course, Article+keywords, FAQ, speakable) |
 
 ### 2.2 Schemas JSON-LD
 
@@ -36,7 +37,7 @@ Contrairement au SEO classique (optimisation pour les crawlers de liens), le GEO
 | `Course` | Détail d'une formation | ✅ Fait | Pages `/formations/[slug]` |
 | `Article` | Articles de blog + `speakable` | ✅ Fait | Pages `/blog/[slug]` |
 | `BreadcrumbList` | Fil d'Ariane | ✅ Fait | Pages internes |
-| `FAQPage` | Questions-réponses sur les services/formations | ⚠️ Helper créé, non déployé | — |
+| `FAQPage` | Questions-réponses sur les services/formations | ✅ Fait | Pages `/formations` et `/services` |
 
 ### 2.3 Crawlers IA autorisés dans robots.txt
 
@@ -104,17 +105,22 @@ Schema `WebPage` avec `speakable` ciblant `h1`, `.hero-tagline`, `.hero-subtitle
 
 ### P3 — Impact faible, effort faible
 
-#### 3.8 `llms-full.txt`
+#### 3.8 `llms-full.txt` ✅ Fait
+`public/llms-full.txt` créé (~300 lignes) avec :
+- Identité complète ACT (fondée 2026, Maroc, 3 langues)
+- 3 pôles métier, 7 services avec compétences, outils, cas d'usage et livrables
+- 6 programmes de formation (IA/ML, IA Agentique, Data Science, Cloud/DevOps, Dev Logiciel, Géomatique) avec curricula, prérequis, durées et certifications
+- 4 catégories éditoriales du blog
+- FAQ étendue 10 entrées
+- Section crawlers techniques (sitemap, robots.txt, schemas présents)
 
-Certains crawlers (You.com, Cohere) cherchent `/llms-full.txt` pour un contenu plus détaillé. Créer `public/llms-full.txt` avec une description complète de chaque service et formation.
-
-#### 3.9 `alternativeHeadline` + `keywords` sur Article
-
+#### 3.9 `alternativeHeadline` + `keywords` sur Article ✅ Fait
+Dans `articleJsonLd()` (`src/i18n/seo-jsonld.ts`) :
 ```typescript
-// Dans articleJsonLd()
-alternativeHeadline: opts.excerpt.substring(0, 110),
-keywords: opts.tags?.join(", "),
+alternativeHeadline: opts.excerpt.slice(0, 110).replace(/\s+\S*$/, "…"),
+keywords: opts.keywords?.join(", "),
 ```
+Appelé dans `src/app/[locale]/blog/[slug]/page.tsx` avec `keywords: post.keywords`.
 
 ---
 
@@ -151,9 +157,9 @@ Si un profil n'existe pas encore, **ne pas laisser de fausse URL** — supprimer
 
 ### Avant mise en production
 - [ ] Vérifier et corriger les URLs `sameAs` (LinkedIn, Facebook, Instagram, YouTube)
-- [ ] Déployer `faqJsonLd()` sur la page formations
-- [ ] Déployer `faqJsonLd()` sur la page services
-- [ ] Ajouter `knowsAbout` + `founder` + `foundingDate` dans `organizationJsonLd()`
+- [x] Déployer `faqJsonLd()` sur la page formations ✅
+- [x] Déployer `faqJsonLd()` sur la page services ✅
+- [x] Ajouter `knowsAbout` + `foundingDate` + `areaServed` dans `organizationJsonLd()` ✅
 - [ ] Valider les schemas avec Google Rich Results Test
 
 ### Après mise en production
@@ -168,21 +174,25 @@ Si un profil n'existe pas encore, **ne pas laisser de fausse URL** — supprimer
 ## 7. Roadmap GEO — priorités
 
 ```
-Semaine 1 (maintenant)
-  ├── P1.1 → knowsAbout + founder + areaServed sur Organization
+✅ P1 — COMPLÉTÉ
+  ├── P1.1 → knowsAbout + foundingDate + areaServed sur Organization
   ├── P1.2 → faqJsonLd() déployé sur /formations
   └── P1.3 → faqJsonLd() déployé sur /services
 
-Semaine 2
-  ├── P2.1 → Enrichir llms.txt avec catalogue formations
-  └── P2.2 → speakable sur home page
+✅ P2 — COMPLÉTÉ
+  ├── P2.1 → Enrichir llms.txt avec catalogue formations (6 programmes + blog)
+  ├── P2.2 → speakable sur home page (WebPage schema)
+  └── P2.3 → dateModified dans les métadonnées (toutes pages)
 
-Semaine 3+
-  ├── P3.1 → llms-full.txt
-  ├── P3.2 → dateModified dans les métadonnées
-  └── P3.3 → alternativeHeadline + keywords sur articles
+✅ P3 — COMPLÉTÉ
+  ├── P3.1 → llms-full.txt (~300 lignes, 7 services, 6 formations, FAQ)
+  └── P3.2 → alternativeHeadline + keywords sur articles de blog
+
+⏳ Reste à faire
+  ├── Vérifier les URLs sameAs (LinkedIn, Facebook, Instagram, YouTube)
+  └── Valider schemas avec Google Rich Results Test après déploiement
 ```
 
 ---
 
-*Document généré le 16 mai 2026 — à mettre à jour à chaque évolution GEO.*
+*Document généré le 16 mai 2026 — mis à jour le 16 mai 2026 (P1 + P2 + P3 complétés).*

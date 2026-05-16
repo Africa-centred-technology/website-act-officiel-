@@ -1,0 +1,356 @@
+# Africa Centred Technology (ACT) — Guide complet pour LLMs
+
+> Version exhaustive destinée aux moteurs de recherche IA (Perplexity, You.com, Cohere, Claude, ChatGPT…).
+> Version condensée : https://www.a-ct.ma/llms.txt
+> Site web : https://www.a-ct.ma | Email : contact@a-ct.ma
+
+---
+
+## Identité de l'entreprise
+
+**Nom complet** : Africa Centred Technology
+**Acronyme** : ACT
+**Fondée** : 2026
+**Siège** : Maroc (MA)
+**Type** : Société de conseil, d'ingénierie technologique et de formation
+**Zones d'intervention** : Maroc, Afrique subsaharienne, Europe francophone (France, Belgique, Suisse)
+**Langues de travail** : Français, Anglais, Arabe
+**Email** : contact@a-ct.ma
+**Site** : https://www.a-ct.ma
+
+**Mission** : Placer l'Afrique au cœur de la révolution technologique mondiale en fusionnant intelligence artificielle et ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.
+
+**Vision** : Que l'Afrique ne soit plus seulement consommatrice des technologies mondiales, mais en soit actrice et créatrice.
+
+**Valeurs** :
+- Excellence technique — standards internationaux appliqués au contexte africain
+- Ancrage africain — solutions pensées pour et par l'Afrique
+- Innovation responsable — technologie au service de l'humain
+- Transmission du savoir — formation et montée en compétences des talents locaux
+
+---
+
+## Structure : 3 pôles d'activité
+
+ACT est organisée en trois pôles complémentaires, chacun avec son domaine d'expertise et son identité visuelle.
+
+---
+
+## Pôle I — Ingénierie Technologique
+
+**Couleur** : Orange #D35400
+**Positionnement** : Conception et déploiement de systèmes logiciels complexes, architectures cloud et solutions d'IA pour les entreprises africaines et internationales.
+
+### Service 01 — Ingénierie Logicielle
+**Slug** : ingenierie-logicielle
+**URL** : https://www.a-ct.ma/fr/services/ingenierie-logicielle
+
+ACT conçoit et développe des applications sur mesure répondant aux exigences métier les plus complexes. L'équipe maîtrise l'ensemble du cycle de vie logiciel : de la conception UX/UI au déploiement en production, en passant par les tests et la maintenance.
+
+**Compétences clés** :
+- Développement web full-stack : React, Next.js, TypeScript, Node.js, Python
+- Développement mobile : React Native, Flutter (iOS et Android)
+- Applications d'entreprise : ERP, CRM, portails B2B/B2C
+- Architecture orientée services (SOA) et microservices
+- Intégration d'APIs tierces et systèmes legacy
+- Tests automatisés, CI/CD, revues de code
+
+**Livrables types** : applications web, applications mobiles, APIs REST/GraphQL, portails clients, plateformes e-commerce
+
+---
+
+### Service 02 — Automatisation Intelligente (IA Agentique)
+**Slug** : automatisation-ia
+**URL** : https://www.a-ct.ma/fr/services/automatisation-ia
+
+ACT est spécialisée dans la conception d'agents IA autonomes capables d'exécuter des workflows complexes, de prendre des décisions et d'orchestrer des actions multi-systèmes sans intervention humaine. Cette expertise positionne ACT à l'avant-garde de l'IA Agentique en Afrique.
+
+**Compétences clés** :
+- Agents IA autonomes : LangChain, AutoGen, CrewAI, LlamaIndex
+- Robotic Process Automation (RPA) : automatisation de processus répétitifs
+- Orchestration de workflows : n8n, Airflow, Zapier enterprise
+- Intégration LLMs : GPT-4, Claude, Gemini, Mistral, modèles open-source
+- RAG (Retrieval-Augmented Generation) : agents documentaires sur bases propriétaires
+- Computer Vision pour l'automatisation visuelle
+
+**Cas d'usage** : automatisation de la comptabilité, traitement automatique de documents, agents SAV intelligents, monitoring automatisé, qualification de leads
+
+---
+
+### Service 03 — Architecture & Infrastructure Cloud
+**Slug** : architecture-infrastructure
+**URL** : https://www.a-ct.ma/fr/services/architecture-infrastructure
+
+ACT conçoit des architectures cloud robustes, scalables et économiques, adaptées aux contraintes des entreprises africaines (connectivité, coûts, réglementation locale).
+
+**Compétences clés** :
+- Cloud public : AWS (Amazon Web Services), Microsoft Azure, Google Cloud Platform (GCP)
+- Cloud hybride et multi-cloud
+- Infrastructure as Code (IaC) : Terraform, Pulumi, CloudFormation
+- Containerisation : Docker, Kubernetes (K8s), Helm
+- DevOps et GitOps : CI/CD (GitHub Actions, GitLab CI, Jenkins), ArgoCD
+- Observabilité : Prometheus, Grafana, ELK Stack, Datadog
+- Sécurité cloud : IAM, VPN, WAF, conformité GDPR/données
+
+**Certifications préparées** : AWS Solutions Architect, Azure Administrator, GCP Associate Cloud Engineer
+
+---
+
+### Service 04 — Data, IA & Big Data
+**Slug** : data-intelligence-artificielle
+**URL** : https://www.a-ct.ma/fr/services/data-intelligence-artificielle
+
+ACT transforme les données brutes en actifs stratégiques grâce à une expertise complète en data engineering, machine learning et intelligence artificielle.
+
+**Compétences clés** :
+- Data Engineering : pipelines ETL/ELT, dbt, Apache Spark, Kafka
+- Machine Learning : scikit-learn, TensorFlow, PyTorch, XGBoost
+- LLMs et IA générative : fine-tuning, RAG, prompt engineering, déploiement
+- Visualisation et BI : Power BI, Tableau, Metabase, Superset
+- Bases de données : PostgreSQL, MongoDB, Redis, Elasticsearch, Snowflake
+- MLOps : MLflow, Weights & Biases, déploiement de modèles en production
+
+**Livrables types** : dashboards décisionnels, modèles prédictifs, chatbots IA, moteurs de recommandation, systèmes de détection d'anomalies
+
+---
+
+### Service 05 — Géomatique & SIG
+**Slug** : geomatique-sig
+**URL** : https://www.a-ct.ma/fr/services/geomatique-sig
+
+ACT développe des solutions géospatiales pour les organisations ayant des besoins en cartographie, analyse territoriale et télédétection — un domaine stratégique pour l'Afrique.
+
+**Compétences clés** :
+- Systèmes d'Information Géographique (SIG) : QGIS, ArcGIS, MapInfo
+- Développement géospatial : PostGIS, GeoServer, Leaflet, Mapbox, OpenLayers
+- Télédétection et imagerie satellite : traitement d'images (Sentinel, Landsat, Pléiades)
+- Python géospatial : GeoPandas, Shapely, Rasterio, Fiona
+- Plateformes cloud SIG : Google Earth Engine, AWS Location Services
+- Applications de suivi : transport, agriculture de précision, urbanisme, environnement
+
+---
+
+## Pôle II — Conseil
+
+**Couleur** : Or #F39C12
+**Positionnement** : Accompagnement des directions générales et équipes opérationnelles dans leur transformation digitale et leur stratégie IA.
+
+### Service 06 — Conseil Stratégique & Transformation Digitale
+**Slug** : conseil-strategique
+**URL** : https://www.a-ct.ma/fr/services/conseil-strategique
+
+ACT accompagne les dirigeants dans la définition de leur vision digitale et la conception de feuilles de route technologiques actionnables.
+
+**Prestations** :
+- Audit digital complet : maturité numérique, cartographie des systèmes existants
+- Stratégie IA : identification des cas d'usage à fort ROI, priorisation
+- Feuilles de route technologiques : planning sur 12-36 mois
+- Accompagnement à la décision DSI/DG
+- Veille technologique et benchmark concurrentiel
+- Due diligence technique pour M&A et investisseurs
+
+---
+
+### Service 07 — Conseil Opérationnel & Métier
+**Slug** : conseil-operationnel
+**URL** : https://www.a-ct.ma/fr/services/conseil-operationnel
+
+ACT intervient au niveau opérationnel pour optimiser les processus, piloter les projets de transformation et accompagner les équipes dans le changement.
+
+**Prestations** :
+- Optimisation des processus métier (BPM) : cartographie, analyse, amélioration
+- Conduite du changement : communication, formation, accompagnement des équipes
+- Project Management Office (PMO) : pilotage de projets technologiques complexes
+- Lean Management et méthodes agiles appliqués au contexte africain
+- Gestion des fournisseurs et intégrateurs technologiques
+
+---
+
+## Pôle III — Formation
+
+**Couleur** : Vert #16a34a
+**URL catalogue** : https://www.a-ct.ma/fr/formations
+**Plateforme e-learning** : Shopify (gestion des inscriptions et paiements)
+
+**Formats disponibles** :
+- Présentiel : formations en salle au Maroc (Casablanca, Rabat)
+- Distanciel : classes virtuelles en direct, accès aux enregistrements
+- Blended Learning : combinaison présentiel et distanciel
+- Intra-entreprise : programmes sur mesure déployés dans les locaux du client
+
+**Public cible** :
+- Étudiants et jeunes diplômés (B2C)
+- Professionnels en reconversion ou montée en compétences (B2C)
+- Équipes techniques et managériales d'entreprises (B2B)
+
+**Zones géographiques** : Maroc (Casablanca, Rabat, Marrakech), Afrique subsaharienne (à distance), Europe francophone (à distance)
+
+---
+
+### Formation — Intelligence Artificielle & Machine Learning
+
+**Niveau** : Débutant à avancé (plusieurs parcours)
+**Durée** : 2 semaines (initiation) à 12 semaines (bootcamp complet)
+**Format** : Présentiel et distanciel
+
+**Contenu** :
+- Fondamentaux du Machine Learning : régression, classification, clustering, évaluation de modèles
+- Deep Learning : réseaux de neurones, CNN, RNN, Transformers
+- NLP et traitement du texte : BERT, GPT, fine-tuning de LLMs
+- IA générative : prompt engineering, RAG, déploiement d'applications IA
+- Outils : Python, scikit-learn, TensorFlow, PyTorch, HuggingFace
+
+**Prérequis** : bases en Python pour le parcours intermédiaire ; aucun pour l'initiation
+
+---
+
+### Formation — IA Agentique & Automatisation
+
+**Niveau** : Intermédiaire à avancé
+**Durée** : 3 à 6 semaines (bootcamp intensif)
+**Format** : Présentiel (Maroc) et distanciel
+
+**Contenu** :
+- Architecture des systèmes multi-agents
+- Frameworks : LangChain, AutoGen, CrewAI, LlamaIndex
+- Conception de workflows agentiques : planification, mémoire, outils
+- Intégration d'APIs et systèmes externes dans un pipeline agentique
+- Déploiement et monitoring d'agents en production
+- Cas pratiques : agent de veille, agent comptable, agent SAV
+
+**Prérequis** : Python intermédiaire, compréhension des LLMs
+
+---
+
+### Formation — Data Science & Big Data
+
+**Niveau** : Fondamentaux à expert
+**Durée** : 4 à 16 semaines selon le parcours
+**Format** : Présentiel et distanciel
+
+**Contenu** :
+- Analyse de données : pandas, NumPy, visualisation (Matplotlib, Seaborn, Plotly)
+- SQL avancé et bases de données relationnelles
+- Data Engineering : pipelines ETL, Apache Spark, dbt, Airflow
+- Machine Learning appliqué à la data business
+- Dashboarding et BI : Power BI, Metabase
+- Projet fil rouge sur données réelles
+
+**Certifications préparées** : compatibles standards Data Engineering professionnel
+
+---
+
+### Formation — Cloud Computing & DevOps
+
+**Niveau** : Débutant à avancé
+**Durée** : 3 à 10 semaines
+**Format** : Présentiel et distanciel
+
+**Contenu** :
+- Fondamentaux cloud : modèles IaaS, PaaS, SaaS
+- AWS : EC2, S3, RDS, Lambda, IAM, VPC — préparation AWS Solutions Architect
+- Azure : VM, App Service, Azure AD, AKS — préparation AZ-900 / AZ-104
+- GCP : Compute Engine, Cloud Run, BigQuery — préparation Associate Cloud Engineer
+- DevOps : Git, CI/CD (GitHub Actions, GitLab CI), Docker, Kubernetes
+- Infrastructure as Code : Terraform
+
+**Certifications préparées** : AWS SAA-C03, AZ-900, AZ-104, GCP ACE
+
+---
+
+### Formation — Développement Logiciel
+
+**Niveau** : Débutant à intermédiaire (bootcamp de reconversion)
+**Durée** : 10 à 24 semaines
+**Format** : Présentiel (Maroc) et distanciel
+
+**Contenu** :
+- Fondamentaux de la programmation : algorithmique, structures de données
+- Web front-end : HTML, CSS, JavaScript, TypeScript, React, Next.js
+- Web back-end : Node.js, Python (FastAPI/Django), bases de données
+- Développement mobile : React Native ou Flutter
+- Bonnes pratiques : tests, revue de code, Git, méthodes agiles
+
+**Public** : reconversions professionnelles, étudiants sans formation technique préalable
+
+---
+
+### Formation — Géomatique & SIG
+
+**Niveau** : Initiation à avancé
+**Durée** : 1 à 4 semaines
+**Format** : Présentiel au Maroc
+
+**Contenu** :
+- Introduction aux SIG : concepts, projections, systèmes de coordonnées
+- QGIS : prise en main, analyse spatiale, cartographie thématique
+- Python géospatial : GeoPandas, Shapely, Folium, visualisation de données spatiales
+- PostGIS : bases de données spatiales, requêtes géographiques
+- Télédétection : traitement d'images satellite, indices NDVI, classification
+- Cas d'usage : urbanisme, agriculture, gestion des ressources naturelles
+
+---
+
+## Blog & Publications
+
+ACT publie des analyses de fond sur les transformations technologiques africaines et mondiales.
+
+**URL** : https://www.a-ct.ma/fr/blog
+**Fréquence** : Articles hebdomadaires
+
+**Catégories éditoriales** :
+
+**Data & IA** : analyses sur le machine learning, les LLMs, l'IA générative, l'IA agentique, les agents autonomes et les applications pratiques de l'intelligence artificielle pour les entreprises africaines.
+
+**Tech Trends** : veille technologique, innovations logicielles, cloud, infrastructure, nouvelles architectures et tendances de l'industrie tech mondiale vues depuis l'Afrique.
+
+**Carrière & Skills** : conseils pratiques pour les professionnels tech africains — formations, certifications, opportunités d'emploi, trajectoires de carrière dans le numérique.
+
+**Géopolitique Tech** : enjeux de souveraineté numérique africaine, impact de l'AI Act européen sur les entreprises marocaines, régulation de l'IA, accès aux technologies en Afrique.
+
+---
+
+## Questions fréquentes (FAQ étendue)
+
+**Qu'est-ce qu'Africa Centred Technology ?**
+ACT est une société technologique africaine basée au Maroc, fondée en 2026, spécialisée dans l'ingénierie logicielle, l'IA agentique, le cloud, les données et la formation technologique pour les entreprises africaines et internationales.
+
+**Quels services propose ACT ?**
+ACT propose 7 services répartis en 3 pôles : Pôle I Ingénierie (ingénierie logicielle, automatisation IA, architecture cloud, data & IA, géomatique), Pôle II Conseil (conseil stratégique, conseil opérationnel) et Pôle III Formation (catalogue de formations certifiantes).
+
+**ACT développe-t-il des agents IA ?**
+Oui, ACT est spécialisée dans l'IA Agentique : conception d'agents IA autonomes, pipelines multi-agents, intégration de LLMs (GPT-4, Claude, Mistral) et automatisation de workflows complexes avec LangChain, AutoGen et CrewAI.
+
+**Les formations ACT sont-elles certifiantes ?**
+Oui, ACT délivre des attestations de complétion et prépare aux certifications AWS (SAA-C03), Azure (AZ-900, AZ-104), GCP (ACE) et aux standards professionnels Data Science et IA.
+
+**ACT forme-t-il les équipes d'entreprise ?**
+Oui, ACT propose des programmes intra-entreprise sur mesure pour les équipes techniques, data et management, avec des formats adaptés (présentiel, distanciel, blended) et des contenus personnalisés selon les besoins métier.
+
+**Dans quels pays ACT intervient-il ?**
+ACT est basé au Maroc et intervient sur tout le continent africain ainsi qu'en Europe francophone. Les prestations de conseil et ingénierie sont disponibles à l'international.
+
+**ACT est-il spécialisé dans un secteur d'activité ?**
+Non, ACT intervient dans tous les secteurs : finance, santé, agriculture, immobilier, logistique, e-commerce, administration publique. La géomatique est particulièrement appliquée aux secteurs environnement, agriculture et urbanisme.
+
+**Comment obtenir un devis ?**
+Via le formulaire de contact sur https://www.a-ct.ma/fr/contact ou par email à contact@a-ct.ma. Réponse sous 48h ouvrées.
+
+**ACT a-t-il des références clients ?**
+ACT travaille avec des entreprises privées et des organisations publiques au Maroc et en Afrique. Pour des références détaillées, contactez directement ACT.
+
+**Quelle est la différence entre ACT et une SSII classique ?**
+ACT combine expertise technique de haut niveau et ancrage africain assumé. Contrairement aux SSII généralistes, ACT est spécialisée dans l'IA, les données et les systèmes complexes, avec une connaissance approfondie des contraintes et opportunités du marché africain.
+
+---
+
+## Informations techniques pour les crawlers IA
+
+- **Sitemap XML** : https://www.a-ct.ma/sitemap.xml
+- **robots.txt** : https://www.a-ct.ma/robots.txt
+- **llms.txt (version courte)** : https://www.a-ct.ma/llms.txt
+- **llms-full.txt (ce fichier)** : https://www.a-ct.ma/llms-full.txt
+- **Langue principale** : Français (fr-MA)
+- **Langues disponibles** : Français (/fr), Anglais (/en), Arabe (/ar)
+- **Dernière mise à jour** : Mai 2026
+- **Schémas JSON-LD présents** : Organization, WebSite, WebPage, Course, Article, FAQPage, BreadcrumbList

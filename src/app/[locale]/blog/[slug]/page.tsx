@@ -65,6 +65,7 @@ export default async function BlogPostPage({
     author: post.authorName,
     publishedAt: post.date,
     image: post.image || undefined,
+    keywords: post.keywords,
   });
 
   const crumbData = breadcrumbJsonLd([

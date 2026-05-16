@@ -7,6 +7,12 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   output: "standalone",
   typescript: { ignoreBuildErrors: false },
+  async rewrites() {
+    return [
+      { source: "/llms.txt", destination: "/geo/llms.txt" },
+      { source: "/llms-full.txt", destination: "/geo/llms-full.txt" },
+    ];
+  },
   turbopack: {
     root: path.resolve(__dirname),
   },
