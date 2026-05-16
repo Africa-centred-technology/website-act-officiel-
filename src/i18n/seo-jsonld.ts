@@ -3,10 +3,30 @@ import type {
   BreadcrumbList,
   Course,
   Article,
+  FAQPage,
+  WebSite,
   WithContext,
 } from "schema-dts";
 
 const BASE_URL = "https://www.a-ct.ma";
+
+export function websiteJsonLd(locale?: string): WithContext<WebSite> {
+  const searchAction = {
+    "@type": "SearchAction",
+    target: `${BASE_URL}/${locale ?? "fr"}/formations?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  };
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Africa Centred Technology",
+    alternateName: "ACT",
+    url: BASE_URL,
+    inLanguage: locale ?? "fr",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    potentialAction: searchAction as any,
+  };
+}
 
 export function organizationJsonLd(locale?: string): WithContext<Organization> {
   const localePath = locale ? `/${locale}` : "/fr";
@@ -19,7 +39,12 @@ export function organizationJsonLd(locale?: string): WithContext<Organization> {
     logo: `${BASE_URL}/logo/logo.png`,
     description:
       "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
-    sameAs: [],
+    sameAs: [
+      "https://www.linkedin.com/company/africa-centred-technology",
+      "https://www.facebook.com/africacentredtechnology",
+      "https://www.instagram.com/africa_centred_technology",
+      "https://www.youtube.com/@africacentredtechnology",
+    ],
     address: {
       "@type": "PostalAddress",
       addressCountry: "MA",
@@ -31,6 +56,23 @@ export function organizationJsonLd(locale?: string): WithContext<Organization> {
       areaServed: ["MA", "FR", "Africa"],
       availableLanguage: ["fr"],
     },
+  };
+}
+
+export function faqJsonLd(
+  faqs: Array<{ question: string; answer: string }>
+): WithContext<FAQPage> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 }
 
@@ -105,7 +147,7 @@ export function articleJsonLd(opts: {
   publishedAt: string;
   image?: string;
 }): WithContext<Article> {
-  const base: WithContext<Article> & { image?: string } = {
+  const base: WithContext<Article> & { image?: string; speakable?: object } = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: opts.title,
@@ -119,6 +161,10 @@ export function articleJsonLd(opts: {
     datePublished: opts.publishedAt,
     inLanguage: opts.locale ?? "fr",
     url: `${BASE_URL}/${opts.locale ?? "fr"}/blog/${opts.slug}`,
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "h2", ".article-excerpt"],
+    },
   };
 
   if (opts.image) {

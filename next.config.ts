@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.pixabay.com" },
       { protocol: "https", hostname: "cdn.shopify.com" },
     ],
+    // Shopify CDN pre-sizes images at 1400px — no need to generate larger breakpoints
+    deviceSizes: [640, 750, 828, 1080, 1200, 1400],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 3600,
   },
 };
 

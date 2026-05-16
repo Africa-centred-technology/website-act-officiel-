@@ -123,8 +123,8 @@
 /* ── Responsive root font (clone approach: anchored on 1920px) ── */
 html {
   font-size: clamp(11px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px);
-  /* Reserve space below the fixed navbar when browser auto-scrolls to focused elements */
-  scroll-padding-top: 6rem;
+  /* Compensate fixed navbar (~5rem) when browser scrolls an element into view */
+  scroll-padding-top: 5rem;
 }
 @media screen and (min-width:1500px) and (max-width:1600px) and (orientation:landscape) {
   html { font-size: clamp(10.5px, calc(12 * (calc(100vw + 2.1rem) / 1920)), 22px); }
@@ -1419,6 +1419,7 @@ a:hover {
 .shopify-blog-content h3 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
 .shopify-blog-content h4 { font-size: 1.7rem; }
 .shopify-blog-content p  { margin-bottom: 1.8rem; }
+/* Shared layout for both list types */
 .shopify-blog-content ul,
 .shopify-blog-content ol {
   margin: 2rem 0;
@@ -1433,7 +1434,9 @@ a:hover {
   gap: 1.2rem;
   align-items: flex-start;
 }
-.shopify-blog-content li::before {
+
+/* Unordered list → orange diamond bullet */
+.shopify-blog-content ul > li::before {
   content: '';
   flex-shrink: 0;
   margin-top: 0.65rem;
@@ -1442,6 +1445,33 @@ a:hover {
   background: #D35400;
   transform: rotate(45deg);
   display: inline-block;
+}
+
+/* Ordered list → CSS counter numbers in ACT orange */
+.shopify-blog-content ol {
+  counter-reset: act-list;
+}
+.shopify-blog-content ol > li {
+  counter-increment: act-list;
+}
+.shopify-blog-content ol > li::before {
+  content: counter(act-list) ".";
+  flex-shrink: 0;
+  min-width: 2.2rem;
+  color: #D35400;
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 1em;
+  line-height: 1.85;
+  display: inline-block;
+}
+
+/* Nested lists */
+.shopify-blog-content ul ul,
+.shopify-blog-content ol ol,
+.shopify-blog-content ul ol,
+.shopify-blog-content ol ul {
+  margin: 0.6rem 0 0.6rem 1.5rem;
 }
 .shopify-blog-content a {
   color: #D35400;

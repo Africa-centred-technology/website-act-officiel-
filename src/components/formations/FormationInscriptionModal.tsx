@@ -127,6 +127,7 @@ export default function FormationInscriptionModal({
                 formationTitle={formationTitle}
                 formationSlug={formationSlug}
                 onSuccess={onClose}
+                onClose={onClose}
               />
             </motion.div>
           </div>

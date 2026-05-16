@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { motion, useInView } from "framer-motion";
 import {
   ChevronLeft,
@@ -138,6 +138,7 @@ interface FormationMeta {
 export default function FormationInscriptionShell({ slug }: { slug: string }) {
   const t = useTranslations("formations.inscription");
   const locale = useLocale();
+  const router = useRouter();
   const [formation, setFormation] = useState<FormationMeta | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -162,7 +163,6 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
     <div
       style={{
         minHeight: "100vh",
-        paddingTop: "clamp(4rem, 7vh, 5.5rem)",
         background: DARK,
         color: "#fff",
         overflowX: "hidden",
@@ -370,7 +370,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
         ref={formRef}
         style={{
           padding:
-            "clamp(7rem, 10vw, 10rem) clamp(1.5rem, 6vw, 8rem) clamp(5rem, 9vw, 9rem)",
+            "clamp(4rem, 7vw, 7rem) clamp(1.5rem, 6vw, 8rem) clamp(5rem, 9vw, 9rem)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
         }}
       >
@@ -405,6 +405,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
             <FormationInscriptionForm
               formationTitle={formation?.title ?? title}
               formationSlug={slug}
+              onClose={() => router.back()}
             />
           </motion.div>
 
@@ -413,7 +414,7 @@ export default function FormationInscriptionShell({ slug }: { slug: string }) {
             initial={{ opacity: 0, y: 30 }}
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.25 }}
-            style={{ display: "flex", flexDirection: "column", gap: "1.5rem", position: "sticky", top: "clamp(6rem, 8vh, 8rem)" }}
+            style={{ display: "flex", flexDirection: "column", gap: "1.5rem", position: "sticky", top: "6rem" }}
           >
             {/* Formation summary card */}
             {formation && (

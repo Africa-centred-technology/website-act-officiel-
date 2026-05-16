@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { organizationJsonLd } from "@/i18n/seo-jsonld";
+import { organizationJsonLd, websiteJsonLd } from "@/i18n/seo-jsonld";
 import CookieBanner from "@/components/layout/CookieBanner";
 
 export const metadata: Metadata = {
@@ -39,6 +39,7 @@ export default async function LocaleLayout({
   return (
     <>
       <JsonLd data={organizationJsonLd(locale)} />
+      <JsonLd data={websiteJsonLd(locale)} />
 
       <NextIntlClientProvider messages={messages}>
         <ThemeProvider>

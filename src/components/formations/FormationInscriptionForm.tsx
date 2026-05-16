@@ -358,6 +358,7 @@ interface FormationInscriptionFormProps {
   formationTitle?: string;
   formationSlug?: string;
   onSuccess?: () => void;
+  onClose?: () => void;
 }
 
 /* ── Main ───────────────────────────────────────────────── */
@@ -365,6 +366,7 @@ export default function FormationInscriptionForm({
   formationTitle,
   formationSlug,
   onSuccess,
+  onClose,
 }: FormationInscriptionFormProps) {
   const t = useTranslations("formations.inscription");
   const tOpts = useTranslations("formations.inscription.options");
@@ -759,8 +761,8 @@ export default function FormationInscriptionForm({
               </p>
             )}
 
-            {/* Submit */}
-            <div style={{ gridColumn: "1 / -1" }}>
+            {/* Submit + Fermer */}
+            <div style={{ gridColumn: "1 / -1", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
               <CTAButton
                 type="submit"
                 disabled={status === "loading"}
@@ -768,6 +770,17 @@ export default function FormationInscriptionForm({
               >
                 {status === "loading" ? t("submitting") : t("submitBtn")}
               </CTAButton>
+
+              {onClose && (
+                <CTAButton
+                  type="button"
+                  onClick={onClose}
+                  icon={<X size={18} />}
+                  iconPosition="right"
+                >
+                  Fermer
+                </CTAButton>
+              )}
             </div>
           </div>
         </div>

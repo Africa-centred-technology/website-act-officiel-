@@ -473,27 +473,34 @@ export default function BlogArticlesShell() {
           </div>
 
           {/* Posts grid */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
-            {searchQuery === "" && paginatedPosts.length > 0 && (
-              <FeaturedArticleCard post={paginatedPosts[0]} />
-            )}
-            
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(auto-fill, minmax(min(100%, 32rem), 1fr))",
-                gap: "2.5rem",
-              }}
-            >
-              {(searchQuery === "" 
-                  ? paginatedPosts.slice(1) 
-                  : paginatedPosts
-              ).map((post, i) => (
-                <ArticleCard key={post.slug} post={post} index={i} />
-              ))}
-            </div>
-          </div>
+          {(() => {
+            // L'article à la une est toujours le plus récent (allPosts[0]), indépendamment du filtre actif
+            const featuredPost = allPosts[0] ?? null;
+            const gridPosts = searchQuery === ""
+              ? paginatedPosts.filter((p) => p.slug !== featuredPost?.slug)
+              : paginatedPosts;
+
+            return (
+              <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+                {searchQuery === "" && featuredPost && (
+                  <FeaturedArticleCard post={featuredPost} />
+                )}
+
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fill, minmax(min(100%, 32rem), 1fr))",
+                    gap: "2.5rem",
+                  }}
+                >
+                  {gridPosts.map((post, i) => (
+                    <ArticleCard key={post.slug} post={post} index={i} />
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Load More Button */}
           {hasMore && (
@@ -698,12 +705,28 @@ function ArticleCard({
   );
 }
 
+/** Extrait les N premiers caractères lisibles depuis du HTML Shopify */
+function htmlToExcerpt(html: string, maxLen = 200): string {
+  if (!html) return "";
+  const text = html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (text.length <= maxLen) return text;
+  return text.slice(0, maxLen).replace(/\s+\S*$/, "") + "…";
+}
+
 /* ─── Featured Article Card ─── */
 function FeaturedArticleCard({ post }: { post: BlogPost }) {
   const t = useTranslations("blog.articles");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const screenSize = useMediaQuery();
+  const excerpt = post.excerpt || htmlToExcerpt(post.contentHtml);
 
   return (
     <motion.div
@@ -836,7 +859,7 @@ function FeaturedArticleCard({ post }: { post: BlogPost }) {
                 fontFamily: "var(--font-body)",
               }}
             >
-              {post.excerpt}
+              {excerpt}
             </p>
 
             <div

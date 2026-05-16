@@ -167,6 +167,7 @@ export default function BlogPostShell({ post }: { post: BlogPost }) {
             src={post.image}
             alt={post.title}
             fill
+            sizes="100vw"
             style={{ objectFit: "cover", opacity: 0.75 }}
             priority
           />

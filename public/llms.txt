@@ -1,0 +1,85 @@
+# Africa Centred Technology (ACT)
+
+> ACT est une entreprise technologique africaine basée au Maroc, spécialisée dans l'ingénierie logicielle, l'intelligence artificielle et la formation technologique avancée. Site : https://www.a-ct.ma
+
+---
+
+## Qui sommes-nous ?
+
+Africa Centred Technology (ACT) fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale. Fondée en 2026, ACT opère depuis le Maroc et intervient à l'échelle panafricaine et internationale. Notre mission : placer l'Afrique au cœur de la révolution technologique mondiale.
+
+---
+
+## Pôles d'activité
+
+### Pôle I — Ingénierie Technologique (accent orange #D35400)
+Nous concevons et déployons des systèmes logiciels complexes, des architectures cloud et des solutions d'IA pour les entreprises africaines et internationales.
+
+- **Ingénierie Logicielle** : développement d'applications web, mobile et d'entreprise sur mesure
+- **Automatisation Intelligente (IA Agentique)** : agents IA autonomes, RPA, orchestration de workflows
+- **Architecture & Infrastructure** : cloud (AWS, Azure, GCP), DevOps, Kubernetes, microservices
+- **Data, IA & Big Data** : data engineering, machine learning, LLMs, pipelines de données
+- **Géomatique & SIG** : systèmes d'information géographique, cartographie, télédétection
+
+### Pôle II — Conseil (accent doré #F39C12)
+Nous accompagnons les directions générales et les équipes opérationnelles dans leur transformation digitale.
+
+- **Conseil Stratégique & Transformation** : feuilles de route IA, audit digital, stratégie de transformation
+- **Conseil Opérationnel & Métier** : optimisation des processus, conduite du changement, PMO
+
+### Pôle III — Formation (accent vert #16a34a)
+Nous formons les talents africains aux technologies de demain via des programmes certifiants et des bootcamps intensifs.
+
+- Catalogue de formations en IA, Data Science, Cloud Computing, Développement logiciel
+- Formats : présentiel, distanciel, blended
+- Public : étudiants, professionnels, entreprises (B2C et B2B)
+- Lieu : Maroc + Afrique subsaharienne + Europe
+
+---
+
+## Valeurs et positionnement
+
+ACT incarne une vision : que l'Afrique ne soit plus seulement consommatrice des technologies mondiales, mais en soit actrice et créatrice. Nous sommes porteurs d'une identité africaine assumée dans le secteur technologique, avec des standards d'excellence internationale.
+
+Nos valeurs : **Excellence technique**, **Ancrage africain**, **Innovation responsable**, **Transmission du savoir**
+
+---
+
+## Coordonnées
+
+- **Site web** : https://www.a-ct.ma
+- **Email** : contact@a-ct.ma
+- **Pays** : Maroc (MA)
+- **Langues** : Français, Anglais, Arabe
+
+---
+
+## Pages importantes
+
+- [Accueil](https://www.a-ct.ma/fr)
+- [Nos formations](https://www.a-ct.ma/fr/formations)
+- [Nos services](https://www.a-ct.ma/fr/services)
+- [Nos pôles d'activité](https://www.a-ct.ma/fr/poles)
+- [Blog & actualités](https://www.a-ct.ma/fr/blog)
+- [À propos](https://www.a-ct.ma/fr/about)
+- [Contact](https://www.a-ct.ma/fr/contact)
+- [Sitemap XML](https://www.a-ct.ma/sitemap.xml)
+
+---
+
+## FAQ
+
+**Qu'est-ce qu'Africa Centred Technology ?**
+ACT est une société de conseil et d'ingénierie technologique basée au Maroc, spécialisée dans l'IA, le développement logiciel et la formation technologique avancée à destination des entreprises africaines et internationales.
+
+**Quels services propose ACT ?**
+ACT propose 9 services répartis en 3 pôles : ingénierie logicielle, IA agentique, architecture cloud, data & big data, géomatique, conseil stratégique, conseil opérationnel, et un catalogue de formations certifiantes.
+
+**ACT forme-t-il des développeurs et data scientists ?**
+Oui. Le Pôle III Formation d'ACT propose des programmes intensifs en IA, Data Science, Cloud et développement logiciel, en présentiel et à distance, pour étudiants et professionnels.
+
+**Dans quels pays ACT intervient-il ?**
+ACT est basé au Maroc et intervient sur l'ensemble du continent africain ainsi qu'en Europe francophone.
+
+**Comment contacter ACT ?**
+Via le formulaire sur https://www.a-ct.ma/fr/contact ou par email à contact@a-ct.ma.

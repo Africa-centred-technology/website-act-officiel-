@@ -73,6 +73,7 @@ export interface ShopifyBlogPost {
   target: string;
   excerpt: string;
   date: string;
+  publishedAtIso: string;
   readTime: string;
   image: string;
   featured?: boolean;
@@ -98,6 +99,21 @@ function extractKeywords(tags: string[]): string[] {
     const lower = t.toLowerCase();
     return !PREFIXED_KEYS.some((k) => lower.startsWith(`${k}:`));
   });
+}
+
+/**
+ * Ajoute le paramètre width= à une URL Shopify CDN.
+ * Shopify redimensionne côté serveur → Next.js reçoit une image déjà petite.
+ */
+function shopifySizedUrl(url: string, maxWidth = 1400): string {
+  if (!url) return "";
+  try {
+    const u = new URL(url);
+    u.searchParams.set("width", String(maxWidth));
+    return u.toString();
+  } catch {
+    return url;
+  }
 }
 
 /** Formate une date ISO en "Mois YYYY" en français */
@@ -157,23 +173,24 @@ function mapArticle(node: any, blogHandle: string): ShopifyBlogPost {
   const keywords    = extractKeywords(tags);
 
   return {
-    id:           node.id,
-    slug:         node.handle,
+    id:             node.id,
+    slug:           node.handle,
     blogHandle,
-    title:        node.title,
+    title:          node.title,
     category,
-    categoryColor: "#D35400",
+    categoryColor:  "#D35400",
     wordCount,
     keywords,
     target,
-    excerpt:      node.excerpt ?? "",
-    date:         formatDate(node.publishedAt),
+    excerpt:        node.excerpt ?? "",
+    date:           formatDate(node.publishedAt),
+    publishedAtIso: node.publishedAt ?? "",
     readTime,
-    image:        node.image?.url ?? "",
-    featured:     featuredRaw === "true",
-    contentHtml:  node.contentHtml ?? "",
-    sections:     [],
-    authorName:   node.author?.name ?? "",
+    image:          shopifySizedUrl(node.image?.url ?? "", 1400),
+    featured:       featuredRaw === "true",
+    contentHtml:    node.contentHtml ?? "",
+    sections:       [],
+    authorName:     node.author?.name ?? "",
   };
 }
 
@@ -206,8 +223,8 @@ export async function fetchShopifyBlogPosts(locale: Locale): Promise<ShopifyBlog
     }
   }
 
-  // Tri par date décroissante
-  return all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // Tri par date décroissante — on utilise publishedAtIso (ISO 8601) et non date (texte formaté)
+  return all.sort((a, b) => new Date(b.publishedAtIso).getTime() - new Date(a.publishedAtIso).getTime());
 }
 
 /** Récupère un seul article par son handle (cherche dans tous les blogs) */
