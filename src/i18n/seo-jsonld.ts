@@ -39,6 +39,26 @@ export function organizationJsonLd(locale?: string): WithContext<Organization> {
     logo: `${BASE_URL}/logo/logo.png`,
     description:
       "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
+    foundingDate: "2026",
+    areaServed: ["MA", "Africa", "FR", "BE", "CH"],
+    knowsAbout: [
+      "Intelligence Artificielle",
+      "IA Agentique",
+      "Ingénierie Logicielle",
+      "Développement d'Applications Web et Mobile",
+      "Cloud Computing",
+      "Architecture Microservices",
+      "DevOps",
+      "Data Science",
+      "Machine Learning",
+      "Big Data",
+      "Géomatique",
+      "Systèmes d'Information Géographique",
+      "Transformation Digitale",
+      "Conseil Stratégique",
+      "Formation Technologique",
+      "Automatisation Intelligente",
+    ],
     sameAs: [
       "https://www.linkedin.com/company/africa-centred-technology",
       "https://www.facebook.com/africacentredtechnology",
@@ -54,7 +74,7 @@ export function organizationJsonLd(locale?: string): WithContext<Organization> {
       contactType: "customer service",
       email: "contact@a-ct.ma",
       areaServed: ["MA", "FR", "Africa"],
-      availableLanguage: ["fr"],
+      availableLanguage: ["fr", "en", "ar"],
     },
   };
 }

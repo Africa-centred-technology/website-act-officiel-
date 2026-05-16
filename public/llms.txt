@@ -37,6 +37,57 @@ Nous formons les talents africains aux technologies de demain via des programmes
 
 ---
 
+## Catalogue de formations
+
+Le catalogue complet est disponible sur https://www.a-ct.ma/fr/formations
+
+### Intelligence Artificielle & Machine Learning
+ACT propose des formations intensives couvrant les fondamentaux du machine learning, du deep learning et des LLMs (Large Language Models). Ces programmes forment les participants à concevoir, entraîner et déployer des modèles d'IA en contexte professionnel.
+- Niveaux : débutant à expert
+- Durée typique : 2 à 12 semaines selon le format
+- Certifications visées : standards industrie IA/ML
+
+### IA Agentique & Automatisation
+Formations spécialisées sur la conception d'agents IA autonomes capables d'orchestrer des workflows complexes, d'interagir avec des APIs et d'automatiser des processus métier (RPA). Contenu centré sur les frameworks agentiques (LangChain, AutoGen, CrewAI).
+- Prérequis : bases en Python et compréhension des LLMs
+- Format : bootcamp intensif de 3 à 6 semaines
+
+### Data Science & Big Data
+Programme complet couvrant l'analyse de données, la visualisation, le data engineering et les pipelines de données à grande échelle. Outils : Python, SQL, Spark, dbt, Airflow.
+- Niveaux : fondamentaux à avancé
+- Certifications : compatibles avec les standards Data Engineering
+
+### Cloud Computing & DevOps
+Formations aux principales plateformes cloud (AWS, Azure, GCP) et aux pratiques DevOps modernes : CI/CD, Infrastructure as Code (Terraform), Kubernetes, Docker, observabilité.
+- Certifications préparées : AWS Solutions Architect, Azure Administrator, GCP Associate
+- Format : présentiel et distanciel
+
+### Développement Logiciel
+Bootcamps en développement web full-stack, développement mobile (React Native, Flutter) et développement d'applications d'entreprise. Stack principale : TypeScript, React, Next.js, Node.js, Python.
+- Public cible : reconversions professionnelles, développeurs juniors
+- Durée : 10 à 24 semaines
+
+### Géomatique & SIG
+Formations aux systèmes d'information géographique, à la cartographie numérique et à la télédétection. Outils : QGIS, ArcGIS, Python géospatial, bases de données spatiales (PostGIS).
+- Public : ingénieurs, urbanistes, professionnels de l'environnement
+- Format : présentiel au Maroc
+
+---
+
+## Blog & Actualités
+
+ACT publie régulièrement des analyses et articles de fond sur les tendances technologiques africaines et mondiales.
+
+Catégories éditoriales :
+- **Data & IA** : analyses sur le machine learning, les LLMs, l'IA générative et l'IA agentique
+- **Tech Trends** : veille technologique, innovations logicielles, cloud et infrastructure
+- **Carrière & Skills** : conseils pour les professionnels tech africains, formations, opportunités
+- **Géopolitique Tech** : enjeux technologiques africains, souveraineté numérique, AI Act
+
+Articles récents disponibles sur : https://www.a-ct.ma/fr/blog
+
+---
+
 ## Valeurs et positionnement
 
 ACT incarne une vision : que l'Afrique ne soit plus seulement consommatrice des technologies mondiales, mais en soit actrice et créatrice. Nous sommes porteurs d'une identité africaine assumée dans le secteur technologique, avec des standards d'excellence internationale.
@@ -73,13 +124,22 @@ Nos valeurs : **Excellence technique**, **Ancrage africain**, **Innovation respo
 ACT est une société de conseil et d'ingénierie technologique basée au Maroc, spécialisée dans l'IA, le développement logiciel et la formation technologique avancée à destination des entreprises africaines et internationales.
 
 **Quels services propose ACT ?**
-ACT propose 9 services répartis en 3 pôles : ingénierie logicielle, IA agentique, architecture cloud, data & big data, géomatique, conseil stratégique, conseil opérationnel, et un catalogue de formations certifiantes.
+ACT propose des services répartis en 3 pôles : ingénierie logicielle, IA agentique, architecture cloud, data & big data, géomatique, conseil stratégique, conseil opérationnel, et un catalogue de formations certifiantes.
 
 **ACT forme-t-il des développeurs et data scientists ?**
 Oui. Le Pôle III Formation d'ACT propose des programmes intensifs en IA, Data Science, Cloud et développement logiciel, en présentiel et à distance, pour étudiants et professionnels.
 
+**Les formations ACT sont-elles certifiantes ?**
+Oui, ACT délivre des attestations de complétion et prépare aux certifications professionnelles AWS, Azure, GCP et aux standards Data Science et IA reconnus par l'industrie.
+
+**ACT peut-il former les équipes d'une entreprise ?**
+Oui, ACT propose des programmes de formation sur mesure (intra-entreprise) pour les équipes techniques et opérationnelles, avec des parcours personnalisés selon les besoins métier.
+
 **Dans quels pays ACT intervient-il ?**
-ACT est basé au Maroc et intervient sur l'ensemble du continent africain ainsi qu'en Europe francophone.
+ACT est basé au Maroc et intervient sur l'ensemble du continent africain ainsi qu'en Europe francophone (France, Belgique, Suisse).
 
 **Comment contacter ACT ?**
 Via le formulaire sur https://www.a-ct.ma/fr/contact ou par email à contact@a-ct.ma.
+
+**ACT développe-t-il des agents IA ?**
+Oui, ACT est spécialisé dans l'IA Agentique : conception et déploiement d'agents IA autonomes capables d'exécuter des workflows complexes, d'automatiser des processus métier et d'orchestrer des actions multi-systèmes.

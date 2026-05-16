@@ -25,6 +25,7 @@ function buildOpenGraph(opts: {
     title: opts.title,
     description: opts.description,
     images: [{ url: opts.ogImageUrl, width: 1200, height: 630, alt: opts.title }],
+    modifiedTime: new Date().toISOString(),
   };
 }
 
@@ -80,6 +81,9 @@ export async function buildPageMetadata({
       description,
       images: [ogImageUrl],
     },
+    other: {
+      "article:modified_time": new Date().toISOString(),
+    },
   };
 }
 
@@ -112,6 +116,9 @@ export function buildDynamicPageMetadata({
       title,
       description,
       images: [ogImageUrl],
+    },
+    other: {
+      "article:modified_time": new Date().toISOString(),
     },
   };
 }

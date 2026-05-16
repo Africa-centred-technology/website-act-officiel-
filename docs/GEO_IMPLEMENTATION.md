@@ -58,34 +58,13 @@ YouBot                                → You.com
 
 ### P1 — Impact fort, effort faible
 
-#### 3.1 `knowsAbout` sur Organization schema
-Les LLMs utilisent cette propriété pour associer ACT aux requêtes métier.
+#### 3.1 `knowsAbout` sur Organization schema ✅ Fait
+16 domaines d'expertise ajoutés dans `organizationJsonLd()`.
 
-```typescript
-// Dans organizationJsonLd() — src/i18n/seo-jsonld.ts
-knowsAbout: [
-  "Intelligence Artificielle",
-  "Ingénierie Logicielle",
-  "Cloud Computing",
-  "Data Science",
-  "Formation Technologique",
-  "Transformation Digitale",
-  "Géomatique",
-  "Automatisation IA Agentique",
-  "Architecture Microservices",
-],
-```
+#### 3.2 `foundingDate` + `areaServed` sur Organization ✅ Fait
+`foundingDate: "2026"`, `areaServed: ["MA", "Africa", "FR", "BE", "CH"]`, `availableLanguage: ["fr", "en", "ar"]`
 
-#### 3.2 `founder` + `foundingDate` + `areaServed` sur Organization
-
-```typescript
-founder: { "@type": "Person", name: "Aldrin Djourobi" },
-foundingDate: "2026",
-areaServed: ["MA", "Africa", "FR", "BE", "CH"],
-numberOfEmployees: { "@type": "QuantitativeValue", minValue: 1, maxValue: 10 },
-```
-
-#### 3.3 Déployer `faqJsonLd()` sur la page formations
+#### 3.3 Déployer `faqJsonLd()` sur la page formations ✅ Fait
 
 Fichier : `src/app/[locale]/formations/page.tsx` ou `FormationsShell.tsx`
 
@@ -110,62 +89,18 @@ const faq = faqJsonLd([
 // Puis : <JsonLd data={faq} />
 ```
 
-#### 3.4 Déployer `faqJsonLd()` sur la page services
-
-Fichier : `src/app/[locale]/services/page.tsx` ou `ServicesShell.tsx`
-
-```typescript
-const faq = faqJsonLd([
-  {
-    question: "Quels services d'ingénierie logicielle propose ACT ?",
-    answer: "ACT développe des applications web, mobile et d'entreprise sur mesure, des agents IA autonomes, des architectures cloud (AWS, Azure, GCP) et des pipelines de données.",
-  },
-  {
-    question: "ACT intervient-il hors du Maroc ?",
-    answer: "Oui, ACT intervient sur l'ensemble du continent africain ainsi qu'en Europe francophone (France, Belgique, Suisse).",
-  },
-  {
-    question: "Comment obtenir un devis pour un projet ?",
-    answer: "Via le formulaire de contact sur https://www.a-ct.ma/fr/contact ou par email à contact@a-ct.ma.",
-  },
-]);
-```
+#### 3.4 Déployer `faqJsonLd()` sur la page services ✅ Fait
 
 ### P2 — Impact moyen, effort moyen
 
-#### 3.5 `dateModified` dans les métadonnées des pages
+#### 3.5 `dateModified` dans les métadonnées des pages ✅ Fait
+`article:modified_time` + `openGraph.modifiedTime` ajoutés dans `buildPageMetadata()` et `buildDynamicPageMetadata()` — couvre toutes les pages statiques.
 
-Dans chaque `generateMetadata()` :
-```typescript
-export async function generateMetadata() {
-  return {
-    other: {
-      "article:modified_time": new Date().toISOString(),
-    },
-  };
-}
-```
+#### 3.6 Enrichir `llms.txt` avec le catalogue formations ✅ Fait
+`public/llms.txt` enrichi avec 6 sections de formations détaillées (IA/ML, IA Agentique, Data Science, Cloud/DevOps, Dev Logiciel, Géomatique) + section Blog avec les 4 catégories éditoriales + 3 nouvelles FAQ.
 
-#### 3.6 Enrichir `llms.txt` avec le catalogue formations
-
-Ajouter dans `public/llms.txt` une section `## Catalogue de formations` avec les titres, niveaux et durées des formations Shopify. À régénérer à chaque ajout de formation.
-
-#### 3.7 `speakable` sur la page d'accueil
-
-Dans le `HomeShell` ou `layout.tsx`, ajouter un schema `WebPage` avec `speakable` :
-
-```typescript
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Africa Centred Technology — IA & Ingénierie Logicielle au Maroc",
-  speakable: {
-    "@type": "SpeakableSpecification",
-    cssSelector: ["h1", ".hero-subtitle", ".tagline"],
-  },
-  url: "https://www.a-ct.ma/fr",
-}
-```
+#### 3.7 `speakable` sur la page d'accueil ✅ Fait
+Schema `WebPage` avec `speakable` ciblant `h1`, `.hero-tagline`, `.hero-subtitle` injecté dans `src/app/[locale]/page.tsx`.
 
 ### P3 — Impact faible, effort faible
 
