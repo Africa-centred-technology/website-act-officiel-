@@ -15,9 +15,9 @@ export async function generateMetadata({
 const HOME_WEBPAGE_LD: WithContext<WebPage> = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Africa Centred Technology — IA & Ingénierie Logicielle au Maroc",
+  name: "ACT — Conseil IA & Transformation Digitale au Maroc",
   description:
-    "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
+    "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale, leurs projets IA et leur montée en compétences. Basés à Casablanca.",
   url: "https://www.a-ct.ma/fr",
   speakable: {
     "@type": "SpeakableSpecification",
