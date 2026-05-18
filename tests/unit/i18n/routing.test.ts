@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { routing } from "@/i18n/routing";
 
 describe("routing config", () => {
-  it("exposes fr, en, ar as locales", () => {
-    expect(routing.locales).toEqual(["fr", "en", "ar"]);
+  it("exposes fr and en as locales", () => {
+    expect(routing.locales).toEqual(["fr", "en"]);
   });
 
   it("uses fr as defaultLocale", () => {
