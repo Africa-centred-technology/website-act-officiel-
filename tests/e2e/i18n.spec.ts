@@ -4,7 +4,7 @@ test.describe("i18n routing", () => {
   test("/ redirects to /fr (or detected locale)", async ({ page }) => {
     const response = await page.goto("/");
     expect(response?.status()).toBe(200);
-    expect(page.url()).toMatch(/\/(fr|en|ar)(\/|$)/);
+    expect(page.url()).toMatch(/\/(fr|en)(\/|$)/);
   });
 
   test("/fr/services renders 200 with lang=fr dir=ltr", async ({ page }) => {
@@ -12,13 +12,6 @@ test.describe("i18n routing", () => {
     const html = page.locator("html");
     await expect(html).toHaveAttribute("lang", "fr");
     await expect(html).toHaveAttribute("dir", "ltr");
-  });
-
-  test("/ar/services renders 200 with lang=ar dir=rtl", async ({ page }) => {
-    await page.goto("/ar/services");
-    const html = page.locator("html");
-    await expect(html).toHaveAttribute("lang", "ar");
-    await expect(html).toHaveAttribute("dir", "rtl");
   });
 
   test("/services returns 308 redirect to /fr/services", async ({ request }) => {

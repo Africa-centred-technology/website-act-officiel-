@@ -20,13 +20,12 @@ describe("sitemap", () => {
     expect(svc).toBeDefined();
   });
 
-  it("each entry has alternates.languages with fr/en/ar", async () => {
+  it("each entry has alternates.languages with fr/en", async () => {
     const entries = await (await import("@/app/sitemap")).default();
     for (const entry of entries) {
       expect(entry.alternates?.languages).toMatchObject({
         fr: expect.stringContaining("/fr"),
         en: expect.stringContaining("/en"),
-        ar: expect.stringContaining("/ar"),
       });
     }
   });
@@ -80,24 +79,10 @@ describe("sitemap", () => {
     expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/en/formations/"))).toBe(true);
   });
 
-  it("emits a canonical /ar/formations/<slug> entry", async () => {
-    const sitemap = (await import("@/app/sitemap")).default;
-    const entries = await sitemap();
-    const urls = entries.map((e) => e.url);
-    expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/ar/formations/"))).toBe(true);
-  });
-
   it("emits a canonical /en/blog/<slug> entry", async () => {
     const sitemap = (await import("@/app/sitemap")).default;
     const entries = await sitemap();
     const urls = entries.map((e) => e.url);
     expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/en/blog/"))).toBe(true);
-  });
-
-  it("emits a canonical /ar/blog/<slug> entry", async () => {
-    const sitemap = (await import("@/app/sitemap")).default;
-    const entries = await sitemap();
-    const urls = entries.map((e) => e.url);
-    expect(urls.some((u) => u.startsWith("https://www.a-ct.ma/ar/blog/"))).toBe(true);
   });
 });

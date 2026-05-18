@@ -2,8 +2,7 @@
   "common": {
     "lang": {
       "fr": "Français",
-      "en": "English",
-      "ar": "العربية"
+      "en": "English"
     },
     "cta": {
       "learnMore": "Learn more",
@@ -94,44 +93,44 @@
   },
   "metadata": {
     "default": {
-      "title": "Africa Centred Technology | Engineering the Future",
-      "description": "ACT merges artificial intelligence and cutting-edge engineering to propel African companies to the top of global innovation."
+      "title": "Africa Centred Technology | AI Consulting Morocco",
+      "description": "ACT — AI consulting and training firm specializing in digital transformation in Morocco. Tailored solutions for African companies."
     },
     "home": {
-      "title": "ACT — Africa Centred Technology | Engineering the Future",
-      "description": "Discover ACT, the African company that merges AI and cutting-edge engineering to propel African companies to the top of global innovation."
+      "title": "ACT — AI Consulting & Digital Transformation Morocco",
+      "description": "ACT helps Moroccan and African companies with AI strategy, digital transformation, and professional training. Based in Casablanca, Morocco."
     },
     "about": {
-      "title": "About — Africa Centred Technology",
-      "description": "Discover the story, mission, and team behind Africa Centred Technology — pioneers of digital transformation in Africa since 2023."
+      "title": "About ACT — AI & Tech Consulting Firm in Morocco",
+      "description": "ACT is an AI consulting and training firm based in Morocco. Pioneers of digital transformation in Africa since 2023."
     },
     "services": {
-      "title": "Services — Africa Centred Technology",
-      "description": "Our 9 services in technology engineering, consulting, and training to propel your African company toward innovation."
+      "title": "Digital Transformation & AI Services in Morocco | ACT",
+      "description": "Technology engineering, strategic consulting, and AI training: 9 tailored services to accelerate your digital transformation in Morocco and Africa."
     },
     "formations": {
-      "title": "Training — Africa Centred Technology",
-      "description": "ACT training catalog in artificial intelligence, data, and digital transformation, designed for African professionals."
+      "title": "AI & Data Training in Morocco | ACT Africa",
+      "description": "Certified training programs in artificial intelligence, data science, and digital transformation. Designed for professionals in Morocco and Africa."
     },
     "poles": {
-      "title": "Divisions — Africa Centred Technology",
-      "description": "ACT's 3 business divisions: Technology Engineering, Consulting, and Training. Discover our full expertise."
+      "title": "Engineering · Consulting · Training | ACT Morocco",
+      "description": "Discover ACT's 3 expertise divisions: Technology Engineering, Strategic Consulting, and AI Training. Complete solutions for your digital transformation."
     },
     "secteurs": {
-      "title": "Industries — Africa Centred Technology",
-      "description": "The industries where ACT operates to support digital transformation of African companies."
+      "title": "Industries We Serve — AI & Digital in Morocco | ACT",
+      "description": "ACT supports digital transformation across finance, industry, healthcare, education, and retail in Morocco and Africa."
     },
     "projects": {
-      "title": "Projects — Africa Centred Technology",
-      "description": "Discover ACT client projects: digital transformations, AI, engineering. Real-world case studies across Africa."
+      "title": "Case Studies & Projects — AI & Digital | ACT Morocco",
+      "description": "Projects delivered by ACT in AI, engineering, and digital transformation. Real-world case studies from Moroccan and African companies."
     },
     "blog": {
-      "title": "Blog — Africa Centred Technology",
-      "description": "Articles, analyses, and technology insights from ACT. AI, digital transformation, engineering: the latest in African tech."
+      "title": "AI & Digital Transformation Blog | ACT Morocco",
+      "description": "Analysis, insights, and practical guides on AI, data, and digital transformation. The reference tech blog for businesses in Morocco and Africa."
     },
     "contact": {
-      "title": "Contact — Africa Centred Technology",
-      "description": "Contact the ACT team to discuss your digital transformation, AI, and training projects in Morocco and Africa."
+      "title": "Contact ACT — AI & Digital Consulting Morocco",
+      "description": "Discuss your digital transformation, AI, and training projects with the ACT team. Based in Casablanca, operating across Morocco and Africa."
     }
   },
   "validation": {

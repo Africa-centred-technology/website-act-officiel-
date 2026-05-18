@@ -8,10 +8,10 @@ const GA_MEASUREMENT_IDS = ["G-5T0CM1FR5Q", "G-R21NYV01M2"];
 const GTM_ID = "GTM-KD4MFQXX";
 
 export const metadata: Metadata = {
-  title: "Africa Centred Technology | Engineering the Future",
+  title: "ACT — Conseil IA & Transformation Digitale au Maroc",
   description:
-    "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
-  keywords: ["IA", "Afrique", "Transformation digitale", "Ingénierie", "Innovation", "Formation IA Maroc", "Conseil digital"],
+    "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale, leurs projets IA et leur montée en compétences. Basés à Casablanca.",
+  keywords: ["conseil IA Maroc", "transformation digitale Maroc", "formation intelligence artificielle", "agence IA Casablanca", "Formation IA Maroc", "ingénierie logicielle Maroc"],
   icons: {
     icon: "/logo/logo.png",
     apple: "/logo/logo.png",
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     locale: "fr_MA",
     url: "https://www.a-ct.ma",
     siteName: "Africa Centred Technology",
-    title: "Africa Centred Technology | Engineering the Future",
-    description: "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
+    title: "ACT — Conseil IA & Transformation Digitale au Maroc",
+    description: "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale, leurs projets IA et leur montée en compétences. Basés à Casablanca.",
     images: [{ url: "/logo/logo.png", width: 1200, height: 630, alt: "ACT - Africa Centred Technology" }],
   },
 };

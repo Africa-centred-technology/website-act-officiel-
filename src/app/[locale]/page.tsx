@@ -1,6 +1,7 @@
 import HomeShell from "@/components/home/Home";
 import { buildPageMetadata } from "@/i18n/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import type { WebPage, WithContext } from "schema-dts";
 
 export async function generateMetadata({
   params,
@@ -11,12 +12,12 @@ export async function generateMetadata({
   return await buildPageMetadata({ locale, namespace: "metadata.home", path: "" });
 }
 
-const HOME_WEBPAGE_LD = {
+const HOME_WEBPAGE_LD: WithContext<WebPage> = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Africa Centred Technology — IA & Ingénierie Logicielle au Maroc",
+  name: "ACT — Conseil IA & Transformation Digitale au Maroc",
   description:
-    "ACT fusionne l'intelligence artificielle et l'ingénierie de pointe pour propulser les entreprises africaines au sommet de l'innovation mondiale.",
+    "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale, leurs projets IA et leur montée en compétences. Basés à Casablanca.",
   url: "https://www.a-ct.ma/fr",
   speakable: {
     "@type": "SpeakableSpecification",
