@@ -67,6 +67,9 @@ export function organizationJsonLd(locale?: string): WithContext<Organization> {
     ],
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Centre d'affaires Tit Mellil N°53, ETG 2 N°8",
+      addressLocality: "Tit Mellil",
+      addressRegion: "Casablanca",
       addressCountry: "MA",
     },
     contactPoint: {
