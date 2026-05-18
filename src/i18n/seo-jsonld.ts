@@ -77,7 +77,7 @@ export function organizationJsonLd(locale?: string): WithContext<Organization> {
       contactType: "customer service",
       email: "contact@a-ct.ma",
       areaServed: ["MA", "FR", "Africa"],
-      availableLanguage: ["fr", "en", "ar"],
+      availableLanguage: ["fr", "en"],
     },
   };
 }
