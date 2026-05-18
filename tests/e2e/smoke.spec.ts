@@ -153,9 +153,10 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
       route.fulfill({ json: { success: true, draftOrder: null } })
     );
 
-    await page.goto("/contact");
+    await page.goto("/fr/contact");
 
-    // Scroll jusqu'au formulaire (la page a une section hero au-dessus)
+    // Attendre que la page soit interactive avant de scroller
+    await page.waitForLoadState("domcontentloaded");
     await page.locator("#form").scrollIntoViewIfNeeded();
 
     // Remplir les champs requis
@@ -189,7 +190,7 @@ test.describe("Smoke pack — parcours critiques ACT", () => {
       })
     );
 
-    await page.goto(`/formations/${MOCK_SLUG}/inscription`);
+    await page.goto(`/fr/formations/${MOCK_SLUG}/inscription`);
 
     // Attendre que le formulaire soit rendu (chargement de la formation mockée)
     await expect(

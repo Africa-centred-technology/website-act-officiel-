@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
@@ -186,6 +186,12 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
   ];
 
   const pathname = usePathname();
+  const router = useRouter();
+
+  const currentLocale = pathname?.startsWith("/en") ? "en" : "fr";
+  const targetLocale = currentLocale === "fr" ? "en" : "fr";
+  const switchPath = pathname?.replace(/^\/(fr|en)/, `/${targetLocale}`) ?? `/${targetLocale}`;
+
   const [scrolled, setScrolled] = useState(false);
   const [scrolledPast120, setScrolledPast120] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -398,6 +404,30 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
               ))}
             </ul>
           </div>
+
+          {/* Language switcher */}
+          <button
+            onClick={() => router.push(switchPath)}
+            aria-label={`Switch to ${targetLocale === "en" ? "English" : "Français"}`}
+            style={{
+              background: "none",
+              border: "1px solid rgba(255,255,255,0.25)",
+              borderRadius: "4px",
+              cursor: "pointer",
+              color: "rgba(255,255,255,0.7)",
+              fontFamily: "var(--font-display)",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              padding: "0.3rem 0.6rem",
+              textTransform: "uppercase",
+              transition: "color 0.2s, border-color 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = ORANGE; e.currentTarget.style.borderColor = ORANGE; }}
+            onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; }}
+          >
+            {targetLocale.toUpperCase()}
+          </button>
 
           {/* Mobile hamburger button */}
           <button

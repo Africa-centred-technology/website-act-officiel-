@@ -14,9 +14,9 @@ test.describe("i18n routing", () => {
     await expect(html).toHaveAttribute("dir", "ltr");
   });
 
-  test("/services returns 308 redirect to /fr/services", async ({ request }) => {
+  test("/services returns 307 redirect to /fr/services", async ({ request }) => {
     const res = await request.get("/services", { maxRedirects: 0 });
-    expect(res.status()).toBe(308);
+    expect(res.status()).toBe(307);
     expect(res.headers()["location"]).toBe("/fr/services");
   });
 

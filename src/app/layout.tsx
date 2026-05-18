@@ -34,9 +34,11 @@ export const metadata: Metadata = {
 
 // Root layout — owns <html>, <body> and all analytics scripts.
 // [locale]/layout.tsx owns providers, Header, CookieBanner.
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const headersList = await headers();
+  const locale = headersList.get("x-next-intl-locale") ?? "fr";
   return (
-    <html suppressHydrationWarning>
+    <html lang={locale} dir="ltr" suppressHydrationWarning>
       <head>
         {/* Preload LCP hero image (home page) */}
         <link rel="preload" as="image" href="/logo/logo_continent.png" fetchPriority="high" />
