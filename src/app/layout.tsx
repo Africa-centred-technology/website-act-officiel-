@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
+import { headers } from "next/headers";
 import "./globals.css";
 
 const META_PIXEL_ID = "1550173629800746";

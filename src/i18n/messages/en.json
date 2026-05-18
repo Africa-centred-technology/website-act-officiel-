@@ -2,7 +2,8 @@
   "common": {
     "lang": {
       "fr": "Français",
-      "en": "English"
+      "en": "English",
+      "ar": "العربية"
     },
     "cta": {
       "learnMore": "Learn more",
