@@ -8,9 +8,6 @@ describe("toShopifyLanguage", () => {
   it("maps en → EN", () => {
     expect(toShopifyLanguage("en")).toBe("EN");
   });
-  it("maps ar → AR", () => {
-    expect(toShopifyLanguage("ar")).toBe("AR");
-  });
   it("throws on unknown locale", () => {
     expect(() => toShopifyLanguage("de")).toThrow(/unsupported locale/i);
   });

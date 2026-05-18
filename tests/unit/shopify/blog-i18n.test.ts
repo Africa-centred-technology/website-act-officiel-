@@ -37,14 +37,6 @@ describe("blog Shopify fetcher — @inContext locale plumbing", () => {
     expect(body.variables.lang).toBe("EN");
   });
 
-  it("fetchShopifyBlogPosts(ar) sends $lang=AR", async () => {
-    vi.resetModules();
-    const { fetchShopifyBlogPosts } = await import("@/lib/shopify/blog");
-    mockEmptyBlogsResponse();
-    await fetchShopifyBlogPosts("ar");
-    expect(bodyOf(0).variables.lang).toBe("AR");
-  });
-
   it("fetchShopifyBlogPosts(fr) sends $lang=FR", async () => {
     vi.resetModules();
     const { fetchShopifyBlogPosts } = await import("@/lib/shopify/blog");
@@ -59,14 +51,6 @@ describe("blog Shopify fetcher — @inContext locale plumbing", () => {
     mockEmptyBlogsResponse();
     await fetchShopifyBlogPostByHandle("some-article", "en");
     expect(bodyOf(0).variables.lang).toBe("EN");
-  });
-
-  it("fetchShopifyBlogPostByHandle(handle, ar) sends $lang=AR", async () => {
-    vi.resetModules();
-    const { fetchShopifyBlogPostByHandle } = await import("@/lib/shopify/blog");
-    mockEmptyBlogsResponse();
-    await fetchShopifyBlogPostByHandle("any-handle", "ar");
-    expect(bodyOf(0).variables.lang).toBe("AR");
   });
 
   it("fetchShopifyBlogPostByHandle(handle, fr) sends $lang=FR", async () => {

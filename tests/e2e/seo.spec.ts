@@ -10,7 +10,7 @@ test.describe("SEO foundations", () => {
     );
   });
 
-  test("hreflang alternates fr/en/ar/x-default present on /fr/services", async ({ page }) => {
+  test("hreflang alternates fr/en/x-default present on /fr/services", async ({ page }) => {
     await page.goto("/fr/services");
     await expect(page.locator('link[rel="alternate"][hreflang="fr"]')).toHaveAttribute(
       "href",
@@ -20,23 +20,17 @@ test.describe("SEO foundations", () => {
       "href",
       "https://www.a-ct.ma/en/services"
     );
-    await expect(page.locator('link[rel="alternate"][hreflang="ar"]')).toHaveAttribute(
-      "href",
-      "https://www.a-ct.ma/ar/services"
-    );
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
       "href",
       "https://www.a-ct.ma/fr/services"
     );
   });
 
-  test("og:locale switches with locale (fr_MA / en_US / ar_MA)", async ({ page }) => {
+  test("og:locale switches with locale (fr_MA / en_US)", async ({ page }) => {
     await page.goto("/fr/services");
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "fr_MA");
     await page.goto("/en/services");
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "en_US");
-    await page.goto("/ar/services");
-    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "ar_MA");
   });
 
   test("Organization JSON-LD present on /fr/", async ({ page }) => {

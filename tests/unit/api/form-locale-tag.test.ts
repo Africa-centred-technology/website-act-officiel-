@@ -6,6 +6,15 @@ vi.mock("@/lib/api/shopify-admin", () => ({
   shopifyAdminRestUrl: (path: string) => `https://test.myshopify.com/admin/api/2024-01/${path}`,
 }));
 
+vi.mock("@/lib/csrf", () => ({
+  validateCsrf: vi.fn(() => null),
+}));
+
+vi.mock("@/lib/facebook/capi", () => ({
+  sendCAPIEvent: vi.fn(async () => {}),
+  extractClientInfo: vi.fn(() => ({})),
+}));
+
 describe("brochure handler — locale tag", () => {
   const fetchMock = vi.fn();
   const ORIGINAL_FETCH = global.fetch;

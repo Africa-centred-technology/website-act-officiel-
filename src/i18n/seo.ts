@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 const BASE_URL = "https://www.a-ct.ma";
-const LOCALES = ["fr", "en", "ar"] as const;
+const LOCALES = ["fr", "en"] as const;
 
 const OG_LOCALE: Record<string, string> = {
   fr: "fr_MA",
   en: "en_US",
-  ar: "ar_MA",
 };
 
 function buildOpenGraph(opts: {

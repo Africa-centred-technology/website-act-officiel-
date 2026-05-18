@@ -1,9 +1,8 @@
-export type ShopifyLanguageCode = "FR" | "EN" | "AR";
+export type ShopifyLanguageCode = "FR" | "EN";
 
 const LOCALE_MAP: Record<string, ShopifyLanguageCode> = {
   fr: "FR",
   en: "EN",
-  ar: "AR",
 };
 
 /** Maps an app locale string to a Shopify Storefront LanguageCode. */
