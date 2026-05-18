@@ -1,6 +1,7 @@
 import HomeShell from "@/components/home/Home";
 import { buildPageMetadata } from "@/i18n/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import type { WebPage, WithContext } from "schema-dts";
 
 export async function generateMetadata({
   params,
@@ -11,7 +12,7 @@ export async function generateMetadata({
   return await buildPageMetadata({ locale, namespace: "metadata.home", path: "" });
 }
 
-const HOME_WEBPAGE_LD = {
+const HOME_WEBPAGE_LD: WithContext<WebPage> = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: "Africa Centred Technology — IA & Ingénierie Logicielle au Maroc",
