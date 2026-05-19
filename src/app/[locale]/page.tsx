@@ -15,10 +15,11 @@ export async function generateMetadata({
 const HOME_WEBPAGE_LD: WithContext<WebPage> = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "ACT — Conseil IA & Transformation Digitale au Maroc",
+  name: "Agence IA Maroc — Conseil & Transformation Digitale Afrique | ACT",
   description:
-    "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale, leurs projets IA et leur montée en compétences. Basés à Casablanca.",
+    "ACT, agence IA Maroc, accompagne les entreprises dans leur transformation digitale et leurs projets d'intelligence artificielle. IA agentique, data science, agent IA entreprise. Basés à Casablanca.",
   url: "https://www.a-ct.ma/fr",
+  keywords: "agence IA Maroc, intelligence artificielle Maroc, transformation digitale Afrique, IA agentique, agent IA entreprise, formation IA Maroc",
   speakable: {
     "@type": "SpeakableSpecification",
     cssSelector: ["h1", ".hero-tagline", ".hero-subtitle"],

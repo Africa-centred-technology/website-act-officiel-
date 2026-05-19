@@ -59,7 +59,6 @@ function ServiceCard({
       style={{
         position: "relative",
         cursor: "pointer",
-        padding: "0 24px", // Augmentation pour réduire la carte et espacer les titres
       }}
       onClick={() => onEnter(index)}
     >
@@ -73,8 +72,6 @@ function ServiceCard({
         background: "#0a0a0a",
         boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
         transition: "transform 0.5s ease",
-        maxWidth: "300px",
-        margin: "0 auto",
       }} className="group-hover:scale-[1.02]">
 
         {/* Image de fond avec effet Ken Burns au hover */}

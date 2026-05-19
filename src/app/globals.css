@@ -831,6 +831,19 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Services overview grid — 3 cols desktop, 2 tablette, 1 mobile */
+.svc-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+}
+@media (max-width: 1024px) {
+  .svc-overview-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .svc-overview-grid { grid-template-columns: 1fr; }
+}
+
 /* Footer mobile padding */
 @media (max-width: 600px) {
   .footer-grid { padding: 3rem 1.5rem 2rem !important; }

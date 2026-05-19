@@ -316,11 +316,11 @@ export default function RealisationsShell() {
         </motion.div>
 
         {/* Titre — structure 3 mots identique à Room 1 / Secteurs */}
-        <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+        <h1 style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-start", margin: 0, padding: 0 }}>
           <WordChars text={t("h1Word1")}  fx="rollIn"   delay={0.10} stagger={0.040} size="clamp(4rem, 9vw, 13rem)" />
           <WordChars text={t("h1Word2")} fx="burstOut" delay={0.30} stagger={0.044} color="#FF6B00" mt="0.12em" size="clamp(2.5rem, 5vw, 7rem)" />
           <WordChars text={t("h1Word3")} fx="riseUp"   delay={0.65} stagger={0.040} mt="0.10em" size="clamp(3.5rem, 8vw, 11.5rem)" />
-        </div>
+        </h1>
 
         {/* Subtitle + stats */}
         <motion.div

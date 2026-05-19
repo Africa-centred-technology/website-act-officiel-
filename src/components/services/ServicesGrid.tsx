@@ -18,103 +18,75 @@ const stagger = (delay = 0) => ({
 });
 
 /* ── Icône SVG inline ─────────────────────────────── */
-function ServiceCard({ svc, index }: { svc: Service; index: number }) {
+function ServiceCard({ svc }: { svc: Service }) {
   const msg = useDataMessages();
   const i18n = msg.services.items[svc.slug];
   return (
-    <motion.div variants={fadeUp} style={{ position: "relative", padding: "0 12px", marginBottom: "4rem" }}>
-      <Link href={`/services/${svc.slug}`} style={{ textDecoration: "none", display: "block", position: "relative" }}>
-        {/* Conteneur Image avec overflow controlé */}
+    <motion.div variants={fadeUp}>
+      <Link href={`/services/${svc.slug}`} style={{ textDecoration: "none", display: "block" }}>
         <motion.article
-          whileHover={{ scale: 1.02 }}
-          className="relative group overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500"
+          whileHover={{ y: -6, boxShadow: `0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px ${svc.accent}30` }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="relative group overflow-hidden rounded-2xl"
           style={{
             aspectRatio: "1 / 1",
             background: "#0a0a0a",
             cursor: "pointer",
-            maxWidth: "300px",
-            margin: "0 auto",
-          }}
-        >
-          {/* Image de fond avec effet Ken Burns au hover */}
-          <motion.img
-            src={svc.heroImage}
-            alt={i18n?.title ?? svc.slug}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-            style={{
-              opacity: 0.75,
-              filter: "brightness(0.85)",
-            }}
-          />
-
-          {/* Overlay dégradé pour la profondeur */}
-          <div
-            className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
-            style={{
-              background: "linear-gradient(to top, rgba(3,10,24,0.95) 0%, transparent 100%)",
-            }}
-          />
-
-          {/* Halo d'accentuation subtil */}
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
-            style={{
-              background: `radial-gradient(circle at 50% 100%, ${svc.accent}88 0%, transparent 60%)`,
-            }}
-          />
-
-          <div className="absolute inset-4 border border-white/0 group-hover:border-white/10 rounded-xl transition-all duration-500 pointer-events-none" />
-          
-          {/* Reflet lumineux furtif */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
-        </motion.article>
-
-        {/* Le bloc de titre (Exactement comme sur la capture) */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "0", // Calé complètement bas
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "70%", // Largeur encore plus réduite
-            maxWidth: "260px",
             display: "flex",
-            justifyContent: "center",
-            zIndex: 10,
+            flexDirection: "column",
           }}
-          className="transition-transform duration-500 group-hover:-translate-y-1"
         >
+          {/* Image — 60% haut */}
+          <div style={{ flex: "0 0 60%", position: "relative", overflow: "hidden" }}>
+            <motion.img
+              src={svc.heroImage}
+              alt={i18n?.title ?? svc.slug}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              style={{ opacity: 0.9 }}
+            />
+            {/* Fondu bas vers le panel */}
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                bottom: 0, left: 0, right: 0,
+                height: "50%",
+                background: "linear-gradient(to bottom, transparent 0%, #20232A 100%)",
+                pointerEvents: "none",
+              }}
+            />
+            {/* Halo accent subtil */}
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none"
+              style={{ background: `radial-gradient(ellipse at 50% 80%, ${svc.accent}88 0%, transparent 65%)` }}
+            />
+          </div>
+
+          {/* Panel titre — 40% bas */}
           <div
             style={{
-              background: "#20232A", // Gris sombre uni sans effet blur
-              padding: "1.5rem 1rem", // Plus haut
-              borderRadius: "0.25rem 0.25rem 0 0", // Coins arrondis seulement en haut
-              boxShadow: "0 -5px 20px rgba(0,0,0,0.3)",
-              width: "100%",
+              flex: "0 0 40%",
+              background: "#20232A",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              minHeight: "12rem", // Encore plus haut
+              padding: "1rem 1.6rem",
             }}
           >
-
-            <h1 style={{
-              fontFamily: "var(--font-heading), system-ui, sans-serif",
-              fontSize: "2rem",
+            <h3 style={{
+              fontFamily: "var(--font-heading), Futura, 'Century Gothic', system-ui, sans-serif",
+              fontSize: "clamp(1rem, 1.4vw, 1.35rem)",
               fontWeight: 900,
               color: "#fff",
               lineHeight: 1.3,
               textAlign: "center",
               margin: 0,
-              whiteSpace: "pre-line",
             }}>
               {i18n?.title ?? svc.slug}
-            </h1>
-
-
+            </h3>
           </div>
-        </div>
+        </motion.article>
       </Link>
     </motion.div>
   );
@@ -167,13 +139,14 @@ function PoleSection({
       <motion.div
         initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}
         variants={stagger(delay + 0.1)}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         style={{
-          gap: "2rem 2rem",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: "1.5rem",
         }}
       >
-        {services.map((svc, i) => (
-          <ServiceCard key={svc.slug} svc={svc} index={i} />
+        {services.map((svc) => (
+          <ServiceCard key={svc.slug} svc={svc} />
         ))}
       </motion.div>
     </section>

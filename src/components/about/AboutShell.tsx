@@ -276,7 +276,7 @@ function SectionHero() {
 
         {/* Title */}
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
-          <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1 }}>
+          <h1 style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1, margin: 0, padding: 0 }}>
             {[
               { word: t("word1"), color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
               { word: t("word2"), color: "#D35400",  size: "clamp(2rem,  4.5vw, 6.5rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
@@ -300,7 +300,7 @@ function SectionHero() {
                 })}
               </div>
             ))}
-          </div>
+          </h1>
         </div>
 
         {/* Rule + subtitle + CTAs */}

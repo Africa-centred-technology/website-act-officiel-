@@ -101,6 +101,7 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
                 { href: "/services", label: "Nos Services" },
                 { href: "/formations", label: "Catalogue de Formations" },
                 { href: "/projects", label: "Réalisations" },
+                { href: "/carrieres", label: "Carrières" },
                 { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (

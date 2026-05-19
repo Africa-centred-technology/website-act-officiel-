@@ -781,14 +781,12 @@ function HeroSection() {
           </span>
         </motion.div>
 
-        <div style={{ overflow: "hidden" }}>
-          <motion.h1 className="font-black uppercase"
-            style={{ fontSize: "var(--font-90)", lineHeight: 0.9, letterSpacing: "-0.03em" }}
-            initial={{ y: "112%" }} animate={{ y: "0%" }}
-            transition={{ duration: 1.1, ease: [...BURST], delay: 0.05 }}>
-            {tIdx("h1")}
-          </motion.h1>
-        </div>
+        <motion.h1 className="font-black uppercase"
+          style={{ fontSize: "var(--font-90)", lineHeight: 0.9, letterSpacing: "-0.03em", margin: 0 }}
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, ease: [...BURST], delay: 0.05 }}>
+          {tIdx("h1")}
+        </motion.h1>
 
         <motion.div style={{ height: 1, background: ORANGE, originX: 0, margin: "2.5rem 0" }}
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}

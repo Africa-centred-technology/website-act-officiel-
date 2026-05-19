@@ -1716,5 +1716,25 @@
     "projects": "Portfolio",
     "secteurs": "Sectors",
     "poles": "Divisions"
+  },
+  "carrieres": {
+    "meta": {
+      "title": "AI Jobs Morocco — Join ACT | Careers",
+      "description": "Join ACT, AI consulting firm in Morocco. Open positions in AI engineering, data science, software development and digital transformation consulting in Casablanca."
+    }
+  },
+  "legal": {
+    "privacy": {
+      "meta": {
+        "title": "Privacy Policy | ACT",
+        "description": "Privacy policy of Africa Centred Technology (ACT). Personal data processing compliant with Moroccan law 09-08 and GDPR."
+      }
+    },
+    "terms": {
+      "meta": {
+        "title": "Terms of Use | ACT",
+        "description": "Terms of use for the Africa Centred Technology (ACT) website, AI consulting firm based in Casablanca."
+      }
+    }
   }
 }

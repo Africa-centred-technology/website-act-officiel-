@@ -338,7 +338,7 @@ const isMobile = screenSize === "mobile";
             style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}
           >
             <Link
-              href={`/blog/articles?cat=${topCategories[activeTopic]?.value || ""}`}
+              href={topCategories[activeTopic]?.value ? `/blog/articles?cat=${topCategories[activeTopic].value}` : "/blog/articles"}
               className="cta-btn"
             >
               <div className="cta-btn__border" />

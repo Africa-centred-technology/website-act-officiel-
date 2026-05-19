@@ -15,24 +15,24 @@ export async function generateMetadata({
 
 const FORMATIONS_FAQ = faqJsonLd([
   {
-    question: "Quelles formations propose ACT ?",
-    answer: "ACT propose des formations en Intelligence Artificielle, Data Science, Cloud Computing, Développement Logiciel et Automatisation, disponibles en présentiel, à distance et en format blended.",
+    question: "Où trouver une formation IA Maroc de qualité ?",
+    answer: "ACT propose des formations IA Maroc conçues par des experts du continent à partir de cas réels. Le catalogue couvre l'intelligence artificielle, l'IA agentique, la data science, le machine learning et le cloud computing — disponibles en présentiel à Casablanca et en ligne.",
   },
   {
-    question: "Les formations ACT sont-elles certifiantes ?",
-    answer: "Oui, les formations ACT délivrent des attestations de complétion reconnues par l'industrie et sont alignées sur les certifications professionnelles AWS, Azure, GCP et les standards Data Science.",
+    question: "ACT propose-t-il une formation data science Maroc ?",
+    answer: "Oui, ACT propose des formations data science Maroc couvrant l'intégralité du cycle de vie de la donnée : Data Engineering, Machine Learning, Big Data et déploiement de modèles IA. Les programmes sont alignés sur les certifications AWS, Azure, GCP et les standards Data Science.",
   },
   {
-    question: "ACT forme-t-il les équipes d'entreprises (B2B) ?",
-    answer: "Oui, ACT propose des programmes de formation sur mesure pour les équipes techniques et opérationnelles d'entreprises au Maroc et en Afrique subsaharienne, avec des formats intra-entreprise et des parcours personnalisés.",
+    question: "Existe-t-il une formation machine learning à Casablanca ?",
+    answer: "Oui, ACT organise des formations machine learning à Casablanca en présentiel ainsi qu'en format hybride. Les sessions couvrent les algorithmes fondamentaux, l'entraînement de modèles sur données africaines et le déploiement en production.",
   },
   {
-    question: "Quel est le niveau requis pour suivre une formation ACT ?",
-    answer: "ACT propose des formations pour tous niveaux, du débutant à l'expert. Chaque programme précise les prérequis. Certains bootcamps intensifs nécessitent une expérience technique préalable.",
+    question: "ACT forme-t-il les équipes d'entreprises à l'automatisation intelligente ?",
+    answer: "Oui, ACT propose des programmes de formation sur mesure en automatisation intelligente IA pour les équipes techniques et opérationnelles d'entreprises au Maroc et en Afrique. Formats intra-entreprise, parcours personnalisés et ateliers pratiques sur agents IA.",
   },
   {
-    question: "Comment s'inscrire à une formation ACT ?",
-    answer: "L'inscription se fait directement sur le catalogue de formations à l'adresse https://www.a-ct.ma/fr/formations, ou en contactant ACT par email à contact@a-ct.ma pour un programme sur mesure.",
+    question: "Comment s'inscrire à une formation IA Maroc avec ACT ?",
+    answer: "L'inscription se fait directement sur le catalogue : https://www.a-ct.ma/fr/formations. Pour un programme sur mesure ou une formation data science Maroc en intra-entreprise, contactez ACT à contact@a-ct.ma. Réponse sous 48h.",
   },
 ]);
 

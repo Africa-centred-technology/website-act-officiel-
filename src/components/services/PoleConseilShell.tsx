@@ -287,7 +287,7 @@ function HeroSection({ svc, i18n, index }: { svc: Service; i18n: ServiceI18n; in
 
         {/* Titre */}
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", marginBottom: "2rem" }}>
-          <div style={{ perspective: "1200px", display: "flex", flexDirection: "column", gap: "0.05em" }}>
+          <h1 style={{ perspective: "1200px", display: "flex", flexDirection: "column", gap: "0.05em", margin: 0, padding: 0 }}>
             {titleLines.map((line, li) => (
               <WordChars key={li} text={line}
                 delay={0.12 + li * 0.22} color={titleColors[li % 3]}
@@ -295,7 +295,7 @@ function HeroSection({ svc, i18n, index }: { svc: Service; i18n: ServiceI18n; in
                 size="clamp(2.4rem, 4.8vw, 6.2rem)"
               />
             ))}
-          </div>
+          </h1>
         </div>
 
         {/* Tagline */}

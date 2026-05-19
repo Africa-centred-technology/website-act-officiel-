@@ -177,6 +177,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
     { href: "/about#equipe", label: "Notre Équipe", key: "equipe", description: "" },
     { href: "/about#valeurs", label: "Nos Valeurs", key: "valeurs", description: "" },
     { href: "/projects", label: "Réalisations", key: "projects", description: "" },
+    { href: "/carrieres", label: "Carrières", key: "carrieres", description: "" },
   ];
 
   const NAV_LINKS = [

@@ -93,44 +93,44 @@
   },
   "metadata": {
     "default": {
-      "title": "Africa Centred Technology | Conseil IA & Digital Maroc",
-      "description": "ACT — cabinet de conseil et formation en intelligence artificielle et transformation digitale au Maroc. Accompagnement sur mesure pour entreprises africaines."
+      "title": "Cabinet Conseil Technologique Maroc | Intelligence Artificielle & Digital — ACT",
+      "description": "ACT — cabinet de conseil en intelligence artificielle et transformation digitale au Maroc. Ingénierie, IA agentique, formation data science. Accompagnement sur mesure pour entreprises africaines."
     },
     "home": {
-      "title": "ACT — Conseil IA & Transformation Digitale au Maroc",
-      "description": "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale, leurs projets IA et leur montée en compétences. Basés à Casablanca."
+      "title": "Agence IA Maroc — Conseil & Transformation Digitale Afrique | ACT",
+      "description": "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale et leurs projets d'intelligence artificielle. Agents IA, data science, formation. Basés à Casablanca."
     },
     "about": {
-      "title": "À Propos — Cabinet Conseil Tech & IA au Maroc | ACT",
-      "description": "ACT est un cabinet de conseil et de formation en intelligence artificielle basé au Maroc. Pionnier de la transformation digitale en Afrique depuis 2023."
+      "title": "Cabinet Conseil Technologique Maroc | À Propos — ACT",
+      "description": "ACT est un cabinet de conseil en intelligence artificielle basé à Casablanca. Pionnier de la transformation digitale en Afrique depuis 2023. IA agentique, data science, formation."
     },
     "services": {
-      "title": "Services Transformation Digitale & IA au Maroc | ACT",
-      "description": "Ingénierie technologique, conseil stratégique et formation IA : 9 services sur mesure pour accélérer votre transformation digitale au Maroc et en Afrique."
+      "title": "Agence IA Maroc — Automatisation, Data & Ingénierie Logicielle | ACT",
+      "description": "Agence IA Maroc spécialisée en IA agentique, agent IA entreprise, développement application web et conseil transformation digitale. 9 services sur mesure pour les entreprises africaines."
     },
     "formations": {
-      "title": "Formations IA & Data au Maroc | ACT Africa",
-      "description": "Formations certifiantes en intelligence artificielle, data science et transformation digitale. Conçues pour les professionnels au Maroc et en Afrique."
+      "title": "Formation IA Maroc — Data Science, Machine Learning & IA Agentique | ACT",
+      "description": "Formation IA Maroc certifiante : data science, machine learning, IA agentique, cloud. Programmes conçus pour les professionnels au Maroc et en Afrique. Présentiel & en ligne."
     },
     "poles": {
-      "title": "Ingénierie · Conseil · Formation | ACT Maroc",
-      "description": "Découvrez les 3 pôles d'expertise d'ACT : Ingénierie Technologique, Conseil Stratégique et Formation IA. Une offre complète pour votre transformation digitale."
+      "title": "Ingénierie · Conseil · Formation IA — Cabinet Technologique Maroc | ACT",
+      "description": "3 pôles d'expertise : ingénierie logicielle, conseil transformation digitale Maroc et formation data science. Une offre complète pour votre transformation digitale en Afrique."
     },
     "secteurs": {
-      "title": "Secteurs d'Intervention — IA & Digital au Maroc | ACT",
-      "description": "ACT accompagne la transformation digitale dans les secteurs finance, industrie, santé, éducation et retail au Maroc et en Afrique."
+      "title": "Transformation Digitale Afrique — Finance, Santé, Industrie | ACT Maroc",
+      "description": "ACT accompagne la transformation digitale en Afrique dans les secteurs finance, industrie, santé, éducation et retail. Intelligence artificielle sur mesure au Maroc."
     },
     "projects": {
-      "title": "Réalisations & Études de Cas — IA & Digital | ACT Maroc",
-      "description": "Projets réalisés par ACT en intelligence artificielle, ingénierie et transformation digitale. Cas concrets d'entreprises marocaines et africaines."
+      "title": "Réalisations IA & Digital — Agent IA, SIG, E-commerce | ACT Maroc",
+      "description": "Projets réalisés par ACT : système RAG multi-sources, automatisation intelligente, SIG Afrique, e-commerce. Études de cas d'entreprises marocaines et africaines."
     },
     "blog": {
-      "title": "Blog IA & Transformation Digitale | ACT Maroc",
-      "description": "Analyses, veille et guides pratiques sur l'IA, la data et la transformation digitale. Le blog tech de référence pour les entreprises au Maroc."
+      "title": "Blog IA Agentique & Transformation Digitale Afrique | ACT Maroc",
+      "description": "Guides, analyses et veille sur l'IA agentique, la data science et la transformation digitale en Afrique. Le blog tech de référence pour les entreprises au Maroc."
     },
     "contact": {
-      "title": "Contactez ACT — Conseil IA & Digital Maroc",
-      "description": "Discutez de vos projets de transformation digitale, IA et formation avec l'équipe ACT. Basés à Casablanca, nous intervenons au Maroc et en Afrique."
+      "title": "Contactez ACT — Agence IA & Cabinet Conseil Technologique Maroc",
+      "description": "Discutez de vos projets d'intelligence artificielle, transformation digitale et formation avec l'équipe ACT. Cabinet conseil technologique basé à Casablanca, Maroc."
     }
   },
   "validation": {
@@ -305,7 +305,7 @@
       "ghostText": "NOS\nEXPERTISES",
       "eyebrow": "L'Arborescence ACT",
       "h1": "Nos Services",
-      "subtitle": "Trois pôles complémentaires — Ingénierie, Conseil et Formation — couvrant l'intégralité de la chaîne de valeur de la transformation digitale africaine.",
+      "subtitle": "Agence IA Maroc · Trois pôles — Ingénierie logicielle, Conseil transformation digitale et Formation data science — pour couvrir l'intégralité de la chaîne de valeur digitale africaine.",
       "countIngenierie": "5 services Ingénierie",
       "countConseil": "3 services Conseil",
       "scrollHint": "Scroll pour explorer",
@@ -441,7 +441,7 @@
         "pole": "Ingénierie Technologique",
         "title": "Automatisation\nIntelligente (IA Agentique)",
         "tagline": "L'IA qui travaille avec vous",
-        "intro": "Les organisations gèrent des processus de plus en plus complexes reposant sur des tâches manuelles, des échanges fragmentés et des outils qui ne communiquent pas. Les solutions d'automatisation traditionnelles peinent à gérer des workflows à plusieurs étapes et sources d'information. ACT déploie des architectures d'agents IA qui collaborent pour transformer ces processus manuels en workflows intelligents — sans remplacer l'humain, mais en démultipliant ses capacités.",
+        "intro": "L'IA agentique redéfinit la manière dont les organisations traitent leurs processus métiers. Là où les outils d'automatisation traditionnels peinent à gérer des workflows à plusieurs étapes et sources d'information, l'IA agentique déploie des architectures d'agents IA autonomes qui collaborent pour transformer ces processus manuels en workflows intelligents. ACT est spécialisé dans la conception et le déploiement d'agents IA entreprise — des systèmes qui automatisent sans remplacer l'humain, mais en démultipliant ses capacités opérationnelles.",
         "subs": [
           {
             "title": "Architectures Multi-Agents",
@@ -543,7 +543,7 @@
         "pole": "Ingénierie Technologique",
         "title": "Géomatique\n& Systèmes d'Information\nGéographique",
         "tagline": "Connaître son territoire pour le développer",
-        "intro": "On ne peut pas développer ce qu'on ne connaît pas. De nombreuses institutions africaines prennent encore des décisions d'aménagement, de gestion des ressources ou de planification d'infrastructures avec des informations géographiques incomplètes ou obsolètes. ACT combine technologies de cartographie, SIG et analyse spatiale pour transformer les données géographiques en outils d'aide à la décision — à partir d'imagerie satellitaire, de relevés terrain, de drones et de bases de données géospatiales ouvertes.",
+        "intro": "On ne peut pas développer ce qu'on ne connaît pas. En Afrique, les décisions d'aménagement, de gestion des ressources et de planification d'infrastructures reposent encore trop souvent sur des données géographiques incomplètes ou obsolètes. ACT déploie des solutions de géomatique et de SIG Afrique pour transformer les données territoriales en véritables outils d'aide à la décision. À partir d'imagerie satellitaire, de relevés terrain, de drones et de bases de données géospatiales ouvertes, nos systèmes d'information géographique permettent aux institutions africaines de planifier, gérer et développer leur territoire avec précision.",
         "subs": [
           {
             "title": "Cartographie Numérique",
@@ -668,7 +668,7 @@
       "breadcrumbFormations": "Formations",
       "heroTitle": "Catalogue de",
       "heroTitleAccent": "Formations",
-      "heroSubtitle": "Développez vos compétences avec nos programmes intensifs conçus pour le monde de l'IA.",
+      "heroSubtitle": "Formation IA Maroc · Data Science · Machine Learning · IA Agentique — des programmes intensifs conçus par des experts du continent.",
       "searchPlaceholder": "Rechercher une formation...",
       "countLabel": "formations trouvées",
       "loadError": "Impossible de charger les formations.",
@@ -1716,5 +1716,163 @@
     "projects": "Réalisations",
     "secteurs": "Secteurs",
     "poles": "Pôles"
+  },
+  "carrieres": {
+    "meta": {
+      "title": "Emploi IA Maroc — Rejoindre ACT | Carrières",
+      "description": "Rejoignez ACT, cabinet de conseil en intelligence artificielle au Maroc. Postes ouverts en IA, data science, ingénierie logicielle et conseil transformation digitale à Casablanca."
+    },
+    "hero": {
+      "eyebrow": "Carrières — Africa Centred Technology",
+      "titleLine1": "Construisons",
+      "titleLine2": "l'Afrique Tech",
+      "titleLine3": "Ensemble",
+      "subtitle": "Rejoignez une équipe qui place la technologie au service du développement africain. Emploi développeur IA Maroc, data scientist, consultant transformation digitale — explorez nos postes ouverts."
+    },
+    "whyAct": {
+      "label": "Pourquoi ACT",
+      "title": "Travailler chez ACT",
+      "items": [
+        { "title": "Impact réel", "desc": "Vos projets servent des organisations africaines concrètes — pas des MVPs qui restent dans des tiroirs." },
+        { "title": "Technologies de pointe", "desc": "IA agentique, LLMs, Data Engineering, SIG — vous travaillez avec les outils les plus avancés du secteur." },
+        { "title": "Croissance rapide", "desc": "Dans une startup en croissance, vos responsabilités évoluent vite. Pas de hiérarchie paralysante." },
+        { "title": "Equipe soudée", "desc": "Une équipe pluridisciplinaire et multiculturelle, réunie par une même conviction : la tech peut changer l'Afrique." }
+      ]
+    },
+    "openings": {
+      "label": "Postes ouverts",
+      "title": "Nos offres",
+      "titleAccent": "d'emploi",
+      "empty": "Aucun poste ouvert pour le moment. Envoyez-nous votre candidature spontanée.",
+      "jobs": [
+        {
+          "id": "ia-engineer",
+          "title": "Ingénieur IA & Agents Autonomes",
+          "type": "CDI",
+          "location": "Casablanca, Maroc",
+          "domain": "Ingénierie IA",
+          "tags": ["Python", "LangChain", "LangGraph", "LLMs", "FastAPI"],
+          "summary": "Concevoir et déployer des architectures d'agents IA autonomes pour les clients ACT. Vous serez au cœur du pôle IA agentique, de la phase de cartographie des processus au déploiement en production.",
+          "missions": [
+            "Concevoir des architectures multi-agents (LangGraph, CrewAI, AutoGen)",
+            "Développer et optimiser des pipelines RAG (Retrieval-Augmented Generation)",
+            "Intégrer les agents dans les systèmes clients (ERP, CRM, APIs métiers)",
+            "Rédiger la documentation technique et les guides de gouvernance IA",
+            "Former les équipes clients à la supervision des agents"
+          ],
+          "profil": [
+            "2+ ans d'expérience en développement Python",
+            "Expérience avec les LLMs (OpenAI, Anthropic, Mistral, Ollama)",
+            "Connaissance des frameworks agentiques (LangChain, LangGraph, CrewAI)",
+            "Capacité à travailler en autonomie et en contact direct client",
+            "Français courant, anglais technique"
+          ]
+        },
+        {
+          "id": "data-scientist",
+          "title": "Data Scientist — ML & Prédiction",
+          "type": "CDI",
+          "location": "Casablanca, Maroc",
+          "domain": "Data & IA",
+          "tags": ["Python", "Scikit-learn", "TensorFlow", "SQL", "Spark"],
+          "summary": "Développer des modèles analytiques et prédictifs pour les clients ACT dans les secteurs finance, santé, agriculture et logistique. Vous construisez des solutions ML ancrées dans les réalités africaines.",
+          "missions": [
+            "Analyser les besoins métiers et traduire en problèmes ML solubles",
+            "Collecter, nettoyer et enrichir les datasets clients",
+            "Entraîner, évaluer et optimiser des modèles de prévision, classification et détection d'anomalies",
+            "Déployer les modèles en production (MLflow, FastAPI, Docker)",
+            "Produire des dashboards analytics pour les équipes métiers"
+          ],
+          "profil": [
+            "Formation Bac+4/5 en Data Science, Statistiques ou Informatique",
+            "Maîtrise de Python (Pandas, Scikit-learn, TensorFlow/PyTorch)",
+            "Expérience en SQL et manipulation de données volumineuses",
+            "Sens du résultat et capacité à vulgariser pour des non-techniciens",
+            "Expérience en Afrique ou compréhension des contextes locaux appréciée"
+          ]
+        },
+        {
+          "id": "fullstack-dev",
+          "title": "Développeur Fullstack — Applications African-Ready",
+          "type": "CDI",
+          "location": "Casablanca, Maroc",
+          "domain": "Ingénierie Logicielle",
+          "tags": ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL"],
+          "summary": "Développer des applications web et mobile sur mesure pour des clients africains. Vous concevez des interfaces optimisées pour les réseaux africains, avec mode hors-ligne intégré et performances mobile-first.",
+          "missions": [
+            "Développer des applications web React/Next.js et mobile (React Native)",
+            "Concevoir des APIs RESTful et GraphQL robustes",
+            "Optimiser les performances pour les réseaux à faible bande passante",
+            "Implémenter des fonctionnalités hors-ligne (PWA, Service Workers)",
+            "Collaborer avec les équipes UX et les clients en direct"
+          ],
+          "profil": [
+            "3+ ans d'expérience en développement fullstack",
+            "Maîtrise de React/Next.js et TypeScript",
+            "Expérience Node.js et bases de données relationnelles (PostgreSQL) et NoSQL",
+            "Sensibilité UX et souci du détail sur les performances",
+            "Portfolio de projets livrés appréciés"
+          ]
+        },
+        {
+          "id": "consultant-digital",
+          "title": "Consultant Transformation Digitale",
+          "type": "CDI",
+          "location": "Casablanca, Maroc — déplacements Afrique",
+          "domain": "Conseil",
+          "tags": ["BPMN", "Stratégie digitale", "Conduite du changement", "IA", "Audit"],
+          "summary": "Accompagner les directions générales et DSI africaines dans leur transformation digitale. Vous réalisez des audits de maturité, co-construisez les feuilles de route et pilotez les projets de transformation.",
+          "missions": [
+            "Réaliser des audits de maturité digitale (interviews, analyse systèmes, benchmark)",
+            "Co-construire des feuilles de route digitales 3 ans avec les équipes dirigeantes",
+            "Cartographier et optimiser les processus métiers (BPMN)",
+            "Piloter la conduite du changement et la formation des équipes",
+            "Rédiger les livrables stratégiques et présenter aux CODIR"
+          ],
+          "profil": [
+            "Bac+5 école de commerce, ingénieur ou équivalent",
+            "3+ ans d'expérience en conseil ou en DSI",
+            "Maîtrise des méthodologies de transformation (Lean, Agile, BPMN)",
+            "Excellente communication écrite et orale en français et arabe",
+            "Disponibilité pour des missions en Afrique subsaharienne"
+          ]
+        }
+      ]
+    },
+    "spontaneous": {
+      "label": "Candidature spontanée",
+      "title": "Votre profil ne correspond à aucune offre ?",
+      "desc": "ACT grandit vite. Si vous partagez notre vision — la technologie au service de l'Afrique — envoyez-nous votre CV et une lettre de motivation. Nous lisons toutes les candidatures.",
+      "cta": "Envoyer ma candidature",
+      "email": "carrieres@a-ct.ma"
+    },
+    "values": {
+      "label": "Nos valeurs",
+      "items": [
+        { "title": "Impact", "desc": "Chaque ligne de code, chaque analyse, chaque conseil doit créer un impact mesurable pour nos clients et leurs bénéficiaires finaux." },
+        { "title": "Excellence", "desc": "Nous nous tenons aux standards les plus élevés de l'industrie, tout en restant ancrés dans les réalités africaines." },
+        { "title": "Ownership", "desc": "Chaque membre de l'équipe est responsable de ses livrables de bout en bout. Pas de culture du passage de relais." },
+        { "title": "Apprentissage continu", "desc": "La tech évolue vite. Nous investissons dans la montée en compétences de chaque collaborateur — formations, veille, conférences." }
+      ]
+    },
+    "cta": {
+      "title": "Une question sur nos offres d'emploi ?",
+      "desc": "Contactez directement l'équipe RH ACT.",
+      "button": "Nous contacter"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "meta": {
+        "title": "Politique de Confidentialité | ACT",
+        "description": "Politique de confidentialité d'Africa Centred Technology (ACT). Traitement des données personnelles conforme à la loi marocaine 09-08 et au RGPD."
+      }
+    },
+    "terms": {
+      "meta": {
+        "title": "Conditions Générales d'Utilisation | ACT",
+        "description": "Conditions générales d'utilisation du site web d'Africa Centred Technology (ACT), cabinet de conseil en intelligence artificielle à Casablanca."
+      }
+    }
   }
 }
