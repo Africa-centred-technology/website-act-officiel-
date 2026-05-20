@@ -67,7 +67,7 @@ function WordChars({
               lineHeight: 1,
               letterSpacing: "-0.03em",
               textShadow: "0px 12px 40px rgba(0,0,0,0.6)",
-              fontFamily: "'Futura', system-ui, sans-serif",
+              fontFamily: "var(--font-display)",
             }}
             initial={initial}
             animate={target}
@@ -204,7 +204,7 @@ function ProjectCard({
             </div>
 
           <h3 style={{
-            fontFamily: "Futura, system-ui, sans-serif", fontWeight: 900,
+            fontFamily: "var(--font-display)", fontWeight: 900,
             textTransform: "uppercase",
             color: hovered ? ORANGE : "#fff",
             fontSize: "var(--font-25)", lineHeight: 1.1, marginBottom: "0.75rem",
@@ -214,6 +214,7 @@ function ProjectCard({
           </h3>
 
           <p style={{
+            fontFamily: "var(--font-body)",
             color: "#ffffff", fontSize: "var(--font-18)", lineHeight: 1.65,
             marginBottom: "1.2rem",
             display: "-webkit-box", WebkitLineClamp: 2,
@@ -263,7 +264,7 @@ export default function RealisationsShell() {
       : PROJECTS.filter((p) => msg.projects.items[p.id]?.category === activeCategory);
 
   return (
-    <div style={{ background: BG, minHeight: "100vh", color: "#fff", fontFamily: "Futura, system-ui, sans-serif" }}>
+    <div style={{ background: BG, minHeight: "100vh", color: "#fff", fontFamily: "var(--font-body)" }}>
 
       {/* ── Couches de fond identiques à la home ── */}
       <WaveTerrain />
@@ -329,7 +330,7 @@ export default function RealisationsShell() {
           transition={{ delay: 1.05, duration: 0.7 }}
           style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", marginTop: "3rem" }}
         >
-          <p style={{ color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.7, maxWidth: "600px" }}>
+          <p style={{ fontFamily: "var(--font-body)", color: "#ffffff", fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)", lineHeight: 1.7, maxWidth: "600px" }}>
             {t("subtitle")}
           </p>
           <div style={{ display: "flex", gap: "3rem", flexWrap: "wrap" }}>

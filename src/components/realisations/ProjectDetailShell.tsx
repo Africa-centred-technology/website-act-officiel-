@@ -253,7 +253,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.6, 0.08, 0.02, 0.99] }}
             style={{
-              fontFamily: "Futura, system-ui, sans-serif",
+              fontFamily: "var(--font-display)",
               fontWeight: 900,
               textTransform: "uppercase",
               fontSize: "var(--font-90)",
@@ -272,6 +272,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.45 }}
             style={{
+              fontFamily: "var(--font-body)",
               color: "rgba(255,255,255,0.5)",
               fontSize: "var(--font-20)",
               maxWidth: "60ch",
@@ -331,7 +332,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 </p>
                 <p
                   style={{
-                    fontFamily: "Futura, system-ui, sans-serif",
+                    fontFamily: "var(--font-display)",
                     fontWeight: 700,
                     fontSize: "var(--font-20)",
                     color: "#fff",
@@ -413,6 +414,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                 <p
                   key={i}
                   style={{
+                    fontFamily: "var(--font-body)",
                     color: "rgba(255,255,255,0.6)",
                     fontSize: "var(--font-20)",
                     lineHeight: 1.85,
@@ -556,6 +558,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
                   </span>
                   <p
                     style={{
+                      fontFamily: "var(--font-body)",
                       color: "rgba(255,255,255,0.55)",
                       fontSize: "var(--font-20)",
                       lineHeight: 1.7,
@@ -587,6 +590,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             >
               <p
                 style={{
+                  fontFamily: "var(--font-body)",
                   color: "rgba(255,255,255,0.6)",
                   fontSize: "var(--font-20)",
                   lineHeight: 1.85,
@@ -629,7 +633,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             </div>
             <h2
               style={{
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: "var(--font-display)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 fontSize: "var(--font-50)",
@@ -643,6 +647,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             </h2>
             <p
               style={{
+                fontFamily: "var(--font-body)",
                 color: "rgba(255,255,255,0.38)",
                 fontSize: "var(--font-20)",
                 lineHeight: 1.72,
@@ -725,7 +730,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             </span>
             <span
               style={{
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: "var(--font-display)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 fontSize: "var(--font-25)",
@@ -778,7 +783,7 @@ export default function ProjectDetailShell({ project }: { project: Project }) {
             </span>
             <span
               style={{
-                fontFamily: "Futura, system-ui, sans-serif",
+                fontFamily: "var(--font-display)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 fontSize: "var(--font-25)",
