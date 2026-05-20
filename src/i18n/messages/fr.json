@@ -93,11 +93,11 @@
   },
   "metadata": {
     "default": {
-      "title": "Cabinet Conseil Technologique Maroc | Intelligence Artificielle & Digital — ACT",
+      "title": "ACT Maroc — Intelligence Artificielle & Conseil Digital",
       "description": "ACT — cabinet de conseil en intelligence artificielle et transformation digitale au Maroc. Ingénierie, IA agentique, formation data science. Accompagnement sur mesure pour entreprises africaines."
     },
     "home": {
-      "title": "Agence IA Maroc — Conseil & Transformation Digitale Afrique | ACT",
+      "title": "Agence IA Maroc — Conseil & Transformation Digitale | ACT",
       "description": "ACT accompagne les entreprises marocaines et africaines dans leur transformation digitale et leurs projets d'intelligence artificielle. Agents IA, data science, formation. Basés à Casablanca."
     },
     "about": {
@@ -105,31 +105,31 @@
       "description": "ACT est un cabinet de conseil en intelligence artificielle basé à Casablanca. Pionnier de la transformation digitale en Afrique depuis 2023. IA agentique, data science, formation."
     },
     "services": {
-      "title": "Agence IA Maroc — Automatisation, Data & Ingénierie Logicielle | ACT",
+      "title": "Services IA Maroc — Data, Automatisation & Ingénierie | ACT",
       "description": "Agence IA Maroc spécialisée en IA agentique, agent IA entreprise, développement application web et conseil transformation digitale. 9 services sur mesure pour les entreprises africaines."
     },
     "formations": {
-      "title": "Formation IA Maroc — Data Science, Machine Learning & IA Agentique | ACT",
+      "title": "Formation IA Maroc — Data Science & Machine Learning | ACT",
       "description": "Formation IA Maroc certifiante : data science, machine learning, IA agentique, cloud. Programmes conçus pour les professionnels au Maroc et en Afrique. Présentiel & en ligne."
     },
     "poles": {
-      "title": "Ingénierie · Conseil · Formation IA — Cabinet Technologique Maroc | ACT",
+      "title": "Pôles ACT — Ingénierie, Conseil & Formation IA | Maroc",
       "description": "3 pôles d'expertise : ingénierie logicielle, conseil transformation digitale Maroc et formation data science. Une offre complète pour votre transformation digitale en Afrique."
     },
     "secteurs": {
-      "title": "Transformation Digitale Afrique — Finance, Santé, Industrie | ACT Maroc",
+      "title": "Transformation Digitale Afrique — Tous Secteurs | ACT",
       "description": "ACT accompagne la transformation digitale en Afrique dans les secteurs finance, industrie, santé, éducation et retail. Intelligence artificielle sur mesure au Maroc."
     },
     "projects": {
-      "title": "Réalisations IA & Digital — Agent IA, SIG, E-commerce | ACT Maroc",
+      "title": "Réalisations IA & Digital — Projets Tech Afrique | ACT",
       "description": "Projets réalisés par ACT : système RAG multi-sources, automatisation intelligente, SIG Afrique, e-commerce. Études de cas d'entreprises marocaines et africaines."
     },
     "blog": {
-      "title": "Blog IA Agentique & Transformation Digitale Afrique | ACT Maroc",
+      "title": "Blog IA & Transformation Digitale Afrique | ACT Maroc",
       "description": "Guides, analyses et veille sur l'IA agentique, la data science et la transformation digitale en Afrique. Le blog tech de référence pour les entreprises au Maroc."
     },
     "contact": {
-      "title": "Contactez ACT — Agence IA & Cabinet Conseil Technologique Maroc",
+      "title": "Contactez ACT — Agence IA & Conseil Technologique Maroc",
       "description": "Discutez de vos projets d'intelligence artificielle, transformation digitale et formation avec l'équipe ACT. Cabinet conseil technologique basé à Casablanca, Maroc."
     }
   },
