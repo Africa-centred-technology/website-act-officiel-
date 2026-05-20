@@ -11,8 +11,7 @@
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { Link } from "@/i18n/navigation";
+import { useRouter, Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { SERVICES, type Service } from "@/lib/data/services";
 import { useDataMessages } from "@/i18n/data-i18n";
@@ -108,12 +107,12 @@ function ServiceCard({
 
         {/* Cadre de focus et numéro */}
         <div className="absolute inset-3 border border-white/0 group-hover:border-white/10 rounded-lg transition-all duration-500 pointer-events-none" />
-        <div className="absolute top-4 start-4 font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 text-5xl select-none" style={{ fontFamily: "Futura" }}>
+        <div className="absolute top-4 inset-s-4 font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 text-5xl select-none" style={{ fontFamily: "Futura" }}>
           {svc.n}
         </div>
 
         {/* Reflet lumineux furtif */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
       </div>
 
       {/* Le bloc de titre décalé */}
