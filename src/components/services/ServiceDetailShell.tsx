@@ -181,7 +181,7 @@ function HeroSection({ svc, i18n, index }: { svc: Service; i18n: ServiceI18n; in
       }}>
         <KenBurns
           src={svc.heroImage}
-          priority alt=""
+          priority alt={svc.heroAlt}
           duration={22}
           fromScale={1.0} toScale={1.14}
           fromX="-1%" toX="1%" fromY="0%" toY="-3%"

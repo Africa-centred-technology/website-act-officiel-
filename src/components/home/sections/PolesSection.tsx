@@ -111,7 +111,7 @@ function Panel({
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <img
           src={pole.img}
-          alt=""
+          alt={i18n.title}
           style={{
             width: "100%", height: "100%", objectFit: "cover",
             transition: "transform 0.8s cubic-bezier(.16,1,.3,1), filter 0.6s",

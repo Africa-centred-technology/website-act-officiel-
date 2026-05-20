@@ -13,6 +13,8 @@ export interface Service {
   video: string;
   /** Image principale (hero / intro section) */
   heroImage: string;
+  /** Texte alternatif descriptif pour l'image hero (SEO + accessibilité) */
+  heroAlt: string;
   /** Images des sous-services (une par sub, peut en avoir moins) */
   subImages: string[];
 }
@@ -29,6 +31,7 @@ export const SERVICES: Service[] = [
     icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
     video: "https://cdn.pixabay.com/video/2019/05/06/23355-334950213_large.mp4",
     heroImage: "/images/services/Ingéneurie_logicielle.jpg",
+    heroAlt: "Développement d'applications web et mobile sur mesure pour les entreprises africaines — ACT Ingénierie Logicielle",
     subImages: [
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
@@ -43,6 +46,7 @@ export const SERVICES: Service[] = [
     icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-2",
     video: "https://cdn.pixabay.com/video/2023/07/24/173103-848555583_large.mp4",
     heroImage: "/images/services/Agentic_AI.jpg",
+    heroAlt: "IA agentique et automatisation intelligente des processus métier en Afrique — ACT Automatisation",
     subImages: [
       "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
@@ -58,6 +62,7 @@ export const SERVICES: Service[] = [
     icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
     video: "https://cdn.pixabay.com/video/2024/11/05/240062_large.mp4",
     heroImage: "/images/services/architerture.png",
+    heroAlt: "Architecture logicielle évolutive et infrastructure cloud souveraine adaptée à l'Afrique — ACT Architecture",
     subImages: [
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
@@ -73,6 +78,7 @@ export const SERVICES: Service[] = [
     icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
     video: "https://cdn.pixabay.com/video/2020/01/30/31772-388253161_large.mp4",
     heroImage: "/images/services/big-data-and-et-artificial-intelligence.jpg",
+    heroAlt: "Big Data et intelligence artificielle au service des entreprises africaines — ACT Data & IA",
     subImages: [
       "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80",
@@ -88,6 +94,7 @@ export const SERVICES: Service[] = [
     icon: "M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7",
     video: "https://cdn.pixabay.com/video/2017/07/23/10854-226632941_large.mp4",
     heroImage: "/images/services/sig.jpg",
+    heroAlt: "Géomatique et systèmes d'information géographique pour le développement territorial en Afrique — ACT SIG",
     subImages: [
       "/images/services/sig-1.jpg",
       "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?auto=format&fit=crop&w=1200&q=80",
@@ -102,6 +109,7 @@ export const SERVICES: Service[] = [
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
     video: "https://cdn.pixabay.com/video/2022/10/31/137265-766326232_large.mp4",
     heroImage: "/images/poles/pole-conseil.jpg",
+    heroAlt: "Conseil en transformation digitale et stratégie d'entreprise au Maroc et en Afrique — ACT Conseil Stratégique",
     subImages: [
       "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
@@ -116,6 +124,7 @@ export const SERVICES: Service[] = [
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
     video: "https://cdn.pixabay.com/video/2024/03/01/202560-918431383_large.mp4",
     heroImage: "/images/poles/pole-conseil.jpg",
+    heroAlt: "Conseil opérationnel et optimisation des processus métier pour les organisations africaines — ACT Conseil Opérationnel",
     subImages: [
       "https://images.unsplash.com/photo-1664575602554-2087b04935a5?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
@@ -131,6 +140,7 @@ export const SERVICES: Service[] = [
     icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
     video: "https://cdn.pixabay.com/video/2024/07/21/222279_large.mp4",
     heroImage: "/images/poles/pole-formation.jpg",
+    heroAlt: "Formation professionnelle en technologies numériques et développement des compétences digitales en Afrique — ACT Formation",
     subImages: [
       "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
