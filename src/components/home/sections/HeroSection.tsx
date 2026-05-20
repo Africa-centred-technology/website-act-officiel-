@@ -312,7 +312,7 @@ export default function HeroSection() {
           >
             <Link href="/">
               <img
-                src="/logo/logo_continent.png"
+                src="/logo/act-africa-centred-technology-logo.png"
                 alt="ACT - Africa Centred Technology"
                 width={1200}
                 height={900}

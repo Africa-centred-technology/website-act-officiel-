@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang={locale} dir="ltr" suppressHydrationWarning>
       <head>
         {/* Preload LCP hero image (home page) */}
-        <link rel="preload" as="image" href="/logo/logo_continent.png" fetchPriority="high" />
+        <link rel="preload" as="image" href="/logo/act-africa-centred-technology-logo.png" fetchPriority="high" />
         {/* Preload Futura to eliminate FOUT on service pages */}
         <link rel="preload" as="font" href="/fonts/futura-medium.woff" type="font/woff" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
