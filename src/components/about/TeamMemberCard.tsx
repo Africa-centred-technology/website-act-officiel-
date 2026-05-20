@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export interface TeamMember {
   name: string;
   role: string;
-  img: string;
+  img: string | null;
   bio: string;
 }
 
@@ -65,16 +65,32 @@ export default function TeamMemberCard({ member, index }: TeamMemberCardProps) {
 
       {/* Image de fond */}
       <div className="absolute inset-0">
-        <Image
-          src={member.img}
-          alt={member.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover object-center transition-transform duration-700"
-          style={{
-            transform: isHovered ? "scale(1.08)" : "scale(1.0)",
-          }}
-        />
+        {member.img ? (
+          <Image
+            src={member.img}
+            alt={member.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover object-center transition-transform duration-700"
+            style={{ transform: isHovered ? "scale(1.08)" : "scale(1.0)" }}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #1B3022 0%, #0A1410 100%)" }}
+          >
+            <span style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 900,
+              fontSize: "clamp(3rem, 6vw, 5rem)",
+              color: "rgba(211,84,0,0.35)",
+              letterSpacing: "-0.02em",
+              userSelect: "none",
+            }}>
+              {member.name.split(" ").map(w => w[0]).slice(0, 2).join("")}
+            </span>
+          </div>
+        )}
         {/* Gradient overlay */}
         <div
           className="absolute inset-0 transition-opacity duration-500"

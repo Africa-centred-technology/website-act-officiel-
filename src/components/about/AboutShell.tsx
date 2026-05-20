@@ -61,7 +61,7 @@ const TEAM_STRUCT = [
   { key: "sohaib",  img: "/images/Equipe/sohaib_baroud.jpg" },
   { key: "mpiga",   img: "/images/Equipe/MPIGA.png" },
   { key: "aldrin",  img: "/images/Equipe/Aldrin.png" },
-  { key: "elvis",   img: "/images/Equipe/elvis.png" },
+  { key: "elvis",   img: null as string | null },
 ];
 
 const STAT_DEPTH = [
