@@ -1721,6 +1721,144 @@
     "meta": {
       "title": "AI Jobs Morocco — Join ACT | Careers",
       "description": "Join ACT, AI consulting firm in Morocco. Open positions in AI engineering, data science, software development and digital transformation consulting in Casablanca."
+    },
+    "hero": {
+      "eyebrow": "Careers — Africa Centred Technology",
+      "titleLine1": "Let's Build",
+      "titleLine2": "Africa's Tech",
+      "titleLine3": "Together",
+      "subtitle": "Join a team that puts technology at the service of African development. AI developer jobs in Morocco, data scientist, digital transformation consultant — explore our open positions."
+    },
+    "whyAct": {
+      "label": "Why ACT",
+      "title": "Working at ACT",
+      "items": [
+        { "title": "Real Impact", "desc": "Your projects serve real African organizations — not MVPs that stay in a drawer." },
+        { "title": "Cutting-edge Tech", "desc": "Agentic AI, LLMs, Data Engineering, GIS — you work with the most advanced tools in the industry." },
+        { "title": "Fast Growth", "desc": "In a growing startup, your responsibilities evolve quickly. No paralyzing hierarchy." },
+        { "title": "Tight-knit Team", "desc": "A multidisciplinary and multicultural team, united by one conviction: tech can change Africa." }
+      ]
+    },
+    "openings": {
+      "label": "Open positions",
+      "title": "Our job",
+      "titleAccent": "openings",
+      "empty": "No open positions at the moment. Send us your spontaneous application.",
+      "jobs": [
+        {
+          "id": "ia-engineer",
+          "title": "AI Engineer & Autonomous Agents",
+          "type": "Full-time",
+          "location": "Casablanca, Morocco",
+          "domain": "AI Engineering",
+          "tags": ["Python", "LangChain", "LangGraph", "LLMs", "FastAPI"],
+          "summary": "Design and deploy autonomous AI agent architectures for ACT clients. You will be at the heart of the agentic AI division, from process mapping to production deployment.",
+          "missions": [
+            "Design multi-agent architectures (LangGraph, CrewAI, AutoGen)",
+            "Develop and optimize RAG pipelines (Retrieval-Augmented Generation)",
+            "Integrate agents into client systems (ERP, CRM, business APIs)",
+            "Write technical documentation and AI governance guides",
+            "Train client teams on agent supervision"
+          ],
+          "profil": [
+            "2+ years of Python development experience",
+            "Experience with LLMs (OpenAI, Anthropic, Mistral, Ollama)",
+            "Knowledge of agentic frameworks (LangChain, LangGraph, CrewAI)",
+            "Ability to work independently and in direct client contact",
+            "Fluent French, technical English"
+          ]
+        },
+        {
+          "id": "data-scientist",
+          "title": "Data Scientist — ML & Prediction",
+          "type": "Full-time",
+          "location": "Casablanca, Morocco",
+          "domain": "Data & AI",
+          "tags": ["Python", "Scikit-learn", "TensorFlow", "SQL", "Spark"],
+          "summary": "Develop analytical and predictive models for ACT clients in finance, health, agriculture, and logistics sectors. You build ML solutions grounded in African realities.",
+          "missions": [
+            "Analyze business needs and translate into solvable ML problems",
+            "Collect, clean, and enrich client datasets",
+            "Train, evaluate, and optimize forecasting, classification, and anomaly detection models",
+            "Deploy models to production (MLflow, FastAPI, Docker)",
+            "Produce analytics dashboards for business teams"
+          ],
+          "profil": [
+            "Master's degree in Data Science, Statistics, or Computer Science",
+            "Proficiency in Python (Pandas, Scikit-learn, TensorFlow/PyTorch)",
+            "Experience in SQL and handling large datasets",
+            "Results-oriented and ability to explain to non-technical stakeholders",
+            "Experience in Africa or understanding of local contexts appreciated"
+          ]
+        },
+        {
+          "id": "fullstack-dev",
+          "title": "Fullstack Developer — African-Ready Applications",
+          "type": "Full-time",
+          "location": "Casablanca, Morocco",
+          "domain": "Software Engineering",
+          "tags": ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL"],
+          "summary": "Develop custom web and mobile applications for African clients. You design interfaces optimized for African networks, with built-in offline mode and mobile-first performance.",
+          "missions": [
+            "Develop React/Next.js web and mobile (React Native) applications",
+            "Design robust RESTful and GraphQL APIs",
+            "Optimize performance for low-bandwidth networks",
+            "Implement offline features (PWA, Service Workers)",
+            "Collaborate with UX teams and clients directly"
+          ],
+          "profil": [
+            "3+ years of fullstack development experience",
+            "Proficiency in React/Next.js and TypeScript",
+            "Node.js experience and relational (PostgreSQL) and NoSQL databases",
+            "UX sensibility and attention to performance detail",
+            "Portfolio of delivered projects appreciated"
+          ]
+        },
+        {
+          "id": "consultant-digital",
+          "title": "Digital Transformation Consultant",
+          "type": "Full-time",
+          "location": "Casablanca, Morocco — Africa travel",
+          "domain": "Consulting",
+          "tags": ["BPMN", "Digital strategy", "Change management", "AI", "Audit"],
+          "summary": "Support African executive teams and CIOs in their digital transformation. You conduct maturity audits, co-build roadmaps, and lead transformation projects.",
+          "missions": [
+            "Conduct digital maturity audits (interviews, system analysis, benchmarking)",
+            "Co-build 3-year digital roadmaps with executive teams",
+            "Map and optimize business processes (BPMN)",
+            "Lead change management and team training",
+            "Write strategic deliverables and present to executive committees"
+          ],
+          "profil": [
+            "Master's degree from business school, engineering, or equivalent",
+            "3+ years in consulting or IT management",
+            "Proficiency in transformation methodologies (Lean, Agile, BPMN)",
+            "Excellent written and oral communication in French and English",
+            "Availability for assignments in sub-Saharan Africa"
+          ]
+        }
+      ]
+    },
+    "spontaneous": {
+      "label": "Spontaneous application",
+      "title": "Your profile doesn't match any opening?",
+      "desc": "ACT grows fast. If you share our vision — technology in service of Africa — send us your CV and a cover letter. We read all applications.",
+      "cta": "Send my application",
+      "email": "carrieres@a-ct.ma"
+    },
+    "values": {
+      "label": "Our values",
+      "items": [
+        { "title": "Impact", "desc": "Every line of code, every analysis, every piece of advice must create measurable impact for our clients and their end beneficiaries." },
+        { "title": "Excellence", "desc": "We hold ourselves to the highest industry standards, while remaining grounded in African realities." },
+        { "title": "Ownership", "desc": "Each team member owns their deliverables end-to-end. No culture of passing the baton." },
+        { "title": "Continuous Learning", "desc": "Tech evolves fast. We invest in every collaborator's skill development — training, research, conferences." }
+      ]
+    },
+    "cta": {
+      "title": "A question about our job openings?",
+      "desc": "Contact the ACT HR team directly.",
+      "button": "Contact us"
     }
   },
   "legal": {
