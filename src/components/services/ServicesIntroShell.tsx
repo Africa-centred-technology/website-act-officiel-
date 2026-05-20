@@ -322,6 +322,7 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
 export default function ServicesIntroShell() {
   const [phase, setPhase] = useState<Phase>("logo");
   const router = useRouter();
+  const tIntro = useTranslations("services.intro");
 
   const handleLogoDone = useCallback(() => setPhase("services"), []);
 
@@ -336,6 +337,18 @@ export default function ServicesIntroShell() {
       position: "relative", background: "#0A1410",
       paddingTop: "max(72px, clamp(5rem, 8vw, 8rem))",   /* clear the fixed navbar; max() garantit ≥72px avec root 8px */
     }}>
+      {/* H1 toujours présent dans le DOM pour le SEO (masqué visuellement) */}
+      <h1 style={{
+        position: "absolute",
+        width: 1, height: 1,
+        padding: 0, margin: -1,
+        overflow: "hidden",
+        clip: "rect(0,0,0,0)",
+        whiteSpace: "nowrap",
+        border: 0,
+      }}>
+        {tIntro("h1Line1")} {tIntro("h1Line2")}
+      </h1>
       {/* ── Background layers (même fond que Secteurs) ── */}
       <WaveTerrain />
       <Cursor />

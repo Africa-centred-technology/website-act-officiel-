@@ -79,6 +79,12 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: SECURITY_HEADERS,
       },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+        ],
+      },
     ];
   },
   async rewrites() {
