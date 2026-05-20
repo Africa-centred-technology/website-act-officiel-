@@ -14,6 +14,8 @@ const CSP = [
   "default-src 'self'",
   [
     "script-src 'self' 'unsafe-inline'",
+    // React dev mode requires eval() for call stack reconstruction — never used in production
+    ...(process.env.NODE_ENV === "development" ? ["'unsafe-eval'"] : []),
     "https://connect.facebook.net",
     "https://www.googletagmanager.com",
     "https://www.google-analytics.com",
