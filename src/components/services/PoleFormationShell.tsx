@@ -563,7 +563,7 @@ function BenefitsSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   return (
     <section ref={ref} style={{ position: "relative", overflow: "hidden" }}>
       {/* Image de fond très sombre */}
-      <motion.div style={{ position: "absolute", inset: 0, zIndex: 0, y: imgY }}>
+      <motion.div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, y: imgY }}>
         <KenBurns
           src={svc.heroImage} alt=""
           duration={28} fromScale={1.05} toScale={1.0}

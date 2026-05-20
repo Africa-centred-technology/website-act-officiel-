@@ -598,7 +598,7 @@ function BenefitsSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n }) {
   return (
     <section ref={ref} style={{ position: "relative", overflow: "hidden" }}>
       {/* Image de fond très sombre */}
-      <motion.div style={{ position: "absolute", inset: 0, zIndex: 0, y: imgY }}>
+      <motion.div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, y: imgY }}>
         <KenBurns
           src={svc.heroImage} alt=""
           duration={28} fromScale={1.05} toScale={1.0}
@@ -755,7 +755,7 @@ function DeliverablesSection({ svc, i18n }: { svc: Service; i18n: ServiceI18n })
 
       {/* Image d'ambiance avec parallax */}
       <div style={{ position: "relative", overflow: "hidden", minHeight: "400px" }}>
-        <motion.div style={{ position: "absolute", inset: 0, y: imgY }}>
+        <motion.div aria-hidden style={{ position: "absolute", inset: 0, y: imgY }}>
           <KenBurns
             src={sideImg} alt=""
             duration={26} fromScale={1.0} toScale={1.1}
@@ -850,7 +850,7 @@ function RelatedServices({ svc }: { svc: Service }) {
                       borderRadius: "0.8rem", cursor: "pointer",
                     }}>
                     {/* Mini image de fond */}
-                    <div style={{ position: "absolute", inset: 0, opacity: 0.15 }}>
+                    <div aria-hidden style={{ position: "absolute", inset: 0, opacity: 0.15 }}>
                       <KenBurns src={r.heroImage} alt="" duration={30} fromScale={1.0} toScale={1.08} />
                     </div>
                     <div aria-hidden style={{
