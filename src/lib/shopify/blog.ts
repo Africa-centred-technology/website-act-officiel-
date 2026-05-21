@@ -132,6 +132,16 @@ function estimateReadTime(html: string): string {
   return `${minutes} min`;
 }
 
+/** Extrait le premier paragraphe de texte depuis contentHtml (fallback excerpt) */
+function extractFallbackExcerpt(html: string, maxLength = 180): string {
+  if (!html) return "";
+  const match = html.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  if (!match) return "";
+  const text = match[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).replace(/\s+\S*$/, "") + "…";
+}
+
 /** Extrait la valeur brute d'un metafield par clé */
 function extractMeta(metafields: { key: string; value: string }[] | null | undefined, key: string): string {
   const mf = metafields?.find((m) => m?.key?.toLowerCase() === key.toLowerCase());
@@ -182,7 +192,7 @@ function mapArticle(node: any, blogHandle: string): ShopifyBlogPost {
     wordCount,
     keywords,
     target,
-    excerpt:        node.excerpt ?? "",
+    excerpt:        node.excerpt || extractFallbackExcerpt(node.contentHtml ?? ""),
     date:           formatDate(node.publishedAt),
     publishedAtIso: node.publishedAt ?? "",
     readTime,
