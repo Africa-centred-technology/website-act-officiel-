@@ -50,12 +50,6 @@ const VALUES_STRUCT = [
   { n: "04", key: "innovation",    color: "#D35400" },
 ];
 
-const TIMELINE_STRUCT = [
-  { year: "2023", color: "#D35400" },
-  { year: "2024", color: "#F39C12" },
-  { year: "2025", color: "#2C4A35" },
-  { year: "2026", color: "#D35400" },
-];
 
 const TEAM_STRUCT = [
   { key: "sohaib",  img: "/images/Equipe/sohaib_baroud.jpg" },
@@ -64,11 +58,6 @@ const TEAM_STRUCT = [
   { key: "elvis",   img: "/images/Equipe/Elvis.png" },
 ];
 
-const STAT_DEPTH = [
-  { rotateX: 14, scale: 0.78, blur: 10, delay: 0.06 },
-  { rotateX: 9,  scale: 0.86, blur: 6,  delay: 0.20 },
-  { rotateX: 5,  scale: 0.93, blur: 3,  delay: 0.34 },
-];
 
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -83,7 +72,7 @@ function ScanLine() {
         background: "linear-gradient(to right, transparent, rgba(211,84,0,0.6) 30%, rgba(255,130,30,0.95) 50%, rgba(211,84,0,0.6) 70%, transparent)",
         boxShadow: "0 0 28px 5px rgba(211,84,0,0.28)" }}
       initial={{ top: "-4px", opacity: 0 }}
-      animate={{ top: ["−4px", "102%"], opacity: [0, 1, 1, 0] }}
+      animate={{ top: ["-4px", "102%"], opacity: [0, 1, 1, 0] }}
       transition={{ duration: 2.8, ease: "easeInOut", repeat: Infinity, repeatDelay: 9, times: [0, 0.06, 0.92, 1] }} />
   );
 }
@@ -306,7 +295,7 @@ function SectionHero() {
         {/* Rule + subtitle + CTAs */}
         <motion.div style={{ height: 1, background: "rgba(211,84,0,0.55)", originX: 0, marginTop: "2.8rem", marginBottom: "2rem" }}
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }} />
-        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "44rem" }}
+        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "clamp(44rem, 65%, 72rem)" }}
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
           {t("subtitle")}
         </motion.p>
@@ -319,8 +308,33 @@ function SectionHero() {
             <div className="cta-btn__background" />
             <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">{t("ctaTeam")}</span></div>
           </a>
-          <a href="#expertise" className="flex items-center gap-3 text-white/50 hover:text-white transition-colors uppercase"
-            style={{ fontSize: "1.15rem", letterSpacing: "0.12em" }}>
+          <a
+            href="#expertise"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              border: "1px solid rgba(255,255,255,0.22)",
+              borderRadius: "4px",
+              padding: "0.85rem 1.6rem",
+              color: "rgba(255,255,255,0.70)",
+              textDecoration: "none",
+              fontSize: "1.05rem",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
+              transition: "border-color 0.22s, color 0.22s",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = "#D35400";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)";
+              e.currentTarget.style.color = "rgba(255,255,255,0.70)";
+            }}
+          >
             <span className="diamond diamond--sm" />{t("ctaApproach")}
           </a>
         </motion.div>
@@ -330,81 +344,106 @@ function SectionHero() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   SECTION 02 — NOS CHIFFRES  (RoomAtelier card pattern)
+   SECTION 02 — NOS CHIFFRES  (même style que SectionValues)
    ══════════════════════════════════════════════════════════════════════ */
+const STAT_ENTRY = [
+  { x: "-16%", y: "10%", scale: 0.80, blur: 10, delay: 0.05 },
+  { x:   "0%", y: "14%", scale: 0.86, blur: 6,  delay: 0.20 },
+  { x:  "16%", y: "10%", scale: 0.80, blur: 10, delay: 0.34 },
+];
+
 function StatCard({ stat, index }: { stat: typeof STATS_STRUCT[0]; index: number }) {
   const t = useTranslations("about.stats");
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, on: false });
-  const depth = STAT_DEPTH[index];
-
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10%" });
-
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const r  = cardRef.current.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top)  / r.height;
-    setTilt({ rx: (py - 0.5) * 20, ry: (px - 0.5) * -20, gx: px * 100, gy: py * 100, on: true });
-  };
+  const [hovered, setHovered] = useState(false);
+  const entry = STAT_ENTRY[index];
 
   return (
-    <div ref={ref}>
-      <motion.div
-        initial={{ opacity: 0, y: 58, scale: depth.scale, rotateX: depth.rotateX, filter: `blur(${depth.blur}px)` }}
-        animate={inView ? { opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" } : {}}
-        transition={{ duration: 0.95, delay: depth.delay, ease: [...EASE3D] }}
-        style={{ perspective: "1200px", height: "100%" }}>
-        <motion.div ref={cardRef} onMouseMove={onMove} onMouseLeave={() => setTilt({ rx: 0, ry: 0, gx: 50, gy: 50, on: false })}
-          animate={{ rotateX: tilt.rx, rotateY: tilt.ry }}
-          transition={{ type: "spring", stiffness: 240, damping: 22 }}
-          style={{ transformStyle: "preserve-3d", position: "relative", padding: "4rem 3rem",
-            background: "rgba(8,18,32,0.70)", border: `1px solid rgba(211,84,0,${tilt.on ? 0.5 : 0.12})`,
-            overflow: "hidden", transition: "border-color 0.28s", height: "100%", display: "flex", flexDirection: "column" }}>
-          {/* CSS scanlines */}
-          <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1,
-            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(211,84,0,0.015) 3px, rgba(211,84,0,0.015) 4px)" }} />
-          {/* Cursor glow */}
-          <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2,
-            background: tilt.on ? `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, rgba(211,84,0,0.09) 0%, transparent 65%)` : "none",
-            transition: "background 0.22s" }} />
-          {/* Scanner bottom */}
-          <motion.div style={{ position: "absolute", bottom: 0, left: 0, height: "2px", width: "100%",
-            background: "linear-gradient(to right, transparent, #D35400, transparent)",
-            boxShadow: "0 0 18px rgba(211,84,0,0.8)", zIndex: 3 }}
-            animate={{ x: ["-100%", "200%"], opacity: [0, 1, 0] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: index * 0.7 }} />
+    <motion.div
+      initial={{ opacity: 0, x: entry.x, y: entry.y, scale: entry.scale, filter: `blur(${entry.blur}px)` }}
+      whileInView={{ opacity: 1, x: "0%", y: "0%", scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.85, delay: entry.delay, ease: [...EASE3D] }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "relative",
+        background: "rgba(255,255,255,0.04)",
+        border: `1px solid rgba(255,255,255,${hovered ? 0.18 : 0.12})`,
+        borderTop: "3px solid #D35400",
+        borderRadius: 20,
+        padding: "2.5rem",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
+        transition: "border-color 0.28s",
+        cursor: "default",
+      }}
+    >
+      {/* Scanlines overlay */}
+      <div aria-hidden style={{
+        position: "absolute", inset: 0, pointerEvents: "none", borderRadius: "inherit",
+        backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(211,84,0,0.012) 3px, rgba(211,84,0,0.012) 4px)",
+      }} />
 
-          <div className="relative flex flex-col" style={{ zIndex: 3, flex: 1 }}>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="diamond diamond--sm" />
-              <span className="text-[#D35400] uppercase" style={{ fontSize: "1rem", letterSpacing: "0.2em" }}>{t("indicator")}</span>
-            </div>
-            <span className="font-black text-white" style={{ fontSize: "clamp(3.5rem, 6vw, 6rem)", lineHeight: 1, marginBottom: "0.5rem" }}>
-              {stat.value}<span style={{ color: "#F39C12" }}>{stat.suffix}</span>
-            </span>
-            <motion.div style={{ height: 1, background: "rgba(211,84,0,0.5)", originX: 0, margin: "1.5rem 0" }}
-              animate={{ scaleX: tilt.on ? 1 : 0.18 }} transition={{ type: "spring", stiffness: 280, damping: 24 }} />
-            <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 2.5vw, 2.8rem)", lineHeight: 1.05, marginBottom: "0.8rem" }}>
-              {t(`items.${stat.key}.label` as Parameters<typeof t>[0])}
-            </h3>
-            <p className="text-white/60" style={{ fontSize: "clamp(1.2rem, 1.5vw, 1.6rem)", lineHeight: 1.72 }}>
-              {t(`items.${stat.key}.sub` as Parameters<typeof t>[0])}
-            </p>
-          </div>
-        </motion.div>
-      </motion.div>
-    </div>
+      {/* Hover glow */}
+      <div aria-hidden style={{
+        position: "absolute", inset: 0, pointerEvents: "none", borderRadius: "inherit",
+        background: hovered ? "radial-gradient(circle at 50% 100%, rgba(211,84,0,0.10) 0%, transparent 70%)" : "none",
+        transition: "background 0.3s",
+      }} />
+
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
+
+        {/* Indicator label */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "2rem" }}>
+          <span className="diamond diamond--sm" />
+          <span style={{
+            color: "#D35400", fontSize: "0.9rem", letterSpacing: "0.2em",
+            textTransform: "uppercase", fontFamily: "var(--font-display)",
+          }}>
+            {t("indicator")}
+          </span>
+        </div>
+
+        {/* Big value */}
+        <span style={{
+          fontFamily: "var(--font-display)", fontWeight: 900,
+          fontSize: "clamp(3.5rem, 6vw, 6rem)", lineHeight: 1,
+          color: "#fff", display: "block", marginBottom: "0.4rem",
+        }}>
+          {stat.value}<span style={{ color: "#F39C12" }}>{stat.suffix}</span>
+        </span>
+
+        {/* Separator */}
+        <div style={{ width: 32, height: 1, background: "#D35400", margin: "1.5rem 0" }} />
+
+        {/* Label */}
+        <h3 style={{
+          fontFamily: "var(--font-display)", fontWeight: 900,
+          textTransform: "uppercase", color: "#fff",
+          fontSize: "clamp(1.6rem, 2.2vw, 2.4rem)", lineHeight: 1.05, marginBottom: "0.8rem",
+        }}>
+          {t(`items.${stat.key}.label` as Parameters<typeof t>[0])}
+        </h3>
+
+        {/* Description */}
+        <p style={{ color: "rgba(255,255,255,0.60)", fontSize: "clamp(1.1rem, 1.3vw, 1.5rem)", lineHeight: 1.7, margin: 0 }}>
+          {t(`items.${stat.key}.sub` as Parameters<typeof t>[0])}
+        </p>
+
+      </div>
+    </motion.div>
   );
 }
 
 function SectionStats() {
   const t = useTranslations("about.stats");
-  const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
+  const { midX, midY, onMouseMove } = useParallax();
 
   return (
-    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
+    <section id="expertise" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
       style={{ minHeight: "100vh" }}>
       <ScanLine />
 
@@ -462,7 +501,7 @@ function BlinkCursor({ delay }: { delay: number }) {
 
 function SectionADN() {
   const t = useTranslations("about.adn");
-  const { bgX, bgY, midX, midY, fgX, onMouseMove } = useParallax();
+  const { midX, midY, fgX, onMouseMove } = useParallax();
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15%" });
   const words  = useMemo(() => t("manifesto").split(/\s+/).filter(Boolean), [t]);
@@ -504,7 +543,7 @@ function SectionADN() {
    ══════════════════════════════════════════════════════════════════════ */
 function SectionValues() {
   const t = useTranslations("about.values");
-  const { bgX, bgY, midX, midY, onMouseMove } = useParallax();
+  const { midX, midY, onMouseMove } = useParallax();
   const [hovered, setHovered] = useState<string | null>(null);
 
   const ENTRY = [
