@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "iRIaR0ZtvBgQSDQPwMV4eOL0-Gajr88p6_t-qKfiSno",
+    other: {
+      "msvalidate.01": "AD1C89BB4765357B980A7ECCA6B480AD",
+    },
   },
   metadataBase: new URL("https://www.a-ct.ma"),
   openGraph: {

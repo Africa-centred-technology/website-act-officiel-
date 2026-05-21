@@ -43,6 +43,5 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "YouBot",       allow: "/" },
     ],
     sitemap: "https://www.a-ct.ma/sitemap.xml",
-    host:    "https://www.a-ct.ma",
   };
 }
