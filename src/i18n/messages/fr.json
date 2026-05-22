@@ -297,22 +297,22 @@
       "items": {
         "africa": {
           "n": "01",
-          "title": "Ancrage africain",
-          "desc": "Nous ne plaquons pas des solutions européennes sur des réalités africaines. Chaque architecture est pensée pour les contraintes et les opportunités du continent."
+          "title": "Solutions sur mesure",
+          "desc": "Pas de solutions génériques copiées-collées. Chaque architecture est conçue à partir de vos contraintes réelles, de votre secteur et de vos objectifs de croissance."
         },
         "price": {
           "n": "02",
           "title": "Tarifs compétitifs",
-          "desc": "Une expertise de niveau international à des tarifs adaptés aux marchés africains. La qualité d'un grand cabinet sans les surcoûts d'une structure internationale."
+          "desc": "Une expertise de niveau international à des tarifs transparents et compétitifs. La qualité d'un grand cabinet sans les surcoûts d'une structure lourde."
         },
         "local": {
           "n": "03",
-          "title": "Maîtrise des contraintes locales",
-          "desc": "Connectivité variable, systèmes legacy, réglementations en évolution : nous concevons pour la réalité opérationnelle du terrain, pas pour l'idéal."
+          "title": "Experts, pas intermédiaires",
+          "desc": "Vous travaillez directement avec les ingénieurs et consultants qui construisent votre solution — sans couches hiérarchiques, sans perte d'information."
         },
         "team": {
           "n": "04",
-          "title": "Équipe pluridisciplinaire",
+          "title": "Couverture bout en bout",
           "desc": "IA, Data Engineering, DevOps, Conseil stratégique — une seule équipe couvre toute votre chaîne de valeur technologique, du prototype au passage à l'échelle."
         }
       }

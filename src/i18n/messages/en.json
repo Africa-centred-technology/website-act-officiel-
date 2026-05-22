@@ -301,22 +301,22 @@
       "items": {
         "africa": {
           "n": "01",
-          "title": "African roots",
-          "desc": "We don't force European solutions onto African realities. Every architecture is designed for the continent's constraints and opportunities."
+          "title": "Tailored solutions",
+          "desc": "No generic, copy-paste solutions. Every architecture is built around your real constraints, your industry, and your growth objectives."
         },
         "price": {
           "n": "02",
           "title": "Competitive pricing",
-          "desc": "International-level expertise at rates tailored to African markets. Top-tier quality without the overhead of an international firm."
+          "desc": "International-level expertise at transparent, competitive rates. Top-tier quality without the overhead of a large firm."
         },
         "local": {
           "n": "03",
-          "title": "Local expertise",
-          "desc": "Variable connectivity, legacy systems, evolving regulations: we design for operational reality, not the ideal scenario."
+          "title": "Experts, not middlemen",
+          "desc": "You work directly with the engineers and consultants building your solution — no management layers, no information loss."
         },
         "team": {
           "n": "04",
-          "title": "Multidisciplinary team",
+          "title": "End-to-end coverage",
           "desc": "AI, Data Engineering, DevOps, Strategic Consulting — one team covers your entire technology value chain, from prototype to scale."
         }
       }
