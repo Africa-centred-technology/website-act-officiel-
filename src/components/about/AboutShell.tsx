@@ -1,20 +1,19 @@
 ﻿"use client";
 
 import React, {
-  useEffect, useState, useMemo, useRef, useCallback,
+  useState, useMemo, useRef, useCallback,
 } from "react";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import {
-  motion, AnimatePresence,
-  useMotionValue, useSpring, useInView,
+  motion,
+  useMotionValue, useSpring,
 } from "framer-motion";
 import TeamSection from "./TeamSection";
+import PolesSection from "@/components/home/sections/PolesSection";
+import CTASection from "@/components/layout/CTASection";
 import { type TeamMember } from "./TeamMemberCard";
-import CTAButton from "@/components/ui/CTAButton";
 import FooterStrip from "@/components/layout/FooterStrip";
-import { Instagram, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 /* ── Background layers (comme SecteursShell) ─────────────────── */
@@ -22,12 +21,6 @@ const WaveTerrain = dynamic(() => import("@/components/background/WaveTerrain"),
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 const Cursor = dynamic(() => import("@/components/background/Cursor"), { ssr: false });
 
-/* ── Réseaux sociaux ─────────────────────────────────────── */
-const SOCIALS = [
-  { Icon: Instagram, href: "https://www.instagram.com/africacentredtechnology?utm_source=qr&igsh=MWU1bzQ4d3Jmdnk3ZQ==", label: "Instagram" },
-  { Icon: Youtube, href: "https://www.youtube.com/@AfricaCentredTechnology", label: "YouTube" },
-  { Icon: Facebook, href: "https://web.facebook.com/profile.php?id=61585541019830", label: "Facebook" },
-];
 
 /* ══════════════════════════════════════════════════════════════════════
    CONSTANTS & DATA
@@ -41,13 +34,6 @@ const STATS_STRUCT = [
   { n: "01", value: "15",  suffix: "+", key: "projects" },
   { n: "02", value: "100", suffix: "%", key: "satisfaction" },
   { n: "03", value: "2",   suffix: "",  key: "countries" },
-];
-
-const VALUES_STRUCT = [
-  { n: "01", key: "collaboration", color: "#D35400" },
-  { n: "02", key: "transmission",  color: "#F39C12" },
-  { n: "03", key: "excellence",    color: "#2C4A35" },
-  { n: "04", key: "innovation",    color: "#D35400" },
 ];
 
 
@@ -184,40 +170,6 @@ function useParallax() {
   return { bgX, bgY, midX, midY, fgX, fgY, onMouseMove };
 }
 
-/** Portal rings (from RoomSortie) */
-function PortalRings() {
-  return (
-    <div aria-hidden className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: 0 }}>
-      {[0, 1, 2].map(i => (
-        <motion.div key={i} className="absolute rounded-full"
-          style={{ border: "1px solid rgba(211,84,0,0.18)" }}
-          initial={{ width: 0, height: 0, opacity: 0.8 }}
-          animate={{ width: "80vmin", height: "80vmin", opacity: 0 }}
-          transition={{ duration: 2.8, delay: i * 0.55, repeat: Infinity, ease: "easeOut" }} />
-      ))}
-    </div>
-  );
-}
-
-/** Magnetic wrapper (from RoomSortie) */
-function Magnetic({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x   = useMotionValue(0);
-  const y   = useMotionValue(0);
-  const sx  = useSpring(x, { stiffness: 220, damping: 20 });
-  const sy  = useSpring(y, { stiffness: 220, damping: 20 });
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    x.set((e.clientX - r.left - r.width  / 2) * 0.32);
-    y.set((e.clientY - r.top  - r.height / 2) * 0.32);
-  };
-  return (
-    <motion.div ref={ref} style={{ x: sx, y: sy, display: "inline-block" }} onMouseMove={onMove} onMouseLeave={() => { x.set(0); y.set(0); }}>
-      {children}
-    </motion.div>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════════
    SECTION 01 — NOTRE HISTOIRE  (RoomEntree pattern)
@@ -233,20 +185,20 @@ function SectionHero() {
       <ParticleField />
       <AmbiantLines positions={["14%", "84%"]} />
 
-      {/* Sun pulse */}
+      {/* Ambient glow */}
       <motion.div aria-hidden className="absolute pointer-events-none"
-        style={{ width: "85vw", height: "52vw", borderRadius: "50%",
-          background: "radial-gradient(ellipse, rgba(211,84,0,0.14) 0%, rgba(211,84,0,0.05) 45%, transparent 72%)",
-          top: "50%", left: "48%", translateX: "-50%", translateY: "-50%", x: bgX, y: bgY, zIndex: 0 }}
-        animate={{ scale: [1, 1.40, 1], opacity: [0.65, 1, 0.65] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
+        style={{ width: "90vw", height: "55vw", borderRadius: "50%",
+          background: "radial-gradient(ellipse, rgba(211,84,0,0.12) 0%, rgba(211,84,0,0.04) 45%, transparent 72%)",
+          top: "50%", left: "50%", translateX: "-50%", translateY: "-50%", x: bgX, y: bgY, zIndex: 0 }}
+        animate={{ scale: [1, 1.35, 1], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} />
 
-      {/* Orbit arc SVG */}
+      {/* Orbit arc */}
       <motion.div aria-hidden className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 0 }}
         animate={{ rotate: 360 }} transition={{ duration: 90, ease: "linear", repeat: Infinity }}>
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
           <defs><path id="op01" d="M 50,50 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" /></defs>
-          <text style={{ fontSize: "3.0", fill: "rgba(255,255,255,0.07)", fontWeight: 900, letterSpacing: "1.2", textTransform: "uppercase", fontFamily: "inherit" }}>
+          <text style={{ fontSize: "3.0", fill: "rgba(255,255,255,0.06)", fontWeight: 900, letterSpacing: "1.2", textTransform: "uppercase", fontFamily: "inherit" }}>
             <textPath href="#op01">{"ACT · AFRICA CENTRED TECHNOLOGY · IA AFRICAINE · "}{" ACT · AFRICA CENTRED TECHNOLOGY · IA AFRICAINE · "}</textPath>
           </text>
         </svg>
@@ -254,86 +206,98 @@ function SectionHero() {
 
       {/* Content */}
       <motion.div className="relative" style={{ x: midX, y: midY, zIndex: 2 }}>
+
         {/* Eyebrow */}
-        <motion.div className="flex items-center gap-4 mb-10"
-          initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.60, delay: 0.04 }}>
+        <motion.div className="flex items-center gap-4 mb-8"
+          initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.55, delay: 0.04 }}>
           <span className="diamond diamond--sm" />
-          <span className="text-white/40 uppercase" style={{ fontSize: "1.05rem", letterSpacing: "0.32em" }}>
+          <span className="text-white/40 uppercase" style={{ fontSize: "1rem", letterSpacing: "0.32em" }}>
             {t("eyebrow")}
           </span>
         </motion.div>
 
-        {/* Title */}
-        <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
-          <h1 style={{ perspective: "1200px", display: "flex", flexDirection: "column", alignItems: "flex-end", flex: 1, margin: 0, padding: 0 }}>
-            {[
-              { word: t("word1"), color: "#ffffff",  size: "clamp(3.5rem, 8vw, 11rem)", fx: "rollIn",   delay: 0.10, stagger: 0.040 },
-              { word: t("word2"), color: "#D35400",  size: "clamp(2rem,  4.5vw, 6.5rem)", fx: "burstOut", delay: 0.30, stagger: 0.032 },
-            ].map(({ word, color, size, fx, delay, stagger }) => (
-              <div key={word} style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-end" }}>
-                {word.split("").map((ch, i) => {
-                  const mid = Math.floor(word.length / 2);
-                  const ord = fx === "burstOut" ? Math.abs(i - mid) : i;
-                  const charDelay = delay + ord * stagger;
-                  const initial = fx === "rollIn" ? { y: "-108%", opacity: 0, filter: "blur(4px)" } : { scale: 0.04, opacity: 0, filter: "blur(22px) brightness(3.2)" };
-                  const target  = fx === "rollIn" ? { y: "0%", opacity: 1, filter: "blur(0px)" }     : { scale: 1, opacity: 1, filter: "blur(0px) brightness(1.0)" };
-                  const inner = (
-                    <motion.span className="font-black uppercase" key={i}
-                      style={{ display: "inline-block", color, fontSize: size, lineHeight: 1, letterSpacing: "-0.03em" }}
-                      initial={initial} animate={target}
-                      transition={{ duration: fx === "burstOut" ? 1.1 : 0.74, delay: charDelay, ease: [...BURST] }}>
-                      {ch}
-                    </motion.span>
-                  );
-                  return fx !== "burstOut" ? <div key={i} style={{ overflow: "hidden" }}>{inner}</div> : <div key={i}>{inner}</div>;
-                })}
-              </div>
+        {/* Mission title */}
+        <h1 style={{ margin: 0, padding: 0, lineHeight: 0.95, letterSpacing: "-0.03em" }}>
+          {/* Line 1 — white, chars roll in */}
+          <div style={{ display: "flex", overflow: "hidden" }}>
+            {t("line1").split("").map((ch, i) => (
+              <motion.span key={i} className="font-black uppercase inline-block"
+                style={{ color: "#ffffff", fontSize: "clamp(3rem, 7.5vw, 10.5rem)", lineHeight: 1 }}
+                initial={{ y: "110%", opacity: 0 }} animate={{ y: "0%", opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.10 + i * 0.032, ease: [...EASE3D] }}>
+                {ch === " " ? " " : ch}
+              </motion.span>
             ))}
-          </h1>
-        </div>
+          </div>
+          {/* Line 2 — orange, burst from center */}
+          <div style={{ display: "flex" }}>
+            {t("line2").split("").map((ch, i) => {
+              const mid = Math.floor(t("line2").length / 2);
+              return (
+                <motion.span key={i} className="font-black uppercase inline-block"
+                  style={{ color: "#D35400", fontSize: "clamp(3rem, 7.5vw, 10.5rem)", lineHeight: 1 }}
+                  initial={{ scale: 0.05, opacity: 0, filter: "blur(20px) brightness(3)" }}
+                  animate={{ scale: 1, opacity: 1, filter: "blur(0px) brightness(1)" }}
+                  transition={{ duration: 1.1, delay: 0.35 + Math.abs(i - mid) * 0.038, ease: [...BURST] }}>
+                  {ch === " " ? " " : ch}
+                </motion.span>
+              );
+            })}
+          </div>
+        </h1>
 
-        {/* Rule + subtitle + CTAs */}
-        <motion.div style={{ height: 1, background: "rgba(211,84,0,0.55)", originX: 0, marginTop: "2.8rem", marginBottom: "2rem" }}
+        {/* Slogan */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.90, duration: 0.65 }}
+          style={{ marginTop: "2rem", display: "inline-flex", alignItems: "center", gap: "1rem" }}
+        >
+          <div style={{ width: 28, height: 1, background: "#D35400" }} />
+          <span style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
+            fontSize: "clamp(0.95rem, 1.2vw, 1.35rem)",
+            letterSpacing: "0.06em",
+            color: "rgba(255,255,255,0.75)",
+            fontStyle: "italic",
+          }}>
+            {t("slogan")}
+          </span>
+          <div style={{ width: 28, height: 1, background: "#D35400" }} />
+        </motion.div>
+
+        {/* Orange rule */}
+        <motion.div style={{ height: 1, background: "rgba(211,84,0,0.35)", originX: 0, marginTop: "1.8rem", marginBottom: "1.8rem" }}
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.0, duration: 0.9, ease: [...EASE3D] }} />
-        <motion.p className="text-white/60" style={{ fontSize: "var(--font-20)", lineHeight: 1.72, maxWidth: "clamp(44rem, 65%, 72rem)" }}
-          initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
+
+        {/* Subtitle */}
+        <motion.p className="text-white/60"
+          style={{ fontSize: "clamp(1.15rem, 1.5vw, 1.65rem)", lineHeight: 1.75, maxWidth: "55rem", margin: "1.5rem 0 0" }}
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.95, duration: 0.65 }}>
           {t("subtitle")}
         </motion.p>
+
+        {/* CTAs */}
         <motion.div className="flex flex-wrap items-center gap-8 mt-10"
           style={{ x: fgX, y: fgY }}
           initial={{ opacity: 0, y: 18, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ delay: 1.15, duration: 0.60 }}>
+          transition={{ delay: 1.20, duration: 0.60 }}>
           <a href="#equipe" className="cta-btn">
             <div className="cta-btn__border" /><div className="cta-btn__blur" />
             <div className="cta-btn__background" />
             <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">{t("ctaTeam")}</span></div>
           </a>
-          <a
-            href="#expertise"
+          <a href="#expertise"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              border: "1px solid rgba(255,255,255,0.22)",
-              borderRadius: "4px",
-              padding: "0.85rem 1.6rem",
-              color: "rgba(255,255,255,0.70)",
-              textDecoration: "none",
-              fontSize: "1.05rem",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
+              display: "inline-flex", alignItems: "center", gap: "0.75rem",
+              border: "1px solid rgba(255,255,255,0.22)", borderRadius: "4px",
+              padding: "0.85rem 1.6rem", color: "rgba(255,255,255,0.70)",
+              textDecoration: "none", fontSize: "1.05rem", letterSpacing: "0.14em",
+              textTransform: "uppercase", fontFamily: "var(--font-display)", fontWeight: 700,
               transition: "border-color 0.22s, color 0.22s",
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = "#D35400";
-              e.currentTarget.style.color = "#fff";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)";
-              e.currentTarget.style.color = "rgba(255,255,255,0.70)";
-            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#D35400"; e.currentTarget.style.color = "#fff"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.color = "rgba(255,255,255,0.70)"; }}
           >
             <span className="diamond diamond--sm" />{t("ctaApproach")}
           </a>
@@ -368,10 +332,12 @@ function StatCard({ stat, index }: { stat: typeof STATS_STRUCT[0]; index: number
       style={{
         position: "relative",
         background: "rgba(255,255,255,0.04)",
-        border: `1px solid rgba(255,255,255,${hovered ? 0.18 : 0.12})`,
         borderTop: "3px solid #D35400",
-        borderRadius: 20,
-        padding: "2.5rem",
+        borderRight: `1px solid rgba(255,255,255,${hovered ? 0.18 : 0.12})`,
+        borderBottom: `1px solid rgba(255,255,255,${hovered ? 0.18 : 0.12})`,
+        borderLeft: `1px solid rgba(255,255,255,${hovered ? 0.18 : 0.12})`,
+        borderRadius: 16,
+        padding: "1.6rem",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
@@ -394,42 +360,32 @@ function StatCard({ stat, index }: { stat: typeof STATS_STRUCT[0]; index: number
         transition: "background 0.3s",
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
-
-        {/* Indicator label */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "2rem" }}>
-          <span className="diamond diamond--sm" />
-          <span style={{
-            color: "#D35400", fontSize: "0.9rem", letterSpacing: "0.2em",
-            textTransform: "uppercase", fontFamily: "var(--font-display)",
-          }}>
-            {t("indicator")}
-          </span>
-        </div>
+      <div style={{ 
+        position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
 
         {/* Big value */}
         <span style={{
           fontFamily: "var(--font-display)", fontWeight: 900,
-          fontSize: "clamp(3.5rem, 6vw, 6rem)", lineHeight: 1,
-          color: "#fff", display: "block", marginBottom: "0.4rem",
+          fontSize: "clamp(2.4rem, 4vw, 4rem)", lineHeight: 1,
+          color: "#fff", display: "block", marginBottom: "0.3rem",
         }}>
           {stat.value}<span style={{ color: "#F39C12" }}>{stat.suffix}</span>
         </span>
 
         {/* Separator */}
-        <div style={{ width: 32, height: 1, background: "#D35400", margin: "1.5rem 0" }} />
+        <div style={{ width: 24, height: 1, background: "#D35400", margin: "1rem 0" }} />
 
         {/* Label */}
         <h3 style={{
           fontFamily: "var(--font-display)", fontWeight: 900,
           textTransform: "uppercase", color: "#fff",
-          fontSize: "clamp(1.6rem, 2.2vw, 2.4rem)", lineHeight: 1.05, marginBottom: "0.8rem",
+          fontSize: "clamp(1.2rem, 1.6vw, 1.8rem)", lineHeight: 1.05, marginBottom: "0.6rem",
         }}>
           {t(`items.${stat.key}.label` as Parameters<typeof t>[0])}
         </h3>
 
         {/* Description */}
-        <p style={{ color: "rgba(255,255,255,0.60)", fontSize: "clamp(1.1rem, 1.3vw, 1.5rem)", lineHeight: 1.7, margin: 0 }}>
+        <p style={{ color: "rgba(255,255,255,0.60)", fontSize: "clamp(0.9rem, 1.1vw, 1.2rem)", lineHeight: 1.6, margin: 0 }}>
           {t(`items.${stat.key}.sub` as Parameters<typeof t>[0])}
         </p>
 
@@ -443,276 +399,102 @@ function SectionStats() {
   const { midX, midY, onMouseMove } = useParallax();
 
   return (
-    <section id="expertise" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
-      style={{ minHeight: "100vh" }}>
+    <section id="expertise" onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad">
       <ScanLine />
 
       <SectionHeader eyebrow={t("eyebrow")} title={t("title")} midX={midX} midY={midY} />
       <OrangeRule />
 
-      <div className="room-grid-3 gap-4">
+      <div className="room-grid-3 gap-4" style={{ flex: "unset" }}>
         {STATS_STRUCT.map((s, i) => <StatCard key={s.n} stat={s} index={i} />)}
       </div>
     </section>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   SECTION 03 — NOTRE ADN  (RoomManifeste pattern)
-   ══════════════════════════════════════════════════════════════════════ */
-function ManifestoWord({ word, index, total, inView }: { word: string; index: number; total: number; inView: boolean }) {
-  const delay = 0.28 + index * (1.55 / total);
-  return (
-    <motion.span
-      style={{ display: "inline-block", marginRight: "0.28em", marginBottom: "0.16em", transformOrigin: "50% 100%" }}
-      initial={{ opacity: 0.05, color: "#D35400bb", scale: 0.86, rotateX: 12, y: 8 }}
-      animate={inView ? { opacity: 1, color: "#ffffff", scale: 1, rotateX: 0, y: 0 } : {}}
-      transition={{ delay, duration: 0.62, ease: "easeOut" }}>
-      {word}
-    </motion.span>
-  );
-}
 
-function BlinkCursor({ delay }: { delay: number }) {
-  return (
-    <motion.span
-      aria-hidden
-      style={{
-        display:       "inline-block",
-        width:         "3px",
-        height:        "0.82em",
-        background:    "#D35400",
-        marginLeft:    "0.15em",
-        verticalAlign: "middle",
-        borderRadius:  1,
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
-      transition={{
-        delay,
-        duration: 1.05,
-        repeat:   Infinity,
-        ease:     "linear",
-        times:    [0, 0.04, 0.06, 0.5, 0.52, 1],
-      }}
-    />
-  );
-}
-
-function SectionADN() {
-  const t = useTranslations("about.adn");
-  const { midX, midY, fgX, onMouseMove } = useParallax();
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-15%" });
-  const words  = useMemo(() => t("manifesto").split(/\s+/).filter(Boolean), [t]);
-
-  return (
-    <section onMouseMove={onMouseMove} className="relative flex flex-col justify-center overflow-hidden about-sec-pad"
-      style={{ minHeight: "100vh" }}>
-      <ScanLine />
-      <AmbiantLines positions={["12%", "88%"]} />
-
-      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} midX={midX} midY={midY} />
-      <OrangeRule />
-
-      {/* Word-by-word manifesto */}
-      <div ref={ref}>
-        <motion.div style={{ maxWidth: "90rem", x: midX, perspective: "1100px" }}>
-          <p className="font-black uppercase" style={{ fontSize: "clamp(1.25rem, 2.0vw, 2.8rem)", lineHeight: 1.55, letterSpacing: "0.01em" }}>
-            {words.map((w, i) => <ManifestoWord key={i} word={w} index={i} total={words.length} inView={inView} />)}
-            <BlinkCursor delay={0.28 + (words.length - 1) * (1.55 / words.length) + 0.65} />
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Attribution */}
-      <motion.div className="flex items-center gap-4 mt-14"
-        initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-        transition={{ delay: 0.28 + (words.length - 1) * (1.55 / words.length) + 1.1, duration: 0.7 }} style={{ x: fgX }}>
-        <div style={{ width: 36, height: 1, background: "#D35400" }} />
-        <span className="text-white/55 uppercase" style={{ fontSize: "1.15rem", letterSpacing: "0.2em" }}>
-          {t("attribution")}
-        </span>
-      </motion.div>
-    </section>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════════
-   SECTION 04 — NOS VALEURS  (RoomGalerie card pattern)
+   SECTION 04 — POURQUOI ACT
    ══════════════════════════════════════════════════════════════════════ */
-function SectionValues() {
-  const t = useTranslations("about.values");
+const WHY_KEYS = ["africa", "price", "local", "team"] as const;
+
+function SectionWhyACT() {
+  const t = useTranslations("about.whyact");
   const { midX, midY, onMouseMove } = useParallax();
-  const [hovered, setHovered] = useState<string | null>(null);
-
-  const ENTRY = [
-    { x: "-16%", y: "10%", scale: 0.80, blur: 10, delay: 0.05 },
-    { x:  "16%", y: "10%", scale: 0.82, blur: 8,  delay: 0.18 },
-    { x: "-10%", y: "12%", scale: 0.87, blur: 5,  delay: 0.30 },
-    { x:  "10%", y: "12%", scale: 0.92, blur: 3,  delay: 0.42 },
-  ];
 
   return (
-    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad"
-      style={{ minHeight: "100vh" }}>
+    <section onMouseMove={onMouseMove} className="relative flex flex-col overflow-hidden about-sec-pad">
       <ScanLine />
+      <AmbiantLines positions={["10%", "90%"]} />
 
       <SectionHeader eyebrow={t("eyebrow")} title={t("title")} midX={midX} midY={midY} />
       <OrangeRule />
 
-      {/* 2×2 grid — each card from its own corner like RoomGalerie */}
-      <div className="about-2col-grid flex-1" style={{ minHeight: 0 }}>
-        {VALUES_STRUCT.map((v, i) => {
-          const entry = ENTRY[i];
-          return (
-            <motion.div key={v.n}
-              initial={{ opacity: 0, x: entry.x, y: entry.y, scale: entry.scale, filter: `blur(${entry.blur}px)` }}
-              whileInView={{ opacity: 1, x: "0%", y: "0%", scale: 1, filter: "blur(0px)" }} viewport={{ once: true }}
-              transition={{ duration: 0.85, delay: entry.delay, ease: [...EASE3D] }}
-              className="relative overflow-hidden"
-              style={{ background: "rgba(8,18,32,0.75)", border: `1px solid rgba(255,255,255,0.06)`, borderTop: `3px solid ${v.color}` }}
-              onMouseEnter={() => setHovered(v.n)} onMouseLeave={() => setHovered(null)}>
-              {/* CSS scanlines */}
-              <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none",
-                backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(211,84,0,0.012) 3px, rgba(211,84,0,0.012) 4px)" }} />
-
-              {/* Default info */}
-              <div className="absolute inset-0 flex flex-col justify-end" style={{ padding: "2.5rem" }}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="diamond diamond--sm" style={{ background: v.color }} />
-                    <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                      {t("standardLabel")}
-                    </span>
-                </div>
-                <h3 className="font-black uppercase text-white" style={{ fontSize: "clamp(1.8rem, 3vw, 3.5rem)", lineHeight: 1.05 }}>
-                  {t(`items.${v.key}.title` as Parameters<typeof t>[0])}
-                </h3>
-              </div>
-
-              {/* Hover overlay — clip-path wipe from bottom */}
-              <AnimatePresence>
-                {hovered === v.n && (
-                  <motion.div initial={{ clipPath: "inset(100% 0% 0% 0%)" }} animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
-                    exit={{ clipPath: "inset(100% 0% 0% 0%)" }}
-                    transition={{ duration: 0.45, ease: [...EASE3D] }}
-                    className="absolute inset-0 flex flex-col justify-center"
-                    style={{ background: "rgba(3,6,10,0.92)", padding: "2.5rem" }}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="diamond diamond--sm" style={{ background: v.color }} />
-                      <span className="uppercase" style={{ color: v.color, fontSize: "0.9rem", letterSpacing: "0.2em" }}>
-                        {t("valueLabel")}
-                      </span>
-                    </div>
-                    <h3 className="font-black uppercase text-white mb-4" style={{ fontSize: "clamp(2rem, 3.2vw, 4rem)", lineHeight: 1.05 }}>
-                      {t(`items.${v.key}.title` as Parameters<typeof t>[0])}
-                    </h3>
-                    <div style={{ width: 32, height: 1, background: v.color, marginBottom: "1.2rem" }} />
-                    <p className="text-white/68" style={{ fontSize: "clamp(1.1rem, 1.4vw, 1.5rem)", lineHeight: 1.7 }}>
-                      {t(`items.${v.key}.desc` as Parameters<typeof t>[0])}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          );
-        })}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gap: "1.5rem",
+      }}
+        className="why-act-grid"
+      >
+        {WHY_KEYS.map((key, i) => (
+          <motion.div
+            key={key}
+            initial={{ opacity: 0, y: 32, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: i * 0.12, ease: [...EASE3D] }}
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              borderLeft: "3px solid #D35400",
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+              borderRight: "1px solid rgba(255,255,255,0.08)",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "0 12px 12px 0",
+              padding: "2rem 2rem 2rem 2.4rem",
+              backdropFilter: "blur(4px)",
+              WebkitBackdropFilter: "blur(4px)",
+            }}
+          >
+            <span style={{
+              display: "block",
+              fontFamily: "var(--font-display)",
+              fontWeight: 900,
+              fontSize: "0.8rem",
+              letterSpacing: "0.28em",
+              color: "#D35400",
+              marginBottom: "1rem",
+              textTransform: "uppercase",
+            }}>
+              {t(`items.${key}.n` as Parameters<typeof t>[0])}
+            </span>
+            <h3 style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              color: "#fff",
+              fontSize: "clamp(1.3rem, 1.8vw, 2rem)",
+              lineHeight: 1.1,
+              marginBottom: "0.9rem",
+            }}>
+              {t(`items.${key}.title` as Parameters<typeof t>[0])}
+            </h3>
+            <p style={{
+              color: "rgba(255,255,255,0.58)",
+              fontSize: "clamp(0.95rem, 1.1vw, 1.25rem)",
+              lineHeight: 1.7,
+              margin: 0,
+            }}>
+              {t(`items.${key}.desc` as Parameters<typeof t>[0])}
+            </p>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
 }
 
-
-
-/* ══════════════════════════════════════════════════════════════════════
-   SECTION 07 — L'HORIZON  (RoomSortie CTA pattern)
-   ══════════════════════════════════════════════════════════════════════ */
-function SectionCTA() {
-  const t = useTranslations("about.cta");
-  const { bgX, bgY, midX, midY, fgX, fgY, onMouseMove } = useParallax();
-
-  return (
-    <section onMouseMove={onMouseMove} className="relative overflow-hidden flex flex-col items-center justify-center text-center about-sec-pad"
-      style={{ minHeight: "100vh" }}>
-      <PortalRings />
-      <ParticleField count={22} />
-      <AmbiantLines positions={["18%", "82%"]} />
-
-      {/* Ambient glow */}
-      <motion.div aria-hidden className="absolute pointer-events-none"
-        style={{ width: "70vw", height: "40vw", borderRadius: "50%",
-          background: "radial-gradient(ellipse, rgba(211,84,0,0.09) 0%, transparent 70%)",
-          top: "50%", left: "50%", translateX: "-50%", translateY: "-50%", x: bgX, y: bgY }}
-        animate={{ scale: [1, 1.22, 1] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
-
-      {/* Content */}
-      <motion.div className="relative z-10 w-full" style={{ x: midX, y: midY }}>
-        {/* Eyebrow */}
-        <motion.div className="flex items-center justify-center gap-3 mb-8"
-          initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.10 }}>
-          <span className="diamond diamond--sm" />
-          <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.88rem", letterSpacing: "0.38em", textTransform: "uppercase" }}>
-            {t("eyebrow")}
-          </span>
-          <span className="diamond diamond--sm" />
-        </motion.div>
-
-        {/* Title */}
-        <div style={{ display: "flex", alignItems: "center", gap: "3rem", marginBottom: "3rem" }}>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-            <motion.p className="font-black uppercase leading-none"
-              style={{ fontSize: "clamp(1.2rem, 2.5vw, 3.5rem)", letterSpacing: "0.18em", color: "rgba(255,255,255,0.45)" }}
-              initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true }}
-              transition={{ duration: 0.75, delay: 0.15, ease: [...EASE3D] }}>
-              {t("line1")}
-            </motion.p>
-            <div style={{ perspective: "1400px" }}>
-              <motion.h2 className="font-black uppercase leading-none"
-                style={{ fontSize: "clamp(3.5rem, 10vw, 14rem)", letterSpacing: "-0.04em", color: "#D35400", transformOrigin: "100% 80%", lineHeight: 0.9 }}
-                initial={{ scale: 0.04, opacity: 0, rotateX: 30, filter: "blur(44px) brightness(0.08)" }}
-                whileInView={{ scale: 1, opacity: 1, rotateX: 0, filter: "blur(0px) brightness(1.0)" }} viewport={{ once: true }}
-                transition={{ duration: 1.22, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.12 }}>
-                {t("line2")}
-              </motion.h2>
-            </div>
-            <motion.p className="font-black uppercase leading-none"
-              style={{ fontSize: "clamp(1.5rem, 3.5vw, 5rem)", letterSpacing: "0.12em", color: "rgba(255,255,255,0.85)" }}
-              initial={{ opacity: 0, scale: 0.08, rotateX: -22, filter: "blur(28px)" }}
-              whileInView={{ opacity: 1, scale: 1, rotateX: 0, filter: "blur(0px)" }} viewport={{ once: true }}
-              transition={{ duration: 0.95, ease: [0.04, 0.72, 0.08, 1.0], delay: 0.38 }}>
-              {t("line3")}
-            </motion.p>
-          </div>
-        </div>
-
-        <motion.p className="text-white/65 mx-auto mb-12"
-          style={{ fontSize: "var(--font-20)", lineHeight: 1.7, maxWidth: "50rem" }}
-          initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ delay: 0.35, duration: 0.7 }}>
-          {t("subtitle")}
-        </motion.p>
-
-        <motion.div className="flex flex-wrap items-center justify-center gap-8"
-          initial={{ opacity: 0, y: 18, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.7 }} style={{ x: fgX, y: fgY }}>
-          <Magnetic>
-            <Link href="/contact" className="cta-btn">
-              <div className="cta-btn__border" /><div className="cta-btn__blur" />
-              <div className="cta-btn__background" />
-              <div className="cta-btn__inner"><span className="cta-btn__icon" /><span className="cta-btn__text">{t("ctaStart")}</span></div>
-            </Link>
-          </Magnetic>
-          <Link href="/services" className="flex items-center gap-3 text-white/55 hover:text-white transition-colors uppercase"
-            style={{ fontSize: "1.2rem", letterSpacing: "0.12em" }}>
-            <span className="diamond diamond--sm" />{t("ctaServices")}
-          </Link>
-        </motion.div>
-      </motion.div>
-    </section>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════════
    MAIN SHELL — Page scrollable normale avec toutes les sections
@@ -737,10 +519,12 @@ export default function AboutShell() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <SectionHero />
         <SectionStats />
-        <SectionADN />
-        <SectionValues />
+        <SectionWhyACT />
+        <div style={{ marginBottom: "-6rem" }}>
+          <PolesSection />
+        </div>
         <TeamSection team={team} />
-        <SectionCTA />
+        <CTASection />
         <FooterStrip />
       </div>
     </div>

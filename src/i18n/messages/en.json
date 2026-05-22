@@ -209,12 +209,17 @@
   },
   "about": {
     "hero": {
-      "eyebrow": "Africa Centred Technology · Expertise & Engineering",
-      "word1": "OUR",
-      "word2": "EXPERTISE",
-      "subtitle": "We support organizations in their digital transformation by deploying high-level artificial intelligence and data engineering solutions — designed for performance and scalability.",
+      "eyebrow": "Africa Centred Technology · Founded in 2023",
+      "slogan": "Rooted in Africa. Built for the World.",
+      "line1": "EXPERTISE",
+      "line2": "& IMPACT",
+      "subtitle": "Born in Casablanca, we design AI and data solutions for organizations worldwide — with the rigor of African engineering and a global vision.",
+      "stat1Value": "15+",
+      "stat1Label": "Projects deployed",
+      "stat2Value": "100%",
+      "stat2Label": "Satisfied clients",
       "ctaTeam": "The Team",
-      "ctaApproach": "Our approach"
+      "ctaApproach": "Our numbers"
     },
     "stats": {
       "eyebrow": "The numbers that speak",
@@ -287,6 +292,57 @@
           "name": "ELVIS-THEO AKIEME OYONO",
           "role": "Founding Member",
           "bio": "Co-creator of ACT, passionate about AI solutions and product excellence serving the continent."
+        }
+      }
+    },
+    "whyact": {
+      "eyebrow": "What sets us apart",
+      "title": "WHY ACT",
+      "items": {
+        "africa": {
+          "n": "01",
+          "title": "African roots",
+          "desc": "We don't force European solutions onto African realities. Every architecture is designed for the continent's constraints and opportunities."
+        },
+        "price": {
+          "n": "02",
+          "title": "Competitive pricing",
+          "desc": "International-level expertise at rates tailored to African markets. Top-tier quality without the overhead of an international firm."
+        },
+        "local": {
+          "n": "03",
+          "title": "Local expertise",
+          "desc": "Variable connectivity, legacy systems, evolving regulations: we design for operational reality, not the ideal scenario."
+        },
+        "team": {
+          "n": "04",
+          "title": "Multidisciplinary team",
+          "desc": "AI, Data Engineering, DevOps, Strategic Consulting — one team covers your entire technology value chain, from prototype to scale."
+        }
+      }
+    },
+    "poles": {
+      "eyebrow": "What we do",
+      "title": "OUR POLES",
+      "cta": "Discover",
+      "items": {
+        "ingenierie": {
+          "n": "Pole I",
+          "title": "Technology Engineering",
+          "desc": "Custom software development, AI automation, cloud and data architecture — we build the systems that power your business.",
+          "services": ["Software engineering", "Automation & AI", "Architecture & Cloud", "Data & Intelligence", "Geomatics & GIS"]
+        },
+        "conseil": {
+          "n": "Pole II",
+          "title": "IT Consulting & Strategy",
+          "desc": "We help decision-makers make the right technology choices: audit, roadmap, digital transformation and operational management.",
+          "services": ["IT strategic consulting", "Operational consulting"]
+        },
+        "formation": {
+          "n": "Pole III",
+          "title": "Training & Development",
+          "desc": "Tailored programs to upskill your teams on AI, data and cloud technologies — from in-person to blended learning.",
+          "services": ["Certified training catalog", "In-company training"]
         }
       }
     },

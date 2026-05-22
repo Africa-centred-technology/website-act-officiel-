@@ -811,6 +811,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (max-width: 640px) {
   .about-sec-pad { padding: 5rem 1.5rem 6rem !important; }
+  .why-act-grid { grid-template-columns: 1fr !important; }
+  .poles-grid   { grid-template-columns: 1fr !important; }
 }
 
 /* Menu overlay link labels — clamp already handles most, but ensure ultra-small */

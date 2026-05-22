@@ -162,7 +162,7 @@ export default function TeamSection({ team }: TeamSectionProps) {
       id="equipe"
       onMouseMove={onMouseMove}
       className="relative overflow-hidden about-sec-pad"
-      style={{ minHeight: "100vh", paddingTop: "clamp(4rem, 8vw, 8rem)", paddingBottom: "clamp(4rem, 8vw, 8rem)" }}
+      style={{ minHeight: "100vh", paddingTop: "clamp(2rem, 4vw, 4rem)", paddingBottom: "clamp(4rem, 8vw, 8rem)" }}
     >
       {/* Glow radial orange */}
       <div

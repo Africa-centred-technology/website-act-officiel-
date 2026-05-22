@@ -209,12 +209,13 @@
   },
   "about": {
     "hero": {
-      "eyebrow": "Africa Centred Technology · Expertise & Ingénierie",
-      "word1": "NOTRE",
-      "word2": "EXPERTISE",
-      "subtitle": "Nous accompagnons les organisations dans leur transformation numérique en déployant des solutions d'intelligence artificielle et d'ingénierie de données de haut niveau — conçues pour la performance et le passage à l'échelle.",
+      "eyebrow": "Africa Centred Technology · Fondée en 2026",
+      "slogan": "Rooted in Africa. Built for the World.",
+      "line1": "EXPERTISE",
+      "line2": "& IMPACT",
+      "subtitle": "Nés à Casablanca, nous concevons des solutions IT pour des organisations partout dans le monde — avec l'exigence de l'ingénierie africaine et une vision internationale.",
       "ctaTeam": "L'Équipe",
-      "ctaApproach": "Notre approche"
+      "ctaApproach": "Nos chiffres"
     },
     "stats": {
       "eyebrow": "Les chiffres qui parlent",
@@ -287,6 +288,57 @@
           "name": "ELVIS-THEO AKIEME OYONO",
           "role": "Membre fondateur",
           "bio": "Co-créateur d'ACT, passionné par les solutions IA et l'excellence produit au service du continent."
+        }
+      }
+    },
+    "whyact": {
+      "eyebrow": "Ce qui nous distingue",
+      "title": "POURQUOI ACT",
+      "items": {
+        "africa": {
+          "n": "01",
+          "title": "Ancrage africain",
+          "desc": "Nous ne plaquons pas des solutions européennes sur des réalités africaines. Chaque architecture est pensée pour les contraintes et les opportunités du continent."
+        },
+        "price": {
+          "n": "02",
+          "title": "Tarifs compétitifs",
+          "desc": "Une expertise de niveau international à des tarifs adaptés aux marchés africains. La qualité d'un grand cabinet sans les surcoûts d'une structure internationale."
+        },
+        "local": {
+          "n": "03",
+          "title": "Maîtrise des contraintes locales",
+          "desc": "Connectivité variable, systèmes legacy, réglementations en évolution : nous concevons pour la réalité opérationnelle du terrain, pas pour l'idéal."
+        },
+        "team": {
+          "n": "04",
+          "title": "Équipe pluridisciplinaire",
+          "desc": "IA, Data Engineering, DevOps, Conseil stratégique — une seule équipe couvre toute votre chaîne de valeur technologique, du prototype au passage à l'échelle."
+        }
+      }
+    },
+    "poles": {
+      "eyebrow": "Ce que nous faisons",
+      "title": "NOS PÔLES",
+      "cta": "Découvrir",
+      "items": {
+        "ingenierie": {
+          "n": "Pôle I",
+          "title": "Ingénierie Technologique",
+          "desc": "Développement logiciel sur mesure, automatisation IA, architecture cloud et données — nous construisons les systèmes qui font tourner votre business.",
+          "services": ["Ingénierie logicielle", "Automatisation & IA", "Architecture & Cloud", "Data & Intelligence", "Géomatique & SIG"]
+        },
+        "conseil": {
+          "n": "Pôle II",
+          "title": "Conseil & Stratégie IT",
+          "desc": "Nous aidons les décideurs à faire les bons choix technologiques : audit, feuille de route, transformation digitale et pilotage opérationnel.",
+          "services": ["Conseil stratégique IT", "Conseil opérationnel"]
+        },
+        "formation": {
+          "n": "Pôle III",
+          "title": "Formation & Développement",
+          "desc": "Des programmes sur mesure pour monter en compétences vos équipes sur les technologies IA, data et cloud — du présentiel au blended learning.",
+          "services": ["Catalogue de formations certifiantes", "Formations intra-entreprise"]
         }
       }
     },
