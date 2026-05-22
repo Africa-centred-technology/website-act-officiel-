@@ -98,7 +98,7 @@ export default function DropdownMenu({ items, isOpen }: DropdownMenuProps) {
                   </div>
                   {hasSubItems && (
                     <motion.div
-                      animate={{ rotate: isHovered ? 180 : 0 }}
+                      animate={{ rotate: isHovered ? 0 : -90 }}
                       transition={{ duration: 0.2 }}
                     >
                       <ChevronDown size={14} color={isHovered ? ORANGE : "rgba(255,255,255,0.3)"} style={{ transition: "color 0.2s" }} />
@@ -110,19 +110,19 @@ export default function DropdownMenu({ items, isOpen }: DropdownMenuProps) {
                 <AnimatePresence>
                   {hasSubItems && isHovered && (
                     <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -8 }}
                       transition={{ duration: 0.15 }}
                       style={{
                         position: "absolute",
-                        top: "calc(100% + 4px)",
-                        left: "1.6rem",
+                        top: 0,
+                        left: "calc(100% + 8px)",
                         background: "rgba(10,20,16, 0.98)",
                         border: "1px solid rgba(211,84,0,0.25)",
                         borderRadius: "0.5rem",
                         padding: "0.75rem",
-                        minWidth: "320px",
+                        minWidth: "260px",
                         boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
                         zIndex: 10,
                       }}

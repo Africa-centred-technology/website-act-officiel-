@@ -158,7 +158,17 @@ function MobileAccordion({
 export default function Header({ hidden = false }: { hidden?: boolean }) {
   /* ── Data (hardcoded French) ──────────────────────────── */
   const SAVOIR_FAIRE_MENU = [
-    { href: "/poles", label: "Nos Pôles d'Excellence", key: "poles", description: "" },
+    {
+      href: "/poles",
+      label: "Nos Pôles d'Excellence",
+      key: "poles",
+      description: "",
+      subItems: [
+        { href: "/poles/developpement-technologique", label: "Ingénierie Technologique", key: "pole-ingenierie" },
+        { href: "/poles/conseil-strategie-it",        label: "Conseil & Stratégie IT",   key: "pole-conseil"    },
+        { href: "/poles/formation",                   label: "Formation & Développement", key: "pole-formation"  },
+      ],
+    },
     { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
     { href: "/services", label: "Nos Services", key: "services", description: "" },
     {
