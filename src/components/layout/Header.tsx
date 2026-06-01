@@ -201,14 +201,6 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
   const [savoirFaireOpen, setSavoirFaireOpen] = useState(false);
   const [nousDecouvrirOpen, setNousDecouvrirOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 900);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   /* Scroll tracking — RAF-throttled */
   useEffect(() => {
@@ -579,13 +571,14 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
         )}
       </AnimatePresence>
 
-      <ScrollToTop label={t("scrollToTop")} />
+      <ScrollToTop />
     </>
   );
 }
 
 /* ── Scroll to Top ── */
-function ScrollToTop({ label }: { label: string }) {
+function ScrollToTop() {
+  const t = useTranslations("common.cta");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -617,7 +610,7 @@ function ScrollToTop({ label }: { label: string }) {
         boxShadow: "0 4px 12px rgba(211, 84, 0, 0.4)",
         transition: "transform 0.2s, background 0.2s",
       }}
-      aria-label={label}
+      aria-label={t("scrollToTop")}
       className="scroll-to-top-btn"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
