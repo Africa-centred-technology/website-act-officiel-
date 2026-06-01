@@ -66,6 +66,74 @@ const processList = [
   { step: "05", key: "s05" },
 ];
 
+type ServiceItem = typeof services[number];
+
+function ServiceCard({ service, index, screenSize }: { service: ServiceItem; index: number; screenSize: "mobile" | "tablet" | "desktop" }) {
+  const t = useTranslations("poles.developpement");
+  const [isHovered, setIsHovered] = useState(false);
+  const Icon = service.icon;
+
+  return (
+    <Link href={`/services/${service.slug}`} style={{ textDecoration: "none" }}>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.15 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{
+          height: "100%",
+          background: "rgba(255,255,255,0.06)",
+          border: isHovered ? `1px solid ${COLOR}` : "1px solid rgba(255,255,255,0.12)",
+          borderRadius: "1rem",
+          overflow: "hidden",
+          transition: "all 0.4s ease",
+          transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+          boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : "none",
+          cursor: "pointer",
+        }}
+      >
+        <div style={{ position: "relative", height: screenSize === "mobile" ? "180px" : "220px", overflow: "hidden", background: "rgba(0,0,0,0.3)" }}>
+          <img
+            src={service.image}
+            alt={t(`services.${service.key}.title` as any)}
+            style={{
+              width: "100%", height: "100%", objectFit: "cover",
+              transition: "transform 0.6s ease, filter 0.4s ease",
+              transform: isHovered ? "scale(1.1)" : "scale(1)",
+              filter: isHovered ? "grayscale(0%) brightness(0.8)" : "grayscale(40%) brightness(0.6)",
+            }}
+          />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 0%, rgba(10,20,16,0.4) 50%, rgba(10,20,16,0.95) 100%)" }} />
+          <div style={{ position: "absolute", bottom: "1rem", left: "1.5rem", width: "3.5rem", height: "3.5rem", borderRadius: "0.75rem", background: COLOR, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 8px 24px ${COLOR}66` }}>
+            <Icon size={24} color="#fff" />
+          </div>
+        </div>
+        <div style={{ padding: screenSize === "mobile" ? "1.5rem" : "2rem", flex: 1, display: "flex", flexDirection: "column" }}>
+          <h3 style={{ fontSize: screenSize === "mobile" ? "1.3rem" : "1.6rem", fontWeight: 900, marginBottom: "1rem", fontFamily: "var(--font-display)", color: "#fff", textTransform: "uppercase", lineHeight: 1.2 }}>
+            {t(`services.${service.key}.title` as any)}
+          </h3>
+          <p style={{ fontSize: screenSize === "mobile" ? "0.95rem" : "1rem", lineHeight: 1.6, color: "rgba(255,255,255,0.80)", marginBottom: "1.5rem", fontFamily: "var(--font-body)", flex: 1 }}>
+            {t(`services.${service.key}.description` as any)}
+          </p>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2rem 0" }}>
+            {(["feature1", "feature2", "feature3"] as const).map((fk) => (
+              <li key={fk} style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-body)" }}>
+                <CheckCircle2 size={16} color={COLOR} />
+                {t(`services.${service.key}.${fk}` as any)}
+              </li>
+            ))}
+          </ul>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", color: isHovered ? "#fff" : COLOR, fontSize: "0.9rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", transition: "all 0.3s ease" }}>
+            {t("servicesCta")} <ArrowRight size={18} />
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
 export default function PoleDeveloppementShell() {
   const t = useTranslations("poles.developpement");
   const locale = useLocale();
@@ -264,137 +332,9 @@ export default function PoleDeveloppementShell() {
           gridTemplateColumns: screenSize === 'mobile' ? '1fr' : screenSize === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
           gap: screenSize === 'mobile' ? '1.5rem' : '2.5rem',
         }}>
-          {services.map((service, i) => {
-            const Icon = service.icon;
-            const [isHovered, setIsHovered] = useState(false);
-            return (
-              <Link href={`/services/${service.slug}`} key={i} style={{ textDecoration: 'none' }}>
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 }}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                  style={{
-                    height: '100%',
-                    background: 'rgba(255,255,255,0.06)',
-                    border: isHovered ? `1px solid ${COLOR}` : '1px solid rgba(255,255,255,0.12)',
-                    borderRadius: '1rem',
-                    overflow: 'hidden',
-                    transition: 'all 0.4s ease',
-                    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-                    boxShadow: isHovered ? `0 20px 60px ${COLOR}33` : 'none',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {/* Image Header */}
-                  <div style={{
-                    position: 'relative',
-                    height: screenSize === 'mobile' ? '180px' : '220px',
-                    overflow: 'hidden',
-                    background: 'rgba(0,0,0,0.3)',
-                  }}>
-                    <img
-                      src={service.image}
-                      alt={t(`services.${service.key}.title` as any)}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.6s ease, filter 0.4s ease',
-                        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-                        filter: isHovered ? 'grayscale(0%) brightness(0.8)' : 'grayscale(40%) brightness(0.6)',
-                      }}
-                    />
-                    {/* Gradient overlay */}
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: `linear-gradient(to bottom, transparent 0%, rgba(10,20,16,0.4) 50%, rgba(10,20,16,0.95) 100%)`,
-                    }} />
-                    {/* Icon badge */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '1rem',
-                      left: '1.5rem',
-                      width: '3.5rem',
-                      height: '3.5rem',
-                      borderRadius: '0.75rem',
-                      background: `${COLOR}`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: `0 8px 24px ${COLOR}66`,
-                    }}>
-                      <Icon size={24} color="#fff" />
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div style={{
-                    padding: screenSize === 'mobile' ? '1.5rem' : '2rem',
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}>
-                    <h3 style={{
-                      fontSize: screenSize === 'mobile' ? '1.3rem' : '1.6rem',
-                      fontWeight: 900,
-                      marginBottom: '1rem',
-                      fontFamily: 'var(--font-display)',
-                      color: '#fff',
-                      textTransform: 'uppercase',
-                      lineHeight: 1.2,
-                    }}>
-                      {t(`services.${service.key}.title` as any)}
-                    </h3>
-                    <p style={{
-                      fontSize: screenSize === 'mobile' ? '0.95rem' : '1rem',
-                      lineHeight: 1.6,
-                      color: 'rgba(255,255,255,0.80)',
-                      marginBottom: '1.5rem',
-                      fontFamily: 'var(--font-body)',
-                      flex: 1,
-                    }}>
-                      {t(`services.${service.key}.description` as any)}
-                    </p>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0' }}>
-                      {(["feature1", "feature2", "feature3"] as const).map((fk) => (
-                        <li key={fk} style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          marginBottom: '0.5rem',
-                          fontSize: '0.9rem',
-                          color: 'rgba(255,255,255,0.75)',
-                          fontFamily: 'var(--font-body)'
-                        }}>
-                          <CheckCircle2 size={16} color={COLOR} />
-                          {t(`services.${service.key}.${fk}` as any)}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* CTA link */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.6rem',
-                      color: isHovered ? '#fff' : COLOR,
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.1em',
-                      transition: 'all 0.3s ease',
-                    }}>
-                      {t("servicesCta")} <ArrowRight size={18} />
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
-            );
-          })}
+          {services.map((service, i) => (
+            <ServiceCard key={service.slug} service={service} index={i} screenSize={screenSize} />
+          ))}
         </div>
       </section>
 

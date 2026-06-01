@@ -1,23 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
-import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations, useLocale } from "next-intl";
 import DropdownMenu from "./DropdownMenu";
 import { Menu, X } from "lucide-react";
 
 const Grain = dynamic(() => import("@/components/background/Grain"), { ssr: false });
 
-/* ── Tokens ─────────────────────────────────────────────── */
 const ORANGE = "#D35400";
 
 /* ══════════════════════════════════════════════════════════
-   MOBILE ACCORDION — Section with expandable sub-links
+   MOBILE ACCORDION
    ══════════════════════════════════════════════════════════ */
 type MobileNavItem = { href: string; label: string; key: string; subItems?: { href: string; label: string; key: string }[] };
-
 
 function MobileAccordion({
   label,
@@ -39,7 +37,6 @@ function MobileAccordion({
       transition={{ delay, duration: 0.35 }}
       style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
     >
-      {/* Accordion trigger */}
       <button
         onClick={() => setOpen(!open)}
         style={{
@@ -68,7 +65,6 @@ function MobileAccordion({
         </motion.svg>
       </button>
 
-      {/* Sub-links — animated expand */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -79,7 +75,6 @@ function MobileAccordion({
             style={{ overflow: "hidden" }}
           >
             <div style={{ paddingBottom: "1rem" }}>
-              {/* Category label */}
               <p style={{
                 fontSize: "0.75rem",
                 color: "#D35400",
@@ -92,7 +87,6 @@ function MobileAccordion({
               }}>
                 {label}
               </p>
-              {/* Items — flat links or nested accordions */}
               {items.map((item, i) => (
                 <motion.div
                   key={item.key}
@@ -156,52 +150,50 @@ function MobileAccordion({
 }
 
 export default function Header({ hidden = false }: { hidden?: boolean }) {
-  /* ── Data (hardcoded French) ──────────────────────────── */
+  const t = useTranslations("common.nav");
+  const locale = useLocale();
+  const pathname = usePathname(); // locale-stripped path from @/i18n/navigation
+  const router = useRouter();     // locale-aware router from @/i18n/navigation
+
+  const targetLocale = locale === "fr" ? "en" : "fr";
+
   const SAVOIR_FAIRE_MENU = [
     {
-      href: "/poles",
-      label: "Nos Pôles d'Excellence",
+      href: "/poles" as const,
+      label: t("polesExcellence"),
       key: "poles",
       description: "",
       subItems: [
-        { href: "/poles/developpement-technologique", label: "Ingénierie Technologique", key: "pole-ingenierie" },
-        { href: "/poles/conseil-strategie-it",        label: "Conseil & Stratégie IT",   key: "pole-conseil"    },
-        { href: "/poles/formation",                   label: "Formation & Développement", key: "pole-formation"  },
+        { href: "/poles/developpement-technologique", label: t("poleIngenierie"), key: "pole-ingenierie" },
+        { href: "/poles/conseil-strategie-it",        label: t("poleConseil"),    key: "pole-conseil"    },
+        { href: "/poles/formation",                   label: t("poleFormation"),  key: "pole-formation"  },
       ],
     },
-    { href: "/secteurs", label: "Nos Secteurs d'Activité", key: "secteurs", description: "" },
-    { href: "/services", label: "Nos Services", key: "services", description: "" },
+    { href: "/secteurs" as const, label: t("secteursActivite"), key: "secteurs", description: "" },
+    { href: "/services" as const, label: t("nosServices"),      key: "services", description: "" },
     {
-      href: "/formations",
-      label: "Catalogue de Formations",
+      href: "/formations" as const,
+      label: t("catalogueFormations"),
       key: "formations",
       description: "",
       subItems: [
-        { href: "/formations/all", label: "Catalogue complet", key: "formations-all" },
+        { href: "/formations/all", label: t("catalogueComplet"), key: "formations-all" },
       ],
     },
   ];
 
   const NOUS_DECOUVRIR_MENU = [
-    { href: "/about", label: "À Propos", key: "about", description: "" },
-    { href: "/about#equipe", label: "Notre Équipe", key: "equipe", description: "" },
-    { href: "/about#valeurs", label: "Nos Valeurs", key: "valeurs", description: "" },
-    { href: "/projects", label: "Réalisations", key: "projects", description: "" },
-    { href: "/carrieres", label: "Carrières", key: "carrieres", description: "" },
+    { href: "/about" as const,     label: t("aPropos"),    key: "about",     description: "" },
+    { href: "/about#equipe",        label: t("equipe"),     key: "equipe",    description: "" },
+    { href: "/projects" as const,  label: t("realisations"), key: "projects", description: "" },
+    { href: "/carrieres" as const, label: t("carrieres"),  key: "carrieres", description: "" },
   ];
 
   const NAV_LINKS = [
-    { href: "/blog", label: "Blog", key: "blog" },
-    { href: "https://elearning.africacentredtechnology.com/", label: "ACT-Université", key: "universite" },
-    { href: "/contact", label: "Contact", key: "contact" },
+    { href: "/blog" as const,    label: t("blog"),       key: "blog"      },
+    { href: "https://elearning.africacentredtechnology.com/", label: t("universite"), key: "universite" },
+    { href: "/contact" as const, label: t("contact"),    key: "contact"   },
   ];
-
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const currentLocale = pathname?.startsWith("/en") ? "en" : "fr";
-  const targetLocale = currentLocale === "fr" ? "en" : "fr";
-  const switchPath = pathname?.replace(/^\/(fr|en)/, `/${targetLocale}`) ?? `/${targetLocale}`;
 
   const [scrolled, setScrolled] = useState(false);
   const [scrolledPast120, setScrolledPast120] = useState(false);
@@ -210,18 +202,15 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
   const [nousDecouvrirOpen, setNousDecouvrirOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
-  /* Mobile detection */
   useEffect(() => {
-    setMounted(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 900);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  /* Scroll tracking — RAF-throttled to avoid INP regressions */
+  /* Scroll tracking — RAF-throttled */
   useEffect(() => {
     let rafId = 0;
     const onScroll = () => {
@@ -242,6 +231,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
     };
   }, []);
 
+  /* pathname from @/i18n/navigation is already locale-stripped */
   function isActive(key: string) {
     const p = pathname ?? "/";
     if (key === "index") return p === "/" || p === "";
@@ -256,7 +246,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
   return (
     <>
-      {/* ── Scroll progress bar ── */}
+      {/* Scroll progress bar */}
       <div aria-hidden style={{
         position: "fixed", top: 0, left: 0, right: 0, height: "1.5px", zIndex: 202,
         background: "rgba(255,255,255,0.04)",
@@ -268,7 +258,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
         />
       </div>
 
-      {/* ── Navbar ── */}
+      {/* Navbar */}
       <nav className={`navbar${scrolled ? " navbar--scrolled" : ""}`} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999 }}>
         <div className="navbar-flex" style={{
           display: "flex",
@@ -279,7 +269,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           width: "100%",
         }}>
 
-          {/* Logo / Accueil */}
+          {/* Logo */}
           <Link
             href="/"
             className={`navbar-navigation__link${isActive("index") ? " --is-active" : ""}`}
@@ -287,7 +277,8 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           >
             ACT
             {isActive("index") && (
-              <motion.span layoutId="nav-dot"
+              <motion.span
+                layoutId="nav-dot"
                 style={{
                   position: "absolute", bottom: "-5px", left: "50%",
                   translateX: "-50%",
@@ -298,10 +289,10 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             )}
           </Link>
 
-          {/* Navigation container - right aligned */}
+          {/* Desktop nav */}
           <div className="hidden lg:flex items-center" style={{ gap: "clamp(1.5rem, 2.5vw, 2.5rem)", marginLeft: "auto" }}>
 
-            {/* Notre savoir-faire - Menu dropdown */}
+            {/* Notre savoir-faire */}
             <div
               className="relative"
               onMouseEnter={() => setSavoirFaireOpen(true)}
@@ -309,30 +300,20 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             >
               <button
                 className={`navbar-navigation__link${isSavoirFaireActive ? " --is-active" : ""}`}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
+                style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", position: "relative" }}
               >
-                Notre savoir-faire
+                {t("savoirFaire")}
                 <motion.svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
+                  width="12" height="12" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5"
                   animate={{ rotate: savoirFaireOpen ? 180 : 0 }}
                   transition={{ duration: 0.25 }}
                 >
                   <path d="M6 9l6 6 6-6" />
                 </motion.svg>
                 {isSavoirFaireActive && (
-                  <motion.span layoutId="nav-dot"
+                  <motion.span
+                    layoutId="nav-dot"
                     style={{
                       position: "absolute", bottom: "-5px", left: "50%",
                       translateX: "-50%",
@@ -342,11 +323,10 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                   />
                 )}
               </button>
-
               <DropdownMenu items={SAVOIR_FAIRE_MENU} isOpen={savoirFaireOpen} />
             </div>
 
-            {/* Nous découvrir - Menu dropdown */}
+            {/* Nous découvrir */}
             <div
               className="relative"
               onMouseEnter={() => setNousDecouvrirOpen(true)}
@@ -354,30 +334,20 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             >
               <button
                 className={`navbar-navigation__link${isNousDecouvrirActive ? " --is-active" : ""}`}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
+                style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", position: "relative" }}
               >
-                Nous découvrir
+                {t("nousDecouvrir")}
                 <motion.svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
+                  width="12" height="12" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5"
                   animate={{ rotate: nousDecouvrirOpen ? 180 : 0 }}
                   transition={{ duration: 0.25 }}
                 >
                   <path d="M6 9l6 6 6-6" />
                 </motion.svg>
                 {isNousDecouvrirActive && (
-                  <motion.span layoutId="nav-dot"
+                  <motion.span
+                    layoutId="nav-dot"
                     style={{
                       position: "absolute", bottom: "-5px", left: "50%",
                       translateX: "-50%",
@@ -387,21 +357,21 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                   />
                 )}
               </button>
-
               <DropdownMenu items={NOUS_DECOUVRIR_MENU} isOpen={nousDecouvrirOpen} />
             </div>
 
-            {/* Navigation links */}
-            <ul className="navbar-navigation flex items-center" style={{
-              gap: "clamp(1.5rem, 2.5vw, 2.5rem)",
-            }}>
+            {/* Flat nav links */}
+            <ul className="navbar-navigation flex items-center" style={{ gap: "clamp(1.5rem, 2.5vw, 2.5rem)" }}>
               {NAV_LINKS.map((link) => (
                 <li key={link.key} style={{ position: "relative" }}>
-                  <Link href={link.href}
-                    className={`navbar-navigation__link${isActive(link.key) ? " --is-active" : ""}`}>
+                  <Link
+                    href={link.href}
+                    className={`navbar-navigation__link${isActive(link.key) ? " --is-active" : ""}`}
+                  >
                     {link.label}
                     {isActive(link.key) && (
-                      <motion.span layoutId="nav-dot"
+                      <motion.span
+                        layoutId="nav-dot"
                         style={{
                           position: "absolute", bottom: "-5px", left: "50%",
                           translateX: "-50%",
@@ -418,7 +388,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
           {/* Language switcher */}
           <button
-            onClick={() => router.push(switchPath)}
+            onClick={() => router.replace(pathname, { locale: targetLocale })}
             aria-label={`Switch to ${targetLocale === "en" ? "English" : "Français"}`}
             style={{
               background: "none",
@@ -440,11 +410,11 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             {targetLocale.toUpperCase()}
           </button>
 
-          {/* Mobile hamburger button */}
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden relative p-2 bg-transparent border-none cursor-pointer flex items-center justify-center text-white z-[301]"
-            aria-label="Menu"
+            className="lg:hidden relative p-2 bg-transparent border-none cursor-pointer flex items-center justify-center text-white z-301"
+            aria-label={mobileMenuOpen ? t("closeMenu") : t("openMenu")}
           >
             {mobileMenuOpen ? <X size={32} color="#fff" /> : <Menu size={32} color="#fff" />}
           </button>
@@ -495,45 +465,30 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  color: "#fff",
-                  padding: "0.5rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                aria-label="Fermer le menu"
+                style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", padding: "0.5rem", display: "flex", alignItems: "center", justifyContent: "center" }}
+                aria-label={t("closeMenu")}
               >
                 <X size={28} />
               </button>
             </div>
 
-            {/* Nav Links — Main with accordion */}
+            {/* Nav Links */}
             <nav style={{ flex: 1, padding: "0 1.8rem" }}>
-
-              {/* Notre Savoir-Faire — Accordion */}
               <MobileAccordion
-                label="Notre savoir-faire"
+                label={t("savoirFaire")}
                 items={SAVOIR_FAIRE_MENU}
                 delay={0.15}
                 onClose={() => setMobileMenuOpen(false)}
               />
-
-              {/* Nous Découvrir — Accordion */}
               <MobileAccordion
-                label="Nous découvrir"
+                label={t("nousDecouvrir")}
                 items={NOUS_DECOUVRIR_MENU}
                 delay={0.22}
                 onClose={() => setMobileMenuOpen(false)}
               />
-
-              {/* Blog + Université */}
               {[
-                { label: "Blog", href: "/blog" },
-                { label: "ACT-Université", href: "https://elearning.africacentredtechnology.com/" },
+                { label: t("blog"),       href: "/blog" as const },
+                { label: t("universite"), href: "https://elearning.africacentredtechnology.com/" },
               ].map((item, i) => (
                 <motion.div key={item.label} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.29 + i * 0.07, duration: 0.35 }}>
                   <Link
@@ -554,7 +509,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
               ))}
             </nav>
 
-            {/* Footer — Utility links */}
+            {/* Footer — Contact + Language switcher */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -587,32 +542,54 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.82 19.79 19.79 0 01.14 2.18 2 2 0 012.12 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
                 </svg>
-                Contactez-nous
+                {t("contactUs")}
               </Link>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", color: "rgba(255,255,255,0.45)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "var(--font-display)" }}>
+
+              {/* Language switcher in mobile */}
+              <button
+                onClick={() => { router.replace(pathname, { locale: targetLocale }); setMobileMenuOpen(false); }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.8rem",
+                  background: "none",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  color: "rgba(255,255,255,0.55)",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.85rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  padding: "0.6rem 1rem",
+                  alignSelf: "flex-start",
+                  transition: "color 0.2s, border-color 0.2s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = ORANGE; e.currentTarget.style.borderColor = ORANGE; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; }}
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
                 </svg>
-                Afrique — FR
-              </div>
+                {targetLocale === "en" ? "Switch to English" : "Passer en Français"}
+              </button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <ScrollToTop />
+      <ScrollToTop label={t("scrollToTop")} />
     </>
   );
 }
 
-/* ── Scroll to Top Button ── */
-function ScrollToTop() {
+/* ── Scroll to Top ── */
+function ScrollToTop({ label }: { label: string }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 300);
-    };
+    const handleScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -640,7 +617,7 @@ function ScrollToTop() {
         boxShadow: "0 4px 12px rgba(211, 84, 0, 0.4)",
         transition: "transform 0.2s, background 0.2s",
       }}
-      aria-label="Remonter en haut"
+      aria-label={label}
       className="scroll-to-top-btn"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
