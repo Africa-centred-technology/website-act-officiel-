@@ -4,12 +4,11 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
-
 export default function Cursor() {
-  const [mounted, setMounted]   = useState(false);
-  const [visible, setVisible]   = useState(false);
-  const [hovered, setHovered]   = useState(false);
-  const [clicked, setClicked]   = useState(false);
+  const [mounted,  setMounted]  = useState(false);
+  const [visible,  setVisible]  = useState(false);
+  const [hovered,  setHovered]  = useState(false);
+  const [clicked,  setClicked]  = useState(false);
 
   const mx = useMotionValue(-300);
   const my = useMotionValue(-300);
@@ -24,16 +23,25 @@ export default function Cursor() {
 
   useEffect(() => {
     setMounted(true);
+
     const onMove = (e: MouseEvent) => {
       mx.set(e.clientX);
       my.set(e.clientY);
-      if (!visible) setVisible(true);
+      setVisible(true); // React ignore les setState sans changement de valeur
     };
+
+    /* Throttle via RAF — mouseover peut déclencher des centaines d'events/s */
+    let overRaf = 0;
     const onOver = (e: MouseEvent) => {
-      const t   = e.target as HTMLElement;
-      const hit = t.closest("a, button, [data-hover], input, select, textarea, .cta-btn") as HTMLElement | null;
-      setHovered(!!hit);
+      if (overRaf) return;
+      overRaf = requestAnimationFrame(() => {
+        overRaf = 0;
+        const el  = e.target as HTMLElement;
+        const hit = el.closest("a, button, [data-hover], input, select, textarea, .cta-btn");
+        setHovered(!!hit);
+      });
     };
+
     const onDown = () => setClicked(true);
     const onUp   = () => setClicked(false);
 
@@ -41,28 +49,28 @@ export default function Cursor() {
     window.addEventListener("mouseover", onOver,  { passive: true });
     window.addEventListener("mousedown", onDown);
     window.addEventListener("mouseup",   onUp);
-    
     document.body.classList.add("cursor-none");
 
     return () => {
+      if (overRaf) cancelAnimationFrame(overRaf);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onOver);
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup",   onUp);
       document.body.classList.remove("cursor-none");
     };
-  }, [mx, my, visible]);
+  }, [mx, my]); // `visible` retiré — ne doit pas déclencher un re-enregistrement des listeners
 
   if (!mounted) return null;
 
   return createPortal(
     <>
-      {/* ── Dot — mix-blend-mode difference, toujours visible ── */}
+      {/* Dot — mix-blend-mode difference */}
       <motion.div
         aria-hidden
         style={{
           position:      "fixed",
-          zIndex:        999999, // Un million pour être sûr
+          zIndex:        999999,
           pointerEvents: "none",
           x:             dx,
           y:             dy,
@@ -81,7 +89,7 @@ export default function Cursor() {
         transition={{ duration: 0.18 }}
       />
 
-      {/* ── Glow halo — soft ambient light sous le curseur ── */}
+      {/* Glow halo */}
       <motion.div
         aria-hidden
         style={{

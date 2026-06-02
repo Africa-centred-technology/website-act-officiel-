@@ -196,6 +196,113 @@
       "titleAccent": "réalisations",
       "viewMore": "Voir plus"
     },
+    "caseStudies": {
+      "eyebrow": "Études de cas",
+      "title": "Ils nous ont fait",
+      "titleAccent": "confiance",
+      "viewMore": "Voir toutes les réalisations",
+      "problemLabel": "Problème",
+      "solutionLabel": "Solution ACT",
+      "resultsLabel": "Résultats",
+      "readMore": "Lire l'étude",
+      "poleLabels": {
+        "I": "Ingénierie",
+        "II": "Conseil",
+        "III": "Formation"
+      },
+      "items": {
+        "ecommerce-logistique": {
+          "sector": "E-commerce",
+          "tagline": "Réduit le taux d'échec de livraison de 35% grâce à la supervision IA temps réel.",
+          "title": "Automatisation logistique pour opérateur COD",
+          "context": "Opérateur e-commerce marocain, 500+ commandes/jour, paiement à la livraison dominant.",
+          "problem": "Taux d'échec de livraison à 35%. Suivi manuel par WhatsApp entre superviseurs et livreurs. Aucune visibilité temps réel sur l'état des commandes.",
+          "solution": "Dashboard de supervision temps réel + système de prédiction IA des commandes à risque avant même la tentative de livraison.",
+          "heroValue": "+28%",
+          "heroLabel": "de taux de livraison réussi",
+          "results": [
+            { "value": "+28%", "label": "taux de livraison" },
+            { "value": "−40%", "label": "temps de traitement" },
+            { "value": "84%", "label": "précision IA" }
+          ]
+        },
+        "ia-documentaire": {
+          "sector": "Services professionnels",
+          "tagline": "Transforme 10 000 documents en assistant IA qui répond en 2 heures au lieu de 2 jours.",
+          "title": "Base de connaissances IA pour cabinet conseil",
+          "context": "Cabinet de conseil, 8 consultants, 10 000+ documents internes (PDF, rapports, présentations).",
+          "problem": "4h perdues par consultant chaque semaine à chercher dans les archives. Les réponses aux clients prenaient 2 jours au lieu de 2 heures.",
+          "solution": "Chatbot RAG multimodal — interroge PDF, images, audio et vidéo en langage naturel et cite les sources exactes.",
+          "heroValue": "−80%",
+          "heroLabel": "de temps de recherche documentaire",
+          "results": [
+            { "value": "−80%", "label": "temps de recherche" },
+            { "value": "2h", "label": "vs 2 jours avant" },
+            { "value": "99.2%", "label": "uptime" }
+          ]
+        },
+        "sig-collectivite": {
+          "sector": "Secteur public",
+          "tagline": "Élimine 60% du temps administratif et cartographie 500+ espaces verts en temps réel.",
+          "title": "Digitalisation des interventions terrain pour une collectivité",
+          "context": "Collectivité gérant 500+ espaces verts, équipes terrain sans aucun outil numérique.",
+          "problem": "Planification sur papier, impossibilité de prouver les interventions, retards non détectés, zéro données géographiques centralisées.",
+          "solution": "Application SIG mobile fonctionnant hors-ligne + module de planification des interventions + tableau de bord de supervision.",
+          "heroValue": "−60%",
+          "heroLabel": "de temps administratif économisé",
+          "results": [
+            { "value": "−60%", "label": "temps administratif" },
+            { "value": "500+", "label": "espaces cartographiés" },
+            { "value": "3", "label": "villes pilotes" }
+          ]
+        },
+        "formation-ia": {
+          "sector": "Formation B2B",
+          "tagline": "Lance 3 projets IA internes en 6 mois grâce à un parcours sur mesure LLM & agents.",
+          "title": "Montée en compétences IA d'une équipe IT",
+          "context": "DSI d'une entreprise de 200 personnes, équipe de 15 développeurs sans culture IA.",
+          "problem": "Les projets d'automatisation stagnaient faute de compétences internes. Les formations externes étaient trop génériques et non adaptées au contexte métier.",
+          "solution": "Parcours de formation sur mesure sur 3 mois : LLM, RAG, agents IA — avec cas pratiques sur les systèmes réels du client.",
+          "heroValue": "+40%",
+          "heroLabel": "d'autonomie de l'équipe sur les sujets IA",
+          "results": [
+            { "value": "3", "label": "projets IA lancés" },
+            { "value": "+40%", "label": "autonomie équipe" },
+            { "value": "−50%", "label": "dépendance externe" }
+          ]
+        },
+        "bi-reporting": {
+          "sector": "Industrie",
+          "tagline": "Supprime 8h de reporting manuel par semaine avec des dashboards connectés en temps réel.",
+          "title": "Reporting temps réel pour direction générale",
+          "context": "PME industrielle, données éparpillées dans un ERP, Excel et 3 outils métier différents.",
+          "problem": "Le rapport de direction prenait 8h chaque lundi à produire manuellement. Les données étaient souvent en retard de 48h. Aucune vue consolidée.",
+          "solution": "Data warehouse centralisé + dashboards interactifs connectés aux sources existantes. Sans remplacement de l'ERP en place.",
+          "heroValue": "8h",
+          "heroLabel": "de reporting manuel éliminées chaque semaine",
+          "results": [
+            { "value": "Temps réel", "label": "vs 48h de retard" },
+            { "value": "−8h", "label": "par semaine" },
+            { "value": "6 sem.", "label": "mise en production" }
+          ]
+        },
+        "media-panafricain": {
+          "sector": "Média",
+          "tagline": "Couvre 15 pays africains dès le lancement avec indexation Google News en moins de 24h.",
+          "title": "Plateforme média digitale panafricaine",
+          "context": "Groupe média, ambition de couvrir l'Afrique francophone tech & innovation.",
+          "problem": "Contenu géré via Word et email. Zéro référencement Google News. Vidéos inaccessibles sur connexions 2G/3G africaines.",
+          "solution": "Architecture headless CMS + Web TV adaptive streaming + SEO Google News natif intégré dès le développement.",
+          "heroValue": "15",
+          "heroLabel": "pays africains couverts dès le lancement",
+          "results": [
+            { "value": "<24h", "label": "indexation Google News" },
+            { "value": "15", "label": "pays couverts" },
+            { "value": "2G/3G", "label": "streaming adaptatif" }
+          ]
+        }
+      }
+    },
     "blog": {
       "title": "Nos Dernières",
       "titleAccent": "publications",

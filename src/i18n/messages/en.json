@@ -196,6 +196,107 @@
       "titleAccent": "projects",
       "viewMore": "View more"
     },
+    "caseStudies": {
+      "eyebrow": "Case studies",
+      "title": "They trusted",
+      "titleAccent": "us",
+      "viewMore": "View all projects",
+      "problemLabel": "Problem",
+      "solutionLabel": "ACT Solution",
+      "resultsLabel": "Results",
+      "readMore": "Read the case study",
+      "poleLabels": {
+        "I": "Engineering",
+        "II": "Consulting",
+        "III": "Training"
+      },
+      "items": {
+        "ecommerce-logistique": {
+          "sector": "E-commerce",
+          "title": "Logistics automation for a COD operator",
+          "context": "Moroccan e-commerce operator, 500+ orders/day, cash-on-delivery dominant.",
+          "problem": "35% delivery failure rate. Manual tracking via WhatsApp. No real-time visibility on order status.",
+          "solution": "Real-time supervision dashboard + AI system to predict at-risk orders before delivery attempt.",
+          "heroValue": "+28%",
+          "heroLabel": "successful delivery rate",
+          "results": [
+            { "value": "+28%", "label": "delivery rate" },
+            { "value": "−40%", "label": "processing time" },
+            { "value": "84%", "label": "AI accuracy" }
+          ]
+        },
+        "ia-documentaire": {
+          "sector": "Professional services",
+          "title": "AI knowledge base for a consulting firm",
+          "context": "Consulting firm, 8 consultants, 10,000+ internal documents (PDFs, reports, presentations).",
+          "problem": "4 hours lost per consultant each week searching through archives. Client responses took 2 days instead of 2 hours.",
+          "solution": "Multimodal RAG chatbot — queries PDFs, images, audio and video in natural language and cites exact sources.",
+          "heroValue": "−80%",
+          "heroLabel": "document search time",
+          "results": [
+            { "value": "−80%", "label": "search time" },
+            { "value": "2h", "label": "vs 2 days before" },
+            { "value": "99.2%", "label": "uptime" }
+          ]
+        },
+        "sig-collectivite": {
+          "sector": "Public sector",
+          "title": "Field operations digitalization for a municipality",
+          "context": "Municipality managing 500+ green spaces, field teams with no digital tools.",
+          "problem": "Paper-based planning, no proof of interventions, undetected delays, zero centralized geographic data.",
+          "solution": "Offline-capable mobile GIS app + intervention planning module + supervision dashboard.",
+          "heroValue": "−60%",
+          "heroLabel": "administrative time saved",
+          "results": [
+            { "value": "−60%", "label": "admin time" },
+            { "value": "500+", "label": "spaces mapped" },
+            { "value": "3", "label": "pilot cities" }
+          ]
+        },
+        "formation-ia": {
+          "sector": "B2B Training",
+          "title": "AI upskilling for an IT team",
+          "context": "CIO of a 200-person company, team of 15 developers with no AI background.",
+          "problem": "Automation projects stalled due to lack of internal skills. External training was too generic and not adapted to their business context.",
+          "solution": "Custom 3-month training program: LLMs, RAG, AI agents — with hands-on cases using the client's real systems.",
+          "heroValue": "+40%",
+          "heroLabel": "team autonomy on AI topics",
+          "results": [
+            { "value": "3", "label": "AI projects launched" },
+            { "value": "+40%", "label": "team autonomy" },
+            { "value": "−50%", "label": "external dependency" }
+          ]
+        },
+        "bi-reporting": {
+          "sector": "Industry",
+          "title": "Real-time reporting for executive management",
+          "context": "Industrial SME, data scattered across an ERP, Excel and 3 different business tools.",
+          "problem": "The management report took 8 hours every Monday to produce manually. Data was often 48 hours late. No consolidated view.",
+          "solution": "Centralized data warehouse + interactive dashboards connected to existing sources. Without replacing the existing ERP.",
+          "heroValue": "8h",
+          "heroLabel": "of manual reporting eliminated each week",
+          "results": [
+            { "value": "Real-time", "label": "vs 48h delay" },
+            { "value": "−8h", "label": "per week" },
+            { "value": "6 wks", "label": "to production" }
+          ]
+        },
+        "media-panafricain": {
+          "sector": "Media",
+          "title": "Pan-African digital media platform",
+          "context": "Media group aiming to cover francophone Africa in tech & innovation.",
+          "problem": "Content managed via Word and email. Zero Google News ranking. Videos inaccessible on African 2G/3G connections.",
+          "solution": "Headless CMS architecture + adaptive streaming Web TV + native Google News SEO built in from day one.",
+          "heroValue": "15",
+          "heroLabel": "African countries covered at launch",
+          "results": [
+            { "value": "<24h", "label": "Google News indexing" },
+            { "value": "15", "label": "countries covered" },
+            { "value": "2G/3G", "label": "adaptive streaming" }
+          ]
+        }
+      }
+    },
     "blog": {
       "title": "Our Latest",
       "titleAccent": "publications",

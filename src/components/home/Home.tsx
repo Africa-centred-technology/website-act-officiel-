@@ -19,6 +19,7 @@ import AboutSection from "@/components/home/sections/AboutSection";
 import ValueSection from "@/components/home/sections/ValueSection";
 import PolesSection from "@/components/home/sections/PolesSection";
 import ManifesteSection from "@/components/home/sections/ManifesteSection";
+import CaseStudiesSection from "@/components/home/sections/CaseStudiesSection";
 import ProjectsSection from "@/components/home/sections/ProjectsSection";
 import BlogShowcaseSection from "@/components/home/sections/BlogShowcaseSection";
 import CTASection from "@/components/layout/CTASection";
@@ -97,8 +98,9 @@ export const SECTIONS: Section[] = [
   { id: "about",     label: "QUI SOMMES-NOUS", number: "02", Component: AboutSection },
   { id: "values",    label: "NOS CHIFFRES",    number: "03", Component: ValueSection },
   { id: "poles",     label: "LA CITÉ",         number: "04", Component: PolesSection },
-  { id: "manifeste", label: "LA MAISON",       number: "05", Component: ManifesteSection },
-  { id: "projects",  label: "LE PORTAIL",      number: "07", Component: ProjectsSection },
+  { id: "manifeste",    label: "LA MAISON",       number: "05", Component: ManifesteSection },
+  { id: "casestudies", label: "LES SUCCÈS",      number: "06", Component: CaseStudiesSection },
+  { id: "projects",    label: "LE PORTAIL",      number: "07", Component: ProjectsSection },
   { id: "blog",      label: "LE BLOG",         number: "08", Component: BlogShowcaseSection },
   { id: "cta",       label: "DÉMARRONS",       number: "09", Component: HomeCTASection, flush: true },
 ];
