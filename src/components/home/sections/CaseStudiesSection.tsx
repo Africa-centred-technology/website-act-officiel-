@@ -204,6 +204,7 @@ function CaseStudyCard({ id, color, image, item, t }: CardProps) {
         cursor: "pointer",
         display: "block",
         textDecoration: "none",
+        transition: "box-shadow 0.4s cubic-bezier(0.22,1,0.36,1), transform 0.4s cubic-bezier(0.22,1,0.36,1)",
       }}
     >
       {/* Background image */}
@@ -296,6 +297,10 @@ function CaseStudyCard({ id, color, image, item, t }: CardProps) {
       </div>
 
       <style jsx>{`
+        .cs-card:hover {
+          box-shadow: 0 0 0 2px ${color}99, 0 8px 40px ${color}44;
+          transform: translateY(-4px);
+        }
         .cs-card:hover :global(.cs-img) {
           transform: scale(1.05);
         }
