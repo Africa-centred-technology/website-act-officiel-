@@ -179,9 +179,6 @@ function PerspectivesMega({ isOpen, t }: { isOpen: boolean; t: ReturnType<typeof
     <MegaMenu isOpen={isOpen}>
       <div>
         <div style={{ padding: "2.25rem 2.5rem" }}>
-          <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", margin: "0 0 1.4rem", fontFamily: "var(--font-body)" }}>
-            {t("colLire")}
-          </p>
           {[
             { label: t("perspArticles"),  href: "/blog",       icon: "📝" },
             { label: t("perspTendances"), href: "/blog",       icon: "🌍" },
@@ -457,7 +454,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
             {/* CTA Nous contacter */}
             <Link href="/contact" className="hidden lg:inline-flex"
-              style={{ alignItems: "center", padding: "0.45rem 1rem", background: ORANGE, borderRadius: "0.35rem", textDecoration: "none", color: "#fff", fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.04em", whiteSpace: "nowrap", transition: "opacity 0.2s" }}
+              style={{ alignItems: "center", padding: "0.6rem 1.4rem", background: ORANGE, borderRadius: "0.4rem", textDecoration: "none", color: "#fff", fontFamily: "var(--font-body)", fontSize: "0.92rem", fontWeight: 700, letterSpacing: "0.04em", whiteSpace: "nowrap", transition: "opacity 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
               onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
             >
