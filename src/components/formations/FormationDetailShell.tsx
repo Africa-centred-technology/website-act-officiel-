@@ -338,6 +338,8 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     return formation.publicCible.split(",").map(p => p.trim()).filter(Boolean);
   }, [formation]);
 
+  const msg = useDataMessages();
+
   /* ── Loading / Error states ─ */
   if (isLoading) {
     return (
@@ -363,7 +365,6 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
   }
 
   /* ── Derived content ─ valeurs par défaut partagées (hybride) ─ */
-  const msg           = useDataMessages();
   const defaults      = msg.formations.defaults;
   const marqueeItems  = defaults.marquee;
   const trustStats    = defaults.trustStats;

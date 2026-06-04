@@ -304,6 +304,72 @@ function ServicesOverview({ onEnter }: { onEnter: (i: number) => void }) {
             {SERVICES.filter(s => s.poleN === "III").map(svc => (
               <ServiceCard key={svc.slug} svc={svc} index={SERVICES.indexOf(svc)} onEnter={onEnter} />
             ))}
+            {/* Carte ACT University */}
+            <motion.a
+              href="https://elearning.africacentredtechnology.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ opacity: { duration: 0.4, delay: 0.45 }, scale: { duration: 0.55, delay: 0.45, ease: [...BURST] } }}
+              className="group"
+              style={{ position: "relative", textDecoration: "none", display: "block" }}
+            >
+              <div style={{
+                position: "relative", borderRadius: "1rem", overflow: "hidden",
+                width: "100%", aspectRatio: "1 / 1", background: "#0a1f10",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.3)", transition: "transform 0.5s ease",
+              }} className="group-hover:scale-[1.02]">
+                {/* Fond dégradé vert */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "radial-gradient(ellipse 90% 80% at 30% 60%, #0d3a1a 0%, #050c18 60%, #030810 100%)",
+                }} />
+                {/* Motif grille subtil */}
+                <div style={{
+                  position: "absolute", inset: 0, opacity: 0.06,
+                  backgroundImage: "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+                  backgroundSize: "40px 40px",
+                }} />
+                {/* Overlay */}
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(3,10,24,0.95) 0%, transparent 66%)", pointerEvents: "none" }} />
+                {/* Halo vert au hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
+                  style={{ background: "radial-gradient(circle at 50% 100%, #16a34a88 0%, transparent 60%)" }} />
+                {/* Numéro */}
+                <div className="absolute top-4 inset-s-4 font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500 text-5xl select-none" style={{ fontFamily: "Futura" }}>
+                  10
+                </div>
+                {/* Icône centrale */}
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontSize: "5rem", opacity: 0.18 }}>🎓</span>
+                </div>
+              </div>
+              {/* Label */}
+              <div style={{
+                position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)",
+                width: "70%", maxWidth: "260px", display: "flex", justifyContent: "center", zIndex: 10, pointerEvents: "none",
+              }} className="transition-transform duration-500 group-hover:-translate-y-2">
+                <div style={{
+                  background: "#16a34a22", border: "1px solid #16a34a55",
+                  padding: "1.5rem 1rem", borderRadius: "0.25rem 0.25rem 0 0",
+                  boxShadow: "0 -5px 20px rgba(22,163,74,0.15)",
+                  width: "100%", display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "center", minHeight: "9.5rem",
+                }}>
+                  <h2 style={{
+                    fontFamily: "var(--font-heading), system-ui, sans-serif",
+                    fontSize: "2rem", fontWeight: 900, color: "#fff",
+                    lineHeight: 1.3, textAlign: "center", margin: 0, whiteSpace: "pre-line",
+                  }}>
+                    ACT{"\n"}University
+                  </h2>
+                  <span style={{ fontSize: "0.75rem", color: "#16a34a", letterSpacing: "0.15em", textTransform: "uppercase", marginTop: "0.5rem" }}>
+                    Plateforme e-learning →
+                  </span>
+                </div>
+              </div>
+            </motion.a>
           </div>
         </div>
 

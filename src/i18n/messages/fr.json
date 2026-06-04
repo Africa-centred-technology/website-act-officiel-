@@ -51,7 +51,37 @@
       "carrieres": "Carrières",
       "poleIngenierie": "Ingénierie Technologique",
       "poleConseil": "Conseil & Stratégie IT",
-      "poleFormation": "Formation & Développement"
+      "poleFormation": "Formation & Développement",
+      "expertises": "Expertises",
+      "industries": "Industries",
+      "perspectives": "Perspectives",
+      "nousContacter": "Nous contacter",
+      "expertiseIA": "IA Agentique",
+      "expertiseDev": "Ingénierie Logicielle & Solutions Métiers",
+      "expertiseConseilStrat": "Roadmap & Transformation Digitale",
+      "expertiseConseilOps": "Optimisation SI & Processus Métier",
+      "expertiseConseil": "Conseil IT & Stratégie",
+      "expertiseData": "Data & IA",
+      "expertiseArchi": "Architecture & Infrastructure",
+      "expertiseGeo": "Géomatique & Systèmes d'Information Géographique",
+      "expertiseFormation": "Formation professionnelle",
+      "voirServices": "Voir tous nos services",
+      "industrie": "Industrie",
+      "finance": "Finance & Banque",
+      "ecommerce": "E-commerce",
+      "education": "Éducation",
+      "sante": "Santé",
+      "telecomsMedias": "Télécoms & Médias",
+      "voirSecteurs": "Voir tous les secteurs",
+      "colLire": "Lire",
+      "colApprendre": "Apprendre",
+      "perspArticles": "Articles & Analyses",
+      "perspTendances": "Tendances Tech",
+      "perspCasIA": "Cas d'usage IA",
+      "perspUniversite": "ACT University",
+      "perspCours": "Cours en ligne",
+      "perspCertif": "Certifications",
+      "perspAcceder": "Accéder à la plateforme"
     },
     "cookies": {
       "title": "Nous utilisons des cookies",
@@ -733,7 +763,7 @@
       },
       "conseil-strategique": {
         "pole": "Conseil",
-        "title": "Conseil Stratégique\n& Transformation",
+        "title": "Roadmap & Transformation\nDigitale",
         "tagline": "La stratégie avant l'outil",
         "intro": "Beaucoup d'organisations africaines cherchent d'abord un logiciel — sans avoir défini pourquoi elles en ont besoin, ce qu'elles veulent changer, ni quel modèle elles visent. Cette approche conduit à des investissements coûteux, mal adoptés et rapidement abandonnés. ACT inverse cette logique : la vision stratégique précède toujours le choix technologique. Ce n'est qu'à l'issue d'un diagnostic de fond que les orientations technologiques sont définies — jamais l'inverse.",
         "subs": [
@@ -761,7 +791,7 @@
       },
       "conseil-operationnel": {
         "pole": "Conseil",
-        "title": "Conseil Opérationnel\n& Métier",
+        "title": "Optimisation SI\n& Processus Métier",
         "tagline": "Comprendre avant de numériser",
         "intro": "Entre la stratégie digitale et le déploiement d'une solution technologique existe un espace critique trop souvent ignoré : l'espace opérationnel. C'est là que vivent les processus métiers réels, les flux d'information et les règles non écrites qui régissent le fonctionnement quotidien. Un processus inefficace numérisé reste un processus inefficace — simplement plus rapide et plus coûteux. ACT optimise l'opérationnel avant de choisir la technologie, en partant du terrain, pas d'une présentation PowerPoint.",
         "subs": [
@@ -793,7 +823,7 @@
       },
       "catalogue-formations": {
         "pole": "Formation",
-        "title": "Catalogue\nde Formations",
+        "title": "Formation\nProfessionnelle",
         "tagline": "Se former aujourd'hui, c'est réussir demain",
         "intro": "Se former aux compétences digitales est devenu incontournable. Nos formations en intelligence artificielle — comme l'intégration de l'IA au quotidien — permettent à tout professionnel de gagner en productivité et de faire de l'IA un véritable levier de performance. Au-delà de ces compétences transversales, c'est toute une culture numérique qu'il est essentiel d'acquérir pour répondre aux enjeux concrets du marché.Conçues par des experts du continent à partir de cas réels, ces formations offrent des compétences opérationnelles immédiatement mobilisable",
         "subs": [

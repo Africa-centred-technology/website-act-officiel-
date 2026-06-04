@@ -86,21 +86,6 @@ export const SERVICES: Service[] = [
     ],
   },
 
-  /* ── 05 ─────────────────────────────────────────────── */
-  {
-    slug: "geomatique-sig",
-    n: "05", poleN: "I", accent: ORANGE,
-    bg: "radial-gradient(ellipse 80% 80% at 70% 70%, #1A1205 0%, #050C18 55%, #030810 100%)",
-    icon: "M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7",
-    video: "https://cdn.pixabay.com/video/2017/07/23/10854-226632941_large.mp4",
-    heroImage: "/images/services/sig.jpg",
-    heroAlt: "Géomatique et systèmes d'information géographique pour le développement territorial en Afrique — ACT SIG",
-    subImages: [
-      "/images/services/sig-1.jpg",
-      "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?auto=format&fit=crop&w=1200&q=80",
-    ],
-  },
-
   /* ── 06 ─────────────────────────────────────────────── */
   {
     slug: "conseil-strategique",
