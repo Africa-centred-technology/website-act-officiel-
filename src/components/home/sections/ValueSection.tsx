@@ -132,6 +132,7 @@ export default function ValueSection() {
     <section
       ref={containerRef}
       style={{
+        position: "relative",
         width: "100%",
         maxWidth: 1400,
         margin: "0 auto",
