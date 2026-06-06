@@ -1,6 +1,17 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Content FR — no regression after externalization", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route("**/api/shopify/formations*", (route) => {
+      if (route.request().url().includes("/api/shopify/formations/")) return route.fallback();
+      return route.fulfill({ json: { formations: [] } });
+    });
+    await page.route("**/api/shopify/blog*", (route) => {
+      if (route.request().url().includes("/api/shopify/blog/")) return route.fallback();
+      return route.fulfill({ json: { posts: [] } });
+    });
+  });
+
   const PAGES = [
     { path: "/fr/", contains: ["Africa Centred Technology"] },
     { path: "/fr/about", contains: ["Africa Centred Technology", "À propos"] },
