@@ -42,13 +42,11 @@ test.describe("Content FR — no regression after externalization", () => {
     });
   }
 
-  test("Breadcrumb JSON-LD on /fr/formations/[slug] contains Accueil + Formations", async ({ page, request }) => {
-    const apiRes = await request.get("/api/shopify/formations");
-    const list = await apiRes.json().catch(() => []);
-    const firstSlug = Array.isArray(list) ? list?.[0]?.slug : undefined;
-    test.skip(!firstSlug, "No formation available");
-
-    await page.goto(`/fr/formations/${firstSlug}`);
+  test("Breadcrumb JSON-LD on /fr/formations/[slug] contains Accueil + Formations", async ({ page }) => {
+    // The breadcrumb is server-rendered from the slug alone (formation?.title ?? slug),
+    // so it is present even when Shopify credentials are unavailable.
+    // SSR errors from fetchShopifyFormationByHandle are caught silently in the page component.
+    await page.goto("/fr/formations/ia-pour-les-pros");
     const html = await page.content();
     expect(html).toContain('"name":"Accueil"');
     expect(html).toContain('"name":"Formations"');

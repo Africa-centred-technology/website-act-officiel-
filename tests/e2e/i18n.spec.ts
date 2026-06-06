@@ -1,6 +1,17 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("i18n routing", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route("**/api/shopify/formations*", (route) => {
+      if (route.request().url().includes("/api/shopify/formations/")) return route.fallback();
+      return route.fulfill({ json: { formations: [] } });
+    });
+    await page.route("**/api/shopify/blog*", (route) => {
+      if (route.request().url().includes("/api/shopify/blog/")) return route.fallback();
+      return route.fulfill({ json: { posts: [] } });
+    });
+  });
+
   test("/ redirects to /fr (or detected locale)", async ({ page }) => {
     const response = await page.goto("/");
     expect(response?.status()).toBe(200);
