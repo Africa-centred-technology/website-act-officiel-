@@ -464,6 +464,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             {/* Language */}
             <button
               onClick={() => router.replace(pathname, { locale: targetLocale })}
+              aria-label={`Switch to ${targetLocale.toUpperCase()}`}
               style={{ background: "none", border: "1px solid rgba(255,255,255,0.18)", borderRadius: "4px", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-display)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", padding: "0.28rem 0.5rem", textTransform: "uppercase", transition: "color 0.2s, border-color 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.color = ORANGE; e.currentTarget.style.borderColor = ORANGE; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.55)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)"; }}
