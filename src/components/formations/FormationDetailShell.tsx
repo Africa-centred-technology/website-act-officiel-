@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useRef, startTransition, memo } fr
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, RefreshCw } from "lucide-react";
+import { Loader2, RefreshCw, Linkedin } from "lucide-react";
 import FooterStrip from "../layout/FooterStrip";
 import FormationInscriptionModal from "./FormationInscriptionModal";
 import BrochureRequestModal from "./BrochureRequestModal";
@@ -128,7 +128,7 @@ interface FormationDetail {
     cta_url?: string;
     features: string[];
   }[];
-  experts?: { nom: string; role: string; bio?: string; photo?: string }[];
+  experts?: { nom: string; role: string; bio?: string; photo?: string; linkedin?: string }[];
   outilsCouverts?: { name: string; color?: "gold" | "orange" }[];
   brochureUrl?: string;
   hookPain?: string;
@@ -868,6 +868,24 @@ export default function FormationDetailShell({
                         <div className="act-expert-role" style={{ ...monoStyle, fontSize: 10, color: ACT_GOLD, marginTop: 4, letterSpacing: "0.18em" }}>
                           {e.role}
                         </div>
+                        {e.linkedin && (
+                          <a
+                            href={e.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`LinkedIn de ${e.nom}`}
+                            style={{
+                              display: "inline-flex", alignItems: "center", gap: 4,
+                              marginTop: 8, color: "#0A66C2", opacity: 0.85,
+                              transition: "opacity 0.15s",
+                              textDecoration: "none",
+                            }}
+                            onMouseEnter={e2 => (e2.currentTarget.style.opacity = "1")}
+                            onMouseLeave={e2 => (e2.currentTarget.style.opacity = "0.85")}
+                          >
+                            <Linkedin size={14} strokeWidth={1.8} />
+                          </a>
+                        )}
                       </div>
                     </div>
                   ))}

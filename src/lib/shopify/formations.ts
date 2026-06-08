@@ -356,6 +356,7 @@ export interface Expert {
   role: string;
   bio?: string;
   photo?: string;
+  linkedin?: string;
 }
 
 export interface OutilCouvert {
@@ -484,6 +485,7 @@ function parseExperts(value: string): Expert[] {
         role: String(e.role || e.titre || e.title || "").trim(),
         bio: e.bio ? String(e.bio).trim() : undefined,
         photo: e.photo ? String(e.photo).trim() : undefined,
+        linkedin: e.linkedin ? String(e.linkedin).trim() : undefined,
       }))
       .filter((e) => e.nom);
   } catch (error) {
