@@ -47,7 +47,9 @@ export async function getBySlug(
         { status: 404 }
       );
     }
-    return NextResponse.json({ formation });
+    return NextResponse.json({ formation }, {
+      headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
+    });
   } catch (error) {
     console.error(`[/api/shopify/formations/${slug}] Shopify fetch failed:`, error);
     return NextResponse.json(

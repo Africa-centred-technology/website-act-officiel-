@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +11,7 @@ import BrochureRequestModal from "./BrochureRequestModal";
 import AnnouncementBar from "../layout/AnnouncementBar";
 import { DEFAULT_PAIN_POINT_IMAGES } from "@/lib/data/formation-defaults";
 import { useDataMessages } from "@/i18n/data-i18n";
+import type { ShopifyFormationDetail } from "@/lib/shopify/formations";
 
 /* ── Tracking helpers (GTM dataLayer + Meta Pixel + GA4) ── */
 type TrackingWindow = Window & {
@@ -287,19 +288,32 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
 }
 
 /* ── Main component ──────────────────────────────────────── */
-export default function FormationDetailShell({ slug }: { slug: string }) {
+export default function FormationDetailShell({
+  slug,
+  initialFormation,
+}: {
+  slug: string;
+  initialFormation?: ShopifyFormationDetail | null;
+}) {
   const t = useTranslations("formations.detail");
   const tInsc = useTranslations("formations.inscription");
   const locale = useLocale();
   const router = useRouter();
-  const [formation, setFormation] = useState<FormationDetail | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Seed state from SSR data to avoid blank screen / spinner on first paint
+  const [formation, setFormation] = useState<FormationDetail | null>(
+    (initialFormation as FormationDetail) ?? null
+  );
+  const [isLoading, setIsLoading] = useState(!initialFormation);
   const [fetchError, setFetchError] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openModule, setOpenModule] = useState<number | null>(0);
   const [openObjectif, setOpenObjectif] = useState<number | null>(0);
   const [isInscriptionOpen, setIsInscriptionOpen] = useState(false);
   const [isBrochureOpen, setIsBrochureOpen]       = useState(false);
+
+  // Track which slug is already loaded to skip redundant fetches
+  const loadedSlugRef = useRef<string>(initialFormation ? slug : "");
 
   const loadFormation = async () => {
     setIsLoading(true);
@@ -309,6 +323,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setFormation(json.formation ?? null);
+      loadedSlugRef.current = slug;
     } catch (err) {
       console.error("[FormationDetailShell] fetch failed:", err);
       setFetchError(true);
@@ -317,7 +332,12 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
     }
   };
 
-  useEffect(() => { loadFormation(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [slug, locale]);
+  useEffect(() => {
+    // Skip fetch when SSR data already covers this slug
+    if (loadedSlugRef.current === slug) return;
+    loadFormation();
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [slug, locale]);
 
   /* ── Sticky CTA bar visibility ─ */
   const [showStickyBar, setShowStickyBar] = useState(false);
@@ -437,7 +457,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
              
               <Eyebrow>{t("eyebrowFormation")}</Eyebrow>
-              <h1 style={{
+              <h1 className="act-hero-h1" style={{
                 fontFamily: FONT_DISPLAY, fontSize: "clamp(46px, 6.4vw, 96px)",
                 lineHeight: 0.98, fontWeight: 500, letterSpacing: "-0.025em",
                 margin: "28px 0 32px", color: TXT, textWrap: "balance",
@@ -449,7 +469,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                   </React.Fragment>
                 ))}
               </h1>
-              <p style={ledeStyle}>{formation.accroche}</p>
+              <p className="act-hero-lede" style={ledeStyle}>{formation.accroche}</p>
 
               <div className="act-hero-btns" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
                 <Btn variant="primary" onClick={() => goInscription("hero_primary")}>{t("inscriptionCta")}</Btn>
@@ -461,7 +481,7 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 </Btn>
               </div>
 
-              <div style={heroTrustStyle}>
+              <div className="act-hero-trust" style={heroTrustStyle}>
                 {trustStats.map((t) => (
                   <div key={t.label} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                     <span style={{
@@ -1125,7 +1145,6 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
       <FooterStrip />
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=swap');
         @keyframes marqueeScroll { to { transform: translateX(-50%); } }
         @keyframes toolsSlide    { to { transform: translateX(-50%); } }
         @keyframes audienceSlide { to { transform: translateX(-50%); } }
@@ -1153,10 +1172,9 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
         /* ── Responsive — mobile (≤768px) ── */
         @media (max-width: 768px) {
           .act-container  { padding: 0 20px !important; }
-          .act-hero       { padding: 64px 0 80px !important; }
-          .act-hero-grid  { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .act-hero       { padding: 64px 0 72px !important; }
+          .act-hero-grid  { grid-template-columns: 1fr !important; gap: 36px !important; }
           .act-hero-card  { padding: 22px !important; }
-          .act-hero-btns  { justify-content: center !important; }
           .act-hero-price { font-size: 38px !important; }
           .act-card-meta  { grid-template-columns: 1fr 1fr !important; gap: 12px 16px !important; }
           .act-section    { padding: 72px 0 !important; }
@@ -1174,12 +1192,26 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
           }
           .act-sticky-inner > div { min-width: 0; flex: 1 1 auto !important; }
           .act-sticky-title { display: none !important; }
+
+          /* Hero text & buttons — mobile */
+          .act-hero-lede  { font-size: 17px !important; line-height: 1.55 !important; margin-bottom: 28px !important; }
+          .act-hero-trust { gap: 20px !important; margin-top: 32px !important; padding-top: 20px !important; }
+          .act-hero-btns  { flex-direction: column !important; align-items: stretch !important; gap: 12px !important; }
+          .act-hero-btns > button,
+          .act-hero-btns > a  { width: 100% !important; }
+          .act-hero-btns > button > span,
+          .act-hero-btns > a > span {
+            width: 100% !important;
+            justify-content: center !important;
+            white-space: normal !important;
+            text-align: center !important;
+          }
         }
 
         /* ── Responsive — small mobile (≤480px) ── */
         @media (max-width: 480px) {
           .act-container  { padding: 0 16px !important; }
-          .act-hero       { padding: 48px 0 64px !important; }
+          .act-hero       { padding: 44px 0 60px !important; }
           .act-hero-card  { padding: 16px !important; }
           .act-hero-price { font-size: 30px !important; }
           .act-card-meta  { grid-template-columns: 1fr !important; }
@@ -1197,6 +1229,13 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             align-items: center !important;
           }
           .act-sticky-title { display: none !important; }
+
+          /* Hero text & buttons — small mobile */
+          .act-hero-h1    { font-size: 38px !important; line-height: 1.05 !important; margin: 20px 0 24px !important; }
+          .act-hero-lede  { font-size: 15px !important; }
+          .act-hero-trust { gap: 16px !important; flex-wrap: wrap !important; }
+          .act-hero-btns > button > span,
+          .act-hero-btns > a > span { padding: 13px 20px !important; font-size: 11px !important; }
         }
       `}</style>
     </div>

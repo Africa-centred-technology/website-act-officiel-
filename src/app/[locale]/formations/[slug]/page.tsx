@@ -71,7 +71,7 @@ export default async function FormationPage({ params }: Props) {
     <Suspense fallback={<FormationDetailLoading />}>
       {courseData && <JsonLd data={courseData as unknown as WithContext<Thing>} />}
       <JsonLd data={crumbData as unknown as WithContext<Thing>} />
-      <FormationDetailShell slug={slug} />
+      <FormationDetailShell slug={slug} initialFormation={formation} />
     </Suspense>
   );
 }
