@@ -456,6 +456,9 @@ export default function FormationDetailShell({ slug }: { slug: string }) {
                 <Btn variant="ghost" onClick={() => { trackCtaClick("hero_voir_programme", slug); scrollTo("programme")(); }}>
                   <Diamond /> {t("voirProgramme")}
                 </Btn>
+                <Btn variant="ghost" onClick={() => { trackCtaClick("hero_brochure", slug, { formation_title: formation.title }); setIsBrochureOpen(true); }}>
+                  <Diamond /> {t("brochureCta")}
+                </Btn>
               </div>
 
               <div style={heroTrustStyle}>

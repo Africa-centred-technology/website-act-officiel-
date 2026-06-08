@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import FooterStrip from "@/components/layout/FooterStrip";
 import { getCsrfToken } from "@/lib/csrf";
 import CTAButton from "@/components/ui/CTAButton";
@@ -292,11 +292,8 @@ function MarketingVideo() {
                     transition={{ delay: 1.3, duration: 0.6 }}
                     style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3.5rem" }}
                 >
-                    <RippleButton href="#catalogue" arrowDeg={45} size="lg">
+                    <RippleButton href="/formations/all" arrowDeg={45} size="lg">
                         Voir le catalogue
-                    </RippleButton>
-                    <RippleButton href="#inscription" arrowDeg={45} variant="outline" size="lg">
-                        S&apos;inscrire maintenant
                     </RippleButton>
                     <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
                         Réponse sous 24h · Sans engagement
