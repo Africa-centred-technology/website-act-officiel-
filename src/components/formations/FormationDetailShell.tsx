@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, startTransition, memo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -242,7 +242,7 @@ const Btn = ({
 };
 
 /* ── FAQ Item ────────────────────────────────────────────── */
-function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
+const FaqItem = memo(function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
   return (
     <div style={{ borderBottom: `1px solid ${LINE}` }}>
       <button onClick={onToggle} style={{
@@ -285,7 +285,174 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
       </AnimatePresence>
     </div>
   );
-}
+});
+
+/* ── ObjectifsAccordion — owns its own open state to isolate re-renders ── */
+const ObjectifsAccordion = memo(function ObjectifsAccordion({ objectifs }: { objectifs: string[] }) {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+      {objectifs.slice(0, 6).map((obj, i) => {
+        const isOpen = open === i;
+        const truncated = obj.length > 80;
+        const preview = truncated ? obj.slice(0, 80) + "…" : obj;
+        const isClickable = truncated;
+        return (
+          <div key={i} style={{
+            borderTop: `1px solid rgba(255,255,255,0.1)`,
+            borderLeft: isOpen ? `2px solid ${ACT_ORANGE}` : "2px solid transparent",
+            paddingLeft: isOpen ? 10 : 0,
+            transition: "border-color 0.25s, padding-left 0.25s",
+          }}>
+            <button
+              onClick={() => isClickable && startTransition(() => setOpen(isOpen ? null : i))}
+              className="act-obj-btn"
+              style={{
+                display: "grid", gridTemplateColumns: "40px 1fr 36px", gap: 24,
+                width: "100%", padding: "28px 0", textAlign: "left",
+                background: "none", border: "none",
+                cursor: isClickable ? "pointer" : "default",
+                color: TXT, alignItems: "start",
+              }}
+            >
+              <div className="act-obj-num" style={{
+                ...valueNumStyle,
+                color: isOpen ? ACT_ORANGE : "rgba(255,255,255,0.35)",
+                transition: "color 0.25s",
+              }}>{String(i + 1).padStart(2, "0")}</div>
+              <h3 className="act-obj-h3" style={{
+                fontFamily: FONT_DISPLAY, fontSize: 24, lineHeight: 1.25,
+                color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500, margin: 0,
+                transition: "color 0.25s",
+              }}>
+                {isOpen ? obj : preview}
+              </h3>
+              {isClickable ? (
+                <span className="act-obj-toggle" style={{
+                  width: 28, height: 28, marginTop: 4,
+                  border: `1px solid ${isOpen ? ACT_ORANGE : "rgba(255,255,255,0.2)"}`,
+                  background: isOpen ? ACT_ORANGE : "transparent",
+                  color: isOpen ? ACT_CREAM : TXT,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  position: "relative", transition: "all 0.3s", justifySelf: "end",
+                }}>
+                  <span style={{ position: "absolute", width: 11, height: 1, background: "currentColor" }} />
+                  {!isOpen && <span style={{ position: "absolute", width: 1, height: 11, background: "currentColor" }} />}
+                </span>
+              ) : (
+                <span />
+              )}
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  );
+});
+
+/* ── ProgrammeModules — owns openModule state to isolate re-renders ── */
+const ProgrammeModules = memo(function ProgrammeModules({
+  programme,
+}: {
+  programme: { module: string; description: string }[];
+}) {
+  const t = useTranslations("formations.detail");
+  const [openModule, setOpenModule] = useState<number | null>(0);
+  return (
+    <>
+      {programme.map((mod, i) => {
+        const isOpen = openModule === i;
+        const hasDescription = !!mod.description;
+        return (
+          <div key={i} className="act-prog-mod" style={{ position: "relative", paddingLeft: 100, paddingBottom: 24 }}>
+            <div style={{
+              position: "absolute", left: 34, top: 28, width: 14, height: 14,
+              background: ACT_ORANGE, transform: "rotate(-43.264deg)",
+              boxShadow: `0 0 0 8px rgba(211,84,0,0.12), 0 0 20px rgba(211,84,0,0.5)`,
+            }} />
+            <button
+              onClick={() => hasDescription && startTransition(() => setOpenModule(isOpen ? null : i))}
+              style={{
+                width: "100%", textAlign: "left",
+                background: "none", border: "none", padding: "20px 0",
+                cursor: hasDescription ? "pointer" : "default", color: TXT,
+                display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+                gap: 24,
+              }}
+            >
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
+                  textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
+                }}>{t("moduleLabel")} {String(i + 1).padStart(2, "0")}</div>
+                <h3 className="act-prog-h3" style={{
+                  fontFamily: FONT_DISPLAY, fontSize: 36, lineHeight: 1.1,
+                  marginTop: 8, color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500,
+                  transition: "color 0.25s",
+                }}>{mod.module}</h3>
+              </div>
+              {hasDescription && (
+                <span style={{
+                  flexShrink: 0, marginTop: 24,
+                  width: 36, height: 36,
+                  border: `1px solid ${isOpen ? ACT_ORANGE : "rgba(255,255,255,0.2)"}`,
+                  background: isOpen ? ACT_ORANGE : "transparent",
+                  color: isOpen ? ACT_CREAM : TXT,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  position: "relative", transition: "all 0.3s",
+                }}>
+                  <span style={{ position: "absolute", width: 14, height: 1, background: "currentColor" }} />
+                  {!isOpen && <span style={{ position: "absolute", width: 1, height: 14, background: "currentColor" }} />}
+                </span>
+              )}
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen && hasDescription && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ overflow: "hidden" }}
+                >
+                  <p style={{
+                    padding: "0 0 28px 0", margin: 0,
+                    maxWidth: 780, fontSize: 16, lineHeight: 1.7,
+                    color: "rgba(255,255,255,0.78)", fontWeight: 300,
+                  }}>
+                    {mod.description}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </>
+  );
+});
+
+/* ── FaqAccordion — owns openFaq state to isolate re-renders ── */
+const FaqAccordion = memo(function FaqAccordion({
+  faqs,
+}: {
+  faqs: { question: string; answer: string }[];
+}) {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  return (
+    <div style={{ maxWidth: 880, margin: "0 auto" }}>
+      {faqs.map((f, i) => (
+        <FaqItem
+          key={i}
+          q={f.question}
+          a={f.answer}
+          open={openFaq === i}
+          onToggle={() => startTransition(() => setOpenFaq(openFaq === i ? null : i))}
+        />
+      ))}
+    </div>
+  );
+});
 
 /* ── Main component ──────────────────────────────────────── */
 export default function FormationDetailShell({
@@ -306,9 +473,6 @@ export default function FormationDetailShell({
   );
   const [isLoading, setIsLoading] = useState(!initialFormation);
   const [fetchError, setFetchError] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [openModule, setOpenModule] = useState<number | null>(0);
-  const [openObjectif, setOpenObjectif] = useState<number | null>(0);
   const [isInscriptionOpen, setIsInscriptionOpen] = useState(false);
   const [isBrochureOpen, setIsBrochureOpen]       = useState(false);
 
@@ -593,9 +757,9 @@ export default function FormationDetailShell({
       {/* ════════════ PAIN ════════════ */}
       <section className="act-section" style={secStyle}>
         <div className="act-container" style={containerStyle}>
-          <div style={secHeadStyle}>
+          <div className="act-sec-head" style={secHeadStyle}>
             <Eyebrow>{t("leConstatLabel")}</Eyebrow>
-            <h2 style={h2Style}>
+            <h2 className="act-sec-h2" style={h2Style}>
               {formation.hookPain || (
                 <>Même outils, même brief :<br /><em style={emStyle}>résultats pas à la hauteur</em> de vos attentes.</>
               )}
@@ -662,56 +826,13 @@ export default function FormationDetailShell({
       {/* ════════════ VALUE ════════════ */}
       <section className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
         <div className="act-container" style={containerStyle}>
-          <div style={secHeadStyle}>
+          <div className="act-sec-head" style={secHeadStyle}>
             <Eyebrow>{t("ceQueVousRepartirezAvecLabel")}</Eyebrow>
-            <h2 style={h2Style}>Pas une formation.<br />Un <em style={emStyle}>déclic</em> opérationnel.</h2>
+            <h2 className="act-sec-h2" style={h2Style}>Pas une formation.<br />Un <em style={emStyle}>déclic</em> opérationnel.</h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: 60, alignItems: "start" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-              {formation.objectifs.slice(0, 6).map((obj, i) => {
-                const isOpen = openObjectif === i;
-                const truncated = obj.length > 80;
-                const preview = truncated ? obj.slice(0, 80) + "…" : obj;
-                const isClickable = truncated;
-                return (
-                  <div key={i} style={{ borderTop: `1px solid rgba(255,255,255,0.1)` }}>
-                    <button
-                      onClick={() => isClickable && setOpenObjectif(isOpen ? null : i)}
-                      style={{
-                        display: "grid", gridTemplateColumns: "40px 1fr 36px", gap: 24,
-                        width: "100%", padding: "28px 0", textAlign: "left",
-                        background: "none", border: "none",
-                        cursor: isClickable ? "pointer" : "default",
-                        color: TXT, alignItems: "start",
-                      }}
-                    >
-                      <div style={valueNumStyle}>{String(i + 1).padStart(2, "0")}</div>
-                      <h3 style={{
-                        fontFamily: FONT_DISPLAY, fontSize: 24, lineHeight: 1.25,
-                        color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500, margin: 0,
-                        transition: "color 0.25s",
-                      }}>
-                        {isOpen ? obj : preview}
-                      </h3>
-                      {isClickable && (
-                        <span style={{
-                          width: 28, height: 28, marginTop: 4,
-                          border: `1px solid ${isOpen ? ACT_ORANGE : "rgba(255,255,255,0.2)"}`,
-                          background: isOpen ? ACT_ORANGE : "transparent",
-                          color: isOpen ? ACT_CREAM : TXT,
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          position: "relative", transition: "all 0.3s", justifySelf: "end",
-                        }}>
-                          <span style={{ position: "absolute", width: 11, height: 1, background: "currentColor" }} />
-                          {!isOpen && <span style={{ position: "absolute", width: 1, height: 11, background: "currentColor" }} />}
-                        </span>
-                      )}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="act-value-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: 60, alignItems: "start" }}>
+            <ObjectifsAccordion objectifs={formation.objectifs} />
 
             {formation.experts && formation.experts.length > 0 && (
               <div className="act-value-visual" style={valueVisualStyle}>
@@ -744,7 +865,7 @@ export default function FormationDetailShell({
                         <div style={{ fontFamily: FONT_DISPLAY, fontSize: 16, color: TXT, fontWeight: 500, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
                           {e.nom}
                         </div>
-                        <div style={{ ...monoStyle, fontSize: 10, color: ACT_GOLD, marginTop: 4, letterSpacing: "0.18em" }}>
+                        <div className="act-expert-role" style={{ ...monoStyle, fontSize: 10, color: ACT_GOLD, marginTop: 4, letterSpacing: "0.18em" }}>
                           {e.role}
                         </div>
                       </div>
@@ -761,7 +882,7 @@ export default function FormationDetailShell({
       {hasOutils && (
         <section className="act-section" style={secStyle}>
           <div className="act-container" style={containerStyle}>
-            <div style={secHeadStyle}>
+            <div className="act-sec-head" style={secHeadStyle}>
               <Eyebrow>{t("outilsCouvertsLabel")}</Eyebrow>
               <h2 style={{ ...h2Style, maxWidth: 780 }}>{outils.length}+ outils IA maîtrisés.<br />Aucune <em style={emStyle}>install</em> obligatoire.</h2>
             </div>
@@ -792,9 +913,9 @@ export default function FormationDetailShell({
       {/* ════════════ PROGRAMME ════════════ */}
       <section id="programme" className="act-section" style={{ ...secStyle, background: ACT_DARK_DEEP }}>
         <div className="act-container" style={containerStyle}>
-          <div style={secHeadStyle}>
+          <div className="act-sec-head" style={secHeadStyle}>
             <Eyebrow>{t("programmeLabel")} · {formation.duree || "14 heures"}</Eyebrow>
-            <h2 style={h2Style}>Un parcours <em style={emStyle}>dense</em>,<br />100% opérationnel.</h2>
+            <h2 className="act-sec-h2" style={h2Style}>Un parcours <em style={emStyle}>dense</em>,<br />100% opérationnel.</h2>
             <p style={secPStyle}>{t("programmeSubtitle")}</p>
           </div>
 
@@ -804,87 +925,19 @@ export default function FormationDetailShell({
               background: `linear-gradient(180deg, transparent, rgba(211,84,0,0.4) 15%, rgba(211,84,0,0.4) 85%, transparent)`,
             }} />
 
-            {formation.programme.map((mod, i) => {
-              const isOpen = openModule === i;
-              const hasDescription = !!mod.description;
-              return (
-                <div key={i} className="act-prog-mod" style={{ position: "relative", paddingLeft: 100, paddingBottom: 24 }}>
-                  <div style={{
-                    position: "absolute", left: 34, top: 28, width: 14, height: 14,
-                    background: ACT_ORANGE, transform: "rotate(-43.264deg)",
-                    boxShadow: `0 0 0 8px rgba(211,84,0,0.12), 0 0 20px rgba(211,84,0,0.5)`,
-                  }} />
-                  <button
-                    onClick={() => hasDescription && setOpenModule(isOpen ? null : i)}
-                    style={{
-                      width: "100%", textAlign: "left",
-                      background: "none", border: "none", padding: "20px 0",
-                      cursor: hasDescription ? "pointer" : "default", color: TXT,
-                      display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-                      gap: 24,
-                    }}
-                  >
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{
-                        fontFamily: FONT_LABEL, fontSize: 11, letterSpacing: "0.22em",
-                        textTransform: "uppercase", color: ACT_ORANGE, fontWeight: 600,
-                      }}>{t("moduleLabel")} {String(i + 1).padStart(2, "0")}</div>
-                      <h3 className="act-prog-h3" style={{
-                        fontFamily: FONT_DISPLAY, fontSize: 36, lineHeight: 1.1,
-                        marginTop: 8, color: isOpen ? ACT_ORANGE : TXT, fontWeight: 500,
-                        transition: "color 0.25s",
-                      }}>{mod.module}</h3>
-                    </div>
-                    {hasDescription && (
-                      <span style={{
-                        flexShrink: 0, marginTop: 24,
-                        width: 36, height: 36,
-                        border: `1px solid ${isOpen ? ACT_ORANGE : "rgba(255,255,255,0.2)"}`,
-                        background: isOpen ? ACT_ORANGE : "transparent",
-                        color: isOpen ? ACT_CREAM : TXT,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        position: "relative", transition: "all 0.3s",
-                      }}>
-                        <span style={{ position: "absolute", width: 14, height: 1, background: "currentColor" }} />
-                        {!isOpen && <span style={{ position: "absolute", width: 1, height: 14, background: "currentColor" }} />}
-                      </span>
-                    )}
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && hasDescription && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                        style={{ overflow: "hidden" }}
-                      >
-                        <p style={{
-                          padding: "0 0 28px 0", margin: 0,
-                          maxWidth: 780, fontSize: 16, lineHeight: 1.7,
-                          color: "rgba(255,255,255,0.78)", fontWeight: 300,
-                        }}>
-                          {mod.description}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
+            <ProgrammeModules programme={formation.programme} />
           </div>
         </div>
       </section>
 
       {/* ════════════ MID CTA · LEAD MAGNET BROCHURE ════════════ */}
-      <section style={{
+      <section className="act-section act-brochure-section" style={{
         padding: "100px 0", position: "relative", overflow: "hidden",
         background: `radial-gradient(ellipse at 30% 50%, rgba(211,84,0,0.3), transparent 60%), radial-gradient(ellipse at 75% 50%, rgba(243,156,18,0.22), transparent 60%), ${ACT_DARK_DEEP}`,
         borderTop: `1px solid rgba(211,84,0,0.3)`, borderBottom: `1px solid rgba(211,84,0,0.3)`,
       }}>
         <div className="act-container" style={containerStyle}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
+          <div className="act-brochure-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
             <div>
               <Eyebrow>{t("brochureLabel")}</Eyebrow>
               <h2 style={{ ...h2Style, fontSize: "clamp(36px, 4.5vw, 64px)", marginTop: 20 }}>
@@ -894,7 +947,7 @@ export default function FormationDetailShell({
                 {t("brochureSubtitle")}
               </p>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-start" }}>
+            <div className="act-brochure-cta" style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: "flex-start" }}>
               <Btn
                 variant="primary"
                 onClick={() => {
@@ -926,9 +979,9 @@ export default function FormationDetailShell({
       {/* ════════════ AUDIENCE — pill marquee ════════════ */}
       <section className="act-section" style={secStyle}>
         <div className="act-container" style={containerStyle}>
-          <div style={secHeadStyle}>
+          <div className="act-sec-head" style={secHeadStyle}>
             <Eyebrow>{t("audienceLabel")}</Eyebrow>
-            <h2 style={h2Style}>Conçu pour les pros<br />qui veulent <em style={emStyle}>des résultats</em>.</h2>
+            <h2 className="act-sec-h2" style={h2Style}>Conçu pour les pros<br />qui veulent <em style={emStyle}>des résultats</em>.</h2>
           </div>
         </div>
 
@@ -1038,11 +1091,7 @@ export default function FormationDetailShell({
 Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2>
           </div>
 
-          <div style={{ maxWidth: 880, margin: "0 auto" }}>
-            {faqs.map((f, i) => (
-              <FaqItem key={i} q={f.question} a={f.answer} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />
-            ))}
-          </div>
+          <FaqAccordion faqs={faqs} />
 
           <div style={{ marginTop: 60, textAlign: "center" }}>
             <Btn variant="ghost" href="/contact">
@@ -1206,6 +1255,45 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
             white-space: normal !important;
             text-align: center !important;
           }
+
+          /* ── Global: prevent any Btn from overflowing on mobile ── */
+          /* Targets all sections (not hero/sticky which have their own rules)  */
+          .act-section a > span,
+          .act-section button:not([class*="act-sticky"]) > span {
+            white-space: normal !important;
+            word-break: break-word !important;
+            max-width: min(100%, calc(100vw - 40px)) !important;
+            box-sizing: border-box !important;
+            text-align: center !important;
+            justify-content: center !important;
+          }
+
+          /* Sections — header & objectives accordion */
+          .act-sec-head   { margin-bottom: 28px !important; }
+          .act-sec-h2     { font-size: clamp(26px, 6.5vw, 38px) !important; margin-top: 10px !important; line-height: 1.1 !important; }
+          .act-obj-btn    { padding: 16px 0 !important; gap: 14px !important;
+                            grid-template-columns: 28px 1fr 32px !important; }
+          .act-obj-h3     { font-size: 16px !important; line-height: 1.4 !important; }
+          .act-obj-num    { font-size: 10px !important; margin-top: 2px !important; }
+          .act-obj-toggle { width: 26px !important; height: 26px !important; }
+
+          /* Value grid — force single column so minmax(380px) doesn't overflow */
+          .act-value-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+
+          /* Expert role — allow long uppercase text to wrap */
+          .act-expert-role {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            letter-spacing: 0.12em !important;
+          }
+
+          /* Brochure CTA section */
+          .act-brochure-section { padding: 72px 0 !important; }
+          .act-brochure-grid    { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .act-brochure-cta     { align-items: stretch !important; }
+          .act-brochure-cta > button,
+          .act-brochure-cta > a { width: 100% !important; }
         }
 
         /* ── Responsive — small mobile (≤480px) ── */
@@ -1236,6 +1324,26 @@ Vous posez des <br /><em style={emStyle}>question</em>  voici nos réponses </h2
           .act-hero-trust { gap: 16px !important; flex-wrap: wrap !important; }
           .act-hero-btns > button > span,
           .act-hero-btns > a > span { padding: 13px 20px !important; font-size: 11px !important; }
+
+          /* Global: tighter max-width on very small screens */
+          .act-section a > span,
+          .act-section button:not([class*="act-sticky"]) > span {
+            max-width: min(100%, calc(100vw - 32px)) !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+          }
+
+          /* Sections — header & objectives accordion — small mobile */
+          .act-sec-head   { margin-bottom: 20px !important; }
+          .act-sec-h2     { font-size: clamp(24px, 6vw, 32px) !important; margin-top: 8px !important; }
+          .act-obj-btn    { padding: 13px 0 !important; gap: 10px !important;
+                            grid-template-columns: 22px 1fr 28px !important; }
+          .act-obj-h3     { font-size: 14px !important; line-height: 1.4 !important; }
+          .act-obj-toggle { width: 24px !important; height: 24px !important; }
+          .act-value-grid { gap: 24px !important; }
+          .act-expert-role { letter-spacing: 0.09em !important; }
+          .act-brochure-section { padding: 56px 0 !important; }
+          .act-brochure-grid    { gap: 28px !important; }
         }
       `}</style>
     </div>

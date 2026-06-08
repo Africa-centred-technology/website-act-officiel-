@@ -413,7 +413,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           </Link>
 
           {/* Desktop — primary items */}
-          <div className="hidden lg:flex items-center" style={{ gap: "clamp(0.25rem, 1vw, 0.5rem)", marginLeft: "auto" }}>
+          <div className="hidden lg:flex items-center" style={{ gap: "clamp(0.25rem, 1vw, 0.5rem)", flex: 1, justifyContent: "flex-end" }}>
 
             {/* 1. Industries */}
             <div style={{ position: "relative" }} onMouseEnter={() => enter("industries")} onMouseLeave={leave}>
@@ -450,7 +450,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           </div>
 
           {/* Right side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", flexShrink: 0, marginLeft: "auto" }}>
 
             {/* CTA Nous contacter */}
             <Link href="/contact" className="hidden lg:inline-flex"
@@ -472,13 +472,16 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
               {targetLocale.toUpperCase()}
             </button>
 
-            {/* Hamburger */}
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden"
-              style={{ background: "transparent", border: "none", cursor: "pointer", color: "#fff", padding: "0.25rem", alignItems: "center" }}
+            {/* Hamburger — mobile only, right side */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="flex lg:hidden"
+              style={{ background: "transparent", border: "none", cursor: "pointer", color: "#fff", padding: "0.25rem", alignItems: "center", flexShrink: 0 }}
               aria-label={mobileOpen ? t("closeMenu") : t("openMenu")}
             >
               {mobileOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
+
           </div>
         </div>
       </nav>
