@@ -42,6 +42,9 @@ export default function robots(): MetadataRoute.Robots {
       // ── You.com ────────────────────────────────────────────────────────────
       { userAgent: "YouBot",       allow: "/" },
     ],
-    sitemap: "https://www.a-ct.ma/sitemap.xml",
+    sitemap: [
+      "https://www.a-ct.ma/sitemap.xml",
+      "https://www.a-ct.ma/sitemap-static.xml",
+    ],
   };
 }

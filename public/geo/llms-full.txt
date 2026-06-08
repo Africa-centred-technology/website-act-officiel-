@@ -14,7 +14,7 @@
 **Siège** : Maroc (MA)
 **Type** : Société de conseil, d'ingénierie technologique et de formation
 **Zones d'intervention** : Maroc, Afrique subsaharienne, Europe francophone (France, Belgique, Suisse)
-**Langues de travail** : Français, Anglais, Arabe
+**Langues de travail** : Français, Anglais
 **Email** : contact@a-ct.ma
 **Site** : https://www.a-ct.ma
 
@@ -351,6 +351,6 @@ ACT combine expertise technique de haut niveau et ancrage africain assumé. Cont
 - **llms.txt (version courte)** : https://www.a-ct.ma/llms.txt
 - **llms-full.txt (ce fichier)** : https://www.a-ct.ma/llms-full.txt
 - **Langue principale** : Français (fr-MA)
-- **Langues disponibles** : Français (/fr), Anglais (/en), Arabe (/ar)
+- **Langues disponibles** : Français (/fr), Anglais (/en)
 - **Dernière mise à jour** : Mai 2026
 - **Schémas JSON-LD présents** : Organization, WebSite, WebPage, Course, Article, FAQPage, BreadcrumbList

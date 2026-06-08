@@ -110,6 +110,30 @@ export default function FooterStrip({ style }: FooterStripProps = {}) {
             <p style={{ fontSize: "0.95rem", lineHeight: 1.7, color: "rgba(255,255,255,0.45)", maxWidth: "22ch" }}>
               Africa Centred Technology — Ingénierie, Conseil & Formation au service de la transformation digitale africaine.
             </p>
+            {/* NAP — indexable par Google en HTML pur */}
+            <address
+              itemScope
+              itemType="https://schema.org/LocalBusiness"
+              style={{ fontStyle: "normal", fontSize: "0.88rem", lineHeight: 1.75, color: "rgba(255,255,255,0.4)" }}
+            >
+              <span itemProp="name" style={{ display: "none" }}>Africa Centred Technology</span>
+              <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                <span itemProp="streetAddress">Centre d&apos;affaires Tit Mellil N°53, ETG 2 N°8</span><br />
+                <span itemProp="addressLocality">Casablanca</span>,{" "}
+                <span itemProp="addressCountry">Maroc</span>
+              </span>
+              <br />
+              <a
+                href="tel:+212662777507"
+                itemProp="telephone"
+                style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = ORANGE; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
+              >
+                +212 662-777507
+              </a>
+            </address>
+
             {/* Socials */}
             <div style={{ display: "flex", gap: "0.65rem", marginTop: "0.5rem" }}>
               {SOCIALS.map(({ Icon, href, label }) => (
