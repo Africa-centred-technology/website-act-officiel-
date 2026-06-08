@@ -97,13 +97,14 @@ export default function CookieBanner() {
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
-    // TEMPORARILY HIDDEN — re-enable by restoring the needsConsent() check
-    // if (needsConsent()) {
-    //   setVisible(true);
-    // } else {
     const stored = getConsent();
-    if (stored) applyConsent(stored);
-    // }
+    if (stored) {
+      applyConsent(stored);
+    } else {
+      // Consentement accordé par défaut (site Maroc — pas de RGPD)
+      applyConsent("granted");
+      startSession();
+    }
   }, []);
 
   function handle(choice: "granted" | "denied") {

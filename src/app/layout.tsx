@@ -68,11 +68,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('consent', 'default', {
-              analytics_storage: 'denied',
-              ad_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-              wait_for_update: 500,
+              analytics_storage: 'granted',
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
             });
           `}
         </Script>
@@ -87,7 +86,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('consent', 'revoke');
+fbq('consent', 'grant');
 fbq('init', '${META_PIXEL_ID}');
 fbq('track', 'PageView');`}
         </Script>
