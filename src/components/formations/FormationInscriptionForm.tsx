@@ -313,21 +313,58 @@ function Field({
   );
 }
 
-function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
+function Input({
+  error,
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement> & { error?: boolean }) {
+  const [focused, setFocused] = useState(false);
   return (
     <input
       {...props}
-      style={fieldStyle}
-      onFocus={(e) => {
-        (e.currentTarget as HTMLInputElement).style.borderColor = ORANGE;
-        props.onFocus?.(e);
+      style={{
+        ...fieldStyle,
+        borderColor: error ? "#ef4444" : focused ? ORANGE : "rgba(255,255,255,0.1)",
+        ...props.style,
       }}
-      onBlur={(e) => {
-        (e.currentTarget as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.1)";
-        props.onBlur?.(e);
-      }}
+      onFocus={(e) => { setFocused(true); props.onFocus?.(e); }}
+      onBlur={(e) => { setFocused(false); props.onBlur?.(e); }}
     />
   );
+}
+
+function ErrorMsg({ msg }: { msg?: string }) {
+  if (!msg) return null;
+  return (
+    <motion.p
+      initial={{ opacity: 0, y: -4 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={{
+        color: "#ef4444",
+        fontSize: "1.15rem",
+        marginTop: "0.45rem",
+        marginBottom: 0,
+        fontFamily: "Futura, system-ui, sans-serif",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.4rem",
+      }}
+    >
+      ⚠ {msg}
+    </motion.p>
+  );
+}
+
+function validateEmail(v: string): string | undefined {
+  if (!v.trim()) return "L'adresse email est requise";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()))
+    return "Adresse email invalide (ex : nom@domaine.com)";
+}
+
+function validatePhone(v: string): string | undefined {
+  if (!v.trim()) return "Le numéro de téléphone est requis";
+  const cleaned = v.replace(/[\s\-\.\(\)]/g, "");
+  if (!/^\+?[0-9]{8,15}$/.test(cleaned))
+    return "Numéro invalide(doit contenir exclusivement des chiffres, avec un indicatif pays optionnel, ex : +212612345678)";
 }
 
 function Select(props: React.SelectHTMLAttributes<HTMLSelectElement> & { options: string[]; placeholder?: string }) {
@@ -414,6 +451,7 @@ export default function FormationInscriptionForm({
 
   const [tab] = useState<"pro" | "etudiant">("etudiant");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errors, setErrors] = useState<{ email?: string; telephone?: string }>({});
 
   const [form, setForm] = useState({
     // Commun
@@ -441,6 +479,10 @@ export default function FormationInscriptionForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const emailErr = validateEmail(form.email);
+    const phoneErr = validatePhone(form.telephone1);
+    setErrors({ email: emailErr, telephone: phoneErr });
+    if (emailErr || phoneErr) return;
     setStatus("loading");
     try {
       const res = await fetch("/api/shopify/inscription", {
@@ -573,10 +615,16 @@ export default function FormationInscriptionForm({
               <Input
                 type="email"
                 required
+                error={!!errors.email}
                 value={form.email}
-                onChange={(e) => set("email", e.target.value)}
+                onChange={(e) => {
+                  set("email", e.target.value);
+                  if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+                }}
+                onBlur={() => setErrors((prev) => ({ ...prev, email: validateEmail(form.email) }))}
                 placeholder="votre@email.com"
               />
+              <ErrorMsg msg={errors.email} />
             </Field>
 
             {/* Formation — full row */}
@@ -701,10 +749,16 @@ export default function FormationInscriptionForm({
               <Input
                 type="tel"
                 required
+                error={!!errors.telephone}
                 value={form.telephone1}
-                onChange={(e) => set("telephone1", e.target.value)}
+                onChange={(e) => {
+                  set("telephone1", e.target.value);
+                  if (errors.telephone) setErrors((prev) => ({ ...prev, telephone: undefined }));
+                }}
+                onBlur={() => setErrors((prev) => ({ ...prev, telephone: validatePhone(form.telephone1) }))}
                 placeholder="+212 6XX XXX XXX"
               />
+              <ErrorMsg msg={errors.telephone} />
             </Field>
 
 
