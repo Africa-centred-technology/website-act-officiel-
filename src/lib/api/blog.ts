@@ -17,7 +17,7 @@ function readLocale(url: string): Locale {
   return routing.defaultLocale;
 }
 
-/** GET /api/shopify/blog?locale=<fr|en|ar> */
+/** GET /api/shopify/blog?locale=<fr|en> */
 export async function GET(req: Request) {
   const locale = readLocale(req.url);
   try {
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
   }
 }
 
-/** GET /api/shopify/blog/[handle]?locale=<fr|en|ar> */
+/** GET /api/shopify/blog/[handle]?locale=<fr|en> */
 export async function getByHandle(
   req: Request,
   { params }: { params: Promise<{ handle: string }> }
