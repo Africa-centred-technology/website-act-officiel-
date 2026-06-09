@@ -1037,7 +1037,7 @@ export default function FormationLandpage() {
                         <div style={{ display: "grid", gridTemplateColumns: screenSize === "mobile" ? "1fr" : "420px 1fr", gap: screenSize === "mobile" ? "3rem" : "5rem", alignItems: "center" }}>
                             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: "relative" }}>
                                 <div style={{ borderRadius: "1rem", overflow: "hidden", border: `1px solid ${COLOR}33`, position: "relative", aspectRatio: "4/5", maxWidth: 420 }}>
-                                    <img src="/Sohaib_baroud_Manifeste.png" alt="Sohaib Baroud — Fondateur ACT" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+                                    <img src="/sohaib-baroud-manifeste.png" alt="Sohaib Baroud — Fondateur ACT" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
                                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,20,16,0.7) 0%, transparent 55%)" }} />
                                     <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
                                         <p style={{ margin: 0, fontWeight: 800, color: "#fff", fontSize: "1.2rem", fontFamily: "var(--font-display)" }}>Sohaib Baroud</p>

@@ -38,10 +38,10 @@ const STATS_STRUCT = [
 
 
 const TEAM_STRUCT = [
-  { key: "sohaib",  img: "/images/Equipe/sohaib_baroud.jpg" },
-  { key: "mpiga",   img: "/images/Equipe/MPIGA.png" },
-  { key: "aldrin",  img: "/images/Equipe/Aldrin.png" },
-  { key: "elvis",   img: "/images/Equipe/Elvis.png" },
+  { key: "sohaib",  img: "/images/equipe/sohaib-baroud.jpg" },
+  { key: "mpiga",   img: "/images/equipe/mpiga.png" },
+  { key: "aldrin",  img: "/images/equipe/aldrin.png" },
+  { key: "elvis",   img: "/images/equipe/elvis.png" },
 ];
 
 

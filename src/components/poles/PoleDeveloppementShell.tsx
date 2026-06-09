@@ -51,10 +51,10 @@ function useMediaQuery() {
 const COLOR = "#D35400";
 
 const services = [
-  { icon: Code, slug: "ingenierie-logicielle", image: "/images/services/Ingéneurie_logicielle.jpg", key: "logicielle" },
-  { icon: Cpu, slug: "automatisation-ia", image: "/images/services/Agentic_AI.jpg", key: "ia" },
-  { icon: Database, slug: "data-intelligence-artificielle", image: "/images/services/big-data-and-et-artificial-intelligence.jpg", key: "data" },
-  { icon: Cloud, slug: "architecture-infrastructure", image: "/images/services/architerture.png", key: "cloud" },
+  { icon: Code, slug: "ingenierie-logicielle", image: "/images/services/ingenierie-logicielle.jpg", key: "logicielle" },
+  { icon: Cpu, slug: "automatisation-ia", image: "/images/services/agentic-ai.jpg", key: "ia" },
+  { icon: Database, slug: "data-intelligence-artificielle", image: "/images/services/big-data-intelligence-artificielle.jpg", key: "data" },
+  { icon: Cloud, slug: "architecture-infrastructure", image: "/images/services/architecture-infrastructure.png", key: "cloud" },
   { icon: Database, slug: "geomatique-sig", image: "/images/services/sig.jpg", key: "sig" },
 ];
 

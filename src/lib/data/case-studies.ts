@@ -7,9 +7,9 @@ export interface CaseStudy {
 
 export const CASE_STUDIES: CaseStudy[] = [
   { id: "ecommerce-logistique", color: "#9B59B6", pole: "I",   image: "/images/secteur/ecommerce.jpg" },
-  { id: "ia-documentaire",      color: "#D35400", pole: "I",   image: "/images/secteur/Finance.jpg" },
-  { id: "sig-collectivite",     color: "#27AE60", pole: "I",   image: "/images/secteur/Industrie.png" },
+  { id: "ia-documentaire",      color: "#D35400", pole: "I",   image: "/images/secteur/finance.jpg" },
+  { id: "sig-collectivite",     color: "#27AE60", pole: "I",   image: "/images/secteur/industrie.png" },
   { id: "formation-ia",         color: "#2980B9", pole: "III", image: "/images/secteur/education.jpg" },
-  { id: "bi-reporting",         color: "#F39C12", pole: "II",  image: "/images/secteur/Sante.jpg" },
-  { id: "media-panafricain",    color: "#8E44AD", pole: "I",   image: "/images/secteur/Telecoms-medias.png" },
+  { id: "bi-reporting",         color: "#F39C12", pole: "II",  image: "/images/secteur/sante.jpg" },
+  { id: "media-panafricain",    color: "#8E44AD", pole: "I",   image: "/images/secteur/telecoms-medias.png" },
 ];

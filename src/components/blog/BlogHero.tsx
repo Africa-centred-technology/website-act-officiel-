@@ -162,7 +162,7 @@ const isMobile = screenSize === "mobile";
             }}
           >
             <Image
-              src="/images/Blog/reader.png"
+              src="/images/blog/reader.png"
               alt={t("readerAlt")}
               width={600}
               height={780}

@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
     bg: "radial-gradient(ellipse 90% 80% at 20% 60%, #0D2040 0%, #050C18 55%, #030810 100%)",
     icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
     video: "https://cdn.pixabay.com/video/2019/05/06/23355-334950213_large.mp4",
-    heroImage: "/images/services/Ingéneurie_logicielle.jpg",
+    heroImage: "/images/services/ingenierie-logicielle.jpg",
     heroAlt: "Développement d'applications web et mobile sur mesure pour les entreprises africaines — ACT Ingénierie Logicielle",
     subImages: [
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
@@ -45,7 +45,7 @@ export const SERVICES: Service[] = [
     bg: "radial-gradient(ellipse 80% 90% at 80% 40%, #0A1F0D 0%, #050C18 55%, #030810 100%)",
     icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-2",
     video: "https://cdn.pixabay.com/video/2023/07/24/173103-848555583_large.mp4",
-    heroImage: "/images/services/Agentic_AI.jpg",
+    heroImage: "/images/services/agentic-ai.jpg",
     heroAlt: "IA agentique et automatisation intelligente des processus métier en Afrique — ACT Automatisation",
     subImages: [
       "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
@@ -61,7 +61,7 @@ export const SERVICES: Service[] = [
     bg: "radial-gradient(ellipse 85% 70% at 60% 80%, #150A2A 0%, #050C18 55%, #030810 100%)",
     icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
     video: "https://cdn.pixabay.com/video/2024/11/05/240062_large.mp4",
-    heroImage: "/images/services/architerture.png",
+    heroImage: "/images/services/architecture-infrastructure.png",
     heroAlt: "Architecture logicielle évolutive et infrastructure cloud souveraine adaptée à l'Afrique — ACT Architecture",
     subImages: [
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
@@ -77,7 +77,7 @@ export const SERVICES: Service[] = [
     bg: "radial-gradient(ellipse 90% 80% at 30% 20%, #071A1A 0%, #050C18 55%, #030810 100%)",
     icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
     video: "https://cdn.pixabay.com/video/2020/01/30/31772-388253161_large.mp4",
-    heroImage: "/images/services/big-data-and-et-artificial-intelligence.jpg",
+    heroImage: "/images/services/big-data-intelligence-artificielle.jpg",
     heroAlt: "Big Data et intelligence artificielle au service des entreprises africaines — ACT Data & IA",
     subImages: [
       "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1200&q=80",

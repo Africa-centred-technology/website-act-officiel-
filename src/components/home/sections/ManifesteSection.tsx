@@ -348,7 +348,7 @@ export default function ManifesteSection() {
             }}
           >
             <img
-              src="/images/Manifeste.png"
+              src="/images/manifeste.png"
               alt={tm("imageAlt")}
               style={{
                 position: "absolute",
