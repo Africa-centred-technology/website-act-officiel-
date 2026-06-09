@@ -513,7 +513,6 @@ export default function FormationInscriptionForm({
       identifyUser({ name: fullName, email: form.email, source: "inscription" });
       setUserProfile({ name: fullName, email: form.email, phone: form.telephone1, company: form.organisme });
       setStatus("success");
-      onSuccess?.();
     } catch {
       setStatus("error");
     }
@@ -523,54 +522,99 @@ export default function FormationInscriptionForm({
   if (status === "success") {
     return (
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.97, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         style={{
           textAlign: "center",
           padding: "5rem 2rem",
-          background: "rgba(255,255,255,0.025)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "rgba(34,197,94,0.05)",
+          border: "1px solid rgba(34,197,94,0.25)",
           borderRadius: "1rem",
         }}
       >
-        <CheckCircle2 size={72} color="#22c55e" style={{ margin: "0 auto 1.5rem" }} />
-        <h3
+        <motion.div
+          initial={{ scale: 0.5, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.15, duration: 0.5, type: "spring", stiffness: 200 }}
+          style={{ margin: "0 auto 1.8rem", width: "fit-content" }}
+        >
+          <CheckCircle2 size={80} color="#22c55e" strokeWidth={1.5} />
+        </motion.div>
+
+        <motion.h3
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
           style={{
-            fontSize: "clamp(2.5rem, 3.5vw, 3.5rem)",
+            fontSize: "clamp(2.4rem, 3.5vw, 3.8rem)",
             fontWeight: 900,
             color: "#22c55e",
-            marginBottom: "1rem",
+            marginBottom: "1.2rem",
             fontFamily: "Futura, system-ui, sans-serif",
+            letterSpacing: "-0.01em",
           }}
         >
           {t("successTitle")}
-        </h3>
-        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.4rem", lineHeight: 1.8, maxWidth: "520px", margin: "0 auto" }}>
+        </motion.h3>
+
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          style={{
+            color: "rgba(255,255,255,0.75)",
+            fontSize: "1.5rem",
+            lineHeight: 1.8,
+            maxWidth: "520px",
+            margin: "0 auto",
+          }}
+        >
           {t("successMessage")}
-        </p>
-        <p style={{ marginTop: "1rem", color: "rgba(255,255,255,0.4)", fontSize: "1rem" }}>
-          {t("successRedirectNote")}
-        </p>
-        {onSuccess && (
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.55 }}
+          style={{
+            marginTop: "1.2rem",
+            color: "rgba(255,255,255,0.35)",
+            fontSize: "1.15rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.4rem",
+          }}
+        >
+          ✉ {t("successRedirectNote")}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65 }}
+        >
           <button
             onClick={onSuccess}
             style={{
-              marginTop: "2.5rem",
-              padding: "0.85rem 2.5rem",
+              marginTop: "2.8rem",
+              padding: "1rem 3rem",
               background: ORANGE,
               color: "#fff",
               border: "none",
               borderRadius: "0.5rem",
-              fontSize: "1rem",
+              fontSize: "1.15rem",
               fontWeight: 700,
               cursor: "pointer",
-              fontFamily: "var(--font-body)",
-              letterSpacing: "0.05em",
+              fontFamily: "Futura, system-ui, sans-serif",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
             }}
           >
             {t("successClose")}
           </button>
-        )}
+        </motion.div>
       </motion.div>
     );
   }
